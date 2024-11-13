@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Third_Email_Descriptions__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(MainLOAStatus__c,
+&quot;LOA Accepted Awaiting Information&quot;,&quot;We requested information on &quot;
++TEXT(Date_LOA_sent_to_provider__c)&amp;&quot;.&quot;&amp;&quot; &quot;
++(LOA_Financial_Account__r.Public_Provider_Name__r.Name)&amp;
+&quot; has told us that we should receive this by &quot;
++TEXT(LOA_Expected_Response_Date__c)&amp;&quot;.&quot;&amp;&quot; We last chased on &quot;
++TEXT(Date_Last_Chased__c)&amp;&quot;.&quot;,
+
+&quot;Information Received&quot;,&quot;We are processing information that we received on&quot;&amp;&quot; &quot;
++TEXT(DateFirstResponseProvider__c)&amp;&quot;.&quot;, 
+
+&quot;Information rerequested&quot;,&quot;We have had to re-request information from&quot;&amp;&quot; &quot;
++(LOA_Financial_Account__r.Public_Provider_Name__r.Name)&amp;&quot; on &quot;
++TEXT(Date_Additional_Information_Requested__c)&amp;&quot;.&quot;&amp;
+&quot; We last chased this on &quot;
++TEXT(Date_Last_Chased__c)&amp;&quot;.&quot;,
+
+&quot;Specialist reviewed&quot;,&quot;We are processing information that we received on&quot;&amp;&quot; &quot;
++TEXT(DateFirstResponseProvider__c)&amp;&quot;.&quot;, 
+
+&quot;LOA Analysis&quot;,&quot;We have everything we need.&quot;,
+
+&quot;Completed&quot;,&quot;We have everything we need.&quot;,
+(&quot;&quot;)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Third Email Descriptions</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

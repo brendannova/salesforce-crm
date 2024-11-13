@@ -1,0 +1,5 @@
+<apex:component controller="EmailHiString" access="global">
+    <apex:attribute name="objectIdValue" type="String" description="This is the ID of the record" assignTo="{!objectIdString}" access="global" />
+    <apex:attribute name="emailTemplateDevNameValue" type="String" description="This is the developer name of the email template" assignTo="{!emailTemplateDevName}" access="global" />
+    <div style="font-size: 18px" >{!hiString}</div> 
+</apex:component>

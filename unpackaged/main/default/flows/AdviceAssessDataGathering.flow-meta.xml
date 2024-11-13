@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <decisions>
+        <name>Is_this_ready_for_dataanalysis</name>
+        <label>Is this ready for data analysis?</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnectorLabel>Not yet</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>(1 OR 5) AND (2 OR 4) AND (3 OR 6) AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.RtqStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.RtqStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No update required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_task_to_write_summary</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Flow to asses whether data gathering has been completed</description>
+    <environments>Default</environments>
+    <interviewLabel>Advice | Asses data gathering {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Advice | Assess data gathering</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_this_ready_for_dataanalysis</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Create_task_to_write_summary</name>
+        <label>Create task to write summary</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>advice.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_advice_id</name>
+            <value>
+                <elementReference>advice.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>ADVICE_DATA_GATHERING_CASE_SUMMARY</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>advice.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>advice</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
+</Flow>

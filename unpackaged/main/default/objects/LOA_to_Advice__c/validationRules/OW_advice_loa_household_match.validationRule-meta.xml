@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_advice_loa_household_match</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT( Advice__r.Advice_Household__c =  LOA__r.Household_Lookup__c )</errorConditionFormula>
+    <errorMessage>The advice and LOA must be part of the same household.</errorMessage>
+</ValidationRule>

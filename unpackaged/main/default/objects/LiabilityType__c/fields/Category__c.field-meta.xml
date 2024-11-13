@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category__c</fullName>
+    <description>Records the category of the liability type. Displayed to internal users when creating a liability. If a user is changing the liability type, they can only select types with the same category.</description>
+    <label>Category</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Mortgage</fullName>
+                <default>false</default>
+                <label>Mortgage</label>
+            </value>
+            <value>
+                <fullName>Other Liabilities</fullName>
+                <default>false</default>
+                <label>Other Liabilities</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

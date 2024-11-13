@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_Client_Folder</name>
+        <label>Create Client Folder</label>
+        <locationX>308</locationX>
+        <locationY>384</locationY>
+        <actionName>GoogleDrive.createGdriveClientFolders</actionName>
+        <actionType>externalService</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>GoogleDriveBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>GoogleDrive.createGdriveClientFolders</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>59.0</apiVersion>
+    <assignments>
+        <name>Assign_household_ID_to_G_Drive_Body</name>
+        <label>Assign household ID to G-Drive Body</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <assignmentItems>
+            <assignToReference>GoogleDriveBody.householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Client_Folder</targetReference>
+        </connector>
+    </assignments>
+    <description>To trigger the full client folder creation when a household Terms of business status is updated to Accepted</description>
+    <environments>Default</environments>
+    <interviewLabel>Account | Google drive create full client folder {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account | Google drive full client folder creation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>ISPICKVAL({!$Record.OW_terms_of_Business_Status__c}, &#39;Accepted&#39;)
+&amp;&amp;
+{!$Record.RecordType.DeveloperName} = &#39;IndustriesHousehold&#39;</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Assign_household_ID_to_G_Drive_Body</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>GoogleDriveBody</name>
+        <apexClass>ExternalService__GoogleDrive_GDriveJobCreateClientFolderBody</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

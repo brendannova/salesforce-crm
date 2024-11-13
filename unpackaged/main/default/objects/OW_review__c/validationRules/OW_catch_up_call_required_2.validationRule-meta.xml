@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_catch_up_call_required_2</fullName>
+    <active>false</active>
+    <description>This rule ensures the planner confirms they have reassessed vulnerability for this customer</description>
+    <errorConditionFormula>( 
+ISPICKVAL(OW_status__c, &quot;Await fact find&quot;)
+||
+ISPICKVAL(OW_status__c, &quot;Provide advice&quot;)
+||
+ISPICKVAL(OW_status__c, &quot;Complete&quot;)
+)
+
+&amp;&amp; 
+
+ISCHANGED( OW_status__c )
+
+&amp;&amp;
+
+NOT( OW_vulnerability_reassesed__c )</errorConditionFormula>
+    <errorDisplayField>OW_vulnerability_reassesed__c</errorDisplayField>
+    <errorMessage>Please confirm that you have reassessed vulnerability before moving beyond the catch up stage.</errorMessage>
+</ValidationRule>

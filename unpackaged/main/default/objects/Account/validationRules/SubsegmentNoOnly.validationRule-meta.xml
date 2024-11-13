@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubsegmentNoOnly</fullName>
+    <active>true</active>
+    <description>Ensures that if the no subsegment option is selected, no other options are too.</description>
+    <errorConditionFormula>INCLUDES(Subsegment__c, &quot;No sub-segment&quot;)
+&amp;&amp;
+(INCLUDES(Subsegment__c, &quot;Products in Trust (+ requirements to work with Trustees etc.)&quot;)
+||
+INCLUDES(Subsegment__c, &quot;Power of attorney in place&quot;)
+||
+INCLUDES(Subsegment__c, &quot;Business owners - with no future exit or sale expected&quot;)
+||
+INCLUDES(Subsegment__c, &quot;Business owners - with future exit planned, or exit taking place&quot;)
+||
+INCLUDES(Subsegment__c, &quot;Ultra-high net worth&quot;)
+||
+INCLUDES(Subsegment__c, &quot;Vulnerable customers&quot;)
+||
+INCLUDES(Subsegment__c, &quot;Conflict of interest customers&quot;)
+||
+INCLUDES(Subsegment__c, &quot;No Capacity for Loss&quot;)
+||
+INCLUDES(Subsegment__c, &quot;DB Transfer Advice&quot;))</errorConditionFormula>
+    <errorDisplayField>Subsegment__c</errorDisplayField>
+    <errorMessage>If &quot;No sub-segment&quot; is chosen, you cannot choose any other values here.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Invite_Email</name>
+        <label>Send Invite Email</label>
+        <locationX>440</locationX>
+        <locationY>648</locationY>
+        <actionName>OctopusWealthPortal.InviteEmail</actionName>
+        <actionType>externalService</actionType>
+        <connector>
+            <targetReference>Loop_through_Household_Clients</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>inviteEmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>OctopusWealthPortal.InviteEmail</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Assign_Invite_Email_Body</name>
+        <label>Assign Invite Email Body</label>
+        <locationX>440</locationX>
+        <locationY>528</locationY>
+        <assignmentItems>
+            <assignToReference>inviteEmailBody.personAccountRecordId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_through_Household_Clients.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Invite_Email</targetReference>
+        </connector>
+    </assignments>
+    <description>Business use: This flow turns on the household dashboard visibility when the first bit of fulfilment gets to the investment checks or complete stage if the household dashboard visibility is not already turned on. 
+Tech use: Turns on household dashboard visibility and calls portal end point to send email notifying client their dashboard is visible.</description>
+    <environments>Default</environments>
+    <interviewLabel>Fulfilment updated - turn dashboard visibility on {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Fulfilment | updated | turn dashboard visibility on</label>
+    <loops>
+        <name>Loop_through_Household_Clients</name>
+        <label>Loop through Household Clients</label>
+        <locationX>352</locationX>
+        <locationY>408</locationY>
+        <collectionReference>householdPeople</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Invite_Email_Body</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_household</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_household</name>
+        <label>Update household</label>
+        <locationX>352</locationX>
+        <locationY>864</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Household_lookup__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Dashboard_Visibility__c</field>
+            <value>
+                <stringValue>On</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>ISPICKVAL({!$Record.Household_lookup__r.Dashboard_Visibility__c}, &quot;Off&quot;)
+&amp;&amp;
+ISPICKVAL({!$Record.Household_lookup__r.GroupCompany__c}, &quot;&quot;)
+&amp;&amp;
+(ISPICKVAL({!$Record.Status__c}, &quot;Investment Checks&quot;)
+||
+ISPICKVAL({!$Record.Status__c}, &quot;Complete&quot;))</filterFormula>
+        <object>Fulfillment__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Get_People_in_Household</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Get_People_in_Household</name>
+        <label>Get People in Household</label>
+        <locationX>352</locationX>
+        <locationY>288</locationY>
+        <connector>
+            <targetReference>Loop_through_Household_Clients</targetReference>
+        </connector>
+        <flowName>AccountGetPeopleInHousehold</flowName>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>$Record.Household_lookup__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>role</name>
+            <value>
+                <stringValue>Client</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>householdPeople</assignToReference>
+            <name>personAccounts</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <name>householdPeople</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>inviteEmailBody</name>
+        <apexClass>ExternalService__OctopusWealthPortal_InviteEmailBody</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <description>Replaced by autolaunched flow. 
+
+Flow to trigger actions when a client passes AML</description>
+    <environments>Default</environments>
+    <interviewLabel>AM | passed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>zUnused | AML | passed</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>OW_party_state_manager_flow</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pass</stringValue>
+            </value>
+        </filters>
+        <object>AML__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+    <subflows>
+        <name>OW_party_state_manager_flow</name>
+        <label>Party state manager flow</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Update_AML_check_status_on_account</targetReference>
+        </connector>
+        <flowName>OW_account_party_state_manager</flowName>
+        <inputAssignments>
+            <name>eventType</name>
+            <value>
+                <stringValue>AML_PASSED</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>partyId</name>
+            <value>
+                <elementReference>$Record.Person_Account__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Update_AML_check_status_on_account</name>
+        <label>Update AML check status on account</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <flowName>Account_AML_sub</flowName>
+        <inputAssignments>
+            <name>AMLCheck</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

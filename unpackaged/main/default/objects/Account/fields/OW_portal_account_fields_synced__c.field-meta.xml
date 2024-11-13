@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_portal_account_fields_synced__c</fullName>
+    <description>Checks whether more than 2 minutes have elapsed since the last update to one of the fields required by the portal and returns true if so. Used to control visibility of components on the person account Lightning pages.</description>
+    <formula>IF( ISBLANK( OW_last_change_to_portal_account_field__c ), TRUE, NOW() - OW_last_change_to_portal_account_field__c &gt; 2/24/60 )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Portal account fields synced</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>CheckAccountOwnerGroupCompany</name>
+        <label>Check Account Owner Group Company</label>
+        <locationX>336</locationX>
+        <locationY>311</locationY>
+        <defaultConnector>
+            <targetReference>AccountGroupCompanyBLANK</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>OM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner.GroupCompany__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Record_type</targetReference>
+            </connector>
+            <label>OM</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Record_type</name>
+        <label>Record type?</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>AccountGroupCompanyOM</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Household</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IndustriesHousehold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Set_Account_Group_Company_to_OM</targetReference>
+            </connector>
+            <label>Household</label>
+        </rules>
+    </decisions>
+    <description>Sets the Group Company field on Account (copied from Group Company of Account Owner).</description>
+    <environments>Default</environments>
+    <interviewLabel>Account | Set Group Company {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account | Set Group Company</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Sets Group Company &amp; Queue fields to blank.</description>
+        <name>AccountGroupCompanyBLANK</name>
+        <label>Set Account Group Company to BLANK</label>
+        <locationX>490</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>GroupCompany__c</field>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Sets Group Company field to &quot;OM&quot; &amp; Queue to OM Specialists queue.</description>
+        <name>AccountGroupCompanyOM</name>
+        <label>Set Account Group Company to OM</label>
+        <locationX>182</locationX>
+        <locationY>767</locationY>
+        <inputAssignments>
+            <field>GroupCompany__c</field>
+            <value>
+                <stringValue>OM</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Sets Group Company field to &quot;OM&quot; &amp; Queue to OM Specialists queue.</description>
+        <name>Copy_1_of_Set_Account_Group_Company_to_OM</name>
+        <label>Copy 1 of Set Account Group Company to OM</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <connector>
+            <targetReference>AccountGroupCompanyOM</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OW_queue__c</field>
+            <value>
+                <stringValue>OMSpecialists</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>210</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>CheckAccountOwnerGroupCompany</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

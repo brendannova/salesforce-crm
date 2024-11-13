@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_time_setup__c</fullName>
+    <description>The number of days that this advice was in setup. Starts acting like a counter until settling on a final value when the advice moves from a value of setup.</description>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(Setup_Complete_Date__c), 
+(5 * ( FLOOR( ( TODAY() - DATE( 1900, 1, 8)) / 7 )) + MIN( 5, MOD( TODAY() - DATE( 1900, 1, 8), 7 )))
+-
+(5 * ( FLOOR( ( DATEVALUE(CreatedDate)- DATE( 1900, 1, 8) ) / 7 )) + MIN( 5, MOD( DATEVALUE(CreatedDate) - DATE( 1900, 1, 8), 7 ))), 
+
+(5 * ( FLOOR( ( Setup_Complete_Date__c - DATE( 1900, 1, 8) ) / 7 )) + MIN( 5, MOD( Setup_Complete_Date__c - DATE( 1900, 1, 8), 7 )))
+-
+(5 * ( FLOOR( ( DATEVALUE(CreatedDate) - DATE( 1900, 1, 8) ) / 7 )) + MIN( 5, MOD( DATEVALUE(CreatedDate) - DATE( 1900, 1, 8), 7 )))
+)</formula>
+    <label>Days in setup</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_no_suitability_rtq_expired</fullName>
+    <active>false</active>
+    <description>Rule to prevent advice from moving to suitability before risk questionnaires are complete</description>
+    <errorConditionFormula>AND (
+     ISCHANGED( Advice_Status__c ),
+     OR (
+          TEXT(Advice_Status__c) = &#39;Ready for suitability&#39;,
+          TEXT(Advice_Status__c) = &#39;Suitability in progress&#39;,
+          TEXT(Advice_Status__c) = &#39;Deck complete&#39;,
+          TEXT(Advice_Status__c) = &#39;Await decision&#39;,
+          TEXT(Advice_Status__c) = &#39;In fulfilment&#39;,
+          TEXT(Advice_Status__c) = &#39;Complete&#39;
+     ),
+     OR ( TEXT(PRIORVALUE(Advice_Status__c)) = &#39;Setup&#39;, 
+          TEXT(PRIORVALUE(Advice_Status__c)) = &#39;Data Gathering&#39;, 
+          TEXT(PRIORVALUE(Advice_Status__c)) = &#39;Risk call&#39;
+     ),
+     ISPICKVAL(Advice_Household__r.OW_rtq_status__c, 
+     &quot;Expired&quot;) 
+)</errorConditionFormula>
+    <errorMessage>RTQs for this household have expired and will need to be updated before you can progress to Ready for suitability</errorMessage>
+</ValidationRule>

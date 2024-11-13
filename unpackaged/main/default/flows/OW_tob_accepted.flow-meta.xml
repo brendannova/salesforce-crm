@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <description>Updates the status of the TOB to accepted.</description>
+        <name>Record_that_TOB_were_accepted</name>
+        <label>Record that TOB were accepted</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Accepted</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Runs when a TOB record is accepted for the first time.</description>
+    <interviewLabel>TOB - accepted {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TOB - accepted</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Record_that_TOB_were_accepted</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Date_terms_of_business_accepted__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Not accepted</stringValue>
+            </value>
+        </filters>
+        <object>Terms_of_Business__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

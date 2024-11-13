@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CoreSegmentStatus__c</fullName>
+    <label>Core Segment Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>CoreSegment__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>In criteria</fullName>
+                <default>false</default>
+                <label>In criteria</label>
+            </value>
+            <value>
+                <fullName>Out of criteria</fullName>
+                <default>false</default>
+                <label>Out of criteria</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Execution only staff member</controllingFieldValue>
+            <controllingFieldValue>Accumulator</controllingFieldValue>
+            <controllingFieldValue>Approaching retirement</controllingFieldValue>
+            <controllingFieldValue>In retirement / Taking income</controllingFieldValue>
+            <controllingFieldValue>Later life and estate planner</controllingFieldValue>
+            <controllingFieldValue>Children of clients who turn 18</controllingFieldValue>
+            <controllingFieldValue>Trusts as household</controllingFieldValue>
+            <controllingFieldValue>Mortgage service only</controllingFieldValue>
+            <valueName>In criteria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accumulator</controllingFieldValue>
+            <controllingFieldValue>Approaching retirement</controllingFieldValue>
+            <controllingFieldValue>In retirement / Taking income</controllingFieldValue>
+            <controllingFieldValue>Later life and estate planner</controllingFieldValue>
+            <controllingFieldValue>Trusts as household</controllingFieldValue>
+            <controllingFieldValue>Mortgage service only</controllingFieldValue>
+            <controllingFieldValue>Outside of the segment criteria</controllingFieldValue>
+            <controllingFieldValue>Family investment companies (FICs)</controllingFieldValue>
+            <valueName>Out of criteria</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

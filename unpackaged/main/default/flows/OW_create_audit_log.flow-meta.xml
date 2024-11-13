@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <description>This flow simply creates an audit log record using values passed in by a process.</description>
+    <interviewLabel>Create audit log {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create audit log</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>This action will create an audit log record using input variables passed in by a process.</description>
+        <name>OW_create_audit_log</name>
+        <label>Create audit log</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <inputAssignments>
+            <field>OW_additional_information__c</field>
+            <value>
+                <elementReference>additionalInformation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_field_changed__c</field>
+            <value>
+                <elementReference>fieldChanged</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_object_changed__c</field>
+            <value>
+                <elementReference>objectChanged</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_prior_value__c</field>
+            <value>
+                <elementReference>priorValue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_record_id__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_time_of_change__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_updated_value__c</field>
+            <value>
+                <elementReference>updatedValue</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OW_audit_log__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>OW_create_audit_log</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Any additional information to be displayed should be stored in this.</description>
+        <name>additionalInformation</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The field that changed and triggered the creation of this audit log</description>
+        <name>fieldChanged</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The object whose change is being audited.</description>
+        <name>objectChanged</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The prior value of the field that changed</description>
+        <name>priorValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The ID of the record that changed</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The updated value of the field that changed</description>
+        <name>updatedValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

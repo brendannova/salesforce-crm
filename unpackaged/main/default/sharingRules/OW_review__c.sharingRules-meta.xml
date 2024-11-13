@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>OW_review_share_all_with_head_of_partners</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>This sharing rule shares all reviews with anyone in the head of partners role. The criteria are that owner ID is not null as this will always be true. Only read access is given as no-one in this role needs to modify the reviews of others.</description>
+        <label>Review - share all with head of partners</label>
+        <sharedTo>
+            <role>Head_of_Partners</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>OW_review_share_all_with_planners</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This sharing rule shares all reviews with all planners. The criteria are that owner ID is not null as this will always be true. The share is with the head of planning role using roles and subs so that all planners get access too. Read write access is given as planners need to modify annual reviews.</description>
+        <label>Review - share all with planners</label>
+        <sharedTo>
+            <roleAndSubordinates>Head_of_Planning</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>OW_review_share_all_with_specialists</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This sharing rule shares all reviews with all specialists. The criteria are that owner ID is not null as this will always be true. The share is with the head of planning role using roles and subs so that all planners get access too. Read write access is given as planners need to modify annual reviews.</description>
+        <label>Review - share all with specialists</label>
+        <sharedTo>
+            <roleAndSubordinates>OW_operations_lead</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>OW_review_assistant_partner_sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This rule will share reviews owned by Andrew and Joseph in the head of partners role with Jen in the assistant partner role.</description>
+        <label>Assistant partner sharing</label>
+        <sharedTo>
+            <role>OW_assistant_partner</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Head_of_Partners</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>TEMPReviewOM</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Temporary rule to share reviews with OM staff.</description>
+        <label>TEMP - Review OM</label>
+        <sharedTo>
+            <group>OMDataAccess</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinates>OctopusMoney</roleAndSubordinates>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

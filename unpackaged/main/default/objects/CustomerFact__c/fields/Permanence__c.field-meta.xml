@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Permanence__c</fullName>
+    <description>For use on vulnerability facts. To indicate if the vulnerability will have a permanent of temporary affect</description>
+    <inlineHelpText>Indicate if this vulnerability has a temporary or permanent affect</inlineHelpText>
+    <label>Permanence</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Temporary</fullName>
+                <default>false</default>
+                <label>Temporary</label>
+            </value>
+            <value>
+                <fullName>Permanent</fullName>
+                <default>false</default>
+                <label>Permanent</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

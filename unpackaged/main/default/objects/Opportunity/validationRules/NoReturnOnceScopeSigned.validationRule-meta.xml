@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoReturnOnceScopeSigned</fullName>
+    <active>true</active>
+    <description>Prevents moving back to stages before await terms once scope has been signed</description>
+    <errorConditionFormula>ISPICKVAL(PRIORVALUE( StageName ), &quot;Await terms&quot; )
+&amp;&amp;
+( ISPICKVAL(StageName, &quot;Book discovery&quot; ) ||
+ISPICKVAL(StageName, &quot;Present discovery&quot; ) ||
+ISPICKVAL(StageName, &quot;Await decision&quot; ))
+&amp;&amp;
+( RecordType.DeveloperName = &quot;Advice_Opportunity&quot; ||
+RecordType.DeveloperName = &quot;AdviceFastTrack&quot; )</errorConditionFormula>
+    <errorMessage>You cannot move backwards in stages.</errorMessage>
+</ValidationRule>

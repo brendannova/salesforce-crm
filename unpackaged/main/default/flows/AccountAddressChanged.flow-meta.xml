@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_case_record_type_ID</name>
+        <label>Get case record type ID</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <actionName>RecordTypeGetId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>CreatePersonalInformationChangeCase</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordTypeDeveloperName</name>
+            <value>
+                <stringValue>PersonalInformationChange</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectType</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>RecordTypeGetId</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>59.0</apiVersion>
+    <description>Runs when a customer address is updated post-AML to ensure the necessary actions take place after, like updating external systems.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Dynamically generates the text that should display depending on which nationality was changed.</description>
+        <name>caseDescriptionDynamic</name>
+        <dataType>String</dataType>
+        <expression>IF({!nationalityChanged}, &quot;Nationality was changed from &quot; &amp; TEXT({!$Record__Prior.Nationality__pc}) &amp; &quot; to &quot; &amp; TEXT({!$Record.Nationality__pc}) &amp; &quot;.&quot; &amp; BR(), &quot;&quot;)
+&amp;
+IF({!dualNationalityChanged}, &quot;Dual nationality was changed from &quot; &amp; TEXT({!$Record__Prior.Dual_Nationality__c}) &amp; &quot; to &quot; &amp; TEXT({!$Record.Dual_Nationality__c}) &amp; &quot;.&quot; &amp; BR(), &quot;&quot;) 
+&amp; 
+IF({!thirdNationalityChanged}, &quot;Third nationality was changed from &quot; &amp; TEXT({!$Record__Prior.OW_third_nationality__c}) &amp; &quot; to &quot; &amp; TEXT({!$Record.OW_third_nationality__c}) &amp; &quot;.&quot; &amp; BR(), &quot;&quot;)
+&amp; 
+IF({!countryOfResidenceChanged}, &quot;Country of residence was changed from &quot; &amp; TEXT({!$Record__Prior.Country_of_Residence__c}) &amp; &quot; to &quot; &amp; TEXT({!$Record.Country_of_Residence__c}) &amp; &quot;.&quot; &amp; BR(), &quot;&quot;)
+&amp; 
+IF({!countryOfDomicileChanged}, &quot;Country of domicile was changed from &quot; &amp; TEXT({!$Record__Prior.Country_of_Domicile__c}) &amp; &quot; to &quot; &amp; TEXT({!$Record.Country_of_Domicile__c}) &amp; &quot;.&quot; &amp; BR(), &quot;&quot;)
+&amp; 
+IF({!usConnectionsSetToYes}, &quot;US connections has been set to yes.&quot;, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>CaseOrigin</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!$User.UserType}, &quot;Integration&quot;), &quot;Portal&quot;, &quot;Internal&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>countryOfDomicileChanged</name>
+        <dataType>Boolean</dataType>
+        <expression>ISCHANGED({!$Record.Country_of_Domicile__c})</expression>
+    </formulas>
+    <formulas>
+        <name>countryOfResidenceChanged</name>
+        <dataType>Boolean</dataType>
+        <expression>ISCHANGED({!$Record.Country_of_Residence__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Returns true if dual nationality was changed.</description>
+        <name>dualNationalityChanged</name>
+        <dataType>Boolean</dataType>
+        <expression>TEXT({!$Record__Prior.Dual_Nationality__c}) != TEXT({!$Record.Dual_Nationality__c})</expression>
+    </formulas>
+    <formulas>
+        <description>Returns true if nationality was changed for a customer.</description>
+        <name>nationalityChanged</name>
+        <dataType>Boolean</dataType>
+        <expression>TEXT({!$Record__Prior.Nationality__pc}) != TEXT({!$Record.Nationality__pc})</expression>
+    </formulas>
+    <formulas>
+        <description>Returns true if third nationality was changed.</description>
+        <name>thirdNationalityChanged</name>
+        <dataType>Boolean</dataType>
+        <expression>TEXT({!$Record__Prior.OW_third_nationality__c}) != TEXT({!$Record.OW_third_nationality__c})</expression>
+    </formulas>
+    <formulas>
+        <name>usConnectionsSetToYes</name>
+        <dataType>Boolean</dataType>
+        <expression>ISCHANGED({!$Record.Do_you_have_any_connections_with_the_USA__c}) &amp;&amp; ISPICKVAL({!$Record.Do_you_have_any_connections_with_the_USA__c}, &quot;Yes&quot;)</expression>
+    </formulas>
+    <interviewLabel>Account | Address Changed {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account | Address Changed</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>CreatePersonalInformationChangeCase</name>
+        <label>Create Personal Information Change case</label>
+        <locationX>176</locationX>
+        <locationY>539</locationY>
+        <assignRecordIdToReference>newCaseId</assignRecordIdToReference>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DateOfRequest__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>CaseDescription</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_household__c</field>
+            <value>
+                <elementReference>$Record.Household_Lookup__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <elementReference>CaseOrigin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>GetQueueID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Person__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_case_record_type_ID.recordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Finalise customer address update </stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>ADDRESS_CHANGE</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordCreates>
+    <recordLookups>
+        <name>GetQueueID</name>
+        <label>Get Queue ID</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_case_record_type_ID</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Household_Lookup__r.OW_queue__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetQueueID</targetReference>
+        </connector>
+        <filterFormula>{!$Record.IsPersonAccount}
+&amp;&amp;
+ISPICKVAL({!$Record.OW_aml_check_account__c}, &quot;Passed&quot;)
+&amp;&amp;
+ISCHANGED({!$Record.ShippingAddress})</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>CaseDescription</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Address updated. 
+From: {!$Record__Prior.ShippingStreet}, {!$Record__Prior.ShippingPostalCode}, {!$Record__Prior.ShippingCity}, {!$Record__Prior.ShippingState}, {!$Record__Prior.ShippingCountry}
+To: {!$Record.ShippingStreet}, {!$Record.ShippingPostalCode}, {!$Record.ShippingCity}, {!$Record.ShippingState}, {!$Record.ShippingCountry}</text>
+    </textTemplates>
+    <variables>
+        <name>newCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

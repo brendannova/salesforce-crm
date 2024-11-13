@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_cant_edit_active_rtqa</fullName>
+    <active>true</active>
+    <description>Prevents the values that drive the Oxford Risk integration and customer facing components of the RTQ from being edited while the RTQ assessment is active. This ensures we don&#39;t make breaking or customer facing changes without proper consideration.</description>
+    <errorConditionFormula>TEXT( OW_status__c ) = &quot;Active&quot;
+
+&amp;&amp;
+
+OR( 
+ISCHANGED( OW_assessment_id__c ),
+ISCHANGED( OW_instrument_id__c ),
+ISCHANGED( OW_instrument_version__c ),
+ISCHANGED( OW_question_01_text__c ),
+ISCHANGED( OW_question_01_ref_id__c ),
+ISCHANGED( OW_question_02_text__c ),
+ISCHANGED( OW_question_02_ref_id__c ),
+ISCHANGED( OW_question_03_text__c ),
+ISCHANGED( OW_question_03_ref_id__c ),
+ISCHANGED( OW_question_04_text__c ),
+ISCHANGED( OW_question_04_ref_id__c ),
+ISCHANGED( OW_question_05_text__c ),
+ISCHANGED( OW_question_05_ref_id__c ),
+ISCHANGED( OW_question_06_text__c ),
+ISCHANGED( OW_question_06_ref_id__c ),
+ISCHANGED( OW_question_07_text__c ),
+ISCHANGED( OW_question_07_ref_id__c ),
+ISCHANGED( OW_question_08_text__c ),
+ISCHANGED( OW_question_08_ref_id__c ),
+ISCHANGED( OW_question_09_text__c ),
+ISCHANGED( OW_question_09_ref_id__c ),
+ISCHANGED( OW_question_10_text__c ),
+ISCHANGED( OW_question_10_ref_id__c ),
+ISCHANGED( OW_question_11_text__c ),
+ISCHANGED( OW_question_11_ref_id__c ),
+ISCHANGED( OW_question_12_text__c ),
+ISCHANGED( OW_question_12_ref_id__c ),
+ISCHANGED( OW_question_13_text__c ),
+ISCHANGED( OW_question_13_ref_id__c ),
+ISCHANGED( OW_question_14_text__c ),
+ISCHANGED( OW_question_14_ref_id__c ),
+ISCHANGED( OW_question_15_text__c ),
+ISCHANGED( OW_question_15_ref_id__c ),
+ISCHANGED( OW_question_16_text__c ),
+ISCHANGED( OW_question_16_ref_id__c ),
+ISCHANGED( OW_question_17_text__c ),
+ISCHANGED( OW_question_17_ref_id__c ),
+ISCHANGED( OW_question_18_text__c ),
+ISCHANGED( OW_question_18_ref_id__c ),
+ISCHANGED( OW_question_19_text__c ),
+ISCHANGED( OW_question_19_ref_id__c ),
+ISCHANGED( OW_question_20_text__c ),
+ISCHANGED( OW_question_20_ref_id__c )
+)</errorConditionFormula>
+    <errorMessage>This RTQ cannot be edited while active as this could have unintended customer facing issues. Please contact an admin if you believe this needs changing.</errorMessage>
+</ValidationRule>

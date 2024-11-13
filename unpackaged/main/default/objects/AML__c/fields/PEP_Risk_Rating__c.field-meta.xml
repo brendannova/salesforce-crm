@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PEP_Risk_Rating__c</fullName>
+    <description>Superseded - replaced by a simpler process in the AML overhaul 2024</description>
+    <label>PEP Risk Rating (Legacy)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Low Risk</fullName>
+                <default>false</default>
+                <label>Low Risk</label>
+            </value>
+            <value>
+                <fullName>Medium Risk</fullName>
+                <default>false</default>
+                <label>Medium Risk</label>
+            </value>
+            <value>
+                <fullName>High Risk</fullName>
+                <default>false</default>
+                <label>High Risk</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

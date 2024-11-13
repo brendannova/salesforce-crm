@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_loa_outside_sla</fullName>
+    <active>true</active>
+    <description>Checks to ensure key fields are populated where the status of the LOA is outside SLA</description>
+    <errorConditionFormula>ISPICKVAL(MainLOAStatus__c, &quot;Outside SLA&quot;)
+
+&amp;&amp; 
+
+(ISBLANK(Date_LOA_accepted_by_provider__c)
+||
+ISBLANK( Maximum_SLA__c )
+||
+ISBLANK( LOA_Financial_Account__r.Public_Provider_Name__c ))</errorConditionFormula>
+    <errorMessage>Please ensure there are values for date received by provider, max SLA, and provider on the financial product.</errorMessage>
+</ValidationRule>

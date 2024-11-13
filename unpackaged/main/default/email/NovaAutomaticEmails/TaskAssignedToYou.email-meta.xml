@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to alert the user that a task has been assigned to them.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Task | Assigned To You</name>
+    <style>none</style>
+    <subject>New task - {!Task.Subject} - {!Task.FinServ__Household__c}</subject>
+    <textOnly>Hiya
+
+You&#39;ve been assigned a new task.
+
+Subject: {!Task.Subject}
+
+Household: {!Task.FinServ__Household__c}
+
+Due: {!Task.ActivityDate}
+
+Priority: {!Task.Priority}
+
+Check it out here:
+{!Task.Link}
+
+Cheers!
+
+Salesforce Team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

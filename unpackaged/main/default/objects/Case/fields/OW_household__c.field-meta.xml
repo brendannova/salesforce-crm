@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_household__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The household to which this case relates.</description>
+    <label>Household</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>The account selected in the household field must be a household. 
+
+(Admin message: lookup filter criteria not met on Household on the Case object)</errorMessage>
+        <filterItems>
+            <field>Account.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>IndustriesHousehold</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Cases</relationshipLabel>
+    <relationshipName>Cases</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

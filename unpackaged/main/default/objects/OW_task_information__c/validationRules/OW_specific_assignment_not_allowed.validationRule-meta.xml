@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_specific_assignment_not_allowed</fullName>
+    <active>true</active>
+    <description>Ensures that a queue or specific user are not specified for certain assigned to types.</description>
+    <errorConditionFormula>(ISPICKVAL( OW_assigned_to__c, &quot;Household team&quot; )
+||
+ISPICKVAL( OW_assigned_to__c, &quot;Partner&quot; ))
+&amp;&amp; 
+(NOT(ISBLANK(OW_specific_user__c))
+||
+NOT(ISPICKVAL(OW_queue__c, &quot;&quot;)))</errorConditionFormula>
+    <errorDisplayField>OW_assigned_to__c</errorDisplayField>
+    <errorMessage>Where assigned to is household team or partner,  you cannot choose a queue or specific user.</errorMessage>
+</ValidationRule>

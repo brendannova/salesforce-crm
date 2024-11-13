@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Qualified</fullName>
+    <active>true</active>
+    <description>Validations if the stage is moved to Nurturing Sales Qualified</description>
+    <errorConditionFormula>OR(
+AND(
+ISPICKVAL(Qualification__c, &quot;Qualified&quot;), 
+ISPICKVAL(Qualified_Level__c,&quot;&quot;)
+)
+,
+(
+AND(
+ ISPICKVAL(Status, &quot;Nurturing | Sales Qualified&quot;),
+ISPICKVAL(Qualified_Level__c,&quot;&quot;)
+)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Qualified_Level__c</errorDisplayField>
+    <errorMessage>You need to complete the &#39;Qualified&#39; section</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_no_complete_wo_sign_off</fullName>
+    <active>true</active>
+    <description>Ensures case can&#39;t be completed unless the coordinator has signed off</description>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;Offboarding&quot;
+&amp;&amp;
+ISPICKVAL(Type, &quot;OFFBOARDING_ACTIVE_CUSTOMER&quot;)
+&amp;&amp;
+NOT(CoordinatorSignOff__c)
+&amp;&amp;
+(ISPICKVAL(Status, &quot;Complete&quot;) ||
+ISPICKVAL(Status, &quot;Cancelled&quot;))</errorConditionFormula>
+    <errorMessage>Cases can&#39;t be completed unless the co-ordinator has signed them off</errorMessage>
+</ValidationRule>

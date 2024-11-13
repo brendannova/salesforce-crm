@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_validations_outstanding</fullName>
+    <active>true</active>
+    <description>Prevents editing of this record where the latest change to it is pending validation.</description>
+    <errorConditionFormula>ISPICKVAL(OW_latest_update__r.Validated__c, &quot;&quot;)
+&amp;&amp;
+NOT(ISNEW())
+&amp;&amp;
+NOT(ISCHANGED( OW_stop_internal_change_processing__c ))
+&amp;&amp;
+NOT(ISBLANK(OW_latest_update__c))</errorConditionFormula>
+    <errorMessage>The last client change to this record must be validated before you can edit it directly.</errorMessage>
+</ValidationRule>

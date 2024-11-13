@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_status_start_date_formula__c</fullName>
+    <description>The start date that applies to this status when determining the due date. Only populated for statuses that have an SLA.</description>
+    <formula>CASE( Advice_Status__c,
+&quot;Setup&quot;, DATEVALUE( CreatedDate),
+&quot;Data gathering&quot;, Setup_Complete_Date__c,
+&quot;In fulfilment&quot;, OW_fulfilment_start_date__c,
+null )</formula>
+    <label>Status start date (formula)</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_user_type__c</fullName>
+    <description>Records the type of user, allowing us to factor this into rules and automation around the system. First released so that duplicate rules did not apply to integration users.</description>
+    <label>User type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Human</fullName>
+                <default>true</default>
+                <label>Human</label>
+            </value>
+            <value>
+                <fullName>Integration</fullName>
+                <default>false</default>
+                <label>Integration</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

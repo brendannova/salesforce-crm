@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CannotChangeStatusOnceCancelled</fullName>
+    <active>true</active>
+    <description>Business use: Once advice has been moved to cancelled, cannot amend the status after that
+Tech use: n/a</description>
+    <errorConditionFormula>ISPICKVAL(PRIORVALUE(Advice_Status__c), &quot;Cancelled&quot; )
+&amp;&amp;
+NOT(ISPICKVAL(Advice_Status__c, &quot;Cancelled&quot; ))
+&amp;&amp;
+$User.Username &lt;&gt; &quot;cian@novawm.com&quot;
+&amp;&amp;
+$User.Username &lt;&gt; &quot;donna@novawm.com&quot;</errorConditionFormula>
+    <errorMessage>Once Advice has been cancelled, you cannot amend the status. Please create new advice</errorMessage>
+</ValidationRule>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <description>Business use: Changes portal status to invite expired 24 hour after person was invited. 
+Tech use: Scheduled path to trigger 24 hours after last modified date and portal status is invited. Changes portal status to invite expired.</description>
+    <environments>Default</environments>
+    <interviewLabel>Account | Invite expired {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account | Invite expired</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Portal_Account_Status_Equals_Invite_Expired</name>
+        <label>Portal Account Status Equals Invite Expired</label>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
+        <inputAssignments>
+            <field>PortalAccountStatus__c</field>
+            <value>
+                <stringValue>Invite expired</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PortalAccountStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Invited</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>Move_Portal_Account_Status_to_Invite_Expired</name>
+            <connector>
+                <targetReference>Portal_Account_Status_Equals_Invite_Expired</targetReference>
+            </connector>
+            <label>Move Portal Account Status to Invite Expired</label>
+            <offsetNumber>24</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <timeSource>RecordTriggerEvent</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

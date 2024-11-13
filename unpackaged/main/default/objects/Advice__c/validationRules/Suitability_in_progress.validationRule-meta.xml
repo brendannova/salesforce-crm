@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Suitability_in_progress</fullName>
+    <active>true</active>
+    <description>Cannot go to suitability in progress status until the relevant fields are complete</description>
+    <errorConditionFormula>AND ( 
+ISPICKVAL( Advice_Status__c, &quot; Suitability in progress &quot;) 
+
+, 
+
+OR( 
+NOT( ISPICKVAL( 
+Full_Fact_Find_Status__c, &quot;Complete&quot;)) 
+
+, 
+
+LOA_s_Completed__c = FALSE 
+
+))</errorConditionFormula>
+    <errorMessage>Check Fact find complete or LoAs complete fields</errorMessage>
+</ValidationRule>

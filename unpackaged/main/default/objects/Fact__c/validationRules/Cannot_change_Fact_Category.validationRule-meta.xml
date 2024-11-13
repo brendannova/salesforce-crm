@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_change_Fact_Category</fullName>
+    <active>true</active>
+    <description>Cannot change Fact Category once created</description>
+    <errorConditionFormula>AND(
+NOT(ISNEW()),
+ISCHANGED(FactCategory__c))</errorConditionFormula>
+    <errorMessage>Cannot amend Fact Category on Fact</errorMessage>
+</ValidationRule>

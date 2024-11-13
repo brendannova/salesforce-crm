@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <description>Given an audit response record, this component will display a list of the before and after values.</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Audit Detail CheerIO</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="objectApiName" role="inputOnly" type="String" label="Object API name" description="The developer name of the object's audit history being viewed"/>
+            <property name="selectedAuditRow" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_AuditHistoryOverviewEntry" label="Audit Row Chosen" description="An audit entry selected by the user"/>
+            <property name="auditRecordResponseAccount" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_AccountAuditRecordResponse" label="Account audit record" description="The account audit record that contains the before and after states as well as fields changed"/>
+            <property name="auditRecordResponseAsset" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_AssetAuditRecordResponse" label="Asset audit record" description="The asset audit record that contains the before and after states as well as fields changed"/>
+            <property name="auditRecordResponseIncome" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_IncomeAuditRecordResponse" label="Income audit record" description="The income audit record that contains the before and after states as well as fields changed"/>
+            <property name="auditRecordResponseRole" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_RoleAuditRecordResponse" label="Role audit record" description="The role audit record that contains the before and after states as well as fields changed"/>
+            <property name="auditRecordResponseLiability" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_LiabilityAuditRecordResponse" label="Liability audit record" description="The liability record that contains the before and after states as well as fields changed"/>
+            <property name="auditRecordResponseFinancialProduct" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_FinancialProductAuditRecordResponse" label="Financial Product audit record" description="The financial product record that contains the before and after states as well as fields changed"/>
+
+            <!---
+                <property name="auditRecordResponseAssetRole" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_AssetRoleAuditRecordResponse" label="Asset role audit record" description="The asset audit record that contains the before and after states as well as fields changed"/>
+                <property name="auditRecordResponseAssetIncome" role="inputOnly" type="apex://ExternalService.NovaServiceAuditHistory_AssetIncomeAuditRecordResponse" label="Asset income audit record" description="The asset audit record that contains the before and after states as well as fields changed"/>
+            -->
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

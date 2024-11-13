@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FrequencyRequired</fullName>
+    <active>true</active>
+    <description>Ensures that if spending figures are</description>
+    <errorConditionFormula>NOT(ISCHANGED( Stop_Internal_User_Update__c ))
+&amp;&amp;
+NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;))
+&amp;&amp;
+RecordType.DeveloperName = &#39;IndustriesHousehold&#39;
+&amp;&amp;
+(
+(NOT(ISBLANK( Cash__c )) &amp;&amp; ISPICKVAL( Cash_Frequency__c, &quot;&quot; ))
+||
+(NOT(ISBLANK( ISAs__c )) &amp;&amp; ISPICKVAL( ISAs_Frequency__c, &quot;&quot; ))
+||
+(NOT(ISBLANK( Pensions__c )) &amp;&amp; ISPICKVAL( Pensions_Frequency__c, &quot;&quot; ))
+||
+(NOT(ISBLANK( Other_Investments__c )) &amp;&amp; ISPICKVAL( Other_Investments_Frequency__c, &quot;&quot; ))
+||
+(NOT(ISBLANK( Rent__c )) &amp;&amp; ISPICKVAL( Rent_Frequency__c, &quot;&quot; ))
+||
+(NOT(ISBLANK( OW_essential_spending__c )) &amp;&amp; ISPICKVAL(OW_essential_spending_frequency__c, &quot;&quot; ))
+||
+(NOT(ISBLANK( OW_non_essential_spending__c )) &amp;&amp; ISPICKVAL( OW_non_essential_spending_frequency__c, &quot;&quot; ))
+)</errorConditionFormula>
+    <errorMessage>If specifying spending/savings figures, you must also include a frequency.</errorMessage>
+</ValidationRule>

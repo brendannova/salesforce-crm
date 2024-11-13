@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AwaitDecisionDiscoRequired</fullName>
+    <active>true</active>
+    <description>Ensures that if the opportunity is in a status of await decision, a discovery meeting date/time must have been recorded.</description>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;Advice_Opportunity&quot;
+&amp;&amp;
+ISPICKVAL(StageName, &quot;Await Decision&quot;)
+&amp;&amp;
+ISBLANK(Discovery_Meeting_Date_Time__c)</errorConditionFormula>
+    <errorMessage>A disco needs to be recorded before you can move to await decision.</errorMessage>
+</ValidationRule>

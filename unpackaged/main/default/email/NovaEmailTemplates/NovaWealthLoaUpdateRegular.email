@@ -1,0 +1,171 @@
+<messaging:emailTemplate subject="NOVA Wealth - Where we've got to" recipientType="Contact" relatedToType="Advice__c">
+    <messaging:htmlEmailBody >
+        <style type="text/css">
+            .primary-button:hover {
+              background: #FFFFFF !important;
+              border-color: #0E1E0F !important;
+              color: #0E1E0F !important;
+            }
+            .secondary-button:hover {
+              background-color: #0E1E0F !important;
+              color: #FFFFFF !important;
+              border: 2px solid #0E1E0F!important;
+            }
+            @media screen and (min-width:600px) {
+              h1 {
+                font-size: 48px !important;
+                line-height: 48px !important;
+              }
+
+              .intro {
+                font-size: 24px !important;
+                line-height: 36px !important;
+              }
+            }
+            @media screen and (max-width: 680px) {
+              .stack-column,
+            .stack-column-center {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                direction: ltr !important;
+              }
+
+              .stack-column-center {
+                text-align: center !important;
+              }
+
+              .hide-on-mobile {
+                display: none !important;
+                max-height: 0 !important;
+                overflow: hidden !important;
+                visibility: hidden !important;
+              }
+
+              .sm-p-none {
+                padding: 0 !important;
+              }
+
+              .sm-pt-none {
+                padding-top: 0 !important;
+              }
+
+              .sm-pb-none {
+                padding-bottom: 0 !important;
+              }
+
+              .sm-pr-none {
+                padding-right: 0 !important;
+              }
+
+              .sm-pl-none {
+                padding-left: 0 !important;
+              }
+
+              .sm-px-none {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+              }
+
+              .sm-py-none {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+              }
+
+              .sm-p {
+                padding: 20px !important;
+              }
+
+              .sm-pt {
+                padding-top: 20px !important;
+              }
+
+              .sm-pb {
+                padding-bottom: 20px !important;
+              }
+
+              .sm-pr {
+                padding-right: 20px !important;
+              }
+
+              .sm-pl {
+                padding-left: 20px !important;
+              }
+
+              .sm-px {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+              }
+
+              .sm-py {
+                padding-top: 20px !important;
+                padding-bottom: 20px !important;
+              }
+
+              .sm-mb {
+                margin-bottom: 20px !important;
+              }
+
+              .bar,
+            .btr,
+            .bbr {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+              }
+            }
+        </style>
+            
+        
+        <body style="mso-line-height-rule: exactly; height: 100%; margin: 0; padding: 0; width: 100%;">
+            <div id="app" role="article" aria-label="An email from NOVA Wealth" lang="en" style="background-color: #1d1d1b; background-color: #FFFFFF; color: #0E1E0F; font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 18px; font-weight: 400; line-height: 28px; margin: 0 auto; max-width: 720px; padding: 40px 20px 40px 20px;">
+                <header>
+                    <a href="https://novawm.com/" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #FF1E7E; font-weight: 600; text-decoration: underline;">
+                        <center>
+                            <img src="https://bucketeer-ff170b78-efdb-46a7-9a03-a5b7fa0f4bd8.s3.eu-west-1.amazonaws.com/NOVA_3_512x512_1_copy_053a75a433.png" alt="NOVA Wealth" width="200" />
+                        </center>
+                    </a>
+                </header>
+              
+                <main style="font-size: 18px;">
+                    <p><c:EmailHiString objectIdValue="{!relatedTo.Id}" emailTemplateDevNameValue="NovaWealthLoaUpdateRegular"></c:EmailHiString></p>
+            
+                    <h3 style="color: #FF1E7E;">We're making progress</h3>
+                    
+                    <p>As you know, we're currently in the process of gathering the information we need from your providers. We need this in order to build the full version of your Lifeline and personalised financial plan.</p>
+                    
+                    <p>Please see below for the latest update on each of your products. If you see any orange, please double-check as we may need some help from you.</p>
+                    
+                    <p>There may be a few products you have told us about that are not listed below. We will be collecting information on these from you directly nearer to your next meeting. </p>
+                    
+                    <p><c:EmailLoaUpdateTable adviceidvalue="{!relatedTo.Id}"></c:EmailLoaUpdateTable></p>
+                    
+                    <p>It can take some time for third parties to provide information (often this will be in the region of 10-12 weeks), but we are doing everything we can to speed things up, and we'll continue to keep you updated on our progress.</p>
+                    
+                    <p>Once we have received information back from a provider, it can still take several weeks before we can progress to your next meeting with us, depending on data quality, how many follow up queries we have and the provider's turnaround times. If you have any questions or require further detail on what stage we have reached in collecting information for you, please reach out to your NOVA Wealth Partner.</p>
+                
+                    <p>If you have any questions, please do get in touch.</p>
+                
+                                
+                    <p>Many thanks</p>
+                    <p>The NOVA Wealth Team</p>
+                    
+                </main>
+              
+                <footer style="color: #99a099; border-top: 1px solid #c0c5c1;">
+                    <p class="small-text" style="font-size: 12px; margin-top: 0; margin-bottom: 2px;">If you wish to unsubscribe from these updates, please reply to this email to let us know.</p>
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
+                            <a border="0" href="https://www.facebook.com/novawm.uk/" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #FF1E7E; font-weight: 600; margin-right: 16px; text-decoration: none;">
+                                <img class="social" alt="facebook" src="https://bucketeer-ff170b78-efdb-46a7-9a03-a5b7fa0f4bd8.s3.eu-west-1.amazonaws.com/social_facebook_89c79a9dad.png" style="-ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; width: 24px;" width="24"></img>
+                            </a>
+                            <a href="https://www.linkedin.com/company/nova-wealth-uk/" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #FF1E7E; font-weight: 600; margin-right: 16px; text-decoration: none;">
+                                <img class="social" alt="linkedin" src="https://bucketeer-ff170b78-efdb-46a7-9a03-a5b7fa0f4bd8.s3.eu-west-1.amazonaws.com/social_linkedin_d7d382ff3f.png" style="-ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; width: 24px;" width="24"></img>
+                            </a>
+                        </table>
+                    <p class="small-text" style="font-size: 12px; margin-top: 0; margin-bottom: 2px;">NOVA is a trading name of NOVA Wealth Ltd, which is authorised and regulated by the Financial Conduct Authority (FRN: 778951) and is a limited company registered in England &amp; Wales (10739796) at 20 Farringdon Street, London, EC4A 4AB.</p>
+                </footer>
+            </div>
+        </body>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

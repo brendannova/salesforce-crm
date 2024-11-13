@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SuitabilityMeetingDate__c</fullName>
+    <description>The date this recommendation was presented</description>
+    <formula>DATEVALUE(Recommendation__r.Advice__r.Suitability_meeting_date_time__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Suitability meeting date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

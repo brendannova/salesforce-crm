@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FeeReceivedDetailsMustBeCompleted</fullName>
+    <active>true</active>
+    <description>Ensures details of fee receipt are complete before the task can be completed</description>
+    <errorConditionFormula>(OW_task_information_name__c = &quot;ensure_ongoing_fee_applied&quot; ||
+OW_task_information_name__c = &quot;ensure_initial_fee_applied&quot;)
+&amp;&amp;
+ISBLANK( RelatedFee__r.DateFeeReceived__c  )
+&amp;&amp;
+NOT(ISBLANK(RelatedFee__c))
+&amp;&amp;
+ISPICKVAL(Status, &quot;Completed&quot;)</errorConditionFormula>
+    <errorMessage>Please complete fee details</errorMessage>
+</ValidationRule>

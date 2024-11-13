@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deletion</fullName>
+    <active>false</active>
+    <description>You cannot validate this record, it has been deleted by the client. You can only park it as Confirm Deletion or Rejected, if you think the deletion was made by the client in error.</description>
+    <errorConditionFormula>AND(
+ISPICKVAL( Deleted_By__c , &quot;Deleted by Client&quot;),
+ISPICKVAL(Validated__c, &quot;Validated&quot;)
+)</errorConditionFormula>
+    <errorMessage>You cannot validate this record, it has been deleted by the client. You can only park it as Confirm Deletion or Rejected, if you think the deletion was made by the client in error.</errorMessage>
+</ValidationRule>

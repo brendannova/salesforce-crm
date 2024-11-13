@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AssistantPartnerTasks</fullName>
+    <columns>SUBJECT</columns>
+    <columns>FinServ__Household__c</columns>
+    <columns>WHO_NAME</columns>
+    <columns>WHAT_NAME</columns>
+    <columns>DUE_DATE</columns>
+    <columns>PRIORITY</columns>
+    <columns>STATUS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CORE.USERS.FULL_NAME</field>
+        <operation>equals</operation>
+        <value>Clare Ferguson</value>
+    </filters>
+    <filters>
+        <field>IS_CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>Associate partner tasks</label>
+    <sharedTo>
+        <group>OW_planners</group>
+        <role>Head_of_Partners</role>
+    </sharedTo>
+</ListView>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <assignments>
+        <description>Adds the current RTQ assessment to the update variable.</description>
+        <name>Add_RTQ_assessment_to_update_variable</name>
+        <label>Add RTQ assessment to update variable</label>
+        <locationX>264</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>RTQ_assessments_to_update</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_rtq_assessments</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_rtq_assessments</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Sets the RTQ assessment record to expired.</description>
+        <name>Set_to_expired</name>
+        <label>Set to expired</label>
+        <locationX>264</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_rtq_assessments.OW_status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Expired</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_RTQ_assessment_to_update_variable</targetReference>
+        </connector>
+    </assignments>
+    <description>Launched when an RTQ assessment is activated by a process, this expires all previous RTQ assessments.</description>
+    <interviewLabel>RTQ assessment activated {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTQ assessment - expire superseded records</label>
+    <loops>
+        <description>Loop through the active RTQ assessments returned by the earlier query. These will be inactivated within the loop.</description>
+        <name>Loop_rtq_assessments</name>
+        <label>Loop through the active RTQ assessments</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <collectionReference>Get_active_rtq_assessments</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Set_to_expired</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_expired_rtq_assessments</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get all other RTQ assessments that are active except the one that launched this flow and mark them as inactive.</description>
+        <name>Get_active_rtq_assessments</name>
+        <label>Get active RTQ assessments</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_rtq_assessments</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>rtq_assessment_id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>OW_rtq_assessment__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>OW_status__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Commit the status updates</description>
+        <name>Update_expired_rtq_assessments</name>
+        <label>Update expired RTQ assessments</label>
+        <locationX>176</locationX>
+        <locationY>734</locationY>
+        <inputReference>RTQ_assessments_to_update</inputReference>
+    </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_active_rtq_assessments</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Stores the ID of the RTQ assessment that has been activated.</description>
+        <name>rtq_assessment_id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>A collection variable of the RTQ assessments that need updating (to expired)</description>
+        <name>RTQ_assessments_to_update</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OW_rtq_assessment__c</objectType>
+    </variables>
+</Flow>

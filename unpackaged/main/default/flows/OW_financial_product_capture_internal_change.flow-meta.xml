@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Clear_hideFromProfile</name>
+        <label>Clear hideFromProfile</label>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>hideFromProfile</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_FF_FP_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Clear_hideFromProfile_no_reason</name>
+        <label>Clear hideFromProfile</label>
+        <locationX>1106</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>hideFromProfile</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_FF_FP_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_hideFromProfile_deleted_by_client</name>
+        <label>Set hideFromProfile</label>
+        <locationX>842</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>hideFromProfile</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Deleted by Client</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_FF_FP_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_hideFromProfile_fp_status</name>
+        <label>Set hideFromProfile</label>
+        <locationX>578</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>hideFromProfile</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Financial product status</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_FF_FP_record</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_hideFromProfile_OW_product</name>
+        <label>Set hideFromProfile</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>hideFromProfile</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Octopus product</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_FF_FP_record</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Display_in_profile</name>
+        <label>Display in profile?</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Clear_hideFromProfile_no_reason</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes - no reason to hide</defaultConnectorLabel>
+        <rules>
+            <name>No_Octopus_product</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Public_Provider_Name__r.OW_group_company__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Public_Provider_Name__r.OW_own_company__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_hideFromProfile_OW_product</targetReference>
+            </connector>
+            <label>No - Octopus product</label>
+        </rules>
+        <rules>
+            <name>Yes_due_to_status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Open</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_hideFromProfile</targetReference>
+            </connector>
+            <label>Yes - due to status</label>
+        </rules>
+        <rules>
+            <name>No_hide_due_to_status</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending Fulfilment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not Taken Up</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Duplicate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled by client</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lapsed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Matured</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Paid up</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Replaced</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sold</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Surrendered</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Transferred</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_hideFromProfile_fp_status</targetReference>
+            </connector>
+            <label>No - hide due to status</label>
+        </rules>
+        <rules>
+            <name>No_deleted_by_client</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.FinServ__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deleted by client</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_hideFromProfile_deleted_by_client</targetReference>
+            </connector>
+            <label>No - deleted by client</label>
+        </rules>
+    </decisions>
+    <description>This flow will run whenever criteria defined within it are met to capture a record of the changes made by an internal user.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ffSessionObject</name>
+        <dataType>String</dataType>
+        <expression>&quot;Financial Product | &quot; &amp; {!$Record.Name}</expression>
+    </formulas>
+    <formulas>
+        <description>This maps the FP record type to the FF record type. Mappings can be found here: 
+
+https://docs.google.com/spreadsheets/d/1Y2isIoUdguRfb1vbs-XcgdSvZGQkj-edfHRbp8fJUQA/edit#gid=0</description>
+        <name>FPrecordTypeID_to_FFrecordTypeID_Mapping</name>
+        <dataType>String</dataType>
+        <expression>CASE( {!$Record.RecordType.DeveloperName},
+&quot;FP_Annuity&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Accident_Sickness_Unemployment&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;FP_AVC&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_BPR&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_BPR_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;FP_Cash_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;FP_Current_Account&quot;,&quot;0124J000000xsyFQAQ&quot;,
+&quot;FP_Defined_Benefit_Pension&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Direct_equity_holding&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_Direct_Gilt_bond_holding&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_EIS&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_Endowment&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_Fixed_Term_Deposit&quot;,&quot;0124J000000xsyFQAQ&quot;,
+&quot;FP_General_Investment_Account_GIA&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_Group_Personal_Pension_GPP&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Income_Protection&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;Junior_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;FP_Life_Cover_CIC_Term&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;FP_Life_Cover_Term&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;FP_Whole_of_Life_Critical_Illness_Cover&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;FP_Life_Cover_Whole_of_Life&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;FP_Occupational_Company_Pension_Scheme&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Offshore_Bond&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;Offset_Mortgage_Cash_Account&quot;,&quot;0124J000000xsyFQAQ&quot;,
+&quot;FP_Onshore_Bond&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_Peer_Peer_Innovative_finance&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;Peer_Peer_Innovative_finance_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;FP_Personal_Pension_PP&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Pre_LOA_Defined_Benefit_Pension&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Pre_LOA_Investment&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_Pre_LOA_Protection&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;Pre_LOA_Defined_Contribution_Pension&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;Pre_LOA_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;FP_Private_Medical&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;FP_Retirement_Annuity_Contract_RAC&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_SASS&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;SavingsAccount&quot;,&quot;0124J000000xsyFQAQ&quot;,
+&quot;FP_Scheme_Pension&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Section_32&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_SEIS&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_SIPP&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Stakeholder_Pension&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;FP_Stocks_Shares_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;FP_Structured_Product&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_Structured_Product_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;Trust&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_VCT&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;FP_VCT_ISA&quot;,&quot;0124J00000049y0QAA&quot;,
+&quot;FP_Direct_Gilt_bond_holding&quot;,&quot;0124J000000xsyUQAQ&quot;,
+&quot;Family_Income_Benefit&quot;,&quot;0124J0000004AjdQAE&quot;,
+&quot;Premium_Bond&quot;,&quot;0124J000000xsyFQAQ&quot;,
+&quot;Junior_SIPP&quot;,&quot;0124J000000xsyPQAQ&quot;,
+&quot;RelevantLifeCover&quot;,&quot;0124J0000004AjdQAE&quot;,
+NULL)</expression>
+    </formulas>
+    <formulas>
+        <name>matchID</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.match_id__c}),
+{!$Record.Id},
+{!$Record.match_id__c})</expression>
+    </formulas>
+    <interviewLabel>Financial product | capture internal change {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Financial product | capture internal change</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_FF_FP_record</name>
+        <label>Create FF FP record</label>
+        <locationX>578</locationX>
+        <locationY>731</locationY>
+        <inputAssignments>
+            <field>Account_Number__c</field>
+            <value>
+                <elementReference>$Record.FinServ__FinancialAccountNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Company_Name__c</field>
+            <value>
+                <elementReference>$Record.Company_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Deleted_By__c</field>
+            <value>
+                <elementReference>hideFromProfile</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Display_Type__c</field>
+            <value>
+                <elementReference>$Record.Subtype__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Expected_Annual_Income_on_Retirement__c</field>
+            <value>
+                <elementReference>$Record.Expected_Annual_Income_on_Retirement__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FF_Session__c</field>
+            <value>
+                <elementReference>ffSessionId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Financial_Product__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Fixed_Term_End_Date__c</field>
+            <value>
+                <elementReference>$Record.Fixed_Term_End_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Fixed_term__c</field>
+            <value>
+                <elementReference>$Record.fixed_term__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Household__c</field>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Income_on_Retirement_Frequency__c</field>
+            <value>
+                <elementReference>$Record.Income_of_Retirement_Frequency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interest_Rate__c</field>
+            <value>
+                <elementReference>$Record.FinServ__InterestRate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Joint_Owner__c</field>
+            <value>
+                <elementReference>$Record.FinServ__JointOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Match_id__c</field>
+            <value>
+                <elementReference>matchID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>$Record.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>$Record.Pre_LOA_notes__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notice_Period_Duration_Days__c</field>
+            <value>
+                <elementReference>$Record.Notice_Period_Duration_Days__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notice_Period__c</field>
+            <value>
+                <elementReference>$Record.Notice_Period__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_is_pension_employment__c</field>
+            <value>
+                <elementReference>$Record.OW_is_pension_employment__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OW_pension_employment__c</field>
+            <value>
+                <elementReference>$Record.OW_employment__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Primary_Owner__c</field>
+            <value>
+                <elementReference>$Record.FinServ__PrimaryOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Public_Provider_Name__c</field>
+            <value>
+                <elementReference>$Record.Public_Provider_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>FPrecordTypeID_to_FFrecordTypeID_Mapping</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <elementReference>$Record.FinServ__Status__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Validated__c</field>
+            <value>
+                <stringValue>Validated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Value__c</field>
+            <value>
+                <elementReference>$Record.FP_Value__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Work_Benefit_2__c</field>
+            <value>
+                <elementReference>$Record.Work_Benefit_2__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>FF_Financial_Product__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>452</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_session</targetReference>
+        </connector>
+        <filterFormula>(ISNEW() &amp;&amp; {!$Record.OW_stop_internal_change_processing__c} = 1)
+||
+(NOT(ISNEW()) &amp;&amp; NOT(ISCHANGED({!$Record.OW_stop_internal_change_processing__c})))</filterFormula>
+        <object>FinServ__FinancialAccount__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Create_session</name>
+        <label>Create session</label>
+        <locationX>578</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Display_in_profile</targetReference>
+        </connector>
+        <flowName>OW_ff_session_create</flowName>
+        <inputAssignments>
+            <name>ffSessionObject</name>
+            <value>
+                <elementReference>ffSessionObject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ffSessionType</name>
+            <value>
+                <stringValue>Internal_User_Update</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>ffSessionId</assignToReference>
+            <name>ffSessionId</name>
+        </outputAssignments>
+    </subflows>
+    <triggerOrder>500</triggerOrder>
+    <variables>
+        <name>ffSessionId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>If populated, the employment record will be hidden from the customer&#39;s profile. The value will be the reason why.</description>
+        <name>hideFromProfile</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

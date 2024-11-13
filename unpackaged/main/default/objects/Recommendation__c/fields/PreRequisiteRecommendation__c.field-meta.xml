@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreRequisiteRecommendation__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is the recommendation which must be completed before this one can be done</description>
+    <label>Pre-requisite recommendation destination</label>
+    <referenceTo>Recommendation__c</referenceTo>
+    <relationshipLabel>Recommendation</relationshipLabel>
+    <relationshipName>Recommendation</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

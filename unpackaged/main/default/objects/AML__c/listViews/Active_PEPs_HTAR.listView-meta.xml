@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_PEPs_HTAR</fullName>
+    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7</booleanFilter>
+    <columns>NAME</columns>
+    <columns>Country_of_Residence__c</columns>
+    <columns>Nationality_HTAR_MatrixRisk_Level__c</columns>
+    <columns>Dual_Nationality_HTAR_Risk_Level__c</columns>
+    <columns>Reason_for_PEP__c</columns>
+    <columns>Date_Registered_as_PEP__c</columns>
+    <columns>Reason_for_Approval__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Active_PEP__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>Country_of_Residence__c</field>
+        <operation>contains</operation>
+        <value>Medium</value>
+    </filters>
+    <filters>
+        <field>Country_of_Residence__c</field>
+        <operation>contains</operation>
+        <value>High</value>
+    </filters>
+    <filters>
+        <field>Dual_Nationality_HTAR_Risk_Level__c</field>
+        <operation>contains</operation>
+        <value>Medium</value>
+    </filters>
+    <filters>
+        <field>Dual_Nationality_HTAR_Risk_Level__c</field>
+        <operation>contains</operation>
+        <value>High</value>
+    </filters>
+    <filters>
+        <field>Nationality_HTAR_MatrixRisk_Level__c</field>
+        <operation>contains</operation>
+        <value>Medium</value>
+    </filters>
+    <filters>
+        <field>Nationality_HTAR_MatrixRisk_Level__c</field>
+        <operation>contains</operation>
+        <value>High</value>
+    </filters>
+    <label>Active PEPs &amp; HTAR</label>
+</ListView>

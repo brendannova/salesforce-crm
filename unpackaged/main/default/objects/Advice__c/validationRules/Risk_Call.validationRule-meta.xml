@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Risk_Call</fullName>
+    <active>true</active>
+    <description>Validations required to move to Risk Call</description>
+    <errorConditionFormula>AND( 
+Ready_for_Partner_call__c = false,
+OR(
+ISPICKVAL(Advice_Status__c, &quot;Risk Call&quot;),
+ISPICKVAL(Advice_Status__c, &quot;Ready for suitability&quot;)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Ready_for_Partner_call__c</errorDisplayField>
+    <errorMessage>You must complete the Outstanding information section before proceeding to risk call</errorMessage>
+</ValidationRule>

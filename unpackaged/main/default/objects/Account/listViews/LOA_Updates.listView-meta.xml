@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LOA_Updates</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>LOAs_Outstanding__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Account.FinServ__IndustriesHousehold</value>
+    </filters>
+    <filters>
+        <field>LOAs_Outstanding__c</field>
+        <operation>greaterThan</operation>
+        <value>0</value>
+    </filters>
+    <label>LOA Updates</label>
+    <sharedTo>
+        <role>Planner</role>
+    </sharedTo>
+</ListView>

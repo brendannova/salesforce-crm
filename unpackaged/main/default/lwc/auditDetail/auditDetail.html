@@ -1,0 +1,17 @@
+<template>
+    <lightning-card>
+        <template if:false={objectDataLoaded}>
+            <div class="slds-m-around_medium">
+                <img src="https://media.tenor.com/dDZAejq7_jQAAAAC/typing-cat.gif">
+            </div>
+        </template>
+        <template if:true={objectDataLoaded}>
+            <lightning-datatable data={auditDetailDisplay} 
+                columns={fieldColumns} 
+                key-field="id"
+                hide-checkbox-column
+                column-widths-mode="auto">
+            </lightning-datatable>
+        </template>
+    </lightning-card>
+</template>

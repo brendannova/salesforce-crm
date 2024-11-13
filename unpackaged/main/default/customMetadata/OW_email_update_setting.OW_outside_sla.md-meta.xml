@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>LOA - Outside SLA</label>
+    <protected>false</protected>
+    <values>
+        <field>OW_action__c</field>
+        <value xsi:type="xsd:string">Include</value>
+    </values>
+    <values>
+        <field>OW_display_status__c</field>
+        <value xsi:type="xsd:string">Off track</value>
+    </values>
+    <values>
+        <field>OW_email_type__c</field>
+        <value xsi:type="xsd:string">LOA</value>
+    </values>
+    <values>
+        <field>OW_message__c</field>
+        <value xsi:type="xsd:string">{provider} said that we were due to receive information by {erd} however, we have not received this. We will continue to chase, and if necessary, make a complaint on your behalf.</value>
+    </values>
+    <values>
+        <field>OW_record_status__c</field>
+        <value xsi:type="xsd:string">Outside SLA</value>
+    </values>
+    <values>
+        <field>SubStatus__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_time_fulfilment__c</fullName>
+    <description>The number of days that this advice was in a status of in fulfilment. Prior to having a status of data gathering, this field will be blank, will then act like a counter while in the status, before settling on a final value when the advice moves out of this status.</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK(Fulfilment_Complete_Date__c), 
+(5 * ( FLOOR( ( TODAY() - DATE( 1900, 1, 8)) / 7 )) + MIN( 5, MOD( TODAY() - DATE( 1900, 1, 8), 7 )))
+-
+(5 * ( FLOOR( ( Meeting_Held_Date__c - DATE( 1900, 1, 8)) / 7 )) + MIN( 5, MOD( Meeting_Held_Date__c - DATE( 1900, 1, 8), 7 ))), 
+
+(5 * ( FLOOR( ( Fulfilment_Complete_Date__c - DATE( 1900, 1, 8)) / 7 )) + MIN( 5, MOD( Fulfilment_Complete_Date__c - DATE( 1900, 1, 8), 7 )))
+-
+(5 * ( FLOOR( ( Meeting_Held_Date__c - DATE( 1900, 1, 8)) / 7 )) + MIN( 5, MOD( Meeting_Held_Date__c - DATE( 1900, 1, 8), 7 )))
+)</formula>
+    <label>Days in fulfilment</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

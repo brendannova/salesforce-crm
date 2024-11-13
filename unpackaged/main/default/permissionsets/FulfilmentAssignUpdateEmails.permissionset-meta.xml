@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to provide access to the assign emails flow</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Fulfilment | Assign update emails</label>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>CanAssignUpdateEmails</name>
+    </customPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advice__c.AdviceLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advice__c.ExcludedUpdateNotes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advice__c.ExcludedUpdateReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ServiceLevelAgreement__c.Fulfilment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <tabSettings>
+        <tab>FulfilmentUpdates</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

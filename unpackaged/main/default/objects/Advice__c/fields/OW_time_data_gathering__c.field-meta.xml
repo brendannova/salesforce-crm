@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_time_data_gathering__c</fullName>
+    <description>The number of days that this advice was in a status of data gathering. Prior to having a status of data gathering, this field will be blank, will then act like a counter while in the status, before settling on a final value when the advice moves out of this status.</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK(Data_Gathering_Complete_Date__c), 
+(5 * ( FLOOR( ( TODAY() - DATE( 1900, 1, 8)) / 7 )) + MIN( 5, MOD( TODAY() - DATE( 1900, 1, 8), 7 )))
+-
+(5 * ( FLOOR( ( Setup_Complete_Date__c - DATE( 1900, 1, 8) ) / 7 ) ) + MIN( 5, MOD( Setup_Complete_Date__c - DATE( 1900, 1, 8), 7 ))), 
+
+(5 * ( FLOOR( ( Data_Gathering_Complete_Date__c - DATE( 1900, 1, 8) ) / 7 )) + MIN( 5, MOD( Data_Gathering_Complete_Date__c - DATE( 1900, 1, 8), 7 )))
+-
+(5 * ( FLOOR( ( Setup_Complete_Date__c - DATE( 1900, 1, 8)) / 7 )) + MIN( 5, MOD( Setup_Complete_Date__c - DATE( 1900, 1, 8), 7 ))) 
+)</formula>
+    <label>Days in data gathering</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

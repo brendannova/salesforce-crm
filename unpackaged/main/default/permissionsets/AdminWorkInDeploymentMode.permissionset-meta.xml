@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allows the user to work in deployment mode, whereas for all other users most work will be prevented. This allows admins to do things like perform data updates and smoke testing while operations are prevented for most users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Admin | Work In Deployment Mode</label>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>AdminWorkInDeploymentMode</name>
+    </customPermissions>
+</PermissionSet>

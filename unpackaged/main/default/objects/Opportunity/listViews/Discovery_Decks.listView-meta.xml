@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discovery_Decks</fullName>
+    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Discovery_Meeting_Date_Time__c</columns>
+    <columns>Discovery_Deck_Planner__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Discovery_Deck_Status__c</field>
+        <operation>notEqual</operation>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Rescheduling</value>
+    </filters>
+    <filters>
+        <field>Discovery_Meeting_Date_Time__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>TODAY</value>
+    </filters>
+    <label>Discovery Decks (ALL)</label>
+    <sharedTo>
+        <role>Planner</role>
+    </sharedTo>
+</ListView>

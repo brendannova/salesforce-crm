@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_fact_find_must_be_complete</fullName>
+    <active>true</active>
+    <description>This rule ensures that a fact find with a complete date is left in a review fact find status of complete.</description>
+    <errorConditionFormula>NOT( ISPICKVAL( OW_review_fact_find_status__c, &quot;Complete&quot; ) )
+
+&amp;&amp; 
+
+ISCHANGED( OW_review_fact_find_status__c )
+
+&amp;&amp; 
+
+NOT( ISBLANK( OW_completed_by_client__c ) )</errorConditionFormula>
+    <errorDisplayField>OW_review_fact_find_status__c</errorDisplayField>
+    <errorMessage>This fact find has been completed by the customer so the review fact find status cannot be changed.</errorMessage>
+</ValidationRule>

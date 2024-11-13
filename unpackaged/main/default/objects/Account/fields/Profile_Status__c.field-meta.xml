@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Profile_Status__c</fullName>
+    <label>Profile Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Update Required</fullName>
+                <default>true</default>
+                <label>Update Required</label>
+            </value>
+            <value>
+                <fullName>Sent to Client(s)</fullName>
+                <default>false</default>
+                <label>Sent to Client(s)</label>
+            </value>
+            <value>
+                <fullName>Updated by Client (Validations Outstanding)</fullName>
+                <default>false</default>
+                <label>Updated by Client (Validations Outstanding)</label>
+            </value>
+            <value>
+                <fullName>Completed by Client (Validations Outstanding)</fullName>
+                <default>false</default>
+                <label>Completed by Client (Validations Outstanding)</label>
+            </value>
+            <value>
+                <fullName>Up-to-date</fullName>
+                <default>false</default>
+                <label>Up-to-date</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

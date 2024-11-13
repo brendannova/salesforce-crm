@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PhoneCannotBeMobile</fullName>
+    <active>true</active>
+    <description>If phone begins with +44, it cannot begin with +447 because that is a mobile number. This only applies where we do not already have a mobile number. If there is already a mobile number, we can accept a second one in the phone field.</description>
+    <errorConditionFormula>NOT(ISPICKVAL( $User.OW_user_type__c , &quot;Integration&quot;)) &amp;&amp;
+IsPersonAccount &amp;&amp;
+NOT(ISBLANK(PersonMobilePhone)) &amp;&amp;
+NOT(ISBLANK(Phone)) &amp;&amp;
+PersonMobilePhone = Phone</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>Phone cannot be the same as the mobile.</errorMessage>
+</ValidationRule>

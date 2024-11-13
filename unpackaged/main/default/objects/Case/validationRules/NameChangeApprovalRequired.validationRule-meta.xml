@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NameChangeApprovalRequired</fullName>
+    <active>true</active>
+    <description>Ensures that approval is received before completing a name change case.</description>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;PersonalInformationChange&quot;
+&amp;&amp;
+ISPICKVAL(Type, &quot;Name change&quot;)
+&amp;&amp;
+ISPICKVAL(Status, &quot;Complete&quot;)
+&amp;&amp;
+NOT(ISPICKVAL( ChangeApprovalStatus__c, &quot;Approved&quot;))</errorConditionFormula>
+    <errorMessage>Approval required before this case can be completed.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scope_Signed_Opportunity__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is only used in the process for terms of business being signed and the discovery meeting being listened to. When terms are signed, I need a way of telling if the discovery meeting has already been listened to. If it has, this field will contain the Opportunity ID.</description>
+    <label>Scope Signed Opportunity</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Scope Signed Opportunity on Account</relationshipLabel>
+    <relationshipName>Accounts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

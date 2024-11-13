@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ExcludedUpdateReason__c</fullName>
+    <description>Allows operations to indicate why this advice shouldn&#39;t be receiving updates</description>
+    <label>Excluded update reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client no longer wants to receive updates</fullName>
+                <default>false</default>
+                <label>Client no longer wants to receive updates</label>
+            </value>
+            <value>
+                <fullName>Client circumstances</fullName>
+                <default>false</default>
+                <label>Client circumstances</label>
+            </value>
+            <value>
+                <fullName>Fulfilment is on hold</fullName>
+                <default>false</default>
+                <label>Fulfilment is on hold</label>
+            </value>
+            <value>
+                <fullName>Long term ongoing transfer</fullName>
+                <default>false</default>
+                <label>Long term ongoing transfer</label>
+            </value>
+            <value>
+                <fullName>Non-standard fulfilment only</fullName>
+                <default>false</default>
+                <label>Non-standard fulfilment only</label>
+            </value>
+            <value>
+                <fullName>Withdrawals only</fullName>
+                <default>false</default>
+                <label>Withdrawals only</label>
+            </value>
+            <value>
+                <fullName>Protection only</fullName>
+                <default>false</default>
+                <label>Protection only</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

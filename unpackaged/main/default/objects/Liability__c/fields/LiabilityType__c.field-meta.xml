@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LiabilityType__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Used to record the type of liability, related liability types dictate the fields available on the liability. 
+Available for input in portal and salesfore</description>
+    <label>Liability type</label>
+    <referenceTo>LiabilityType__c</referenceTo>
+    <relationshipLabel>Liabilities</relationshipLabel>
+    <relationshipName>Liabilities</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

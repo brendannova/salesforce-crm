@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdviceMethod__c</fullName>
+    <description>Captures whether the advice is presented or non-presented</description>
+    <inlineHelpText>Set using the change advice method button on the advice page.</inlineHelpText>
+    <label>How will customer receive this advice?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PRESENTED</fullName>
+                <default>false</default>
+                <label>Presented</label>
+            </value>
+            <value>
+                <fullName>NON_PRESENTED</fullName>
+                <default>false</default>
+                <label>Non-presented</label>
+            </value>
+            <value>
+                <fullName>NA</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

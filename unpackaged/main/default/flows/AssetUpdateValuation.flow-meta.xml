@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <constants>
+        <name>ActionType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Update_Valuation</stringValue>
+        </value>
+    </constants>
+    <description>Used to update any asset information relating to the asset value.</description>
+    <environments>Default</environments>
+    <interviewLabel>Asset | Update Valuation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Asset | Update Valuation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Manage_asset_data</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Manage_asset_data</name>
+        <label>Manage asset data</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <flowName>AssetManageData</flowName>
+        <inputAssignments>
+            <name>ActionType</name>
+            <value>
+                <elementReference>ActionType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

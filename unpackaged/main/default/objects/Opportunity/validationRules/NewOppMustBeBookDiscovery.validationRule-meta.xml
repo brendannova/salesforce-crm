@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NewOppMustBeBookDiscovery</fullName>
+    <active>true</active>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;Advice_Opportunity&quot;
+&amp;&amp;
+ISNEW()
+&amp;&amp;
+NOT(ISPICKVAL( StageName, &quot;Book discovery&quot; ))</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>When creating an advice opportunity, you must do so in the book discovery stage.</errorMessage>
+</ValidationRule>

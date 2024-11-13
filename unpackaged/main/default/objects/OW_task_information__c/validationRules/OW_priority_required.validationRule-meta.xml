@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_priority_required</fullName>
+    <active>true</active>
+    <description>Ensures that a priority for the task template is specified where this is an active record.</description>
+    <errorConditionFormula>NOT(ISBLANK( OW_task_type__c ))
+
+&amp;&amp;
+
+ISPICKVAL( OW_status__c, &quot;Active&quot; ) 
+
+&amp;&amp; 
+
+ISPICKVAL( OW_priority__c, &quot;&quot; )</errorConditionFormula>
+    <errorDisplayField>OW_priority__c</errorDisplayField>
+    <errorMessage>Please specify a priority</errorMessage>
+</ValidationRule>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_role_required</fullName>
+    <active>true</active>
+    <description>Ensures that a role is recorded.</description>
+    <errorConditionFormula>ISBLANK(Roles)</errorConditionFormula>
+    <errorDisplayField>Roles</errorDisplayField>
+    <errorMessage>A role is required</errorMessage>
+</ValidationRule>

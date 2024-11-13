@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <description>When a Slack Auth is updated, this flow will publish a user event so that the user&#39;s Slack ID can be synced. 
+
+This flow publishes an event as mixed DML operations prevent direct update of the user record.</description>
+    <environments>Default</environments>
+    <interviewLabel>Slack | User Slack ID | Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Slack | User Slack ID | Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Publishes a user event with the Slack User ID</description>
+        <name>Publish_user_event</name>
+        <label>Publish user event</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>SlackUserId__c</field>
+            <value>
+                <elementReference>$Record.slackv2__Slack_User_Id__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UserId__c</field>
+            <value>
+                <elementReference>$Record.slackv2__User__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>UserEvent__e</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Publish_user_event</targetReference>
+        </connector>
+        <filterFormula>{!$Record.slackv2__Workspace_Id__c} = {!$Setup.OW_business_configuration__c.SlackWorkspaceId__c}
+&amp;&amp;
+{!$Record.slackv2__User__r.SlackUserId__c} &lt;&gt; {!$Record.slackv2__Slack_User_Id__c}</filterFormula>
+        <object>slackv2__Slack_Auth__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

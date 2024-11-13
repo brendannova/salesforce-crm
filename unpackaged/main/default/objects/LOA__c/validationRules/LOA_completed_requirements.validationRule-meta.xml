@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LOA_completed_requirements</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ ISPICKVAL(MainLOAStatus__c, &quot;Completed&quot;),
+CONTAINS(LOA_Financial_Account__r.RecordType.Name,&quot;LOA&quot;)
+)</errorConditionFormula>
+    <errorMessage>You need to change the record type of the Financial Product</errorMessage>
+</ValidationRule>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WC1__c</fullName>
+    <description>Used to indicate the final decision on the WC1 check</description>
+    <label>WC1 Status</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pass</fullName>
+                <default>false</default>
+                <label>Pass</label>
+            </value>
+            <value>
+                <fullName>Pass following review</fullName>
+                <default>false</default>
+                <label>Pass following review</label>
+            </value>
+            <value>
+                <fullName>Pending review</fullName>
+                <default>false</default>
+                <label>Escalated to experienced specialist</label>
+            </value>
+            <value>
+                <fullName>MLRO approval required</fullName>
+                <default>false</default>
+                <label>MLRO approval required</label>
+            </value>
+            <value>
+                <fullName>Fail</fullName>
+                <default>false</default>
+                <label>Fail</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

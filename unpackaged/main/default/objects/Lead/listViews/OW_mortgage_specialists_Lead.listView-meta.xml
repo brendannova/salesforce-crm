@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_mortgage_specialists_Lead</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>FinServ__Employer__c</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Lead.OW_mortgage</value>
+    </filters>
+    <filters>
+        <field>OW_parent_lead__c</field>
+        <operation>equals</operation>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>No Further Action</value>
+    </filters>
+    <label>Mortgage leads</label>
+    <sharedTo>
+        <group>OW_mortgage_specialists</group>
+    </sharedTo>
+</ListView>
