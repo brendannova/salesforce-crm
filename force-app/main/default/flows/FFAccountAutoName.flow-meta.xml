@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Set_name</name>
+        <label>Set name</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>name</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Flow runs before save to automatically set the name of an FF record.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>name</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.RecordType.DeveloperName} = &quot;Household&quot;, 
+&quot;Household&quot;,
+IF(ISBLANK({!$Record.First_Name__c}), &quot;&quot;, {!$Record.First_Name__c} &amp; &quot; &quot;) &amp; {!$Record.Last_Name__c})</expression>
+    </formulas>
+    <interviewLabel>FF Account | Auto-name {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FF Account | Auto-name</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_name</targetReference>
+        </connector>
+        <object>FF_Person_Account__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

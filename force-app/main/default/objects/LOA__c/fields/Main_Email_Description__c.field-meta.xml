@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Main_Email_Description__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(MainLOAStatus__c,
+ 
+&quot;Awaiting Policy Numbers&quot;,&quot;First_Five_Stages_Email_Description__c&quot;, 
+
+&quot;Awaiting Provider Policy Numbers&quot;,&quot;First_Five_Stages_Email_Description__&quot;,
+
+&quot;Send to Provider&quot;,&quot;First_Five_Stages_Email_Description__&quot;,
+
+&quot;Sent to provider&quot;,&quot;First_Five_Stages_Email_Description__&quot;,
+
+&quot;LOA Rejected Internal&quot;,&quot;First_Five_Stages_Email_Description__&quot;,
+
+&quot;LOA Rejected Action Required from Client&quot;,&quot;Client_Actions_email_description__c&quot;, 
+
+&quot;Outside SLA&quot;,&quot;Second_Email_Descriptions__c&quot;,
+
+&quot;LOA Received Awaiting Information&quot;,&quot;Second_Email_Descriptions__c&quot;, 
+
+&quot;LOA Accepted Awaiting Information&quot;,&quot;Third_Email_Descriptions__c&quot;,
+
+&quot;Information Received&quot;,&quot;Third_Email_Descriptions__c&quot;,
+
+&quot;Information rerequested&quot;,&quot;Third_Email_Descriptions__c&quot;,
+
+&quot;Specialist reviewed&quot;,&quot;Third_Email_Descriptions__c&quot;,
+
+&quot;LOA Analysis&quot;,&quot;Third_Email_Descriptions__c&quot;,
+
+&quot;Completed&quot;,&quot;Third_Email_Descriptions__c&quot;,
+&quot;ERROR&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Main Email Description</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

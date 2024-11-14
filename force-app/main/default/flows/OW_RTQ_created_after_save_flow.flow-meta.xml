@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <description>Used to create a chase RTQ task upon creation of an RTQ</description>
+    <interviewLabel>RTQ - created | after save flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTQ - created | after save flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_chase_RTQ_task</targetReference>
+        </connector>
+        <object>OW_rtq__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Create_chase_RTQ_task</name>
+        <label>Create chase RTQ task</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>$Record.OW_household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>chase_rtq</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

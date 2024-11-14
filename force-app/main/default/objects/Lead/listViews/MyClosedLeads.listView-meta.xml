@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MyClosedLeads</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>Lost_Reasons__c</columns>
+    <columns>Lost_Notes__c</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>equals</operation>
+        <value>No Further Action</value>
+    </filters>
+    <label>My Closed Leads</label>
+    <sharedTo>
+        <roleAndSubordinates>Head_of_Partners</roleAndSubordinates>
+    </sharedTo>
+</ListView>

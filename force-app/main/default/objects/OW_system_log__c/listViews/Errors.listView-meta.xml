@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Errors</fullName>
+    <columns>NAME</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>CREATEDBY_USER</columns>
+    <columns>OW_error__c</columns>
+    <columns>OW_detail__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OW_error__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Errors</label>
+</ListView>

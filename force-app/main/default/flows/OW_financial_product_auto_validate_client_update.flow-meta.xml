@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>Public_provider_missing</name>
+        <label>Key details missing?</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <defaultConnector>
+            <targetReference>Attempt_validation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not missing</defaultConnectorLabel>
+        <rules>
+            <name>Provider_missing</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Custom_Provider_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Public_Provider_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Provider missing</label>
+        </rules>
+        <rules>
+            <name>Owner_not_yet_specified</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Primary_Owner__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Owner not yet specified</label>
+        </rules>
+    </decisions>
+    <description>This flow will run when a client update is added for a household on the discovery profile in an attempt to automatically validate the change.</description>
+    <environments>Default</environments>
+    <interviewLabel>Financial product | auto-validate client update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Financial product | auto-validate client update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Public_provider_missing</targetReference>
+        </connector>
+        <filterFormula>ISPICKVAL( {!$Record.Household__r.Fact_Find_Type__c}, &quot;Discovery&quot; )
+&amp;&amp;
+NOT( ISBLANK( {!$Record.FF_Session__c} ))
+&amp;&amp;
+{!$Record.FF_Session__r.RecordType.DeveloperName} = &#39;Client_Update&#39;
+&amp;&amp;
+ISPICKVAL( {!$Record.Validated__c} , &quot;&quot; )</filterFormula>
+        <object>FF_Financial_Product__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Attempt_validation</name>
+        <label>Attempt validation</label>
+        <locationX>440</locationX>
+        <locationY>455</locationY>
+        <flowName>OW_ff_financial_product_validate</flowName>
+        <inputAssignments>
+            <name>ffFinancialProduct</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>validationType</name>
+            <value>
+                <stringValue>Automatic</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+</Flow>

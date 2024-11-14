@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Provides user access to share advice/snapshots with compliance consultants.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Compliance | Approve Access</label>
+    <applicationVisibilities>
+        <application>OW_compliance_external</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>ComplianceApproveAccess</name>
+    </customPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FF_Session__c.EligibleForComplianceReview__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FF_Session__c.Household__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FF_Session__c.IsPrimarySnapshot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>FF_Session__c.RelatedAdviceName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <tabSettings>
+        <tab>ComplianceRequestAccess</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

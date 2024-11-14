@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Finishing_Setup</fullName>
+    <active>false</active>
+    <description>What they need to do before they can select the data gathering stage</description>
+    <errorConditionFormula>AND(
+NOT(ISPICKVAL(Advice_Status__c, &quot;Setup&quot;)),
+OR(  
+ISPICKVAL(Update_valuations__c,&quot;&quot;),
+ISPICKVAL(New_LOAs_required__c,&quot;&quot;),
+ISPICKVAL(New_or_existing_client__c,&quot;&quot;)
+))</errorConditionFormula>
+    <errorMessage>You need to complete the Setup section</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MediumRequiredIfAccepted</fullName>
+    <active>true</active>
+    <description>Demands that medium of acceptance be recorded if the advice was accepted</description>
+    <errorConditionFormula>ISPICKVAL( AcceptedAdvice__c , &quot;Yes&quot;) &amp;&amp; ISPICKVAL( AcceptedMedium__c , &quot;&quot;)</errorConditionFormula>
+    <errorMessage>The medium of acceptance must be given if advice is accepted</errorMessage>
+</ValidationRule>

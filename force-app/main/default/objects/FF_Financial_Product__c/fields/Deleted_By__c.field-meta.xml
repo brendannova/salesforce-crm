@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deleted_By__c</fullName>
+    <description>If populated, the related record will not be visible in the profile to the customer. This is a control implemented on the profile logic. This field captures the reason why it is hidden.</description>
+    <inlineHelpText>Octopus products are hidden from the profile as they are visible in the dashboard.</inlineHelpText>
+    <label>Hidden from profile reason</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Deleted by Client</fullName>
+                <default>false</default>
+                <label>Deleted by Client</label>
+            </value>
+            <value>
+                <fullName>Financial product status</fullName>
+                <default>false</default>
+                <label>Financial product status</label>
+            </value>
+            <value>
+                <fullName>Octopus product</fullName>
+                <default>false</default>
+                <label>Octopus product</label>
+            </value>
+            <value>
+                <fullName>Deleted by Internal User</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Deleted by Internal User</label>
+            </value>
+            <value>
+                <fullName>Removed From Household</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Removed From Household</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

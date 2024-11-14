@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Documents_Received__c</fullName>
+    <description>The type documents received as proof of identity</description>
+    <label>Identity Documents Received</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Passport</fullName>
+                <default>false</default>
+                <label>Passport</label>
+            </value>
+            <value>
+                <fullName>Photocard driving licence</fullName>
+                <default>false</default>
+                <label>Photocard driving licence</label>
+            </value>
+            <value>
+                <fullName>EEA identity card</fullName>
+                <default>false</default>
+                <label>EEA identity card</label>
+            </value>
+            <value>
+                <fullName>Old-school UK driving licence</fullName>
+                <default>false</default>
+                <label>Old-school UK driving licence</label>
+            </value>
+            <value>
+                <fullName>Documents Rejected</fullName>
+                <default>false</default>
+                <label>Documents Rejected</label>
+            </value>
+            <value>
+                <fullName>Not required</fullName>
+                <default>false</default>
+                <label>Not required</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

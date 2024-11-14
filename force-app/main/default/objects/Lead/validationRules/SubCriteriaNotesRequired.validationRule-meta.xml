@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubCriteriaNotesRequired</fullName>
+    <active>true</active>
+    <description>Sub-criteria notes must be populated where estimated liquid assets are below £200k.</description>
+    <errorConditionFormula>RecordType.DeveloperName = &quot;General&quot; &amp;&amp;
+Est_Liquid_Assets__c &lt; 200000 &amp;&amp;
+ISBLANK(SubCriteriaNotes__c) &amp;&amp;
+ConvertedDate &gt;= DATE(2023,02,23)</errorConditionFormula>
+    <errorDisplayField>SubCriteriaNotes__c</errorDisplayField>
+    <errorMessage>You must enter sub-criteria notes as estimated liquid assets is below £200k.</errorMessage>
+</ValidationRule>

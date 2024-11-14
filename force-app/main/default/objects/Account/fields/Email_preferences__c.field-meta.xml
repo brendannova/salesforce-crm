@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Email_preferences__c</fullName>
+    <inlineHelpText>Who should be included on emails that relate to the Household.</inlineHelpText>
+    <label>Email contact preferences</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Primary member</fullName>
+                <default>false</default>
+                <label>Primary member</label>
+            </value>
+            <value>
+                <fullName>All members</fullName>
+                <default>false</default>
+                <label>All members</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

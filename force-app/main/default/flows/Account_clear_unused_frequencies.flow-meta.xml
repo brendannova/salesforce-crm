@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Clear_additional_outgoings</name>
+        <label>Clear additional outgoings</label>
+        <locationX>50</locationX>
+        <locationY>1439</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Additional_Outgoings_Frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_cash_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Clear_cash_frequency</name>
+        <label>Clear cash frequency</label>
+        <locationX>50</locationX>
+        <locationY>1775</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Cash_Frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_ISAs_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Clear_essential_spending_frequency</name>
+        <label>Clear essential spending frequency</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_essential_spending_frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_non_essential_spending_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Clear_ISA_frequency</name>
+        <label>Clear ISA frequency</label>
+        <locationX>50</locationX>
+        <locationY>2111</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.ISAs_Frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_pensions_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Clear_non_essential_spending</name>
+        <label>Clear non-essential spending</label>
+        <locationX>50</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_non_essential_spending_frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_rent_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Clear_OI_frequency</name>
+        <label>Clear OI frequency</label>
+        <locationX>50</locationX>
+        <locationY>2783</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Other_Investments_Frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Clear_pension_frequency</name>
+        <label>Clear pension frequency</label>
+        <locationX>50</locationX>
+        <locationY>2447</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Pensions_Frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_other_investments_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Clear_rent_frequency</name>
+        <label>Clear rent frequency</label>
+        <locationX>50</locationX>
+        <locationY>1103</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Rent_Frequency__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_additional_outgoings_blank</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_additional_outgoings_blank</name>
+        <label>Is additional outgoings blank?</label>
+        <locationX>182</locationX>
+        <locationY>1319</locationY>
+        <defaultConnector>
+            <targetReference>Is_cash_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>Essential_outgoings_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Additional_Monthly_Outgoings__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_additional_outgoings</targetReference>
+            </connector>
+            <label>Essential outgoings blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_cash_blank</name>
+        <label>Is cash blank?</label>
+        <locationX>182</locationX>
+        <locationY>1655</locationY>
+        <defaultConnector>
+            <targetReference>Is_ISAs_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>Cash_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Cash__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_cash_frequency</targetReference>
+            </connector>
+            <label>Cash blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_essential_spending_blank</name>
+        <label>Is essential spending blank?</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <defaultConnector>
+            <targetReference>Is_non_essential_spending_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>Essential_spending_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_essential_spending__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_essential_spending_frequency</targetReference>
+            </connector>
+            <label>Essential spending blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_ISAs_blank</name>
+        <label>Is ISAs blank?</label>
+        <locationX>182</locationX>
+        <locationY>1991</locationY>
+        <defaultConnector>
+            <targetReference>Is_pensions_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>ISAs_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ISAs__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_ISA_frequency</targetReference>
+            </connector>
+            <label>ISAs blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_non_essential_spending_blank</name>
+        <label>Is non-essential spending blank?</label>
+        <locationX>182</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <targetReference>Is_rent_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>Non_essential_spending_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_non_essential_spending__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_non_essential_spending</targetReference>
+            </connector>
+            <label>Non-essential spending blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_other_investments_blank</name>
+        <label>Is other investments blank?</label>
+        <locationX>182</locationX>
+        <locationY>2663</locationY>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>OI_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Other_Investments__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_OI_frequency</targetReference>
+            </connector>
+            <label>OI blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_pensions_blank</name>
+        <label>Is pensions blank?</label>
+        <locationX>182</locationX>
+        <locationY>2327</locationY>
+        <defaultConnector>
+            <targetReference>Is_other_investments_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>Pensions_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Pensions__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_pension_frequency</targetReference>
+            </connector>
+            <label>Pensions blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_rent_blank</name>
+        <label>Is rent blank?</label>
+        <locationX>182</locationX>
+        <locationY>983</locationY>
+        <defaultConnector>
+            <targetReference>Is_additional_outgoings_blank</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not blank</defaultConnectorLabel>
+        <rules>
+            <name>Rent_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Rent__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_rent_frequency</targetReference>
+            </connector>
+            <label>Rent blank</label>
+        </rules>
+    </decisions>
+    <description>Checks for spending/savings figures and clears the associated frequencies if they are unused.</description>
+    <environments>Default</environments>
+    <interviewLabel>Account - clear unused frequencies {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account - clear unused frequencies</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_essential_spending_blank</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

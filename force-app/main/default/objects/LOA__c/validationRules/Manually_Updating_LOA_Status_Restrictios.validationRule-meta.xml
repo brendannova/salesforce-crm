@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manually_Updating_LOA_Status_Restrictios</fullName>
+    <active>false</active>
+    <description>Prevents users manually changing the LOA&#39;s status to anything beyond &quot;Signed&quot;</description>
+    <errorConditionFormula>AND(
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;, 
+ISCHANGED( MainLOAStatus__c ),
+OR(
+ ISPICKVAL(MainLOAStatus__c, &quot;Sent to Provider&quot;), 
+ ISPICKVAL(MainLOAStatus__c, &quot;Within SLA&quot;), 
+ ISPICKVAL(MainLOAStatus__c, &quot;Outside SLA&quot;), 
+ ISPICKVAL(MainLOAStatus__c, &quot;Specialist Reviewed&quot;),
+ ISPICKVAL(MainLOAStatus__c, &quot;LOA Analysis&quot;), 
+ ISPICKVAL(MainLOAStatus__c, &quot;Completed&quot;)
+)
+)</errorConditionFormula>
+    <errorMessage>You cannot manually move the LOA to this status. If you have already sent the LOA to the provider, start at stage &quot;Signed&quot; and work through the process.</errorMessage>
+</ValidationRule>

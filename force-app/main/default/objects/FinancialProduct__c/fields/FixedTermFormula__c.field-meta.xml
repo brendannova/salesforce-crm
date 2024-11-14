@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FixedTermFormula__c</fullName>
+    <description>If fixed term end date is populated, we know the account has a fixed term so this field should be Yes. Otherwise No.</description>
+    <externalId>false</externalId>
+    <formula>IF(ISNULL(FixedTermEndDate__c),&quot;No&quot;,&quot;Yes&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Fixed term</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

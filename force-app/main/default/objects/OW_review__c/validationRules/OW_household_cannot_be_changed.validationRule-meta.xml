@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_household_cannot_be_changed</fullName>
+    <active>true</active>
+    <description>This rule ensures that reviews cannot be reparented to different households.</description>
+    <errorConditionFormula>NOT( ISNEW() )
+
+&amp;&amp;
+
+ISCHANGED( OW_household__c )</errorConditionFormula>
+    <errorDisplayField>OW_household__c</errorDisplayField>
+    <errorMessage>You cannot change the household that this review is linked to.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Adding_in_Suitability_Builder_URL</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ OW_task_information_identifier__c = &quot;loa_analysis_and_suitability_preparation&quot;,
+ISPICKVAL(Status, &quot;Completed&quot;),
+ISBLANK( Related_LOA__r.Suitability_Builder_Tab_URL__c)
+)</errorConditionFormula>
+    <errorMessage>You need to add in the URL to the suitability builder before completing this task</errorMessage>
+</ValidationRule>

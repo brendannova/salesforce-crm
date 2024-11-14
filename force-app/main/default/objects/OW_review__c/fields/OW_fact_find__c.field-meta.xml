@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_fact_find__c</fullName>
+    <businessStatus>DeprecateCandidate</businessStatus>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Populated with the Precise FP fact find for clients on the old fact find. This field should be deprecated when all customers are moved to the new fact find.</description>
+    <inlineHelpText>This is only used for client on the old Precise FP fact find.</inlineHelpText>
+    <label>Annual review fact find</label>
+    <referenceTo>Fact_Find__c</referenceTo>
+    <relationshipName>Annual_Reviews</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

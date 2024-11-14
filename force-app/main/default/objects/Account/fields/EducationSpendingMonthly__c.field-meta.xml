@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EducationSpendingMonthly__c</fullName>
+    <description>Takes costs of education at any frequency and returns monthly</description>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL( Cost_of_Education_Frequency__c , &quot;Weekly&quot;),52* Costs_of_Education__c /12, IF(ISPICKVAL(Cost_of_Education_Frequency__c,&quot;Monthly&quot;),Costs_of_Education__c,
+IF(ISPICKVAL(Cost_of_Education_Frequency__c,&quot;Annually&quot;), Costs_of_Education__c/12,0)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Education Spending (Monthly)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Training_Discos</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Discovery_Meeting_Date_Time__c</columns>
+    <columns>Partner__c</columns>
+    <columns>Disco_w__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Disco_w__c</field>
+        <operation>equals</operation>
+        <value>Yes</value>
+    </filters>
+    <label>Training Discos</label>
+</ListView>

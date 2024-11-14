@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <description>Given a collection of account audit history rows, this component will display a table and allow the user to select a row that will be returned as an output.</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Audit List</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="auditRowsAccount" role="inputOnly" type="apex://ExternalService.PlanServiceAuditHistory_AccountAuditHistoryOverviewEntry[]" label="Account Audit History List" description="A collection of audit entries for accounts"/>
+            <property name="selectedAuditRowAccount" role="outputOnly" type="apex://ExternalService.PlanServiceAuditHistory_AccountAuditHistoryOverviewEntry" label="Account Audit Row Chosen" description="An audit entry selected by the user"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

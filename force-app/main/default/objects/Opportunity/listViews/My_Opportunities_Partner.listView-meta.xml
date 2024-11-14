@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Opportunities_Partner</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Discovery_Meeting_Date_Time__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Scope_of_Advice_status__c</columns>
+    <columns>Date_scope_of_advice_accepted__c</columns>
+    <columns>Est_Liquid_Assets__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>OPPORTUNITY.CLOSED</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>My Opportunities (Partner)</label>
+    <sharedTo>
+        <roleAndSubordinates>Head_of_Partners</roleAndSubordinates>
+        <roleAndSubordinates>Partner</roleAndSubordinates>
+    </sharedTo>
+</ListView>

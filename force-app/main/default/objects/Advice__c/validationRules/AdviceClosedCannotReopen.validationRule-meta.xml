@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdviceClosedCannotReopen</fullName>
+    <active>true</active>
+    <description>Once advice has been closed, it cannot be re-opened. This ensures that a business process of creating new advice is followed.</description>
+    <errorConditionFormula>PRIORVALUE( IsClosed__c ) = true
+&amp;&amp;
+IsClosed__c = false
+&amp;&amp;
+$User.Username &lt;&gt; &quot;cian@novawm.com&quot;
+&amp;&amp;
+$User.Username &lt;&gt; &quot;donna@novawm.com&quot;</errorConditionFormula>
+    <errorDisplayField>Advice_Status__c</errorDisplayField>
+    <errorMessage>This advice is closed and cannot be re-opened. You should create new advice or talk with the Salesforce team if you need support.</errorMessage>
+</ValidationRule>

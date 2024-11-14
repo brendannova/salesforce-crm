@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Four_Eye_Annual_Review_Deck</fullName>
+    <active>true</active>
+    <description>Candidate for deletion when review functionality is stable - Q4 2021 earliest</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status, &quot;Completed&quot;),
+ RecordType.Name = &quot;4 Eye Annual Review Deck&quot;,
+OR(
+ ISBLANK( Related_Annual_Review__r.X4_Eye_Planner__c),
+ ISBLANK( Related_Annual_Review__r.Advice__c  )
+)
+)</errorConditionFormula>
+    <errorMessage>You need to complete the Deck 4 Eye Checklist</errorMessage>
+</ValidationRule>

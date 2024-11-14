@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_advice__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>The advice that we give as a result of this annual review. In some instances, this will be advice that was ongoing around the time the annual review was due. 
+
+We will always give advice off the back of an annual review - even if that advice is to do very little.</description>
+    <inlineHelpText>The advice that we give as a result of this annual review. In some instances, this will be advice that was ongoing around the time the annual review was due.</inlineHelpText>
+    <label>Advice</label>
+    <lookupFilter>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <errorMessage>The advice and annual review must be linked to the same household. The advice must also not be linked to another review. 
+
+(Admin message: filter criteria on OW_advice__c field on the OW_annual_review__c object)</errorMessage>
+        <filterItems>
+            <field>$Source.OW_household__c</field>
+            <operation>equals</operation>
+            <valueField>Advice__c.Advice_Household__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Advice__c.OW_review__c</field>
+            <operation>equals</operation>
+            <value />
+        </filterItems>
+        <filterItems>
+            <field>Advice__c.OW_review__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Id</valueField>
+        </filterItems>
+        <infoMessage>You will only see advice records here that are
+- linked to the same household as the review here
+- not currently linked to a review</infoMessage>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Advice__c</referenceTo>
+    <relationshipLabel>Reviews</relationshipLabel>
+    <relationshipName>Annual_Reviews</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

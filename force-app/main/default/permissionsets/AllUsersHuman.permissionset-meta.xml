@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permissions to be given to all human users, internal (i.e. Nova staff) and external (e.g. CATS). This permission set is not granted to integration and other system users.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>#All Users (Human)</label>
+    <classAccesses>
+        <apexClass>AuditLogEntry</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ForceTwoFactor</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>TwoFactorApi</name>
+    </userPermissions>
+</PermissionSet>

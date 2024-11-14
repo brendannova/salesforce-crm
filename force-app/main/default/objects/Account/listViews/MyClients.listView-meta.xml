@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MyClients</fullName>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>FinServ__LastReview__c</columns>
+    <columns>FinServ__NextReview__c</columns>
+    <columns>FinServ__Status__c</columns>
+    <columns>CORE.USERS.FIRST_NAME</columns>
+    <columns>CORE.USERS.LAST_NAME</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>FinServ__Status__c</field>
+        <operation>equals</operation>
+        <value>Prospect,Onboarding,Active,Offboarding</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Account.FinServ__IndustriesHousehold</value>
+    </filters>
+    <label>My clients</label>
+    <sharedTo>
+        <roleAndSubordinates>Head_of_Partners</roleAndSubordinates>
+    </sharedTo>
+</ListView>

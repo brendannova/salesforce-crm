@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DeploymentPreventEditingMobilePhone</fullName>
+    <active>false</active>
+    <description>Prevents editing the mobile or phone while we make updates to that data.</description>
+    <errorConditionFormula>NOT($Permission.AdminWorkInDeploymentMode)
+&amp;&amp;
+$Setup.OW_business_configuration__c.DeploymentMode__c
+&amp;&amp;
+(ISCHANGED(PersonMobilePhone)
+||
+ISCHANGED(Phone))</errorConditionFormula>
+    <errorMessage>Editing mobile and phone is temporarily disabled while deployment takes place. This should be finished in about 5 minutes.</errorMessage>
+</ValidationRule>

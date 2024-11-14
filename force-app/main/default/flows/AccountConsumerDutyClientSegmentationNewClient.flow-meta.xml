@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <assignments>
+        <name>NoSegment</name>
+        <label>NoSegment</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>NoSegmentSelected</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>SegmentsScreen</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>SegmentsAdded</name>
+        <label>Segments added?</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>UpdateAccount</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>AllAdded</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAccounts.CoreSegment__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetAccounts.CoreSegmentStatus__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetAccounts.Subsegment__c</leftValueReference>
+                <operator>EqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>NoSegment</targetReference>
+            </connector>
+            <label>No, not added</label>
+        </rules>
+        <rules>
+            <name>Invalid_sub_segments_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>invalidSubSegment</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>SegmentsScreen</targetReference>
+            </connector>
+            <label>Invalid sub-segments</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>invalidSubSegment</name>
+        <dataType>Boolean</dataType>
+        <expression>INCLUDES({!GetAccounts.Subsegment__c}, &quot;No sub-segment&quot;)
+&amp;&amp;
+(INCLUDES({!GetAccounts.Subsegment__c}, &quot;Products in Trust (+ requirements to work with Trustees etc.)&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;Power of attorney in place&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;Business owners - with no future exit or sale expected&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;Business owners - with future exit planned, or exit taking place&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;Ultra-high net worth&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;Vulnerable customers&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;Conflict of interest customers&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;No Capacity for Loss&quot;)
+||
+INCLUDES({!GetAccounts.Subsegment__c}, &quot;DB Transfer Advice&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>SegmentBlankFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+NOT(ISBLANK(TEXT({!GetAccounts.CoreSegment__c}))),
+NOT(ISBLANK(TEXT({!GetAccounts.CoreSegmentStatus__c}))),
+NOT(ISBLANK({!GetAccounts.Subsegment__c}))
+)</expression>
+    </formulas>
+    <interviewLabel>Account | Consumer Duty Client Segmentation - New Client {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account | Consumer Duty Client Segmentation - New Client</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>GetAccounts</name>
+        <label>Get Accounts</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>SegmentsScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>CoreSegment__c</queriedFields>
+        <queriedFields>CoreSegmentStatus__c</queriedFields>
+        <queriedFields>Subsegment__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>UpdateAccount</name>
+        <label>Update Account</label>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CoreSegmentStatus__c</field>
+            <value>
+                <elementReference>GetAccounts.CoreSegmentStatus__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CoreSegment__c</field>
+            <value>
+                <elementReference>GetAccounts.CoreSegment__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subsegment__c</field>
+            <value>
+                <elementReference>GetAccounts.Subsegment__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <screens>
+        <name>SegmentsScreen</name>
+        <label>SegmentsScreen</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>SegmentsAdded</targetReference>
+        </connector>
+        <fields>
+            <name>NoSegmentSelectedText</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(255, 60, 0); background-color: rgb(255, 255, 255);&quot;&gt;Please select a Core Segment, Core Segment Status and at least one Sub-segment from the picklists below:&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1</conditionLogic>
+                <conditions>
+                    <leftValueReference>NoSegmentSelected</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SegmentScreenWelcome</name>
+            <fieldText>&lt;p&gt;Please choose client segments:&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>GetAccounts.CoreSegment__c</objectFieldReference>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>GetAccounts.CoreSegmentStatus__c</objectFieldReference>
+        </fields>
+        <fields>
+            <name>SubSegmentError</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(255, 60, 0); background-color: rgb(255, 255, 255);&quot;&gt;&quot;No sub-segment&quot; cannot be selected with any other sub-segment options. &lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>invalidSubSegment</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <objectFieldReference>GetAccounts.Subsegment__c</objectFieldReference>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetAccounts</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>WelcomeScreenText</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;You currently own a total of X households.&lt;/p&gt;&lt;p&gt;X of those households have not been assigned a core segment. Please click next to update those households.&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CoreSegment</name>
+        <dataType>Picklist</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NoSegmentSelected</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>TotalHouseholds</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>TotalHouseholdsMissingSegment</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+</Flow>

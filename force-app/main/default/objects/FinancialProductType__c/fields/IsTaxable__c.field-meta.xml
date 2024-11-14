@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsTaxable__c</fullName>
+    <description>Is related financial product taxable? For reference only</description>
+    <label>Is taxable</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Taxable</fullName>
+                <default>false</default>
+                <label>Taxable</label>
+            </value>
+            <value>
+                <fullName>Non-taxable</fullName>
+                <default>false</default>
+                <label>Non-taxable</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

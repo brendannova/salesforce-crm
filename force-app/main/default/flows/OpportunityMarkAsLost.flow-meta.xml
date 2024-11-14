@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>56.0</apiVersion>
+    <choices>
+        <name>AskedToBeTakenOffOurLists</name>
+        <choiceText>Asked to be taken off our lists</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Asked to be taken off our lists</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>IncorrectEmail</name>
+        <choiceText>Incorrect Email</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Incorrect Email</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>IncorrectPhoneNumber</name>
+        <choiceText>Incorrect Phone Number</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Incorrect Phone Number</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NotInterested</name>
+        <choiceText>Not Interested</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Not Interested</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NotQualified</name>
+        <choiceText>Not Qualified</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Not Qualified</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NotRealProspect</name>
+        <choiceText>Not Real Prospect</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Not Real Prospect</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UnableToContact</name>
+        <choiceText>Unable to Contact</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unable to Contact</stringValue>
+        </value>
+    </choices>
+    <description>Walks a user through losing an advice opportunity.</description>
+    <dynamicChoiceSets>
+        <name>LostReasonsChoice</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Lost_Reason__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity - mark as lost {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity | Lose</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordUpdates>
+        <name>Update_opportunity</name>
+        <label>Update opportunity</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <elementReference>Lost_date</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lost_Date__c</field>
+            <value>
+                <elementReference>Lost_date</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lost_Notes__c</field>
+            <value>
+                <elementReference>Lost_notes</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lost_Reason__c</field>
+            <value>
+                <elementReference>Lost_reasons</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <screens>
+        <name>Collect_lost_information</name>
+        <label>Collect lost information</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_opportunity</targetReference>
+        </connector>
+        <fields>
+            <name>Lost_date</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </defaultValue>
+            <fieldText>Lost date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Lost_reasons</name>
+            <choiceReferences>IncorrectPhoneNumber</choiceReferences>
+            <choiceReferences>IncorrectEmail</choiceReferences>
+            <choiceReferences>NotInterested</choiceReferences>
+            <choiceReferences>NotQualified</choiceReferences>
+            <choiceReferences>NotRealProspect</choiceReferences>
+            <choiceReferences>UnableToContact</choiceReferences>
+            <choiceReferences>AskedToBeTakenOffOurLists</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Lost reasons</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Lost_notes</name>
+            <dataType>String</dataType>
+            <fieldText>Lost notes</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Collect_lost_information</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>opportunity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

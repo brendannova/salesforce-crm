@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Assign_values</name>
+        <label>Assign values</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignmentItems>
+            <assignToReference>outputNextTaxYearEnd</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>nextTaxYearEnd</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outputNextTaxYearStart</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>nextTaxYearStart</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>This flows takes in a date and outputs the tax year end date following that date, and the beginning of the new tax year after that date</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>nextTaxYearEnd</name>
+        <dataType>Date</dataType>
+        <expression>DATE( YEAR(TODAY()) + IF( 
+          MONTH(TODAY()) &gt; 4 || (MONTH(TODAY()) = 4 &amp;&amp; DAY(TODAY()) &gt; 5), 1, 0
+          ) 
+     , 4, 6
+) - 1</expression>
+    </formulas>
+    <formulas>
+        <name>nextTaxYearStart</name>
+        <dataType>Date</dataType>
+        <expression>DATE( YEAR(TODAY()) + IF( 
+          MONTH(TODAY()) &gt; 4 || (MONTH(TODAY()) = 4 &amp;&amp; DAY(TODAY()) &gt; 5), 1, 0
+          ) 
+     , 4, 6
+)</expression>
+    </formulas>
+    <interviewLabel>Date | Calculate next tax year end and start {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Date | Calculate next tax year end and start</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Assign_values</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>inputDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>outputNextTaxYearEnd</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>nextTaxYearEnd</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>outputNextTaxYearStart</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>nextTaxYearStart</elementReference>
+        </value>
+    </variables>
+</Flow>

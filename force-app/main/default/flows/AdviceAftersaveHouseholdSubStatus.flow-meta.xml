@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <assignments>
+        <description>Assign sub status to Await decision</description>
+        <name>AwaitDecision</name>
+        <label>Await Decision</label>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>householdSubStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Await decision</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign sub status to data gathering</description>
+        <name>Data_Gathering_Assignment</name>
+        <label>Data Gathering</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>householdSubStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Data gathering</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set sub status to In Fulfilment</description>
+        <name>InFulfilment</name>
+        <label>In Fulfilment</label>
+        <locationX>1634</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>householdSubStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In fulfilment</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign sub status to Prepare advice</description>
+        <name>Prepare_adviceAssignment</name>
+        <label>Prepare advice</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>householdSubStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prepare advice</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign sub status to Present advice</description>
+        <name>Present_Advice_Assignment</name>
+        <label>Present Advice</label>
+        <locationX>842</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>householdSubStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Present advice</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign sub status to Risk Call</description>
+        <name>Risk_CallAssignment</name>
+        <label>Risk Call</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>householdSubStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Risk call</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Clear household sub status if they decline suitability</description>
+        <name>SuitabilityDeclined</name>
+        <label>Suitability Declined</label>
+        <locationX>1370</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>householdSubStatus</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Suitability declined</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Household</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Advice_Stage</name>
+        <label>Advice Stage</label>
+        <locationX>974</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Data_Gathering</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Household__r.OW_sub_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_Gathering_Assignment</targetReference>
+            </connector>
+            <label>Data Gathering</label>
+        </rules>
+        <rules>
+            <name>Risk_Call</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risk Call</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Household__r.OW_sub_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Risk call</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Risk_CallAssignment</targetReference>
+            </connector>
+            <label>Risk Call</label>
+        </rules>
+        <rules>
+            <name>Prepare_advice</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready for suitability</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Suitability in progress</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Household__r.OW_sub_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Prepare advice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prepare_adviceAssignment</targetReference>
+            </connector>
+            <label>Prepare advice</label>
+        </rules>
+        <rules>
+            <name>Present_Advice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deck complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Household__r.OW_sub_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Present advice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Present_Advice_Assignment</targetReference>
+            </connector>
+            <label>Present Advice</label>
+        </rules>
+        <rules>
+            <name>Await_decision</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Await decision</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Meeting held</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Household__r.OW_sub_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Await decision</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AwaitDecision</targetReference>
+            </connector>
+            <label>Await decision</label>
+        </rules>
+        <rules>
+            <name>Suitability_Declined</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Suitability Declined</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Household__r.OW_sub_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Suitability declined</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SuitabilityDeclined</targetReference>
+            </connector>
+            <label>Suitability Declined</label>
+        </rules>
+        <rules>
+            <name>In_fulfilment</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In fulfilment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Household__r.OW_sub_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>In fulfilment</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>InFulfilment</targetReference>
+            </connector>
+            <label>In fulfilment</label>
+        </rules>
+    </decisions>
+    <description>To populate the sub-status of the related household when a new piece of advice is created or edited.</description>
+    <environments>Default</environments>
+    <interviewLabel>Advice | Aftersave | Household Sub-status {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Advice | After save | Household Sub-status</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Household</name>
+        <label>Update Household</label>
+        <locationX>974</locationX>
+        <locationY>623</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Advice_Household__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OW_sub_status__c</field>
+            <value>
+                <elementReference>householdSubStatus</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>848</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Advice_Stage</targetReference>
+        </connector>
+        <filterFormula>ISPICKVAL({!$Record.Advice_Household__r.FinServ__Status__c}, &quot;Onboarding&quot;)
+&amp;&amp;
+ISPICKVAL({!$Record.New_or_existing_client__c}, &quot;New&quot;)</filterFormula>
+        <object>Advice__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>householdSubStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

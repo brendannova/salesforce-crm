@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoReturnOnceMeetingOccurred</fullName>
+    <active>true</active>
+    <description>Prevents moving back a stage once disco has been prevented</description>
+    <errorConditionFormula>ISPICKVAL(PRIORVALUE( StageName ), &quot;Await decision&quot; )
+&amp;&amp;
+( ISPICKVAL( StageName, &quot;Book discovery&quot; ) ||
+ISPICKVAL( StageName, &quot;Present discovery&quot; ))
+&amp;&amp;
+RecordType.DeveloperName = &quot;Advice_Opportunity&quot;</errorConditionFormula>
+    <errorMessage>You cannot go backwards in stages.</errorMessage>
+</ValidationRule>

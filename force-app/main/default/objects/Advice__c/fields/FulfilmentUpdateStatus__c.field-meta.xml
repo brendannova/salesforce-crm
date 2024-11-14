@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FulfilmentUpdateStatus__c</fullName>
+    <description>Indicates whether this advice is receiving fulfilment updates</description>
+    <label>Fulfilment update status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Receiving updates</fullName>
+                <default>false</default>
+                <label>Receiving updates</label>
+            </value>
+            <value>
+                <fullName>Not receiving updates</fullName>
+                <default>false</default>
+                <label>Not receiving updates</label>
+            </value>
+            <value>
+                <fullName>Final update sent</fullName>
+                <default>false</default>
+                <label>Final update sent</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

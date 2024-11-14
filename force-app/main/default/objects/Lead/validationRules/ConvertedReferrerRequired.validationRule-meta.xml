@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConvertedReferrerRequired</fullName>
+    <active>true</active>
+    <description>Based on the choice of lead source, a referrer must be specified.</description>
+    <errorConditionFormula>IsConverted &amp;&amp;
+ConvertedDate &gt; DATE(2024,04,15) &amp;&amp;
+ISBLANK(Referrer__c) &amp;&amp;
+(ISPICKVAL(LeadSource, &quot;Introducer&quot;) ||
+ISPICKVAL(LeadSource, &quot;Employee Referral&quot;) ||
+ISPICKVAL(LeadSource, &quot;Client Referral&quot;)) &amp;&amp;
+BetaProcess__c</errorConditionFormula>
+    <errorDisplayField>Referrer__c</errorDisplayField>
+    <errorMessage>A referrer is required given the lead source.</errorMessage>
+</ValidationRule>

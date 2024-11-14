@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_io_id_must_be_integer</fullName>
+    <active>true</active>
+    <description>Ensures that the IO ID is a number.</description>
+    <errorConditionFormula>NOT( ISBLANK( Intelligent_Office_ID__c ) )
+&amp;&amp;
+NOT( ISNUMBER( Intelligent_Office_ID__c ) )
+&amp;&amp;
+NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;))</errorConditionFormula>
+    <errorDisplayField>Intelligent_Office_ID__c</errorDisplayField>
+    <errorMessage>The IO ID must be a number.</errorMessage>
+</ValidationRule>

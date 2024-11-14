@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_advice_reason__c</fullName>
+    <description>Intended to capture the reason(s) why we are giving this advice to the customer.</description>
+    <inlineHelpText>What is the reason we are giving this advice? Select all that apply</inlineHelpText>
+    <label>Advice reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Annual review</fullName>
+                <default>false</default>
+                <label>Annual review</label>
+            </value>
+            <value>
+                <fullName>Customer request</fullName>
+                <default>false</default>
+                <label>Customer request</label>
+            </value>
+            <value>
+                <fullName>Tax year end</fullName>
+                <default>false</default>
+                <label>Tax year end</label>
+            </value>
+            <value>
+                <fullName>Onboarding</fullName>
+                <default>false</default>
+                <label>Onboarding</label>
+            </value>
+            <value>
+                <fullName>IM to Hubwise switch</fullName>
+                <default>false</default>
+                <label>IM to Hubwise switch</label>
+            </value>
+            <value>
+                <fullName>Hartley to Hubwise switch</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Hartley to Hubwise switch</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

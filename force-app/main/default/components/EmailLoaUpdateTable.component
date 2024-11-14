@@ -1,0 +1,31 @@
+<apex:component controller="EmailLoaUpdateTable" access="global">    
+    <apex:attribute name="adviceIdValue" type="String" description="This is the ID of the advice record" assignTo="{!adviceId}" access="global"/>
+            <table class="loa-table" style="table-layout:fixed;width: 100%;margin: 0 auto; padding: 0;">
+                <apex:repeat value="{!owners}" var="owner"> <!-- outer -->
+                    <tr>
+                        <td data-label="Update" colspan="2" class="name-wrapper" style="width: 100%;border-bottom: 1px solid #C1C1C1;font-weight: bold;">
+                            <div class="name" style="text-transform: capitalize; font-size: 11pt;" title="{!owner.Name}">{!owner.Name}</div>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td data-label="blank-row" colspan="2" class="blank-row-wrapper" style="width: 100%;height: 4px;">
+                        </td>
+                    </tr>
+                    <apex:repeat value="{!owner_loa_map[owner.account_id]}" var="loa_update">
+                        <tr class="slds-hint-parent">
+                            <td data-label="Policy">
+                                <div class="policy" style="font-weight: 600; margin:0px 0px 0px 0px; font-size: 11pt">{!loa_update.provider} ({!loa_update.product_type})</div>
+                            </td>  
+                            <td data-label="Status">
+                                <div class="{!CASE(loa_update.status, "Completed", "status completed","On track", "status on-track","Off track", "status off-track", "Action required", "status action-required","status on-track")}" style="{!CASE(loa_update.status, "Completed", "float: right;border: none;border-radius: 3px;padding: 5px 10px;margin: 10 0;color: white;background-color: #226d27; font-size: 11pt;","On track", "float: right;border: none;border-radius: 3px;padding: 5px 10px;margin: 10 0;color: white;background-color: #15507a; font-size: 11pt;","Off track", "float: right;border: none;border-radius: 3px;padding: 5px 10px;margin: 10 0;color: white;background-color: #C70039; font-size: 11pt;", "Action required", "float: right;border: none;border-radius: 3px;padding: 5px 10px;margin: 10 0;color: white;background-color: #e19614; font-size: 11pt;","status on-track")}">{!loa_update.status}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-label="Update" colspan="2">
+                                <div class="update" style="color: #999999;margin:0px 0px 10px 0px;font-weight: 400; font-size: 11pt" title="{!loa_update.message}">{!loa_update.message}</div>
+                            </td> 
+                        </tr>
+                    </apex:repeat>
+                </apex:repeat>
+            </table>
+</apex:component>

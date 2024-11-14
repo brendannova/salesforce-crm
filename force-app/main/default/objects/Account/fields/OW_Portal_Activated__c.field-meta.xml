@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_Portal_Activated__c</fullName>
+    <label>Portal Activation Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Activation Email Sent</fullName>
+                <default>false</default>
+                <label>Activation Email Sent</label>
+            </value>
+            <value>
+                <fullName>Activation Email Expired</fullName>
+                <default>false</default>
+                <label>Activation Email Expired</label>
+            </value>
+            <value>
+                <fullName>Activated</fullName>
+                <default>false</default>
+                <label>Activated</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

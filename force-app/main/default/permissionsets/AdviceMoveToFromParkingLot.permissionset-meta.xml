@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Mark advice records and tasks as being in the parking lot.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Advice | Move to/from parking lot</label>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advice__c.OW_parking_lot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OW_parking_lot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OW_parking_lot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+</PermissionSet>

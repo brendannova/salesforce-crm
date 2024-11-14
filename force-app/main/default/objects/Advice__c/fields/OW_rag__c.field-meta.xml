@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_rag__c</fullName>
+    <description>The current RAG status of this advice based on the status and the SLA that applies to that. Blank if not SLA applies.</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK(OW_status_sla__c), &quot;&quot;, 
+
+IF( TODAY() &gt; OW_status_due_date__c, IMAGE(&quot;https://img.icons8.com/emoji/48/000000/red-circle-emoji.png&quot;, &quot;Red&quot;,30, 30),  
+
+IF(TODAY() &gt; OW_amber_date__c, IMAGE(&quot;https://img.icons8.com/emoji/48/000000/orange-circle-emoji.png&quot;, &quot;Amber&quot;,30, 30), 
+
+IMAGE(&quot;https://img.icons8.com/emoji/48/000000/green-circle-emoji.png&quot;, &quot;Green&quot;, 30, 30))))</formula>
+    <label>RAG</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

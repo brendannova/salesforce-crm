@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>OMAccounts</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>Shares accounts where Group Company = OM with &quot;All OM users&quot; public group.</description>
+        <label>OM Accounts</label>
+        <sharedTo>
+            <group>OMDataAccess</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>GroupCompany__c</field>
+            <operation>equals</operation>
+            <value>OM</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>OW_account_planner_share_non_limited_accounts</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>This rule will share any accounts that do not have a customer flag with planners.</description>
+        <label>Planner - share non-limited accounts</label>
+        <sharedTo>
+            <group>OW_planners</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>OW_customer_flag__c</field>
+            <operation>equals</operation>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GroupCompany__c</field>
+            <operation>equals</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>OW_account_specialist_share_non_limited_accounts</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>This rule will share any accounts that do not have a customer flag with specialists.</description>
+        <label>Specialist - share non-limited accounts</label>
+        <sharedTo>
+            <group>OW_specialists</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>OW_customer_flag__c</field>
+            <operation>equals</operation>
+            <value></value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>GroupCompany__c</field>
+            <operation>equals</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>OW_mortgage_team_account_access</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Read</opportunityAccessLevel>
+        </accountSettings>
+        <description>Gives access for the mortgage team to access most households and their associated data.</description>
+        <label>Mortgage team account access</label>
+        <sharedTo>
+            <roleAndSubordinates>OW_mortgage_specialist</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>OW_customer_flag__c</field>
+            <operation>equals</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>OW_share_household_with_cats</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Shares accounts with CATS in order to give them access to snapshots that they need to review.</description>
+        <label>Share household with CATS</label>
+        <sharedTo>
+            <role>OW_compliance_consultant</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>OW_share_with_cats_until__c</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>false</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>PardotEditAllAccounts</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Makes all accounts editable by a group containing only the Pardot user. This is to ensure it can edit these to update them without needing to have the modify all permission.</description>
+        <label>Pardot | Edit All Accounts</label>
+        <sharedTo>
+            <group>PardotUser</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ShareConfigurationAccounts</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Shares accounts tagged as being used for configuration purposes with all internal staff.</description>
+        <label>ShareConfigurationAccounts</label>
+        <sharedTo>
+            <group>All_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>Type</field>
+            <operation>equals</operation>
+            <value>Configuration</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>ShareTrustsWithPlanners</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>Shares Accounts where Household customer flag = Trust with certain Planners.</description>
+        <label>ShareTrustsWithPlanners</label>
+        <sharedTo>
+            <group>TrustAccess</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>OW_customer_flag__c</field>
+            <operation>equals</operation>
+            <value>Trust</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>OW_account_assistant_partner_sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>This rule will share accounts owned by Andrew and Joseph in the head of partners role with Jen in the assistant partner role.</description>
+        <label>Assistant partner sharing</label>
+        <sharedTo>
+            <role>OW_assistant_partner</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Head_of_Partners</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

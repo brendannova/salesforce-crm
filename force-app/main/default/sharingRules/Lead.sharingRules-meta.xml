@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>OW_youtube_leads</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Shares any YouTube leads (based on lead source) with a YouTube leads public group which James is a member of.</description>
+        <label>YouTube leads</label>
+        <sharedTo>
+            <group>OW_youtube_leads</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>LeadSource</field>
+            <operation>equals</operation>
+            <value>YouTube</value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>SpecialistAccess</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Shares leads as read only with operations.</description>
+        <label>Specialist Access</label>
+        <sharedTo>
+            <roleAndSubordinates>OW_head_of_operations</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>AssociatePartnerAccess</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Shares Andrew and Joseph&#39;s leads with the associate partners.</description>
+        <label>Associate Partner Access</label>
+        <sharedTo>
+            <group>AssociatePartners</group>
+        </sharedTo>
+        <sharedFrom>
+            <role>Head_of_Partners</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>OMLeads</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Shares Leads owned by users from Octopus Money with the All OM Users public group.</description>
+        <label>OM Leads</label>
+        <sharedTo>
+            <group>OMDataAccess</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinates>OctopusMoney</roleAndSubordinates>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>OW_lead_assistant_partner_sharing</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>This rule will share leads owned by Andrew and Joseph in the head of partners role with Jen in the assistant partner role.</description>
+        <label>Assistant partner sharing</label>
+        <sharedTo>
+            <role>OW_assistant_partner</role>
+        </sharedTo>
+        <sharedFrom>
+            <role>Head_of_Partners</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

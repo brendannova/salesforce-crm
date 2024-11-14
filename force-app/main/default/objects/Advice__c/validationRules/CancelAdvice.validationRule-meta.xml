@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CancelAdvice</fullName>
+    <active>true</active>
+    <description>Cannot cancel advice if it has already been presented</description>
+    <errorConditionFormula>AdvicePresented__c = true
+&amp;&amp;
+ISPICKVAL(Advice_Status__c,&quot;Cancelled&quot;)</errorConditionFormula>
+    <errorMessage>Advice cannot be cancelled if it&#39;s already been presented.</errorMessage>
+</ValidationRule>

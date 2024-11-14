@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Tasks</fullName>
+    <columns>DUE_DATE</columns>
+    <columns>SUBJECT</columns>
+    <columns>WHAT_NAME</columns>
+    <columns>FinServ__Household__c</columns>
+    <columns>PRIORITY</columns>
+    <columns>STATUS</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>STATUS</field>
+        <operation>equals</operation>
+        <value>Open,Not Started,In Progress,On Hold,Incomplete</value>
+    </filters>
+    <filters>
+        <field>TASK_SUBTYPE</field>
+        <operation>notEqual</operation>
+        <value>email</value>
+    </filters>
+    <label>My tasks | all open</label>
+</ListView>

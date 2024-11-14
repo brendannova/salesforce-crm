@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Seen_by_Partner__c</fullName>
+    <description>This information is important for the AML process.</description>
+    <inlineHelpText>Choose the way in which the client was met, or if they have not.</inlineHelpText>
+    <label>Seen by Partner</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Face to Face</fullName>
+                <default>false</default>
+                <label>Face to Face</label>
+            </value>
+            <value>
+                <fullName>Video</fullName>
+                <default>false</default>
+                <label>Video (camera on)</label>
+            </value>
+            <value>
+                <fullName>Video (camera off)</fullName>
+                <default>false</default>
+                <label>Video (camera off)</label>
+            </value>
+            <value>
+                <fullName>Never Met</fullName>
+                <default>false</default>
+                <label>Never Met</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

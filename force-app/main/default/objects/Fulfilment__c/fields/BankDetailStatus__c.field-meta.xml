@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BankDetailStatus__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(  CONTAINS( Recommendation__r.ProductName__c , &quot;Junior&quot;), 
+  IF(  ISPICKVAL(Recommendation__r.RegisteredContact__r.BankDetailsStatus__c, &quot;Submitted&quot;), 
+    &quot;Received&quot;, 
+    &quot;To be requested&quot;  ),
+  IF(  ISBLANK(Recommendation__r.DestinationLegacy__r.FinServ__JointOwner__c), 
+    IF( ISPICKVAL( Recommendation__r.DestinationLegacy__r.FinServ__PrimaryOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;), 
+      &quot;Received&quot;, 
+      &quot;To be requested&quot;) , 
+    IF( ISPICKVAL( Recommendation__r.DestinationLegacy__r.FinServ__PrimaryOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;) &amp;&amp; ISPICKVAL( Recommendation__r.DestinationLegacy__r.FinServ__JointOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;), 
+      &quot;Received&quot;, 
+      &quot;To be requested&quot;
+)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Bank details status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <description>Do not use. Legacy LWC to be deleted.</description>
+    <isExposed>true</isExposed>
+    <masterLabel>zUnused | Audit List Account</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="auditList" role="inputOnly" type="apex://ExternalService.PlanServiceAuditHistory_AccountAuditHistoryOverviewEntry[]" label="Audit History" description="A history of changes to the account"/>
+            <property name="auditRow" role="outputOnly" type="apex://ExternalService.PlanServiceAuditHistory_AccountAuditHistoryOverviewEntry" label="Audit Row Chosen" description="The audit row chosen by the user"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

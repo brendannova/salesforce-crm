@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DB_Data_Gathering</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(RecordType.Id = &#39;0124J000000qj42&#39;,
+ ISPICKVAL(Advice_Status__c, &#39;Data gathering&#39;),
+ISBLANK( Date_Client_Confirmed_Understanding__c)
+
+
+)</errorConditionFormula>
+    <errorMessage>You need to enter the date on which the client confirmed understanding of the triage process</errorMessage>
+</ValidationRule>

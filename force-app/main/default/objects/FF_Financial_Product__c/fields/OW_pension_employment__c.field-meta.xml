@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_pension_employment__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>This field allows an employment record to be linked to a financial product and exists to link pensions to employment records where they are employer provided.</description>
+    <inlineHelpText>The record linked her contains details of the employment where this pension is provided.</inlineHelpText>
+    <label>Pension employment</label>
+    <referenceTo>FinServ__Employment__c</referenceTo>
+    <relationshipLabel>FF Financial Products</relationshipLabel>
+    <relationshipName>Employer_pensions</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

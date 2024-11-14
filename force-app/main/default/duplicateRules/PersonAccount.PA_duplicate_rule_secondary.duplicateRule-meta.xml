@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DuplicateRule xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionOnInsert>Allow</actionOnInsert>
+    <actionOnUpdate>Allow</actionOnUpdate>
+    <alertText>This might be a duplicate. If you can&#39;t see the duplicate in question, please raise an issue so Cian can support, including a link to this record.</alertText>
+    <description>Runs on non-PA records on 2º details - e.g. secondary email and phone over email and mobile. Runs in bypass mode due to the private sharing model and excludes users marked as integration users to avoid problems with syncing from other systems.</description>
+    <duplicateRuleFilter>
+        <booleanFilter xsi:nil="true" />
+        <duplicateRuleFilterItems>
+            <field>OW_user_type__c</field>
+            <operation>notEqual</operation>
+            <value>Integration</value>
+            <sortOrder>1</sortOrder>
+            <table>User</table>
+        </duplicateRuleFilterItems>
+        <duplicateRuleFilterItems>
+            <field>Profile</field>
+            <operation>equals</operation>
+            <value>Partner, Head of Partners</value>
+            <sortOrder>2</sortOrder>
+            <table>User</table>
+        </duplicateRuleFilterItems>
+    </duplicateRuleFilter>
+    <duplicateRuleMatchRules>
+        <matchRuleSObjectType>Lead</matchRuleSObjectType>
+        <matchingRule>OW_lead_matching</matchingRule>
+        <objectMapping>
+            <inputObject>PersonAccount</inputObject>
+            <mappingFields>
+                <inputField>Secondary_Email__pc</inputField>
+                <outputField>Email</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>Phone</inputField>
+                <outputField>MobilePhone</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>Phone</inputField>
+                <outputField>Phone</outputField>
+            </mappingFields>
+            <mappingFields>
+                <inputField>Secondary_Email__pc</inputField>
+                <outputField>Secondary_Email__c</outputField>
+            </mappingFields>
+            <outputObject>Lead</outputObject>
+        </objectMapping>
+    </duplicateRuleMatchRules>
+    <isActive>true</isActive>
+    <masterLabel>PA duplicate rule - secondary</masterLabel>
+    <operationsOnInsert>Alert</operationsOnInsert>
+    <operationsOnInsert>Report</operationsOnInsert>
+    <securityOption>BypassSharingRules</securityOption>
+    <sortOrder>1</sortOrder>
+</DuplicateRule>

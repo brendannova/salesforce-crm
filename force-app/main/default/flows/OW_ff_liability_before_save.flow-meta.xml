@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Set_name</name>
+        <label>Set name</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ffLiabilityName</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_name_with_trimmed_characters</name>
+        <label>Set name with trimmed characters</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ffLiabilityNameTrim</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>CheckCaracterLength</name>
+        <label>Check character length</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Set_name</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Character length is OK</defaultConnectorLabel>
+        <rules>
+            <name>Longer_than_80_characters</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ffLiabilityNameLength</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>80.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_name_with_trimmed_characters</targetReference>
+            </connector>
+            <label>Longer than 80 characters</label>
+        </rules>
+    </decisions>
+    <description>This flow runs before save to process fast field updates like setting the name.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ffLiabilityName</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Public_Provider_List__c}), 
+TEXT({!$Record.Type__c}) &amp; &quot; | &quot; &amp; {!$Record.Custom_Provider_Name__c} , 
+TEXT({!$Record.Type__c}) &amp; &quot; | &quot; &amp; {!$Record.Public_Provider_List__r.Name}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ffLiabilityNameLength</name>
+        <dataType>Number</dataType>
+        <expression>LEN({!ffLiabilityName})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ffLiabilityNameTrim</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!ffLiabilityName}, 80)</expression>
+    </formulas>
+    <interviewLabel>FF liability | before save {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FF liability | before save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>CheckCaracterLength</targetReference>
+        </connector>
+        <object>FF_Liability__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

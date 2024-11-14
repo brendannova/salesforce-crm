@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HtarApprovalStatus__c</fullName>
+    <description>Indicates the status of the HTAR risk level</description>
+    <label>HTAR Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Approved</fullName>
+                <default>false</default>
+                <label>Approved</label>
+            </value>
+            <value>
+                <fullName>Approved following checks</fullName>
+                <default>false</default>
+                <label>Approved following checks</label>
+            </value>
+            <value>
+                <fullName>Documents required</fullName>
+                <default>false</default>
+                <label>Documents required</label>
+            </value>
+            <value>
+                <fullName>Documents received</fullName>
+                <default>false</default>
+                <label>Documents received</label>
+            </value>
+            <value>
+                <fullName>Escalated to MLRO</fullName>
+                <default>false</default>
+                <label>Escalated to MLRO</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>Documents requested</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Documents requested</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

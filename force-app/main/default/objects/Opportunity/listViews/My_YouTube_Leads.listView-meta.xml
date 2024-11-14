@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_YouTube_Leads</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Est_Liquid_Assets__c</columns>
+    <columns>Discovery_Meeting_Date_Time__c</columns>
+    <columns>Meeting_Held_Confirmation__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.LEAD_SOURCE</field>
+        <operation>equals</operation>
+        <value>YouTube</value>
+    </filters>
+    <filters>
+        <field>Assigned_partner_filter__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>My YouTube Leads</label>
+</ListView>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Provides access to a custom permission and apex class that allow sending of the profile email for acquired customers. This allows us to control who can see and use this option.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>zDelCreate profile for acquired customer</label>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>OW_can_create_and_send_acquired_customer_portal_access</name>
+    </customPermissions>
+</PermissionSet>

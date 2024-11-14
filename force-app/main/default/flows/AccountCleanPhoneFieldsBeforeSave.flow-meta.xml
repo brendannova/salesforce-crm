@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Strip_special_chars_and_spaces</name>
+        <label>Strip special chars and spaces</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Phone</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>updatedPhone</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PersonMobilePhone</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>updatedMobile</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Update_required</name>
+        <label>Update required?</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>mobileFormatCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>phoneFormatCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Strip_special_chars_and_spaces</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Business use: Used to remove any special characters and spaces currently in the mobile and phone fields
+Tech use: There&#39;s a validation rule on accounts to ensure no spaces or special characters are accepted on mobile and phone fields. On save of a person record this flow will run before the validation rule to strip out any special characters or spaces if they exist in the mobile/phone fields.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>mobileFormatCheck</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(CONTAINS({!$Record.PersonMobilePhone},&quot; &quot;), true,
+IF(CONTAINS({!$Record.PersonMobilePhone},&quot;(&quot;), true,
+IF(CONTAINS({!$Record.PersonMobilePhone}, &quot;)&quot;), true, 
+IF(CONTAINS({!$Record.PersonMobilePhone}, &quot;-&quot;),true,
+false))))</expression>
+    </formulas>
+    <formulas>
+        <name>phoneFormatCheck</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(CONTAINS({!$Record.Phone},&quot; &quot;), true,
+IF(CONTAINS({!$Record.Phone},&quot;(&quot;), true,
+IF(CONTAINS({!$Record.Phone}, &quot;)&quot;), true, 
+IF(CONTAINS({!$Record.Phone}, &quot;-&quot;),true,
+false))))</expression>
+    </formulas>
+    <formulas>
+        <name>updatedMobile</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(
+{!$Record.PersonMobilePhone}, &quot; &quot;, &quot;&quot;),&quot;(&quot;, &quot;&quot;), &quot;)&quot;, &quot;&quot;), &quot;-&quot;, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>updatedPhone</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(
+{!$Record.Phone}, &quot; &quot;, &quot;&quot;),&quot;(&quot;, &quot;&quot;), &quot;)&quot;, &quot;&quot;), &quot;-&quot;, &quot;&quot;)</expression>
+    </formulas>
+    <interviewLabel>Account | {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Account | Clean phone fields | Before save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_required</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>PersonMobilePhone</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phone</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

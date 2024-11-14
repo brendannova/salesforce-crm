@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdviceNonPresented</fullName>
+    <active>true</active>
+    <description>Ensures that when advice is being marked as non-presented, it is also moved along to an appropriate status.</description>
+    <errorConditionFormula>ISPICKVAL(Suitability_meeting_status__c, &quot;Non-presented&quot;)
+&amp;&amp;
+NOT(AdvicePresented__c)</errorConditionFormula>
+    <errorMessage>If the advice is non-presented, it must be moved to a status of await decision, in fulfilment, complete, or suitability declined.</errorMessage>
+</ValidationRule>

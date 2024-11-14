@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_Comp_fulfilment_needs_complete_date</fullName>
+    <active>true</active>
+    <description>Completed fulfilment requires a completed date</description>
+    <errorConditionFormula>ISPICKVAL( Status__c , &quot;Complete&quot;) 
+
+&amp;&amp;
+
+ ISBLANK( Date_Fulfilment_Complete__c )
+&amp;&amp;
+NOT(ISPICKVAL(  Checklist_Type__c , &quot;Rebalance&quot;))
+&amp;&amp;
+NOT(ISPICKVAL(  Checklist_Type__c , &quot;Portfolio switch&quot;))</errorConditionFormula>
+    <errorMessage>Please add an accurate date that the fulfilment was completed</errorMessage>
+</ValidationRule>

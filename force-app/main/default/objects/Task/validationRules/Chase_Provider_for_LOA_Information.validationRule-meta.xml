@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Chase_Provider_for_LOA_Information</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status, &quot;Completed&quot;), 
+  OW_task_information_identifier__c = &quot;chase_provider_for_loa_information&quot;,
+OR(
+Related_LOA__r.Checklist_Completed_Specialist__c = FALSE
+)
+)</errorConditionFormula>
+    <errorMessage>You need to complete the &quot;Specialist Review&quot; section, having completed the LOA Builder</errorMessage>
+</ValidationRule>

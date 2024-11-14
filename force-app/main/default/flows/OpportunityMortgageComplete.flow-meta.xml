@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>RandomNumberAction</name>
+        <label>Random Number</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <actionName>NumberGenerateRandomNumber</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>ApplicationComplete</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>odds</name>
+            <value>
+                <numberValue>1000.0</numberValue>
+            </value>
+        </inputParameters>
+        <nameSegment>NumberGenerateRandomNumber</nameSegment>
+        <outputParameters>
+            <assignToReference>RandomNumber</assignToReference>
+            <name>output</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <choices>
+        <name>DIPAccepted</name>
+        <choiceText>&lt;span style=&quot;font-size: 13px;&quot;&gt;DIP Accepted&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>DIPDeclined</name>
+        <choiceText>&lt;span style=&quot;font-size: 13px;&quot;&gt;DIP Declined&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>false</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>true</stringValue>
+        </value>
+    </choices>
+    <description>Displays success message once process has been completed.
+Used in Opportunity | Mortgage | Process Controller flow.</description>
+    <dynamicChoiceSets>
+        <name>ClosedReasonPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>OW_closed_reason__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <interviewLabel>Opportunity | Mortgage | Complete {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity | Mortgage | Complete</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>GetOpportunity</name>
+        <label>Get opportunity</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>RandomNumberAction</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>ApplicationComplete</name>
+        <label>Application Complete</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>CompletedApp</name>
+            <fieldText>&lt;p&gt;Congratulations, you have completed this mortgage application!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>BkGif</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt; &lt;img src=&quot;https://octopuswealth--devmortgag.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0683M000001RHkY?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;Bk test.gif&quot;&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>RandomNumber</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>88.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetOpportunity</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>orchestrationInstanceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RandomNumber</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

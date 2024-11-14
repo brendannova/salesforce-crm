@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DefaultProvider__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>If we know the provider of the type selected, a link to the provider should be displayed here</description>
+    <label>Default provider</label>
+    <referenceTo>Public_Provider_Names__c</referenceTo>
+    <relationshipLabel>Financial Product Types</relationshipLabel>
+    <relationshipName>Financial_Product_Types</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_loa_spec_reviewed</fullName>
+    <active>true</active>
+    <description>Checks to ensure key fields are populated where the status of the LOA is specialist reviewed.</description>
+    <errorConditionFormula>( ISPICKVAL( MainLOAStatus__c, &quot;LOA Analysis&quot; )
+||
+ISPICKVAL( MainLOAStatus__c, &quot;Completed&quot; )
+)
+
+&amp;&amp;
+(
+ISBLANK ( LOA_Financial_Account__r.FP_Value__c )
+
+||
+
+ISBLANK ( LOA_Financial_Account__r.FP_Date_of_valuation__c )
+
+||
+ISPICKVAL(  LOA_Financial_Account__r.TransferFormFormat__c, &quot;&quot; )
+
+||
+( ISPICKVAL(  LOA_Financial_Account__r.TransferProcess__c, &quot;&quot; ) &amp;&amp; ( LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Pre LOA DB Pension&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;DB Pension&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;AVC&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;GPP&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Scheme Pension&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Retirement Annuity Contract&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Pre-LOA DC Pension&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Personal Pension (PP)&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Occupational/Company Pension&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Junior SIPP&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;SIPP&quot; ||
+LOA_Financial_Account__r.FinServ__RecordTypeName__c == &quot;Annuity&quot;
+)
+) 
+
+)
+&amp;&amp;
+
+( LOA_Financial_Account__r.FinServ__RecordTypeName__c != &quot;Pre LOA DB Pension&quot; )
+&amp;&amp;
+( LOA_Financial_Account__r.FinServ__RecordTypeName__c != &quot;DB Pension&quot; )
+&amp;&amp;
+NOT( CONTAINS(LOA_Financial_Account__r.FinServ__RecordTypeName__c, &quot;Life&quot;) )
+&amp;&amp;
+NOT( CONTAINS(LOA_Financial_Account__r.FinServ__RecordTypeName__c, &quot;Income&quot;) )
+&amp;&amp;
+( LOA_Financial_Account__r.FinServ__RecordTypeName__c != &quot;Pre LOA Protection&quot; )</errorConditionFormula>
+    <errorMessage>Please ensure the financial product has a value and date of valuation, and transfer form format &amp; process is completed</errorMessage>
+</ValidationRule>

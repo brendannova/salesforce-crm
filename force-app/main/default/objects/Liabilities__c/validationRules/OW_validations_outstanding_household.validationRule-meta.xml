@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_validations_outstanding_household</fullName>
+    <active>true</active>
+    <description>Prevents editing of this record while there are validations outstanding on the household.</description>
+    <errorConditionFormula>Household__r.Fact_Find_Validations_Outstanding__c = true
+&amp;&amp;
+NOT(ISNEW())
+&amp;&amp;
+NOT(ISCHANGED( OW_stop_internal_change_processing__c ))
+&amp;&amp;
+NOT( $Permission.IntegrationUser )</errorConditionFormula>
+    <errorMessage>Client changes on the household must be validated before you can edit this record directly. Please speak with a planner.</errorMessage>
+</ValidationRule>

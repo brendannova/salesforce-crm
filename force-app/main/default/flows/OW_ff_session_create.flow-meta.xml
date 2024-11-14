@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <description>Given a set of inputs, this flow will create an FF session record for a given household and return the session ID to the calling flow.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Calculates the record type ID that should be used for this session.</description>
+        <name>ffSessionRecordTypeId</name>
+        <dataType>String</dataType>
+        <expression>CASE( {!ffSessionType}, 
+&quot;Internal_User_Update&quot;, &quot;0124J000000xm1IQAQ&quot;,
+&quot;Snapshot&quot;, &quot;0124J000000xm1SQAQ&quot;,
+&quot;Client_Update&quot;, &quot;0124J000000xm1NQAQ&quot;,
+&quot;&quot;)</expression>
+    </formulas>
+    <interviewLabel>FF session | create {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FF session | create</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Creates the FF session record and assigns the ID of this to the sessionId output variable .</description>
+        <name>Create_FF_session_record</name>
+        <label>Create FF session record</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignRecordIdToReference>ffSessionId</assignRecordIdToReference>
+        <inputAssignments>
+            <field>Household_Account__c</field>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Object__c</field>
+            <value>
+                <elementReference>ffSessionObject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>ffSessionRecordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Validated__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>FF_Session__c</object>
+    </recordCreates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_FF_session_record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>The ID of the session created in this flow. Specified as an output to the calling flow can make use of it and link FF record to this.</description>
+        <name>ffSessionId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>The value that should be entered in the object field on this FF session record.</description>
+        <name>ffSessionObject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Takes as an input a session type and maps this to the appropriate record type ID.</description>
+        <name>ffSessionType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

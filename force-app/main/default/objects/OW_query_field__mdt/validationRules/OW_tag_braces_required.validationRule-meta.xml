@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_tag_braces_required</fullName>
+    <active>false</active>
+    <description>Ensures tags are always defined within curly braces.</description>
+    <errorConditionFormula>NOT( ISBLANK ( OW_tag__c ) )
+
+&amp;&amp;
+
+( NOT( LEFT( OW_tag__c, 1 )= &quot;{&quot; )
+
+|| 
+
+NOT( RIGHT( OW_tag__c, 1 ) = &quot;{&quot; )
+)</errorConditionFormula>
+    <errorMessage>Tag values must start with</errorMessage>
+</ValidationRule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CashSavingsMonthly__c</fullName>
+    <description>Takes cash savings at any frequency and returns monthly figure</description>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL( Cash_Frequency__c ,&quot;Weekly&quot;), 52*Cash__c/12,
+IF( ISPICKVAL(Cash_Frequency__c ,&quot;Monthly&quot;), Cash__c,
+IF( ISPICKVAL(Cash_Frequency__c ,&quot;Annually&quot;), Cash__c/12,0)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Cash Savings (Monthly)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

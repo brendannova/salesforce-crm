@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_account__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Allows this campaign to be linked to a company for whom we are running a campaign. Added as part of the work to set us up to manage mortgage roll outs to firms we work with.</description>
+    <inlineHelpText>Please specify the company we are running this campaign for if applicable - e.g. who are we doing a mortgage rollout for.</inlineHelpText>
+    <label>Account</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>The account chosen here must be of record type business. 
+
+(Admin note: OW_company field on the Campaign object)</errorMessage>
+        <filterItems>
+            <field>Account.RecordType.DeveloperName</field>
+            <operation>equals</operation>
+            <value>OW_business</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Campaigns</relationshipLabel>
+    <relationshipName>Campaigns</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

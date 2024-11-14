@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>Mapping_FF_values_to_annual_review</name>
+        <label>Mapping FF values to annual review</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignmentItems>
+            <assignToReference>annualReview.Stop_Internal_User_Update__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>annualReview.OW_anything_else_to_know__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Anything_else_we_should_know__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>annualReview.OW_expected_changes_short_term__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Expected_changes_to_profile_short_term__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>annualReview.OW_expected_changes_long_term__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Expected_changes_to_profile_long_term__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>annualReview.OW_lifeline_scenarios_to_model__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Lifeline_Scenarios_to_Model__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>annualReview.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Annual_Review__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_review</targetReference>
+        </connector>
+    </assignments>
+    <description>Runs when a client submits information at the end of an annual review.</description>
+    <environments>Default</environments>
+    <interviewLabel>Review - validate client annual review {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Review - validate client annual review</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Set_to_validated</name>
+        <label>Set to validated</label>
+        <locationX>176</locationX>
+        <locationY>575</locationY>
+        <connector>
+            <targetReference>Check_for_outstanding_validations</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OW_validation_type__c</field>
+            <value>
+                <stringValue>Automatic</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Validated__c</field>
+            <value>
+                <stringValue>Validated</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the review with the changes submitted on the FF record.</description>
+        <name>Update_review</name>
+        <label>Update review</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <connector>
+            <targetReference>Set_to_validated</targetReference>
+        </connector>
+        <inputReference>annualReview</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Mapping_FF_values_to_annual_review</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>NOT(ISBLANK({!$Record.FF_Session__c})) 
+&amp;&amp;
+{!$Record.FF_Session__r.RecordType.DeveloperName} = &quot;Client_Update&quot;</filterFormula>
+        <object>FF_Annual_Review__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <description>Run flow to check for outstanding validations.</description>
+        <name>Check_for_outstanding_validations</name>
+        <label>Check for outstanding validations</label>
+        <locationX>176</locationX>
+        <locationY>695</locationY>
+        <flowName>OW_ff_objects_check_for_outstanding_validations</flowName>
+        <inputAssignments>
+            <name>householdID</name>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <description>Stores the details of the annual review for which these changes have been submitted.</description>
+        <name>annualReview</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OW_review__c</objectType>
+    </variables>
+</Flow>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Last_BDM__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Shows the BDM who last held the lead. This is populated when a lead is put to Not Interested or Not Qualified.</description>
+    <label>Last BDM</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Leads_and_Referrals</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

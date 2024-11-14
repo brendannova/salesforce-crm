@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Planner__c</fullName>
+    <description>If the activity is related to advice, display the suitability planner.</description>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK( Related_Advice__c ), &quot;&quot;, Related_Advice__r.Assigned_planner__r.FirstName  &amp; &quot; &quot; &amp;  Related_Advice__r.Assigned_planner__r.LastName)</formula>
+    <label>Planner</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

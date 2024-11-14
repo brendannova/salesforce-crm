@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Only include in the beta features permission set group. Provides access to the beta app so that new features can be tested out.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Beta | App</label>
+    <applicationVisibilities>
+        <application>Beta</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>BetaUser</name>
+    </customPermissions>
+</PermissionSet>

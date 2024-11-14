@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_person_account__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>This is the individual who completed the RTQ. The value is set by Salesforce when the RTQ record is created.</description>
+    <label>Customer</label>
+    <lookupFilter>
+        <active>false</active>
+        <errorMessage>The customer must be part of the household to which this record relates.</errorMessage>
+        <filterItems>
+            <field>$Source.OW_household__c</field>
+            <operation>equals</operation>
+            <valueField>Account.Household_Lookup__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>RTQs (Customer)</relationshipLabel>
+    <relationshipName>RTQs_person_account</relationshipName>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

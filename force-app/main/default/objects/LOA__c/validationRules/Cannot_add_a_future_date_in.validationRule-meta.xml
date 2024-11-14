@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_add_a_future_date_in</fullName>
+    <active>true</active>
+    <errorConditionFormula>DateFirstResponseProvider__c &gt; TODAY()</errorConditionFormula>
+    <errorMessage>Date First Response from Provider cannot be greater than todays date</errorMessage>
+</ValidationRule>

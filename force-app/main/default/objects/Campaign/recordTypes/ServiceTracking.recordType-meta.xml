@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ServiceTracking</fullName>
+    <active>true</active>
+    <description>Used for tracking of service interaction.</description>
+    <label>Service Tracking</label>
+    <picklistValues>
+        <picklist>Source__c</picklist>
+        <values>
+            <fullName>MoneyCoach Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MoneyCoach Rollout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>YouTube</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status</picklist>
+        <values>
+            <fullName>Aborted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Planned</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Financial Wellness</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mortgage rollout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OMC Joint Rollout</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social Media</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website Direct</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

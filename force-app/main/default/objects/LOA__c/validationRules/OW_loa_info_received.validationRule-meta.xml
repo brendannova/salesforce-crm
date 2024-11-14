@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_loa_info_received</fullName>
+    <active>true</active>
+    <description>Checks to ensure key fields are populated where the status of the LOA is information received</description>
+    <errorConditionFormula>ISPICKVAL( MainLOAStatus__c, &quot;Information Received&quot; )
+
+&amp;&amp; 
+
+ISBLANK( DateFirstResponseProvider__c )
+
+&amp;&amp;
+
+ISPICKVAL( Format_of_information_received__c, &quot;&quot; )</errorConditionFormula>
+    <errorMessage>Please ensure the format of information received and date of the first response is complete</errorMessage>
+</ValidationRule>

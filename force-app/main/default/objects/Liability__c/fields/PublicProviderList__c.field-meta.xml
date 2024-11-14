@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PublicProviderList__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Storing the provider of the liability. If the provider is not listed in our database, the customer provider text must be populated.</description>
+    <label>Public provider list</label>
+    <referenceTo>Public_Provider_Names__c</referenceTo>
+    <relationshipLabel>Liabilities</relationshipLabel>
+    <relationshipName>Liabilities1</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
