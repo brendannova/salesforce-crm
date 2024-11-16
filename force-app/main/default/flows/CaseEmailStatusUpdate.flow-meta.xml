@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Assign_SLA_status</name>
+        <label>Assign SLA status</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SlaStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Inside SLA</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Clear_SLA_status</name>
+        <label>Clear SLA status</label>
+        <locationX>842</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SlaStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.EmailStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>N/A</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Clear_SLA_status_AR</name>
+        <label>Clear SLA status</label>
+        <locationX>578</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SlaStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Paused</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <customErrors>
+        <name>Cannot_change_status_back_to_new</name>
+        <label>Cannot change status back to new</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <customErrorMessages>
+            <errorMessage>Select another status</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Status_Update</name>
+        <label>Status Update</label>
+        <locationX>578</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cannot_change_status_back_to_new</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>New</label>
+        </rules>
+        <rules>
+            <name>In_Progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_SLA_status</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>In Progress</label>
+        </rules>
+        <rules>
+            <name>Await_response</name>
+            <conditionLogic>1 AND 2</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Await response</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SlaStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>N/A</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_SLA_status_AR</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Await response</label>
+        </rules>
+        <rules>
+            <name>Closed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_SLA_status</targetReference>
+            </connector>
+            <label>Closed</label>
+        </rules>
+    </decisions>
+    <description>If case is in progress, update SLA status. Don&#39;t allow users to manually update case to await response.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>isNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Case | Email | Status update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case | Email | Status update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>452</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Status_Update</targetReference>
+        </connector>
+        <filterFormula>{!$Record.RecordType.DeveloperName} = &quot;Email&quot;</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -231,7 +231,7 @@
             <assignToReference>recommendationToCreate.RegisteredContact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Loop_through_products_to_lumpsum.Registered_Contact__c</elementReference>
+                <elementReference>Loop_through_products_to_lumpsum.RegisteredContact__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1049,7 +1049,7 @@ IF( {!Who_will_this_be_paid_byRec}=&quot;Client&quot;, {!AmountRec} / 4, 0), 0)<
         <queriedFields>FinServ__RecordTypeName__c</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
-        <queriedFields>Registered_Contact__c</queriedFields>
+        <queriedFields>RegisteredContact__c</queriedFields>
     </recordLookups>
     <screens>
         <name>DoneDoneScreen</name>

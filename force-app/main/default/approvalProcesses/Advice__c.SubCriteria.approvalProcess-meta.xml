@@ -10,7 +10,27 @@
         <field>Advice_Status__c</field>
         <field>Partner__c</field>
     </approvalPageFields>
-    
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>andrew@novawm.com</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>jared@novawm.com</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>joseph@novawm.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>Approval by members of the leadership team to confirm we can do business with this customer.</description>
+        <label>Business Approval</label>
+        <name>BusinessApproval</name>
+    </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <finalApprovalActions>
         <action>

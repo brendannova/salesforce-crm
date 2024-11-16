@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SlaIcon__c</fullName>
+    <description>Formula to display a visual icon to the user displaying if we&#39;re inside or outside SLA</description>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL(SlaStatus__c, &#39;Inside SLA&#39;)
+&amp;&amp; (ISPICKVAL(EmailStatus__c, &#39;Holding email sent&#39;) || ISPICKVAL(EmailStatus__c, &#39;N/A&#39;)) , IMAGE(&quot;/resource/EmailReplyGreen&quot;, &quot;Inside SLA&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Approaching violation&#39;)
+&amp;&amp; (ISPICKVAL(EmailStatus__c, &#39;Holding email sent&#39;) || ISPICKVAL(EmailStatus__c, &#39;N/A&#39;)) , IMAGE(&quot;/resource/EmailReplyAmber&quot;, &quot;Approaching SLA&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Outside SLA&#39;)
+&amp;&amp; (ISPICKVAL(EmailStatus__c, &#39;Holding email sent&#39;) || ISPICKVAL(EmailStatus__c, &#39;N/A&#39;)) , IMAGE(&quot;/resource/EmailReplyRed&quot;, &quot;Outstanding&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Inside SLA&#39;)
+&amp;&amp; ISPICKVAL(EmailStatus__c, &#39;Email in approval&#39;) , IMAGE(&quot;/resource/EmailApprovalGreen&quot;, &quot;Inside SLA&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Approaching violation&#39;)
+&amp;&amp; ISPICKVAL(EmailStatus__c, &#39;Email in approval&#39;), IMAGE(&quot;/resource/EmailApprovalAmber&quot;, &quot;Approaching SLA&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Outside SLA&#39;)
+&amp;&amp; ISPICKVAL(EmailStatus__c, &#39;Email in approval&#39;), IMAGE(&quot;/resource/EmailApprovalRed&quot;, &quot;Outstanding&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Inside SLA&#39;)
+&amp;&amp; ISPICKVAL(EmailStatus__c, &#39;Email in Draft&#39;) , IMAGE(&quot;/resource/EmailDraftGreen&quot;, &quot;Inside SLA&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Approaching violation&#39;)
+&amp;&amp; ISPICKVAL(EmailStatus__c, &#39;Email in Draft&#39;), IMAGE(&quot;/resource/EmailDraftAmber&quot;, &quot;Approaching SLA&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Outside SLA&#39;)
+&amp;&amp; ISPICKVAL(EmailStatus__c, &#39;Email in Draft&#39;), IMAGE(&quot;/resource/EmailDraftRed&quot;, &quot;Outstanding&quot;, 25, 25),
+IF( ISPICKVAL(SlaStatus__c, &#39;Paused&#39;) &amp;&amp; ISPICKVAL ( Status, &#39;Await response&#39;), IMAGE(&quot;/resource/EmailPause&quot;, &quot;Paused&quot;, 25, 25),
+IF( NOT(ISPICKVAL(SlaStatus__c, &#39;Paused&#39;)) &amp;&amp; ISPICKVAL ( Status, &#39;Await response&#39;), IMAGE(&quot;/resource/EmailAwaitReply&quot;, &quot;Awaiting response&quot;, 25, 25),
+&quot;&quot;)))))))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>SLA Icon</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

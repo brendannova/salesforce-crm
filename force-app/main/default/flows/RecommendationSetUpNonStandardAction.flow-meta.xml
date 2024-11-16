@@ -76,7 +76,7 @@
     <formulas>
         <name>registeredContact</name>
         <dataType>String</dataType>
-        <expression>IF({!productOrPerson.value}, IF({!productorrectoggle.value}, {!productsToHaveLumpSumSelection.firstSelectedRow.Registered_Contact__c}, {!recommendationSelectTable.firstSelectedRow.RegisteredContact__c}), {!ClientSelect.firstSelectedRow.Id})</expression>
+        <expression>IF({!productOrPerson.value}, IF({!productorrectoggle.value}, {!productsToHaveLumpSumSelection.firstSelectedRow.RegisteredContact__c}, {!recommendationSelectTable.firstSelectedRow.RegisteredContact__c}), {!ClientSelect.firstSelectedRow.Id})</expression>
     </formulas>
     <interviewLabel>Recommendation | set up non-standard action {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Recommendation | set up non-standard action</label>
@@ -265,7 +265,7 @@
         <queriedFields>FinServ__RecordTypeName__c</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
-        <queriedFields>Registered_Contact__c</queriedFields>
+        <queriedFields>RegisteredContact__c</queriedFields>
     </recordLookups>
     <screens>
         <name>Collect_details</name>

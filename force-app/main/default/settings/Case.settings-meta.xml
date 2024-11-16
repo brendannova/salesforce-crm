@@ -13,35 +13,52 @@
     <defaultCaseOwner>cian@novawm.com</defaultCaseOwner>
     <defaultCaseOwnerType>User</defaultCaseOwnerType>
     <emailToCase>
-        <enableE2CAttachmentAsFile>false</enableE2CAttachmentAsFile>
-        <enableE2CDeduplicateAttachments>false</enableE2CDeduplicateAttachments>
+        <enableE2CAttachmentAsFile>true</enableE2CAttachmentAsFile>
+        <enableE2CDeduplicateAttachments>true</enableE2CDeduplicateAttachments>
         <enableE2CExternalServer>false</enableE2CExternalServer>
         <enableE2CSourceTracking>true</enableE2CSourceTracking>
         <enableEmailToCase>true</enableEmailToCase>
         <enableHtmlEmail>true</enableHtmlEmail>
         <enableNewToReadTriggers>false</enableNewToReadTriggers>
         <enableOnDemandEmailToCase>true</enableOnDemandEmailToCase>
-        <enableThreadIDInBody>true</enableThreadIDInBody>
-        <enableThreadIDInSubject>false</enableThreadIDInSubject>
+        <enableThreadTokenInBody>false</enableThreadTokenInBody>
+        <enableThreadTokenInSubject>false</enableThreadTokenInSubject>
         <movingEmailEnabled>false</movingEmailEnabled>
-        <notifyOwnerOnNewCaseEmail>true</notifyOwnerOnNewCaseEmail>
-        <overEmailLimitAction>Bounce</overEmailLimitAction>
+        <notifyOwnerOnNewCaseEmail>false</notifyOwnerOnNewCaseEmail>
+        <overEmailLimitAction>Requeue</overEmailLimitAction>
         <preQuoteSignature>true</preQuoteSignature>
-        <replyWithNewContentOnly>false</replyWithNewContentOnly>
+        <replyWithNewContentOnly>true</replyWithNewContentOnly>
         <routingAddresses>
             <addressType>EmailToCase</addressType>
             <caseOrigin>Email</caseOrigin>
+            <caseOwner>EmailQueue</caseOwner>
+            <caseOwnerType>Queue</caseOwnerType>
             <casePriority>Medium</casePriority>
-            <createTask>true</createTask>
-            <emailAddress>dummy@octopuswealth.com</emailAddress>
-            
+            <createTask>false</createTask>
+            <emailAddress>amy@novawm.com</emailAddress>
+            <emailServicesAddress>amy@13ck2pi6qiex75p011slrxc3ptr63juy4yzsd90g5ldsbyo0n.1t-swqbeay.gbr84.case.salesforce.com</emailServicesAddress>
             <isPermsetControlled>false</isPermsetControlled>
-            
-            <routingName>dummy@octopuswealth.com</routingName>
+            <isVerified>false</isVerified>
+            <routingName>Amy Farringdon</routingName>
             <saveEmailHeaders>true</saveEmailHeaders>
-            <taskStatus>Open</taskStatus>
         </routingAddresses>
+        <routingAddresses>
+            <addressType>EmailToCase</addressType>
+            <caseOrigin>Email</caseOrigin>
+            <caseOwner>EmailQueue</caseOwner>
+            <caseOwnerType>Queue</caseOwnerType>
+            <casePriority>Medium</casePriority>
+            <createTask>false</createTask>
+            <emailAddress>team@novawm.com</emailAddress>
+            <emailServicesAddress>team@l-2578tlr1ijk76iwc0i7dilbcrbv1pgs6nwmsm2clw0zcj12g6e.1t-swqbeay.gbr84.case.salesforce.com</emailServicesAddress>
+            <isPermsetControlled>false</isPermsetControlled>
+            <isVerified>false</isVerified>
+            <routingName>Nova Team</routingName>
+            <saveEmailHeaders>true</saveEmailHeaders>
+        </routingAddresses>
+        <showWordCountInComposer>true</showWordCountInComposer>
         <unauthorizedSenderAction>Discard</unauthorizedSenderAction>
+        <useEmailHeadersForThreading>true</useEmailHeadersForThreading>
     </emailToCase>
     <enableCaseFeed>true</enableCaseFeed>
     <enableCaseSwarming>false</enableCaseSwarming>

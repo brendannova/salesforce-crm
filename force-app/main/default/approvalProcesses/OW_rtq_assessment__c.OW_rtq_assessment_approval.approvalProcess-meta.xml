@@ -51,7 +51,19 @@
         <field>OW_question_20_ref_id__c</field>
         <field>Owner</field>
     </approvalPageFields>
-    
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>andrew@novawm.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>Sends the RTQ assessment for approval by nominated compliance staff.</description>
+        <label>Compliance approval</label>
+        <name>OW_compliance_approval</name>
+    </approvalStep>
     <description>Approval process for RTQ assessments. The intent is that any new records created by the portal will go into this approval process automatically.</description>
     <emailTemplate>NovaAutomaticEmails/OW_rtq_assessment_requires_approval</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>

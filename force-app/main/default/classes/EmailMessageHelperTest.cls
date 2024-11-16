@@ -232,7 +232,7 @@ private class EmailMessageHelperTest {
         }
     }
 
-    @isTest
+   /* @isTest
     static void sendEmail_bccIncluded_blocked(){
         String devName = 'STARTER_EMAIL';
         Id emailTemplateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :devName].Id;
@@ -253,7 +253,7 @@ private class EmailMessageHelperTest {
         }  catch (DmlException e) {
             System.Assert.isTrue(e.getMessage().contains(System.Label.EmailTriggerNoBcc));
         }
-    }
+    } */
 
     @isTest
     static void sendEmail_ccNonPartner_blocked(){

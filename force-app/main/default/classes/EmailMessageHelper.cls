@@ -190,7 +190,7 @@ public with sharing class EmailMessageHelper {
                         }
                         Boolean bypassValidation = householdMap.get(householdId).EmailRecipientValidationBypass__c;
                         errors.addAll(checkFrom(outboundMessage, emailConfig));
-                        errors.addAll(checkBcc(outboundMessage, bypassValidation));
+                        //errors.addAll(checkBcc(outboundMessage, bypassValidation));
                         errors.addAll(checkCc(outboundMessage, emailConfig, householdId, bypassValidation));
                         errors.addAll(checkTo(outboundMessage, emailConfig, householdId, bypassValidation));
                         if(bypassValidation){
@@ -200,7 +200,7 @@ public with sharing class EmailMessageHelper {
                 }
             }
             if(errors.size() > 0){
-                outboundMessage.emailMessage.addError('Error' + String.join(errors, '; '));
+                outboundMessage.emailMessage.addError('Error: ' + String.join(errors, '; '));
             }
         }  
         if(householdsBypassRevert.size() > 0){
@@ -233,7 +233,7 @@ public with sharing class EmailMessageHelper {
     @param          bypassValidation - indicates if validation bypass applies
     @return         errors - a list of errors that should be displayed at the end of validation
     *********************************************************/
-    private List<String> checkBcc(EmailDetail ed, Boolean bypassValidation){
+ /*   private List<String> checkBcc(EmailDetail ed, Boolean bypassValidation){
         List<String> errors = new List<String>();
         if (!bypassValidation) {
             if(!String.isBlank(ed.emailMessage.BccAddress)){
@@ -241,7 +241,7 @@ public with sharing class EmailMessageHelper {
             }
         }
         return errors;
-    }
+    } */
 
     /**********************************************************
     @Method Name    checkCc

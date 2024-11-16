@@ -25,7 +25,37 @@
         <label>Planner approval</label>
         <name>PlannerApproval</name>
     </approvalStep>
-    
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>andrew@novawm.com</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>joseph@novawm.com</name>
+                <type>user</type>
+            </approver>
+            <approver>
+                <name>rene@novawm.com</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>Step to send P&amp;L approval to compliance if a payment is to be made.</description>
+        <entryCriteria>
+            <criteriaItems>
+                <field>Case.PLOutcome__c</field>
+                <operation>greaterOrEqual</operation>
+                <value>5</value>
+            </criteriaItems>
+        </entryCriteria>
+        <label>Compliance approval</label>
+        <name>ComplianceApproval</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
     <description>Submit for approval for P&amp;L case</description>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>

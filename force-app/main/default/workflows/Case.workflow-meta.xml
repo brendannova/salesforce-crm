@@ -45,6 +45,28 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>SlaStatusApproachingViolation</fullName>
+        <description>Update status to approaching violation</description>
+        <field>SlaStatus__c</field>
+        <literalValue>Approaching violation</literalValue>
+        <name>SLA status | Approaching violation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>SlaStatusOutsideSla</fullName>
+        <description>Reply is outside of our SLA</description>
+        <field>SlaStatus__c</field>
+        <literalValue>Outside SLA</literalValue>
+        <name>SLA status | Outside SLA</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>StatusApproval</fullName>
         <description>Sets the status to approval.</description>
         <field>Status</field>
@@ -61,6 +83,17 @@
         <field>Status</field>
         <literalValue>In Progress</literalValue>
         <name>Status | In Progress</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>UpdateSlaStatusInsideSLA</fullName>
+        <description>Update SLA status to Inside SLA</description>
+        <field>SlaStatus__c</field>
+        <literalValue>N/A</literalValue>
+        <name>Update SLA status | Inside SLA</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>

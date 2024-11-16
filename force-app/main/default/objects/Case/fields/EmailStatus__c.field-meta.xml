@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EmailStatus__c</fullName>
+    <description>Updated if most recent email is in draft, a holding email or in approval. This field is cleared when email is sent. Controlled by Email Message after save flow.</description>
+    <label>Email Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Email in draft</fullName>
+                <default>false</default>
+                <label>Email in draft</label>
+            </value>
+            <value>
+                <fullName>Holding email sent</fullName>
+                <default>false</default>
+                <label>Holding email sent</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>true</default>
+                <label>N/A</label>
+            </value>
+            <value>
+                <fullName>Email in approval</fullName>
+                <default>false</default>
+                <label>Email in approval</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
