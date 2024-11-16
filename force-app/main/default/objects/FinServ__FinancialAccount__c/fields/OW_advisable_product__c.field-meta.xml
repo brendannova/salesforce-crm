@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_advisable_product__c</fullName>
+    <description>Indicates whether this product is advisable and why - because it&#39;s an Octopus Wealth one or part of the wider Octopus Group. If blank, it is not advisable or not yet categorised as advisable.</description>
+    <externalId>false</externalId>
+    <formula>IF(Public_Provider_Name__r.OW_own_company__c, &quot;own&quot;, IF(Public_Provider_Name__r.OW_group_company__c, &quot;group&quot;, &quot;&quot;))</formula>
+    <inlineHelpText>If own, this is an Octopus Wealth product. If group, this is product is provided by a member of Octopus Group. Does not cover protection or trusts.</inlineHelpText>
+    <label>Advisable product</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

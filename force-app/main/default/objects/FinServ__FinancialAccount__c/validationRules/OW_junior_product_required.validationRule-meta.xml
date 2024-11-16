@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_junior_product_required</fullName>
+    <active>true</active>
+    <description>Ensures that it is not possible to create ISAs or SIPPs for people under 18.</description>
+    <errorConditionFormula>(RecordType.DeveloperName = &#39;FP_Stocks_Shares_ISA&#39;
+||
+RecordType.DeveloperName = &#39;FP_SIPP&#39;)
+&amp;&amp;
+ISNEW()
+&amp;&amp;
+FinServ__PrimaryOwner__r.PersonContact.FinServ__Age__c &lt; 17.9
+&amp;&amp;
+ Public_Provider_Name__r.OW_own_company__c</errorConditionFormula>
+    <errorMessage>You cannot create ISAs or SIPPs for people under 18. Please create a Junior ISA or Junior SIPP instead.</errorMessage>
+</ValidationRule>

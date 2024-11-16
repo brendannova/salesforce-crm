@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sub_Type__c</fullName>
+    <label>Sub Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>FinServ__AssetsAndLiabilitiesType__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Fixed Term Deposit</fullName>
+                <default>false</default>
+                <label>Fixed Term Deposit</label>
+            </value>
+            <value>
+                <fullName>Current Account</fullName>
+                <default>false</default>
+                <label>Current Account</label>
+            </value>
+            <value>
+                <fullName>Primary Residential</fullName>
+                <default>false</default>
+                <label>Primary Residential</label>
+            </value>
+            <value>
+                <fullName>Secondary Residential</fullName>
+                <default>false</default>
+                <label>Secondary Residential</label>
+            </value>
+            <value>
+                <fullName>Rental</fullName>
+                <default>false</default>
+                <label>Rental</label>
+            </value>
+            <value>
+                <fullName>Commercial</fullName>
+                <default>false</default>
+                <label>Commercial</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Auto Loan</controllingFieldValue>
+            <controllingFieldValue>Mortgage</controllingFieldValue>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <controllingFieldValue>Personal Loan</controllingFieldValue>
+            <valueName>Fixed Term Deposit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Auto Loan</controllingFieldValue>
+            <controllingFieldValue>Mortgage</controllingFieldValue>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <controllingFieldValue>Personal Loan</controllingFieldValue>
+            <valueName>Current Account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Property</controllingFieldValue>
+            <valueName>Primary Residential</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Property</controllingFieldValue>
+            <valueName>Secondary Residential</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Property</controllingFieldValue>
+            <valueName>Rental</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Property</controllingFieldValue>
+            <valueName>Commercial</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

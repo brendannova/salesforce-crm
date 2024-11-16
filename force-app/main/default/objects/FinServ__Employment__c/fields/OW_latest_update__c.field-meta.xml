@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_latest_update__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Links the employment record to the latest FF employment. This allows information about validation and profile visibility to be displayed on the employment record itself in the form of formula fields.</description>
+    <label>Latest update</label>
+    <lookupFilter>
+        <active>false</active>
+        <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+        <errorMessage>You can only link an FF employment record that is for this employment.</errorMessage>
+        <filterItems>
+            <field>$Source.Id</field>
+            <operation>equals</operation>
+            <valueField>FF_Employment__c.Employment__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>FF_Employment__c.Validated__c</field>
+            <operation>equals</operation>
+            <value>Validated</value>
+        </filterItems>
+        <filterItems>
+            <field>FF_Employment__c.Employment__c</field>
+            <operation>equals</operation>
+            <value />
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>FF_Employment__c</referenceTo>
+    <relationshipLabel>Employment</relationshipLabel>
+    <relationshipName>Employment</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

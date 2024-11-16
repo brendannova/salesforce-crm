@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_joint_owner_must_be_client</fullName>
+    <active>true</active>
+    <description>Ensures the primary owner is a client in their primary household</description>
+    <errorConditionFormula>(NOT( ISBLANK( FinServ__JointOwner__r.Household_Lookup__c ) )
+&amp;&amp;
+NOT( FinServ__JointOwner__r.OW_role_in_primary_household__c = &quot;Client&quot; )
+&amp;&amp; 
+NOT( ISPICKVAL( Household__r.Type, &quot;Trust&quot; ))
+&amp;&amp;
+NOT( ISPICKVAL( Household__r.FinServ__Status__c, &quot;Inactive&quot; )))
+&amp;&amp;
+NOT( $Permission.ValidationBypass )</errorConditionFormula>
+    <errorDisplayField>FinServ__JointOwner__c</errorDisplayField>
+    <errorMessage>The joint owner must have a role of client in the household.</errorMessage>
+</ValidationRule>

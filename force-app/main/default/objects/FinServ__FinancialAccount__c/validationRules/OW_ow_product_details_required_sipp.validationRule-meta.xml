@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_ow_product_details_required_sipp</fullName>
+    <active>false</active>
+    <description>Ensures that information required for SIPPs we offer is captured.</description>
+    <errorConditionFormula>Public_Provider_Name__r.OW_own_company__c
+&amp;&amp;
+(RecordType.DeveloperName = &#39;FP_SIPP&#39; || RecordType.DeveloperName = &#39;Junior_SIPP&#39;)
+&amp;&amp;
+(ISPICKVAL( OW_Investment_Mandate__c, &quot;&quot; ) ||
+ISPICKVAL( OW_custodian__c , &quot;&quot; ) ||
+ISBLANK( FinServ__FinancialAccountNumber__c ) ||
+ISBLANK( IO_Plan_ID__c ) ||
+ISBLANK( FP_Value__c  ) ||
+ISBLANK( FP_Start_date__c  ) ||
+ISBLANK( FP_Date_of_valuation__c   ))</errorConditionFormula>
+    <errorMessage>Given this is an Octopus Wealth SIPP, you must complete the following fields: account number, start date, value, date of valuation, OW investment mandate, custodian, administrator, &amp; IO plan ID.</errorMessage>
+</ValidationRule>

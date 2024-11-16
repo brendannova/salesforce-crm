@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_ow_product_not_allowed</fullName>
+    <active>true</active>
+    <description>Sets conditions under which recording a type of Octopus Wealth product is not allowed, specifically when this is not one of our own products.</description>
+    <errorConditionFormula>(Public_Provider_Name__r.OW_own_company__c = FALSE || 
+ISBLANK( Public_Provider_Name__c ))
+
+&amp;&amp;
+
+NOT(ISPICKVAL( OW_octopus_wealth_product__c, &quot;&quot;))</errorConditionFormula>
+    <errorDisplayField>OW_octopus_wealth_product__c</errorDisplayField>
+    <errorMessage>Octopus Wealth product must be blank where Octopus Wealth is not the provider.</errorMessage>
+</ValidationRule>

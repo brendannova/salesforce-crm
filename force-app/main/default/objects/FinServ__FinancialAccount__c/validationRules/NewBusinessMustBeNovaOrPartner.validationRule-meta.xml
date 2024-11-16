@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NewBusinessMustBeNovaOrPartner</fullName>
+    <active>true</active>
+    <description>Ensures that products marked as new business have a provider of either NOVA Wealth or a partner company</description>
+    <errorConditionFormula>NOT( Public_Provider_Name__r.OW_own_company__c )
+&amp;&amp;
+NOT( Public_Provider_Name__r.PartnerCompany__c )
+&amp;&amp;
+ISPICKVAL( BusinessType__c, &#39;New business&#39;)
+&amp;&amp;
+NOT(
+CONTAINS(TEXT(Subtype__c) , &quot;Cover&quot;) ||
+CONTAINS(TEXT(Subtype__c) , &quot;Life&quot;) ||
+CONTAINS(TEXT(Subtype__c) , &quot;Income&quot;) )</errorConditionFormula>
+    <errorMessage>To be a new business product, it must be provided by a company which is either NOVA or one of our partners</errorMessage>
+</ValidationRule>

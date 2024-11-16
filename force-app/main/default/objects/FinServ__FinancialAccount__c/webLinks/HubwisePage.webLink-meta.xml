@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HubwisePage</fullName>
+    <availability>online</availability>
+    <description>This button will launch the Hubwise portal in a new tab. The page will be the details of the account with URL being pre-populated with just the Hubwise investor ID and the Hubwise account ID merged.</description>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Hubwise Page</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://portal.hubwise.co.uk/adviser-CARIBPL-E006007/logon#views/account/AccountDetail/AccountDetail?personId={!FinServ__FinancialAccount__c.HubwisePersonId__c}&amp;accountId={!FinServ__FinancialAccount__c.FinServ__FinancialAccountNumber__c}</url>
+</WebLink>

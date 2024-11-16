@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FinServ__KYCStatus__c</fullName>
+    <deprecated>false</deprecated>
+    <inlineHelpText>Old KYC status. If blank, a new KYC check should appear below. If filled out, checks are not tracked in Salesforce.</inlineHelpText>
+    <label>KYC Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Passed (electronic checks)</fullName>
+                <default>false</default>
+                <label>Passed (electronic checks)</label>
+            </value>
+            <value>
+                <fullName>Passed (electronic checks + docs)</fullName>
+                <default>false</default>
+                <label>Passed (electronic checks + docs)</label>
+            </value>
+            <value>
+                <fullName>Failed (further info req)</fullName>
+                <default>false</default>
+                <label>Failed (further info req)</label>
+            </value>
+            <value>
+                <fullName>Failed (cannot continue)</fullName>
+                <default>false</default>
+                <label>Failed (cannot continue)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

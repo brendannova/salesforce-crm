@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_primary_owner_must_be_client</fullName>
+    <active>true</active>
+    <description>Ensures the primary owner is a client in their primary household</description>
+    <errorConditionFormula>(
+NOT( 
+FinServ__PrimaryOwner__r.OW_role_in_primary_household__c = &quot;Client&quot; ||
+FinServ__PrimaryOwner__r.OW_role_in_primary_household__c = &quot;Child&quot; ||
+FinServ__PrimaryOwner__r.OW_role_in_primary_household__c = &quot;Client;Child&quot;
+)
+&amp;&amp; 
+NOT( ISPICKVAL( Household__r.Type, &quot;Trust&quot; ))
+&amp;&amp;
+NOT( ISPICKVAL( Household__r.FinServ__Status__c, &quot;Inactive&quot; ))
+)
+&amp;&amp;
+NOT( $Permission.ValidationBypass )
+&amp;&amp; NOT(ISPICKVAL( FinServ__Status__c, &quot;Closed&quot;))</errorConditionFormula>
+    <errorDisplayField>FinServ__PrimaryOwner__c</errorDisplayField>
+    <errorMessage>The primary owner must have a role of client or child in the household.</errorMessage>
+</ValidationRule>

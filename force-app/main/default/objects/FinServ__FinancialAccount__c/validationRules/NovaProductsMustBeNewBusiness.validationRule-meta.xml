@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NovaProductsMustBeNewBusiness</fullName>
+    <active>true</active>
+    <description>Ensures any NOVA Wealth products are marked as new business</description>
+    <errorConditionFormula>ISPICKVAL( BusinessType__c , &quot;Pre-existing&quot;) 
+&amp;&amp;
+ Public_Provider_Name__r.OW_own_company__c</errorConditionFormula>
+    <errorMessage>NOVA Wealth products must have a business type of &#39;New business&#39;</errorMessage>
+</ValidationRule>

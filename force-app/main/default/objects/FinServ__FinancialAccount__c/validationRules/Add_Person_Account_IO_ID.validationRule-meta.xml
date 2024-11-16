@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Add_Person_Account_IO_ID</fullName>
+    <active>true</active>
+    <errorConditionFormula>(IF(ISBLANK(FinServ__JointOwner__c),
+AND(
+NOT(ISBLANK(IO_Plan_ID__c)), 
+ISBLANK(FinServ__PrimaryOwner__r.Intelligent_Office_ID__c)
+)
+
+, 
+
+AND(
+NOT(ISBLANK(IO_Plan_ID__c)), 
+OR(
+ISBLANK(FinServ__PrimaryOwner__r.Intelligent_Office_ID__c), 
+ISBLANK(FinServ__JointOwner__r.Intelligent_Office_ID__c) 
+)
+)
+))
+&amp;&amp;
+NOT( $Permission.ValidationBypass )</errorConditionFormula>
+    <errorMessage>You need to add the Person Account IO ID&#39;s for ALL owners before adding the IO ID.</errorMessage>
+</ValidationRule>

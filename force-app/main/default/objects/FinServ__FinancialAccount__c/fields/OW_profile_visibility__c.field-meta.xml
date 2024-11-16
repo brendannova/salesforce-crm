@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_profile_visibility__c</fullName>
+    <description>Displays to users whether this employment record is visible to the customer in the profile.</description>
+    <externalId>false</externalId>
+    <formula>IF( ISBLANK( OW_latest_update__c ), &quot;ERROR: no update linked&quot;, IF( ISPICKVAL( OW_latest_update__r.Deleted_By__c, &quot;&quot; ), &quot;Visible&quot;, &quot;Hidden&quot; ))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Tells you whether this employment is visible to the customer in the profile.</inlineHelpText>
+    <label>Profile visibility</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

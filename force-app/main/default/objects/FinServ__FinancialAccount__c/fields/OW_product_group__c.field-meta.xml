@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_product_group__c</fullName>
+    <description>The group to which this financial product belongs. Part of the taxonomy of product information we capture.</description>
+    <label>Product group</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Account</fullName>
+                <default>false</default>
+                <label>Account</label>
+            </value>
+            <value>
+                <fullName>Protection</fullName>
+                <default>false</default>
+                <label>Protection</label>
+            </value>
+            <value>
+                <fullName>Trust</fullName>
+                <default>false</default>
+                <label>Trust</label>
+            </value>
+            <value>
+                <fullName>Uncategorised</fullName>
+                <default>false</default>
+                <label>Uncategorised</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_administrator__c</fullName>
+    <description>For Octopus Wealth SIPPs, we need to capture the administrator.</description>
+    <label>Administrator</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>OW_custodian__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hartley</fullName>
+                <default>false</default>
+                <label>Hartley</label>
+            </value>
+            <value>
+                <fullName>Hubwise</fullName>
+                <default>false</default>
+                <label>Hubwise</label>
+            </value>
+            <value>
+                <fullName>Intelligent Money</fullName>
+                <default>false</default>
+                <label>Intelligent Money</label>
+            </value>
+            <value>
+                <fullName>Curtis Banks</fullName>
+                <default>false</default>
+                <label>Curtis Banks</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Hubwise</controllingFieldValue>
+            <valueName>Hartley</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hubwise</controllingFieldValue>
+            <valueName>Hubwise</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hubwise</controllingFieldValue>
+            <valueName>Intelligent Money</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Curtis Banks</controllingFieldValue>
+            <valueName>Curtis Banks</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

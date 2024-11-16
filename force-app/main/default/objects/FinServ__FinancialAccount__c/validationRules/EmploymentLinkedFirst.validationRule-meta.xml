@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EmploymentLinkedFirst</fullName>
+    <active>true</active>
+    <description>Ensures that if the FF FP record to which this is linked is meant to have a linked employment, this is linked first.</description>
+    <errorConditionFormula>NOT(ISBLANK( OW_latest_update__c ))
+&amp;&amp;
+NOT(ISBLANK( OW_latest_update__r.OW_employment_match_id__c ))
+&amp;&amp;
+ISBLANK( OW_latest_update__r.OW_pension_employment__c )
+&amp;&amp;
+ISBLANK( OW_employment__c )
+&amp;&amp;
+NOT(ISCHANGED( OW_stop_internal_change_processing__c ))</errorConditionFormula>
+    <errorMessage>This pension is linked to an employment record. Please ensure this is validated first. If this is the case, raise an issue.</errorMessage>
+</ValidationRule>

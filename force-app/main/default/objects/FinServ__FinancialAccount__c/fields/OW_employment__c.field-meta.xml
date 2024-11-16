@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_employment__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Links pensions to a record of employment.</description>
+    <inlineHelpText>Applicable to pensions only, this is populated where this is an employer pension and we have a record of that employment.</inlineHelpText>
+    <label>Employment</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Employment and pension must be for the same person and household.</errorMessage>
+        <filterItems>
+            <field>FinServ__Employment__c.Household__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.Household__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>FinServ__Employment__c.Person_Account__c</field>
+            <operation>equals</operation>
+            <valueField>$Source.FinServ__PrimaryOwner__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>FinServ__Employment__c</referenceTo>
+    <relationshipLabel>Financial Products</relationshipLabel>
+    <relationshipName>Financial_Products</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_client_validation_outstanding</fullName>
+    <active>true</active>
+    <description>Ensures that internal changes can&#39;t be made to a record while there is an outstanding client change to be validated.</description>
+    <errorConditionFormula>ISPICKVAL(OW_latest_update__r.Validated__c, &quot;&quot;) 
+&amp;&amp;
+NOT(ISNEW())
+&amp;&amp;
+NOT(ISCHANGED( OW_stop_internal_change_processing__c ))
+&amp;&amp;
+NOT(ISBLANK(OW_latest_update__c))</errorConditionFormula>
+    <errorMessage>There is a client change for this record that needs to be validated before we can make further changes.</errorMessage>
+</ValidationRule>

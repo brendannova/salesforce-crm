@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OW_primary_owner_must_be_in_household</fullName>
+    <active>true</active>
+    <description>Ensures the primary owner of a product is in the household to which the product is linked.</description>
+    <errorConditionFormula>( NOT( Household__c = FinServ__PrimaryOwner__r.Household_Lookup__c )
+&amp;&amp; 
+NOT( ISPICKVAL(  Household__r.Type, &quot;Trust&quot; ))
+&amp;&amp;
+NOT( ISPICKVAL( Household__r.FinServ__Status__c, &quot;Inactive&quot; ))
+)
+&amp;&amp; NOT( $Permission.ValidationBypass )
+&amp;&amp; NOT(ISPICKVAL( FinServ__Status__c, &quot;Closed&quot;))</errorConditionFormula>
+    <errorDisplayField>FinServ__PrimaryOwner__c</errorDisplayField>
+    <errorMessage>The primary owner must be in the household to which this product is linked. Ensure their relationship in the household is marked as the primary group.</errorMessage>
+</ValidationRule>
