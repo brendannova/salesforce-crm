@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BuilderLevel__c</fullName>
+    <description>Indicates the level of detail required in the suitability builder</description>
+    <label>Builder level</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not required</fullName>
+                <default>false</default>
+                <label>Not required</label>
+            </value>
+            <value>
+                <fullName>Value only</fullName>
+                <default>false</default>
+                <label>Value only</label>
+            </value>
+            <value>
+                <fullName>Full analysis</fullName>
+                <default>false</default>
+                <label>Full analysis</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
