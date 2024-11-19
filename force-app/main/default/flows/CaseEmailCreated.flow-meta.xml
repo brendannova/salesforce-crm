@@ -21,7 +21,7 @@
         <name>Assign_entitlement_to_case</name>
         <label>Assign entitlement to case</label>
         <locationX>380</locationX>
-        <locationY>1139</locationY>
+        <locationY>1439</locationY>
         <assignmentItems>
             <assignToReference>$Record.EntitlementId</assignToReference>
             <operator>Assign</operator>
@@ -31,6 +31,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_owner_to_DS</name>
+        <label>Assign owner to DS</label>
+        <locationX>248</locationX>
+        <locationY>1139</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_household.OW_dedicated_specialist__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_entitlements</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -60,10 +76,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Does_owner_need_updating</name>
+        <label>Does owner need updating?</label>
+        <locationX>380</locationX>
+        <locationY>1031</locationY>
+        <defaultConnector>
+            <targetReference>Get_entitlements</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Leave in client email queue</defaultConnectorLabel>
+        <rules>
+            <name>Update_owner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_household.OW_dedicated_specialist__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_household.OW_dedicated_specialist__r.OutOfOfficeMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_owner_to_DS</targetReference>
+            </connector>
+            <label>Update owner to DS</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_related_account_found</name>
         <label>Is related account found?</label>
         <locationX>182</locationX>
         <locationY>539</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Does_owner_need_updating</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Related account not found</defaultConnectorLabel>
         <rules>
             <name>Related_account_found</name>
@@ -81,7 +133,7 @@
             <label>Related account found</label>
         </rules>
     </decisions>
-    <description>***UPDATED: Excluding assign to DS*** Assign case owner and link entitlement process on creation of an email case.</description>
+    <description>Assign case owner and link entitlement process on creation of an email case.</description>
     <environments>Default</environments>
     <interviewLabel>Case | Email | Created {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case | Email | Created</label>
@@ -143,7 +195,7 @@
         <name>Get_entitlements</name>
         <label>Get entitlements</label>
         <locationX>380</locationX>
-        <locationY>1031</locationY>
+        <locationY>1331</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_entitlement_to_case</targetReference>
@@ -167,7 +219,7 @@
         <locationY>923</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_entitlements</targetReference>
+            <targetReference>Does_owner_need_updating</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -185,7 +237,7 @@
         <name>Update_case</name>
         <label>Update case</label>
         <locationX>380</locationX>
-        <locationY>1247</locationY>
+        <locationY>1547</locationY>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
