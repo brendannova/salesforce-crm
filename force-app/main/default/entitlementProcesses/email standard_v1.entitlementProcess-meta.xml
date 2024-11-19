@@ -22,23 +22,23 @@
         <minutesCustomClass>MilestoneTimeCalculator</minutesCustomClass>
         <timeTriggers>
             <actions>
-                <name>SlaStatusApproachingViolation</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <timeLength>-2</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </timeTriggers>
-        <timeTriggers>
-            <actions>
                 <name>SlaStatusOutsideSla</name>
                 <type>FieldUpdate</type>
             </actions>
             <timeLength>0</timeLength>
             <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
         </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>SlaStatusApproachingViolation</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>-2</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </timeTriggers>
         <useCriteriaStartTime>true</useCriteriaStartTime>
     </milestones>
-    <name>Email standard</name>
+    <name>Email Standard</name>
     <versionMaster>552UE000006EiTy</versionMaster>
     <versionNumber>1</versionNumber>
 </EntitlementProcess>

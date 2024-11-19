@@ -29,7 +29,7 @@
         <name>Navigate_to_new_case</name>
         <label>Navigate to new case</label>
         <locationX>314</locationX>
-        <locationY>1298</locationY>
+        <locationY>1406</locationY>
         <actionName>c:navigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -72,7 +72,7 @@
         <name>Assign_case_values</name>
         <label>Assign case values</label>
         <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>case.Advice__c</assignToReference>
             <operator>Assign</operator>
@@ -120,6 +120,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Medium</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>case.SuppliedEmail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_primary_contact_details.PersonEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>case.SuppliedName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_primary_contact_details.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -209,7 +223,7 @@
         <name>Create_new_case</name>
         <label>Create new case</label>
         <locationX>314</locationX>
-        <locationY>1082</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Success_screen</targetReference>
         </connector>
@@ -243,7 +257,7 @@
         <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_record_type_id</targetReference>
+            <targetReference>Get_primary_contact_details</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -261,10 +275,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_primary_contact_details</name>
+        <label>Get primary contact details</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_record_type_id</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PersonContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Household.FinServ__PrimaryContact__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>PersonEmail</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_record_type_id</name>
         <label>Get record type id</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_fields</targetReference>
@@ -285,7 +323,7 @@
         <name>Case_fields</name>
         <label>Case fields</label>
         <locationX>314</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -312,7 +350,7 @@
         <name>Success_screen</name>
         <label>Success screen</label>
         <locationX>314</locationX>
-        <locationY>1190</locationY>
+        <locationY>1298</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
