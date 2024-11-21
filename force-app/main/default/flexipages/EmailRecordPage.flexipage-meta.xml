@@ -19,6 +19,22 @@
                         <valueListItems>
                             <value>Case.ChangeOwner</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Case.ViewDraftEmail</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.EmailStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Email in draft</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.EmailStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Email in approval</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
