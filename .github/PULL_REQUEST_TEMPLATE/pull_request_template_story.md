@@ -1,2 +1,5 @@
-Description of change: 
-Link to ticket: 
+# {Change title}
+## Change details
+{Details go here}
+## Ticket
+{Link to ticket}
