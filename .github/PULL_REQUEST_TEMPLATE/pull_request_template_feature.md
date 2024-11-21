@@ -1,2 +1,3 @@
-Feature name: 
-Change Details:
+# {Feature name}
+## Change details
+{Details go here}
