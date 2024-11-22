@@ -218,6 +218,12 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.Recommendation__r.PreRequisiteActionRecommendation__c</fieldItem>
+                <identifier>RecordRecommendation_rPreRequisiteActionRecommendation_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.Recommendation__r.EarliestFulfilmentDate__c</fieldItem>
                 <identifier>RecordRecommendation_rEarliestFulfilmentDate_cField</identifier>
             </fieldInstance>
@@ -237,8 +243,15 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Recommendation__r.PreRequisiteActionRecommendation__c</fieldItem>
-                <identifier>RecordRecommendation_rPreRequisiteActionRecommendation_cField</identifier>
+                <fieldItem>Record.Recommendation__r.PaidBy__c</fieldItem>
+                <identifier>RecordRecommendation_rPaidBy_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Recommendation__r.RecommendationType__r.HasAmount__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Not Applicable</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-698c6335-6bb0-4944-bb65-d51d345ac27b</name>
@@ -628,6 +641,12 @@
             <fieldInstance>
                 <fieldItem>Record.Recommendation__r.Product__c</fieldItem>
                 <identifier>RecordRecommendation_rProduct_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Recommendation__r.NewInvestmentMandate__c</fieldItem>
+                <identifier>RecordRecommendation_rNewInvestmentMandate_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-aa3c81fb-3446-46e1-aebc-cb71ac9c0ac7</name>
@@ -1658,6 +1677,54 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Recommendation__r.ImportantNotesForSpecialists__c</fieldItem>
+                <identifier>RecordRecommendation_rImportantNotesForSpecialists_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-139085eb-2f52-472e-95ae-f3f88e7396dc</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ImportantNotes__c</fieldItem>
+                <identifier>RecordImportantNotes_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-c705b39d-09bd-4cec-a4a2-99de39553c69</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-139085eb-2f52-472e-95ae-f3f88e7396dc</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column27</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-c705b39d-09bd-4cec-a4a2-99de39553c69</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column28</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-68ac1b8a-82b7-4edf-af5d-bbd22d933ded</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>flowArguments</name>
@@ -1734,6 +1801,24 @@
                         <rightValue>Awaiting pre-requisites</rightValue>
                     </criteria>
                 </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-68ac1b8a-82b7-4edf-af5d-bbd22d933ded</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Important notes</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection14</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
