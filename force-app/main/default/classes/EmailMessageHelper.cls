@@ -193,7 +193,7 @@ public with sharing class EmailMessageHelper {
                         //errors.addAll(checkBcc(outboundMessage, bypassValidation));
                         errors.addAll(checkCc(outboundMessage, emailConfig, householdId, bypassValidation));
                         errors.addAll(checkTo(outboundMessage, emailConfig, householdId, bypassValidation));
-                        if(bypassValidation){
+                        if(bypassValidation && outboundMessage.EmailMessage.Status == '3'){
                             householdsBypassRevert.add(new Account(Id = householdId, EmailRecipientValidationBypass__c = false));
                         }
                     } 
