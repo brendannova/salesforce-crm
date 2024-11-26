@@ -363,7 +363,8 @@ private class EmailMessageHelperTest {
             Incoming = false,
             RelatedToId = acc.Id,
             CcAddress = UserInfo.getUserEmail() + ',test@test.com',
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -373,5 +374,35 @@ private class EmailMessageHelperTest {
         System.assertEquals(Schema.EmailMessage.SObjectType, message.Id.getSobjectType(), 'Message failed to insert');
         acc = [SELECT Id, EmailRecipientValidationBypass__c FROM Account WHERE OW_admin_notes__c = 'EmailMessageHelperTestHousehold'];
         System.assertEquals(acc.EmailRecipientValidationBypass__c, false, 'Bypass not reset to false');
+    }   
+    
+        @isTest
+    static void sendEmail_bypassValidation_failed(){
+        String devName = 'STARTER_EMAIL';
+        Id emailTemplateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :devName].Id;
+        Account acc = [SELECT Id FROM Account WHERE OW_admin_notes__c = 'EmailMessageHelperTestHousehold'];
+        acc.EmailRecipientValidationBypass__c = true;
+        update acc;
+        OrgWideEmailAddress fromEmail = [SELECT Id, Address FROM OrgWideEmailAddress ORDER BY Address ASC LIMIT 1];
+        EmailMessage message = new EmailMessage(
+            FromAddress = fromEmail.Address,
+            ToAddress = 'test@test.com,test2@test.com',
+            BccAddress = 'test@test.com',
+            Subject = 'Test',
+            TextBody = 'Testing',
+            Incoming = false,
+            RelatedToId = acc.Id,
+            CcAddress = UserInfo.getUserEmail() + ',test@test.com',
+            EmailTemplateId = emailTemplateId,
+            Status = '5'
+        );
+        try{
+            insert message;
+        }  catch (DmlException e) {
+            System.debug(e);
+        }
+        System.assertEquals(Schema.EmailMessage.SObjectType, message.Id.getSobjectType(), 'Message failed to insert');
+        acc = [SELECT Id, EmailRecipientValidationBypass__c FROM Account WHERE OW_admin_notes__c = 'EmailMessageHelperTestHousehold'];
+        System.assertEquals(acc.EmailRecipientValidationBypass__c, true, 'Bypass not reset to false');
     }   
 }
