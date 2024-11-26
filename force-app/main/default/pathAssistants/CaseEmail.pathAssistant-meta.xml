@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Case</entityName>
+    <fieldName>Status</fieldName>
+    <masterLabel>Case | Email</masterLabel>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;We&amp;#39;re awaiting a client response or the SLA has been paused. To close this case, update the status to &amp;#39;Closed&amp;#39;&lt;/p&gt;</info>
+        <picklistValueName>Await response</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;This email is closed and you can no longer send an email or post on the chatter feed. To reopen the case manually, update the status to &amp;#39;In progress&amp;#39; and a new SLA will be started. If a reply is received, the email will reopen automatically. &lt;/p&gt;</info>
+        <picklistValueName>Closed</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;A reply is needed on this email and an SLA is in progress. You can pause the SLA, or close this email by updating the status using the bar above&lt;/p&gt;</info>
+        <picklistValueName>In Progress</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <info>&lt;p&gt;To progress this case, please send an email using the &amp;#39;Send Email&amp;#39; tab&lt;/p&gt;</info>
+        <picklistValueName>New</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Email</recordTypeName>
+</PathAssistant>
