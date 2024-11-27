@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InformationRequestStatus__c</fullName>
+    <description>Indicates the progress of our information request</description>
+    <label>Information request status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>AuthorityLevel__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>To be sent</fullName>
+                <default>false</default>
+                <label>To be sent</label>
+            </value>
+            <value>
+                <fullName>Sent to client</fullName>
+                <default>false</default>
+                <label>Sent to client</label>
+            </value>
+            <value>
+                <fullName>Sent to provider</fullName>
+                <default>false</default>
+                <label>Sent to provider</label>
+            </value>
+            <value>
+                <fullName>Processing</fullName>
+                <default>false</default>
+                <label>Processing</label>
+            </value>
+            <value>
+                <fullName>On the way</fullName>
+                <default>false</default>
+                <label>On the way</label>
+            </value>
+            <value>
+                <fullName>Received</fullName>
+                <default>false</default>
+                <label>Received</label>
+            </value>
+            <value>
+                <fullName>Not required</fullName>
+                <default>false</default>
+                <label>Not required</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Information only (LOA)</controllingFieldValue>
+            <controllingFieldValue>Servicing agent (TOS)</controllingFieldValue>
+            <controllingFieldValue>Client managed (None)</controllingFieldValue>
+            <valueName>To be sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information only (LOA)</controllingFieldValue>
+            <controllingFieldValue>Servicing agent (TOS)</controllingFieldValue>
+            <controllingFieldValue>Client managed (None)</controllingFieldValue>
+            <valueName>Sent to client</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information only (LOA)</controllingFieldValue>
+            <controllingFieldValue>Servicing agent (TOS)</controllingFieldValue>
+            <valueName>Sent to provider</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information only (LOA)</controllingFieldValue>
+            <controllingFieldValue>Servicing agent (TOS)</controllingFieldValue>
+            <valueName>Processing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information only (LOA)</controllingFieldValue>
+            <controllingFieldValue>Servicing agent (TOS)</controllingFieldValue>
+            <controllingFieldValue>Client managed (None)</controllingFieldValue>
+            <valueName>On the way</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information only (LOA)</controllingFieldValue>
+            <controllingFieldValue>Servicing agent (TOS)</controllingFieldValue>
+            <controllingFieldValue>Client managed (None)</controllingFieldValue>
+            <valueName>Received</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Information only (LOA)</controllingFieldValue>
+            <controllingFieldValue>Servicing agent (TOS)</controllingFieldValue>
+            <controllingFieldValue>Client managed (None)</controllingFieldValue>
+            <valueName>Not required</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

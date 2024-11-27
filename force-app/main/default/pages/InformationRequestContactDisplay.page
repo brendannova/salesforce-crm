@@ -1,0 +1,51 @@
+<apex:page controller="InformationRequestContactDisplay" lightningStyleSheets="true">
+    <apex:pageBlock title="Provider details">
+        <apex:pageBlockSection >
+            <apex:outputField value="{! ProviderContact.Name }"/>
+            <apex:outputField value="{! ProviderContact.Email__c }"/>
+            <apex:outputField value="{! ProviderContact.Telephone__c }"/>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+        <apex:pageBlock title="Provider secret">
+        <apex:pageBlockSection >
+            <apex:form >
+                <apex:inputField value="{! InfoReq.ProviderSecret__c }"/>
+                <apex:commandButton action="{! save }" value="Update" />
+            </apex:form>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Primary owner details">
+        <apex:pageBlockSection >
+            <apex:outputField label="Name" value="{! PrimaryOwner.Name }"/>
+            <apex:outputField value="{! PrimaryOwner.PersonBirthdate }"/>
+            <apex:outputField value="{! PrimaryOwner.National_Insurance_Number__pc }"/>
+            <apex:outputField label="Address" value="{! PrimaryOwner.FinServ__ShippingAddress__pc }"/>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Joint owner details" rendered="{!visibleJoint}">
+        <apex:pageBlockSection >
+            <apex:outputField label="Name" value="{! JointOwner.Name }"/>
+            <apex:outputField value="{! JointOwner.PersonBirthdate }"/>
+            <apex:outputField value="{! JointOwner.National_Insurance_Number__pc }"/>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Call details">
+
+            <apex:form >
+                <apex:pageBlockSection >
+                    <apex:inputText label="Who did you speak to?" value="{!callName}"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                    <apex:inputText label="What number did you call?" value="{!callNumber}"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                    <apex:inputTextArea label="Call outcomes" value="{!callOutcomes}"/>
+                </apex:pageBlockSection>
+                <apex:commandButton rendered="{!visibleButton}" action="{!postToChatter }" value="Post to chatter" />
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>

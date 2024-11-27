@@ -190,6 +190,41 @@ public class fake_data_factory_v2 {
             }
             insert financial_products;
             
+            InformationRequestType__c irt = new InformationRequestType__c(
+                Name = 'Standard - third party',
+                ChecklistLevel__c = 'Full',
+                BuilderLevel__c = 'Full analysis',
+                InformationSource__c = 'Third party provider',
+                DeveloperName__c = 'STANDARD_THIRDPARTY'
+                
+            );
+            insert irt;
+            
+            List<String> statuses = new List<String>{'Setup','Information request to be sent','Awaiting policy pre-requisites','Awaiting ad hoc action','Awaiting advice progression', 'Awaiting initial information','Fund analysis','Complete','Checklist review'};
+            
+            Integer i = 0;
+            Integer j = 0;
+            
+            // Create IRs
+            List<InformationRequest__c> irs = new List<InformationRequest__c>();
+            for ( FinServ__FinancialAccount__c fp : financial_products ){ 
+                j = math.mod(i,6);
+                InformationRequest__c ir = new InformationRequest__c (
+                    FinancialProductFinServ__c = fp.Id,
+                    Status__c = statuses[j],
+                    Advice__c = advice.id,
+                    InformationRequestType__c = irt.id,
+                    ComplaintStatus__c= 'Lodged',
+                    FirstExpectedReceiptDate__c = Date.today()
+                    
+                );
+                i++;
+                irs.add(ir);
+            }
+            insert irs;
+        
+            
+         
             // Create LOAs for the financial products
             List<LOA__c> loas = new List<LOA__c>();
             for( FinServ__FinancialAccount__c financial_product : financial_products){
@@ -233,6 +268,63 @@ public class fake_data_factory_v2 {
             }
             insert(novaprods);
             
+            Product__c prod = new Product__c(
+                Name = 'ISA',
+                ReferenceName__c = 'SSISA_HUBWISE'
+                
+            );
+            insert prod;
+            
+            RecommendationType__c rt = new RecommendationType__c(
+                Name = 'Open product',
+                ReferenceName__c = 'OPEN_PRODUCT',
+                Dependency__c = 'Not Applicable', 
+                HasAmount__c = 'Not Applicable', 
+                HasDestination__c = 'Not Applicable', 
+                HasFrequency__c = 'Not Applicable', 
+                HasProduct__c = 'Required', 
+                HasSource__c = 'Not Applicable', 
+                InvestmentMandate__c = 'Required', 
+                PaidBy__c = 'Not Applicable', 
+                Phasing__c = 'Not Applicable', 
+                TransferNotes__c = 'Not Applicable', 
+                TransferType__c = 'Not Applicable'
+            );
+            insert rt;
+            
+            RecommendationType__c rtls = new RecommendationType__c(
+                Name = 'Lump sum',
+                ReferenceName__c = 'LUMP_SUM',
+                Dependency__c = 'Not Applicable', 
+                HasAmount__c = 'Required', 
+                HasDestination__c = 'Required', 
+                HasFrequency__c = 'Not Applicable', 
+                HasProduct__c = 'Not Applicable', 
+                HasSource__c = 'Not Applicable', 
+                InvestmentMandate__c = 'Not Applicable', 
+                PaidBy__c = 'Required', 
+                Phasing__c = 'Optional', 
+                TransferNotes__c = 'Not Applicable', 
+                TransferType__c = 'Not Applicable'
+            );
+            insert rtls;
+            
+            FulfilmentType__c ft = new FulfilmentType__c(
+                Name = 'Open product ISA',
+                RecommendationType__c = rt.Id,
+                DestinationProductType__c = '0121t0000001eNHAAY',
+                ReferenceName__c = 'OPEN_PRODUCT_ISA'
+            );
+            insert ft;
+            
+            FulfilmentType__c ftls = new FulfilmentType__c(
+                Name = 'Lump sum ISA',
+                RecommendationType__c = rtls.Id,
+                DestinationProductType__c = '0121t0000001eNHAAY',
+                ReferenceName__c = 'LUMP_SUM_ISA'
+            );
+            insert ftls;
+            
             List<Recommendation__c> recs = new List<Recommendation__c>();
             // Create recommendations for each of the clients in the household
             for(FinServ__FinancialAccount__c novaprod : novaprods) {
@@ -242,8 +334,8 @@ public class fake_data_factory_v2 {
                         Household__c = household_id,
                         InvestmentMandate__c = 'Passive Plus 80 (S)',
                         PrimaryOwner__c = novaprod.FinServ__PrimaryOwner__r.Id,
-                        Product__c = [ SELECT Id FROM Product__c WHERE ReferenceName__c = 'SSISA_HUBWISE' ].Id,
-                        RecommendationType__c = [ SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'OPEN_PRODUCT' ].Id,
+                        Product__c = prod.Id,
+                        RecommendationType__c = rt.Id,
                         Status__c = 'Accepted',
                         DestinationLegacy__c = novaprod.Id
                     );
@@ -257,7 +349,7 @@ public class fake_data_factory_v2 {
                         PrimaryOwner__c = novaprod.FinServ__PrimaryOwner__r.Id,
                         PaidBy__c = 'Client',
                         PhasingFrequency__c = 'Single',
-                        RecommendationType__c = [ SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'LUMP_SUM' ].Id,
+                        RecommendationType__c = rtls.Id,
                         Status__c = 'Accepted',
                         DestinationLegacy__c = novaprod.Id
                     );
