@@ -136,6 +136,13 @@
                 <elementReference>Get_primary_contact_details.Name</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>case.CreatedSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Manual</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_new_case</targetReference>
         </connector>

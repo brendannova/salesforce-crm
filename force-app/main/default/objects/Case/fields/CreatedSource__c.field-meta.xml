@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CreatedSource__c</fullName>
+    <description>Used on email cases to indicate if email was initially created by an internal user, or by email-to-case functionality</description>
+    <label>Created source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Manual</fullName>
+                <default>false</default>
+                <label>Manual</label>
+            </value>
+            <value>
+                <fullName>Email-to-case</fullName>
+                <default>false</default>
+                <label>Email-to-case</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
