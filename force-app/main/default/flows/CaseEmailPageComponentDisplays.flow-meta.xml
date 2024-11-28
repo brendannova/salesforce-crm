@@ -1,16 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_record_type_ID_Action_1</name>
+        <label>Get record type ID Action 1</label>
+        <locationX>1282</locationX>
+        <locationY>458</locationY>
+        <actionName>RecordTypeGetId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Get_related_cases_from_household</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>recordTypeDeveloperName</name>
+            <value>
+                <stringValue>Email</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectType</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>emailRecordTypeId</assignToReference>
+            <name>recordTypeId</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Go_to_email</name>
+        <label>Go to email</label>
+        <locationX>1282</locationX>
+        <locationY>1190</locationY>
+        <actionName>c:navigateToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>DisplayRelatedCasesFromHousehold.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:navigateToRecord</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Add_case_to_collection</name>
+        <label>Add case to collection</label>
+        <locationX>1370</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>casesToDisplay</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_cases</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_cases</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_owner_name</name>
+        <label>Assign owner name</label>
+        <locationX>1370</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_cases.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ownerName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_case_to_collection</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assign_person_name</name>
         <label>Assign person name</label>
-        <locationX>138</locationX>
+        <locationX>490</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Loop_facts_found.Person__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_person.AddressedName__pc</elementReference>
+                <elementReference>PersonName</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -20,7 +102,7 @@
     <assignments>
         <name>Assign_to_collection</name>
         <label>Assign to collection</label>
-        <locationX>138</locationX>
+        <locationX>490</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>displayFactsCollection</assignToReference>
@@ -36,8 +118,8 @@
     <decisions>
         <name>Facts_found</name>
         <label>Facts found?</label>
-        <locationX>182</locationX>
-        <locationY>458</locationY>
+        <locationX>534</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Empty_screen</targetReference>
         </defaultConnector>
@@ -59,10 +141,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_SLA_icon</name>
+        <label>Is SLA icon key</label>
+        <locationX>545</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Get_household_ID_from_case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>SLA_icon</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inputEnum</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SLA_ICON_KEY</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DisplaySlaIcons</targetReference>
+            </connector>
+            <label>SLA icon</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Which_input_chosen</name>
         <label>Which input chosen?</label>
-        <locationX>644</locationX>
-        <locationY>134</locationY>
+        <locationX>1040</locationX>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Display_facts_input</name>
@@ -75,24 +182,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_case</targetReference>
+                <targetReference>Get_Facts</targetReference>
             </connector>
             <label>Display facts input</label>
-        </rules>
-        <rules>
-            <name>Display_SLA_icon_key</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inputEnum</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>SLA_ICON_KEY</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>DisplaySlaIcons</targetReference>
-            </connector>
-            <label>Display SLA icon key</label>
         </rules>
         <rules>
             <name>Display_preferred_name</name>
@@ -105,24 +197,64 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>get_household_id_from_case</targetReference>
+                <targetReference>Get_clients_in_household</targetReference>
             </connector>
             <label>Display preferred name</label>
+        </rules>
+        <rules>
+            <name>Related_household_emails</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inputEnum</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HOUSEHOLD_EMAILS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_record_type_ID_Action_1</targetReference>
+            </connector>
+            <label>Related household emails</label>
         </rules>
     </decisions>
     <description>Flow used to display page components on email cases, components include a data table of helpful facts from the household, and a description of each SLA icon</description>
     <environments>Default</environments>
+    <formulas>
+        <name>ownerName</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Loop_cases.Owner:Group.Name}), {!Loop_cases.Owner:User.FirstName} + &#39; &#39; + {!Loop_cases.Owner:User.LastName} , 
+{!Loop_cases.Owner:Group.Name})</expression>
+    </formulas>
+    <formulas>
+        <name>PersonName</name>
+        <dataType>String</dataType>
+        <expression>{!Loop_facts_found.Person__r.FirstName} + &#39; &#39; + {!Loop_facts_found.Person__r.LastName}</expression>
+    </formulas>
     <interviewLabel>Case | Display helpful information {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Case | Email | Page component displays</label>
     <loops>
+        <name>Loop_cases</name>
+        <label>Loop cases</label>
+        <locationX>1282</locationX>
+        <locationY>674</locationY>
+        <collectionReference>Get_related_cases_from_household</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_owner_name</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Display_related_cases</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>Loop_facts_found</name>
         <label>Loop facts found</label>
-        <locationX>50</locationX>
-        <locationY>566</locationY>
+        <locationX>402</locationX>
+        <locationY>674</locationY>
         <collectionReference>Get_Facts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Get_person</targetReference>
+            <targetReference>Assign_person_name</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Display_facts</targetReference>
@@ -148,34 +280,11 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_case</name>
-        <label>Get case</label>
-        <locationX>182</locationX>
-        <locationY>242</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Facts</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>AccountId</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Get household facts relevant to ops when sending emails. This query gets all vulnerability facts where the assessment is vulnerable and contact preferences related to emails and preferred method of contact.</description>
         <name>Get_Facts</name>
         <label>Get Facts</label>
-        <locationX>182</locationX>
-        <locationY>350</locationY>
+        <locationX>534</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Facts_found</targetReference>
@@ -185,7 +294,7 @@
             <field>Household__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_case.AccountId</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
         <filters>
@@ -228,13 +337,13 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>get_household_id_from_case</name>
-        <label>get household id from case</label>
-        <locationX>842</locationX>
+        <name>Get_household_ID_from_case</name>
+        <label>Get household ID from case</label>
+        <locationX>1040</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_clients_in_household</targetReference>
+            <targetReference>Which_input_chosen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -244,37 +353,53 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>AccountId</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>householdId</assignToReference>
+            <field>AccountId</field>
+        </outputAssignments>
     </recordLookups>
     <recordLookups>
-        <name>Get_person</name>
-        <label>Get person</label>
-        <locationX>138</locationX>
-        <locationY>674</locationY>
+        <name>Get_related_cases_from_household</name>
+        <label>Get related cases from household</label>
+        <locationX>1282</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_person_name</targetReference>
+            <targetReference>Loop_cases</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Id</field>
+            <field>AccountId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Loop_facts_found.Person__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>emailRecordTypeId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Case</object>
+        <sortField>Status</sortField>
+        <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
         <name>Display_facts</name>
         <label>Display facts</label>
-        <locationX>50</locationX>
+        <locationX>402</locationX>
         <locationY>1082</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -337,10 +462,91 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Display_related_cases</name>
+        <label>Display related cases</label>
+        <locationX>1282</locationX>
+        <locationY>1082</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Go_to_email</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayRelatedCasesFromHousehold</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Case</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Other household emails</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isShowSearchBar</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>casesToDisplay</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Subject&quot;,&quot;guid&quot;:&quot;column-b52f&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Subject&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Status&quot;,&quot;guid&quot;:&quot;column-136e&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;SlaIcon__c&quot;,&quot;guid&quot;:&quot;column-1b3f&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;SLA Icon&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;OwnerId&quot;,&quot;guid&quot;:&quot;column-1e61&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Owner&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Owner ID&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;LastEmailReceivedDateTime__c&quot;,&quot;guid&quot;:&quot;column-c055&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:4,&quot;label&quot;:&quot;Last email received date time&quot;,&quot;type&quot;:&quot;customDateTime&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedRows</name>
+                <value>
+                    <elementReference>casesToDisplay</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <nextOrFinishButtonLabel>Go to email</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>DisplayClientInformation</name>
         <label>DisplayClientInformation</label>
-        <locationX>842</locationX>
-        <locationY>458</locationY>
+        <locationX>930</locationX>
+        <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -404,7 +610,7 @@
     <screens>
         <name>DisplaySlaIcons</name>
         <label>Display SLA icons</label>
-        <locationX>578</locationX>
+        <locationX>50</locationX>
         <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -801,8 +1007,8 @@
     <screens>
         <name>Empty_screen</name>
         <label>Empty screen</label>
-        <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationX>666</locationX>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -810,18 +1016,18 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>518</locationX>
+        <locationX>419</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Which_input_chosen</targetReference>
+            <targetReference>Is_SLA_icon</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Get_clients_in_household</name>
         <label>Get clients in household</label>
-        <locationX>842</locationX>
-        <locationY>350</locationY>
+        <locationX>930</locationX>
+        <locationY>458</locationY>
         <connector>
             <targetReference>DisplayClientInformation</targetReference>
         </connector>
@@ -829,7 +1035,7 @@
         <inputAssignments>
             <name>householdId</name>
             <value>
-                <elementReference>get_household_id_from_case.AccountId</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -843,6 +1049,14 @@
             <name>personAccounts</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>casesToDisplay</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
     <variables>
         <name>clientsInHousehold</name>
         <dataType>SObject</dataType>
@@ -858,6 +1072,20 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>CustomerFact__c</objectType>
+    </variables>
+    <variables>
+        <name>emailRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>inputEnum</name>
