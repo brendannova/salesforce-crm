@@ -135,8 +135,8 @@ public class fake_data_factory_v2 {
             Public_Provider_Names__c[] public_providers = [SELECT Id FROM Public_Provider_Names__c WHERE Name =: public_provider_name];
             if(public_providers.size() == 0){
                 public_provider = new Public_Provider_Names__c (
-                    Name = public_provider_name,
-                    ReferenceName__c = public_provider_name
+                    Name = public_provider_name
+                    //DeveloperName__c = public_provider_name
                 );
                 insert public_provider;
             } else {

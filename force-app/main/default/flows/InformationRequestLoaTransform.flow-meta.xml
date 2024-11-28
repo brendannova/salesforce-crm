@@ -236,6 +236,13 @@ IF(ISBLANK({!loa.LOA_Completed_Date__c})&amp;&amp;NOT(ISBLANK({!loa.Date_Checkli
                     <elementReference>loa.Id</elementReference>
                 </value>
             </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>FolderLink__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.Policy_G_Drive_Folder__c</elementReference>
+                </value>
+            </transformValueActions>
         </transformValues>
     </transforms>
     <variables>

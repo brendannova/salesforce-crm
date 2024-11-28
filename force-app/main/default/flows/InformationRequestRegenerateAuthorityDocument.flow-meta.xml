@@ -39,6 +39,20 @@
                 <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>body.useSignature</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>useSignatureFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>body.authorityLevel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Confirm_authority_level</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Call_document_generation_service</targetReference>
         </connector>
@@ -100,7 +114,7 @@
             <label>Success</label>
         </rules>
     </decisions>
-    <description>Flow to allow specialists to call out to comet to regenerate an authority document.</description>
+    <description>Flow to allow specialists to call out to comet to (re)generate an authority document.</description>
     <dynamicChoiceSets>
         <name>authorityLevel</name>
         <dataType>Picklist</dataType>
@@ -109,9 +123,22 @@
         <picklistField>AuthorityLevel__c</picklistField>
         <picklistObject>InformationRequest__c</picklistObject>
     </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>sigFormatChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>InformationRequestFormat__c</picklistField>
+        <picklistObject>ProviderContact__c</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>useSignatureFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!Signature_format}=&quot;Digital signature&quot;, true, false)</expression>
+    </formulas>
     <interviewLabel>Information Request | Regenerate authority document {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Information Request | Regenerate authority document</label>
+    <label>IR | Quick action | Generate authority document</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -208,6 +235,18 @@
                 <elementReference>Get_IR.AuthorityLevel__c</elementReference>
             </defaultValue>
             <fieldText>Confirm authority level</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Signature_format</name>
+            <choiceReferences>sigFormatChoice</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_IR.ProviderContact__r.InformationRequestFormat__c</elementReference>
+            </defaultValue>
+            <fieldText>Signature format</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>

@@ -1367,6 +1367,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>informationRequestRelatedList</componentName>
+                <identifier>c_informationRequestRelatedList2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Prospect</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>irDisplay</componentName>
                 <identifier>c_irDisplay</identifier>
             </componentInstance>

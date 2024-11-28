@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_advice_to_IR</name>
         <label>Assign advice to IR</label>
-        <locationX>710</locationX>
-        <locationY>458</locationY>
+        <locationX>578</locationX>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>ir.Advice__c</assignToReference>
             <operator>Assign</operator>
@@ -21,14 +21,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_provider_contacts</targetReference>
+            <targetReference>Which_task_is_required_now</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_follow_on_task</name>
         <label>Assign follow on task</label>
         <locationX>314</locationX>
-        <locationY>1322</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>Assign_follow_on_taskChaseDetails</name>
         <label>Assign follow on task</label>
         <locationX>50</locationX>
-        <locationY>1322</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +60,7 @@
         <name>Assign_follow_on_taskClientSend</name>
         <label>Assign follow on task</label>
         <locationX>578</locationX>
-        <locationY>1322</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -76,7 +76,7 @@
         <name>Update_IR</name>
         <label>Update IR</label>
         <locationX>314</locationX>
-        <locationY>1430</locationY>
+        <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>ir.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -141,7 +141,7 @@
         <name>Update_IR_Default</name>
         <label>Update IR</label>
         <locationX>842</locationX>
-        <locationY>1322</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>ir.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +206,7 @@
         <name>Update_IRClientSend</name>
         <label>Update IR</label>
         <locationX>578</locationX>
-        <locationY>1430</locationY>
+        <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>ir.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -271,7 +271,7 @@
         <name>Update_IRPolicydetails</name>
         <label>Update IR</label>
         <locationX>50</locationX>
-        <locationY>1430</locationY>
+        <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>ir.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -336,19 +336,26 @@
         <name>Is_this_IR_linked_to_advice</name>
         <label>Is this IR linked to advice?</label>
         <locationX>446</locationX>
-        <locationY>134</locationY>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Get_advice</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesLinkedAdvice</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ir.Advice__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>typeSelect.firstSelectedRow.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CONTRIBUTION_HISTORY</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -361,7 +368,7 @@
         <name>Which_task_is_required_now</name>
         <label>Which task is required now</label>
         <locationX>446</locationX>
-        <locationY>1214</locationY>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Update_IR_Default</targetReference>
         </defaultConnector>
@@ -442,8 +449,16 @@
     <formulas>
         <name>awaitingPreReqsFormula</name>
         <dataType>Boolean</dataType>
-        <expression>IF( ISBLANK({!ir.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c}) || ({!ir.FinancialProductFinServ__r.Public_Provider_Name__r.Name} == &quot;Unknown&quot;), false, 
-IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &lt; 18 &amp;&amp; ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}),false,true))</expression>
+        <expression>IF(
+ISBLANK({!ir.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c})
+||
+ {!ir.FinancialProductFinServ__r.Public_Provider_Name__r.Name} == &quot;Unknown&quot;
+||
+(
+NOT(CONTAINS(TEXT({!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Status__c}),&quot;Junior&quot;))
+||
+NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
+), true, false)</expression>
     </formulas>
     <formulas>
         <name>builderStatus</name>
@@ -463,7 +478,7 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
     <formulas>
         <name>statusFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISBLANK({!advice.AllLoaInfoReceivedTimestamp__c}), &quot;Awaiting advice progression&quot;,IF(NOT({!awaitingPreReqsFormula}),&quot;Awaiting policy pre-requisites&quot;,&quot;Information request to be sent&quot;))</expression>
+        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISBLANK({!advice.AllLoaInfoReceivedTimestamp__c}), &quot;Awaiting advice progression&quot;,IF({!awaitingPreReqsFormula},&quot;Awaiting policy pre-requisites&quot;,&quot;Information request to be sent&quot;))</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Set up {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IR | Orchestrator | Set up</label>
@@ -489,8 +504,8 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>710</locationX>
-        <locationY>242</locationY>
+        <locationX>578</locationX>
+        <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Link_advice_screen</targetReference>
@@ -539,10 +554,37 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_financial_product_types</name>
+        <label>Get financial product types</label>
+        <locationX>446</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Financial_product_type_select_screen</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>FinancialProductType__c</object>
+        <sortField>SortOrder__c</sortField>
+        <sortOrder>Asc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_info_request_types</name>
         <label>Get info request types</label>
         <locationX>446</locationX>
-        <locationY>998</locationY>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Type_select_screen</targetReference>
@@ -569,7 +611,7 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <name>Get_provider_contacts</name>
         <label>Get provider contacts</label>
         <locationX>446</locationX>
-        <locationY>782</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Contact_select_screen</targetReference>
@@ -593,16 +635,12 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
     <recordLookups>
         <name>GetAdvicePreSelected</name>
         <label>Get advice</label>
-        <locationX>182</locationX>
-        <locationY>242</locationY>
+        <locationX>314</locationX>
+        <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_provider_contacts</targetReference>
+            <targetReference>Which_task_is_required_now</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -619,8 +657,8 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
     <recordRollbacks>
         <name>Rollback</name>
         <label>Rollback</label>
-        <locationX>974</locationX>
-        <locationY>350</locationY>
+        <locationX>842</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Error_screen</targetReference>
         </connector>
@@ -629,7 +667,7 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <name>Update_data_request</name>
         <label>Update data request</label>
         <locationX>446</locationX>
-        <locationY>1622</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>Update_financial_product</targetReference>
         </connector>
@@ -643,7 +681,7 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>446</locationX>
-        <locationY>1730</locationY>
+        <locationY>1946</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Rollback</targetReference>
@@ -657,6 +695,12 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
             </value>
         </filters>
         <inputAssignments>
+            <field>FinancialProductType__c</field>
+            <value>
+                <elementReference>fptSelect.firstSelectedRow.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ProviderContact__c</field>
             <value>
                 <elementReference>contactSelect.firstSelectedRow.Id</elementReference>
@@ -669,7 +713,7 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <name>Contact_select_screen</name>
         <label>Contact select screen</label>
         <locationX>446</locationX>
-        <locationY>890</locationY>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -735,8 +779,8 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
     <screens>
         <name>Error_screen</name>
         <label>Error screen</label>
-        <locationX>974</locationX>
-        <locationY>458</locationY>
+        <locationX>842</locationX>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -749,10 +793,77 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Financial_product_type_select_screen</name>
+        <label>Financial product type select screen</label>
+        <locationX>446</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_provider_contacts</targetReference>
+        </connector>
+        <fields>
+            <name>fptSelectExplain</name>
+            <fieldText>&lt;p&gt;Please choose the correct &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;financial product type&lt;/span&gt; for this information request.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>fptSelect</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>FinancialProductType__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Data Table</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>Get_financial_product_types</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-aa1a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Product Type Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;DescriptionInternal__c&quot;,&quot;guid&quot;:&quot;column-1536&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Description (internal)&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Link_advice_screen</name>
         <label>Link advice screen</label>
-        <locationX>710</locationX>
-        <locationY>350</locationY>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -819,12 +930,12 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <name>Type_select_screen</name>
         <label>Type select screen</label>
         <locationX>446</locationX>
-        <locationY>1106</locationY>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Which_task_is_required_now</targetReference>
+            <targetReference>Is_this_IR_linked_to_advice</targetReference>
         </connector>
         <fields>
             <name>typeSelect</name>
@@ -948,7 +1059,7 @@ IF( {!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &
         <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_this_IR_linked_to_advice</targetReference>
+            <targetReference>Get_financial_product_types</targetReference>
         </connector>
     </start>
     <status>Active</status>
