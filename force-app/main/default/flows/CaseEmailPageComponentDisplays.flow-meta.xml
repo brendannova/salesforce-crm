@@ -61,7 +61,7 @@
     <decisions>
         <name>Which_input_chosen</name>
         <label>Which input chosen?</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -93,6 +93,21 @@
                 <targetReference>DisplaySlaIcons</targetReference>
             </connector>
             <label>Display SLA icon key</label>
+        </rules>
+        <rules>
+            <name>Display_preferred_name</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inputEnum</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PREFERRED_NAME</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>get_household_id_from_case</targetReference>
+            </connector>
+            <label>Display preferred name</label>
         </rules>
     </decisions>
     <description>Flow used to display page components on email cases, components include a data table of helpful facts from the household, and a description of each SLA icon</description>
@@ -213,6 +228,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>get_household_id_from_case</name>
+        <label>get household id from case</label>
+        <locationX>842</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_clients_in_household</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_person</name>
         <label>Get person</label>
         <locationX>138</locationX>
@@ -252,7 +290,7 @@
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Household facts</stringValue>
+                    <stringValue>Important facts</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -283,6 +321,71 @@
                 <name>columns</name>
                 <value>
                     <stringValue>[{&quot;apiName&quot;:&quot;FactCategoryName__c&quot;,&quot;guid&quot;:&quot;column-8c3d&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Fact Category Name&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-7385&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Customer Fact Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Person__c&quot;,&quot;guid&quot;:&quot;column-0a42&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Person&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;Notes__c&quot;,&quot;guid&quot;:&quot;column-5276&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Notes&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>DisplayClientInformation</name>
+        <label>DisplayClientInformation</label>
+        <locationX>842</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayClientInfo</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Account</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>People in household</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>NO_SELECTION</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>clientsInHousehold</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-b8e9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Full name&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;AddressedName__pc&quot;,&quot;guid&quot;:&quot;column-fe57&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Preferred Name&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Addressed Name&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;ServiceContactPreferences__pc&quot;,&quot;guid&quot;:&quot;column-e933&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Service Contact Preferences&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;FinServ__Status__c&quot;,&quot;guid&quot;:&quot;column-0d7e&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:3,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -707,13 +810,47 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>386</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Which_input_chosen</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Get_clients_in_household</name>
+        <label>Get clients in household</label>
+        <locationX>842</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>DisplayClientInformation</targetReference>
+        </connector>
+        <flowName>AccountGetPeopleInHousehold</flowName>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>get_household_id_from_case.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>role</name>
+            <value>
+                <stringValue>Client</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>clientsInHousehold</assignToReference>
+            <name>personAccounts</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <name>clientsInHousehold</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
     <variables>
         <name>displayFactsCollection</name>
         <dataType>SObject</dataType>
