@@ -123,7 +123,7 @@ public class EmailInformationRequestUpdateTable {
                             // Complaint resolved, still chasing
                             } else if ( r.ComplaintStatus__c == 'Resolved') {
                                 status = 'On track';
-                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + System.Label.EmailDataRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
+                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
                                 
                             // No complaint made
                             } else {
@@ -135,7 +135,7 @@ public class EmailInformationRequestUpdateTable {
                         // Expected receipt date in future
                         } else {
                             status = 'On track';
-                            message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + System.Label.EmailDataRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
+                            message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
                         }  
                     }
                 }
