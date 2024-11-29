@@ -3722,12 +3722,20 @@
       },
       &quot;GDriveJobCreateAuthorityDocumentBody&quot;: {
         &quot;properties&quot;: {
+          &quot;authorityLevel&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
           &quot;infoRequestId&quot;: {
             &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;useSignature&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
           }
         },
         &quot;required&quot;: [
-          &quot;infoRequestId&quot;
+          &quot;authorityLevel&quot;,
+          &quot;infoRequestId&quot;,
+          &quot;useSignature&quot;
         ],
         &quot;type&quot;: &quot;object&quot;
       },
@@ -4846,6 +4854,18 @@
       },
       &quot;LegacyFinancialProductOwner&quot;: {
         &quot;properties&quot;: {
+          &quot;addressCity&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;addressStreet&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;dateOfBirth&quot;: {
+            &quot;format&quot;: &quot;date&quot;,
+            &quot;type&quot;: &quot;string&quot;
+          },
           &quot;displayName&quot;: {
             &quot;maxLength&quot;: 1000,
             &quot;type&quot;: &quot;string&quot;
@@ -4857,17 +4877,42 @@
           &quot;lastName&quot;: {
             &quot;maxLength&quot;: 1000,
             &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;nationalInsuranceNumber&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;postCode&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
           }
         },
         &quot;required&quot;: [
+          &quot;addressCity&quot;,
+          &quot;addressStreet&quot;,
+          &quot;dateOfBirth&quot;,
           &quot;displayName&quot;,
           &quot;id&quot;,
-          &quot;lastName&quot;
+          &quot;lastName&quot;,
+          &quot;nationalInsuranceNumber&quot;,
+          &quot;postCode&quot;
         ],
         &quot;type&quot;: &quot;object&quot;
       },
       &quot;LegacyFinancialProductProvider&quot;: {
         &quot;properties&quot;: {
+          &quot;addressCity&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;addressStreet&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;email&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          },
           &quot;id&quot;: {
             &quot;maxLength&quot;: 1000,
             &quot;type&quot;: &quot;string&quot;
@@ -4875,11 +4920,24 @@
           &quot;name&quot;: {
             &quot;maxLength&quot;: 1000,
             &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;phone&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          },
+          &quot;postCode&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
           }
         },
         &quot;required&quot;: [
+          &quot;addressCity&quot;,
+          &quot;addressStreet&quot;,
+          &quot;email&quot;,
           &quot;id&quot;,
-          &quot;name&quot;
+          &quot;name&quot;,
+          &quot;phone&quot;,
+          &quot;postCode&quot;
         ],
         &quot;type&quot;: &quot;object&quot;
       },
