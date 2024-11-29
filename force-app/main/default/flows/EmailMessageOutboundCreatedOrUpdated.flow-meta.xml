@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Notify_creator_when_email_is_rejected</name>
+        <label>Notify creator when email is rejected</label>
+        <locationX>314</locationX>
+        <locationY>1271</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>UpdateRelatedCase</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>NotificationTypeId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>recipientIds</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Email rejected</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>RejectionNotificationbody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>customNotificationAction</nameSegment>
+        <offset>0</offset>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
         <name>Assign_case_fields_outbound</name>
         <label>Assign case fields outbound</label>
-        <locationX>1106</locationX>
+        <locationX>1634</locationX>
         <locationY>1055</locationY>
         <assignmentItems>
             <assignToReference>case.Status</assignToReference>
@@ -34,7 +79,7 @@
     <assignments>
         <name>Assign_case_id_variable</name>
         <label>Assign case id variable</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>case.Id</assignToReference>
@@ -71,9 +116,25 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_draft_status_on_case</name>
-        <label>Assign draft status on case</label>
+        <name>Assign_case_status_to_draft</name>
+        <label>Assign case status to draft</label>
         <locationX>314</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>case.EmailStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Email in draft</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_created_by_ID</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_case_status_to_draft_recalled</name>
+        <label>Assign case status to draft | recalled</label>
+        <locationX>578</locationX>
         <locationY>839</locationY>
         <assignmentItems>
             <assignToReference>case.EmailStatus__c</assignToReference>
@@ -87,9 +148,48 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_created_by_ID_to_collection</name>
+        <label>Assign created by ID to collection</label>
+        <locationX>314</locationX>
+        <locationY>1055</locationY>
+        <assignmentItems>
+            <assignToReference>recipientIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_created_by_ID.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_notification_type_ID</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_draft_status_on_case</name>
+        <label>Assign draft status on case</label>
+        <locationX>842</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>case.EmailStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Email in draft</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IsPrivateDraft</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateRelatedCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_holding_email_fields</name>
         <label>Assign holding email fields</label>
-        <locationX>578</locationX>
+        <locationX>1106</locationX>
         <locationY>839</locationY>
         <assignmentItems>
             <assignToReference>case.EmailStatus__c</assignToReference>
@@ -119,7 +219,7 @@
     <assignments>
         <name>Close_related_case</name>
         <label>Close related case</label>
-        <locationX>842</locationX>
+        <locationX>1370</locationX>
         <locationY>1055</locationY>
         <assignmentItems>
             <assignToReference>case.Status</assignToReference>
@@ -149,7 +249,7 @@
     <decisions>
         <name>Does_template_need_a_reply</name>
         <label>Does template need a reply</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>947</locationY>
         <defaultConnector>
             <targetReference>Assign_case_fields_outbound</targetReference>
@@ -174,7 +274,7 @@
     <decisions>
         <name>Has_email_been_sent</name>
         <label>Has email been sent?</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Update_related_case_email_status</targetReference>
@@ -200,7 +300,7 @@
     <decisions>
         <name>Update_related_case_email_status</name>
         <label>Update related case email status</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>731</locationY>
         <defaultConnector>
             <targetReference>UpdateRelatedCase</targetReference>
@@ -223,10 +323,77 @@
                     <stringValue>5</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In approval</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assign_case_status</targetReference>
             </connector>
             <label>Email in approval</label>
+        </rules>
+        <rules>
+            <name>Approval_rejected</name>
+            <conditionLogic>1 AND 2 AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RequestApproval__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_case_status_to_draft</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Approval rejected</label>
+        </rules>
+        <rules>
+            <name>Approval_recalled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RequestApproval__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Yes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>5</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ApprovalStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recalled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_case_status_to_draft_recalled</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Approval recalled</label>
         </rules>
         <rules>
             <name>Email_in_draft</name>
@@ -319,9 +486,31 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_created_by_ID</name>
+        <label>Get created by ID</label>
+        <locationX>314</locationX>
+        <locationY>947</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_created_by_ID_to_collection</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.CreatedById</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_email_template_config</name>
         <label>Get email template config</label>
-        <locationX>974</locationX>
+        <locationX>1502</locationX>
         <locationY>839</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -339,10 +528,33 @@
         <object>EmailConfiguration__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_notification_type_ID</name>
+        <label>Get notification type ID</label>
+        <locationX>314</locationX>
+        <locationY>1163</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Notify_creator_when_email_is_rejected</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>OW_notify_dedicated_specialist</stringValue>
+            </value>
+        </filters>
+        <object>CustomNotificationType</object>
+        <outputAssignments>
+            <assignToReference>NotificationTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <recordUpdates>
         <name>Close_case_milestone</name>
         <label>Close case milestone</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>539</locationY>
         <connector>
             <targetReference>Update_related_case_email_status</targetReference>
@@ -378,14 +590,24 @@
         <object>CaseMilestone</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Update_email_message</name>
+        <label>Update email message</label>
+        <locationX>974</locationX>
+        <locationY>1571</locationY>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>UpdateRelatedCase</name>
         <label>Update related case</label>
-        <locationX>710</locationX>
-        <locationY>1331</locationY>
+        <locationX>974</locationX>
+        <locationY>1463</locationY>
+        <connector>
+            <targetReference>Update_email_message</targetReference>
+        </connector>
         <inputReference>case</inputReference>
     </recordUpdates>
     <start>
-        <locationX>584</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_case_id_variable</targetReference>
@@ -411,9 +633,9 @@
     </start>
     <status>Active</status>
     <textTemplates>
-        <name>Notificationbody</name>
+        <name>RejectionNotificationbody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>You have a new email from {!$Record.FromName} with subject: {!$Record.Subject}.</text>
+        <text>Your email &quot;{!$Record.Subject}&quot; has been rejected. Click here to view the case record and comments</text>
     </textTemplates>
     <variables>
         <name>case</name>
