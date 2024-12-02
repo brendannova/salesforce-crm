@@ -16,12 +16,13 @@ import { refreshApex } from "@salesforce/apex";
 // The columns to be displayed in the table for new business
 const columnsNew = [
     { label: "Stage", fieldName: "Stage"},
-    { label: "Name", fieldName: "Name"},
-    { label: "Status", fieldName: "Advice_Status__c"},
-    { label: "Retirement call", fieldName: "RetirementCallStatus__c"},
+    { label: 'Name',fieldName: 'RecordLink', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
+    { label: "Status", fieldName: "Status"},
+    { label: "Retirement call", fieldName: "RetirementCallStatus"},
     { label: "Partner", fieldName: "Partner"},
     { label: "Planner", fieldName: "Planner"},
-    { label: "Risk call", fieldName: "RiskCallDate"},
+    { label: "Specialist", fieldName: "Specialist"},
+    { label: "Risk call", fieldName: "RiskCallDate", type: "date"},
     { label: "Priority", fieldName: "IsPriority__c", type: "boolean", editable: true},
     { label: "Notes", fieldName: "PlanningNotes__c", editable: true},
 ];
@@ -29,13 +30,26 @@ const columnsNew = [
 // The columns to be displayed in the table for existing customer advice
 const columnsExisting = [
     { label: "Stage", fieldName: "Stage"},
-    { label: "Name", fieldName: "Name"},
+    { label: 'Name',fieldName: 'RecordLink', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
     { label: "Advice type", fieldName: "AdviceType"},
-    { label: "Status", fieldName: "Advice_Status__c"},
-    { label: "Retirement call", fieldName: "RetirementCallStatus__c"},
+    { label: "Status", fieldName: "Status"},
+    { label: "Retirement call", fieldName: "RetirementCallStatus"},
     { label: "Partner", fieldName: "Partner"},
     { label: "Planner", fieldName: "Planner"},
-    { label: "Annual review", fieldName: "AnnualReviewDate"},
+    { label: "Specialist", fieldName: "Specialist"},
+    { label: "Annual review", fieldName: "AnnualReviewDate", type: "date"},
+    { label: "Priority", fieldName: "IsPriority__c", type: "boolean", editable: true},
+    { label: "Notes", fieldName: "PlanningNotes__c", editable: true},
+];
+
+const columnsSimplified = [
+    { label: "Stage", fieldName: "Stage"},
+    { label: 'Name',fieldName: 'RecordLink', type: 'url', typeAttributes: {label: { fieldName: 'Name' }, target: '_blank'}},
+    { label: "Advice type", fieldName: "AdviceType"},
+    { label: "Status", fieldName: "Status"},
+    { label: "Partner", fieldName: "Partner"},
+    { label: "Planner", fieldName: "Planner"},
+    { label: "Specialist", fieldName: "Specialist"},
     { label: "Priority", fieldName: "IsPriority__c", type: "boolean", editable: true},
     { label: "Notes", fieldName: "PlanningNotes__c", editable: true},
 ];
@@ -50,8 +64,6 @@ export default class AdvicePlanningPrioritisation extends LightningElement {
     dataLoaded = false;
     draftValues = [];
     adviceRefresh;
-    showOnboardingAdvice = false;
-    showExistingCustomerAdvice = false;
     onboardingdisabled = false;
     existingdisabled = false;
     
@@ -65,19 +77,22 @@ export default class AdvicePlanningPrioritisation extends LightningElement {
             let recordsTemp = JSON.parse(JSON.stringify(result.data));
             recordsTemp = recordsTemp.map(row => {
                 return {...row, 
+                    //Stage: this.getStageValue(row),
+                    /*
                     Planner: this.plannerValue(row), 
                     Household: row.Advice_Household__r.Name, 
                     Partner: row.Partner__r.Name,
                     AdviceType: this.adviceTypeValue(row),
                     RiskCallDate: this.riskCallDateValue(row),
                     NewOrExisting: this.getOnboardingOrExisting(row),
-                    Stage: this.getStageValue(row),
-                    AnnualReviewDate: this.getAnnualReviewDate(row),
+                    AnnualReviewDate: this.getAnnualReviewDate(row),*/
                 };
             })
             this.recordsAll = recordsTemp;
             this.recordsNew = this.recordsAll.filter((row) => row.NewOrExisting == 'NEW');;
             this.recordsExisting = this.recordsAll.filter((row) => row.NewOrExisting == 'EXISTING');;
+            this.recordsTopUp = this.recordsAll.filter((row) => row.NewOrExisting == 'TOP_UP');;
+            this.recordsWithdrawal = this.recordsAll.filter((row) => row.NewOrExisting == 'WITHDRAWAL');;
             if(this.showOnboardingAdvice){
                 this.recordsDisplay = this.recordsNew;
             } else if(this.showExistingCustomerAdvice){
@@ -99,17 +114,31 @@ export default class AdvicePlanningPrioritisation extends LightningElement {
         if(event.target.name == 'onboardingAdvice'){
             this.onboardingdisabled = true;
             this.existingdisabled = false;
+            this.topupdisabled = false;
+            this.withdrawaldisabled = false;
             this.columns = columnsNew;
-            this.showExistingCustomerAdvice = false;
             this.recordsDisplay = this.recordsNew;
-            this.showOnboardingAdvice = true;
         } else if(event.target.name == 'existingCustomerAdvice'){
             this.existingdisabled = true;
             this.onboardingdisabled = false;
+            this.topupdisabled = false;
+            this.withdrawaldisabled = false;
             this.columns = columnsExisting;
-            this.showOnboardingAdvice = false;
             this.recordsDisplay = this.recordsExisting;
-            this.showExistingCustomerAdvice = true;
+        } else if(event.target.name == 'topUpAdvice'){
+            this.existingdisabled = false;
+            this.onboardingdisabled = false;
+            this.topupdisabled = true;
+            this.withdrawaldisabled = false;
+            this.columns = columnsSimplified;
+            this.recordsDisplay = this.recordsTopUp;
+        } else if(event.target.name == 'withdrawalAdvice'){
+            this.existingdisabled = false;
+            this.onboardingdisabled = false;
+            this.topupdisabled = false;
+            this.withdrawaldisabled = true;
+            this.columns = columnsSimplified;
+            this.recordsDisplay = this.recordsWithdrawal;
         }
         this.dataLoaded = true;
     }
@@ -140,97 +169,5 @@ export default class AdvicePlanningPrioritisation extends LightningElement {
         this.dispatchEvent(toastEvent);
 
         await refreshApex (this.adviceRefresh);
-    }
-
-    // Return the planner name if there's a planner and a blank string otherwise. Prevents that will occur otherwise. 
-    plannerValue(row) {
-        if(row.Assigned_planner__c == null){
-            return '';
-        } else {
-            return row.Assigned_planner__r.Name;
-        }
-    }
-    
-    // Return the advice type name if there's an advice type and a blank string otherwise. Prevents that will occur otherwise. 
-    adviceTypeValue(row) {
-        if(row.AdviceType__c == null){
-            return '';
-        } else {
-            return row.AdviceType__r.Name;
-        }
-    }
-
-    // Format and return the risk call date
-    riskCallDateValue(row) {
-        if(row.RiskCallDate__c == null){
-            return '';
-        } else {
-            return new Date(row.RiskCallDate__c).toLocaleDateString("en-GB");
-        }
-    }
-    
-    getOnboardingOrExisting(row) {
-        if(row.New_or_existing_client__c == 'New'){
-            return 'NEW';
-        } else {
-            return 'EXISTING';
-        }
-    }
-
-    // Format and return the annual review month
-    getAnnualReviewDate(row) {
-        if(row.OW_review__c == null){
-            return '-';
-        } else {
-            return new Date(row.OW_review__r.OW_due_date__c).toLocaleString('default', { month: 'long' });;
-        }
-    }
-    
-    // Format and return a stage description value
-    getStageValue(row){
-        const narrativeStatus = row.NarrativeStatus__c;
-        const deckStatus = row.DeckStatus__c;
-        const status = row.Advice_Status__c;
-        if(status == 'Data gathering'){
-            return 'Data gathering';
-        } else if(status == 'Risk Call'){
-            if(row.RiskCallStatus__c == 'Ready'){
-                return 'Risk call | Ready';
-            } else if(row.RiskCallStatus__c == 'Booked'){
-                return 'Risk call | Booked';
-            } else if(row.RiskCallStatus__c == 'Complete'){
-                return 'Risk call | Complete';
-            }
-        } else if (status == 'Suitability in progress'){
-            if (narrativeStatus == 'Not started'){
-                return 'Narrative | Ready to start';
-            } else if (narrativeStatus == 'In progress') {
-                return 'Narrative | In progress';
-            } else if (narrativeStatus == 'Planner review') {
-                return 'Narrative | Planner review';
-            } else if (narrativeStatus == 'Resolve planner comments') {
-                return 'Narrative | Resolve planner comments';
-            } else if (narrativeStatus == 'Partner review') {
-                return 'Narrative | Partner review';
-            } else if (narrativeStatus == 'Resolve partner comments') {
-                return 'Narrative | Resolve partner comments';
-            } else if (narrativeStatus == 'Complete') {
-                if(deckStatus == 'Not started'){
-                    return 'Deck | Ready to start';
-                } else if(deckStatus == 'In progress'){
-                    return 'Deck | In progress';
-                } else if(deckStatus == 'Planner review'){
-                    return 'Deck | Planner review';
-                } else if(deckStatus == 'Resolve planner comments'){
-                    return 'Deck | Resolve planner comments';
-                } else if(deckStatus == 'Partner review'){
-                    return 'Deck | Partner review';
-                } else if(deckStatus == 'Resolve partner comments'){
-                    return 'Deck | Resolve partner comments';
-                } else if(deckStatus == 'Complete'){
-                    return 'Deck | Complete';
-                }
-            }
-        }
     }
 }
