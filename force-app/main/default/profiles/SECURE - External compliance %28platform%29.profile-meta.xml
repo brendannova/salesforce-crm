@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>true</custom>
     <description>A fully stripped back profile for external compliance consultants from CATS. Access should be opened up with PSs and PSGs. There is an equivalent profile on a full fat license but this can be used for cheaper pricing.</description>
@@ -2327,6 +2327,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ProductRelComponentOverride.Quantity</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Public_Provider_Names__c.DeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

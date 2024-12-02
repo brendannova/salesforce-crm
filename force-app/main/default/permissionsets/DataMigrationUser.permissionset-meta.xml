@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>This permission set should be assigned to the data migration user when performing data migration activities. It should provide the bare minimum level of access needed to perform the data migration exercise.</description>
     <hasActivationRequired>false</hasActivationRequired>
@@ -2284,6 +2284,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Liability__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Public_Provider_Names__c.DeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>InformationRequestFormat__c</fullName>
-    <description>The format which any data request must be sent to this department</description>
+    <description>The format by which this department receives requests</description>
     <label>Information request format</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
@@ -11,14 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Wet signature</fullName>
-                <default>false</default>
-                <label>Wet signature</label>
-            </value>
-            <value>
                 <fullName>Email</fullName>
                 <default>false</default>
                 <label>Email</label>
+            </value>
+            <value>
+                <fullName>Post</fullName>
+                <default>false</default>
+                <label>Post</label>
+            </value>
+            <value>
+                <fullName>Portal</fullName>
+                <default>false</default>
+                <label>Portal</label>
             </value>
         </valueSetDefinition>
     </valueSet>

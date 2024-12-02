@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SignatureFormat__c</fullName>
+    <description>The format of the signature on which any data request must be sent to this department</description>
+    <label>Signature format</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Digital signature</fullName>
+                <default>false</default>
+                <label>Digital signature</label>
+            </value>
+            <value>
+                <fullName>Wet signature (internal)</fullName>
+                <default>false</default>
+                <label>Wet signature (internal)</label>
+            </value>
+            <value>
+                <fullName>Wet signature (client)</fullName>
+                <default>false</default>
+                <label>Wet signature (client)</label>
+            </value>
+            <value>
+                <fullName>Scanned wet signature (Client)</fullName>
+                <default>false</default>
+                <label>Scanned wet signature (client)</label>
+            </value>
+            <value>
+                <fullName>DocuSign</fullName>
+                <default>false</default>
+                <label>DocuSign</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
