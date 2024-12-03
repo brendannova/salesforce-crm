@@ -16,7 +16,8 @@ public with sharing class DataFactory {
     String RecordTypeDevNamePerson = 'PersonAccount';
     Id RecordTypeIdPerson = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(RecordTypeDevNamePerson).getRecordTypeId();
 
-    /*public void createConfigurationData(){
+    /* This can be used in the future to load configuration data. 
+     * public void createConfigurationData(){
         List<sObject> ls = Test.loadData(Public_Provider_Names__c.sObjectType, 'ProvidersRef');
         List<sObject> ls3 = Test.loadData(RecommendationType__c.sObjectType, 'RecRef');
         List<sObject> ls4 = Test.loadData(ProductType__c.sObjectType, 'ProductTypeRef');
