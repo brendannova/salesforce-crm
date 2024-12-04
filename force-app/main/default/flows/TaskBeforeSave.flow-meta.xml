@@ -5,7 +5,7 @@
         <name>Set_target_start_date</name>
         <label>Set target start date</label>
         <locationX>50</locationX>
-        <locationY>767</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_target_start_date__c</assignToReference>
             <operator>Assign</operator>
@@ -19,7 +19,7 @@
         <name>Set_task_subject</name>
         <label>Set task subject</label>
         <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationY>395</locationY>
         <assignmentItems>
             <assignToReference>$Record.Subject</assignToReference>
             <operator>Assign</operator>
@@ -36,7 +36,7 @@
         <name>Change_target_start_date</name>
         <label>Change target start date?</label>
         <locationX>182</locationX>
-        <locationY>647</locationY>
+        <locationY>587</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -66,7 +66,7 @@
         <name>Subject_update_needed</name>
         <label>Subject update needed?</label>
         <locationX>182</locationX>
-        <locationY>311</locationY>
+        <locationY>287</locationY>
         <defaultConnector>
             <targetReference>Change_target_start_date</targetReference>
         </defaultConnector>
@@ -114,6 +114,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>BusinessDevelopment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>CallNotes</stringValue>
                 </rightValue>
             </conditions>
             <connector>
