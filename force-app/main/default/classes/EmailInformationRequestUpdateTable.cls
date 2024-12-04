@@ -76,12 +76,26 @@ public class EmailInformationRequestUpdateTable {
                 status = 'On track';
                 message = System.Label.EmailInformationRequestUpdateClientRequest;
                 
-                // Policy pre-reqs required
+            // Policy pre-reqs required
             } else if (r.Status__c == 'Awaiting policy pre-requisites') {
-                status = 'Action required';
-                message = System.Label.EmailInformationRequestUpdateAwaitPreReqs;
+                String awaitDetails = '';
+                if ( r.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c == '' ){
+                    awaitDetails += 'provider, ';
+                }
+                if ( r.FinancialProductFinServ__r.Public_Provider_Name__r.DeveloperName__c == 'UNKNOWN') {
+                    awaitDetails += 'policy number, ';
+                }
+                if( r.FinancialProductFinServ__r.Subtype__c.contains('Junior')&& r.FinancialProductFinServ__r.RegisteredContact__c == '') {
+                    awaitDetails += 'registered contact, ';
+                }
+                awaitdetails = awaitDetails.substringBeforeLast(', ') + ' & ' + awaitDetails.substringAfterLast(', ');
                 
-                // Info request to be sent - differs by info source
+                status = 'Action required';
+                message = System.Label.EmailInformationRequestUpdateAwaitPreReqsPt1 + awaitDetails + System.Label.EmailInformationRequestUpdateAwaitPreReqsPt2;
+                
+                
+                
+            // Info request to be sent - differs by info source
             } else if (r.Status__c == 'Information request to be sent') {
                 if (r.InformationRequestType__r.InformationSource__c == 'Client') {
                     status = 'On track';
@@ -93,7 +107,7 @@ public class EmailInformationRequestUpdateTable {
                     
                 }
                 
-                // Awaiting initial information
+            // Awaiting initial information
             } else if (r.Status__c == 'Awaiting initial information') {
                 
                 // If info is from client
@@ -101,15 +115,15 @@ public class EmailInformationRequestUpdateTable {
                     status = 'Action required';
                     message = System.Label.EmailInformationRequestUpdateChaseClient;
                     
-                    // If info is from third party
+                // If info is from third party
                 } else if (r.InformationRequestType__r.InformationSource__c == 'Third party provider') {
                     
                     // Check if we have ever chased before
                     if( r.FirstExpectedReceiptDate__c == null ) {
                         status = 'On track';
-                        message = System.Label.EmailInformationRequestUpdateChasing;
+                        message = System.Label.EmailInformationRequestUpdateChasing + formatDate( r.DateInformationRequestSent__c) + '.';
                         
-                        // If we have chased before...
+                    // If we have chased before...
                     } else {
                         
                         // Expected receipt date has passed
@@ -123,20 +137,19 @@ public class EmailInformationRequestUpdateTable {
                             // Complaint resolved, still chasing
                             } else if ( r.ComplaintStatus__c == 'Resolved') {
                                 status = 'On track';
-                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
+                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
                                 
                             // No complaint made
                             } else {
                                 status = 'Off track';
-                                message = System.Label.EmailInformationRequestUpdateOffTrack;
+                                message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + System.Label.EmailInformationRequestUpdateOffTrack + formatDate(r.ExpectedReceiptDate__c) + System.Label.EmailInformationRequestUpdateChasingPart2;
                             }
                             
                             
                         // Expected receipt date in future
                         } else {
                             status = 'On track';
-                            message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
-                        }  
+							message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';                        }  
                     }
                 }
                 
@@ -166,7 +179,6 @@ public class EmailInformationRequestUpdateTable {
                 status = 'Off track';
                 message = System.Label.EmailInformationRequestGeneric;
             }
-            System.debug('end of loop ' + title + ' ' + message);
             
             // Add data request update to collection of outputs
             if( status != null ) {
