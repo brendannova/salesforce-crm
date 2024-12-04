@@ -25,6 +25,7 @@
             </value>
         </inputParameters>
         <nameSegment>chatterPost</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -52,6 +53,7 @@
             </value>
         </inputParameters>
         <nameSegment>chatterPost</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -130,7 +132,7 @@
             <assignToReference>advice.RiskCallStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Ready</stringValue>
+                <elementReference>riskCallStatus</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -3195,7 +3197,7 @@
         <description>Sets status to in progress, unless it&#39;s already complete, in which case stays complete</description>
         <name>dataAnalysisStatus</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!advice.DataAnalysisStatus__c}, &quot;Complete&quot;), &quot;Complete&quot;, &quot;In progress&quot;)</expression>
+        <expression>IF(ISPICKVAL({!advice.DataAnalysisStatus__c}, &quot;Complete&quot;), &quot;Complete&quot;, IF(ISPICKVAL({!advice.DataAnalysisStatus__c}, &quot;Not required&quot;),&quot;Not required&quot;,&quot;In progress&quot;))</expression>
     </formulas>
     <formulas>
         <name>dataGatheringStatus</name>
@@ -3236,6 +3238,11 @@
         <name>profileUpdateStatus</name>
         <dataType>String</dataType>
         <expression>IF({!Does_this_advice_require_a_profile_update} = {!There_s_one_in_progress} || {!Does_this_advice_require_a_profile_update} = {!We_need_to_start_one}, &quot;In progress&quot;, &quot;Not required&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>riskCallStatus</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Complete&quot;), &quot;Complete&quot;, IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Not required&quot;),&quot;Not required&quot;,&quot;In progress&quot;))</expression>
     </formulas>
     <formulas>
         <name>statusFormula</name>
