@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FeeFriendlyText__c</fullName>
+    <description>Formula field to display a friendly text version of the fee</description>
+    <externalId>false</externalId>
+    <formula>IF(  StandardModel__c , &quot;Standard model&quot;, 
+  IF(  ISPICKVAL( FeeModel__r.Format__c , &quot;Fixed amount&quot;), &quot;£&quot; +  TEXT(FixedFee__c) ,  TEXT(PercentageFee__c) + &quot;%&quot;))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Fee</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
