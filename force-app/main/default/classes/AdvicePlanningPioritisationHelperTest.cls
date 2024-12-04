@@ -15,7 +15,7 @@ public with sharing class AdvicePlanningPioritisationHelperTest {
         DataFactory df = new DataFactory();
         Id householdId = df.createHousehold('Test', numClients, numChildren, householdStatus, profileType);
         Advice__c advice = df.createAdvice(2, householdId);
-        List<Advice__c> records = AdvicePlanningPioritisationHelper.getAdvice();
+        List<Map<String, Object>> records = AdvicePlanningPioritisationHelper.getAdvice();
         System.Assert.areEqual(records.size(), 1, 'Expected 1 advice record');
     }    
 }

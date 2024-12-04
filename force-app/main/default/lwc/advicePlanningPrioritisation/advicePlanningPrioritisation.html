@@ -4,33 +4,22 @@
         <div class="slds-var-m-around_medium">
             <lightning-button variant="brand" label="Onboarding" name="onboardingAdvice" title="New customer advice" onclick={handleClick} disabled={onboardingdisabled} class="slds-m-left_x-small"></lightning-button>
             <lightning-button variant="brand" label="Existing" name="existingCustomerAdvice" title="Existing customer advice" onclick={handleClick} disabled={existingdisabled} class="slds-m-left_x-small"></lightning-button>
+            <lightning-button variant="brand" label="Top up" name="topUpAdvice" title="Top up advice" onclick={handleClick} disabled={topupdisabled} class="slds-m-left_x-small"></lightning-button>
+            <lightning-button variant="brand" label="Withdrawal" name="withdrawalAdvice" title="Withdrawal advice" onclick={handleClick} disabled={withdrawaldisabled} class="slds-m-left_x-small"></lightning-button>
         </div> 
         <template if:false={dataLoaded}>
             <lightning-spinner alternative-text="Loading"></lightning-spinner>
         </template>
         <template if:true={dataLoaded}>
-            <template if:true={showOnboardingAdvice}>
-                <lightning-datatable
-                    key-field="Id"
-                    data={recordsDisplay}
-                    columns={columns}
-                    hide-checkbox-column="true"
-                    column-widths-mode="auto"
-                    onsave={handleSave}
-                    draft-values={draftValues}>
-                </lightning-datatable>
-            </template>
-            <template if:true={showExistingCustomerAdvice}>
-                <lightning-datatable
-                    key-field="Id"
-                    data={recordsDisplay}
-                    columns={columns}
-                    hide-checkbox-column="true"
-                    column-widths-mode="auto"
-                    onsave={handleSave}
-                    draft-values={draftValues}>
-                </lightning-datatable>
-            </template>
+            <lightning-datatable
+                key-field="Id"
+                data={recordsDisplay}
+                columns={columns}
+                hide-checkbox-column="true"
+                column-widths-mode="auto"
+                onsave={handleSave}
+                draft-values={draftValues}>
+            </lightning-datatable>
         </template>
     </lightning-card>
 </template>
