@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TakenFromFriendly__c</fullName>
+    <description>Friendly text for the source of this fee</description>
+    <externalId>false</externalId>
+    <formula>IF(  AppliesToLegacy__c ==  TakenFromLegacy__c ||  AppliesToRecommendation__c ==  TakenFromRecommendation__c , &quot;This &quot; +  IF( ISBLANK(AppliesToRecommendation__c), TakenFromRecommendation__r.Product__r.Name, AppliesToRecommendation__r.Product__r.Name) , 
+
+ AppliesToRecommendation__r.PrimaryOwner__r.FirstName + IF( ISBLANK( AppliesToRecommendation__r.JointOwner__c) , &quot; &amp; &quot; + AppliesToRecommendation__r.JointOwner__r.FirstName, &quot;&quot; ) + &quot;&#39;s &quot; + IF( ISBLANK(AppliesToRecommendation__c),  TakenFromRecommendation__r.Product__r.Name , AppliesToRecommendation__r.Product__r.Name ))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Taken from</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
