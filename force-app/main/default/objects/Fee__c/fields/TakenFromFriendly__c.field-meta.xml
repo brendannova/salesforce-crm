@@ -3,9 +3,15 @@
     <fullName>TakenFromFriendly__c</fullName>
     <description>Friendly text for the source of this fee</description>
     <externalId>false</externalId>
-    <formula>IF(  AppliesToLegacy__c ==  TakenFromLegacy__c ||  AppliesToRecommendation__c ==  TakenFromRecommendation__c , &quot;This &quot; +  IF( ISBLANK(AppliesToRecommendation__c), TakenFromRecommendation__r.Product__r.Name, AppliesToRecommendation__r.Product__r.Name) , 
+    <formula>IF( ISBLANK(TakenFromLegacy__c), &quot;Not accepted yet&quot;,
+  IF(  AppliesToLegacy__c ==  TakenFromLegacy__c , 
+    &quot;This &quot; +  TakenFromLegacy__r.RecordType.Name ,  
 
- AppliesToRecommendation__r.PrimaryOwner__r.FirstName + IF( ISBLANK( AppliesToRecommendation__r.JointOwner__c) , &quot; &amp; &quot; + AppliesToRecommendation__r.JointOwner__r.FirstName, &quot;&quot; ) + &quot;&#39;s &quot; + IF( ISBLANK(AppliesToRecommendation__c),  TakenFromRecommendation__r.Product__r.Name , AppliesToRecommendation__r.Product__r.Name ))</formula>
+HYPERLINK(&quot;https://octopuswealth.lightning.force.com/lightning/r/FinServ__FinancialAccount__c/&quot; + TakenFromLegacy__c + &quot;/view&quot;,  TakenFromLegacy__r.FinServ__PrimaryOwner__r.FirstName + 
+IF( ISBLANK(TakenFromLegacy__r.FinServ__JointOwner__c ),&quot;&quot;, TakenFromLegacy__r.FinServ__JointOwner__r.FirstName
+) + &quot;&#39;s &quot; + TakenFromLegacy__r.RecordType.Name)
+)
+)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Taken from</label>
     <required>false</required>
