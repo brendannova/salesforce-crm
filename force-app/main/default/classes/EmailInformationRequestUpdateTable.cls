@@ -42,7 +42,7 @@ public class EmailInformationRequestUpdateTable {
         System.debug('in set irs');
         List<Advice__c> advList = [SELECT Id FROM Advice__c WHERE Advice_Household__c =: objectId AND (Advice_Status__c = 'Data gathering' OR Advice_Status__c = 'Risk call')];
         Set<Id> advIds = new Set<Id>(new Map<Id, Advice__c>(advList).keySet());
-        List<InformationRequest__c> irs = [SELECT Id, FinancialProductFinServ__r.FinServ__JointOwner__c, FinancialProductFinServ__r.FinServ__PrimaryOwner__r.AddressedName__pc,ComplaintStatus__c,FinancialProductFinServ__r.Company_Name__c,FinancialProductFinServ__r.Subtype__c,FinancialProductFinServ__r.Public_Provider_Name__r.Name,Status__c,InformationRequestType__r.InformationSource__c, FirstExpectedReceiptDate__c, ExpectedReceiptDate__c, DateLastChased__c FROM InformationRequest__c WHERE Advice__c IN :advIds ];
+        List<InformationRequest__c> irs = [SELECT Id, FinancialProductFinServ__r.Public_Provider_Name__r.DeveloperName__c,FinancialProductFinServ__r.FinServ__JointOwner__c, FinancialProductFinServ__r.FinServ__PrimaryOwner__r.AddressedName__pc,ComplaintStatus__c,FinancialProductFinServ__r.Company_Name__c,FinancialProductFinServ__r.Subtype__c,FinancialProductFinServ__r.Public_Provider_Name__r.Name,FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c,Status__c,InformationRequestType__r.InformationSource__c, FirstExpectedReceiptDate__c, ExpectedReceiptDate__c, DateLastChased__c FROM InformationRequest__c WHERE Advice__c IN :advIds ];
         
         String status;
         String message;
@@ -51,8 +51,8 @@ public class EmailInformationRequestUpdateTable {
         String name;
         List<IrUpdate> irList = new List<IrUpdate>();
         
-        for (InformationRequest__c r : irs) {
-            
+        for (InformationRequest__c r : irs) {  
+            System.debug(r.ExpectedReceiptDate__c);
             // Set title
             if ( r.FinancialProductFinServ__r.Subtype__c == 'Direct Equity Holding' ) {
                 title = r.FinancialProductFinServ__r.Company_Name__c + ' Shares';
@@ -149,7 +149,8 @@ public class EmailInformationRequestUpdateTable {
                         // Expected receipt date in future
                         } else {
                             status = 'On track';
-							message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';                        }  
+							message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';                        
+                        }  
                     }
                 }
                 
