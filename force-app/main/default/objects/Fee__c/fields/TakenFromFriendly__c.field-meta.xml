@@ -3,13 +3,16 @@
     <fullName>TakenFromFriendly__c</fullName>
     <description>Friendly text for the source of this fee</description>
     <externalId>false</externalId>
-    <formula>IF( ISBLANK(TakenFromLegacy__c), &quot;Not accepted yet&quot;,
+    <formula>IF( CONTAINS( FeeModel__r.Name , &quot;Commission&quot;), &quot;Paid by provider&quot;,
+
+IF( ISBLANK(TakenFromLegacy__c), &quot;Not accepted yet&quot;,
   IF(  AppliesToLegacy__c ==  TakenFromLegacy__c , 
     &quot;This &quot; +  TakenFromLegacy__r.RecordType.Name ,  
 
 HYPERLINK(&quot;https://octopuswealth.lightning.force.com/lightning/r/FinServ__FinancialAccount__c/&quot; + TakenFromLegacy__c + &quot;/view&quot;,  TakenFromLegacy__r.FinServ__PrimaryOwner__r.FirstName + 
 IF( ISBLANK(TakenFromLegacy__r.FinServ__JointOwner__c ),&quot;&quot;, TakenFromLegacy__r.FinServ__JointOwner__r.FirstName
 ) + &quot;&#39;s &quot; + TakenFromLegacy__r.RecordType.Name)
+)
 )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
