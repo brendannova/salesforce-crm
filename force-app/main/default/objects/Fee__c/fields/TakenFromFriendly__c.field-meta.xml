@@ -7,7 +7,7 @@
 
 IF( ISBLANK(TakenFromLegacy__c), &quot;Not accepted yet&quot;,
   IF(  AppliesToLegacy__c ==  TakenFromLegacy__c , 
-    &quot;This &quot; +  TakenFromLegacy__r.RecordType.Name ,  
+    HYPERLINK(&quot;https://octopuswealth.lightning.force.com/lightning/r/FinServ__FinancialAccount__c/&quot; + TakenFromLegacy__c + &quot;/view&quot;,&quot;This &quot; +  TakenFromLegacy__r.RecordType.Name ),  
 
 HYPERLINK(&quot;https://octopuswealth.lightning.force.com/lightning/r/FinServ__FinancialAccount__c/&quot; + TakenFromLegacy__c + &quot;/view&quot;,  TakenFromLegacy__r.FinServ__PrimaryOwner__r.FirstName + 
 IF( ISBLANK(TakenFromLegacy__r.FinServ__JointOwner__c ),&quot;&quot;, TakenFromLegacy__r.FinServ__JointOwner__r.FirstName
