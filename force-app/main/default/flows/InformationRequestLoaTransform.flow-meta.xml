@@ -172,22 +172,24 @@ IF(ISPICKVAL({!loa.Provider_LOA_Status__c},&quot;&quot;),&quot;To be requested&q
                 <transformType>Map</transformType>
                 <value>
                     <formulaDataType>String</formulaDataType>
-                    <formulaExpression>IF(CONTAINS(TEXT({!loa.MainLOAStatus__c}), &quot;Awaiting&quot;), &quot;Awaiting policy pre-requisites&quot;,
-IF(ISPICKVAL({!loa.MainLOAStatus__c}, &quot;To be sent to provider&quot;), &quot;Information request to be sent&quot;,
+                    <formulaExpression>IF(CONTAINS(TEXT({!loa.MainLOAStatus__c}), &quot;Awaiting Policy Numbers&quot;) || 
+CONTAINS(TEXT({!loa.MainLOAStatus__c}), &quot;Awaiting Provider Policy Numbers&quot;) ||
+CONTAINS(TEXT({!loa.MainLOAStatus__c}),&quot;Awaiting confirmation of Signee&quot;), &quot;Awaiting policy pre-requisites&quot;,
+IF(ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Send to Provider&quot;), &quot;Information request to be sent&quot;,
 IF(
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Sent to provider&quot;) ||
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Rejected Internal&quot;) ||
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Rejected Action Required from Client&quot;) ||
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Within SLA&quot;) ||
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Outside SLA&quot;) ||
-  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Received - Awaiting Information&quot;) ||
-  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Accepted - Awaiting Information&quot;), &quot;Awaiting initial information&quot;,
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Received Awaiting Information&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Accepted Awaiting Information&quot;), &quot;Awaiting initial information&quot;,
 IF(
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Information Received&quot;) ||
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Information requested&quot;), &quot;Checklist review&quot;,
 IF(
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Specialist reviewed&quot;) ||
-  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Analysis&quot;), &quot;Fund review&quot;,
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Analysis&quot;), &quot;Fund analysis&quot;,
 IF(ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Cancelled&quot;), &quot;Cancelled&quot;, 
 IF(ISPICKVAL({!loa.MainLOAStatus__c}, &quot;On hold&quot;), &quot;Awaiting advice progression&quot;,&quot;Complete&quot;)))))))</formulaExpression>
                 </value>
