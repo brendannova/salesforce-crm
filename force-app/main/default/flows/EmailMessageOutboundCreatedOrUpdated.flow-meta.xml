@@ -175,13 +175,6 @@
                 <stringValue>Email in draft</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>$Record.IsPrivateDraft</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>UpdateRelatedCase</targetReference>
         </connector>
@@ -590,20 +583,10 @@
         <object>CaseMilestone</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_email_message</name>
-        <label>Update email message</label>
-        <locationX>974</locationX>
-        <locationY>1571</locationY>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>UpdateRelatedCase</name>
         <label>Update related case</label>
         <locationX>974</locationX>
         <locationY>1463</locationY>
-        <connector>
-            <targetReference>Update_email_message</targetReference>
-        </connector>
         <inputReference>case</inputReference>
     </recordUpdates>
     <start>
