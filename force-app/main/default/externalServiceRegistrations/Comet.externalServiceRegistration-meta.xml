@@ -20,6 +20,10 @@
         <name>checkinformationrequestlastupdated</name>
     </operations>
     <operations>
+        <active>true</active>
+        <name>completeinforequest</name>
+    </operations>
+    <operations>
         <active>false</active>
         <name>createasset</name>
     </operations>
@@ -130,6 +134,10 @@
     <operations>
         <active>false</active>
         <name>downloadhouseholdgdriveclientdocument</name>
+    </operations>
+    <operations>
+        <active>false</active>
+        <name>exportholdings</name>
     </operations>
     <operations>
         <active>false</active>
@@ -3356,6 +3364,18 @@
         ],
         &quot;type&quot;: &quot;object&quot;
       },
+      &quot;ExportHoldingsBody&quot;: {
+        &quot;properties&quot;: {
+          &quot;sheetUrl&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;sheetUrl&quot;
+        ],
+        &quot;type&quot;: &quot;object&quot;
+      },
       &quot;FeeBandResponse&quot;: {
         &quot;properties&quot;: {
           &quot;lowerLimit&quot;: {
@@ -3879,6 +3899,9 @@
       },
       &quot;GDriveRecordResponse&quot;: {
         &quot;properties&quot;: {
+          &quot;canDownload&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          },
           &quot;children&quot;: {
             &quot;items&quot;: {
               &quot;type&quot;: &quot;string&quot;
@@ -3905,6 +3928,7 @@
           }
         },
         &quot;required&quot;: [
+          &quot;canDownload&quot;,
           &quot;fileMimetype&quot;,
           &quot;id&quot;,
           &quot;label&quot;,
@@ -4475,6 +4499,17 @@
         ],
         &quot;type&quot;: &quot;object&quot;
       },
+      &quot;InfoRequestCompletedResponse&quot;: {
+        &quot;properties&quot;: {
+          &quot;completed&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;completed&quot;
+        ],
+        &quot;type&quot;: &quot;object&quot;
+      },
       &quot;InfoRequestFPResponse&quot;: {
         &quot;properties&quot;: {
           &quot;answers&quot;: {
@@ -4727,6 +4762,17 @@
           &quot;priceDate&quot;,
           &quot;transactionFeeRate&quot;,
           &quot;units&quot;
+        ],
+        &quot;type&quot;: &quot;object&quot;
+      },
+      &quot;InfoRequestHoldingsExportResponse&quot;: {
+        &quot;properties&quot;: {
+          &quot;success&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          }
+        },
+        &quot;required&quot;: [
+          &quot;success&quot;
         ],
         &quot;type&quot;: &quot;object&quot;
       },
@@ -7712,6 +7758,37 @@
         ]
       }
     },
+    &quot;/v1/infoRequests/{infoRequestId}/complete&quot;: {
+      &quot;post&quot;: {
+        &quot;description&quot;: &quot;No description&quot;,
+        &quot;operationId&quot;: &quot;completeInfoRequest&quot;,
+        &quot;parameters&quot;: [{
+          &quot;in&quot;: &quot;path&quot;,
+          &quot;name&quot;: &quot;infoRequestId&quot;,
+          &quot;required&quot;: true,
+          &quot;schema&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          }
+        }],
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/InfoRequestCompletedResponse&quot;
+                }
+              }
+            },
+            &quot;description&quot;: &quot;OK&quot;
+          }
+        },
+        &quot;summary&quot;: &quot;Mark an information request as complete&quot;,
+        &quot;tags&quot;: [
+          &quot;Information Request&quot;
+        ]
+      }
+    },
     &quot;/v1/infoRequests/{infoRequestId}/fees/&quot;: {
       &quot;get&quot;: {
         &quot;description&quot;: &quot;Get a given information request&#39;s fees&quot;,
@@ -8065,6 +8142,48 @@
           }
         },
         &quot;summary&quot;: &quot;Add a custom fund holding for an information request&quot;,
+        &quot;tags&quot;: [
+          &quot;Information Request&quot;
+        ]
+      }
+    },
+    &quot;/v1/infoRequests/{infoRequestId}/holdings/export&quot;: {
+      &quot;post&quot;: {
+        &quot;description&quot;: &quot;Export holdings to Google Sheets&quot;,
+        &quot;operationId&quot;: &quot;exportHoldings&quot;,
+        &quot;parameters&quot;: [{
+          &quot;in&quot;: &quot;path&quot;,
+          &quot;name&quot;: &quot;infoRequestId&quot;,
+          &quot;required&quot;: true,
+          &quot;schema&quot;: {
+            &quot;maxLength&quot;: 1000,
+            &quot;type&quot;: &quot;string&quot;
+          }
+        }],
+        &quot;requestBody&quot;: {
+          &quot;content&quot;: {
+            &quot;application/json&quot;: {
+              &quot;schema&quot;: {
+                &quot;$ref&quot;: &quot;#/components/schemas/ExportHoldingsBody&quot;
+              }
+            }
+          },
+          &quot;description&quot;: &quot;No description&quot;,
+          &quot;required&quot;: true
+        },
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/InfoRequestHoldingsExportResponse&quot;
+                }
+              }
+            },
+            &quot;description&quot;: &quot;OK&quot;
+          }
+        },
+        &quot;summary&quot;: &quot;Export holdings to Google Sheets&quot;,
         &quot;tags&quot;: [
           &quot;Information Request&quot;
         ]
