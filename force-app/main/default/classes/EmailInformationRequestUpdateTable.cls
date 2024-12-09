@@ -136,7 +136,7 @@ public class EmailInformationRequestUpdateTable {
                     // Check if we have ever chased before
                     if( r.FirstExpectedReceiptDate__c == null ) {
                         status = 'On track';
-                        message = System.Label.EmailInformationRequestUpdateChasing + formatDate( r.DateInformationRequestSent__c) + '.';
+                        message = System.Label.EmailInformationRequestUpdateChasing + ' ' + formatDate( r.DateInformationRequestSent__c) + '.';
                         
                     // If we have chased before...
                     } else {
@@ -152,19 +152,19 @@ public class EmailInformationRequestUpdateTable {
                             // Complaint resolved, still chasing
                             } else if ( r.ComplaintStatus__c == 'Resolved') {
                                 status = 'On track';
-                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';
+                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + ' ' + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + ' ' + formatDate(r.ExpectedReceiptDate__c) + '.';
                                 
                             // No complaint made
                             } else {
                                 status = 'Off track';
-                                message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + System.Label.EmailInformationRequestUpdateOffTrack + formatDate(r.ExpectedReceiptDate__c) + System.Label.EmailInformationRequestUpdateChasingPart2;
+                                message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateOffTrack + ' ' + formatDate(r.ExpectedReceiptDate__c) + ' ' + System.Label.EmailInformationRequestUpdateOffTrackPt2;
                             }
                             
                             
                         // Expected receipt date in future
                         } else {
                             status = 'On track';
-							message = System.Label.EmailInformationRequestUpdateChasingPart1 + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + formatDate(r.ExpectedReceiptDate__c) + '.';                        
+							message = System.Label.EmailInformationRequestUpdateChasingPart1 + ' ' + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + ' ' + formatDate(r.ExpectedReceiptDate__c) + '.';                        
                         }  
                     }
                 }
