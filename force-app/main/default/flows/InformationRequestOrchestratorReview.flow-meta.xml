@@ -312,7 +312,7 @@
     <formulas>
         <name>statusFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!ir.InformationRequestType__r.BuilderLevel__c}, &quot;Not required&quot;), &quot;Complete&quot;, &quot;Fund analysis&quot;)</expression>
+        <expression>IF(ISPICKVAL({!ir.InformationRequestType__r.BuilderLevel__c}, &quot;Not required&quot;), &quot;READY_FOR_ADVICE&quot;, &quot;FUND_ANALYSIS&quot;)</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Review {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IR | Orchestrator | Review</label>

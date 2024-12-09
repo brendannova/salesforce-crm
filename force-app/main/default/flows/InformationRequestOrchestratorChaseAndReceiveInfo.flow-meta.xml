@@ -622,10 +622,10 @@ IF(ISPICKVAL({!ir.InformationRequestType__r.BuilderLevel__c},&quot;Full analysis
         <dataType>String</dataType>
         <expression>IF( 
   NOT(ISPICKVAL({!ir.InformationRequestType__r.ChecklistLevel__c},&quot;Not required&quot;)), 
-  &quot;Checklist review&quot;, 
+  &quot;CHECKLIST_REVIEW&quot;, 
   IF(NOT(ISPICKVAL({!ir.InformationRequestType__r.BuilderLevel__c},&quot;Not required&quot;)),
-    &quot;Fund analysis&quot;,
-    &quot;Complete&quot;
+    &quot;FUND_ANALYSIS&quot;,
+    &quot;READY_FOR_ADVICE&quot;
 ))</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Chase and receive info {!$Flow.CurrentDateTime}</interviewLabel>

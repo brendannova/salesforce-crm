@@ -186,14 +186,21 @@
                 <leftValueReference>Information_requests.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Complete</stringValue>
+                    <stringValue>COMPLETE</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Information_requests.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Cancelled</stringValue>
+                    <stringValue>CANCELLED</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Information_requests.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>READY_FOR_ADVICE</stringValue>
                 </rightValue>
             </conditions>
             <connector>

@@ -33,7 +33,7 @@
     </assignments>
     <decisions>
         <name>Is_this_complete</name>
-        <label>Is this complete?</label>
+        <label>Is this ready for use in advice?</label>
         <locationX>352</locationX>
         <locationY>539</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
@@ -44,14 +44,14 @@
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Complete</stringValue>
+                    <stringValue>READY_FOR_ADVICE</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>$Record.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Cancelled</stringValue>
+                    <stringValue>CANCELLED</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -137,14 +137,14 @@
             <field>Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Complete</stringValue>
+                <stringValue>READY_FOR_ADVICE</stringValue>
             </value>
         </filters>
         <filters>
             <field>Status__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Cancelled</stringValue>
+                <stringValue>CANCELLED</stringValue>
             </value>
         </filters>
         <object>InformationRequest__c</object>
