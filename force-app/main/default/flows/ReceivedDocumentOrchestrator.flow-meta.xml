@@ -2,22 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Set_advice_ID</name>
-        <label>Set advice ID</label>
-        <locationX>600</locationX>
-        <locationY>134</locationY>
-        <assignmentItems>
-            <assignToReference>receivedDocumentId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_received_document</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_household_ID</name>
         <label>Set household ID</label>
         <locationX>600</locationX>
@@ -31,6 +15,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_received_document_ID</name>
+        <label>Set received document ID</label>
+        <locationX>600</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>receivedDocumentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_document</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -173,18 +173,14 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_received_document</name>
-        <label>Get received document</label>
+        <name>Get_document</name>
+        <label>Get document</label>
         <locationX>600</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_household_ID</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -477,7 +473,7 @@
         <locationX>474</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Set_advice_ID</targetReference>
+            <targetReference>Set_received_document_ID</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -543,7 +539,7 @@
         <name>receivedDocumentId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
