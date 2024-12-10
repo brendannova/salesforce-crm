@@ -87,12 +87,12 @@ public class EmailInformationRequestUpdateTable {
             // Set status and messages
             
             // Await advice progression
-            if (r.Status__c == 'AWAIT_IDG') {
+            if (r.Status__c == 'Awaiting advice progression') {
                 status = 'On track';
                 message = System.Label.EmailInformationRequestUpdateClientRequest;
                 
             // Policy pre-reqs required
-            } else if (r.Status__c == 'AWAIT_PRE_REQS') {
+            } else if (r.Status__c == 'Awaiting policy pre-requisites') {
                 String awaitDetails = '';
                 if ( r.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c == '' ){
                     awaitDetails += 'provider, ';
@@ -111,7 +111,7 @@ public class EmailInformationRequestUpdateTable {
                 
                 
             // Info request to be sent - differs by info source
-            } else if (r.Status__c == 'INFO_REQ_SEND') {
+            } else if (r.Status__c == 'Information request to be sent') {
                 if (r.InformationRequestType__r.InformationSource__c == 'Client') {
                     status = 'On track';
                     message = System.Label.EmailInformationRequestUpdateClientRequest;
@@ -123,7 +123,7 @@ public class EmailInformationRequestUpdateTable {
                 }
                 
             // Awaiting initial information
-            } else if (r.Status__c == 'AWAIT_INFO') {
+            } else if (r.Status__c == 'Awaiting initial information') {
                 
                 // If info is from client
                 if (r.InformationRequestType__r.InformationSource__c == 'Client') {
@@ -170,7 +170,7 @@ public class EmailInformationRequestUpdateTable {
                 }
                 
             // Information received
-            } else if (r.Status__c == 'CHECKLIST_REVIEW') {
+            } else if (r.Status__c == 'Checklist review') {
                 if (r.InformationRequestType__r.InformationSource__c == 'Client') {
                     status = 'On track';
                     message = System.Label.EmailInformationRequestUpdateClientReceived;
@@ -181,12 +181,12 @@ public class EmailInformationRequestUpdateTable {
                 }
                 
             // Checklist complete
-            } else if (r.Status__c == 'FUND_ANALYSIS') {
+            } else if (r.Status__c == 'Fund analysis') {
                 status = 'Completed';
                 message = System.Label.EmailInformationRequestUpdateComplete;
                 
             // Completed
-            } else if (r.Status__c == 'COMPLETE' || r.Status__c == 'READY_FOR_ADVICE') {
+            } else if (r.Status__c == 'Complete' || r.Status__c == 'Ready for advice') {
                 status = 'Completed';
                 message = System.Label.EmailInformationRequestUpdateComplete;
                 
