@@ -478,7 +478,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
     <formulas>
         <name>statusFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISBLANK({!advice.AllLoaInfoReceivedTimestamp__c}), &quot;Awaiting advice progression&quot;,IF({!awaitingPreReqsFormula},&quot;Awaiting policy pre-requisites&quot;,&quot;Information request to be sent&quot;))</expression>
+        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISBLANK({!advice.AllLoaInfoReceivedTimestamp__c}), &quot;AWAIT_IDG&quot;,IF({!awaitingPreReqsFormula},&quot;AWAIT_PRE_REQS&quot;,&quot;INFO_REQ_SEND&quot;))</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Set up {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IR | Orchestrator | Set up</label>
