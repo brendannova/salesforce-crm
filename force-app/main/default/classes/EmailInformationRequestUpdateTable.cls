@@ -71,7 +71,7 @@ public class EmailInformationRequestUpdateTable {
             System.debug(r.ExpectedReceiptDate__c);
             // Set title
             if ( r.FinancialProductFinServ__r.Subtype__c == 'Direct Equity Holding' ) {
-                title = r.FinancialProductFinServ__r.Company_Name__c + ' Shares';
+                title = r.FinancialProductFinServ__r.Name__c + ' Shares';
             } else {
                 title = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + r.FinancialProductFinServ__r.Subtype__c;
             }
