@@ -56,6 +56,7 @@ public class EmailInformationRequestUpdateTable {
                                            InformationRequestType__r.InformationSource__c,
                                            FirstExpectedReceiptDate__c,
                                            ExpectedReceiptDate__c,
+                                           FinancialProductFinServ__r.RegisteredContact__c,
                                            DateLastChased__c 
                                            FROM InformationRequest__c WHERE Advice__c IN :advIds ];
         
@@ -94,16 +95,25 @@ public class EmailInformationRequestUpdateTable {
             // Policy pre-reqs required
             } else if (r.Status__c == 'AWAIT_PRE_REQS') {
                 String awaitDetails = '';
-                if ( r.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c == '' ){
-                    awaitDetails += 'provider, ';
+                Integer numOutstanding = 0;
+                if ( String.isBlank(r.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c) ){
+                    awaitDetails += ' policy number, ';
+                    numOutstanding += 1;
                 }
                 if ( r.FinancialProductFinServ__r.Public_Provider_Name__r.DeveloperName__c == 'UNKNOWN') {
-                    awaitDetails += 'policy number, ';
+                    awaitDetails += ' provider, ';
+                    numOutstanding += 1;
                 }
-                if( r.FinancialProductFinServ__r.Subtype__c.contains('Junior')&& r.FinancialProductFinServ__r.RegisteredContact__c == '') {
-                    awaitDetails += 'registered contact, ';
+                if( r.FinancialProductFinServ__r.Subtype__c.contains('Junior') && String.isBlank(r.FinancialProductFinServ__r.RegisteredContact__c) ) {
+                    awaitDetails += ' registered contact, ';
+                    numOutstanding += 1;
                 }
-                awaitdetails = awaitDetails.substringBeforeLast(', ') + ' & ' + awaitDetails.substringAfterLast(', ');
+                if ( numOutstanding == 1 ) {
+                    awaitDetails = awaitDetails.substringBeforeLast(', ') + ' ' + awaitDetails.substringAfterLast(', ');
+                } else {
+                    awaitDetails = awaitDetails.substringBeforeLast(', ') + ' ' + awaitDetails.substringAfterLast(', ');
+                    awaitDetails = awaitDetails.substringBeforeLast(', ') + ' & ' + awaitDetails.substringAfterLast(', ');
+                }
                 
                 status = 'Action required';
                 message = System.Label.EmailInformationRequestUpdateAwaitPreReqsPt1 + awaitDetails + System.Label.EmailInformationRequestUpdateAwaitPreReqsPt2;
@@ -157,7 +167,7 @@ public class EmailInformationRequestUpdateTable {
                             // No complaint made
                             } else {
                                 status = 'Off track';
-                                message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateOffTrack + ' ' + formatDate(r.ExpectedReceiptDate__c) + ' ' + System.Label.EmailInformationRequestUpdateOffTrackPt2;
+                                message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateOffTrack + ' ' + formatDate(r.ExpectedReceiptDate__c) + '. ' + System.Label.EmailInformationRequestUpdateOffTrackPt2;
                             }
                             
                             
