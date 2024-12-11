@@ -43,6 +43,13 @@
                         </valueListItems>
                         <valueListItems>
                             <value>InformationRequest__c.ChangeDetails</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>COMPLETE</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>InformationRequest__c.AdHocAction</value>
@@ -51,17 +58,17 @@
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Complete</rightValue>
+                                    <rightValue>COMPLETE</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Cancelled</rightValue>
+                                    <rightValue>CANCELLED</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Awaiting ad hoc action</rightValue>
+                                    <rightValue>AWAIT_AD_HOC</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -98,12 +105,12 @@
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Complete</rightValue>
+                                    <rightValue>COMPLETE</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>NE</operator>
-                                    <rightValue>Cancelled</rightValue>
+                                    <rightValue>CANCELLED</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -249,7 +256,7 @@
                     <criteria>
                         <leftValue>{!Record.Status__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Cancelled</rightValue>
+                        <rightValue>CANCELLED</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -266,7 +273,7 @@
                     <criteria>
                         <leftValue>{!Record.Status__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Complete</rightValue>
+                        <rightValue>COMPLETE</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -764,7 +771,7 @@
                     <criteria>
                         <leftValue>{!Record.Status__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Cancelled</rightValue>
+                        <rightValue>CANCELLED</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
@@ -774,7 +781,7 @@
                     <criteria>
                         <leftValue>{!Record.Status__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Complete</rightValue>
+                        <rightValue>COMPLETE</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

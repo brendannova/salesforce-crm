@@ -109,6 +109,13 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>READY_FOR_ADVICE</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>InformationRequest__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
