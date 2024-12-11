@@ -3167,7 +3167,7 @@
         <name>Planners</name>
         <dataType>String</dataType>
         <displayField>Name</displayField>
-        <filterLogic>and</filterLogic>
+        <filterLogic>(1 AND 2) OR 3</filterLogic>
         <filters>
             <field>ProfileId</field>
             <operator>EqualTo</operator>
@@ -3180,6 +3180,13 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Username</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>hugo@novawm.com</stringValue>
             </value>
         </filters>
         <object>User</object>
