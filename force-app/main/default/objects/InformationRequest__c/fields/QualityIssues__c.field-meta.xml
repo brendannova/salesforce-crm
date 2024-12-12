@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QualityIssues__c</fullName>
+    <description>High level description of any issues with this information request</description>
+    <label>Quality issues</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Incorrect fees</fullName>
+                <default>false</default>
+                <label>Incorrect fees</label>
+            </value>
+            <value>
+                <fullName>Missed guarantees</fullName>
+                <default>false</default>
+                <label>Missed guarantees</label>
+            </value>
+            <value>
+                <fullName>Spelling mistakes</fullName>
+                <default>false</default>
+                <label>Spelling mistakes</label>
+            </value>
+            <value>
+                <fullName>Missing data</fullName>
+                <default>false</default>
+                <label>Missing data</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>
