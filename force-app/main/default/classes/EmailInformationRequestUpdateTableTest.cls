@@ -1,3 +1,8 @@
+/**
+ * This class exists exclusively to provide testing coverage for the Information Request Update Table used in the email templates for updates.
+ * It should not be used in any other contexts.
+ * It generates a household with some information requests and compares the outputted formatted data for those information requests. 
+ */
 @isTest(SeeAllData=true)
 public class EmailInformationRequestUpdateTableTest {
         

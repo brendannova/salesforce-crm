@@ -1,3 +1,8 @@
+/**
+ * This class exists exclusively to provide testing coverage for the Information Request Related List for households LWC.
+ * It should not be used in any other contexts.
+ * It generates a household with some information requests and compares the outputted formatted data from those information requests. 
+ */
 @isTest
 public class InformationRequestHouseholdDisplayTest {
     @istest

@@ -1,3 +1,8 @@
+/**
+ * This class exists exclusively to provide support for the Information Request Related List for households LWC.
+ * It should not be used in any other contexts.
+ * It gets information requests for any financial product related to the household and formats the data into a list of maps for an LWC to use. 
+ */
 public with sharing class InformationRequestHouseholdDisplay {
     @AuraEnabled(cacheable=true)
     public static List<Map<String, String>> formattedData(String recordId) {

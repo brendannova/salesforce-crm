@@ -4520,6 +4520,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>InformationRequest__c.CancelledReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>InformationRequest__c.ChecklistCompleteDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4685,12 +4690,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>InformationRequest__c.ReasonForCancellation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>InformationRequest__c.ReceiptDate__c</field>
+        <field>InformationRequest__c.ReceivedDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5011,6 +5011,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ProviderContact__c.DeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ProviderContact__c.InformationRequestFormat__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6004,6 +6009,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>LoanApplicationProperty</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>ProviderContact__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

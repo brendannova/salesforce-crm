@@ -1,3 +1,9 @@
+/**
+ * This class exists exclusively to provide support for the Information Request Update Table visualforce component for the update email templates.
+ * It should not be used in any other contexts.
+ * It gets information requests for any advice related to the household which is in data gathering or risk call and formats the data into a list of irUpdates.
+ * These are then used to display individual product updates correctly.
+ */
 public class EmailInformationRequestUpdateTable {
     public String objectId{get;set;}
     public List<String> owners;
