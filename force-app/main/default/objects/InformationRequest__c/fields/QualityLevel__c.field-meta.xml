@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QualityLevel__c</fullName>
+    <description>A RAG status to indicate the quality of the checklist review completed by specialists. If blank, this is an implicit indication of Green/High quality.</description>
+    <label>Quality level</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RED</fullName>
+                <default>false</default>
+                <label>Red</label>
+            </value>
+            <value>
+                <fullName>AMBER</fullName>
+                <default>false</default>
+                <label>Amber</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
