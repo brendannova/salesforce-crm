@@ -9,7 +9,7 @@
                         <valueListItems>
                             <value>InformationRequest__c.GenerateAuthorityDocument</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.AuthorityStatus__c}</leftValue>
                                     <operator>NE</operator>
@@ -20,6 +20,11 @@
                                     <operator>NE</operator>
                                     <rightValue>Not required</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>SETUP</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
@@ -28,7 +33,7 @@
                         <valueListItems>
                             <value>CustomButton.InformationRequest__c.OpenChecklist</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ChecklistStatus__c}</leftValue>
                                     <operator>NE</operator>
@@ -39,15 +44,26 @@
                                     <operator>NE</operator>
                                     <rightValue>Not started</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>SETUP</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>InformationRequest__c.ChangeDetails</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>COMPLETE</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>SETUP</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -192,6 +208,16 @@
             <fieldInstance>
                 <fieldItem>Record.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c</fieldItem>
                 <identifier>RecordFinancialAccount_rFinServ_FinancialAccountNumber_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.QualityLevel__c</fieldItem>
+                <identifier>RecordQualityLevel__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-75b6cb83-a3b4-4587-ac34-178c69b26498</name>

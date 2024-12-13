@@ -6,14 +6,14 @@
     <formulas>
         <name>taskType</name>
         <dataType>String</dataType>
-        <expression>IF( ISPICKVAL({!$Record.Status__c}, &quot;Awaiting policy pre-requisites&quot;), &quot;IR_POLICYINFO_CHASE&quot;,
-IF(ISPICKVAL({!$Record.Status__c}, &quot;Information request to be sent&quot;), 
+        <expression>IF( ISPICKVAL({!$Record.Status__c}, &quot;AWAIT_PRE_REQS&quot;), &quot;IR_POLICYINFO_CHASE&quot;,
+IF(ISPICKVAL({!$Record.Status__c}, &quot;INFO_REQ_SEND&quot;), 
   IF(ISPICKVAL({!$Record.InformationRequestType__r.InformationSource__c},&quot;Client&quot;), &quot;IR_CLIENT_REQUEST&quot;,&quot;IR_THIRDPARTY_SEND&quot;),
-IF(ISPICKVAL({!$Record.Status__c}, &quot;Awaiting initial information&quot;),
+IF(ISPICKVAL({!$Record.Status__c}, &quot;AWAIT_IDG&quot;),
    IF(ISPICKVAL({!$Record.InformationRequestType__r.InformationSource__c},&quot;Client&quot;),&quot;IR_CLIENT_CHASE&quot;,&quot;IR_THIRDPARTY_CHASE&quot;),
-IF(ISPICKVAL({!$Record.Status__c}, &quot;Checklist review&quot;),
+IF(ISPICKVAL({!$Record.Status__c}, &quot;CHECKLIST_REVIEW&quot;),
   IF(ISPICKVAL({!$Record.InformationRequestType__r.ChecklistLevel__c},&quot;Full&quot;),&quot;IR_COMET_FULL&quot;,&quot;IR_COMET_SHORT&quot;),
-IF(ISPICKVAL({!$Record.Status__c}, &quot;Fund analysis&quot;),
+IF(ISPICKVAL({!$Record.Status__c}, &quot;FUND_ANALYSIS&quot;),
   IF(ISPICKVAL({!$Record.InformationRequestType__r.BuilderLevel__c},&quot;Full&quot;),&quot;IR_FUNDREVIEW&quot;,&quot;IR_BUILDER_INPUT&quot;),&quot;&quot;)))))</expression>
     </formulas>
     <interviewLabel>Information Request | Created from LOA {!$Flow.CurrentDateTime}</interviewLabel>
