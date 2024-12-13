@@ -3,11 +3,12 @@
     <fullName>QualityReviewBy__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>The user who scored this information request</description>
+    <inlineHelpText>This is the person who last updated the review for this checklist</inlineHelpText>
     <label>Quality review by</label>
     <referenceTo>User</referenceTo>
     <relationshipName>Information_Requests</relationshipName>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
+    <trackFeedHistory>true</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
