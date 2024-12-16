@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Assign_to_household</name>
-        <label>Assign to household</label>
+        <name>Assign_household_and_dedicated_specialist</name>
+        <label>Assign household and dedicated specialist</label>
         <locationX>314</locationX>
         <locationY>276</locationY>
-        <actionName>FlowHelperEmailAssignHousehold</actionName>
+        <actionName>FlowHelperCaseEmailCreated</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -14,7 +14,7 @@
                 <elementReference>$Record</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>FlowHelperEmailAssignHousehold</nameSegment>
+        <nameSegment>FlowHelperCaseEmailCreated</nameSegment>
         <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -98,7 +98,7 @@
         <scheduledPaths>
             <name>Assign_to_household_logic</name>
             <connector>
-                <targetReference>Assign_to_household</targetReference>
+                <targetReference>Assign_household_and_dedicated_specialist</targetReference>
             </connector>
             <label>Assign to household logic</label>
             <offsetNumber>2</offsetNumber>
