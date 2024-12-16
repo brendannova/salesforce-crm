@@ -203,10 +203,17 @@
                     <stringValue>READY_FOR_ADVICE</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Information_requests.InformationRequestType__r.HoldUpAdvice__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NO</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Information_requests</targetReference>
             </connector>
-            <label>Complete</label>
+            <label>Complete / Skippable</label>
         </rules>
         <rules>
             <name>Information_received</name>
@@ -357,6 +364,7 @@
         <outputReference>irs</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Status__c</queriedFields>
+        <queriedFields>InformationRequestType__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_IRs_for_this_adviceWithoutInclusion</name>
@@ -386,6 +394,7 @@
         <outputReference>irs</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Status__c</queriedFields>
+        <queriedFields>InformationRequestType__c</queriedFields>
     </recordLookups>
     <start>
         <locationX>452</locationX>

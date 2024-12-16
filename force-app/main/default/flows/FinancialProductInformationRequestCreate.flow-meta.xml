@@ -58,6 +58,10 @@ ISBLANK({!$Record.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c
 ||
 (
 (CONTAINS({!$Record.RecordType.Name}, &quot;Junior&quot;) &amp;&amp; (ISPICKVAL({!$Record.FinServ__Household__r.FinServ__Status__c},&quot;Onboarding&quot;) || ISPICKVAL({!$Record.Household__r.FinServ__Status__c},&quot;Onboarding&quot;) || ISPICKVAL({!$Record.Household__r.FinServ__Status__c},&quot;Active&quot;) || ISPICKVAL({!$Record.FinServ__Household__r.FinServ__Status__c},&quot;Active&quot;)))
+)
+&amp;&amp;
+(
+NOT(ISPICKVAL({!$Record.Subtype__c}, &quot;Private Medical&quot;))
 )</filterFormula>
         <object>FinServ__FinancialAccount__c</object>
         <recordTriggerType>Create</recordTriggerType>
