@@ -5,7 +5,7 @@
         <name>Add_FP_to_collection</name>
         <label>Add FP to collection</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>financialProductsForLOAing</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Add_FPforupdate_to_collection</name>
         <label>Add FP to collection</label>
         <locationX>600</locationX>
-        <locationY>1430</locationY>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>FPsToBeUpdated</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>Add_FPs_to_collection</name>
         <label>Add FPs to collection</label>
         <locationX>446</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>financialProductsForLOAing</assignToReference>
             <operator>Add</operator>
@@ -53,7 +53,7 @@
         <name>Add_LOA_to_collection</name>
         <label>Add LOA to collection</label>
         <locationX>600</locationX>
-        <locationY>1190</locationY>
+        <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>LOAsToCreate</assignToReference>
             <operator>Add</operator>
@@ -69,7 +69,7 @@
         <name>Add_one_to_output</name>
         <label>Add one to output</label>
         <locationX>600</locationX>
-        <locationY>1550</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>loa_created_count</assignToReference>
             <operator>Add</operator>
@@ -85,7 +85,7 @@
         <name>Create_LOA</name>
         <label>Create LOA</label>
         <locationX>600</locationX>
-        <locationY>1070</locationY>
+        <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>LOAforAdding.Household_Lookup__c</assignToReference>
             <operator>Assign</operator>
@@ -122,7 +122,7 @@
         <name>Set_triage_flag</name>
         <label>Set triage flag</label>
         <locationX>468</locationX>
-        <locationY>1790</locationY>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>db_triage_needed</assignToReference>
             <operator>Assign</operator>
@@ -138,7 +138,7 @@
         <name>Tick_Create_LOA_box</name>
         <label>Tick Create LOA box</label>
         <locationX>600</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>Identify_FPs_needing_LOAs.Create_LOA__c</assignToReference>
             <operator>Assign</operator>
@@ -161,7 +161,7 @@
         <name>Any_FPs_to_update_0</name>
         <label>Any FPs to update?</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>FPs_to_update_0</name>
@@ -183,7 +183,7 @@
         <name>Any_LOAs_to_create</name>
         <label>Any LOAs to create?</label>
         <locationX>380</locationX>
-        <locationY>2198</locationY>
+        <locationY>1958</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes_LOAs</name>
@@ -205,7 +205,7 @@
         <name>DB_Triage_needed_decision</name>
         <label>DB Triage needed?</label>
         <locationX>600</locationX>
-        <locationY>1670</locationY>
+        <locationY>1490</locationY>
         <defaultConnector>
             <targetReference>Identify_FPs_needing_LOAs</targetReference>
         </defaultConnector>
@@ -237,7 +237,7 @@
         <name>FP_known</name>
         <label>FP known?</label>
         <locationX>380</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Get_financial_products_without_LOAs</targetReference>
         </defaultConnector>
@@ -262,7 +262,7 @@
         <name>Ready_for_LOA</name>
         <label>Ready for LOA?</label>
         <locationX>754</locationX>
-        <locationY>950</locationY>
+        <locationY>842</locationY>
         <defaultConnector>
             <targetReference>Identify_FPs_needing_LOAs</targetReference>
         </defaultConnector>
@@ -350,7 +350,7 @@
         <name>Triage_task_needed</name>
         <label>Triage task needed?</label>
         <locationX>182</locationX>
-        <locationY>2558</locationY>
+        <locationY>2282</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_triage_needed_task</name>
@@ -393,12 +393,12 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>LOA - Create LOAs for financial products {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>LOA - Create LOAs for financial products</label>
+    <label>zUnused LOA - Create LOAs for financial products</label>
     <loops>
         <name>Identify_FPs_needing_LOAs</name>
         <label>Identify FPs needing LOAs</label>
         <locationX>380</locationX>
-        <locationY>830</locationY>
+        <locationY>734</locationY>
         <collectionReference>financialProductsForLOAing</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -431,7 +431,7 @@
         <name>Create_LOAs</name>
         <label>Create LOAs</label>
         <locationX>182</locationX>
-        <locationY>2318</locationY>
+        <locationY>2066</locationY>
         <connector>
             <targetReference>Update_FPs</targetReference>
         </connector>
@@ -441,7 +441,7 @@
         <name>Get_financial_products_without_LOAs</name>
         <label>Get financial products without LOAs</label>
         <locationX>578</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Any_FPs_to_update_0</targetReference>
@@ -482,7 +482,7 @@
         <name>Update_FPs</name>
         <label>Update FPs</label>
         <locationX>182</locationX>
-        <locationY>2438</locationY>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>Triage_task_needed</targetReference>
         </connector>
@@ -500,7 +500,7 @@
         <name>Create_triage_task_0</name>
         <label>Create triage task</label>
         <locationX>50</locationX>
-        <locationY>2678</locationY>
+        <locationY>2390</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>

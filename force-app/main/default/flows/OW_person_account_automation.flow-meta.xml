@@ -6,7 +6,7 @@
         <name>Add_ATM_to_collection</name>
         <label>Add ATM to collection</label>
         <locationX>138</locationX>
-        <locationY>2279</locationY>
+        <locationY>1871</locationY>
         <assignmentItems>
             <assignToReference>atms</assignToReference>
             <operator>Add</operator>
@@ -68,7 +68,7 @@
         <name>Create_equivalent_ATM_role_for_person</name>
         <label>Create equivalent ATM role for person</label>
         <locationX>138</locationX>
-        <locationY>2171</locationY>
+        <locationY>1763</locationY>
         <assignmentItems>
             <assignToReference>atm.OW_parent_atm_record__c</assignToReference>
             <operator>Assign</operator>
@@ -140,7 +140,7 @@
         <name>Any_ATM_records</name>
         <label>Any ATM records?</label>
         <locationX>446</locationX>
-        <locationY>2063</locationY>
+        <locationY>1655</locationY>
         <defaultConnectorLabel>None found</defaultConnectorLabel>
         <rules>
             <name>Some_found</name>
@@ -201,7 +201,7 @@
         <name>Household_changed</name>
         <label>Household changed?</label>
         <locationX>446</locationX>
-        <locationY>1847</locationY>
+        <locationY>1439</locationY>
         <defaultConnectorLabel>Not changed</defaultConnectorLabel>
         <rules>
             <name>Changed</name>
@@ -254,7 +254,7 @@
         <locationX>446</locationX>
         <locationY>623</locationY>
         <defaultConnector>
-            <targetReference>TOB_Signed</targetReference>
+            <targetReference>Household_changed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -272,31 +272,6 @@
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>TOB_Signed</name>
-        <label>TOB Signed?</label>
-        <locationX>446</locationX>
-        <locationY>1439</locationY>
-        <defaultConnector>
-            <targetReference>Household_changed</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Unchanged</defaultConnectorLabel>
-        <rules>
-            <name>Signed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Date_terms_of_business_last_accepted__c</leftValueReference>
-                <operator>IsChanged</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_LOAs</targetReference>
-            </connector>
-            <label>Signed</label>
         </rules>
     </decisions>
     <description>Automation for person account records covering a number of scenarios
@@ -326,7 +301,7 @@
         <name>Loop_the_household_ATMs</name>
         <label>Loop the household ATMs</label>
         <locationX>50</locationX>
-        <locationY>2063</locationY>
+        <locationY>1655</locationY>
         <collectionReference>Get_ATM_records_for_household</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -373,21 +348,21 @@
         <name>Insert_ATMs</name>
         <label>Insert ATMs</label>
         <locationX>50</locationX>
-        <locationY>2471</locationY>
+        <locationY>2063</locationY>
         <inputReference>atms</inputReference>
     </recordCreates>
     <recordDeletes>
         <name>Delete_ATM_records</name>
         <label>Delete ATM records</label>
         <locationX>314</locationX>
-        <locationY>2171</locationY>
+        <locationY>1763</locationY>
         <inputReference>Get_ATM_records_for_person_account</inputReference>
     </recordDeletes>
     <recordLookups>
         <name>Get_ATM_records_for_household</name>
         <label>Get ATM records for household</label>
         <locationX>50</locationX>
-        <locationY>1955</locationY>
+        <locationY>1547</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_the_household_ATMs</targetReference>
@@ -409,7 +384,7 @@
         <name>Get_ATM_records_for_person_account</name>
         <label>Get ATM records for person account</label>
         <locationX>446</locationX>
-        <locationY>1955</locationY>
+        <locationY>1547</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Any_ATM_records</targetReference>
@@ -478,7 +453,7 @@
         <locationX>314</locationX>
         <locationY>1247</locationY>
         <connector>
-            <targetReference>TOB_Signed</targetReference>
+            <targetReference>Household_changed</targetReference>
         </connector>
         <inputReference>dBsToUpdate</inputReference>
     </recordUpdates>
@@ -494,24 +469,6 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <subflows>
-        <description>Calls subflow to create LOAs for any financial products requiring them against this household.</description>
-        <name>Create_LOAs</name>
-        <label>Create LOAs</label>
-        <locationX>314</locationX>
-        <locationY>1547</locationY>
-        <connector>
-            <targetReference>Update_LOAs</targetReference>
-        </connector>
-        <flowName>OW_loa_create_loas_for_financial_products</flowName>
-        <inputAssignments>
-            <name>HouseholdID</name>
-            <value>
-                <elementReference>$Record.Household_Lookup__c</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
     <subflows>
         <name>DOB_changed</name>
         <label>DOB changed</label>
@@ -531,22 +488,6 @@
             <name>partyId</name>
             <value>
                 <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Update_LOAs</name>
-        <label>Update LOAs</label>
-        <locationX>314</locationX>
-        <locationY>1655</locationY>
-        <connector>
-            <targetReference>Household_changed</targetReference>
-        </connector>
-        <flowName>OW_loa_push_loa_to_to_be_sent</flowName>
-        <inputAssignments>
-            <name>householdId</name>
-            <value>
-                <elementReference>$Record.Household_Lookup__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>
