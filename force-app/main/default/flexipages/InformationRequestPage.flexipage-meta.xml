@@ -210,16 +210,6 @@
                 <identifier>RecordFinancialAccount_rFinServ_FinancialAccountNumber_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.QualityLevel__c</fieldItem>
-                <identifier>RecordQualityLevel__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-75b6cb83-a3b4-4587-ac34-178c69b26498</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -323,6 +313,16 @@
                         <rightValue>Replaced</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FolderLink__c</fieldItem>
+                <identifier>RecordFolderLink_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4a9e5fcd-a204-475c-b55a-ec87e050cf16</name>
@@ -864,24 +864,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>CANCELLED</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Replaced</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>COMPLETE</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
