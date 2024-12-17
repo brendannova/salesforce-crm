@@ -1372,6 +1372,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>informationRequestRelatedList</componentName>
+                <identifier>c_informationRequestRelatedList</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Prospect</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
                 </componentInstanceProperties>
@@ -1383,6 +1396,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>MainLOAStatus__c|NOT_EQUAL|[&quot;Completed&quot;]</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>MainLOAStatus__c|NOT_EQUAL|[&quot;Replaced&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

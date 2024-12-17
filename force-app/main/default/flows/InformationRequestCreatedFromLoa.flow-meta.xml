@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Flow to create tasks for information requests which have been created by converting an existing LOA</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>taskType</name>
+        <dataType>String</dataType>
+        <expression>IF( ISPICKVAL({!$Record.Status__c}, &quot;AWAIT_PRE_REQS&quot;), &quot;IR_POLICYINFO_CHASE&quot;,
+IF(ISPICKVAL({!$Record.Status__c}, &quot;INFO_REQ_SEND&quot;), 
+  IF(ISPICKVAL({!$Record.InformationRequestType__r.InformationSource__c},&quot;Client&quot;), &quot;IR_CLIENT_REQUEST&quot;,&quot;IR_THIRDPARTY_SEND&quot;),
+IF(ISPICKVAL({!$Record.Status__c}, &quot;AWAIT_IDG&quot;),
+   IF(ISPICKVAL({!$Record.InformationRequestType__r.InformationSource__c},&quot;Client&quot;),&quot;IR_CLIENT_CHASE&quot;,&quot;IR_THIRDPARTY_CHASE&quot;),
+IF(ISPICKVAL({!$Record.Status__c}, &quot;CHECKLIST_REVIEW&quot;),
+  IF(ISPICKVAL({!$Record.InformationRequestType__r.ChecklistLevel__c},&quot;Full&quot;),&quot;IR_COMET_FULL&quot;,&quot;IR_COMET_SHORT&quot;),
+IF(ISPICKVAL({!$Record.Status__c}, &quot;FUND_ANALYSIS&quot;),
+  IF(ISPICKVAL({!$Record.InformationRequestType__r.BuilderLevel__c},&quot;Full&quot;),&quot;IR_FUNDREVIEW&quot;,&quot;IR_BUILDER_INPUT&quot;),&quot;&quot;)))))</expression>
+    </formulas>
+    <interviewLabel>Information Request | Created from LOA {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Information Request | Created from LOA</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Create_task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LegacyLoa__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>InformationRequest__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Create_task</name>
+        <label>Create task</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>$Record.Advice__r.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <elementReference>taskType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+</Flow>

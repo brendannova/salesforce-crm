@@ -135,12 +135,24 @@ public class fake_data_factory_v2 {
             Public_Provider_Names__c[] public_providers = [SELECT Id FROM Public_Provider_Names__c WHERE Name =: public_provider_name];
             if(public_providers.size() == 0){
                 public_provider = new Public_Provider_Names__c (
-                    Name = public_provider_name,
-                    ReferenceName__c = public_provider_name
+                    Name = public_provider_name
+                    //DeveloperName__c = public_provider_name
                 );
                 insert public_provider;
             } else {
                 public_provider = public_providers[0];
+            }
+            
+            // Identify an existing NOVA public provider or create a new one if none exists
+            Public_Provider_Names__c nova = new Public_Provider_Names__c();
+            Public_Provider_Names__c[] novas = [SELECT Id FROM Public_Provider_Names__c WHERE OW_own_company__c = true];
+            if(novas.size() == 0){
+                nova.Name = 'Nova';
+                nova.DeveloperName__c = 'NOVA';
+                nova.OW_own_company__c = true;
+                insert nova;
+            } else {
+                nova = novas[0];
             }
             
             //Might not be needed as hoping this is not mandatory. 
@@ -190,6 +202,43 @@ public class fake_data_factory_v2 {
             }
             insert financial_products;
             
+            InformationRequestType__c irt = new InformationRequestType__c(
+                Name = 'Standard - third party',
+                ChecklistLevel__c = 'Full',
+                BuilderLevel__c = 'Full analysis',
+                InformationSource__c = 'Third party provider',
+                DeveloperName__c = 'STANDARD_THIRDPARTY'
+                
+            );
+            insert irt;
+            
+            List<String> statuses = new List<String>{'SETUP','INFO_REQ_SEND','AWAIT_PRE_REQS','AWAIT_AD_HOC','AWAIT_IDG', 'AWAIT_INFO ','FUND_ANALYSIS','COMPLETE','CHECKLIST_REVIEW'};
+            
+            Integer i = 0;
+            Integer j = 0;
+            
+            // Create IRs
+            List<InformationRequest__c> irs = new List<InformationRequest__c>();
+            for ( FinServ__FinancialAccount__c fp : financial_products ){ 
+                j = math.mod(i,6);
+                InformationRequest__c ir = new InformationRequest__c (
+                    FinancialProductFinServ__c = fp.Id,
+                    Status__c = statuses[j],
+                    Advice__c = advice.id,
+                    InformationRequestType__c = irt.id,
+                    ComplaintStatus__c= 'Lodged',
+                    FirstExpectedReceiptDate__c = Date.today(),
+                    ExpectedReceiptDate__c = Date.today(),
+                    DateLastChased__c = Date.today() - 1
+                    
+                );
+                i++;
+                irs.add(ir);
+            }
+            insert irs;
+        
+            
+         
             // Create LOAs for the financial products
             List<LOA__c> loas = new List<LOA__c>();
             for( FinServ__FinancialAccount__c financial_product : financial_products){
@@ -226,12 +275,94 @@ public class fake_data_factory_v2 {
                     FinServ__PrimaryOwner__c = acr.Contact.AccountId,
                     Household__c = household_id,
                     FinServ__Status__c = 'Open',
-                    Public_Provider_Name__c = [SELECT Id FROM Public_Provider_Names__c WHERE OW_own_company__c = true ].Id,
+                    Public_Provider_Name__c = nova.Id,
                     RecordTypeId = Schema.SObjectType.FinServ__FinancialAccount__c.getRecordTypeInfosByDeveloperName().get('FP_Stocks_Shares_ISA').getRecordTypeId()
                 );
                 novaprods.add(novaprod);
             }
             insert(novaprods);
+            
+            
+            Product__c prod = new Product__c();
+            Product__c[] prods = [SELECT Id FROM Product__c WHERE ReferenceName__c = 'SSISA_HUBWISE'];
+            if(prods.size() == 0){
+                prod.Name = 'ISA';
+                prod.ReferenceName__c = 'SSISA_HUBWISE';
+            	insert prod;
+            } else {
+                prod = prods[0];
+            }
+
+            
+            RecommendationType__c rt = new RecommendationType__c();
+            RecommendationType__c[] rts = [SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'OPEN_PRODUCT'];
+            if(rts.size() == 0 ){
+                rt.Name = 'Open product';
+                rt.ReferenceName__c = 'OPEN_PRODUCT';
+                rt.Dependency__c = 'Not Applicable'; 
+                rt.HasAmount__c = 'Not Applicable';
+                rt.HasDestination__c = 'Not Applicable'; 
+                rt.HasFrequency__c = 'Not Applicable'; 
+                rt.HasProduct__c = 'Required';
+                rt.HasSource__c = 'Not Applicable';
+                rt.InvestmentMandate__c = 'Required'; 
+                rt.PaidBy__c = 'Not Applicable'; 
+                rt.Phasing__c = 'Not Applicable';
+                rt.TransferNotes__c = 'Not Applicable';
+                rt.TransferType__c = 'Not Applicable';
+           		insert rt;
+            } else {
+                rt = rts[0];
+            }
+            
+            RecommendationType__c rtls = new RecommendationType__c();
+            RecommendationType__c[] rtlss = [SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'LUMP_SUM'];
+            if(rtlss.size() == 0 ){
+                rtls.Name = 'Lump sum';
+                rtls.ReferenceName__c = 'LUMP_SUM';
+                rtls.Dependency__c = 'Not Applicable';
+                rtls.HasAmount__c = 'Required';
+                rtls.HasDestination__c = 'Required';
+                rtls.HasFrequency__c = 'Not Applicable';
+                rtls.HasProduct__c = 'Not Applicable';
+                rtls.HasSource__c = 'Not Applicable';
+                rtls.InvestmentMandate__c = 'Not Applicable';
+                rtls.PaidBy__c = 'Required';
+                rtls.Phasing__c = 'Optional';
+                rtls.TransferNotes__c = 'Not Applicable';
+                rtls.TransferType__c = 'Not Applicable';
+           		insert rtls;
+            } else {
+                rt = rtlss[0];
+            }
+            
+
+            
+            FulfilmentType__c ft = new FulfilmentType__c();
+            FulfilmentType__c[] fts = [SELECT Id FROM FulfilmentType__c WHERE ReferenceName__c = 'OPEN_PRODUCT_ISA'];
+            if( fts.size() == 0) {    
+            	ft.Name = 'Open product ISA';
+                ft.RecommendationType__c = rt.Id;
+                ft.DestinationProductType__c = '0121t0000001eNHAAY';
+                ft.ReferenceName__c = 'OPEN_PRODUCT_ISA';
+            	insert ft;
+            } else {
+                ft = fts[0];
+            }
+            
+            FulfilmentType__c ftls = new FulfilmentType__c();
+            FulfilmentType__c[] ftlss = [SELECT Id FROM FulfilmentType__c WHERE ReferenceName__c = 'LUMP_SUM_ISA'];
+            if( fts.size() == 0) {    
+            	ftls.Name = 'Open product ISA';
+                ftls.RecommendationType__c = rt.Id;
+                ftls.DestinationProductType__c = '0121t0000001eNHAAY';
+                ftls.ReferenceName__c = 'LUMP_SUM_ISA';
+            	insert ftls;
+            } else {
+                ftls = ftlss[0];
+            }
+            
+
             
             List<Recommendation__c> recs = new List<Recommendation__c>();
             // Create recommendations for each of the clients in the household
@@ -242,8 +373,8 @@ public class fake_data_factory_v2 {
                         Household__c = household_id,
                         InvestmentMandate__c = 'Passive Plus 80 (S)',
                         PrimaryOwner__c = novaprod.FinServ__PrimaryOwner__r.Id,
-                        Product__c = [ SELECT Id FROM Product__c WHERE ReferenceName__c = 'SSISA_HUBWISE' ].Id,
-                        RecommendationType__c = [ SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'OPEN_PRODUCT' ].Id,
+                        Product__c = prod.Id,
+                        RecommendationType__c = rt.Id,
                         Status__c = 'Accepted',
                         DestinationLegacy__c = novaprod.Id
                     );
@@ -257,7 +388,7 @@ public class fake_data_factory_v2 {
                         PrimaryOwner__c = novaprod.FinServ__PrimaryOwner__r.Id,
                         PaidBy__c = 'Client',
                         PhasingFrequency__c = 'Single',
-                        RecommendationType__c = [ SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'LUMP_SUM' ].Id,
+                        RecommendationType__c = rtls.Id,
                         Status__c = 'Accepted',
                         DestinationLegacy__c = novaprod.Id
                     );
@@ -275,7 +406,7 @@ public class fake_data_factory_v2 {
                     AdditionalBankDetailsStatus__c = 'Not required',
                     Advice__c = advice.Id,
                     ExpressionOfWishFormStatus__c = 'Not required',
-                    FulfilmentType__c = [ SELECT Id FROM FulfilmentType__c WHERE RecommendationType__c =: rec.RecommendationType__c AND DestinationProductType__c = '0121t0000001eNHAAY' ].Id,
+                    FulfilmentType__c = ft.Id,
                     SearchName__c = rec.PrimaryOwner__c + ' | ' + rec.recommendationType__r.Name + ' ISA ',
                     TransferFormsStatus__c = 'Not required'
                 );

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <decisions>
+        <name>Was_there_a_relevant_info_request</name>
+        <label>Was there a relevant info request?</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_IR</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_IR</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Flow to update IR when policy details are added</description>
+    <environments>Default</environments>
+    <interviewLabel>Financial product | IR | Policy details added {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Financial product | IR | Policy details added</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_IR</name>
+        <label>Get IR</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Was_there_a_relevant_info_request</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>FinancialProductFinServ__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>AWAIT_PRE_REQS</stringValue>
+            </value>
+        </filters>
+        <object>InformationRequest__c</object>
+        <outputReference>ir</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Advice__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <name>Close_existing_task</name>
+        <label>Close existing task</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Create_send_task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ir.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_IR</name>
+        <label>Update IR</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Close_existing_task</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ir.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AuthorityStatus__c</field>
+            <value>
+                <stringValue>To be requested</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InformationRequestStatus__c</field>
+            <value>
+                <stringValue>To be sent</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>INFO_REQ_SEND</stringValue>
+            </value>
+        </inputAssignments>
+        <object>InformationRequest__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_IR</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>NOT({!$Record.Public_Provider_Name__r.OW_own_company__c})
+&amp;&amp;
+NOT(ISBLANK({!$Record.FinServ__FinancialAccountNumber__c}))
+&amp;&amp;
+{!$Record.Public_Provider_Name__r.Name} != &quot;Unknown&quot;
+&amp;&amp;
+(
+NOT(CONTAINS(TEXT({!$Record.FinServ__PrimaryOwner__r.FinServ__Status__c}),&quot;Junior&quot;))
+||
+NOT(ISBLANK({!$Record.RegisteredContact__c}))
+)</filterFormula>
+        <object>FinServ__FinancialAccount__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Create_send_task</name>
+        <label>Create send task</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>ir.Advice__r.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>IR_THIRDPARTY_SEND</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>ir.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>ir</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InformationRequest__c</objectType>
+    </variables>
+</Flow>

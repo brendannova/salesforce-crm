@@ -161,7 +161,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Define_task_type</targetReference>
+            <targetReference>OW_create_advice_record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -196,22 +196,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>No</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>OW_create_advice_record</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Define_task_type</name>
-        <label>Define task type</label>
-        <locationX>50</locationX>
-        <locationY>974</locationY>
-        <assignmentItems>
-            <assignToReference>taskType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>setup_loas</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -292,7 +276,7 @@
         <name>Task_to_create</name>
         <label>Task to create?</label>
         <locationX>314</locationX>
-        <locationY>1274</locationY>
+        <locationY>1166</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -345,7 +329,7 @@
         <name>OW_create_advice_record</name>
         <label>Create advice record</label>
         <locationX>314</locationX>
-        <locationY>1166</locationY>
+        <locationY>1058</locationY>
         <connector>
             <targetReference>Task_to_create</targetReference>
         </connector>
@@ -414,7 +398,7 @@
         <name>Create_first_task</name>
         <label>Create first task</label>
         <locationX>182</locationX>
-        <locationY>1382</locationY>
+        <locationY>1274</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>

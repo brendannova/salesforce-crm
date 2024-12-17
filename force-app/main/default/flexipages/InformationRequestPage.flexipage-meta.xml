@@ -4,6 +4,135 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>InformationRequest__c.GenerateAuthorityDocument</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.AuthorityStatus__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Accepted</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.AuthorityStatus__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Not required</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>SETUP</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>InformationRequest__c.CallDetails</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.InformationRequest__c.OpenChecklist</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.ChecklistStatus__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Not required</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.ChecklistStatus__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Not started</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>SETUP</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>InformationRequest__c.ChangeDetails</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>COMPLETE</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>SETUP</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>InformationRequest__c.AdHocAction</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>COMPLETE</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>CANCELLED</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>AWAIT_AD_HOC</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>InformationRequest__c.OutstandingInformationReceived</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 OR 2) AND (3 OR 4)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.AdditionalInformationRequestStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Information requested</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.AdditionalInformationRequestStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Provider processing</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.ChecklistStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Complete</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.ChecklistStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Complete</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>InformationRequest__c.CancelInformationRequest</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>COMPLETE</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>CANCELLED</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
@@ -79,16 +208,6 @@
             <fieldInstance>
                 <fieldItem>Record.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c</fieldItem>
                 <identifier>RecordFinancialAccount_rFinServ_FinancialAccountNumber_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.QualityLevel__c</fieldItem>
-                <identifier>RecordQualityLevel__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-75b6cb83-a3b4-4587-ac34-178c69b26498</name>
@@ -194,6 +313,16 @@
                         <rightValue>Replaced</rightValue>
                     </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FolderLink__c</fieldItem>
+                <identifier>RecordFolderLink_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4a9e5fcd-a204-475c-b55a-ec87e050cf16</name>
@@ -735,24 +864,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>CANCELLED</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Replaced</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>COMPLETE</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
