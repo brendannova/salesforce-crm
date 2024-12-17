@@ -212,7 +212,7 @@ public class fake_data_factory_v2 {
             );
             insert irt;
             
-            List<String> statuses = new List<String>{'Setup','Information request to be sent','Awaiting policy pre-requisites','Awaiting ad hoc action','Awaiting advice progression', 'Awaiting initial information','Fund analysis','Complete','Checklist review'};
+            List<String> statuses = new List<String>{'SETUP','INFO_REQ_SEND','AWAIT_PRE_REQS','AWAIT_AD_HOC','AWAIT_IDG', 'AWAIT_INFO ','FUND_ANALYSIS','COMPLETE','CHECKLIST_REVIEW'};
             
             Integer i = 0;
             Integer j = 0;
