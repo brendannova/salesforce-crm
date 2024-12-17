@@ -2,22 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Set_advice_ID</name>
-        <label>Set advice ID</label>
-        <locationX>600</locationX>
-        <locationY>134</locationY>
-        <assignmentItems>
-            <assignToReference>receivedDocumentId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_received_document</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_household_ID</name>
         <label>Set household ID</label>
         <locationX>600</locationX>
@@ -31,6 +15,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_received_document_ID</name>
+        <label>Set received document ID</label>
+        <locationX>600</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>receivedDocumentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_document</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -173,18 +173,14 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_received_document</name>
-        <label>Get received document</label>
+        <name>Get_document</name>
+        <label>Get document</label>
         <locationX>600</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_household_ID</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -437,6 +433,7 @@
             <dataType>String</dataType>
             <fieldText>Document renamed</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;&lt;a href=&quot;https://www.notion.so/novawealth/Receiving-documents-from-clients-158950256fc48003aeaeec19cef361f5?pvs=4#158950256fc480fa8c0fef1d400ebb15&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Naming convention&lt;/a&gt;&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
@@ -455,8 +452,9 @@
             <choiceReferences>Yes</choiceReferences>
             <choiceReferences>NotApplicable</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Colleagues alerted that document has been received</fieldText>
+            <fieldText>Colleagues alerted to new document</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;For example, do you need to post to Chatter to let the planning team know. &lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
@@ -465,19 +463,20 @@
             <choiceReferences>Yes</choiceReferences>
             <choiceReferences>NotApplicable</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Customer thanked</fieldText>
+            <fieldText>Customer acknowledged</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;For example, do you need to email the customer to thank them for sharing the information and let them know we are processing it. &lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>474</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Set_advice_ID</targetReference>
+            <targetReference>Set_received_document_ID</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -543,7 +542,7 @@
         <name>receivedDocumentId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

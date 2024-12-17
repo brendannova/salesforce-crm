@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MyClientEmailsAll</fullName>
+    <columns>CASES.SUBJECT</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>CASES.STATUS</columns>
+    <columns>SlaIcon__c</columns>
+    <columns>LastEmailReceivedDateTime__c</columns>
+    <columns>OWNER_NAME</columns>
+    <columns>CASES.EMAIL</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Case.Email</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.NAME</field>
+        <operation>notEqual</operation>
+    </filters>
+    <label>My client emails | All</label>
+    <sharedTo>
+        <group>AssociatePartners</group>
+        <group>OW_partners</group>
+    </sharedTo>
+</ListView>
