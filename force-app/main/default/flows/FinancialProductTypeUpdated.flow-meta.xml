@@ -10,14 +10,14 @@
             <assignToReference>$Record.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.FinancialProductType__r.LegacyRecordTypeId__c</elementReference>
+                <elementReference>$Record.FinancialProductType__r.RecordTypeIdFinServ__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.Subtype__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.FinancialProductType__r.Name</elementReference>
+                <elementReference>$Record.FinancialProductType__r.PortalName__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>

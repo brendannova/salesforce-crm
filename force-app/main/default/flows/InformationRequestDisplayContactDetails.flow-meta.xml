@@ -133,7 +133,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Display_details</targetReference>
+            <targetReference>Get_registered_contact</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -265,23 +265,6 @@
                         <elementReference>Get_information_request.ProviderContact__r.Name</elementReference>
                     </defaultValue>
                     <fieldText>Name</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isDisabled>
-                        <booleanValue>false</booleanValue>
-                    </isDisabled>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
-                </fields>
-                <fields>
-                    <name>Address</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_information_request.ProviderContact__r.Address__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Address</fieldText>
                     <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isDisabled>
@@ -465,7 +448,7 @@
                     <name>AddressPO</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_primary_owner.ShippingAddress</elementReference>
+                        <elementReference>Get_primary_owner.FinServ__ShippingAddress__pc</elementReference>
                     </defaultValue>
                     <fieldText>Address</fieldText>
                     <fieldType>InputField</fieldType>
@@ -578,7 +561,7 @@
                     <name>AddressJO</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_joint_owner.ShippingAddress</elementReference>
+                        <elementReference>Get_joint_owner.FinServ__ShippingAddress__pc</elementReference>
                     </defaultValue>
                     <fieldText>Address</fieldText>
                     <fieldType>InputField</fieldType>
@@ -701,7 +684,7 @@
                     <name>AddressRC</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_registered_contact.ShippingAddress</elementReference>
+                        <elementReference>Get_registered_contact.FinServ__ShippingAddress__pc</elementReference>
                     </defaultValue>
                     <fieldText>Address</fieldText>
                     <fieldType>InputField</fieldType>

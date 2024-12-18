@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Set_new_financial_product_type_ID</name>
+        <label>Set new financial product type ID</label>
+        <locationX>176</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>financialProduct.FinancialProductType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fptSelect.firstSelectedRow.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_financial_product</targetReference>
+        </connector>
+    </assignments>
     <description>Flow to allow users to update the financial product type on products</description>
     <environments>Default</environments>
     <interviewLabel>Financial product | Change type {!$Flow.CurrentDateTime}</interviewLabel>
@@ -25,10 +41,32 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Get_financial_product</name>
+        <label>Get financial product</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_financial_product_type_records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>financialProductId</elementReference>
+            </value>
+        </filters>
+        <object>FinServ__FinancialAccount__c</object>
+        <outputReference>financialProduct</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>FinancialProductType__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_financial_product_type_records</name>
         <label>Get financial product type records</label>
         <locationX>176</locationX>
-        <locationY>134</locationY>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Collect_details</targetReference>
@@ -51,7 +89,7 @@
         <name>Rollback</name>
         <label>Rollback</label>
         <locationX>704</locationX>
-        <locationY>458</locationY>
+        <locationY>674</locationY>
         <connector>
             <targetReference>Error</targetReference>
         </connector>
@@ -60,7 +98,7 @@
         <name>Update_any_information_requests</name>
         <label>Update any information requests</label>
         <locationX>176</locationX>
-        <locationY>458</locationY>
+        <locationY>674</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Rollback</targetReference>
@@ -70,7 +108,7 @@
             <field>FinancialProductFinServ__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>fpId</elementReference>
+                <elementReference>financialProductId</elementReference>
             </value>
         </filters>
         <filters>
@@ -78,6 +116,13 @@
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ChecklistStatus__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Complete</stringValue>
             </value>
         </filters>
         <inputAssignments>
@@ -89,39 +134,25 @@
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>176</locationX>
-        <locationY>350</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Update_any_information_requests</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Rollback</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>fpId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>FinancialProductType__c</field>
-            <value>
-                <elementReference>fptSelect.firstSelectedRow.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>FinServ__FinancialAccount__c</object>
+        <inputReference>financialProduct</inputReference>
     </recordUpdates>
     <screens>
         <name>Collect_details</name>
         <label>Collect details</label>
         <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Update_financial_product</targetReference>
+            <targetReference>Set_new_financial_product_type_ID</targetReference>
         </connector>
         <fields>
             <name>explain</name>
@@ -183,7 +214,7 @@
         <name>Error</name>
         <label>Error</label>
         <locationX>704</locationX>
-        <locationY>566</locationY>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -199,12 +230,20 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_financial_product_type_records</targetReference>
+            <targetReference>Get_financial_product</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <variables>
-        <name>fpId</name>
+        <name>financialProduct</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>financialProductId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
