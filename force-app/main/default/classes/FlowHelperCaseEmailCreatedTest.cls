@@ -1,7 +1,6 @@
+//Test class to assist the FlowHelperCaseEmailCreatedHousehold invocable class
 @isTest
 public class FlowHelperCaseEmailCreatedTest {
-    
-    //Test class to assist the FlowHelperCaseEmailCreatedHousehold invocable class
     
     @testSetup
     static void setup() {
@@ -41,11 +40,13 @@ public class FlowHelperCaseEmailCreatedTest {
     static void sendEmail_FromInternal_HouseholdFound() {
         // Create new email from and internal @novawm.com email to a known client. Check corrent household is linked to related case
         Account h = [SELECT Id FROM Account WHERE OW_admin_notes__c = 'EmailAssignHousehold' LIMIT 1];
+        Account person = [SELECT Id, PersonEmail FROM Account WHERE Household_Lookup__c =: h.Id LIMIT 1];
         Case c = new Case();
         c.Subject = 'From internal email, person found';
+        c.AccountId = person.Id;
         insert c;
         
-        Account person = [SELECT Id, PersonEmail FROM Account WHERE Household_Lookup__c =: h.Id LIMIT 1];
+        
         EmailMessage em = new EmailMessage();
         em.Subject = 'From external email';
         em.FromAddress = 'testcolleague@novawm.com';
@@ -60,7 +61,8 @@ public class FlowHelperCaseEmailCreatedTest {
         caseFlowInputs.add(caseList);
         FlowHelperCaseEmailCreated.AssignHouseholdFromEmailMessage(caseFlowInputs);
         
-        System.AssertEquals(h.Id, c.AccountId);
+        Case ca = [SELECT Id, AccountId FROM Case LIMIT 1];
+        System.AssertEquals(h.Id, ca.AccountId);
     }
 
     @isTest
