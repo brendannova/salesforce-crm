@@ -269,7 +269,8 @@ private class EmailMessageHelperTest {
             Incoming = false,
             RelatedToId = acc.Id,
             CcAddress = 'test@test.com',
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -291,7 +292,8 @@ private class EmailMessageHelperTest {
             TextBody = 'Testing',
             Incoming = false,
             RelatedToId = acc.Id,
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -314,7 +316,8 @@ private class EmailMessageHelperTest {
             Incoming = false,
             RelatedToId = acc.Id,
             CcAddress = UserInfo.getUserEmail(),
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -337,7 +340,8 @@ private class EmailMessageHelperTest {
             Incoming = false,
             RelatedToId = acc.Id,
             CcAddress = UserInfo.getUserEmail() + ',test@test.com',
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
