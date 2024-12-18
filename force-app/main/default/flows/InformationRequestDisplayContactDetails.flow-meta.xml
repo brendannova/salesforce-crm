@@ -131,6 +131,10 @@
         <connector>
             <targetReference>Get_registered_contact</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Display_details</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -152,6 +156,9 @@
         <connector>
             <targetReference>Get_joint_owner</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Error</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -173,6 +180,10 @@
         <connector>
             <targetReference>Display_details</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Display_details</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -882,6 +893,22 @@
             <regionContainerType>SectionWithHeader</regionContainerType>
         </fields>
         <nextOrFinishButtonLabel>Update information request</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>1106</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorText</name>
+            <fieldText>&lt;p&gt;There&#39;s been an error here. Please raise a ticket with the product team with the following message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
