@@ -186,7 +186,7 @@ IF(
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Accepted Awaiting Information&quot;), &quot;AWAIT_INFO&quot;,
 IF(
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Information Received&quot;) ||
-  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Information requested&quot;), &quot;CHECKLIST_REVIEW&quot;,
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Information rerequested&quot;), &quot;CHECKLIST_REVIEW&quot;,
 IF(
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Specialist reviewed&quot;) ||
   ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Analysis&quot;), &quot;FUND_ANALYSIS&quot;,
