@@ -4,7 +4,7 @@
     <decisions>
         <name>Which_button</name>
         <label>Which button?</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -52,6 +52,21 @@
             </connector>
             <label>Contact</label>
         </rules>
+        <rules>
+            <name>Product_type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>productType.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_financial_product_type</targetReference>
+            </connector>
+            <label>Product type</label>
+        </rules>
     </decisions>
     <description>Quick action to point specialists to sub flows for any changes to information requests</description>
     <environments>Default</environments>
@@ -79,7 +94,7 @@
     <recordLookups>
         <name>Get_information_request</name>
         <label>Get information request</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -100,7 +115,7 @@
     <screens>
         <name>Buttons</name>
         <label>Buttons</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -150,11 +165,25 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <fields>
+            <name>productType</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Change financial product type</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_information_request</targetReference>
@@ -184,6 +213,19 @@
             <name>ir</name>
             <value>
                 <elementReference>Get_information_request</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Change_financial_product_type</name>
+        <label>Change financial product type</label>
+        <locationX>842</locationX>
+        <locationY>458</locationY>
+        <flowName>FinancialProductChangeFinancialProductType</flowName>
+        <inputAssignments>
+            <name>fpId</name>
+            <value>
+                <elementReference>Get_information_request.FinancialProductFinServ__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>
