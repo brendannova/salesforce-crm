@@ -20,7 +20,7 @@
     <assignments>
         <name>Add_to_collectionFps</name>
         <label>Add to collection</label>
-        <locationX>264</locationX>
+        <locationX>352</locationX>
         <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>fpsToUpdate</assignToReference>
@@ -30,29 +30,29 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LOAs</targetReference>
+            <targetReference>Get_specific_task</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_to_output_collection</name>
         <label>Add to output collection</label>
-        <locationX>264</locationX>
-        <locationY>1190</locationY>
+        <locationX>352</locationX>
+        <locationY>1988</locationY>
         <assignmentItems>
             <assignToReference>InformationRequests</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>TransformSubflow.ir</elementReference>
+                <elementReference>informationRequestSingle</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assign_financial_product_values</targetReference>
+            <targetReference>LOAs</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_financial_product_values</name>
         <label>Assign financial product values</label>
-        <locationX>264</locationX>
+        <locationX>352</locationX>
         <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>fpSingle.Id</assignToReference>
@@ -72,6 +72,44 @@
             <targetReference>Add_to_collectionFps</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_task_date</name>
+        <label>Assign task date</label>
+        <locationX>440</locationX>
+        <locationY>1730</locationY>
+        <assignmentItems>
+            <assignToReference>informationRequestSingle.TempTaskDueDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Old_tasks.ActivityDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Add_to_output_collection</targetReference>
+        </connector>
+    </assignments>
+    <collectionProcessors>
+        <name>Get_specific_task</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Get specific task</label>
+        <locationX>352</locationX>
+        <locationY>1514</locationY>
+        <assignNextValueToReference>currentItem_Get_specific_task</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_tasks</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Get_specific_task.WhatId</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <elementReference>LOAs.Id</elementReference>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Old_tasks</targetReference>
+        </connector>
+    </collectionProcessors>
     <description>Flow to allow specialists to convert existing LOAs to information requests</description>
     <environments>Default</environments>
     <interviewLabel>Advice | IR | Convert LOAs {!$Flow.CurrentDateTime}</interviewLabel>
@@ -94,7 +132,7 @@
         <name>LOAs</name>
         <label>LOAs</label>
         <locationX>176</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <collectionReference>Get_LOAs</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -102,6 +140,20 @@
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Create_irs</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Old_tasks</name>
+        <label>Old tasks</label>
+        <locationX>352</locationX>
+        <locationY>1622</locationY>
+        <collectionReference>Get_specific_task</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_task_date</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Add_to_output_collection</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -127,7 +179,7 @@
         <name>Create_irs</name>
         <label>Create irs</label>
         <locationX>176</locationX>
-        <locationY>1598</locationY>
+        <locationY>2180</locationY>
         <connector>
             <targetReference>Update_LOAs</targetReference>
         </connector>
@@ -179,6 +231,8 @@
         </faultConnector>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>InformationRequestType__c</object>
+        <sortField>Sequence__c</sortField>
+        <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -188,7 +242,7 @@
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>LOAs</targetReference>
+            <targetReference>Get_tasks</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -227,15 +281,66 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>LOA_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Replaced</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LOA_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>LOA_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>LOA_to_Advice__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_tasks</name>
+        <label>Get tasks</label>
+        <locationX>176</locationX>
+        <locationY>866</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LOAs</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>loaIds</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Task</object>
+        <sortField>ActivityDate</sortField>
+        <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordRollbacks>
         <name>Rollback</name>
         <label>Rollback</label>
         <locationX>440</locationX>
-        <locationY>2030</locationY>
+        <locationY>2612</locationY>
         <connector>
             <targetReference>Error_screen</targetReference>
         </connector>
@@ -244,7 +349,7 @@
         <name>Close_tasks</name>
         <label>Close tasks</label>
         <locationX>176</locationX>
-        <locationY>1922</locationY>
+        <locationY>2504</locationY>
         <faultConnector>
             <targetReference>Rollback</targetReference>
         </faultConnector>
@@ -275,7 +380,7 @@
         <name>Update_financial_products</name>
         <label>Update financial products</label>
         <locationX>176</locationX>
-        <locationY>1814</locationY>
+        <locationY>2396</locationY>
         <connector>
             <targetReference>Close_tasks</targetReference>
         </connector>
@@ -289,7 +394,7 @@
         <name>Update_LOAs</name>
         <label>Update LOAs</label>
         <locationX>176</locationX>
-        <locationY>1706</locationY>
+        <locationY>2288</locationY>
         <connector>
             <targetReference>Update_financial_products</targetReference>
         </connector>
@@ -330,8 +435,8 @@
     <screens>
         <name>Collect_details</name>
         <label>Collect details</label>
-        <locationX>264</locationX>
-        <locationY>974</locationY>
+        <locationX>352</locationX>
+        <locationY>1082</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -340,7 +445,7 @@
         </connector>
         <fields>
             <name>explain</name>
-            <fieldText>&lt;p&gt;Choose the information request type for this LOA:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!LOAs.Name}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Choose the information request type for this LOA:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; {!LOAs.Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Value: &lt;/strong&gt;£{!LOAs.LOA_Financial_Account__r.FP_Value__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -393,7 +498,7 @@
         </fields>
         <fields>
             <name>fptExplain</name>
-            <fieldText>&lt;p&gt;Choose the financial product type for this financial product:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!LOAs.LOA_Financial_Account__r.Name}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Choose the financial product type for this financial product:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Name: &lt;/strong&gt;{!LOAs.LOA_Financial_Account__r.Name}&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Portal display type:&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt; {!LOAs.LOA_Financial_Account__r.Subtype__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -451,7 +556,7 @@
         <name>Error_screen</name>
         <label>Error screen</label>
         <locationX>440</locationX>
-        <locationY>2138</locationY>
+        <locationY>2720</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -474,10 +579,10 @@
     <subflows>
         <name>TransformSubflow</name>
         <label>Transform</label>
-        <locationX>264</locationX>
-        <locationY>1082</locationY>
+        <locationX>352</locationX>
+        <locationY>1190</locationY>
         <connector>
-            <targetReference>Add_to_output_collection</targetReference>
+            <targetReference>Assign_financial_product_values</targetReference>
         </connector>
         <flowName>InformationRequestLoaTransform</flowName>
         <inputAssignments>
@@ -487,7 +592,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>informationRequestType</name>
+            <name>InformationRequestType</name>
             <value>
                 <elementReference>irtType.firstSelectedRow</elementReference>
             </value>
@@ -498,8 +603,19 @@
                 <elementReference>LOAs</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>informationRequestSingle</assignToReference>
+            <name>ir</name>
+        </outputAssignments>
     </subflows>
+    <variables>
+        <name>currentItem_Get_specific_task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
     <variables>
         <name>fpSingle</name>
         <dataType>SObject</dataType>
@@ -525,6 +641,14 @@
         <objectType>InformationRequest__c</objectType>
     </variables>
     <variables>
+        <name>informationRequestSingle</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InformationRequest__c</objectType>
+    </variables>
+    <variables>
         <name>loaIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
@@ -536,6 +660,14 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>taskRequestSingle</name>
+        <apexClass>TaskRequest</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

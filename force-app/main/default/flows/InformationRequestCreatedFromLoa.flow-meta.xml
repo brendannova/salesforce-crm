@@ -85,6 +85,12 @@ IF(ISPICKVAL({!$Record.Status__c}, &quot;FUND_ANALYSIS&quot;),
         <locationY>431</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
+            <name>due_date_input</name>
+            <value>
+                <elementReference>$Record.TempTaskDueDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>household_id</name>
             <value>
                 <elementReference>$Record.Advice__r.Advice_Household__c</elementReference>
