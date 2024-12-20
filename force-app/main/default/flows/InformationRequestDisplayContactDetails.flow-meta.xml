@@ -445,18 +445,54 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>AddressPO</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_primary_owner.FinServ__ShippingAddress__pc</elementReference>
-                    </defaultValue>
-                    <fieldText>Address</fieldText>
-                    <fieldType>InputField</fieldType>
+                    <name>primaryOwnerAddress</name>
+                    <extensionName>flowruntime:address</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>addressLabel</name>
+                        <value>
+                            <stringValue>Primary owner address</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>street</name>
+                        <value>
+                            <elementReference>Get_primary_owner.ShippingStreet</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>city</name>
+                        <value>
+                            <elementReference>Get_primary_owner.ShippingCity</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>province</name>
+                        <value>
+                            <elementReference>Get_primary_owner.ShippingState</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>postalCode</name>
+                        <value>
+                            <elementReference>Get_primary_owner.ShippingPostalCode</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>country</name>
+                        <value>
+                            <elementReference>Get_primary_owner.ShippingCountry</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -558,18 +594,54 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>AddressJO</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_joint_owner.FinServ__ShippingAddress__pc</elementReference>
-                    </defaultValue>
-                    <fieldText>Address</fieldText>
-                    <fieldType>InputField</fieldType>
+                    <name>jointOwnerAddress</name>
+                    <extensionName>flowruntime:address</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>addressLabel</name>
+                        <value>
+                            <stringValue>Joint owner address</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>street</name>
+                        <value>
+                            <elementReference>Get_joint_owner.ShippingStreet</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>city</name>
+                        <value>
+                            <elementReference>Get_joint_owner.ShippingCity</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>province</name>
+                        <value>
+                            <elementReference>Get_joint_owner.ShippingState</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>postalCode</name>
+                        <value>
+                            <elementReference>Get_joint_owner.ShippingPostalCode</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>country</name>
+                        <value>
+                            <elementReference>Get_joint_owner.ShippingCountry</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -681,18 +753,54 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
-                    <name>AddressRC</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_registered_contact.FinServ__ShippingAddress__pc</elementReference>
-                    </defaultValue>
-                    <fieldText>Address</fieldText>
-                    <fieldType>InputField</fieldType>
+                    <name>registeredContactAddress</name>
+                    <extensionName>flowruntime:address</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>addressLabel</name>
+                        <value>
+                            <stringValue>Registered contact address</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>disabled</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>street</name>
+                        <value>
+                            <elementReference>Get_registered_contact.ShippingStreet</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>city</name>
+                        <value>
+                            <elementReference>Get_registered_contact.ShippingCity</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>province</name>
+                        <value>
+                            <elementReference>Get_registered_contact.ShippingState</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>postalCode</name>
+                        <value>
+                            <elementReference>Get_registered_contact.ShippingPostalCode</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>country</name>
+                        <value>
+                            <elementReference>Get_registered_contact.ShippingCountry</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <inputParameters>
                     <name>width</name>
