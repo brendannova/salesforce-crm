@@ -1,136 +1,96 @@
-//This class exists exclusively to assign a household and owner to a new email case record when an incoming email is received.
-public class FlowHelperCaseEmailCreated {
-    
+/**
+ * This class exists exclusively to assign a household and owner to a new email case record when an incoming email is received.
+ * We check information on the 1st email associated with the case to see if we can identify a single household to link the case to. If we can, we also check whether there is a dedicated specialist that should own the case.
+ * We start by looking at who the email is from. If it is from an external party, we simply need to look at their email address, see if we have a person account associated with that email address, and link it to their household if they are a client in one.
+ * If the email is from an internal Nova email address, we need to check the other parties on the email and see if we can associate it with a single household. We do this by checking the other external email addresses in to and cc.
+ * If no household can be found, we leave the case to go to the email queue and the AccountId field is not updated.
+ * If a household is found, we update the AccountId field but the case will only be assigned to a dedicated specialist instead of the email queue if there is one assigned and not OOO.
+ */
+public without sharing class FlowHelperCaseEmailCreated {
     /**
-    * This method checks if the FromAddress of an incoming email on a new email case is from an internal (@novawm.com)address
-    * If not, searches for a known person account with the FromAddress and relates their household if they are a client in the household
-    * If so, this code checks if all external emails listed in the ToAddress and CcAddress fields are person accounts in Salesforce 
+     * Invocable method that takes a list of cases to process as an input via the FlowInputs class.
+	 * As the processing and updates are all completed within the method, there is no return.
     */
-
     @invocableMethod (label = 'Case email created invocable' description = 'Assign household and owner to an email case' category = 'Flow Helpers' iconName='slds:standard:custom_component_task')
     public static void assignHouseholdFromEmailMessage(List<FlowInputs> inputs){
-		List<Case> cases = new List<Case>();
+        
+        List<Case> cases = new List<Case>();
         for(FlowInputs input : inputs) {
             cases.add(input.record);
         }
-        Map<Id,List<String>> emailMap = new Map<Id, List<String>>();
-        Set<String> emailsToFind = new Set<String>();
+        Map<Id,List<String>> emailAddressMap = new Map<Id, List<String>>();
+        Set<String> emailAddressesToFind = new Set<String>();
         
-        for(Case c : [SELECT Id, (SELECT Id, ParentId, Subject, FromAddress, ToAddress, CcAddress FROM EmailMessages ORDER BY MessageDate ASC LIMIT 1) FROM Case WHERE Id =: cases]){
-            if(!c.EmailMessages.isEmpty()){
-                EmailMessage em = c.EmailMessages[0]; //Review notes: error handling added - if email list is empty a debug line is printed. Maybe we can talk about how else to log errors.
-                List<String> emailsInMessage = new List<String>(); //List instantiated insidee loop so is cleared for each iteration
+        for(Case emailCase : [SELECT Id, (SELECT Id, ParentId, Subject, FromAddress, ToAddress, CcAddress FROM EmailMessages ORDER BY MessageDate ASC LIMIT 1) FROM Case WHERE Id =: cases]){
+            if(!emailCase.EmailMessages.isEmpty()){
+                EmailMessage eMessage = emailCase.EmailMessages[0];         
+                List<String> emailAddressesInMessage = new List<String>();
                 // Check if from Nova or external
-                if(!em.FromAddress.endsWith('@novawm.com')){
-                    emailsInMessage.add(em.FromAddress);
+                if(!eMessage.FromAddress.endsWith('@novawm.com')){
+                    emailAddressesInMessage.add(eMessage.FromAddress);
                 } else {
                     // If email is from an internal email, check To and CC fields if not blank
-                    if(String.isNotBlank(em.ToAddress)) {
-                        emailsInMessage.addAll(em.ToAddress.deleteWhiteSpace().split(';'));
+                    if(String.isNotBlank(eMessage.ToAddress)) {
+                        emailAddressesInMessage.addAll(eMessage.ToAddress.deleteWhiteSpace().split(';'));
                     }
-                    if(String.isNotBlank(em.ccAddress)){
-                        emailsInMessage.addAll(em.ccAddress.deleteWhiteSpace().split(';'));
+                    if(String.isNotBlank(eMessage.ccAddress)){
+                        emailAddressesInMessage.addAll(eMessage.ccAddress.deleteWhiteSpace().split(';'));
                     }
                     //Remove internal emails
-                    for(Integer i = (emailsInMessage.size()-1); i>=0; i--) {
-                        String e = emailsInMessage[i];
-                        if(e.endsWith('@novawm.com')){
-                            emailsInMessage.remove(i);
+                    for(Integer i = (emailAddressesInMessage.size()-1); i>=0; i--) {
+                        String emailAddress = emailAddressesInMessage[i];
+                        if(emailAddress.endsWith('@novawm.com')){
+                            emailAddressesInMessage.remove(i);
                         }
                     }
                 }
-                emailMap.put(c.Id, emailsInMessage);
-                //@Cian, Review comment: This set was created so we could search people's email addresses in the query on line 62. I tried using emailMap.values() but doesn't work as it's a List<List<String>>
-                emailsToFind.addAll(emailsInMessage);
-            } else{
-                    System.debug('No email message found for ' + c);
-            }
+                if(!emailAddressesInMessage.isEmpty()){
+                    emailAddressMap.put(emailCase.Id, emailAddressesInMessage);
+                    emailAddressesToFind.addAll(emailAddressesInMessage);
+                }
+            } 
         }
         
-        List<Case> casesToAssign = new List<Case>(); // Cases that should be assigned to a household and dedicated specialist or email queue
-        List<Account> people = [SELECT Id, PersonEmail, PersonContactId FROM Account WHERE PersonEmail IN: emailsToFind];
-        List<Id> personContactIds = new List<Id>();
-        for(Account p : people){
-                    personContactIds.add(p.PersonContactId);
-                }
-        List<AccountContactRelation> relationships = [SELECT Id, AccountId, ContactId FROM AccountContactRelation WHERE ContactId IN: personContactIds AND Roles = 'Client'];
-        
-        List<String> emailsInMessage = new List<String>(); //List of emails in given email message
-        List<Account> peopleFound = new List<Account>(); //List of people found from emails in given email message
-        Set<String> accountIds = new Set<String>(); //Unique list of accounts linked from all ACR's of people found. Remove duplicates to determine if all people are found in same household
-        List<String> accountIdList = new List<String>(); //Once satisfied all people belong to the same household, add household to caseToAccountMap. A list allows us to specify the index of the row we add to the map
-        List<AccountContactRelation> acrList = new List<AccountContactRelation>(); //Used to compare the size of relationships found with emails in message to ensure all people are clients in the household
-        Map<Id, Id> caseToAccountMap = new Map<Id, Id>(); //Used to map the case we want to update with it's assigned household
-        
-        for(String caseId : emailMap.keySet()){
-            emailsInMessage.addAll(emailMap.get(caseId));
-			//Check if all people exist in the household
-            for(Account p : people){
-                if(emailsInMessage.contains(p.PersonEmail)){
-                    peopleFound.add(p);
-                    personContactIds.add(p.PersonContactId);
-                }
-            }
-            //If people found from emails in message, then match the total number of emails, then check if they are all in the same household
-            if(peopleFound.size() == emailsInMessage.size()){
-                for(AccountContactRelation acr : relationships) {
-                    if(personContactIds.contains(acr.ContactId)){
-                        accountIds.add(acr.AccountId);
-                        acrList.add(acr);
-                    }
-                }
-                if(acrList.size() == emailsInMessage.size() && accountIds.size() == 1) {
-                    accountIdList.addAll(accountIds);
-                    caseToAccountMap.put(caseId, accountIdList.get(0));
-                    //householdMatch = true;
-                }
-            }
-            //Clear all lists before restarting the loop
-            emailsInMessage.clear();
-            peopleFound.clear();
-            personContactIds.clear();
-            accountIds.clear();
-            acrList.clear();
-        }
-        
-        Map<Id, Id> accountToDSMap = new Map<Id, Id>();
-        for(Account a : [SELECT Id, OW_dedicated_specialist__c FROM Account WHERE Id =: caseToAccountMap.Values() AND OW_dedicated_specialist__c NOT IN (SELECT UserId FROM OutOfOffice)]) {
-            if(a.OW_dedicated_Specialist__c != null){
-                accountToDsMap.put(a.Id, a.OW_dedicated_specialist__c);
+        Map<String, AccountContactRelation> emailAddressPersonMap = new Map<String, AccountContactRelation>();
+        List<AccountContactRelation> relationships = [SELECT Id, AccountId, Account.OW_dedicated_specialist__c, Account.OW_dedicated_specialist__r.OutOfOfficeMessage, ContactId, Contact.Account.PersonEmail FROM AccountContactRelation WHERE Contact.Account.PersonEmail IN: emailAddressesToFind AND Roles = 'Client'];
+        Map<Id, Id> householdDedicatedSpecialistMap = new Map<Id, Id>();
+        for(AccountContactRelation relationship : relationships){
+            emailAddressPersonMap.put(relationship.Contact.Account.PersonEmail, relationship);
+            if(String.isBlank(relationship.Account.OW_dedicated_specialist__r.OutOfOfficeMessage) && !String.isBlank(relationship.Account.OW_dedicated_specialist__c)){
+                householdDedicatedSpecialistMap.put(relationship.AccountId, relationship.Account.OW_dedicated_specialist__c);
             }
         }
- 
-        for(Id caseId : caseToAccountMap.keySet()){
-            Case c = new Case();
-            c.Id = caseId;
-            c.AccountId = caseToAccountMap.get(c.Id);
-            if(accountToDsMap.containsKey(caseToAccountMap.get(c.Id))) {
-                c.OwnerId = accountToDsMap.get(caseToAccountMap.get(c.Id));
+
+        List<Case> casesToAssign = new List<Case>();        // Cases that should be assigned to a household and dedicated specialist or email queue
+        for(String caseId : emailAddressMap.keySet()){
+            Set<Id> accountIds = new Set<Id>();
+            Boolean allClients = true;
+            for(String emailAddress : emailAddressMap.get(caseId)){
+                if(allClients && emailAddressPersonMap.containsKey(emailAddress)){
+                    accountIds.add(emailAddressPersonMap.get(emailAddress).AccountId);
+                } else {
+                    allClients = false;
+                }
             }
-            casesToAssign.add(c);
+            if(allClients && accountIds.size() == 1) {
+                List<Id> accountIdsList = new List<Id>(accountIds);
+                Id householdId = accountIdsList[0];
+                Case caseRecord = new Case(
+                    Id = caseId,
+                    AccountId = householdId
+                );
+                if(householdDedicatedSpecialistMap.containsKey(householdId)){
+                    caseRecord.OwnerId = householdDedicatedSpecialistMap.get(householdId);
+                }
+                casesToAssign.add(caseRecord);
+            }
         }
         update casesToAssign;
-	}
+    }
     
     public class FlowInputs {
         
-        @InvocableVariable (label='Case record'description = 'The case record to be assigned' required=true)
+        @InvocableVariable (label='Case record' description='The case record to be assigned' required=true)
         public Case record;
     }
-
-   /* private class EmailDetails {
-        
-        private Id caseId;
-        private Case caseRecord;
-        private List<String> emailAddresses;
-        private Boolean assignHousehold;
-        private Boolean allPeopleInHousehold;
-        private Boolean onlyOneHousehold;
-    } */
 }
-// Things we need to know
-        // - 1st email received
-        // - FromEmail - nova or not
-        // - If from Nova, list of to/cc email addresses, stripped of Nova ones
-        // - Are they all person accounts? 
-        // - Are they all in the same household?
