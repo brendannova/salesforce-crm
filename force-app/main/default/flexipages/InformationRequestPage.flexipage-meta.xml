@@ -194,14 +194,20 @@
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.FinancialProductFinServ__r.Household__c</fieldItem>
+                <identifier>RecordFinancialProductFinServ_rHousehold_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.FinancialProductFinServ__r.FinServ__PrimaryOwner__c</fieldItem>
                 <identifier>RecordFinancialAccount_rFinServ_PrimaryOwner_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.FinancialProductFinServ__r.FP_Value__c</fieldItem>
-                <identifier>RecordFinancialAccount_rFP_Value_cField</identifier>
+                <fieldItem>Record.FinancialProductFinServ__r.Public_Provider_Name__c</fieldItem>
+                <identifier>RecordFinancialProductFinServ_rPublic_Provider_Name_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -210,10 +216,22 @@
                 <identifier>RecordFinancialAccount_rFinServ_FinancialAccountNumber_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.FinancialProductFinServ__r.FP_Value__c</fieldItem>
+                <identifier>RecordFinancialAccount_rFP_Value_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-75b6cb83-a3b4-4587-ac34-178c69b26498</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:blankSpace</componentName>
+                <identifier>flexipage_blankSpace</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.FinancialProductFinServ__r.FinServ__JointOwner__c</fieldItem>
@@ -222,14 +240,20 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.FinancialProductFinServ__r.FP_Date_of_valuation__c</fieldItem>
-                <identifier>RecordFinancialAccount_rFP_Date_of_valuation_cField</identifier>
+                <fieldItem>Record.FinancialProductFinServ__r.Subtype__c</fieldItem>
+                <identifier>RecordFinancialProductFinServ_rSubtype_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldItem>Record.FinancialProductFinServ__r.FinServ__Status__c</fieldItem>
                 <identifier>RecordFinancialAccount_rFinServ_Status_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.FinancialProductFinServ__r.FP_Date_of_valuation__c</fieldItem>
+                <identifier>RecordFinancialAccount_rFP_Date_of_valuation_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d945fc51-bc82-49fc-89f4-e6aa79c21f6e</name>
@@ -257,6 +281,50 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-7515b665-05a0-47da-8c69-ee384a6257db</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.FinancialProductFinServ__r.Internal_Notes__c</fieldItem>
+                <identifier>RecordFinancialProductFinServ_rInternal_Notes_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-cdefe678-753d-4d97-a7ab-c4459aa966fa</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.FinancialProductFinServ__r.Pre_LOA_notes__c</fieldItem>
+                <identifier>RecordFinancialProductFinServ_rPre_LOA_notes_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-a0b0795a-c72c-419c-9f53-68fc82a5dcb8</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-cdefe678-753d-4d97-a7ab-c4459aa966fa</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column17</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a0b0795a-c72c-419c-9f53-68fc82a5dcb8</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column18</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-3d675566-c204-4d3a-8888-273365d615c0</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -294,6 +362,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FolderLink__c</fieldItem>
+                <identifier>RecordFolderLink_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-392db5a9-d3de-45cd-8505-9568df432095</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -317,12 +395,28 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.FolderLink__c</fieldItem>
-                <identifier>RecordFolderLink_cField</identifier>
+                <fieldItem>Record.LegacyLoa__r.LOA_Builder_Tab_URL__c</fieldItem>
+                <identifier>RecordLegacyLoa_rLOA_Builder_Tab_URL_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Replaced</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.LegacyLoa__r.Suitability_Builder_Tab_URL__c</fieldItem>
+                <identifier>RecordLegacyLoa_rSuitability_Builder_Tab_URL_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Replaced</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4a9e5fcd-a204-475c-b55a-ec87e050cf16</name>
@@ -846,6 +940,24 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-3d675566-c204-4d3a-8888-273365d615c0</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Policy notes</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection9</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
