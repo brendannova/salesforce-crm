@@ -79,7 +79,7 @@
             <assignToReference>taskToAdd.householdId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>advice.Advice_Household__c</elementReference>
+                <elementReference>IRs.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -165,7 +165,7 @@
         <inputAssignments>
             <name>householdId</name>
             <value>
-                <elementReference>advice.Advice_Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -191,6 +191,13 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>irsToCreate</name>
