@@ -80,6 +80,12 @@ NOT(ISPICKVAL({!$Record.Subtype__c}, &quot;Private Medical&quot;))
                 <elementReference>fps</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <variables>
         <name>fps</name>
