@@ -596,6 +596,23 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Setting this so we can ensure the task to chase recommendation acceptance stays open at the end.</description>
+        <name>Set_someAccepted_variable</name>
+        <label>Set someAccepted variable</label>
+        <locationX>842</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>someAccepted</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_acceptable_recommendations</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Update_earliest_date</name>
         <label>Update earliest date</label>
         <locationX>292</locationX>
@@ -868,12 +885,19 @@ ISBLANK({!currentItem_Other_acceptable_recommendations.PreRequisiteRecommendatio
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesRecsAwaiting</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>count</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>someAccepted</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <label>Yes</label>
@@ -2242,7 +2266,7 @@ ISBLANK({!Changed_recommendations.Product__c})
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_acceptable_recommendations</targetReference>
+            <targetReference>Set_someAccepted_variable</targetReference>
         </connector>
         <fields>
             <name>partialAcceptanceModal</name>
@@ -2522,6 +2546,17 @@ ISBLANK({!Changed_recommendations.Product__c})
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Recommendation__c</objectType>
+    </variables>
+    <variables>
+        <description>Records that only some of the advised clients have provided a decision.</description>
+        <name>someAccepted</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>unchangedRecs</name>
