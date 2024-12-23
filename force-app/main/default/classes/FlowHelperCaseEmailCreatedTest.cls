@@ -4,15 +4,13 @@ public class FlowHelperCaseEmailCreatedTest {
     
     @testSetup
     static void setup() {
-        //Setup test data
+        //Setup test data. Create a household with 2 clients and add an email address to each client.
         List<Account> testAccounts = TestDataFactory.createHousehold(2,0,'1236');
         Id personRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
         List<Account> people = [SELECT Id, PersonEmail FROM Account WHERE AccountNumber = '1236' AND RecordTypeId =: personRT];
-        System.debug(people);
         for(Integer i=0; i < people.size(); i++) {
             Account p = people.get(i);
             p.PersonEmail = 'owemailtest2108+' + i + '@gmail.com';
-            System.debug(p);
         }
         update people;
     }
@@ -21,11 +19,10 @@ public class FlowHelperCaseEmailCreatedTest {
     static void sendEmail_FromExternal_HouseholdFound() {
         //Create new email from a known client and ensure a household is found and linked to related case
         Account h = [SELECT Id FROM Account WHERE AccountNumber = '1236' AND IsPersonAccount = false LIMIT 1];
+        Account person = [SELECT Id, PersonEmail FROM Account WHERE AccountNumber = '1236' AND IsPersonAccount = true LIMIT 1];
         Case c = new Case();
         c.Subject = 'From external email';
         insert c;
-        
-        Account person = [SELECT Id, PersonEmail FROM Account WHERE AccountNumber = '1236' AND IsPersonAccount = true LIMIT 1];
         
         EmailMessage em = new EmailMessage();
         em.Subject = 'From external email';
@@ -53,7 +50,6 @@ public class FlowHelperCaseEmailCreatedTest {
         Case c = new Case();
         c.Subject = 'Test from internal email; household found';
         insert c;
-        
         
         EmailMessage em = new EmailMessage();
         em.Subject = 'Test from internal email; household found';
@@ -156,6 +152,45 @@ public class FlowHelperCaseEmailCreatedTest {
         FlowHelperCaseEmailCreated.AssignHouseholdFromEmailMessage(caseFlowInputs);
 
         Case ca = [SELECT Id, AccountId FROM Case WHERE Subject = 'From internal email, two person household' LIMIT 1];
+        System.AssertEquals(h.Id, ca.AccountId);
+    }
+    
+        @isTest
+    	static void sendEmail_FromExternal_HouseholdFound_Bulk() {
+        //Create multiple email messages on multiple cases and process them in bulk. Household should be found and linked to case.
+        Account h = [SELECT Id FROM Account WHERE AccountNumber = '1236' AND IsPersonAccount = false LIMIT 1];
+        Account person = [SELECT Id, PersonEmail FROM Account WHERE AccountNumber = '1236' AND IsPersonAccount = true LIMIT 1];
+            List<Case> caseList = new List<Case>();
+            for(Integer i=0; i<=2; i++){
+                Case c = new Case();
+                c.Subject = 'From external email ' + i;
+                caseList.add(c);
+            }
+        insert caseList;
+        
+        List<EmailMessage> emailMessageList = new List<EmailMessage>();
+            for(Integer i=0; i < caseList.size(); i++) {
+                Case caseRecord = new Case();
+                caseRecord.Id = caseList.get(i).Id;
+                EmailMessage em = new EmailMessage();
+        		em.Subject = 'From external email ' + i;
+        		em.FromAddress = person.PersonEmail;
+        		em.ToAddress = 'test@novawm.com';
+        		em.ParentId = caseRecord.Id;
+        		em.Incoming = true;
+                emailMessageList.add(em);
+            }  
+        insert emailMessageList;
+        
+        List<FlowHelperCaseEmailCreated.FlowInputs> caseFlowInputs = new List<FlowHelperCaseEmailCreated.FlowInputs>();
+            for(Integer i=0; i < caseList.size(); i++) {
+                FlowHelperCaseEmailCreated.FlowInputs flowInterview = new FlowHelperCaseEmailCreated.FlowInputs();
+        		flowInterview.record = caseList.get(i);
+                caseFlowInputs.add(flowInterview);
+            }
+        FlowHelperCaseEmailCreated.AssignHouseholdFromEmailMessage(caseFlowInputs);
+        
+        Case ca = [SELECT Id, AccountId FROM Case WHERE Subject = 'From external email 0' LIMIT 1];
         System.AssertEquals(h.Id, ca.AccountId);
     }
 }
