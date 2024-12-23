@@ -2023,46 +2023,6 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-a797bde2-111b-480c-84ae-75af516a683d</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>AML/KYC (Pre-suitability)</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>flowArguments</name>
-                    <value>[{&quot;label&quot;:&quot;AdviceChecklistID&quot;,&quot;dataType&quot;:&quot;SObject&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;},{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>flowLayout</name>
-                    <value>oneColumn</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>flowName</name>
-                    <value>AccountAmlCheckScreen</value>
-                </componentInstanceProperties>
-                <componentName>flowruntime:interview</componentName>
-                <identifier>flowruntime_interview</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-a117bcb9-c7d7-4dad-8339-7b2f390e10a8</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -2864,6 +2824,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.AnnualReviewOngoingSuitabilityAssess__c</fieldItem>
                 <identifier>RecordAnnualReviewOngoingSuitabilityAssess_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.AdviceName__r.New_or_existing_client__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Existing</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -2874,6 +2841,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.AnnualReviewRebalancing__c</fieldItem>
                 <identifier>RecordAnnualReviewRebalancing_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.AdviceName__r.New_or_existing_client__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Existing</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -3061,6 +3035,172 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CapacityForLoss__c</fieldItem>
+                <identifier>RecordCapacityForLoss_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ResistanceToCatastrophe__c</fieldItem>
+                <identifier>RecordResistanceToCatastrophe_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.RequirementToTakeRisk__c</fieldItem>
+                <identifier>RecordRequirementToTakeRisk_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-07508e8e-208f-4305-bde7-5611f714c48d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.JustifyCapacityForLoss__c</fieldItem>
+                <identifier>RecordJustifyCapacityForLoss_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.JustifyResistanceToCatastrophe__c</fieldItem>
+                <identifier>RecordJustifyResistanceToCatastrophe_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.JustifyRequirementToTakeRisk__c</fieldItem>
+                <identifier>RecordJustifyRequirementToTakeRisk_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-a3f65c5e-3879-451c-8ac8-04c5dcb90f1b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-07508e8e-208f-4305-bde7-5611f714c48d</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column19</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a3f65c5e-3879-451c-8ac8-04c5dcb90f1b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column20</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-eeb7d361-e95e-4362-bb12-4bfdba45a32e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.RiskCallNotes__c</fieldItem>
+                <identifier>RecordRiskCallNotes_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ConfirmPortfolioOfEachClient__c</fieldItem>
+                <identifier>RecordConfirmPortfolioOfEachClient_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-26d93c57-d01c-4ce8-93c1-638273714a9c</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-26d93c57-d01c-4ce8-93c1-638273714a9c</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-b7b24b44-45cd-42e3-a04a-d8aabf652f36</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-a797bde2-111b-480c-84ae-75af516a683d</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>AML/KYC (Pre-suitability)</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>flowArguments</name>
+                    <value>[{&quot;label&quot;:&quot;AdviceChecklistID&quot;,&quot;dataType&quot;:&quot;SObject&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;},{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowLayout</name>
+                    <value>oneColumn</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>flowName</name>
+                    <value>AccountAmlCheckScreen</value>
+                </componentInstanceProperties>
+                <componentName>flowruntime:interview</componentName>
+                <identifier>flowruntime_interview</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -3340,140 +3480,6 @@
                 </visibilityRule>
             </componentInstance>
         </itemInstances>
-        <name>Facet-ab1aab8f-c1fc-4e63-8fb0-b833686fed87</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RiskCallNotes__c</fieldItem>
-                <identifier>RecordRiskCallNotes_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ConfirmPortfolioOfEachClient__c</fieldItem>
-                <identifier>RecordConfirmPortfolioOfEachClient_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-26d93c57-d01c-4ce8-93c1-638273714a9c</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-26d93c57-d01c-4ce8-93c1-638273714a9c</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column3</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-b7b24b44-45cd-42e3-a04a-d8aabf652f36</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CapacityForLoss__c</fieldItem>
-                <identifier>RecordCapacityForLoss_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.ResistanceToCatastrophe__c</fieldItem>
-                <identifier>RecordResistanceToCatastrophe_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RequirementToTakeRisk__c</fieldItem>
-                <identifier>RecordRequirementToTakeRisk_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-07508e8e-208f-4305-bde7-5611f714c48d</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.JustifyCapacityForLoss__c</fieldItem>
-                <identifier>RecordJustifyCapacityForLoss_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.JustifyResistanceToCatastrophe__c</fieldItem>
-                <identifier>RecordJustifyResistanceToCatastrophe_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.JustifyRequirementToTakeRisk__c</fieldItem>
-                <identifier>RecordJustifyRequirementToTakeRisk_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-a3f65c5e-3879-451c-8ac8-04c5dcb90f1b</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-07508e8e-208f-4305-bde7-5611f714c48d</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column19</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-a3f65c5e-3879-451c-8ac8-04c5dcb90f1b</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column20</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-eeb7d361-e95e-4362-bb12-4bfdba45a32e</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -3542,24 +3548,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-b7b24b44-45cd-42e3-a04a-d8aabf652f36</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Risk Profiles (continued)</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
                     <value>Facet-eeb7d361-e95e-4362-bb12-4bfdba45a32e</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -3574,24 +3562,28 @@
                 <identifier>flexipage_fieldSection10</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-96tw29uihqb</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-a117bcb9-c7d7-4dad-8339-7b2f390e10a8</value>
+                    <name>columns</name>
+                    <value>Facet-b7b24b44-45cd-42e3-a04a-d8aabf652f36</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Pre-suitability</value>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
                 </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab2</identifier>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Risk Profiles (continued)</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection2</identifier>
             </componentInstance>
         </itemInstances>
+        <name>Facet-ab1aab8f-c1fc-4e63-8fb0-b833686fed87</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -3608,20 +3600,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-96tw29uihqb</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Risk profiles</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab4</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-0cc13983-b7a5-421d-ae91-5fad175b1706</name>
