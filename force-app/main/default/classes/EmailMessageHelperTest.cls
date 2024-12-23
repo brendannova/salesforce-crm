@@ -2,7 +2,7 @@
 private class EmailMessageHelperTest {
    
     @testSetup
-    static void setup() {
+    static void setUp() {
 
         // set up user and permissions
         User currentUser = [ SELECT Id FROM User WHERE Id = :UserInfo.getUserId() ];
