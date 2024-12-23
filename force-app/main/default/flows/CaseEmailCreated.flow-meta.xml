@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>61.0</apiVersion>
-    <assignments>
-        <name>Assign_Account_Id</name>
-        <label>Assign Account Id</label>
-        <locationX>50</locationX>
-        <locationY>647</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.AccountId</assignToReference>
-            <operator>Assign</operator>
+    <actionCalls>
+        <name>Assign_household_and_dedicated_specialist</name>
+        <label>Assign household and dedicated specialist</label>
+        <locationX>314</locationX>
+        <locationY>276</locationY>
+        <actionName>FlowHelperCaseEmailCreated</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>record</name>
             <value>
-                <elementReference>get_ACR.AccountId</elementReference>
+                <elementReference>$Record</elementReference>
             </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_household</targetReference>
-        </connector>
-    </assignments>
+        </inputParameters>
+        <nameSegment>FlowHelperCaseEmailCreated</nameSegment>
+        <offset>0</offset>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
     <assignments>
         <name>Assign_entitlement_to_case</name>
         <label>Assign entitlement to case</label>
-        <locationX>380</locationX>
-        <locationY>1439</locationY>
+        <locationX>50</locationX>
+        <locationY>384</locationY>
         <assignmentItems>
             <assignToReference>$Record.EntitlementId</assignToReference>
             <operator>Assign</operator>
@@ -33,113 +35,6 @@
             <targetReference>Update_case</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>Assign_owner_to_DS</name>
-        <label>Assign owner to DS</label>
-        <locationX>248</locationX>
-        <locationY>1139</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.OwnerId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_household.OW_dedicated_specialist__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_entitlements</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <description>When case is created from email, AccountId is set to the contact record if found.</description>
-        <name>Does_account_Id_need_updating</name>
-        <label>Does account Id need updating?</label>
-        <locationX>380</locationX>
-        <locationY>323</locationY>
-        <defaultConnector>
-            <targetReference>Get_household</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No update needed</defaultConnectorLabel>
-        <rules>
-            <name>Account_Id_needs_updating</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Account.IsPersonAccount</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>get_ACR</targetReference>
-            </connector>
-            <label>Account Id needs updating</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Does_owner_need_updating</name>
-        <label>Does owner need updating?</label>
-        <locationX>380</locationX>
-        <locationY>1031</locationY>
-        <defaultConnector>
-            <targetReference>Get_entitlements</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Leave in client email queue</defaultConnectorLabel>
-        <rules>
-            <name>Update_owner</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_household.OW_dedicated_specialist__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_household.OW_dedicated_specialist__r.OutOfOfficeMessage</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.CreatedSource__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Manual</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_owner_to_DS</targetReference>
-            </connector>
-            <label>Update owner to DS</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_related_account_found</name>
-        <label>Is related account found?</label>
-        <locationX>182</locationX>
-        <locationY>539</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Does_owner_need_updating</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Related account not found</defaultConnectorLabel>
-        <rules>
-            <name>Related_account_found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>get_ACR</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Account_Id</targetReference>
-            </connector>
-            <label>Related account found</label>
-        </rules>
-    </decisions>
     <description>Assign case owner and link entitlement process on creation of an email case.</description>
     <environments>Default</environments>
     <interviewLabel>Case | Email | Created {!$Flow.CurrentDateTime}</interviewLabel>
@@ -164,45 +59,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>get_ACR</name>
-        <label>get ACR</label>
-        <locationX>182</locationX>
-        <locationY>431</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Is_related_account_found</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ContactId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.ContactId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>FinServ__PrimaryGroup__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Client</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>AccountContactRelation</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_entitlements</name>
         <label>Get entitlements</label>
-        <locationX>380</locationX>
-        <locationY>1331</locationY>
+        <locationX>50</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_entitlement_to_case</targetReference>
@@ -219,43 +79,32 @@
         <object>Entitlement</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_household</name>
-        <label>Get household</label>
-        <locationX>380</locationX>
-        <locationY>923</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Does_owner_need_updating</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.AccountId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Update_case</name>
         <label>Update case</label>
-        <locationX>380</locationX>
-        <locationY>1547</locationY>
+        <locationX>50</locationX>
+        <locationY>492</locationY>
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Does_account_Id_need_updating</targetReference>
+            <targetReference>Get_entitlements</targetReference>
         </connector>
         <filterFormula>{!$Record.RecordType.DeveloperName} = &#39;Email&#39;</filterFormula>
         <object>Case</object>
         <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <name>Assign_to_household_logic</name>
+            <connector>
+                <targetReference>Assign_household_and_dedicated_specialist</targetReference>
+            </connector>
+            <label>Assign to household logic</label>
+            <offsetNumber>2</offsetNumber>
+            <offsetUnit>Minutes</offsetUnit>
+            <timeSource>RecordTriggerEvent</timeSource>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
