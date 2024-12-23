@@ -178,21 +178,45 @@ NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.Shippin
 &amp;&amp;
 NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.ShippingPostalCode}))
 &amp;&amp;
-NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinancialProductType__c}))</expression>
+NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinancialProductType__c}))
+&amp;&amp;
+(
+ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__c})
+||
+(
+NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.PersonBirthdate}))
+&amp;&amp;
+NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.FirstName}))
+&amp;&amp;
+NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.LastName}))
+&amp;&amp;
+NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.ShippingStreet}))
+&amp;&amp;
+NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.ShippingCity}))
+&amp;&amp;
+NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.ShippingPostalCode}))
+)
+)</expression>
     </formulas>
     <formulas>
         <name>outstandingInformation</name>
         <dataType>String</dataType>
         <expression>&quot;The following information is outstanding: &quot; + 
-IF(ISBLANK({!Get_IR.GoogleDriveFolderId__c}) || ISBLANK({!Get_IR.FinancialProductFinServ__r.Household__r.GoogleDriveFolderId__c}), &quot;Google drive folder ID; &quot;,&quot;&quot;) + 
+IF(ISBLANK({!Get_IR.GoogleDriveFolderId__c}) &amp;&amp; ISBLANK({!Get_IR.FinancialProductFinServ__r.Household__r.GoogleDriveFolderId__c}), &quot;Google Drive folder ID; &quot;,&quot;&quot;) + 
 IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.ProviderContact__c}), &quot;Provider contact; &quot;,&quot;&quot;) +
 IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinancialProductType__c}), &quot;Financial product type; &quot;,&quot;&quot;) + 
 IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FirstName}),&quot;Primary owner&#39;s first name; &quot;,&quot;&quot;) + 
 IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.LastName}),&quot;Primary owner&#39;s last name; &quot;,&quot;&quot;) + 
 IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.PersonBirthdate}), &quot;Primary owner&#39;s birthdate; &quot;,&quot;&quot;) +
 IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.ShippingStreet}),&quot;Primary owner&#39;s street address; &quot;,&quot;&quot; ) + 
-IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.ShippingCity}),&quot;Primary owner&#39;s city address; &quot;,&quot;&quot;) + 
-IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.ShippingPostalCode}),&quot;Primary owner&#39;s postcode; &quot;,&quot;&quot;)</expression>
+IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.ShippingCity}),&quot;Primary owner&#39;s city; &quot;,&quot;&quot;) + 
+IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.ShippingPostalCode}),&quot;Primary owner&#39;s postcode; &quot;,&quot;&quot;) +
+IF(NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__c})) &amp;&amp; ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.FirstName}), &quot;Joint owner&#39;s first name; &quot;,&quot;&quot;) +
+IF(NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__c})) &amp;&amp; ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.LastName}), &quot;Joint owner&#39;s last name; &quot;,&quot;&quot;) +
+IF(NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__c})) &amp;&amp; ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.PersonBirthdate}), &quot;Joint owner&#39;s birthdate; &quot;,&quot;&quot;) +
+IF(NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__c})) &amp;&amp; ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.ShippingStreet}), &quot;Joint owner&#39;s street address; &quot;,&quot;&quot;) +
+IF(NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__c})) &amp;&amp; ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.ShippingCity}), &quot;Joint owner&#39;s city &quot;,&quot;&quot;) +
+IF(NOT(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__c})) &amp;&amp; ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__JointOwner__r.ShippingPostalCode}), &quot;Joint owner&#39;s postcode; &quot;,&quot;&quot;)</expression>
     </formulas>
     <formulas>
         <name>useSignatureFormula</name>
