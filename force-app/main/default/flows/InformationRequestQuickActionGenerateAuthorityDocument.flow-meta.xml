@@ -199,8 +199,8 @@ IF(ISBLANK({!Get_IR.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.Shipping
         <dataType>Boolean</dataType>
         <expression>IF({!Signature_format}=&quot;Digital signature&quot;, true, false)</expression>
     </formulas>
-    <interviewLabel>Information Request | Regenerate authority document {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>zReplaced IR | Quick action | Generate authority document</label>
+    <interviewLabel>IR | Quick action | Generate authority document {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IR | Quick action | Generate authority document</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
