@@ -428,14 +428,6 @@
         </connector>
     </assignments>
     <choices>
-        <name>No</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>Yes</name>
         <choiceText>Yes</choiceText>
         <dataType>String</dataType>
@@ -839,11 +831,6 @@
         <name>deckExpiryDate</name>
         <dataType>Date</dataType>
         <expression>ADDMONTHS({!$Flow.CurrentDate},3)</expression>
-    </formulas>
-    <formulas>
-        <name>userId18Char</name>
-        <dataType>String</dataType>
-        <expression>CASESAFEID({!$User.Id})</expression>
     </formulas>
     <interviewLabel>Advice | Top Up | Orchestrator {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Top Up | Orchestrator</label>

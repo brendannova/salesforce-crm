@@ -90,7 +90,7 @@
         <name>Deck_review_changes_needed</name>
         <label>Deck review changes needed</label>
         <locationX>3482</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>No_outcome_to_planner_deck_review</name>
         <label>No outcome to planner deck review</label>
         <locationX>4274</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -362,7 +362,7 @@
         <name>Set_book_meeting_task</name>
         <label>Set book meeting task</label>
         <locationX>3746</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -375,7 +375,7 @@
         <name>Set_doc_upload_task</name>
         <label>Set doc upload task</label>
         <locationX>4010</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -401,7 +401,7 @@
         <name>Set_to_deck_complete_and_present_advice</name>
         <label>Set to deck complete and present advice</label>
         <locationX>3878</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -424,7 +424,7 @@
         <name>Set_to_not_close_task</name>
         <label>Set to not close task</label>
         <locationX>3174</locationX>
-        <locationY>1466</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
@@ -494,14 +494,6 @@
         </connector>
     </assignments>
     <choices>
-        <name>No</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>Yes</name>
         <choiceText>Yes</choiceText>
         <dataType>String</dataType>
@@ -545,7 +537,7 @@
         <name>Advice_presented1</name>
         <label>Advice presented?</label>
         <locationX>3878</locationX>
-        <locationY>890</locationY>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Set_doc_upload_task</targetReference>
         </defaultConnector>
@@ -570,7 +562,7 @@
         <name>Changes_deck_planner</name>
         <label>Changes?</label>
         <locationX>3878</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>No_outcome_to_planner_deck_review</targetReference>
         </defaultConnector>
@@ -1015,11 +1007,6 @@
         <dataType>Date</dataType>
         <expression>ADDMONTHS({!$Flow.CurrentDate},3)</expression>
     </formulas>
-    <formulas>
-        <name>userId18Char</name>
-        <dataType>String</dataType>
-        <expression>CASESAFEID({!$User.Id})</expression>
-    </formulas>
     <interviewLabel>Advice | Top Up | Orchestrator {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Withdrawal | Orchestrator</label>
     <processMetadataValues>
@@ -1185,36 +1172,6 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Planner_deck_review_task</name>
-        <label>Planner deck review task</label>
-        <locationX>3878</locationX>
-        <locationY>566</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Changes_deck_planner</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompleteDeckReviewPlanner</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Update on the advice checklist then click complete task to proceed. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>DeckUpdatesNeededPlanner</name>
-            <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>No</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Updates needed?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>4742</locationX>
         <locationY>0</locationY>
@@ -1364,7 +1321,7 @@
         <locationX>3878</locationX>
         <locationY>458</locationY>
         <connector>
-            <targetReference>Planner_deck_review_task</targetReference>
+            <targetReference>Changes_deck_planner</targetReference>
         </connector>
         <flowName>AdviceOrchestratorNarrativeReview</flowName>
         <inputAssignments>
