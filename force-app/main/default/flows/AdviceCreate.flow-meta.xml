@@ -24,6 +24,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -467,7 +468,8 @@
     <formulas>
         <name>rtqStatus</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Complete&quot;), &quot;No update required&quot;, IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Pending&quot;),&quot;In progress&quot;,&quot;Not started&quot;))</expression>
+        <expression>IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Complete&quot;), &quot;No update required&quot;, IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Pending&quot;),&quot;In progress&quot;,
+IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot;, &quot;&quot;, &quot;Not started&quot;)))</expression>
     </formulas>
     <interviewLabel>AdviceCreate {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Create</label>
