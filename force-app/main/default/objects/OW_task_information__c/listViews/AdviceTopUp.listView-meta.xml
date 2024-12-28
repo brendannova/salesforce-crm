@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdviceTopUp</fullName>
+    <columns>NAME</columns>
+    <columns>OW_task_type__c</columns>
+    <columns>OW_assigned_to__c</columns>
+    <columns>OW_queue__c</columns>
+    <columns>OW_status__c</columns>
+    <columns>OW_sequence__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OW_task_type__c</field>
+        <operation>startsWith</operation>
+        <value>ADVICE_TOP_UP_</value>
+    </filters>
+    <label>Advice | Top up</label>
+</ListView>
