@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_advice_updates</name>
         <label>Assign advice updates</label>
-        <locationX>1106</locationX>
+        <locationX>1634</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.Assigned_planner__c</assignToReference>
@@ -38,7 +38,7 @@
     <assignments>
         <name>Create_deck_updates</name>
         <label>Create deck updates</label>
-        <locationX>2690</locationX>
+        <locationX>3218</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -83,13 +83,13 @@
     <assignments>
         <name>Create_illustrations_updates</name>
         <label>Create illustrations updates</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_WRITE_PROPOSAL_DECK</stringValue>
+                <stringValue>ADVICE_PROTECTION_RECOMMENDATIONS_CREATE</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -100,13 +100,13 @@
     <assignments>
         <name>Create_proposal_deck_updates</name>
         <label>Create proposal deck updates</label>
-        <locationX>2162</locationX>
+        <locationX>2690</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_PRESENT_PROPOSAL_DECK</stringValue>
+                <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_PRESENT</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -124,13 +124,13 @@
     <assignments>
         <name>Create_recommendations_updates</name>
         <label>Create recommendations updates</label>
-        <locationX>1634</locationX>
+        <locationX>2426</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_CREATE_ILLUSTRATIONS</stringValue>
+                <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_WRITE</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -139,26 +139,51 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Data_gathering_updates</name>
-        <label>Data gathering updates</label>
+        <name>Data_gathering_status_complete</name>
+        <label>Data gathering status complete</label>
         <locationX>578</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
+            <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_ASSIGN</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Prepare advice</stringValue>
+                <stringValue>Complete</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_profile_update_status</targetReference>
+            <targetReference>Mark_task_to_stay_open</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Data_gathering_status_in_progress</name>
+        <label>Data gathering status in progress</label>
+        <locationX>1106</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Mark_task_to_stay_open</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Data_gathering_status_not_required</name>
+        <label>Data gathering status not required</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not required</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Mark_task_to_stay_open</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -181,42 +206,19 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Next_steps</targetReference>
+            <targetReference>Next_step_setup</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Keep_task_open</name>
-        <label>Keep task open</label>
-        <locationX>842</locationX>
-        <locationY>674</locationY>
+        <name>Mark_task_to_stay_open</name>
+        <label>Mark task to stay open</label>
+        <locationX>974</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Set_profile_update_status</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Move_to_advice</name>
-        <label>Move to advice</label>
-        <locationX>314</locationX>
-        <locationY>782</locationY>
-        <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ADVICE_PROTECTION_ASSIGN</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Prepare advice</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -243,13 +245,13 @@
     <assignments>
         <name>Present_proposal_deck_updates</name>
         <label>Present proposal deck updates</label>
-        <locationX>2426</locationX>
+        <locationX>2954</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_WRITE_ADVICE_DECK</stringValue>
+                <stringValue>ADVICE_PROTECTION_DECK_ADVICE_WRITE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -267,7 +269,7 @@
     <assignments>
         <name>Set_no_advice_type_error</name>
         <label>Set no advice type error</label>
-        <locationX>3922</locationX>
+        <locationX>4450</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -280,8 +282,8 @@
     <assignments>
         <name>Set_profile_update_status</name>
         <label>Set profile update status</label>
-        <locationX>710</locationX>
-        <locationY>866</locationY>
+        <locationX>1370</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.ProfileUpdateStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -289,12 +291,22 @@
                 <elementReference>ProfileUpdateStatus</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>closeTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Mark_task_to_stay_open</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_to_not_close_task</name>
         <label>Set to not close task</label>
-        <locationX>1920</locationX>
-        <locationY>1166</locationY>
+        <locationX>2184</locationX>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
@@ -306,7 +318,7 @@
     <assignments>
         <name>Set_unidentified_task_error</name>
         <label>Set unidentified task error</label>
-        <locationX>3658</locationX>
+        <locationX>4186</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -319,7 +331,7 @@
     <assignments>
         <name>Write_narrative_updates</name>
         <label>Write narrative updates</label>
-        <locationX>1370</locationX>
+        <locationX>1898</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -332,7 +344,7 @@
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_CREATE_RECOMMENDATIONS</stringValue>
+                <stringValue>ADVICE_PROTECTION_ILLUSTRATIONS_CREATE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -363,19 +375,19 @@
         </value>
     </choices>
     <choices>
-        <name>No</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>Not_required</name>
+        <name>NotRequired</name>
         <choiceText>Not required</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Not required</stringValue>
+            <stringValue>NOT_REQUIRED</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Required</name>
+        <choiceText>Required</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>REQUIRED</stringValue>
         </value>
     </choices>
     <choices>
@@ -389,7 +401,7 @@
     <decisions>
         <name>Found_advice_type_status</name>
         <label>Found advice type status</label>
-        <locationX>2921</locationX>
+        <locationX>3317</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_no_advice_type_error</targetReference>
@@ -412,29 +424,81 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Next_steps</name>
-        <label>Next steps</label>
-        <locationX>182</locationX>
+        <name>Next_step_data_gathering</name>
+        <label>Next step</label>
+        <locationX>974</locationX>
         <locationY>674</locationY>
         <defaultConnector>
-            <targetReference>Move_to_advice</targetReference>
+            <targetReference>Set_profile_update_status</targetReference>
         </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Proceed_while_IRs_in_progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DataGatheringProceedWhileInProgress.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_gathering_status_complete</targetReference>
+            </connector>
+            <label>Proceed while IRs in progress</label>
+        </rules>
+        <rules>
+            <name>IRs_now_not_required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DataGatheringNotRequiredNow.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_gathering_status_not_required</targetReference>
+            </connector>
+            <label>IRs now not required</label>
+        </rules>
+        <rules>
+            <name>Data_gathering_now_required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DataGatheringRequiredNow.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_gathering_status_in_progress</targetReference>
+            </connector>
+            <label>Data gathering now required</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Next_step_setup</name>
+        <label>Next step</label>
+        <locationX>182</locationX>
+        <locationY>674</locationY>
         <defaultConnectorLabel>Prepare advice</defaultConnectorLabel>
         <rules>
             <name>Data_gathering_next_step</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProfileUpdatesNeeded</leftValueReference>
+                <leftValueReference>ProfileUpdatesAdvice</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Yes</elementReference>
+                    <elementReference>Required</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>InformationRequestsNeeded</leftValueReference>
+                <leftValueReference>InformationRequestsAdvice</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Yes</elementReference>
+                    <elementReference>Required</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -444,55 +508,9 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Progress_advice</name>
-        <label>Progress advice</label>
-        <locationX>710</locationX>
-        <locationY>566</locationY>
-        <defaultConnector>
-            <targetReference>Keep_task_open</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Not ready</defaultConnectorLabel>
-        <rules>
-            <name>Ready_to_progress</name>
-            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
-            <conditions>
-                <leftValueReference>ProfileUpdateStatus</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Complete</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProfileUpdateStatus</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Not_required</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Not required</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Data_gathering_updates</targetReference>
-            </connector>
-            <label>Ready</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Ready_to_confirm_deck</name>
         <label>Ready to confirm deck?</label>
-        <locationX>3086</locationX>
+        <locationX>3614</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Set_to_not_close_task</targetReference>
@@ -517,7 +535,7 @@
     <decisions>
         <name>Status</name>
         <label>Task type</label>
-        <locationX>1920</locationX>
+        <locationX>2184</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Set_unidentified_task_error</targetReference>
@@ -549,7 +567,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Data_gathering_screen</targetReference>
+                <targetReference>Get_information_requests</targetReference>
             </connector>
             <label>Data gathering</label>
         </rules>
@@ -584,21 +602,6 @@
             <label>Narrative | Write</label>
         </rules>
         <rules>
-            <name>Create_recommendations</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ADVICE_PROTECTION_CREATE_RECOMMENDATIONS</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_recommendations_updates</targetReference>
-            </connector>
-            <label>Create recommendations</label>
-        </rules>
-        <rules>
             <name>Create_illustrations</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -612,6 +615,21 @@
                 <targetReference>Create_illustrations_updates</targetReference>
             </connector>
             <label>Create illustrations</label>
+        </rules>
+        <rules>
+            <name>Create_recommendations</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ADVICE_PROTECTION_CREATE_RECOMMENDATIONS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_recommendations_updates</targetReference>
+            </connector>
+            <label>Create recommendations</label>
         </rules>
         <rules>
             <name>Create_proposal_deck</name>
@@ -714,11 +732,22 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
+        <description>Maps the information request input from the screen to a DataGatheringStatus__c field picklist value. Returns error for an unmapped value, which will trigger an error in the field as it is restricted to picklist values.</description>
         <name>dataGatheringStatusFormula</name>
         <dataType>String</dataType>
-        <expression>CASE({!InformationRequestsNeeded}, 
-&quot;Yes&quot;, &quot;In progress&quot;,
-&quot;No&quot;, &quot;Not required&quot;,
+        <expression>CASE({!InformationRequestsAdvice}, 
+{!Required}, &quot;In progress&quot;,
+{!NotRequired}, &quot;Not required&quot;,
+&quot;ERROR&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Contextual help for the data gathering status field.</description>
+        <name>dataGatheringStatusHelp</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.DataGatheringStatus__c},
+&quot;Not required&quot;, &quot;No information requests are needed for this advice.&quot;,
+&quot;In progress&quot;, &quot;This will update to complete automatically when all associated information requests have their information.&quot;,
+&quot;Complete&quot;, &quot;&quot;,
 &quot;&quot;)</expression>
     </formulas>
     <formulas>
@@ -728,12 +757,13 @@
         <expression>ADDMONTHS({!$Flow.CurrentDate},3)</expression>
     </formulas>
     <formulas>
+        <description>Maps the profile status input from the screen to a ProfileUpdateStatus__c field picklist value. Returns error for an unmapped value, which will trigger an error in the field as it is restricted to picklist values.</description>
         <name>profileUpdateStatusFormula</name>
         <dataType>String</dataType>
-        <expression>CASE({!ProfileUpdatesNeeded}, 
-&quot;Yes&quot;, &quot;In progress&quot;,
-&quot;No&quot;, &quot;Not required&quot;,
-&quot;&quot;)</expression>
+        <expression>CASE({!ProfileUpdatesAdvice}, 
+{!Required}, &quot;Not started&quot;,
+{!NotRequired}, &quot;Not required&quot;,
+&quot;ERROR&quot;)</expression>
     </formulas>
     <interviewLabel>Advice | Protection | Orchestrator {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Protection | Orchestrator</label>
@@ -759,7 +789,7 @@
     <recordLookups>
         <name>Get_advice_type_status</name>
         <label>Get advice type status</label>
-        <locationX>2921</locationX>
+        <locationX>3317</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -787,11 +817,35 @@
         <queriedFields>Status__c</queriedFields>
         <queriedFields>NextStatus__c</queriedFields>
     </recordLookups>
+    <recordLookups>
+        <name>Get_information_requests</name>
+        <label>Get information requests</label>
+        <locationX>974</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Data_gathering_screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Advice__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </filters>
+        <object>InformationRequest__c</object>
+        <outputReference>informationRequests</outputReference>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <sortField>Status__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Confirm_deck_shared</name>
         <label>Confirm deck shared</label>
-        <locationX>3086</locationX>
+        <locationX>3614</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -810,7 +864,7 @@
     <screens>
         <name>Confirm_recommendations</name>
         <label>Confirm recommendations</label>
-        <locationX>3394</locationX>
+        <locationX>3922</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -829,7 +883,7 @@
     <screens>
         <name>Confirm_task_complete_generic</name>
         <label>Confirm task complete</label>
-        <locationX>1370</locationX>
+        <locationX>1898</locationX>
         <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -855,13 +909,13 @@
     <screens>
         <name>Data_gathering_screen</name>
         <label>Data gathering</label>
-        <locationX>710</locationX>
-        <locationY>458</locationY>
+        <locationX>974</locationX>
+        <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Progress_advice</targetReference>
+            <targetReference>Next_step_data_gathering</targetReference>
         </connector>
         <fields>
             <name>Copy_1_of_Copy_1_of_ConfirmCompletePrompt</name>
@@ -872,7 +926,7 @@
             <name>ProfileUpdateStatus</name>
             <choiceReferences>In_progress</choiceReferences>
             <choiceReferences>Complete</choiceReferences>
-            <choiceReferences>Not_required</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
                 <elementReference>advice.ProfileUpdateStatus__c</elementReference>
@@ -892,12 +946,143 @@
             </defaultValue>
             <fieldText>Data gathering status</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;Set automatically by related information request records. &lt;/p&gt;</helpText>
+            <helpText>&lt;p&gt;{!dataGatheringStatusHelp}&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isDisabled>
                 <booleanValue>true</booleanValue>
             </isDisabled>
             <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>InformationRequestsTable</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>InformationRequest__c</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Information requests</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>NO_SELECTION</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isShowSearchBar</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>informationRequests</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-3021&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Status__c&quot;,&quot;guid&quot;:&quot;column-c547&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>In progress</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Complete</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DataGatheringProceedWhileInProgress</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>In progress</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DataGatheringNotRequiredNow</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>In progress</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DataGatheringRequiredNow</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Not required</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -921,7 +1106,7 @@
         <fields>
             <name>IntroductionsMade</name>
             <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>Not_required</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Appropriate introductions made</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -930,11 +1115,11 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>ProfileUpdatesNeeded</name>
-            <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>No</choiceReferences>
+            <name>ProfileUpdatesAdvice</name>
+            <choiceReferences>Required</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Profile updates needed?</fieldText>
+            <fieldText>Profile updates</fieldText>
             <fieldType>DropdownBox</fieldType>
             <helpText>&lt;p&gt;Select yes if we are missing anything like the details of an existing protection policy. This will trigger a task for ops to get those specific details.&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -951,20 +1136,20 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>ProfileUpdatesNeeded</leftValueReference>
+                    <leftValueReference>ProfileUpdatesAdvice</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <elementReference>Yes</elementReference>
+                        <elementReference>Required</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>InformationRequestsNeeded</name>
-            <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>No</choiceReferences>
+            <name>InformationRequestsAdvice</name>
+            <choiceReferences>Required</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Information requests needed?</fieldText>
+            <fieldText>Information requests</fieldText>
             <fieldType>DropdownBox</fieldType>
             <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Select yes if we still need to complete the information request process for any existing protection policies. This will trigger a task for ops to kick these off.&lt;/span&gt;&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -975,7 +1160,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2795</locationX>
+        <locationX>3191</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_advice_type_status</targetReference>
@@ -985,7 +1170,7 @@
     <subflows>
         <name>Assign_planner</name>
         <label>Assign planner</label>
-        <locationX>1106</locationX>
+        <locationX>1634</locationX>
         <locationY>458</locationY>
         <connector>
             <targetReference>Assign_advice_updates</targetReference>
@@ -1002,7 +1187,7 @@
     <subflows>
         <name>Confirm_deck_non_presented</name>
         <label>Confirm deck non-presented</label>
-        <locationX>2954</locationX>
+        <locationX>3482</locationX>
         <locationY>782</locationY>
         <connector>
             <targetReference>Set_to_not_close_task</targetReference>
@@ -1024,7 +1209,7 @@
     <subflows>
         <name>Mark_decisions_sub_flow</name>
         <label>Mark decisions sub flow</label>
-        <locationX>3394</locationX>
+        <locationX>3922</locationX>
         <locationY>566</locationY>
         <connector>
             <targetReference>Set_to_not_close_task</targetReference>
@@ -1040,7 +1225,7 @@
     <subflows>
         <name>Upload_advice_deck</name>
         <label>Upload advice deck</label>
-        <locationX>3086</locationX>
+        <locationX>3614</locationX>
         <locationY>566</locationY>
         <connector>
             <targetReference>Ready_to_confirm_deck</targetReference>
@@ -1125,6 +1310,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>informationRequests</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InformationRequest__c</objectType>
     </variables>
     <variables>
         <name>task</name>

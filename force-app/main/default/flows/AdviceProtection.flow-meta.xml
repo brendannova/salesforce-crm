@@ -5,7 +5,7 @@
         <name>Create_new_SLA</name>
         <label>Create new SLA</label>
         <locationX>50</locationX>
-        <locationY>1055</locationY>
+        <locationY>1679</locationY>
         <assignmentItems>
             <assignToReference>createNewSla</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Set_SLA_status_variables</name>
         <label>Set SLA status variables</label>
         <locationX>182</locationX>
-        <locationY>839</locationY>
+        <locationY>1463</locationY>
         <assignmentItems>
             <assignToReference>statusNew</assignToReference>
             <operator>Assign</operator>
@@ -40,11 +40,34 @@
             <targetReference>SLA_applies</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_variables</name>
+        <label>Set variables</label>
+        <locationX>743</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>adviceId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Advice_Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>New_decision</targetReference>
+        </connector>
+    </assignments>
     <customErrors>
         <name>FlowFaultError</name>
         <label>Flow Fault Error</label>
         <locationX>842</locationX>
-        <locationY>731</locationY>
+        <locationY>1355</locationY>
         <customErrorMessages>
             <errorMessage>{!$Flow.FaultMessage}{!Manage_SLAs.errorMessage}</errorMessage>
             <isFieldError>false</isFieldError>
@@ -54,17 +77,71 @@
         <name>No_advice_type_status_error</name>
         <label>No advice type status error</label>
         <locationX>578</locationX>
-        <locationY>839</locationY>
+        <locationY>1463</locationY>
         <customErrorMessages>
             <errorMessage>No advice type status found. Please raise a ticket.</errorMessage>
             <isFieldError>false</isFieldError>
         </customErrorMessages>
     </customErrors>
     <decisions>
+        <name>Data_gathering_status</name>
+        <label>Data gathering status</label>
+        <locationX>743</locationX>
+        <locationY>731</locationY>
+        <defaultConnector>
+            <targetReference>StatusDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No change</defaultConnectorLabel>
+        <rules>
+            <name>Completed</name>
+            <conditionLogic>1 AND (2 OR 3) AND (4 OR 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_assign_planner_task</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Completed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Found_advice_type_status</name>
         <label>Found advice type status</label>
         <locationX>380</locationX>
-        <locationY>731</locationY>
+        <locationY>1355</locationY>
         <defaultConnector>
             <targetReference>No_advice_type_status_error</targetReference>
         </defaultConnector>
@@ -88,10 +165,10 @@
     <decisions>
         <name>New_decision</name>
         <label>New?</label>
-        <locationX>380</locationX>
-        <locationY>323</locationY>
+        <locationX>743</locationX>
+        <locationY>431</locationY>
         <defaultConnector>
-            <targetReference>Get_advice_type_status</targetReference>
+            <targetReference>Data_gathering_status</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Existing</defaultConnectorLabel>
         <rules>
@@ -114,7 +191,7 @@
         <name>SLA_applies</name>
         <label>SLA applies?</label>
         <locationX>182</locationX>
-        <locationY>947</locationY>
+        <locationY>1571</locationY>
         <defaultConnector>
             <targetReference>Manage_SLAs</targetReference>
         </defaultConnector>
@@ -139,7 +216,7 @@
         <name>SLA_outcome</name>
         <label>SLA outcome</label>
         <locationX>182</locationX>
-        <locationY>1355</locationY>
+        <locationY>1979</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>FlowFaultError</targetReference>
@@ -156,6 +233,35 @@
                 </rightValue>
             </conditions>
             <label>Success</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>StatusDecision</name>
+        <label>Status</label>
+        <locationX>743</locationX>
+        <locationY>1139</locationY>
+        <defaultConnectorLabel>No change</defaultConnectorLabel>
+        <rules>
+            <name>Updated</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>isNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_advice_type_status</targetReference>
+            </connector>
+            <label>Updated</label>
         </rules>
     </decisions>
     <description>Record triggered flow to automate actions for protection advice.</description>
@@ -191,7 +297,7 @@
         <name>Get_advice_type_status</name>
         <label>Get advice type status</label>
         <locationX>380</locationX>
-        <locationY>623</locationY>
+        <locationY>1247</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_advice_type_status</targetReference>
@@ -220,40 +326,89 @@
         <queriedFields>ServiceLevelAgreementApplies__c</queriedFields>
         <queriedFields>ServiceLevelAgreement__c</queriedFields>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_advice</name>
+        <label>Update advice</label>
+        <locationX>611</locationX>
+        <locationY>947</locationY>
+        <connector>
+            <targetReference>StatusDecision</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Advice_Status__c</field>
+            <value>
+                <stringValue>Prepare advice</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>617</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>New_decision</targetReference>
+            <targetReference>Set_variables</targetReference>
         </connector>
         <filterFormula>{!$Record.RecordType.DeveloperName} = &quot;Protection&quot; &amp;&amp;
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;PROTECTION&quot; &amp;&amp;
-(ISNEW() ||
-ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
+{!$Record.AdviceType__r.DeveloperName__c} = &quot;PROTECTION&quot;</filterFormula>
         <object>Advice__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
-        <name>Create_setup_task</name>
-        <label>Create setup task</label>
-        <locationX>248</locationX>
-        <locationY>431</locationY>
+        <name>Create_assign_planner_task</name>
+        <label>Create assign planner task</label>
+        <locationX>611</locationX>
+        <locationY>839</locationY>
         <connector>
-            <targetReference>Get_advice_type_status</targetReference>
+            <targetReference>Update_advice</targetReference>
         </connector>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>$Record.Advice_Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>related_advice_id</name>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>ADVICE_PROTECTION_ASSIGN</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Create_setup_task</name>
+        <label>Create setup task</label>
+        <locationX>611</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Data_gathering_status</targetReference>
+        </connector>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_advice_id</name>
+            <value>
+                <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -265,7 +420,7 @@ ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -274,7 +429,7 @@ ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
         <name>Manage_SLAs</name>
         <label>Manage SLAs</label>
         <locationX>182</locationX>
-        <locationY>1247</locationY>
+        <locationY>1871</locationY>
         <connector>
             <targetReference>SLA_outcome</targetReference>
         </connector>
@@ -312,6 +467,13 @@ ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
+        <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>adviceTypeStatus</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -337,6 +499,13 @@ ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>ServiceLevelAgreement__c</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>statusExit</name>
