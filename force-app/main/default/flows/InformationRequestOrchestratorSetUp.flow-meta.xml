@@ -332,6 +332,22 @@
             <targetReference>Update_data_request</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>loaChoice</name>
+        <choiceText>Information only (LOA)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Information only (LOA)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>tosChoice</name>
+        <choiceText>Servicing agent (TOS)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Servicing agent (TOS)</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Is_this_IR_linked_to_advice</name>
         <label>Is this IR linked to advice?</label>
@@ -478,7 +494,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
     <formulas>
         <name>statusFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISBLANK({!advice.AllLoaInfoReceivedTimestamp__c}), &quot;AWAIT_IDG&quot;,IF({!awaitingPreReqsFormula},&quot;AWAIT_PRE_REQS&quot;,&quot;INFO_REQ_SEND&quot;))</expression>
+        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISPICKVAL({!advice.Advice_Status__c},&quot;Data gathering&quot;), &quot;AWAIT_IDG&quot;,IF({!awaitingPreReqsFormula},&quot;AWAIT_PRE_REQS&quot;,&quot;INFO_REQ_SEND&quot;))</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Set up {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IR | Orchestrator | Set up</label>
@@ -987,7 +1003,8 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         </fields>
         <fields>
             <name>Authority_level</name>
-            <choiceReferences>authorityLevel</choiceReferences>
+            <choiceReferences>loaChoice</choiceReferences>
+            <choiceReferences>tosChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Authority level</fieldText>
             <fieldType>DropdownBox</fieldType>
