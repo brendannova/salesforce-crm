@@ -243,6 +243,26 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Move_to_prepare_advice</name>
+        <label>Move to prepare advice</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>followUpTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ADVICE_PROTECTION_ASSIGN</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prepare advice</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Present_proposal_deck_updates</name>
         <label>Present proposal deck updates</label>
         <locationX>2954</locationX>
@@ -289,13 +309,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>ProfileUpdateStatus</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>closeTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -379,7 +392,7 @@
         <choiceText>Not required</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>NOT_REQUIRED</stringValue>
+            <stringValue>Not required</stringValue>
         </value>
     </choices>
     <choices>
@@ -483,6 +496,9 @@
         <label>Next step</label>
         <locationX>182</locationX>
         <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>Move_to_prepare_advice</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Prepare advice</defaultConnectorLabel>
         <rules>
             <name>Data_gathering_next_step</name>
@@ -731,6 +747,14 @@
         <picklistObject>Advice__c</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>confirmModalMessage</name>
+        <dataType>String</dataType>
+        <expression>IF({!DataGatheringNotRequiredNow.renderNext}, &quot;Are you sure you want to mark data gathering as not required? No information requests may be linked and the advice will complete data gathering without them.&quot;,
+IF({!DataGatheringRequiredNow.renderNext}, &quot;Are you sure you want to mark data gathering as required? This advice will complete data gathering when associated information requests receive their information.&quot;,
+IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated information requests are not yet at information received. Are you sure you want to complete data gathering with information outstanding?&quot;,
+&quot;&quot;)))</expression>
+    </formulas>
     <formulas>
         <description>Maps the information request input from the screen to a DataGatheringStatus__c field picklist value. Returns error for an unmapped value, which will trigger an error in the field as it is restricted to picklist values.</description>
         <name>dataGatheringStatusFormula</name>
@@ -1031,27 +1055,15 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>DataGatheringProceedWhileInProgress</name>
-            <extensionName>runtime_industries_lending:flowButton</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>In progress</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>DataGatheringNotRequiredNow</name>
             <extensionName>runtime_industries_lending:flowButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Information requests not required</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1070,6 +1082,12 @@
             <name>DataGatheringRequiredNow</name>
             <extensionName>runtime_industries_lending:flowButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Information requests required</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1083,6 +1101,74 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>DataGatheringProceedWhileInProgress</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Proceed past data gathering</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>In progress</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ConfirmDataGatheringStatusChange</name>
+            <extensionName>c:confirmModalFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>navigateBackOnCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>navigateForwardOnConfirm</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>header</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>confirmModalMessage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <stringValue>info</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Confirmation needed</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
