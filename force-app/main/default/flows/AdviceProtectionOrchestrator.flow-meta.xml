@@ -142,7 +142,7 @@
         <name>Data_gathering_status_complete</name>
         <label>Data gathering status complete</label>
         <locationX>578</locationX>
-        <locationY>890</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -158,7 +158,7 @@
         <name>Data_gathering_status_in_progress</name>
         <label>Data gathering status in progress</label>
         <locationX>1106</locationX>
-        <locationY>890</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -174,7 +174,7 @@
         <name>Data_gathering_status_not_required</name>
         <label>Data gathering status not required</label>
         <locationX>842</locationX>
-        <locationY>890</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -213,7 +213,7 @@
         <name>Mark_task_to_stay_open</name>
         <label>Mark task to stay open</label>
         <locationX>974</locationX>
-        <locationY>1082</locationY>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
@@ -303,7 +303,7 @@
         <name>Set_profile_update_status</name>
         <label>Set profile update status</label>
         <locationX>1370</locationX>
-        <locationY>890</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.ProfileUpdateStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -319,7 +319,7 @@
         <name>Set_to_not_close_task</name>
         <label>Set to not close task</label>
         <locationX>2184</locationX>
-        <locationY>1382</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
@@ -412,6 +412,45 @@
         </value>
     </choices>
     <decisions>
+        <name>Button_clicked</name>
+        <label>Button clicked?</label>
+        <locationX>974</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>Next_step_data_gathering</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not clicked</defaultConnectorLabel>
+        <rules>
+            <name>Clicked</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>DataGatheringProceedWhileInProgress.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DataGatheringNotRequiredNow.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>DataGatheringRequiredNow.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Confirmation_modal</targetReference>
+            </connector>
+            <label>Clicked</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Found_advice_type_status</name>
         <label>Found advice type status</label>
         <locationX>3317</locationX>
@@ -440,7 +479,7 @@
         <name>Next_step_data_gathering</name>
         <label>Next step</label>
         <locationX>974</locationX>
-        <locationY>782</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Set_profile_update_status</targetReference>
         </defaultConnector>
@@ -746,13 +785,21 @@
         <picklistField>DataGatheringStatus__c</picklistField>
         <picklistObject>Advice__c</picklistObject>
     </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ProfileUpdateStatusChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>ProfileUpdateStatus__c</picklistField>
+        <picklistObject>Advice__c</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
         <name>confirmModalMessage</name>
         <dataType>String</dataType>
         <expression>IF({!DataGatheringNotRequiredNow.renderNext}, &quot;Are you sure you want to mark data gathering as not required? No information requests may be linked and the advice will complete data gathering without them.&quot;,
 IF({!DataGatheringRequiredNow.renderNext}, &quot;Are you sure you want to mark data gathering as required? This advice will complete data gathering when associated information requests receive their information.&quot;,
-IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated information requests are not yet at information received. Are you sure you want to complete data gathering with information outstanding?&quot;,
+IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated information requests are not yet at information received. Are you sure you want to mark them as complete?&quot;,
 &quot;&quot;)))</expression>
     </formulas>
     <formulas>
@@ -931,18 +978,18 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Copy_1_of_Data_gathering</name>
-        <label>Copy 1 of Data gathering</label>
-        <locationX>974</locationX>
-        <locationY>674</locationY>
-        <allowBack>false</allowBack>
+        <name>Confirmation_modal</name>
+        <label>Confirmation modal</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
             <targetReference>Next_step_data_gathering</targetReference>
         </connector>
         <fields>
-            <name>Copy_1_of_ConfirmDataGatheringStatusChange</name>
+            <name>ConfirmDataGatheringStatusChange</name>
             <extensionName>c:confirmModalFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1021,18 +1068,16 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Copy_1_of_Data_gathering</targetReference>
+            <targetReference>Button_clicked</targetReference>
         </connector>
         <fields>
-            <name>Copy_1_of_Copy_1_of_ConfirmCompletePrompt</name>
+            <name>ConfirmCompletePromptDataGathering</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Record any status updates and proceed.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>ProfileUpdateStatus</name>
-            <choiceReferences>In_progress</choiceReferences>
-            <choiceReferences>Complete</choiceReferences>
-            <choiceReferences>NotRequired</choiceReferences>
+            <choiceReferences>ProfileUpdateStatusChoice</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
                 <elementReference>advice.ProfileUpdateStatus__c</elementReference>
@@ -1058,83 +1103,6 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
                 <booleanValue>true</booleanValue>
             </isDisabled>
             <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>InformationRequestsTable</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>InformationRequest__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Information requests</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>NO_SELECTION</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>isShowSearchBar</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>shouldDisplayLabel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>informationRequests</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>maxRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-3021&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Status__c&quot;,&quot;guid&quot;:&quot;column-c547&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>In progress</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Complete</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>DataGatheringNotRequiredNow</name>
@@ -1191,7 +1159,7 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Proceed past data gathering</stringValue>
+                    <stringValue>Information requests complete</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1208,6 +1176,7 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
                 </conditions>
             </visibilityRule>
         </fields>
+        <nextOrFinishButtonLabel>Update advice</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
