@@ -142,7 +142,7 @@
         <name>Data_gathering_status_complete</name>
         <label>Data gathering status complete</label>
         <locationX>578</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -158,7 +158,7 @@
         <name>Data_gathering_status_in_progress</name>
         <label>Data gathering status in progress</label>
         <locationX>1106</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -174,7 +174,7 @@
         <name>Data_gathering_status_not_required</name>
         <label>Data gathering status not required</label>
         <locationX>842</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -213,7 +213,7 @@
         <name>Mark_task_to_stay_open</name>
         <label>Mark task to stay open</label>
         <locationX>974</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
@@ -303,7 +303,7 @@
         <name>Set_profile_update_status</name>
         <label>Set profile update status</label>
         <locationX>1370</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.ProfileUpdateStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -319,7 +319,7 @@
         <name>Set_to_not_close_task</name>
         <label>Set to not close task</label>
         <locationX>2184</locationX>
-        <locationY>1274</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
@@ -440,7 +440,7 @@
         <name>Next_step_data_gathering</name>
         <label>Next step</label>
         <locationX>974</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Set_profile_update_status</targetReference>
         </defaultConnector>
@@ -931,6 +931,88 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Copy_1_of_Data_gathering</name>
+        <label>Copy 1 of Data gathering</label>
+        <locationX>974</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Next_step_data_gathering</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_ConfirmDataGatheringStatusChange</name>
+            <extensionName>c:confirmModalFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>navigateBackOnCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>navigateForwardOnConfirm</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>header</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>confirmModalMessage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <stringValue>info</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Confirmation needed</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>DataGatheringNotRequiredNow.renderNext</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DataGatheringRequiredNow.renderNext</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DataGatheringProceedWhileInProgress.renderNext</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Data_gathering_screen</name>
         <label>Data gathering</label>
         <locationX>974</locationX>
@@ -939,7 +1021,7 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Next_step_data_gathering</targetReference>
+            <targetReference>Copy_1_of_Data_gathering</targetReference>
         </connector>
         <fields>
             <name>Copy_1_of_Copy_1_of_ConfirmCompletePrompt</name>
@@ -1122,74 +1204,6 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>In progress</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>ConfirmDataGatheringStatusChange</name>
-            <extensionName>c:confirmModalFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>navigateBackOnCancel</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>navigateForwardOnConfirm</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>header</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>message</name>
-                <value>
-                    <elementReference>confirmModalMessage</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>theme</name>
-                <value>
-                    <stringValue>info</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Confirmation needed</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>DataGatheringNotRequiredNow.renderNext</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>DataGatheringRequiredNow.renderNext</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>DataGatheringProceedWhileInProgress.renderNext</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
