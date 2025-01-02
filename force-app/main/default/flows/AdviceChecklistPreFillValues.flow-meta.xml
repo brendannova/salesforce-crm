@@ -55,7 +55,7 @@
     <assignments>
         <name>Add_cash_isa_to_investments_pension_summary</name>
         <label>Add cash isa to investments pension summary</label>
-        <locationX>1194</locationX>
+        <locationX>1370</locationX>
         <locationY>7952</locationY>
         <assignmentItems>
             <assignToReference>investmentsSummary</assignToReference>
@@ -367,7 +367,7 @@
     <assignments>
         <name>Add_to_cash_ISA_total</name>
         <label>Add to cash ISA total</label>
-        <locationX>1194</locationX>
+        <locationX>1370</locationX>
         <locationY>7844</locationY>
         <assignmentItems>
             <assignToReference>cashIsaTotal</assignToReference>
@@ -383,13 +383,13 @@
     <assignments>
         <name>Add_to_db_pension_summary</name>
         <label>Add to db pension summary</label>
-        <locationX>930</locationX>
+        <locationX>1106</locationX>
         <locationY>7844</locationY>
         <assignmentItems>
             <assignToReference>dbPensionsSummary</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>finProdName</elementReference>
+                <elementReference>dbFinProdName</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -399,7 +399,7 @@
     <assignments>
         <name>Add_to_dc_pension_summary</name>
         <label>Add to dc pension summary</label>
-        <locationX>666</locationX>
+        <locationX>842</locationX>
         <locationY>7844</locationY>
         <assignmentItems>
             <assignToReference>dcPensionsSummary</assignToReference>
@@ -438,7 +438,7 @@
     <assignments>
         <name>Add_to_investments_summary</name>
         <label>Add to investments summary</label>
-        <locationX>1458</locationX>
+        <locationX>1634</locationX>
         <locationY>7844</locationY>
         <assignmentItems>
             <assignToReference>investmentsSummary</assignToReference>
@@ -454,7 +454,7 @@
     <assignments>
         <name>Add_to_rebalancing_summary</name>
         <label>Add to rebalancing summary</label>
-        <locationX>402</locationX>
+        <locationX>578</locationX>
         <locationY>7844</locationY>
         <assignmentItems>
             <assignToReference>rebalancingSummary</assignToReference>
@@ -1184,15 +1184,86 @@
     <decisions>
         <name>Product_type</name>
         <label>Product type</label>
-        <locationX>1062</locationX>
+        <locationX>1150</locationX>
         <locationY>7736</locationY>
         <defaultConnector>
             <targetReference>Financial_products</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
+            <name>Protection</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Relevant Life Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Critical Illness Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Family Income Benefit</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Income Protection</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Life &amp; Critical Illness Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Life Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Life Cover (Whole of Life)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Private Medical</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Relevant Life Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Financial_products</targetReference>
+            </connector>
+            <label>Protection</label>
+        </rules>
+        <rules>
             <name>New_business</name>
-            <conditionLogic>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Financial_products.Public_Provider_Name__r.OW_own_company__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1205,41 +1276,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>New business</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Relevant Life Cover</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Life Cover (Whole of Life)</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Life Cover</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Life &amp; Critical Illness Cover</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Family Income Benefit</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1412,13 +1448,18 @@
     <formulas>
         <name>btlProfit</name>
         <dataType>Number</dataType>
-        <expression>{!rentalIncomeTotal} - {!btlExpenditure}</expression>
+        <expression>{!rentalIncomeTotal} - 12*{!btlExpenditure}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
         <name>childcareText</name>
         <dataType>String</dataType>
         <expression>&quot;Childcare (&quot; + {!Children_2.AddressedName__pc} + &quot;): £&quot; + TEXT(ROUND({!Children_2.ChildcareSpendingMonthly__c},2)) + &quot; pm / £&quot; + TEXT(ROUND(12*{!Children_2.ChildcareSpendingMonthly__c},2)) + &quot; py&quot; + {!br}</expression>
+    </formulas>
+    <formulas>
+        <name>dbFinProdName</name>
+        <dataType>String</dataType>
+        <expression>{!Financial_products.FinServ__PrimaryOwner__r.AddressedName__pc} + IF(NOT(ISBLANK({!Financial_products.FinServ__JointOwner__c})), &quot; &amp; &quot; + {!Financial_products.FinServ__JointOwner__r.AddressedName__pc},&quot;&quot;) + &quot;: &quot; + {!Financial_products.Public_Provider_Name__r.Name} + &quot; (&quot; + {!Financial_products.FinServ__FinancialAccountNumber__c} + &quot;) &quot; + TEXT({!Financial_products.Subtype__c}) + &quot; - £&quot; + TEXT({!Financial_products.Expected_Annual_Income_on_Retirement__c}) + &quot; per year&quot; + {!br}</expression>
     </formulas>
     <formulas>
         <name>educationText</name>
@@ -2206,12 +2247,12 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
     <textTemplates>
         <name>cashReservesTextTemplate</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;u style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/u&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Spending:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!householdSpendingText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!educationTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!childcareSpendingTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Liabilities &lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;(excluding BTL mortgages)&lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!liabilitySummaryCashReserve}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total outgoings:&lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; £{!totalExpenditure} per month / £{!totalExpenditureYearly} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Savings:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Budget planner: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;BTL properties:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Liabilities&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;{!btlLiabilitySummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Rental income&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!rentalAssetTextSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Net income less mortgage payments = £{!btlProfit}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Upcoming lump sum spending: &lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;One-off: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Luxury spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Total one off spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Recommended reserve:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!recommendedReserveText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Current cash: £{!currentCash}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Fixed cash:&lt;/span&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Cash ISAs: £{!cashIsaTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Fixed ISAs: &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total cash: &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Income&lt;/u&gt; &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;(excluding &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt;BTL properties)&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;font-size: var(--lwc-fontSize3,0.8125rem); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt;Net figures calculated  using &lt;/em&gt;&lt;a href=&quot;https://www.thesalarycalculator.co.uk/salary.php&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;The Salary Calculator&lt;/em&gt;&lt;/a&gt;&lt;em style=&quot;font-size: var(--lwc-fontSize3,0.8125rem); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt; or &lt;/em&gt;&lt;a href=&quot;https://www.uktaxcalculators.co.uk/tax-calculators/personal-tax-calculators/multiple-income-tax-estimate/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;UK Tax Calculators&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!employemntTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!incomeAssetsTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Total (gross)&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; = £{!totalIncomeMonthly} per month / £{!totalIncome} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total (net) &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;= £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per month / £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per year&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Surplus/shortfall:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;+/- £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per month / +/- £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Available cash:&lt;/u&gt;&lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;u style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;﻿&lt;/u&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&lt;u&gt;Spending:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!householdSpendingText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!educationTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!childcareSpendingTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Liabilities &lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;(excluding BTL mortgages)&lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!liabilitySummaryCashReserve}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Total outgoings:&lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; £{!totalExpenditure} per month / £{!totalExpenditureYearly} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Savings:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px; background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Budget planner: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&lt;u&gt;BTL properties:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Liabilities&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!btlLiabilitySummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Rental income&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!rentalAssetTextSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Gross income less mortgage payments = £{!btlProfit}pa&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&lt;u&gt;Upcoming lump sum spending: &lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;One-off: &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Luxury spending: &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Total one off spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&lt;u&gt;Recommended reserve:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!recommendedReserveText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Current cash: £{!currentCash}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Fixed cash:&lt;/span&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; &lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Cash ISAs: £{!cashIsaTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Fixed ISAs: INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Total cash: &lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&lt;u&gt;Income&lt;/u&gt; &lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;(excluding &lt;/span&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: 14px;&quot;&gt;BTL properties)&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;Net figures calculated  using &lt;/em&gt;&lt;a href=&quot;https://www.thesalarycalculator.co.uk/salary.php&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;The Salary Calculator&lt;/em&gt;&lt;/a&gt;&lt;em style=&quot;font-size: var(--lwc-fontSize3,0.8125rem); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68)));&quot;&gt; or &lt;/em&gt;&lt;a href=&quot;https://www.uktaxcalculators.co.uk/tax-calculators/personal-tax-calculators/multiple-income-tax-estimate/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;UK Tax Calculators&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!employemntTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!incomeAssetsTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Total (gross)&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; = £{!totalIncomeMonthly} per month / £{!totalIncome} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Total (net) &lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;= £&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; per month / £&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; per year&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&lt;u&gt;Surplus/shortfall:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;+/- £&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; per month / +/- £&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&lt;u&gt;Available cash:&lt;/u&gt;&lt;/strong&gt;&lt;span style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>pensionReviewAdvice</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;DC Pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!dcPensionsSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;DB Pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!dbPensionsSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Expression of wish&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client1Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s NOVA SIPP:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client2Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s NOVA SIPP:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client1Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s&amp;nbsp;[Financial product: Public provider Name]&amp;nbsp;pension:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client2Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s&amp;nbsp;[Financial product: Public provider Name]&amp;nbsp;pension: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;State pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client1Name}:&amp;nbsp;x full years, x years to retirement / In payment = £ py&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client2Name}:&amp;nbsp;x full years, x years to retirement / In payment = £ py&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;DC Pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!dcPensionsSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;DB Pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!dbPensionsSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Expression of wish&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!client1Name}&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&#39;s NOVA SIPP:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!client2Name}&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&#39;s NOVA SIPP:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!client1Name}&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;&#39;s&amp;nbsp;[Financial product: Public provider Name]&amp;nbsp;pension:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!client2Name}&#39;s&amp;nbsp;[Financial product: Public provider Name]&amp;nbsp;pension:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;State pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;{!client1Name}:&amp;nbsp;x full years, x years to retirement / In payment = £ py&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;{!client2Name}:&amp;nbsp;x full years, x years to retirement / In payment = £ py&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>RiskCallNotesTemplate</name>
