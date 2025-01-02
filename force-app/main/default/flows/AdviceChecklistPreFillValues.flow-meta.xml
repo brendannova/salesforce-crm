@@ -30,6 +30,45 @@
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
+        <name>Add_BTL_liability_details_part_1</name>
+        <label>Add BTL liability details part 1</label>
+        <locationX>294</locationX>
+        <locationY>5720</locationY>
+        <assignmentItems>
+            <assignToReference>btlLiabilitySummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>liabilityDetailsPart1</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>liabilitySummaryLiabilitySummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>liabilityDetailsPart1</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_remaining_liability_details_and_clear_owners</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_cash_isa_to_investments_pension_summary</name>
+        <label>Add cash isa to investments pension summary</label>
+        <locationX>1194</locationX>
+        <locationY>7952</locationY>
+        <assignmentItems>
+            <assignToReference>investmentsSummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>finProdName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Financial_products</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_childcare_to_household_spending</name>
         <label>Add childcare to household spending</label>
         <locationX>294</locationX>
@@ -56,7 +95,7 @@
         <name>Add_comma_to_names</name>
         <label>Add comma to names</label>
         <locationX>514</locationX>
-        <locationY>4004</locationY>
+        <locationY>5204</locationY>
         <assignmentItems>
             <assignToReference>liabilityOwners</assignToReference>
             <operator>Add</operator>
@@ -95,7 +134,7 @@
         <name>Add_employment_to_text</name>
         <label>Add employment to text</label>
         <locationX>402</locationX>
-        <locationY>6236</locationY>
+        <locationY>7220</locationY>
         <assignmentItems>
             <assignToReference>employemntTextTotal</assignToReference>
             <operator>Add</operator>
@@ -118,7 +157,7 @@
         <name>Add_id_to_collection</name>
         <label>Add id to collection</label>
         <locationX>402</locationX>
-        <locationY>5012</locationY>
+        <locationY>6404</locationY>
         <assignmentItems>
             <assignToReference>finProdTypeIds</assignToReference>
             <operator>Add</operator>
@@ -133,8 +172,8 @@
     <assignments>
         <name>Add_liability_details_part_1</name>
         <label>Add liability details part 1</label>
-        <locationX>426</locationX>
-        <locationY>4412</locationY>
+        <locationX>558</locationX>
+        <locationY>5720</locationY>
         <assignmentItems>
             <assignToReference>liabilitySummaryCashReserve</assignToReference>
             <operator>Add</operator>
@@ -154,10 +193,47 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Add_liability_headline_to_BTL_text_values</name>
+        <label>Add liability headline to BTL text values</label>
+        <locationX>294</locationX>
+        <locationY>5612</locationY>
+        <assignmentItems>
+            <assignToReference>btlExpenditure</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>liabilityCost</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>btlLiabilitySummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>liabilityName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>liabilitySummaryLiabilitySummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>liabilityName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>liabilityBalanceTotal</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Liabilities.Balance__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_BTL_liability_details_part_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_liability_headline_to_text_values</name>
         <label>Add liability headline to text values</label>
-        <locationX>426</locationX>
-        <locationY>4196</locationY>
+        <locationX>558</locationX>
+        <locationY>5612</locationY>
         <assignmentItems>
             <assignToReference>totalExpenditure</assignToReference>
             <operator>Add</operator>
@@ -187,14 +263,37 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_liability_owners_to_text_values</targetReference>
+            <targetReference>Add_liability_details_part_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_liability_owners_to_BTL_text_values</name>
+        <label>Add liability owners to BTL text values</label>
+        <locationX>294</locationX>
+        <locationY>5504</locationY>
+        <assignmentItems>
+            <assignToReference>btlLiabilitySummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>liabilityOwners</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>liabilitySummaryLiabilitySummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>liabilityOwners</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_liability_headline_to_BTL_text_values</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_liability_owners_to_text_values</name>
         <label>Add liability owners to text values</label>
-        <locationX>426</locationX>
-        <locationY>4304</locationY>
+        <locationX>558</locationX>
+        <locationY>5504</locationY>
         <assignmentItems>
             <assignToReference>liabilitySummaryCashReserve</assignToReference>
             <operator>Add</operator>
@@ -210,14 +309,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_liability_details_part_1</targetReference>
+            <targetReference>Add_liability_headline_to_text_values</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_name_to_owners</name>
         <label>Add name to owners</label>
         <locationX>514</locationX>
-        <locationY>3896</locationY>
+        <locationY>5096</locationY>
         <assignmentItems>
             <assignToReference>liabilityOwners</assignToReference>
             <operator>Add</operator>
@@ -233,7 +332,7 @@
         <name>Add_remaining_liability_details_and_clear_owners</name>
         <label>Add remaining liability details and clear owners</label>
         <locationX>426</locationX>
-        <locationY>4520</locationY>
+        <locationY>5912</locationY>
         <assignmentItems>
             <assignToReference>liabilitySummaryLiabilitySummary</assignToReference>
             <operator>Add</operator>
@@ -250,10 +349,74 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Add_to_cash_reserve_text</name>
+        <name>Add_to_BTL_collection</name>
+        <label>Add to BTL collection</label>
+        <locationX>358</locationX>
+        <locationY>4112</locationY>
+        <assignmentItems>
+            <assignToReference>btlPropertyIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Assets.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assets</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_cash_ISA_total</name>
+        <label>Add to cash ISA total</label>
+        <locationX>1194</locationX>
+        <locationY>7844</locationY>
+        <assignmentItems>
+            <assignToReference>cashIsaTotal</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Financial_products.FP_Value__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_cash_isa_to_investments_pension_summary</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_db_pension_summary</name>
+        <label>Add to db pension summary</label>
+        <locationX>930</locationX>
+        <locationY>7844</locationY>
+        <assignmentItems>
+            <assignToReference>dbPensionsSummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>finProdName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Financial_products</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_dc_pension_summary</name>
+        <label>Add to dc pension summary</label>
+        <locationX>666</locationX>
+        <locationY>7844</locationY>
+        <assignmentItems>
+            <assignToReference>dcPensionsSummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>finProdName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Financial_products</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_income_text</name>
         <label>Add to text</label>
-        <locationX>338</locationX>
-        <locationY>6968</locationY>
+        <locationX>622</locationX>
+        <locationY>4004</locationY>
         <assignmentItems>
             <assignToReference>incomeAssetsTotal</assignToReference>
             <operator>Add</operator>
@@ -273,6 +436,61 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Add_to_investments_summary</name>
+        <label>Add to investments summary</label>
+        <locationX>1458</locationX>
+        <locationY>7844</locationY>
+        <assignmentItems>
+            <assignToReference>investmentsSummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>finProdName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Financial_products</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_rebalancing_summary</name>
+        <label>Add to rebalancing summary</label>
+        <locationX>402</locationX>
+        <locationY>7844</locationY>
+        <assignmentItems>
+            <assignToReference>rebalancingSummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>finProdNameRebalancing</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Financial_products</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_rental_text</name>
+        <label>Add to rental text</label>
+        <locationX>358</locationX>
+        <locationY>4004</locationY>
+        <assignmentItems>
+            <assignToReference>rentalAssetTextSummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>incomeAssetText</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>rentalIncomeTotal</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>assetIncome</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_BTL_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_to_total_spending</name>
         <label>Add to total spending</label>
         <locationX>314</locationX>
@@ -285,30 +503,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_liabilities</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Add_value_to_cash_isas</name>
-        <label>Add value to cash isas</label>
-        <locationX>402</locationX>
-        <locationY>5828</locationY>
-        <assignmentItems>
-            <assignToReference>cashIsaTotal</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Cash_ISAs.FP_Value__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Cash_ISAs</targetReference>
+            <targetReference>Get_assets</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_value_to_current_cash</name>
         <label>Add value to current cash</label>
         <locationX>402</locationX>
-        <locationY>5420</locationY>
+        <locationY>6812</locationY>
         <assignmentItems>
             <assignToReference>currentCash</assignToReference>
             <operator>Add</operator>
@@ -548,7 +750,7 @@
         <name>Assign_checklist_to_advice</name>
         <label>Assign checklist to advice</label>
         <locationX>314</locationX>
-        <locationY>7652</locationY>
+        <locationY>8552</locationY>
         <assignmentItems>
             <assignToReference>Advice.AdviceChecklist__c</assignToReference>
             <operator>Assign</operator>
@@ -633,7 +835,7 @@
         <name>Update_advice_checklist</name>
         <label>Update advice checklist</label>
         <locationX>314</locationX>
-        <locationY>7328</locationY>
+        <locationY>8228</locationY>
         <assignmentItems>
             <assignToReference>AdviceChecklist.RecommendedCashReserve__c</assignToReference>
             <operator>Assign</operator>
@@ -683,17 +885,72 @@
                 <elementReference>willsAndLpa</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdviceChecklist.PensionReviewAdvice__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>pensionReviewAdvice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdviceChecklist.InvestmentReviewAdvice__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>investmentsSummary</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdviceChecklist.AnnualReviewOngoingSuitabilityAssess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>annualReviewOngoingSuitability</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdviceChecklist.AnnualReviewRebalancing__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>rebalancingSummary</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Next_action</targetReference>
         </connector>
     </assignments>
+    <collectionProcessors>
+        <name>Sort_products</name>
+        <elementSubtype>SortCollectionProcessor</elementSubtype>
+        <label>Sort products</label>
+        <locationX>314</locationX>
+        <locationY>7520</locationY>
+        <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_financial_products</collectionReference>
+        <connector>
+            <targetReference>Financial_products</targetReference>
+        </connector>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>FinServ__PrimaryOwner__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>OW_is_pension_employment__c</sortField>
+            <sortOrder>Desc</sortOrder>
+        </sortOptions>
+        <sortOptions>
+            <doesPutEmptyStringAndNullFirst>false</doesPutEmptyStringAndNullFirst>
+            <sortField>FP_Value__c</sortField>
+            <sortOrder>Asc</sortOrder>
+        </sortOptions>
+    </collectionProcessors>
     <decisions>
         <name>Are_there_any_assets</name>
         <label>Are there any assets?</label>
         <locationX>314</locationX>
-        <locationY>6536</locationY>
+        <locationY>3464</locationY>
         <defaultConnector>
-            <targetReference>Update_advice_checklist</targetReference>
+            <targetReference>Get_liabilities</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -741,7 +998,7 @@
         <name>Are_there_any_liabilities</name>
         <label>Are there any liabilities?</label>
         <locationX>314</locationX>
-        <locationY>3464</locationY>
+        <locationY>4664</locationY>
         <defaultConnector>
             <targetReference>Get_cash_account_financial_product_type</targetReference>
         </defaultConnector>
@@ -790,8 +1047,8 @@
     <decisions>
         <name>Is_there_an_income</name>
         <label>Is there an income?</label>
-        <locationX>470</locationX>
-        <locationY>6860</locationY>
+        <locationX>688</locationX>
+        <locationY>3788</locationY>
         <defaultConnector>
             <targetReference>Assets</targetReference>
         </defaultConnector>
@@ -807,7 +1064,57 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Add_to_cash_reserve_text</targetReference>
+                <targetReference>Is_this_for_a_BTL_property</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_this_for_a_BTL_property</name>
+        <label>Is this for a BTL property?</label>
+        <locationX>490</locationX>
+        <locationY>3896</locationY>
+        <defaultConnector>
+            <targetReference>Add_to_income_text</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesBtlProperty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Assets.AssetType__r.Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Property</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_rental_text</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_this_for_a_BTL_propertyLiability</name>
+        <label>Is this for a BTL property?</label>
+        <locationX>426</locationX>
+        <locationY>5396</locationY>
+        <defaultConnector>
+            <targetReference>Add_liability_owners_to_text_values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesBtlLiability</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>btlPropertyIds</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>Liabilities.Asset__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_liability_owners_to_BTL_text_values</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -816,7 +1123,7 @@
         <name>Next_action</name>
         <label>Next action</label>
         <locationX>314</locationX>
-        <locationY>7436</locationY>
+        <locationY>8336</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Update_checklist</name>
@@ -872,6 +1179,161 @@
                 <targetReference>AdviceChecklistVariables_Client_1</targetReference>
             </connector>
             <label>Client 1 blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Product_type</name>
+        <label>Product type</label>
+        <locationX>1062</locationX>
+        <locationY>7736</locationY>
+        <defaultConnector>
+            <targetReference>Financial_products</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>New_business</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4 AND 5 AND 6 AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>Financial_products.Public_Provider_Name__r.OW_own_company__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.BusinessType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New business</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Relevant Life Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Life Cover (Whole of Life)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Life Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Life &amp; Critical Illness Cover</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Family Income Benefit</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_rebalancing_summary</targetReference>
+            </connector>
+            <label>New business</label>
+        </rules>
+        <rules>
+            <name>DC_Pension</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Defined Contribution</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Personal Pension (PP)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_dc_pension_summary</targetReference>
+            </connector>
+            <label>DC Pension</label>
+        </rules>
+        <rules>
+            <name>DB_Pension</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Defined Benefit</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_db_pension_summary</targetReference>
+            </connector>
+            <label>DB Pension</label>
+        </rules>
+        <rules>
+            <name>Cash_ISA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cash ISA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_cash_ISA_total</targetReference>
+            </connector>
+            <label>Cash ISA</label>
+        </rules>
+        <rules>
+            <name>Investments</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Defined Benefit</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Defined Contribution</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Personal Pension (PP)</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Financial_products.Subtype__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Cash ISA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_investments_summary</targetReference>
+            </connector>
+            <label>Investments</label>
         </rules>
     </decisions>
     <decisions>
@@ -948,6 +1410,12 @@
         <scale>2</scale>
     </formulas>
     <formulas>
+        <name>btlProfit</name>
+        <dataType>Number</dataType>
+        <expression>{!rentalIncomeTotal} - {!btlExpenditure}</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
         <name>childcareText</name>
         <dataType>String</dataType>
         <expression>&quot;Childcare (&quot; + {!Children_2.AddressedName__pc} + &quot;): £&quot; + TEXT(ROUND({!Children_2.ChildcareSpendingMonthly__c},2)) + &quot; pm / £&quot; + TEXT(ROUND(12*{!Children_2.ChildcareSpendingMonthly__c},2)) + &quot; py&quot; + {!br}</expression>
@@ -971,6 +1439,16 @@
 &quot;Average gross bonus: £&quot; + TEXT({!Employment.Average_bonus__c}) + &quot; / Average net bonus: INSERT&quot; + {!br} +
 &quot;Salary sacrifice/workplace pension contributions: £INSERT&quot; + {!br} + 
 &quot;Business dividends: £&quot; + TEXT({!Employment.Business_Dividends__c}) + {!br} + {!br}</expression>
+    </formulas>
+    <formulas>
+        <name>finProdName</name>
+        <dataType>String</dataType>
+        <expression>{!Financial_products.FinServ__PrimaryOwner__r.AddressedName__pc} + IF(NOT(ISBLANK({!Financial_products.FinServ__JointOwner__c})), &quot; &amp; &quot; + {!Financial_products.FinServ__JointOwner__r.AddressedName__pc},&quot;&quot;) + &quot;: &quot; + {!Financial_products.Public_Provider_Name__r.Name} + &quot; (&quot; + {!Financial_products.FinServ__FinancialAccountNumber__c} + &quot;) &quot; + TEXT({!Financial_products.Subtype__c}) + &quot; - £&quot; + TEXT({!Financial_products.FP_Value__c}) + &quot; @ &quot; + TEXT({!Financial_products.FP_Date_of_valuation__c}) + {!br}</expression>
+    </formulas>
+    <formulas>
+        <name>finProdNameRebalancing</name>
+        <dataType>String</dataType>
+        <expression>{!Financial_products.FinServ__PrimaryOwner__r.AddressedName__pc} + IF(NOT(ISBLANK({!Financial_products.FinServ__JointOwner__c})), &quot; &amp; &quot; + {!Financial_products.FinServ__JointOwner__r.AddressedName__pc},&quot;&quot;) + &quot;: &quot; + {!Financial_products.Public_Provider_Name__r.Name} + &quot; (&quot; + {!Financial_products.FinServ__FinancialAccountNumber__c} + &quot;) &quot; + TEXT({!Financial_products.Subtype__c})  + &quot; - &quot; + TEXT({!Financial_products.OW_Investment_Mandate__c}) + {!br}</expression>
     </formulas>
     <formulas>
         <name>householdSaving</name>
@@ -1013,8 +1491,8 @@
     <formulas>
         <name>incomeAssetText</name>
         <dataType>String</dataType>
-        <expression>{!Get_income_from_asset.Asset__r.Name} + &quot; (&quot; + {!Get_income_from_asset.Asset__r.AssetType__r.Name} + &quot;): £&quot; +
-TEXT(IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c}, &#39;Monthly&#39;),{!Get_income_from_asset.Amount__c}, IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c},&#39;Weekly&#39;),ROUND({!Get_income_from_asset.Amount__c}*52/12,2), ROUND({!Get_income_from_asset.Amount__c}/12,2)))) + &quot; pm / £&quot; + TEXT(IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c}, &#39;Monthly&#39;),{!Get_income_from_asset.Amount__c}*12, IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c},&#39;Weekly&#39;),{!Get_income_from_asset.Amount__c}*52, {!Get_income_from_asset.Amount__c}))) + &quot; py&quot; + {!br}</expression>
+        <expression>{!Get_income_from_asset.Asset__r.Name} + &quot; (&quot; + {!Get_income_from_asset.Asset__r.AssetType__r.Name} + &quot;) Gross rental income: £&quot; +
+TEXT(IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c}, &#39;Monthly&#39;),{!Get_income_from_asset.Amount__c}, IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c},&#39;Weekly&#39;),ROUND({!Get_income_from_asset.Amount__c}*52/12,2), ROUND({!Get_income_from_asset.Amount__c}/12,2)))) + &quot; pm / £&quot; + TEXT(IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c}, &#39;Monthly&#39;),{!Get_income_from_asset.Amount__c}*12, IF(ISPICKVAL({!Get_income_from_asset.AmountFrequency__c},&#39;Weekly&#39;),{!Get_income_from_asset.Amount__c}*52, {!Get_income_from_asset.Amount__c}))) + &quot; py&quot; + {!br} + &quot;Net rental income: pm / py&quot; + {!br}</expression>
     </formulas>
     <formulas>
         <name>liabilityCost</name>
@@ -1034,12 +1512,15 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <expression>&quot;Balance: £&quot; + TEXT({!Liabilities.Balance__c}) + {!br} +
 &quot;Interest rate: &quot; + TEXT(100*{!Liabilities.InterestRate__c}) + &quot;%&quot; + {!br} + 
 &quot;Fixed rate expiry: &quot; + TEXT({!Liabilities.FixedRateExpiry__c}) + {!br} +
-&quot;End date: &quot; + TEXT({!Liabilities.EndDate__c}) + {!br} + {!br}</expression>
+&quot;End date: &quot; + TEXT({!Liabilities.EndDate__c}) + {!br} +
+&quot;Repayment amount: £&quot; + TEXT({!Liabilities.RepaymentAmount__c}) + &quot; &quot; + TEXT({!Liabilities.RepaymentFrequency__c}) + {!br} + &quot;Internal notes: &quot; + {!Liabilities.NotesInternal__c} + {!br} + 
+&quot;Customer notes: &quot; + {!Liabilities.NotesCustomer__c} + {!br}
++ {!br}</expression>
     </formulas>
     <formulas>
         <name>liabilityName</name>
         <dataType>String</dataType>
-        <expression>IF(ISBLANK({!Liabilities.CustomProviderName__c}),{!Liabilities.PublicProviderList__r.Name},{!Liabilities.CustomProviderName__c})</expression>
+        <expression>{!Liabilities.Asset__r.Name} + &quot; &quot; + IF(ISBLANK({!Liabilities.CustomProviderName__c}),{!Liabilities.PublicProviderList__r.Name},{!Liabilities.CustomProviderName__c}) + &quot; &quot; + {!Liabilities.LiabilityType__r.Name}</expression>
     </formulas>
     <formulas>
         <name>recommendedReserveText</name>
@@ -1099,40 +1580,26 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
     <loops>
         <name>Assets</name>
         <label>Assets</label>
-        <locationX>250</locationX>
-        <locationY>6644</locationY>
+        <locationX>270</locationX>
+        <locationY>3572</locationY>
         <collectionReference>Get_assets</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Get_income_from_asset</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_advice_checklist</targetReference>
+            <targetReference>Get_liabilities</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Cash_accounts</name>
         <label>Cash accounts</label>
         <locationX>314</locationX>
-        <locationY>5312</locationY>
+        <locationY>6704</locationY>
         <collectionReference>Get_cash_accounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Add_value_to_current_cash</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Get_cash_ISAs</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>Cash_ISAs</name>
-        <label>Cash ISAs</label>
-        <locationX>314</locationX>
-        <locationY>5720</locationY>
-        <collectionReference>Get_cash_ISAs</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Add_value_to_cash_isas</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Get_employment</targetReference>
@@ -1170,21 +1637,35 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>Employment</name>
         <label>Employment</label>
         <locationX>314</locationX>
-        <locationY>6128</locationY>
+        <locationY>7112</locationY>
         <collectionReference>Get_employment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Add_employment_to_text</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Get_assets</targetReference>
+            <targetReference>Get_financial_products</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Financial_products</name>
+        <label>Financial products</label>
+        <locationX>314</locationX>
+        <locationY>7628</locationY>
+        <collectionReference>Get_financial_products</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Product_type</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_advice_checklist</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>FinProdTypes</name>
         <label>FinProdTypes</label>
         <locationX>314</locationX>
-        <locationY>4904</locationY>
+        <locationY>6296</locationY>
         <collectionReference>Get_cash_account_financial_product_type</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1197,8 +1678,8 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
     <loops>
         <name>Liabilities</name>
         <label>Liabilities</label>
-        <locationX>250</locationX>
-        <locationY>3572</locationY>
+        <locationX>206</locationX>
+        <locationY>4772</locationY>
         <collectionReference>Get_liabilities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1212,14 +1693,14 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>Liability_owners</name>
         <label>Liability owners</label>
         <locationX>426</locationX>
-        <locationY>3788</locationY>
+        <locationY>4988</locationY>
         <collectionReference>Get_liability_roles</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Add_name_to_owners</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Add_liability_headline_to_text_values</targetReference>
+            <targetReference>Is_this_for_a_BTL_propertyLiability</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -1259,7 +1740,7 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>CreateAdviceChecklist</name>
         <label>Create Advice Checklist</label>
         <locationX>314</locationX>
-        <locationY>7544</locationY>
+        <locationY>8444</locationY>
         <connector>
             <targetReference>Assign_checklist_to_advice</targetReference>
         </connector>
@@ -1313,12 +1794,26 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <object>Advice__c</object>
         <outputReference>Advice</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>ChecklistType__c</queriedFields>
+        <queriedFields>AdviceType__c</queriedFields>
+        <queriedFields>Advice_Household__c</queriedFields>
+        <queriedFields>Understanding__c</queriedFields>
+        <queriedFields>Focus_on_return__c</queriedFields>
+        <queriedFields>Focus_on_risk__c</queriedFields>
+        <queriedFields>Volatility__c</queriedFields>
+        <queriedFields>Risk_Score__c</queriedFields>
+        <queriedFields>Experience__c</queriedFields>
+        <queriedFields>Knowledge__c</queriedFields>
+        <queriedFields>Experienced_investor_comments_optional__c</queriedFields>
+        <queriedFields>Splitting_of_advice_optional__c</queriedFields>
+        <queriedFields>Risk_Discussion_Completed__c</queriedFields>
+        <queriedFields>OW_review__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_assets</name>
         <label>Get assets</label>
         <locationX>314</locationX>
-        <locationY>6428</locationY>
+        <locationY>3356</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_assets</targetReference>
@@ -1346,7 +1841,7 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>Get_cash_account_financial_product_type</name>
         <label>Get cash account financial product type</label>
         <locationX>314</locationX>
-        <locationY>4796</locationY>
+        <locationY>6188</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>FinProdTypes</targetReference>
@@ -1409,7 +1904,7 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>Get_cash_accounts</name>
         <label>Get cash accounts</label>
         <locationX>314</locationX>
-        <locationY>5204</locationY>
+        <locationY>6596</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Cash_accounts</targetReference>
@@ -1441,45 +1936,10 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_cash_ISAs</name>
-        <label>Get cash ISAs</label>
-        <locationX>314</locationX>
-        <locationY>5612</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Cash_ISAs</targetReference>
-        </connector>
-        <filterLogic>(1 OR 2) AND 3</filterLogic>
-        <filters>
-            <field>Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>FinServ__Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Subtype__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Cash ISA</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>FinServ__FinancialAccount__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_employment</name>
         <label>Get employment</label>
         <locationX>314</locationX>
-        <locationY>6020</locationY>
+        <locationY>7004</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Employment</targetReference>
@@ -1501,6 +1961,34 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>FinServ__Employment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_financial_products</name>
+        <label>Get financial products</label>
+        <locationX>314</locationX>
+        <locationY>7412</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Sort_products</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>FinServ__Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>FinServ__FinancialAccount__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -1570,8 +2058,8 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
     <recordLookups>
         <name>Get_income_from_asset</name>
         <label>Get income from asset</label>
-        <locationX>470</locationX>
-        <locationY>6752</locationY>
+        <locationX>688</locationX>
+        <locationY>3680</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_there_an_income</targetReference>
@@ -1592,7 +2080,7 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>Get_liabilities</name>
         <label>Get liabilities</label>
         <locationX>314</locationX>
-        <locationY>3356</locationY>
+        <locationY>4556</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_liabilities</targetReference>
@@ -1620,7 +2108,7 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>Get_liability_roles</name>
         <label>Get liability roles</label>
         <locationX>426</locationX>
-        <locationY>3680</locationY>
+        <locationY>4880</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Liability_owners</targetReference>
@@ -1641,14 +2129,14 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>314</locationX>
-        <locationY>7760</locationY>
+        <locationY>8660</locationY>
         <inputReference>Advice</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_checklistInsert</name>
         <label>Update checklist</label>
         <locationX>50</locationX>
-        <locationY>7544</locationY>
+        <locationY>8444</locationY>
         <inputReference>AdviceChecklist</inputReference>
     </recordUpdates>
     <start>
@@ -1706,6 +2194,11 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <textTemplates>
+        <name>annualReviewOngoingSuitability</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Annual review FF questions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Anything else we should know?: {!Advice.OW_review__r.OW_anything_else_to_know__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Expected changes (long term): {!Advice.OW_review__r.OW_expected_changes_long_term__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68); font-size: 14px;&quot;&gt;Expected changes (short term): {!Advice.OW_review__r.OW_expected_changes_short_term__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Catch up call notes&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;[copy relevant notes from outstanding info section]&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Changes to circumstances&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Regulars &amp;amp; affordability&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Check if there are regulars in place, if so, are they still affordable/&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;If not - No regulars in place, no affordability assessment.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Wrappers and ownership&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Fees&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Are they being taken from most tax efficient source? I.e. ISAs from GIA&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
         <name>br</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>&lt;br/&gt;</text>
@@ -1713,7 +2206,12 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
     <textTemplates>
         <name>cashReservesTextTemplate</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 14px; font-family: Arial, sans-serif; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Spending:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!householdSpendingText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!educationTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!childcareSpendingTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Liabilities:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!liabilitySummaryCashReserve}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total outgoings:&lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; £{!totalExpenditure} per month / £{!totalExpenditureYearly} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Savings:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px; background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Budget planner: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Upcoming lump sum spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;One-off: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Luxury spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Total one off spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; font-family: Arial, sans-serif; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Recommended reserve:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!recommendedReserveText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Current cash:&lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; £{!currentCash}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Cash ISAs:&lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; £{!cashIsaTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; font-family: Arial, sans-serif; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Income:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt;Net figures calculated  using &lt;/em&gt;&lt;a href=&quot;https://www.thesalarycalculator.co.uk/salary.php&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;); font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;The Salary Calculator&lt;/em&gt;&lt;/a&gt;&lt;em style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt; or &lt;/em&gt;&lt;a href=&quot;https://www.uktaxcalculators.co.uk/tax-calculators/personal-tax-calculators/multiple-income-tax-estimate/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;); font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;UK Tax Calculators&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!employemntTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!incomeAssetsTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Total (gross)&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; = £{!totalIncomeMonthly} per month / £{!totalIncome} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; font-family: Arial, sans-serif; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total (net) &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; font-family: Arial, sans-serif; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;= £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; font-family: Arial, sans-serif; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per month / £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; font-family: Arial, sans-serif; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per year&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Surplus/shortfall:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;+/- £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per month / +/- £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Available cash: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;</text>
+        <text>&lt;p&gt;&lt;u style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/u&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Spending:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!householdSpendingText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!educationTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!childcareSpendingTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Liabilities &lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;(excluding BTL mortgages)&lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!liabilitySummaryCashReserve}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total outgoings:&lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; £{!totalExpenditure} per month / £{!totalExpenditureYearly} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Savings:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: transparent; font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: transparent; color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;Budget planner: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;BTL properties:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Liabilities&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;{!btlLiabilitySummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Rental income&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!rentalAssetTextSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Net income less mortgage payments = £{!btlProfit}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Upcoming lump sum spending: &lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;One-off: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Luxury spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Total one off spending: &lt;/span&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Recommended reserve:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!recommendedReserveText}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Current cash: £{!currentCash}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Fixed cash:&lt;/span&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Cash ISAs: £{!cashIsaTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Fixed ISAs: &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total cash: &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Income&lt;/u&gt; &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;(excluding &lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt;BTL properties)&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;em style=&quot;font-size: var(--lwc-fontSize3,0.8125rem); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt;Net figures calculated  using &lt;/em&gt;&lt;a href=&quot;https://www.thesalarycalculator.co.uk/salary.php&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;The Salary Calculator&lt;/em&gt;&lt;/a&gt;&lt;em style=&quot;font-size: var(--lwc-fontSize3,0.8125rem); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255)));&quot;&gt; or &lt;/em&gt;&lt;a href=&quot;https://www.uktaxcalculators.co.uk/tax-calculators/personal-tax-calculators/multiple-income-tax-estimate/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: var(--lwc-fontSize3,0.8125rem);&quot;&gt;&lt;em&gt;UK Tax Calculators&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!employemntTextTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!incomeAssetsTotal}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Total (gross)&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; = £{!totalIncomeMonthly} per month / £{!totalIncome} per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;Total (net) &lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;= £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per month / £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per year&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Surplus/shortfall:&lt;/u&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;+/- £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per month / +/- £&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; per year&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt;&lt;u&gt;Available cash:&lt;/u&gt;&lt;/strong&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: transparent;&quot;&gt; &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;INSERT&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>pensionReviewAdvice</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;DC Pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!dcPensionsSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;DB Pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!dbPensionsSummary}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Expression of wish&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client1Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s NOVA SIPP:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client2Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s NOVA SIPP:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client1Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s&amp;nbsp;[Financial product: Public provider Name]&amp;nbsp;pension:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client2Name}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;&#39;s&amp;nbsp;[Financial product: Public provider Name]&amp;nbsp;pension: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;State pensions&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client1Name}:&amp;nbsp;x full years, x years to retirement / In payment = £ py&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;{!client2Name}:&amp;nbsp;x full years, x years to retirement / In payment = £ py&lt;/span&gt;&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <name>RiskCallNotesTemplate</name>
@@ -1750,6 +2248,28 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>AdviceChecklistID</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>btlExpenditure</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>btlLiabilitySummary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>btlPropertyIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
@@ -1849,6 +2369,20 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <objectType>Account</objectType>
     </variables>
     <variables>
+        <name>dbPensionsSummary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>dcPensionsSummary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>educationTextTotal</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1920,6 +2454,13 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>investmentsSummary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>KnowledgeVar</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1957,6 +2498,28 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rebalancingSummary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rentalAssetTextSummary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rentalIncomeTotal</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
     <variables>
         <name>RiskDiscussionNotesVar</name>
