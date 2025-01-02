@@ -62,7 +62,9 @@ ISBLANK({!$Record.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c
 &amp;&amp;
 (
 NOT(ISPICKVAL({!$Record.Subtype__c}, &quot;Private Medical&quot;))
-)</filterFormula>
+)
+&amp;&amp;
+NOT({!$Record.Public_Provider_Name__r.OW_own_company__c})</filterFormula>
         <object>FinServ__FinancialAccount__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
