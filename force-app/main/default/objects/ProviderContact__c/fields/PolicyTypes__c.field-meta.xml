@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PolicyTypes__c</fullName>
-    <description>Indicates which kind of policies are handled by this department</description>
+    <description>Indicates which kind of policies are handled by this department. This is currently for operations information only and does not restrict selection in any way.</description>
     <label>Policy types</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
@@ -54,6 +54,21 @@
                 <fullName>Trust</fullName>
                 <default>false</default>
                 <label>Trust</label>
+            </value>
+            <value>
+                <fullName>Annuity</fullName>
+                <default>false</default>
+                <label>Annuity</label>
+            </value>
+            <value>
+                <fullName>Endowment</fullName>
+                <default>false</default>
+                <label>Endowment</label>
+            </value>
+            <value>
+                <fullName>Direct Equity Holding</fullName>
+                <default>false</default>
+                <label>Direct Equity Holding</label>
             </value>
         </valueSetDefinition>
     </valueSet>
