@@ -37,5 +37,7 @@ public class TaskRequest {
     @AuraEnabled
     public Id relatedFulfilment ;
     @AuraEnabled
+    public Id RelatedInformationRequest;
+    @AuraEnabled
     public Id chosenUser ;
 }
