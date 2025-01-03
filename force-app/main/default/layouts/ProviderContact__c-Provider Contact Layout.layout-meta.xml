@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -13,7 +14,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PublicProviderList__c</field>
+                <field>PolicyTypes__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -25,7 +26,21 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PlatformId__c</field>
+                <field>AgencyNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>InformationRequestFormat__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PublicProviderList__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DeveloperName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -33,13 +48,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DeveloperName__c</field>
+                <field>Address__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>OwnerId</field>
+                <field>SignatureFormat__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -50,6 +63,10 @@
         <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
