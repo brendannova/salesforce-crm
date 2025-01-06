@@ -32,6 +32,14 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Clone</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>numVisibleActions</name>
                     <value>3</value>
                 </componentInstanceProperties>
@@ -55,10 +63,20 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Name</fieldItem>
+                <identifier>RecordNameField3</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.PublicProviderList__c</fieldItem>
-                <identifier>RecordPublicProviderList_cField</identifier>
+                <fieldItem>Record.PolicyTypes__c</fieldItem>
+                <identifier>RecordPolicyTypes__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -91,10 +109,40 @@
                 <identifier>RecordInformationRequestFormat_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AgencyNumber__c</fieldItem>
+                <identifier>RecordAgencyNumber_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-6df65f48-19a7-4ffb-9abe-274e52e12f22</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PublicProviderList__c</fieldItem>
+                <identifier>RecordPublicProviderList_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DeveloperName__c</fieldItem>
+                <identifier>RecordDeveloperName__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -113,16 +161,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Address__c</fieldItem>
                 <identifier>RecordAddress_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.AgencyNumber__c</fieldItem>
-                <identifier>RecordAgencyNumber_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -171,16 +209,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreatedById</fieldItem>
                 <identifier>RecordCreatedByIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DeveloperName__c</fieldItem>
-                <identifier>RecordDeveloperName__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6f40b7bd-460b-4ded-a399-d68577a84dea</name>
