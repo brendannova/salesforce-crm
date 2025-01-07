@@ -97,6 +97,12 @@ IF(ISPICKVAL({!$Record.Status__c}, &quot;FUND_ANALYSIS&quot;),
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>related_information_request</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>task_type</name>
             <value>
                 <elementReference>taskType</elementReference>

@@ -1,5 +1,5 @@
 import { LightningElement, wire, api } from 'lwc';
-import formattedData from '@salesforce/apex/InformationRequestHouseholdDisplay.formattedData';
+import getData from '@salesforce/apex/LwcHelperInformationRequestList.getData';
 
 // The columns to be displayed in the table
 const columnsFixed = [
@@ -8,6 +8,7 @@ const columnsFixed = [
     { label: "Type", fieldName: "Type"},
     { label: "Product", fieldName: "FinancialProductName"},
     { label: "Status", fieldName: "Status"},
+    { label: "Authority Status", fieldName: "AuthStatus"},
 ];
 
 export default class InformationRequestRelatedList extends LightningElement {
@@ -17,7 +18,7 @@ export default class InformationRequestRelatedList extends LightningElement {
     cardIcon = 'standard:account';
     cardTitle = 'Information Requests';
 
-    @wire(formattedData,{recordId: '$recordId'})  
+    @wire(getData,{recordId: '$recordId'})  
     setRecords(result) {
         if(result.data){
             console.log('got it');

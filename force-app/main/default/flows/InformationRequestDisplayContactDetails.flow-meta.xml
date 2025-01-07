@@ -275,6 +275,20 @@
                     </isReadOnly>
                     <isRequired>false</isRequired>
                 </fields>
+                <fields>
+                    <name>Policy_number</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_information_request.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c</elementReference>
+                    </defaultValue>
+                    <fieldText>Policy number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isReadOnly>
+                        <booleanValue>true</booleanValue>
+                    </isReadOnly>
+                    <isRequired>false</isRequired>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
