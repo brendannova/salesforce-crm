@@ -154,6 +154,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
+        <queriedFields>Household__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_financial_products_including_juniors</name>
@@ -191,6 +192,8 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
+        <queriedFields>Household__c</queriedFields>
+        <queriedFields>RegisteredContact__c</queriedFields>
     </recordLookups>
     <start>
         <locationX>56</locationX>
@@ -222,6 +225,12 @@
             <name>financialAccounts</name>
             <value>
                 <elementReference>fps</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>$Record.Household_Lookup__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>
