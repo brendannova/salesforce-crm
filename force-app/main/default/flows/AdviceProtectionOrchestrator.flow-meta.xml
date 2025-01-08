@@ -187,29 +187,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Define_post_setup_updates</name>
-        <label>Define post setup updates</label>
-        <locationX>182</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.ProfileUpdateStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>profileUpdateStatusFormula</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>dataGatheringStatusFormula</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Next_step_setup</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Mark_task_to_stay_open</name>
         <label>Mark task to stay open</label>
         <locationX>974</locationX>
@@ -226,7 +203,7 @@
         <name>Move_to_data_gathering</name>
         <label>Move to data gathering</label>
         <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -246,7 +223,7 @@
         <name>Move_to_prepare_advice</name>
         <label>Move to prepare advice</label>
         <locationX>314</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -534,7 +511,7 @@
         <name>Next_step_setup</name>
         <label>Next step</label>
         <locationX>182</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Move_to_prepare_advice</targetReference>
         </defaultConnector>
@@ -543,17 +520,10 @@
             <name>Data_gathering_next_step</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProfileUpdatesAdvice</leftValueReference>
+                <leftValueReference>Set_up_advice.dataGatheringRequired</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Required</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>InformationRequestsAdvice</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Required</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -597,7 +567,7 @@
         </defaultConnector>
         <defaultConnectorLabel>Unknown task</defaultConnectorLabel>
         <rules>
-            <name>Set_up_advice</name>
+            <name>Set_up_advice_outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
@@ -607,7 +577,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_up_protection_advice</targetReference>
+                <targetReference>Set_up_advice</targetReference>
             </connector>
             <label>Set up advice</label>
         </rules>
@@ -663,7 +633,7 @@
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>ADVICE_PROTECTION_CREATE_ILLUSTRATIONS</stringValue>
+                    <stringValue>ADVICE_PROTECTION_ILLUSTRATIONS_CREATE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -678,7 +648,7 @@
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>ADVICE_PROTECTION_CREATE_RECOMMENDATIONS</stringValue>
+                    <stringValue>ADVICE_PROTECTION_RECOMMENDATIONS_CREATE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -693,7 +663,7 @@
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>ADVICE_PROTECTION_WRITE_PROPOSAL_DECK</stringValue>
+                    <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_WRITE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -708,7 +678,7 @@
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>ADVICE_PROTECTION_PRESENT_PROPOSAL_DECK</stringValue>
+                    <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_PRESENT</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -723,7 +693,7 @@
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>ADVICE_PROTECTION_WRITE_ADVICE_DECK</stringValue>
+                    <stringValue>ADVICE_PROTECTION_DECK_ADVICE_WRITE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -803,15 +773,6 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
 &quot;&quot;)))</expression>
     </formulas>
     <formulas>
-        <description>Maps the information request input from the screen to a DataGatheringStatus__c field picklist value. Returns error for an unmapped value, which will trigger an error in the field as it is restricted to picklist values.</description>
-        <name>dataGatheringStatusFormula</name>
-        <dataType>String</dataType>
-        <expression>CASE({!InformationRequestsAdvice}, 
-{!Required}, &quot;In progress&quot;,
-{!NotRequired}, &quot;Not required&quot;,
-&quot;ERROR&quot;)</expression>
-    </formulas>
-    <formulas>
         <description>Contextual help for the data gathering status field.</description>
         <name>dataGatheringStatusHelp</name>
         <dataType>String</dataType>
@@ -826,15 +787,6 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <name>deckExpiryDate</name>
         <dataType>Date</dataType>
         <expression>ADDMONTHS({!$Flow.CurrentDate},3)</expression>
-    </formulas>
-    <formulas>
-        <description>Maps the profile status input from the screen to a ProfileUpdateStatus__c field picklist value. Returns error for an unmapped value, which will trigger an error in the field as it is restricted to picklist values.</description>
-        <name>profileUpdateStatusFormula</name>
-        <dataType>String</dataType>
-        <expression>CASE({!ProfileUpdatesAdvice}, 
-{!Required}, &quot;Not started&quot;,
-{!NotRequired}, &quot;Not required&quot;,
-&quot;ERROR&quot;)</expression>
     </formulas>
     <interviewLabel>Advice | Protection | Orchestrator {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Protection | Orchestrator</label>
@@ -1114,7 +1066,7 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
                     <stringValue>Information requests not required</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1138,7 +1090,7 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
                     <stringValue>Information requests required</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1162,7 +1114,7 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
                     <stringValue>Information requests complete</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1177,78 +1129,6 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
             </visibilityRule>
         </fields>
         <nextOrFinishButtonLabel>Update advice</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Set_up_protection_advice</name>
-        <label>Set up protection advice</label>
-        <locationX>182</locationX>
-        <locationY>458</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Define_post_setup_updates</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompletePromptSetup</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Provide answers to the questions below and proceed. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>IntroductionsMade</name>
-            <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>NotRequired</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Appropriate introductions made</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;There is no rule on what to do here but please ensure that any appropriate introductions to the client have been made. &lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>ProfileUpdatesAdvice</name>
-            <choiceReferences>Required</choiceReferences>
-            <choiceReferences>NotRequired</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Profile updates</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;Select yes if we are missing anything like the details of an existing protection policy. This will trigger a task for ops to get those specific details.&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>ProfileUpdatesNeededDetail</name>
-            <dataType>String</dataType>
-            <fieldText>Profile update details</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;Provide details of the profile updates needed.&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ProfileUpdatesAdvice</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Required</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>InformationRequestsAdvice</name>
-            <choiceReferences>Required</choiceReferences>
-            <choiceReferences>NotRequired</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Information requests</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Select yes if we still need to complete the information request process for any existing protection policies. This will trigger a task for ops to kick these off.&lt;/span&gt;&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1314,6 +1194,41 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
                 <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Set_up_advice</name>
+        <label>Set up advice</label>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Next_step_setup</targetReference>
+        </connector>
+        <flowName>AdviceOrchestrationSetUp</flowName>
+        <inputAssignments>
+            <name>advice</name>
+            <value>
+                <elementReference>advice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceType</name>
+            <value>
+                <elementReference>adviceType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>Upload_advice_deck</name>
