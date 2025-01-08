@@ -74,6 +74,7 @@
         <outputReference>ir</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Advice__c</queriedFields>
+        <queriedFields>FinancialProductFinServ__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Close_existing_task</name>
@@ -167,13 +168,13 @@ NOT(ISBLANK({!$Record.RegisteredContact__c}))
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>ir.Advice__r.Advice_Household__c</elementReference>
+                <elementReference>ir.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>related_information_request</name>
             <value>
-                <elementReference>Get_IR</elementReference>
+                <elementReference>ir.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
