@@ -166,7 +166,7 @@ public with sharing class EmailMessageHelper {
         List<Account> householdsBypassRevert = new List<Account>();
         // Loop the known outbound emails to validate the conditions are met
         for(EmailDetail outboundMessage : outboundMessages){
-            if(outboundMessage.EmailMessage.Status == '3' || (outboundMessage.EmailMessage.Status == '5' && outboundMessage.EmailMessage.ApprovalStatus__c == 'In approval')){
+            if(outboundMessage.EmailMessage.Status == '3' || (outboundMessage.EmailMessage.Status == '5' && outboundMessage.EmailMessage.ApprovalStatus__c == 'In approval' && outboundMessage.EmailMessage.BypassValidations__c != 'Yes')){
                 List<String> errors = new List<String>();
     
                 // Check whether an email template ID has been specified - one must be
@@ -189,14 +189,14 @@ public with sharing class EmailMessageHelper {
                             } else {
                                 householdId = relatedIdHouseholdIdMap.get(outboundMessage.emailMessage.relatedToId);
                             }
-                            Boolean bypassValidation = householdMap.get(householdId).EmailRecipientValidationBypass__c;
+                            Boolean bypassValidation = false;
+                            if(outboundMessage.emailMessage.BypassValidations__c == 'Yes' && outboundMessage.emailMessage.ApprovalStatus__c == 'Approved'){
+                                bypassValidation = true;
+                            }
                             errors.addAll(checkFrom(outboundMessage, emailConfig));
                             //errors.addAll(checkBcc(outboundMessage, bypassValidation));
                             errors.addAll(checkCc(outboundMessage, emailConfig, householdId, bypassValidation));
                             errors.addAll(checkTo(outboundMessage, emailConfig, householdId, bypassValidation));
-                            if(bypassValidation && outboundMessage.EmailMessage.Status == '3'){
-                                householdsBypassRevert.add(new Account(Id = householdId, EmailRecipientValidationBypass__c = false));
-                            }
                         } 
                     }
                 }
@@ -204,9 +204,6 @@ public with sharing class EmailMessageHelper {
                     outboundMessage.emailMessage.addError('Error: ' + String.join(errors, '; '));
                 }
             }
-        }
-        if(householdsBypassRevert.size() > 0){
-            update householdsBypassRevert;
         }
     }
 
@@ -275,7 +272,7 @@ public with sharing class EmailMessageHelper {
                     errors.add(System.Label.EmailTriggerCcPartner);
                 } else {
                     if(!ccPartnerOnly){
-                        errors.add(System.Label.EmailTriggerCcPartnerOnly);
+                        errors.add(System.Label.EmailTriggerCcPartnerOnly + System.Label.EmailTriggerBypassMessage);
                         if(!ccPartnerIncluded){
                             errors.add(System.Label.EmailTriggerCcPartner);
                         }
@@ -283,7 +280,7 @@ public with sharing class EmailMessageHelper {
                 }
             } else if(ec.PartnerCopied__c == 'Never'){
                 if(ccPopulated){
-                    errors.add(System.Label.EmailTriggerCcMustBeBlank);
+                    errors.add(System.Label.EmailTriggerCcMustBeBlank + System.Label.EmailTriggerBypassMessage);
                 }
             } else if(ec.PartnerCopied__c == 'Optional'){
                 if (ccPopulated){
@@ -324,7 +321,7 @@ public with sharing class EmailMessageHelper {
                 }
             }
             if(recipientsOutsideHousehold.size() > 0){
-                errors.add(System.Label.EmailTriggerRecipients + String.join(recipientsOutsideHousehold, ', '));
+                errors.add(System.Label.EmailTriggerRecipients + String.join(recipientsOutsideHousehold, ', ' + '. ' + System.Label.EmailTriggerBypassMessage));
             }
 
             // Check the household emails to figure out who should be blocked from being emailed and who is required
@@ -348,7 +345,7 @@ public with sharing class EmailMessageHelper {
                     }
                 }
                 if(!missingRequiredRecipients.isEmpty()){
-                    errors.add(System.Label.EmailTriggerRecipientsMissing + String.join(missingRequiredRecipients, ', '));
+                    errors.add(System.Label.EmailTriggerRecipientsMissing + String.join(missingRequiredRecipients, ', ' + '. ' + System.Label.EmailTriggerBypassMessage));
                 }
             }
 
@@ -361,7 +358,7 @@ public with sharing class EmailMessageHelper {
                         }
                     } else if (ri.serviceContactPreferences == 'All emails'){
                         if(!toAddresses.contains(ri.Email)){
-                            errors.add('This person should be included on the email: ' + ri.Email);
+                            errors.add('This person should be included on the email: ' + ri.Email + '. ' + System.Label.EmailTriggerBypassMessage);
                         }
                     }
                 }
