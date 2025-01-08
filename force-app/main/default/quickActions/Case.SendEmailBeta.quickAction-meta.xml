@@ -6,10 +6,6 @@
         <formula>Case.Account.OwnerId</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>Subject</field>
-        <formula>Case.Subject</formula>
-    </fieldOverrides>
-    <fieldOverrides>
         <field>ValidatedFromAddress</field>
         <literalValue>amy@novawm.com</literalValue>
     </fieldOverrides>
@@ -40,12 +36,17 @@
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
+                <field>HoldingEmail__c</field>
+                <uiBehavior>Required</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
                 <field>RequestApproval__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
                 <emptySpace>false</emptySpace>
-                <field>HoldingEmail__c</field>
+                <field>BypassValidations__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
             <quickActionLayoutItems>
