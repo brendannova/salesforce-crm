@@ -1,6 +1,6 @@
 /* 
  * This class exists to set the ToAddress on emails sent using the send email quick action on the case
- * This class sets only the ToAddress field, Cc and From addresses are set using the default feilds from the quick action in the org
+ * This class sets only the ToAddress field. Cc and From addresses are set using the default fields from the quick action in the org
  * We start by getting the cases from all quick actions passed into the class, then all clients in the household and their email addresses and use this to set the ToAddress on the email message
  * If there are multiple clients to the household, we add both emails to the ToAddress field.
  */
@@ -27,23 +27,28 @@ public class QuickActionEmailMessage implements QuickAction.QuickActionDefaultsH
         }
         
         Map<Id,Id> caseToAccountIdMap = new Map<Id,Id>();
-        for(Case c : [SELECT Id, AccountId, Account.IsPersonAccount FROM Case WHERE Id =: caseIds]) { //Loop through cases on quick actions and add to a map
-            if(!String.IsBlank(c.AccountId) && c.Account.IsPersonAccount != true){ //Ensure case is assiged a household. Cannot be a person account.
+        //Loop through cases on quick actions and add to a map
+        for(Case c : [SELECT Id, AccountId, Account.IsPersonAccount FROM Case WHERE Id =: caseIds]) {
+            //Ensure case is assigned a household. Cannot be a person account
+            if(!String.IsBlank(c.AccountId) && c.Account.IsPersonAccount != true){ 
             	caseToAccountIdMap.put(c.AccountId, c.Id);
             }
         }
         
         Map<Id,String> caseToEmailAddressMap = new Map<Id,String>();
         for(AccountContactRelation relationships : [SELECT Id, AccountId, ContactId, Contact.Email, Account.Owner.Email FROM AccountContactRelation WHERE AccountId =: caseToAccountIdMap.keySet() AND Roles = 'Client']){
-            if(caseToEmailAddressMap.containsKey(caseToAccountIdMap.get(relationships.AccountId))){ //If a row already exists for the quick action case, then add the current client email address to the map
+            //If a row already exists for the quick action case, then add the current client email address to the map
+            if(caseToEmailAddressMap.containsKey(caseToAccountIdMap.get(relationships.AccountId))){ 
                 String emailAddresses = caseToEmailAddressMap.get(caseToAccountIdMap.get(relationships.AccountId)) + ';' + relationships.Contact.Email;
                 caseToEmailAddressMap.put(caseToAccountIdMap.get(relationships.AccountId), emailAddresses);
-            }else{ //If a row does not already exist for the case, then add caseId and current item's email address
+            } else { 
+                //If a row does not already exist for the case, then add caseId and current item's email address
                 caseToEmailAddressMap.put(caseToAccountIdMap.get(relationships.AccountId), relationships.Contact.Email);
             }
         }
         
-        for(QuickAction.SendEmailQuickActionDefaults quickAction : sendEmailDefaults){ //Loop through quick actions and set ToAddress
+        //Loop through quick actions and set ToAddress
+        for(QuickAction.SendEmailQuickActionDefaults quickAction : sendEmailDefaults){ 
             EmailMessage emailMessageRecord = (EmailMessage)quickAction.getTargetSObject();
             if(caseToEmailAddressMap.containsKey(quickAction.getContextId())){
                 emailMessageRecord.ToAddress = caseToEmailAddressMap.get(quickAction.getContextId());

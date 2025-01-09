@@ -32,7 +32,8 @@ public class QuickActionEmailMessageTest {
         
         Id personRT = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
         Case c = [SELECT Id FROM Case WHERE Subject = 'Test Case'];    
-        List<Map<String, Object>> defaultSettingString = new List<Map<String, Object>> { //Create a map of SendEmailQuickAction properties to execute the correct quick action
+        //Create a map of SendEmailQuickAction properties to execute the correct quick action
+        List<Map<String, Object>> defaultSettingString = new List<Map<String, Object>> { 
   			new Map<String, Object> {
         		'targetSObject' => new EmailMessage(),
         		'contextId' => c.Id,
@@ -65,7 +66,8 @@ public class QuickActionEmailMessageTest {
         Case c = [SELECT Id FROM Case WHERE Subject = 'Test Case'];
         c.AccountId = null;
         update c;
-        List<Map<String, Object>> defaultSettingString = new List<Map<String, Object>> { //Create a map of SendEmailQuickAction properties to execute the correct quick action
+        //Create a map of SendEmailQuickAction properties to execute the correct quick action
+        List<Map<String, Object>> defaultSettingString = new List<Map<String, Object>> { 
   			new Map<String, Object> {
         		'targetSObject' => new EmailMessage(),
         		'contextId' => c.Id,
