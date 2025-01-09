@@ -3,7 +3,6 @@
     <customButtons>Request_Update_Valudations_Contribution_History</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>Clone</excludeButtons>
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>PrintableView</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -28,6 +27,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>FinancialProductType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>FinServ__RecordTypeName__c</field>
             </layoutItems>
             <layoutItems>
@@ -49,10 +52,6 @@
                 <field>Household__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Registered_Contact__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>FinServ__Status__c</field>
             </layoutItems>
@@ -70,7 +69,12 @@
                 <field>Public_Provider_Name__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns />
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ProviderContact__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>

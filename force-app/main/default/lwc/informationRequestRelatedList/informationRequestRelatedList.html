@@ -1,0 +1,45 @@
+<template>
+
+    <lightning-card  title="    ">
+    </lightning-card>
+    <div class="related-list-style-div"></div>
+        <div class="slds-card_boundary">
+            <div class="slds-page-header related-list-header">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <lightning-icon
+                                    icon-name={cardIcon}
+                                    alternative-text={cardTitle}
+                                    size="small"
+                                    title="large size"
+                                ></lightning-icon>
+                            </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate related-list-title" title={cardTitle}>
+                                            {cardTitle}
+                                        </span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="related-list-body">
+            <lightning-datatable
+                key-field="Id"
+                data={records}
+                columns={columns}
+                hide-checkbox-column
+                show-row-number-column
+                column-widths-mode="auto">
+            </lightning-datatable> 
+        </div>
+    </div>
+</template>

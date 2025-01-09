@@ -1303,6 +1303,14 @@
         <connector>
             <targetReference>Choose_Fin_Prod_Type</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Cash</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>FinancialProductType__c</object>
         <sortField>SortOrder__c</sortField>

@@ -3,6 +3,14 @@
     <custom>false</custom>
     <userLicense>Salesforce</userLicense>
     <classAccesses>
+        <apexClass>EmailInformationRequestUpdateTable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailInformationRequestUpdateTableTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>FinServ__AccountAccountRelationTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -863,6 +871,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>InformationRequestHouseholdDisplay</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>InformationRequestHouseholdDisplayTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MilestoneTimeCalculator</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1271,10 +1287,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DataFactory</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DataFactoryTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1348,10 +1360,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EmailMessageHelperTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FakeDataGenerata</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1503,6 +1511,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <pageAccesses>
+        <apexPage>InformationRequestContactDisplay</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>SiteRegister</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -1592,6 +1604,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>MicrobatchSelfReg</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>irTest</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <applicationVisibilities>
@@ -17264,6 +17280,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Public_Provider_Names__c.DeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Quote.AccountId</field>
         <readable>true</readable>
@@ -19760,11 +19781,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Public_Provider_Names__c.ReferenceName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>FF_Feedback__c.How_easy_was_it_to_complete_your_profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22073,6 +22089,12 @@
         <layout>Individual-Individual Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InformationRequestType__c-Information Request Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InformationRequest__c-Information Request Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InsuranceContract-Insurance Contract Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -22370,6 +22392,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ProfileSkillUser-Skill User Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProviderContact__c-Provider Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Provider_Database__c-Fulfilment Layout</layout>
@@ -24289,6 +24314,14 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>InformationRequestType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>InformationRequest__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>LOA__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -24338,6 +24371,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ProductType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>ProviderContact__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

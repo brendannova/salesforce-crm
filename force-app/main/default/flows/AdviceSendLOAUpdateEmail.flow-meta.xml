@@ -58,6 +58,7 @@
             </value>
         </inputParameters>
         <nameSegment>sendTemplatedEmail</nameSegment>
+        <offset>0</offset>
         <outputParameters>
             <assignToReference>final_email_successful</assignToReference>
             <name>emailSuccessful</name>
@@ -122,6 +123,7 @@
             </value>
         </inputParameters>
         <nameSegment>sendTemplatedEmail</nameSegment>
+        <offset>0</offset>
         <outputParameters>
             <assignToReference>testEmailSucessful</assignToReference>
             <name>emailSuccessful</name>
@@ -441,7 +443,7 @@
     <description>Called by a quick action on advice, this flow will walk the user through the process of sending an LOA update email following a test.</description>
     <environments>Default</environments>
     <interviewLabel>Advice | Send LOA Update Email {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Advice | Send LOA Update Email</label>
+    <label>zUnused Advice | Send LOA Update Email</label>
     <loops>
         <description>Loops through the customers so the email addresses can be added to the to recipients</description>
         <name>Loop_customers</name>

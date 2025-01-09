@@ -13,10 +13,16 @@
                         <valueListItems>
                             <value>AdviceChecklist__c.RefreshValues</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Suitability narrative</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Household__r.Name}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>OW3378 Tito, P</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

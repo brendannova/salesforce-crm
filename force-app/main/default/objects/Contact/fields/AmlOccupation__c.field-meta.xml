@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AmlOccupation__c</fullName>
+    <description>This field is used as part of the Hubwise AML process to capture occupation aligned to Hubwise&#39;s categorisations.</description>
+    <label>Occupation</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ARMED_FORCES</fullName>
+                <default>false</default>
+                <label>Armed forces</label>
+            </value>
+            <value>
+                <fullName>SENIOR_EXECUTIVE</fullName>
+                <default>false</default>
+                <label>Senior Executive</label>
+            </value>
+            <value>
+                <fullName>PROFESSIONAL</fullName>
+                <default>false</default>
+                <label>Professional</label>
+            </value>
+            <value>
+                <fullName>SELF_EMPLOYED</fullName>
+                <default>false</default>
+                <label>Self employed</label>
+            </value>
+            <value>
+                <fullName>STUDENT</fullName>
+                <default>false</default>
+                <label>Student</label>
+            </value>
+            <value>
+                <fullName>UNEMPLOYED</fullName>
+                <default>false</default>
+                <label>Unemployed</label>
+            </value>
+            <value>
+                <fullName>RETIREE</fullName>
+                <default>false</default>
+                <label>Retiree</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

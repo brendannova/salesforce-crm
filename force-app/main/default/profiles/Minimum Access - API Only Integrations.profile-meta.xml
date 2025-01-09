@@ -454,7 +454,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Public_Provider_Names__c.ReferenceName__c</field>
+        <field>Public_Provider_Names__c.DeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
@@ -578,6 +578,12 @@
         <layout>FlowRecord-Flow Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InformationRequestType__c-Information Request Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InformationRequest__c-Information Request Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Lead-Lead Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -592,6 +598,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>PortfolioCharge__c-Portfolio Charge Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProviderContact__c-Provider Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ReceivedDocument-Received Document Layout</layout>
@@ -1378,6 +1387,14 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>InformationRequestType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>InformationRequest__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>LOA__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -1427,6 +1444,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ProductType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>ProviderContact__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

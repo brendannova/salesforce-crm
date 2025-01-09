@@ -166,43 +166,45 @@ public with sharing class EmailMessageHelper {
         List<Account> householdsBypassRevert = new List<Account>();
         // Loop the known outbound emails to validate the conditions are met
         for(EmailDetail outboundMessage : outboundMessages){
-            List<String> errors = new List<String>();
-
-            // Check whether an email template ID has been specified - one must be
-            if (outboundMessage.emailMessage.EmailTemplateId == null) {
-                errors.add(System.Label.EmailTriggerNoTemplate);
-            } else {
-                // Check for an email config file and through an error if there is not one
-                EmailConfiguration__c emailConfig = emailConfigMap.get(outboundMessage.emailMessage.EmailTemplateId);
-                if (emailConfig == null) {
-                    errors.add(System.Label.EmailTriggerNoConfig);
+            if(outboundMessage.EmailMessage.Status == '3' || (outboundMessage.EmailMessage.Status == '5' && outboundMessage.EmailMessage.ApprovalStatus__c == 'In approval')){
+                List<String> errors = new List<String>();
+    
+                // Check whether an email template ID has been specified - one must be
+                if (outboundMessage.emailMessage.EmailTemplateId == null) {
+                    errors.add(System.Label.EmailTriggerNoTemplate);
                 } else {
-                    // Check that the user has the permission to send the associated email template and throw an error if not
-                    if(!FeatureManagement.checkPermission(emailConfig.CustomPermission__c)){
-                        errors.add(System.Label.EmailTriggerNoPermission);
+                    // Check for an email config file and through an error if there is not one
+                    EmailConfiguration__c emailConfig = emailConfigMap.get(outboundMessage.emailMessage.EmailTemplateId);
+                    if (emailConfig == null) {
+                        errors.add(System.Label.EmailTriggerNoConfig);
                     } else {
-                        // Validate that the conditions of the email are in line with what the email configuration file requires
-                        Id householdId;
-                        if(outboundMessage.relatedObjectApiName == 'Account'){
-                            householdId = outboundMessage.householdId;
+                        // Check that the user has the permission to send the associated email template and throw an error if not
+                        if(!FeatureManagement.checkPermission(emailConfig.CustomPermission__c)){
+                            errors.add(System.Label.EmailTriggerNoPermission);
                         } else {
-                            householdId = relatedIdHouseholdIdMap.get(outboundMessage.emailMessage.relatedToId);
-                        }
-                        Boolean bypassValidation = householdMap.get(householdId).EmailRecipientValidationBypass__c;
-                        errors.addAll(checkFrom(outboundMessage, emailConfig));
-                        //errors.addAll(checkBcc(outboundMessage, bypassValidation));
-                        errors.addAll(checkCc(outboundMessage, emailConfig, householdId, bypassValidation));
-                        errors.addAll(checkTo(outboundMessage, emailConfig, householdId, bypassValidation));
-                        if(bypassValidation && outboundMessage.EmailMessage.Status == '3'){
-                            householdsBypassRevert.add(new Account(Id = householdId, EmailRecipientValidationBypass__c = false));
-                        }
-                    } 
+                            // Validate that the conditions of the email are in line with what the email configuration file requires
+                            Id householdId;
+                            if(outboundMessage.relatedObjectApiName == 'Account'){
+                                householdId = outboundMessage.householdId;
+                            } else {
+                                householdId = relatedIdHouseholdIdMap.get(outboundMessage.emailMessage.relatedToId);
+                            }
+                            Boolean bypassValidation = householdMap.get(householdId).EmailRecipientValidationBypass__c;
+                            errors.addAll(checkFrom(outboundMessage, emailConfig));
+                            //errors.addAll(checkBcc(outboundMessage, bypassValidation));
+                            errors.addAll(checkCc(outboundMessage, emailConfig, householdId, bypassValidation));
+                            errors.addAll(checkTo(outboundMessage, emailConfig, householdId, bypassValidation));
+                            if(bypassValidation && outboundMessage.EmailMessage.Status == '3'){
+                                householdsBypassRevert.add(new Account(Id = householdId, EmailRecipientValidationBypass__c = false));
+                            }
+                        } 
+                    }
+                }
+                if(errors.size() > 0){
+                    outboundMessage.emailMessage.addError('Error: ' + String.join(errors, '; '));
                 }
             }
-            if(errors.size() > 0){
-                outboundMessage.emailMessage.addError('Error: ' + String.join(errors, '; '));
-            }
-        }  
+        }
         if(householdsBypassRevert.size() > 0){
             update householdsBypassRevert;
         }

@@ -3167,7 +3167,7 @@
         <name>Planners</name>
         <dataType>String</dataType>
         <displayField>Name</displayField>
-        <filterLogic>and</filterLogic>
+        <filterLogic>(1 AND 2) OR 3</filterLogic>
         <filters>
             <field>ProfileId</field>
             <operator>EqualTo</operator>
@@ -3180,6 +3180,13 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Username</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>hugo@novawm.com</stringValue>
             </value>
         </filters>
         <object>User</object>
@@ -3242,7 +3249,7 @@
     <formulas>
         <name>riskCallStatus</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Complete&quot;), &quot;Complete&quot;, IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Not required&quot;),&quot;Not required&quot;,&quot;In progress&quot;))</expression>
+        <expression>IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Not ready&quot;), &quot;Ready&quot;, TEXT({!advice.RiskCallStatus__c}))</expression>
     </formulas>
     <formulas>
         <name>statusFormula</name>
