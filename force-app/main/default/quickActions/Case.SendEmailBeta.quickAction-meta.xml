@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Action to reply to a case email</description>
+    <description>Beta testing of default quick action</description>
     <fieldOverrides>
         <field>CcIds</field>
         <formula>Case.Account.OwnerId</formula>
     </fieldOverrides>
     <fieldOverrides>
-        <field>ToIds</field>
-        <formula>Case.Account.FinServ__PrimaryContact__c</formula>
-    </fieldOverrides>
-    <fieldOverrides>
         <field>ValidatedFromAddress</field>
         <literalValue>amy@novawm.com</literalValue>
     </fieldOverrides>
-    <label>Send email</label>
+    <label>Send email ß</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
