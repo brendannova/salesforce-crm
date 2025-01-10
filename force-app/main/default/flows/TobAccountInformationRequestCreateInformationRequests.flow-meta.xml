@@ -18,8 +18,8 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_household_id</name>
-        <label>Assign household id</label>
+        <name>Assign_IDs</name>
+        <label>Assign IDs</label>
         <locationX>182</locationX>
         <locationY>134</locationY>
         <assignmentItems>
@@ -29,6 +29,13 @@
                 <elementReference>client.Household_Lookup__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>personAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>client.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_clients</targetReference>
         </connector>
@@ -36,7 +43,7 @@
     <assignments>
         <name>Set_flag_to_false</name>
         <label>Set flag to false</label>
-        <locationX>446</locationX>
+        <locationX>270</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>firstTobFlag</assignToReference>
@@ -46,7 +53,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Clients</targetReference>
+            <targetReference>Loop_clients_in_household</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -75,37 +82,29 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Have_they_signed_terms_already</name>
-        <label>Have they signed terms already?</label>
-        <locationX>490</locationX>
+        <name>Has_another_client_in_the_household_already_signed_terms</name>
+        <label>Has another client in the household already signed terms?</label>
+        <locationX>402</locationX>
         <locationY>458</locationY>
         <defaultConnector>
-            <targetReference>Clients</targetReference>
+            <targetReference>Loop_clients_in_household</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>They_are_the_triggering_client</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Clients.Id</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>client.Id</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Clients</targetReference>
-            </connector>
-            <label>They are the triggering client</label>
-        </rules>
         <rules>
             <name>YesSigned</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Clients.Date_terms_of_business_last_accepted__c</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>Loop_clients_in_household.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <elementReference>personAccountId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_clients_in_household.OW_terms_of_Business_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -115,29 +114,29 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_this_ready</name>
-        <label>Is this ready?</label>
+        <name>Information_request_outcome</name>
+        <label>Information request outcome</label>
         <locationX>402</locationX>
         <locationY>1250</locationY>
         <defaultConnector>
             <targetReference>Loop</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <defaultConnectorLabel>No action</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
-            <conditionLogic>(1 AND (2 OR 3)) OR (4 OR 5 OR 6)</conditionLogic>
+            <name>Create_IR</name>
+            <conditionLogic>(1 AND (2 OR 3)) OR (4 OR 5)</conditionLogic>
             <conditions>
-                <leftValueReference>Loop.FinServ__PrimaryOwner__r.Date_terms_of_business_last_accepted__c</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>Loop.FinServ__PrimaryOwner__r.OW_terms_of_Business_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>Accepted</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Loop.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>Loop.FinServ__JointOwner__r.OW_terms_of_Business_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <stringValue>Accepted</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -148,50 +147,29 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Loop.FinServ__PrimaryOwner__r.FinServ__Age__pc</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <numberValue>18.0</numberValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop.Subtype__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Junior</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>Loop.RecordType.DeveloperName</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Junior</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Loop.FinServ__PrimaryOwner__r.FinServ__Age__pc</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>18.0</numberValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Add_to_collection</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Create IR</label>
         </rules>
     </decisions>
     <description>Sub flow to be called as part of prospect -&gt; verifying actions which decides which financial products are now ready to receive information requests</description>
     <environments>Default</environments>
     <interviewLabel>TOB | Account | Information Request | Create Information Requests {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TOB | Account | Information Request | Create Information Requests</label>
-    <loops>
-        <name>Clients</name>
-        <label>Clients</label>
-        <locationX>182</locationX>
-        <locationY>350</locationY>
-        <collectionReference>Get_clients.personAccounts</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Have_they_signed_terms_already</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>First_TOB_for_household</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <loops>
         <name>Loop</name>
         <label>Loop</label>
@@ -200,10 +178,24 @@
         <collectionReference>gotFps</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Is_this_ready</targetReference>
+            <targetReference>Information_request_outcome</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Create_information_requests</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Loop_clients_in_household</name>
+        <label>Loop clients in household</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <collectionReference>Get_clients.personAccounts</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Has_another_client_in_the_household_already_signed_terms</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>First_TOB_for_household</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -234,19 +226,33 @@
         <connector>
             <targetReference>Loop</targetReference>
         </connector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>BusinessType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pre-existing</stringValue>
+            </value>
+        </filters>
         <filters>
             <field>FinServ__PrimaryOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>client.Id</elementReference>
+                <elementReference>personAccountId</elementReference>
             </value>
         </filters>
         <filters>
             <field>FinServ__JointOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>client.Id</elementReference>
+                <elementReference>personAccountId</elementReference>
             </value>
         </filters>
         <object>FinServ__FinancialAccount__c</object>
@@ -255,6 +261,8 @@
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
         <queriedFields>Household__c</queriedFields>
+        <queriedFields>FinServ__RecordTypeName__c</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_financial_products_including_juniors</name>
@@ -265,7 +273,7 @@
         <connector>
             <targetReference>Loop</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
+        <filterLogic>1 AND 2 AND (3 OR 4 OR 5)</filterLogic>
         <filters>
             <field>Household__c</field>
             <operator>EqualTo</operator>
@@ -274,17 +282,24 @@
             </value>
         </filters>
         <filters>
+            <field>BusinessType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pre-existing</stringValue>
+            </value>
+        </filters>
+        <filters>
             <field>FinServ__PrimaryOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>client.Id</elementReference>
+                <elementReference>personAccountId</elementReference>
             </value>
         </filters>
         <filters>
             <field>FinServ__JointOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>client.Id</elementReference>
+                <elementReference>personAccountId</elementReference>
             </value>
         </filters>
         <filters>
@@ -301,12 +316,14 @@
         <queriedFields>FinServ__JointOwner__c</queriedFields>
         <queriedFields>Household__c</queriedFields>
         <queriedFields>RegisteredContact__c</queriedFields>
+        <queriedFields>FinServ__RecordTypeName__c</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assign_household_id</targetReference>
+            <targetReference>Assign_IDs</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -335,7 +352,7 @@
         <locationX>182</locationX>
         <locationY>242</locationY>
         <connector>
-            <targetReference>Clients</targetReference>
+            <targetReference>Loop_clients_in_household</targetReference>
         </connector>
         <flowName>AccountGetPeopleInHousehold</flowName>
         <inputAssignments>
@@ -388,6 +405,13 @@
     </variables>
     <variables>
         <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>personAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
