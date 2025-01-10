@@ -5,7 +5,7 @@
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>270</locationX>
-        <locationY>1439</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>fps</assignToReference>
             <operator>Add</operator>
@@ -18,10 +18,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_household_id</name>
+        <label>Assign household id</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>client.Household_Lookup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_clients</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_flag_to_false</name>
         <label>Set flag to false</label>
         <locationX>446</locationX>
-        <locationY>647</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>firstTobFlag</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +53,7 @@
         <name>First_TOB_for_household</name>
         <label>First TOB for household?</label>
         <locationX>182</locationX>
-        <locationY>923</locationY>
+        <locationY>842</locationY>
         <defaultConnector>
             <targetReference>Get_financial_products</targetReference>
         </defaultConnector>
@@ -62,7 +78,7 @@
         <name>Have_they_signed_terms_already</name>
         <label>Have they signed terms already?</label>
         <locationX>490</locationX>
-        <locationY>539</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Clients</targetReference>
         </defaultConnector>
@@ -74,7 +90,7 @@
                 <leftValueReference>Clients.Id</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>$Record.Id</elementReference>
+                    <elementReference>client.Id</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -102,7 +118,7 @@
         <name>Is_this_ready</name>
         <label>Is this ready?</label>
         <locationX>402</locationX>
-        <locationY>1331</locationY>
+        <locationY>1250</locationY>
         <defaultConnector>
             <targetReference>Loop</targetReference>
         </defaultConnector>
@@ -158,15 +174,15 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Flow to create IRs when TOBs are signed</description>
+    <description>Sub flow to be called as part of prospect -&gt; verifying actions which decides which financial products are now ready to receive information requests</description>
     <environments>Default</environments>
-    <interviewLabel>Account | IR | TOB Signed {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>zReplaced Account | IR | TOB Signed</label>
+    <interviewLabel>TOB | Account | Information Request | Create Information Requests {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TOB | Account | Information Request | Create Information Requests</label>
     <loops>
         <name>Clients</name>
         <label>Clients</label>
         <locationX>182</locationX>
-        <locationY>431</locationY>
+        <locationY>350</locationY>
         <collectionReference>Get_clients.personAccounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -180,7 +196,7 @@
         <name>Loop</name>
         <label>Loop</label>
         <locationX>182</locationX>
-        <locationY>1223</locationY>
+        <locationY>1142</locationY>
         <collectionReference>gotFps</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -213,7 +229,7 @@
         <name>Get_financial_products</name>
         <label>Get financial products</label>
         <locationX>314</locationX>
-        <locationY>1031</locationY>
+        <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop</targetReference>
@@ -223,14 +239,14 @@
             <field>FinServ__PrimaryOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>client.Id</elementReference>
             </value>
         </filters>
         <filters>
             <field>FinServ__JointOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>client.Id</elementReference>
             </value>
         </filters>
         <object>FinServ__FinancialAccount__c</object>
@@ -244,24 +260,31 @@
         <name>Get_financial_products_including_juniors</name>
         <label>Get financial products (including juniors)</label>
         <locationX>50</locationX>
-        <locationY>1031</locationY>
+        <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop</targetReference>
         </connector>
-        <filterLogic>1 OR 2 OR (3 AND 4)</filterLogic>
+        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
+        <filters>
+            <field>Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </filters>
         <filters>
             <field>FinServ__PrimaryOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>client.Id</elementReference>
             </value>
         </filters>
         <filters>
             <field>FinServ__JointOwner__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>client.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -269,13 +292,6 @@
             <operator>Contains</operator>
             <value>
                 <stringValue>Junior</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$Record.Household_Lookup__c</elementReference>
             </value>
         </filters>
         <object>FinServ__FinancialAccount__c</object>
@@ -290,27 +306,15 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_clients</targetReference>
+            <targetReference>Assign_household_id</targetReference>
         </connector>
-        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Date_terms_of_business_last_accepted__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>Account</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <subflows>
         <name>Create_information_requests</name>
         <label>Create information requests</label>
         <locationX>182</locationX>
-        <locationY>1715</locationY>
+        <locationY>1634</locationY>
         <flowName>InformationRequestCreate</flowName>
         <inputAssignments>
             <name>financialAccounts</name>
@@ -321,7 +325,7 @@
         <inputAssignments>
             <name>householdId</name>
             <value>
-                <elementReference>$Record.Household_Lookup__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -329,7 +333,7 @@
         <name>Get_clients</name>
         <label>Get clients</label>
         <locationX>182</locationX>
-        <locationY>323</locationY>
+        <locationY>242</locationY>
         <connector>
             <targetReference>Clients</targetReference>
         </connector>
@@ -337,7 +341,7 @@
         <inputAssignments>
             <name>householdId</name>
             <value>
-                <elementReference>$Record.Household_Lookup__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -348,6 +352,14 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>client</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
     <variables>
         <name>firstTobFlag</name>
         <dataType>Boolean</dataType>
@@ -373,5 +385,12 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
