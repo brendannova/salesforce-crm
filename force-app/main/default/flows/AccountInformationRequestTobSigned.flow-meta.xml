@@ -165,7 +165,7 @@
         <connector>
             <targetReference>Loop</targetReference>
         </connector>
-        <filterLogic>1 OR 2 OR 3</filterLogic>
+        <filterLogic>1 OR 2 OR (3 AND 4)</filterLogic>
         <filters>
             <field>FinServ__PrimaryOwner__c</field>
             <operator>EqualTo</operator>
@@ -185,6 +185,13 @@
             <operator>Contains</operator>
             <value>
                 <stringValue>Junior</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Household_Lookup__c</elementReference>
             </value>
         </filters>
         <object>FinServ__FinancialAccount__c</object>
