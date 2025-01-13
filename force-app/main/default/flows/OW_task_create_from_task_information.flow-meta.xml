@@ -33,6 +33,7 @@
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
@@ -212,6 +213,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>taskOrchestrationStatus</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>task.RelatedInformationRequest__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>related_information_request</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1355,6 +1363,13 @@
     </variables>
     <variables>
         <name>related_fulfilment</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>related_information_request</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

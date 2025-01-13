@@ -41,22 +41,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_follow_on_taskChaseDetails</name>
-        <label>Assign follow on task</label>
-        <locationX>50</locationX>
-        <locationY>1538</locationY>
-        <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>IR_POLICYINFO_CHASE</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_IRPolicydetails</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_follow_on_taskClientSend</name>
         <label>Assign follow on task</label>
         <locationX>578</locationX>
@@ -134,7 +118,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -199,7 +183,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -264,14 +248,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Update_IRPolicydetails</name>
         <label>Update IR</label>
         <locationX>50</locationX>
-        <locationY>1646</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>ir.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -329,7 +313,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -407,7 +391,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_follow_on_taskChaseDetails</targetReference>
+                <targetReference>Update_IRPolicydetails</targetReference>
             </connector>
             <label>Chase policy pre-reqs</label>
         </rules>
@@ -680,20 +664,6 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         </connector>
     </recordRollbacks>
     <recordUpdates>
-        <name>Update_data_request</name>
-        <label>Update data request</label>
-        <locationX>446</locationX>
-        <locationY>1838</locationY>
-        <connector>
-            <targetReference>Update_financial_product</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
-        </faultConnector>
-        <inputReference>ir</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>446</locationX>
@@ -723,6 +693,20 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
             </value>
         </inputAssignments>
         <object>FinServ__FinancialAccount__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_information_request</name>
+        <label>Update information request</label>
+        <locationX>446</locationX>
+        <locationY>1838</locationY>
+        <connector>
+            <targetReference>Update_financial_product</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
+        <inputReference>ir</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>

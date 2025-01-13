@@ -82,6 +82,13 @@
                 <elementReference>IRs.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskToAdd.RelatedInformationRequest</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IRs.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_task_to_collection</targetReference>
         </connector>
