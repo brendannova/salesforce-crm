@@ -11495,6 +11495,10 @@
         <recordType>Advice__c.Advice_RT_General_Advice</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Advice__c-Protection Advice</layout>
+        <recordType>Advice__c.Protection</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
         <recordType>Advice__c.RegularAmendment</recordType>
     </layoutAssignments>
@@ -13288,6 +13292,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>AdviceChecklist__c.Protection</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>AdviceChecklist__c.TopUp</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -13305,6 +13314,11 @@
         <default>false</default>
         <recordType>Advice__c.DB_Advice</recordType>
         <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Advice__c.Protection</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -14093,10 +14107,6 @@
     <tabVisibilities>
         <tab>OW_task_information__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Planning_Prioritisation</tab>
-        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>PortfolioCharge__c</tab>
