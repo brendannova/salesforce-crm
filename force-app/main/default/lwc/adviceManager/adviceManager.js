@@ -51,6 +51,7 @@ export default class AdviceManager extends LightningElement {
                 fields : fieldInput
             };
         });
+        this.draftValues = [];
         let recordsUpdatedArrayPromise = recordsUpdatedArray.map((currItem) => 
             updateRecord(currItem)
         );
