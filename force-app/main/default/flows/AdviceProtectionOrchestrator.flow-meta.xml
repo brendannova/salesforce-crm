@@ -75,40 +75,6 @@
                 <elementReference>deckExpiryDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Confirm_task_complete_generic</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Create_illustrations_updates</name>
-        <label>Create illustrations updates</label>
-        <locationX>2162</locationX>
-        <locationY>458</locationY>
-        <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ADVICE_PROTECTION_RECOMMENDATIONS_CREATE</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Confirm_task_complete_generic</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Create_proposal_deck_updates</name>
-        <label>Create proposal deck updates</label>
-        <locationX>2690</locationX>
-        <locationY>458</locationY>
-        <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_PRESENT</stringValue>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -118,24 +84,23 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Confirm_task_complete_generic</targetReference>
+            <targetReference>Complete_task</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Create_recommendations_updates</name>
         <label>Create recommendations updates</label>
-        <locationX>2426</locationX>
+        <locationX>2954</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_WRITE</stringValue>
+                <stringValue>ADVICE_PROTECTION_DECK_ADVICE_WRITE</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Confirm_task_complete_generic</targetReference>
+            <targetReference>Complete_task</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -242,26 +207,22 @@
     <assignments>
         <name>Present_proposal_deck_updates</name>
         <label>Present proposal deck updates</label>
-        <locationX>2954</locationX>
-        <locationY>458</locationY>
+        <locationX>2162</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_DECK_ADVICE_WRITE</stringValue>
+                <stringValue>ADVICE_PROTECTION_RECOMMENDATIONS_CREATE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
+            <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Present advice</stringValue>
+                <stringValue>In progress</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Confirm_task_complete_generic</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_no_advice_type_error</name>
@@ -319,6 +280,19 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Set_unknown_proposal_outcome_error</name>
+        <label>Set unknown proposal outcome error</label>
+        <locationX>2690</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Raise a ticket with this message: Unknown outcome to protection proposal.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Write_narrative_updates</name>
         <label>Write narrative updates</label>
         <locationX>1898</locationX>
@@ -334,19 +308,9 @@
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_PROTECTION_ILLUSTRATIONS_CREATE</stringValue>
+                <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_PRESENT</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In progress</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Confirm_task_complete_generic</targetReference>
-        </connector>
     </assignments>
     <choices>
         <name>Complete</name>
@@ -362,6 +326,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>In progress</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
         </value>
     </choices>
     <choices>
@@ -533,6 +505,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Protection_proposal_outcome</name>
+        <label>Protection proposal outcome</label>
+        <locationX>2426</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Set_unknown_proposal_outcome_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Unknown outcome</defaultConnectorLabel>
+        <rules>
+            <name>Proceed_to_advice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProceedWithAdvice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Present_proposal_deck_updates</targetReference>
+            </connector>
+            <label>Proceed to advice</label>
+        </rules>
+        <rules>
+            <name>Do_not_proceed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProceedWithAdvice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>No</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cancellation_warning</targetReference>
+            </connector>
+            <label>Do not proceed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Ready_to_confirm_deck</name>
         <label>Ready to confirm deck?</label>
         <locationX>3614</locationX>
@@ -627,19 +639,19 @@
             <label>Narrative | Write</label>
         </rules>
         <rules>
-            <name>Create_illustrations</name>
+            <name>Present_protection_proposal</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>ADVICE_PROTECTION_ILLUSTRATIONS_CREATE</stringValue>
+                    <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_PRESENT</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_illustrations_updates</targetReference>
+                <targetReference>Proposal_presented</targetReference>
             </connector>
-            <label>Create illustrations</label>
+            <label>Present protection proposal</label>
         </rules>
         <rules>
             <name>Create_recommendations</name>
@@ -655,36 +667,6 @@
                 <targetReference>Create_recommendations_updates</targetReference>
             </connector>
             <label>Create recommendations</label>
-        </rules>
-        <rules>
-            <name>Create_proposal_deck</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_WRITE</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_proposal_deck_updates</targetReference>
-            </connector>
-            <label>Create proposal deck</label>
-        </rules>
-        <rules>
-            <name>Present_protection_proposal</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_PRESENT</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Present_proposal_deck_updates</targetReference>
-            </connector>
-            <label>Present protection proposal</label>
         </rules>
         <rules>
             <name>Create_protection_advice_deck</name>
@@ -866,6 +848,64 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Cancellation_warning</name>
+        <label>Cancellation warning</label>
+        <locationX>2426</locationX>
+        <locationY>674</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Cancel_advice</targetReference>
+        </connector>
+        <fields>
+            <name>CancellationWarning</name>
+            <extensionName>c:confirmModalFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>navigateBackOnCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>navigateForwardOnConfirm</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Advice will be cancelled</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>header</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>The advice will be closed, which cannot be undone. Click OK to proceed or cancel to go back. </stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Confirm_deck_shared</name>
         <label>Confirm deck shared</label>
         <locationX>3614</locationX>
@@ -900,32 +940,6 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
             <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Proceed to &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;update the recommendations.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Confirm_task_complete_generic</name>
-        <label>Confirm task complete</label>
-        <locationX>1898</locationX>
-        <locationY>566</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>ConfirmCompletePrompt</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;When you have finished the work for this task, click complete task to trigger the next steps.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>TaskCompleted</name>
-            <choiceReferences>Yes</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Have you completed the task?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1132,6 +1146,45 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Proposal_presented</name>
+        <label>Proposal presented</label>
+        <locationX>2426</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Protection_proposal_outcome</targetReference>
+        </connector>
+        <fields>
+            <name>ProposalPresentedPrompt</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;When you have finished the work for this task, click complete task to trigger the next steps.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ProposalPresented</name>
+            <choiceReferences>Yes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Proposal presented</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;If we will not go on to present a proposal, you can cancel this advice. &lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>ProceedWithAdvice</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Proceed with protection advice</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>3191</locationX>
         <locationY>0</locationY>
@@ -1139,7 +1192,7 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
             <targetReference>Get_advice_type_status</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Assign_planner</name>
         <label>Assign planner</label>
@@ -1156,6 +1209,35 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Cancel_advice</name>
+        <label>Cancel advice</label>
+        <locationX>2426</locationX>
+        <locationY>782</locationY>
+        <connector>
+            <targetReference>Set_to_not_close_task</targetReference>
+        </connector>
+        <flowName>AdviceCancel</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Complete_task</name>
+        <label>Complete task</label>
+        <locationX>2954</locationX>
+        <locationY>566</locationY>
+        <flowName>OrchestratorTaskComplete</flowName>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Confirm_deck_non_presented</name>
@@ -1318,6 +1400,13 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>informationRequests</name>
