@@ -22,7 +22,7 @@ public with sharing class EmailMessageHelper {
     public EmailMessageHelper(Map<Id,EmailMessage> messagesMap){
         collateEmailInformation(messagesMap.values());      // Collate the key information needed
         collateEmailTemplateInformation();                  // Get the email templates
-        collateEmailConfigurationInfomration();             // Get the email configuration information
+        collateEmailConfigurationInformation();             // Get the email configuration information
         getHouseholdInformation();                          // Get the information on households related to the emails
         collateEmailRecipientInformation();
     }
@@ -65,7 +65,7 @@ public with sharing class EmailMessageHelper {
     }
 
     // Gets email configruation record information for use in applying business rules
-    private void collateEmailConfigurationInfomration(){
+    private void collateEmailConfigurationInformation(){
         List<EmailConfiguration__c> emailConfigs = [SELECT Id, DeveloperName__c, PartnerCopied__c, Necessity__c, Type__c, From__c, CustomPermission__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames];
         for(EmailConfiguration__c config : emailConfigs){
             emailConfigMap.put(emailTemplateDevNameIdMap.get(config.DeveloperName__c), config);
@@ -84,12 +84,13 @@ public with sharing class EmailMessageHelper {
         }
         householdIds.addAll(relatedIdHouseholdIdMap.values());
 
-        // Get the household IDs for the advice we are sending messages for if there are advice IDs
+        // Get the household IDs for the case we are sending messages for
         if(caseIds.size() > 0){
             List<Case> caseList = [SELECT Id, AccountId FROM Case WHERE Id IN :caseIds];
             for(Case c : caseList){
-                // *** Keep only one of these, TBC if the advice <=> household map is needed
-                relatedIdHouseholdIdMap.put(c.Id, c.AccountId);
+                if(!String.IsBlank(c.AccountId)){
+                    relatedIdHouseholdIdMap.put(c.Id, c.AccountId);
+                }
             }
         }
         householdIds.addAll(relatedIdHouseholdIdMap.values());
@@ -128,7 +129,6 @@ public with sharing class EmailMessageHelper {
 
     // Runs through the collated information to determine if the email message meets the business rules that apply
     public void validateConditions(){
-        List<Account> householdsBypassRevert = new List<Account>();
         // Loop the known outbound emails to validate the conditions are met
         for(EmailDetail outboundMessage : outboundMessages){
             if(outboundMessage.EmailMessage.Status == '3' || (outboundMessage.EmailMessage.Status == '5' && outboundMessage.EmailMessage.ApprovalStatus__c == 'In approval')){
@@ -152,16 +152,22 @@ public with sharing class EmailMessageHelper {
                             if(outboundMessage.relatedObjectApiName == 'Account'){
                                 householdId = outboundMessage.householdId;
                             } else {
-                                householdId = relatedIdHouseholdIdMap.get(outboundMessage.emailMessage.relatedToId);
+                                if(relatedIdHouseholdIdMap.containsKey(outboundMessage.emailMessage.relatedToId)){
+                                	householdId = relatedIdHouseholdIdMap.get(outboundMessage.emailMessage.relatedToId);
+                                }
                             }
-                            Boolean bypassValidation = (outboundMessage.emailMessage.BypassValidations__c == 'Yes'); //Bypass validations is on if BypassValidations picklist = 'Yes'
-                            errors.addAll(checkFrom(outboundMessage, emailConfig));
-                            List<String> ccErrors = checkCc(outboundMessage, emailConfig, householdId, bypassValidation);
-                            List<String> toErrors = checkTo(outboundMessage, emailConfig, householdId, bypassValidation);
-                            errors.addAll(ccErrors);
-                            errors.addAll(toErrors);
-                            if(!bypassValidation && (!ccErrors.isEmpty() || !toErrors.isEmpty())){
-                                errors.add(System.Label.EmailTriggerBypassMessage);
+                            if(!String.isBlank(householdId)) {
+                                Boolean bypassValidation = (outboundMessage.emailMessage.BypassValidations__c == 'Yes'); //Bypass validations is on if BypassValidations picklist = 'Yes'
+                                errors.addAll(checkFrom(outboundMessage, emailConfig));
+                                List<String> ccErrors = checkCc(outboundMessage, emailConfig, householdId, bypassValidation);
+                                List<String> toErrors = checkTo(outboundMessage, emailConfig, householdId, bypassValidation);
+                                errors.addAll(ccErrors);
+                                errors.addAll(toErrors);
+                                if(!bypassValidation && (!ccErrors.isEmpty() || !toErrors.isEmpty())){
+                                    errors.add(System.Label.EmailTriggerBypassMessage);
+                                } 
+                            } else { 
+                                errors.add(System.Label.EmailTriggerNoHousehold);
                             }
                         } 
                     }
