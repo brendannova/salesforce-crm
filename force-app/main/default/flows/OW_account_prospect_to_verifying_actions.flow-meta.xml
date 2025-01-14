@@ -37,10 +37,26 @@
         <name>Kick_off_AML_process</name>
         <label>Kick off AML process</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
+        <connector>
+            <targetReference>Kick_off_information_request_process</targetReference>
+        </connector>
         <flowName>OW_aml_create</flowName>
         <inputAssignments>
             <name>party</name>
+            <value>
+                <elementReference>party</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Kick_off_information_request_process</name>
+        <label>Kick off information request process</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <flowName>TobAccountInformationRequestCreateInformationRequests</flowName>
+        <inputAssignments>
+            <name>client</name>
             <value>
                 <elementReference>party</elementReference>
             </value>

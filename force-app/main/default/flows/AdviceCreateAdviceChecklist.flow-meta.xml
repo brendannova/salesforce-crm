@@ -25,7 +25,6 @@
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
@@ -1453,6 +1452,7 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;&lt;strong&gt;{!client1Name}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Will in place - {!client1.Valid_Will_in_Place__c}&lt;/p&gt;&lt;p&gt;Wills up to date - {!client1.Is_Will_Up_to_Date__c}&lt;/p&gt;&lt;p&gt;Power of Attorney in Place - {!client1.Power_of_Attorney_in_Place__c}&lt;/p&gt;&lt;p&gt;Power of Attorney type - {!client1.Power_of_Attorney_Types__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!client2Name}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Will in place - {!client2.Valid_Will_in_Place__c}&lt;/p&gt;&lt;p&gt;Wills up to date - {!client2.Is_Will_Up_to_Date__c}&lt;/p&gt;&lt;p&gt;Power of Attorney in Place - {!client2.Power_of_Attorney_in_Place__c}&lt;/p&gt;&lt;p&gt;Power of Attorney type - {!client2.Power_of_Attorney_Types__c}&lt;/p&gt;</text>
     </textTemplates>
+    <triggerOrder>1300</triggerOrder>
     <variables>
         <name>AdviceChecklist</name>
         <dataType>SObject</dataType>

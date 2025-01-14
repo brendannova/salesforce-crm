@@ -29,7 +29,6 @@
             <assignToReference>adviceRecordTypeId</assignToReference>
             <name>recordTypeId</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
@@ -43,13 +42,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>household.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.Partner__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>household.OwnerId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -160,6 +152,13 @@
                 <stringValue>In progress</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.Partner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>household.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>OW_create_advice_record</targetReference>
         </connector>
@@ -182,20 +181,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Existing</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.New_LOAs_required__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>No</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.Update_valuations__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>No</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -272,28 +257,6 @@
             <label>Protection</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Task_to_create</name>
-        <label>Task to create?</label>
-        <locationX>314</locationX>
-        <locationY>1166</locationY>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>taskType</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_first_task</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <description>Creates a new piece of advice with the advice type being passed in as an input.</description>
     <environments>Default</environments>
     <formulas>
@@ -330,9 +293,6 @@
         <label>Create advice record</label>
         <locationX>314</locationX>
         <locationY>1058</locationY>
-        <connector>
-            <targetReference>Task_to_create</targetReference>
-        </connector>
         <inputReference>advice</inputReference>
     </recordCreates>
     <recordLookups>
@@ -394,32 +354,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Create_first_task</name>
-        <label>Create first task</label>
-        <locationX>182</locationX>
-        <locationY>1274</locationY>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>advice.Advice_Household__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <elementReference>taskType</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>advice.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
     <variables>
         <name>advice</name>
         <dataType>SObject</dataType>
