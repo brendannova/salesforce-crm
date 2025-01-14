@@ -28,7 +28,6 @@
         <nameSegment>FlowUtilityGetFirstListItem</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
@@ -51,7 +50,7 @@
         <name>Close_task</name>
         <label>Close task</label>
         <locationX>94</locationX>
-        <locationY>2510</locationY>
+        <locationY>2966</locationY>
         <assignmentItems>
             <assignToReference>task.Status</assignToReference>
             <operator>Assign</operator>
@@ -119,6 +118,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_review_ID</name>
+        <label>Set review ID</label>
+        <locationX>94</locationX>
+        <locationY>2510</locationY>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>reviewId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_task</name>
         <label>Set task</label>
         <locationX>314</locationX>
@@ -167,6 +182,13 @@
                 <elementReference>adviceChecklist.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reviewId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>advice.OW_review__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Tasks_in_users_name</targetReference>
         </connector>
@@ -177,7 +199,7 @@
         <locationX>358</locationX>
         <locationY>1946</locationY>
         <defaultConnector>
-            <targetReference>Task_action</targetReference>
+            <targetReference>Review_update_required</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not required</defaultConnectorLabel>
         <rules>
@@ -292,7 +314,7 @@
         <name>Follow_on_task_to_create</name>
         <label>Follow on task to create</label>
         <locationX>358</locationX>
-        <locationY>3158</locationY>
+        <locationY>3614</locationY>
         <defaultConnector>
             <targetReference>CompleteScreen</targetReference>
         </defaultConnector>
@@ -340,10 +362,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Review_update_required</name>
+        <label>Review update required?</label>
+        <locationX>358</locationX>
+        <locationY>2402</locationY>
+        <defaultConnector>
+            <targetReference>Task_action</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not required</defaultConnectorLabel>
+        <rules>
+            <name>Required_review_update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>reviewUpdated</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_review_ID</targetReference>
+            </connector>
+            <label>Required</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Task_action</name>
         <label>Task action</label>
         <locationX>358</locationX>
-        <locationY>2402</locationY>
+        <locationY>2858</locationY>
         <defaultConnector>
             <targetReference>Follow_on_task_to_create</targetReference>
         </defaultConnector>
@@ -470,6 +517,8 @@
         <queriedFields>RiskCallStatus__c</queriedFields>
         <queriedFields>Suitability_meeting_date_time__c</queriedFields>
         <queriedFields>ProfileUpdateStatus__c</queriedFields>
+        <queriedFields>Narrative__c</queriedFields>
+        <queriedFields>RtqStatus__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_advice_checklist</name>
@@ -570,12 +619,13 @@
         <queriedFields>ActivityDate</queriedFields>
         <queriedFields>OW_target_start_date__c</queriedFields>
         <queriedFields>Type</queriedFields>
+        <queriedFields>WhatId</queriedFields>
     </recordLookups>
     <recordRollbacks>
         <name>Roll_back_changes</name>
         <label>Roll back changes</label>
         <locationX>358</locationX>
-        <locationY>2726</locationY>
+        <locationY>3182</locationY>
         <connector>
             <targetReference>Error_screen</targetReference>
         </connector>
@@ -600,7 +650,7 @@
         <locationX>94</locationX>
         <locationY>2162</locationY>
         <connector>
-            <targetReference>Task_action</targetReference>
+            <targetReference>Review_update_required</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -609,10 +659,24 @@
         <inputReference>adviceChecklistUpdated</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Update_review</name>
+        <label>Update review</label>
+        <locationX>94</locationX>
+        <locationY>2618</locationY>
+        <connector>
+            <targetReference>Task_action</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Roll_back_changes</targetReference>
+        </faultConnector>
+        <inputReference>reviewUpdated</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_task</name>
         <label>Update task</label>
         <locationX>94</locationX>
-        <locationY>2618</locationY>
+        <locationY>3074</locationY>
         <connector>
             <targetReference>Follow_on_task_to_create</targetReference>
         </connector>
@@ -693,7 +757,7 @@
         <name>CompleteScreen</name>
         <label>Complete screen</label>
         <locationX>358</locationX>
-        <locationY>3458</locationY>
+        <locationY>3914</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -730,7 +794,7 @@
         <name>Error_screen</name>
         <label>Error screen</label>
         <locationX>358</locationX>
-        <locationY>2834</locationY>
+        <locationY>3290</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -809,7 +873,7 @@
         <name>Create_next_task</name>
         <label>Create next task</label>
         <locationX>226</locationX>
-        <locationY>3266</locationY>
+        <locationY>3722</locationY>
         <connector>
             <targetReference>CompleteScreen</targetReference>
         </connector>
@@ -1178,6 +1242,21 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>reviewId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>reviewUpdated</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OW_review__c</objectType>
     </variables>
     <variables>
         <name>task</name>

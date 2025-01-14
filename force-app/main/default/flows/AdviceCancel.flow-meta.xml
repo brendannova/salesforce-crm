@@ -4,7 +4,7 @@
         <name>Go_to_Househoold</name>
         <label>Go to Househoold</label>
         <locationX>50</locationX>
-        <locationY>1106</locationY>
+        <locationY>1214</locationY>
         <actionName>c:navigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -15,24 +15,61 @@
             </value>
         </inputParameters>
         <nameSegment>c:navigateToRecord</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Assign_advice_values</name>
+        <label>Assign advice values</label>
+        <locationX>182</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>advice.Advice_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.ClosedReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ClosedReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.OtherClosedReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Other_Closed_Reason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Advice.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Advice</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>ClosedReasonActiveReason</name>
         <choiceText>Active customer is offboarding</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Active customer is offboarding</stringValue>
+            <stringValue>Customer offboarding</stringValue>
         </value>
     </choices>
     <choices>
-        <name>CustomerWithdrawing</name>
-        <choiceText>Customer Withdrawing</choiceText>
+        <name>CustomerOffboarding</name>
+        <choiceText>Customer offboarding</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Customer Withdrawing</stringValue>
+            <stringValue>Customer offboarding</stringValue>
         </value>
     </choices>
     <choices>
@@ -71,7 +108,7 @@
         <name>Customer_offboarding</name>
         <label>Customer offboarding</label>
         <locationX>182</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Advice_Cancelled_Success</targetReference>
         </defaultConnector>
@@ -153,17 +190,10 @@
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
-        <name>ClosedReasonActual</name>
-        <dataType>String</dataType>
-        <expression>IF(NOT(ISBLANK({!Closed_Reason_Active})), {!Closed_Reason_Active},
-IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding}, 
-{!ClosedReason}))</expression>
-    </formulas>
-    <formulas>
         <description>Formula to set the Customer Is Offboarding checkbox if the reason for withdrawing is &#39;Customer is Withdrawing&#39;. This option is only available if the customer is in onboarding.</description>
         <name>CustomerWithdrawingFormula</name>
         <dataType>Boolean</dataType>
-        <expression>IF({!Closed_Reason_Onboarding} = &#39;Customer Withdrawing&#39;, true, false)</expression>
+        <expression>IF({!ClosedReason} = &#39;Customer offboarding&#39;, true, false)</expression>
     </formulas>
     <interviewLabel>Advice | Cancel {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Cancel</label>
@@ -240,40 +270,14 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
         <name>Update_Advice</name>
         <label>Update Advice</label>
         <locationX>182</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <connector>
             <targetReference>Customer_offboarding</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Advice.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Advice_Status__c</field>
-            <value>
-                <stringValue>Cancelled</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ClosedReason__c</field>
-            <value>
-                <elementReference>ClosedReasonActual</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>OtherClosedReason__c</field>
-            <value>
-                <elementReference>Other_Closed_Reason</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Advice__c</object>
+        <inputReference>advice</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
@@ -296,7 +300,7 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
         <name>Advice_Cancelled_Success</name>
         <label>Advice Cancelled Success</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>1106</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -312,7 +316,7 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
         <name>Advice_Updated_Success_Offboarding</name>
         <label>Advice Updated Success Offboarding</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -338,7 +342,7 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
         <allowPause>false</allowPause>
         <backButtonLabel>No, go back</backButtonLabel>
         <connector>
-            <targetReference>Update_Advice</targetReference>
+            <targetReference>Assign_advice_values</targetReference>
         </connector>
         <fields>
             <name>YouSure</name>
@@ -414,74 +418,14 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Closed_Reason_Active</name>
-            <choiceReferences>ClosedReasonActiveReason</choiceReferences>
-            <choiceReferences>DuplicateAdvice</choiceReferences>
-            <choiceReferences>NoLongerRequired</choiceReferences>
-            <choiceReferences>SetUpInError</choiceReferences>
-            <choiceReferences>Other</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Closed Reason</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Household.FinServ__Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Active</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Closed_Reason_Onboarding</name>
-            <choiceReferences>CustomerWithdrawing</choiceReferences>
-            <choiceReferences>DuplicateAdvice</choiceReferences>
-            <choiceReferences>NoLongerRequired</choiceReferences>
-            <choiceReferences>SetUpInError</choiceReferences>
-            <choiceReferences>Other</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Closed Reason</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Household.FinServ__Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Onboarding</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>ClosedReason</name>
             <choiceReferences>AdviceClosedReason</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Closed Reason</fieldText>
             <fieldType>DropdownBox</fieldType>
             <helpText>&lt;p&gt;Please indicate why you are closing the advice.&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_Household.FinServ__Status__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Active</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_Household.FinServ__Status__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue>Onboarding</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Other_Closed_Reason</name>
@@ -489,23 +433,10 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
             <fieldText>Other</fieldText>
             <fieldType>InputField</fieldType>
             <helpText>&lt;p&gt;Please provide further detail on why you have selected other&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>Closed_Reason_Active</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Other</elementReference>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Closed_Reason_Onboarding</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Other</elementReference>
-                    </rightValue>
-                </conditions>
                 <conditions>
                     <leftValueReference>ClosedReason</leftValueReference>
                     <operator>EqualTo</operator>
@@ -538,13 +469,13 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
         <name>Error_Screen</name>
         <label>Error Screen</label>
         <locationX>578</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>SomethingWentWrong</name>
-            <fieldText>&lt;p&gt;{!$Label.ErrorMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!$Label.ErrorMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -558,6 +489,14 @@ IF(NOT(ISBLANK({!Closed_Reason_Onboarding})), {!Closed_Reason_Onboarding},
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>advice</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
     <variables>
         <name>adviceCollectionCount</name>
         <dataType>Number</dataType>
