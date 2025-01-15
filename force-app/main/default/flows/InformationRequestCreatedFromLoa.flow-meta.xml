@@ -93,7 +93,13 @@ IF(ISPICKVAL({!$Record.Status__c}, &quot;FUND_ANALYSIS&quot;),
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>$Record.Advice__r.Advice_Household__c</elementReference>
+                <elementReference>$Record.FinancialProductFinServ__r.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_information_request</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

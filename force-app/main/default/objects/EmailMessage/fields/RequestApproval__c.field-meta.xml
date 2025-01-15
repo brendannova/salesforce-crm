@@ -6,6 +6,7 @@
     <required>false</required>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>BypassValidations__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -20,5 +21,14 @@
                 <label>No</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <controllingFieldValue>Yes</controllingFieldValue>
+            <valueName>Yes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>No</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

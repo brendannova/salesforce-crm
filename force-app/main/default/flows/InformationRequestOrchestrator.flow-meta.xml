@@ -59,7 +59,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>followUpTask</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -510,7 +510,13 @@
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.FinServ__Household__c</elementReference>
+                <elementReference>ir.FinancialProductFinServ__r.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_information_request</name>
+            <value>
+                <elementReference>ir.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

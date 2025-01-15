@@ -1,18 +1,13 @@
-/*********************************************************
-Apex Class Name    EmailMessageHelper
-Created Date       2024-06-19
-@description       This class is a helper for an email message trigger that ensures emails we send go the right people.
-@author            Cian Morrissey
-Modification Log:
-Date         Author                               Modification
-2024-09-17   Cian Morrissey                       Prevent emailing deceased and reported deceased customers plus update to code structure. 
-2024-06-19   Cian Morrissey                       Initial Version
-*********************************************************/
+/**
+ * This class is a helper for an email message trigger that ensures outbound emails meet business rules. 
+ * The validation within is a major part of ensuring that emails are sent to the right people, protecting customer data, do not go to deceased clients etc.
+ */
+
 public with sharing class EmailMessageHelper {
     private List<EmailDetail> outboundMessages = new List<EmailDetail>();
     private Set<Id> emailTemplateIds = new Set<Id>();
     private Set<String> emailTemplateDeveloperNames = new Set<String>();
-    private Map<String, Id> emailTemplateDevNameIdMap = new Map<String, Id>(); // Map of email template develo
+    private Map<String, Id> emailTemplateDevNameIdMap = new Map<String, Id>();
     private Map<Id, EmailConfiguration__c> emailConfigMap = new Map<Id, EmailConfiguration__c>(); // Map of email template IDs to corresponding email configuration records
     private Set<Id> householdIds = new Set<Id>();
     private Set<Id> adviceIds = new Set<Id>();
@@ -23,26 +18,16 @@ public with sharing class EmailMessageHelper {
     private Map<Id, List<String>> householdEmailsMap = new Map<Id, List<String>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
     private Map<Id, List<RecipientInformation>> householdRecipientMap = new Map<Id, List<RecipientInformation>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
 
-    /**********************************************************
-    @Method Name    EmailMessageHelper
-    @author         Cian Morrissey
-    @description    Constructor class that collates the information needed in validation.
-    @param          messagesMap - the map of email messages passed in from the Trigger
-    *********************************************************/
+    // This constructor runs to collate the information needed to validate an email message
     public EmailMessageHelper(Map<Id,EmailMessage> messagesMap){
         collateEmailInformation(messagesMap.values());      // Collate the key information needed
-        collateEmailTemplateInformation();  // Get the email templates
-        collateEmailConfigurationInfomration();             // Get the email configuration information
+        collateEmailTemplateInformation();                  // Get the email templates
+        collateEmailConfigurationInformation();             // Get the email configuration information
         getHouseholdInformation();                          // Get the information on households related to the emails
         collateEmailRecipientInformation();
     }
  
-    /**********************************************************
-    @Method Name    collateEmailInformation
-    @author         Cian Morrissey
-    @description    Construct a list of EmailDetail objects for each outbound EmailMessage
-    @param          allEmails - a list of email messages that are to be sent
-    *********************************************************/
+    // Constructs a list of EmailDetail objects for each outbound EmailMessage
     private void collateEmailInformation(List<EmailMessage> allEmails){
         for(EmailMessage email : allEmails){
             if(email.Incoming == false){
@@ -70,11 +55,7 @@ public with sharing class EmailMessageHelper {
         }
     }
 
-    /**********************************************************
-    @Method Name    collateEmailTemplateInformation
-    @author         Cian Morrissey
-    @description    Gets email template information so that associated email config records can be found from developer names
-    *********************************************************/
+    // Gets email template information so that associated email config records can be found from developer names
     private void collateEmailTemplateInformation(){
         List<EmailTemplate> emailTemplates = [SELECT Id, DeveloperName FROM EmailTemplate WHERE Id IN :emailTemplateIds];
         for(EmailTemplate et : emailTemplates){
@@ -83,23 +64,15 @@ public with sharing class EmailMessageHelper {
         }
     }
 
-    /**********************************************************
-    @Method Name    collateEmailConfigurationInfomration
-    @author         Cian Morrissey
-    @description    Gets email configruation record information for use in applying business rules
-    *********************************************************/
-    private void collateEmailConfigurationInfomration(){
+    // Gets email configruation record information for use in applying business rules
+    private void collateEmailConfigurationInformation(){
         List<EmailConfiguration__c> emailConfigs = [SELECT Id, DeveloperName__c, PartnerCopied__c, Necessity__c, Type__c, From__c, CustomPermission__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames];
         for(EmailConfiguration__c config : emailConfigs){
             emailConfigMap.put(emailTemplateDevNameIdMap.get(config.DeveloperName__c), config);
         }
     }
 
-    /**********************************************************
-    @Method Name    getHouseholdInformation
-    @author         Cian Morrissey
-    @description    Gets information on households receiving emails
-    *********************************************************/
+    // Gets information on households receiving emails
     private void getHouseholdInformation(){
         // Get the household IDs for the advice we are sending messages for if there are advice IDs
         if(adviceIds.size() > 0){
@@ -111,12 +84,13 @@ public with sharing class EmailMessageHelper {
         }
         householdIds.addAll(relatedIdHouseholdIdMap.values());
 
-        // Get the household IDs for the advice we are sending messages for if there are advice IDs
+        // Get the household IDs for the case we are sending messages for
         if(caseIds.size() > 0){
             List<Case> caseList = [SELECT Id, AccountId FROM Case WHERE Id IN :caseIds];
             for(Case c : caseList){
-                // *** Keep only one of these, TBC if the advice <=> household map is needed
-                relatedIdHouseholdIdMap.put(c.Id, c.AccountId);
+                if(!String.IsBlank(c.AccountId)){
+                    relatedIdHouseholdIdMap.put(c.Id, c.AccountId);
+                }
             }
         }
         householdIds.addAll(relatedIdHouseholdIdMap.values());
@@ -126,11 +100,7 @@ public with sharing class EmailMessageHelper {
         householdMap = new Map<Id, Account>(households);
     }
 
-    /**********************************************************
-    @Method Name    collateEmailRecipientInformation
-    @author         Cian Morrissey
-    @description    Gets information on people in the household that might need to receive the email
-    *********************************************************/
+    // Gets information on people in the household that might need to receive the email
     private void collateEmailRecipientInformation(){
         // Create the map of household IDs to accepted email addresses
         for(Id householdId : householdIds){
@@ -157,13 +127,8 @@ public with sharing class EmailMessageHelper {
         }      
     }
 
-    /**********************************************************
-    @Method Name    validateConditions
-    @author         Cian Morrissey
-    @description    Runs through the collated information to determine if the email message meets the business rules that apply
-    *********************************************************/
+    // Runs through the collated information to determine if the email message meets the business rules that apply
     public void validateConditions(){
-        List<Account> householdsBypassRevert = new List<Account>();
         // Loop the known outbound emails to validate the conditions are met
         for(EmailDetail outboundMessage : outboundMessages){
             if(outboundMessage.EmailMessage.Status == '3' || (outboundMessage.EmailMessage.Status == '5' && outboundMessage.EmailMessage.ApprovalStatus__c == 'In approval')){
@@ -187,15 +152,22 @@ public with sharing class EmailMessageHelper {
                             if(outboundMessage.relatedObjectApiName == 'Account'){
                                 householdId = outboundMessage.householdId;
                             } else {
-                                householdId = relatedIdHouseholdIdMap.get(outboundMessage.emailMessage.relatedToId);
+                                if(relatedIdHouseholdIdMap.containsKey(outboundMessage.emailMessage.relatedToId)){
+                                	householdId = relatedIdHouseholdIdMap.get(outboundMessage.emailMessage.relatedToId);
+                                }
                             }
-                            Boolean bypassValidation = householdMap.get(householdId).EmailRecipientValidationBypass__c;
-                            errors.addAll(checkFrom(outboundMessage, emailConfig));
-                            //errors.addAll(checkBcc(outboundMessage, bypassValidation));
-                            errors.addAll(checkCc(outboundMessage, emailConfig, householdId, bypassValidation));
-                            errors.addAll(checkTo(outboundMessage, emailConfig, householdId, bypassValidation));
-                            if(bypassValidation && outboundMessage.EmailMessage.Status == '3'){
-                                householdsBypassRevert.add(new Account(Id = householdId, EmailRecipientValidationBypass__c = false));
+                            if(!String.isBlank(householdId)) {
+                                Boolean bypassValidation = (outboundMessage.emailMessage.BypassValidations__c == 'Yes'); //Bypass validations is on if BypassValidations picklist = 'Yes'
+                                errors.addAll(checkFrom(outboundMessage, emailConfig));
+                                List<String> ccErrors = checkCc(outboundMessage, emailConfig, householdId, bypassValidation);
+                                List<String> toErrors = checkTo(outboundMessage, emailConfig, householdId, bypassValidation);
+                                errors.addAll(ccErrors);
+                                errors.addAll(toErrors);
+                                if(!bypassValidation && (!ccErrors.isEmpty() || !toErrors.isEmpty())){
+                                    errors.add(System.Label.EmailTriggerBypassMessage);
+                                } 
+                            } else { 
+                                errors.add(System.Label.EmailTriggerNoHousehold);
                             }
                         } 
                     }
@@ -205,19 +177,14 @@ public with sharing class EmailMessageHelper {
                 }
             }
         }
-        if(householdsBypassRevert.size() > 0){
-            update householdsBypassRevert;
-        }
     }
 
-    /**********************************************************
-    @Method Name    checkFrom
-    @author         Cian Morrissey
-    @description    Ensures the correct from address has been applied
-    @param          ed - the EmailDetail object that contains the email message and additional information
-    @param          ec - the email configuration that contains business rules
-    @return         errors - a list of errors that should be displayed at the end of validation
-    *********************************************************/
+    /**
+     * Ensures the correct from address has been applied
+     * @param          ed - the EmailDetail object that contains the email message and additional information
+     * @param          ec - the email configuration that contains business rules
+     * @return         errors - a list of errors that should be displayed at the end of validation
+     */
     private List<String> checkFrom(EmailDetail ed, EmailConfiguration__c ec){
         List<String> errors = new List<String>();
         String requiredFromAddress = ec.From__c;
@@ -227,34 +194,14 @@ public with sharing class EmailMessageHelper {
         return errors;
     }
 
-    /**********************************************************
-    @Method Name    checkBcc
-    @author         Cian Morrissey
-    @description    Ensures nobody is included in BCC
-    @param          ed - the EmailDetail object that contains the email message and additional information
-    @param          bypassValidation - indicates if validation bypass applies
-    @return         errors - a list of errors that should be displayed at the end of validation
-    *********************************************************/
- /*   private List<String> checkBcc(EmailDetail ed, Boolean bypassValidation){
-        List<String> errors = new List<String>();
-        if (!bypassValidation) {
-            if(!String.isBlank(ed.emailMessage.BccAddress)){
-                errors.add(System.Label.EmailTriggerNoBcc);
-            }
-        }
-        return errors;
-    } */
-
-    /**********************************************************
-    @Method Name    checkCc
-    @author         Cian Morrissey
-    @description    Ensures the CC field requirements have been met
-    @param          ed - the EmailDetail object that contains the email message and additional information
-    @param          ec - the email configuration that contains business rules
-    @param          householdId - the ID of the household the email is going to 
-    @param          bypassValidation - indicates if validation bypass applies
-    @return         errors - a list of errors that should be displayed at the end of validation
-    *********************************************************/
+    /**
+     * @description    Ensures the CC field requirements have been met
+     * @param          ed - the EmailDetail object that contains the email message and additional information
+     * @param          ec - the email configuration that contains business rules
+     * @param          householdId - the ID of the household the email is going to 
+     * @param          bypassValidation - indicates if validation bypass applies
+     * @return         errors - a list of errors that should be displayed at the end of validation
+     */
     private List<String> checkCc(EmailDetail ed, EmailConfiguration__c ec, Id householdId, Boolean bypassValidation){
         List<String> errors = new List<String>();
         if (!bypassValidation) {
@@ -276,6 +223,7 @@ public with sharing class EmailMessageHelper {
                 } else {
                     if(!ccPartnerOnly){
                         errors.add(System.Label.EmailTriggerCcPartnerOnly);
+                        
                         if(!ccPartnerIncluded){
                             errors.add(System.Label.EmailTriggerCcPartner);
                         }
@@ -296,16 +244,14 @@ public with sharing class EmailMessageHelper {
         return errors;
     }
 
-    /**********************************************************
-    @Method Name    checkTo
-    @author         Cian Morrissey
-    @description    Ensures the main recipients meet the business rules
-    @param          ed - the EmailDetail object that contains the email message and additional information
-    @param          ec - the email configuration that contains business rules
-    @param          householdId - the ID of the household the email is going to 
-    @param          bypassValidation - indicates if validation bypass applies
-    @return         errors - a list of errors that should be displayed at the end of validation
-    *********************************************************/
+    /**
+     * @description    Ensures the main recipients meet the business rules
+     * @param          ed - the EmailDetail object that contains the email message and additional information
+     * @param          ec - the email configuration that contains business rules
+     * @param          householdId - the ID of the household the email is going to 
+     * @param          bypassValidation - indicates if validation bypass applies
+     * @return         errors - a list of errors that should be displayed at the end of validation
+     */
     private List<String> checkTo(EmailDetail ed, EmailConfiguration__c ec, Id householdId, Boolean bypassValidation){
         List<String> errors = new List<String>();
         if (!bypassValidation) {
@@ -324,7 +270,7 @@ public with sharing class EmailMessageHelper {
                 }
             }
             if(recipientsOutsideHousehold.size() > 0){
-                errors.add(System.Label.EmailTriggerRecipients + String.join(recipientsOutsideHousehold, ', '));
+                errors.add(System.Label.EmailTriggerRecipients + ' ' + String.join(recipientsOutsideHousehold, ', '));
             }
 
             // Check the household emails to figure out who should be blocked from being emailed and who is required
@@ -348,7 +294,7 @@ public with sharing class EmailMessageHelper {
                     }
                 }
                 if(!missingRequiredRecipients.isEmpty()){
-                    errors.add(System.Label.EmailTriggerRecipientsMissing + String.join(missingRequiredRecipients, ', '));
+                    errors.add(System.Label.EmailTriggerRecipientsMissing + ' ' + String.join(missingRequiredRecipients, ', '));
                 }
             }
 

@@ -41,22 +41,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_follow_on_taskChaseDetails</name>
-        <label>Assign follow on task</label>
-        <locationX>50</locationX>
-        <locationY>1538</locationY>
-        <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>IR_POLICYINFO_CHASE</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_IRPolicydetails</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_follow_on_taskClientSend</name>
         <label>Assign follow on task</label>
         <locationX>578</locationX>
@@ -134,7 +118,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -199,7 +183,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -264,14 +248,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Update_IRPolicydetails</name>
         <label>Update IR</label>
         <locationX>50</locationX>
-        <locationY>1646</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
             <assignToReference>ir.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -329,9 +313,25 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_data_request</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>loaChoice</name>
+        <choiceText>Information only (LOA)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Information only (LOA)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>tosChoice</name>
+        <choiceText>Servicing agent (TOS)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Servicing agent (TOS)</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Is_this_IR_linked_to_advice</name>
         <label>Is this IR linked to advice?</label>
@@ -391,7 +391,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_follow_on_taskChaseDetails</targetReference>
+                <targetReference>Update_IRPolicydetails</targetReference>
             </connector>
             <label>Chase policy pre-reqs</label>
         </rules>
@@ -478,7 +478,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
     <formulas>
         <name>statusFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISBLANK({!advice.AllLoaInfoReceivedTimestamp__c}), &quot;AWAIT_IDG&quot;,IF({!awaitingPreReqsFormula},&quot;AWAIT_PRE_REQS&quot;,&quot;INFO_REQ_SEND&quot;))</expression>
+        <expression>IF(ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) &amp;&amp; ISPICKVAL({!advice.Advice_Status__c},&quot;Data gathering&quot;), &quot;AWAIT_IDG&quot;,IF({!awaitingPreReqsFormula},&quot;AWAIT_PRE_REQS&quot;,&quot;INFO_REQ_SEND&quot;))</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Set up {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IR | Orchestrator | Set up</label>
@@ -664,20 +664,6 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         </connector>
     </recordRollbacks>
     <recordUpdates>
-        <name>Update_data_request</name>
-        <label>Update data request</label>
-        <locationX>446</locationX>
-        <locationY>1838</locationY>
-        <connector>
-            <targetReference>Update_financial_product</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
-        </faultConnector>
-        <inputReference>ir</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>446</locationX>
@@ -707,6 +693,20 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
             </value>
         </inputAssignments>
         <object>FinServ__FinancialAccount__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_information_request</name>
+        <label>Update information request</label>
+        <locationX>446</locationX>
+        <locationY>1838</locationY>
+        <connector>
+            <targetReference>Update_financial_product</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
+        <inputReference>ir</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
@@ -766,7 +766,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
             <inputParameters>
                 <name>columns</name>
                 <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-2b85&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Provider Contact Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Email__c&quot;,&quot;guid&quot;:&quot;column-96c0&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Email&quot;,&quot;type&quot;:&quot;email&quot;},{&quot;apiName&quot;:&quot;Telephone__c&quot;,&quot;guid&quot;:&quot;column-67fd&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Telephone&quot;,&quot;type&quot;:&quot;phone&quot;},{&quot;apiName&quot;:&quot;&quot;,&quot;guid&quot;:&quot;column-0040&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2}]</stringValue>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-2b85&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Provider Contact Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Email__c&quot;,&quot;guid&quot;:&quot;column-96c0&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Email&quot;,&quot;type&quot;:&quot;email&quot;},{&quot;apiName&quot;:&quot;PolicyTypes__c&quot;,&quot;guid&quot;:&quot;column-0040&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Policy types&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -987,7 +987,8 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         </fields>
         <fields>
             <name>Authority_level</name>
-            <choiceReferences>authorityLevel</choiceReferences>
+            <choiceReferences>loaChoice</choiceReferences>
+            <choiceReferences>tosChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Authority level</fieldText>
             <fieldType>DropdownBox</fieldType>

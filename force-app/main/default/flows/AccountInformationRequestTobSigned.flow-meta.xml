@@ -5,7 +5,7 @@
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>270</locationX>
-        <locationY>839</locationY>
+        <locationY>1439</locationY>
         <assignmentItems>
             <assignToReference>fps</assignToReference>
             <operator>Add</operator>
@@ -17,18 +17,99 @@
             <targetReference>Loop</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_flag_to_false</name>
+        <label>Set flag to false</label>
+        <locationX>446</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>firstTobFlag</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Clients</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>First_TOB_for_household</name>
+        <label>First TOB for household?</label>
+        <locationX>182</locationX>
+        <locationY>923</locationY>
+        <defaultConnector>
+            <targetReference>Get_financial_products</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesFirstTob</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>firstTobFlag</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_financial_products_including_juniors</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Have_they_signed_terms_already</name>
+        <label>Have they signed terms already?</label>
+        <locationX>490</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>Clients</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>They_are_the_triggering_client</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Clients.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clients</targetReference>
+            </connector>
+            <label>They are the triggering client</label>
+        </rules>
+        <rules>
+            <name>YesSigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Clients.Date_terms_of_business_last_accepted__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_flag_to_false</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Is_this_ready</name>
         <label>Is this ready?</label>
         <locationX>402</locationX>
-        <locationY>731</locationY>
+        <locationY>1331</locationY>
         <defaultConnector>
             <targetReference>Loop</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>(1 AND (2 OR 3)) OR (4 OR 5 OR 6)</conditionLogic>
             <conditions>
                 <leftValueReference>Loop.FinServ__PrimaryOwner__r.Date_terms_of_business_last_accepted__c</leftValueReference>
                 <operator>IsBlank</operator>
@@ -50,40 +131,29 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Loop.FinServ__PrimaryOwner__r.FinServ__Age__pc</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>18.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop.Subtype__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Junior</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop.RecordType.DeveloperName</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Junior</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Add_to_collection</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_this_the_first_TOB_for_this_household</name>
-        <label>Is this the first TOB for this household?</label>
-        <locationX>182</locationX>
-        <locationY>323</locationY>
-        <defaultConnector>
-            <targetReference>Get_financial_products</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesFirstTob</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record__Prior.Household_Lookup__r.FinServ__Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Onboarding</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record__Prior.Household_Lookup__r.FinServ__Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Active</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_financial_products_including_juniors</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -91,12 +161,26 @@
     <description>Flow to create IRs when TOBs are signed</description>
     <environments>Default</environments>
     <interviewLabel>Account | IR | TOB Signed {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account | IR | TOB Signed</label>
+    <label>zReplaced Account | IR | TOB Signed</label>
+    <loops>
+        <name>Clients</name>
+        <label>Clients</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <collectionReference>Get_clients.personAccounts</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Have_they_signed_terms_already</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>First_TOB_for_household</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <loops>
         <name>Loop</name>
         <label>Loop</label>
         <locationX>182</locationX>
-        <locationY>623</locationY>
+        <locationY>1223</locationY>
         <collectionReference>gotFps</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -129,7 +213,7 @@
         <name>Get_financial_products</name>
         <label>Get financial products</label>
         <locationX>314</locationX>
-        <locationY>431</locationY>
+        <locationY>1031</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop</targetReference>
@@ -154,17 +238,18 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
+        <queriedFields>Household__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_financial_products_including_juniors</name>
         <label>Get financial products (including juniors)</label>
         <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationY>1031</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop</targetReference>
         </connector>
-        <filterLogic>1 OR 2 OR 3</filterLogic>
+        <filterLogic>1 OR 2 OR (3 AND 4)</filterLogic>
         <filters>
             <field>FinServ__PrimaryOwner__c</field>
             <operator>EqualTo</operator>
@@ -186,17 +271,26 @@
                 <stringValue>Junior</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Household_Lookup__c</elementReference>
+            </value>
+        </filters>
         <object>FinServ__FinancialAccount__c</object>
         <outputReference>gotFps</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
+        <queriedFields>Household__c</queriedFields>
+        <queriedFields>RegisteredContact__c</queriedFields>
     </recordLookups>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_this_the_first_TOB_for_this_household</targetReference>
+            <targetReference>Get_clients</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -211,12 +305,12 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_information_requests</name>
         <label>Create information requests</label>
         <locationX>182</locationX>
-        <locationY>1115</locationY>
+        <locationY>1715</locationY>
         <flowName>InformationRequestCreate</flowName>
         <inputAssignments>
             <name>financialAccounts</name>
@@ -224,7 +318,46 @@
                 <elementReference>fps</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>$Record.Household_Lookup__c</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Get_clients</name>
+        <label>Get clients</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Clients</targetReference>
+        </connector>
+        <flowName>AccountGetPeopleInHousehold</flowName>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>$Record.Household_Lookup__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>role</name>
+            <value>
+                <stringValue>Client</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>firstTobFlag</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>fps</name>
         <dataType>SObject</dataType>
