@@ -39,20 +39,22 @@ public class EmailInformationRequestUpdateTable {
         	}
             returnMap.put(s, tempList); 
         }
+        
         this.outputs = returnMap;
         this.owners = owners;
     }
         
     // Takes an object id for a piece of advice and returns a list of data request updates
     public List<irUpdate> setIrs(String objectId) {
-        System.debug('in set irs');
         List<Advice__c> advList = [SELECT Id FROM Advice__c WHERE Advice_Household__c =: objectId AND (Advice_Status__c = 'Data gathering' OR Advice_Status__c = 'Risk call')];
         Set<Id> advIds = new Set<Id>(new Map<Id, Advice__c>(advList).keySet());
         List<InformationRequest__c> irs = [ SELECT Id, 
+                                           AdditionalInformationRequestStatus__c,
                                            FinancialProductFinServ__r.Public_Provider_Name__r.DeveloperName__c,
                                            FinancialProductFinServ__r.FinServ__JointOwner__c, 
                                            DateInformationRequestSent__c, 
                                            FinancialProductFinServ__r.FinServ__PrimaryOwner__r.AddressedName__pc,
+                                           FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Status__c,
                                            ComplaintStatus__c,
                                            FinancialProductFinServ__r.Company_Name__c,
                                            FinancialProductFinServ__r.Subtype__c,
@@ -74,16 +76,18 @@ public class EmailInformationRequestUpdateTable {
         List<IrUpdate> irList = new List<IrUpdate>();
         
         for (InformationRequest__c r : irs) {  
-            System.debug(r.ExpectedReceiptDate__c);
             // Set title
             if ( r.FinancialProductFinServ__r.Subtype__c == 'Direct Equity Holding' ) {
-                title = r.FinancialProductFinServ__r.Name__c + ' Shares';
+                title = r.FinancialProductFinServ__r.Company_Name__c + ' Shares';
             } else {
                 title = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + r.FinancialProductFinServ__r.Subtype__c;
             }
             
             // Set role and name
-            if ( r.FinancialProductFinServ__r.FinServ__JointOwner__c == null ) {
+            if( r.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Status__c == 'Junior' || r.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Status__c == 'Junior Policy Holder'){
+                role = 'Child';
+                name = r.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.AddressedName__pc;
+            } else if ( r.FinancialProductFinServ__r.FinServ__JointOwner__c == null ) {
                 role = 'Client';
                 name = r.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.AddressedName__pc;
             } else {
@@ -134,7 +138,7 @@ public class EmailInformationRequestUpdateTable {
                     
                 } else if (r.InformationRequestType__r.InformationSource__c == 'Third party provider') {
                     status = 'On track';
-                    message = System.Label.EmailInformationRequestUpdatePrepRequest;
+                    message = System.Label.EmailInformationRequestUpdatePrepRequest + ' ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + '.';
                     
                 }
                 
@@ -173,7 +177,7 @@ public class EmailInformationRequestUpdateTable {
                             // No complaint made
                             } else {
                                 status = 'Off track';
-                                message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateOffTrack + ' ' + formatDate(r.ExpectedReceiptDate__c) + '. ' + System.Label.EmailInformationRequestUpdateOffTrackPt2;
+                                message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateOffTrack + ' ' + formatDate(r.ExpectedReceiptDate__c) + System.Label.EmailInformationRequestUpdateOffTrackPt2;
                             }
                             
                             
@@ -192,8 +196,13 @@ public class EmailInformationRequestUpdateTable {
                     message = System.Label.EmailInformationRequestUpdateClientReceived;
                     
                 } else if (r.InformationRequestType__r.InformationSource__c == 'Third party provider') {
-                    status = 'On track';
-                    message = System.Label.EmailInformationRequestUpdateInfoReceived;
+                    if (r.AdditionalInformationRequestStatus__c == null || r.AdditionalInformationRequestStatus__c == 'Not required' || r.AdditionalInformationRequestStatus__c == 'Received') {
+                        status = 'On track';
+                    	message = System.Label.EmailInformationRequestUpdateInfoReceived;
+                    } else {
+                        status = 'On track';
+                        message = System.Label.EmailInformationRequestUpdateAdditionalRequested + ' ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + '.';
+                    }
                 }
                 
             // Checklist complete
@@ -210,7 +219,7 @@ public class EmailInformationRequestUpdateTable {
                 status = null;
             // Other
             } else {
-                status = 'Off track';
+                status = 'Action required';
                 message = System.Label.EmailInformationRequestGeneric;
             }
             
@@ -231,7 +240,7 @@ public class EmailInformationRequestUpdateTable {
         public String message {get;set;}
         public String status {get;set;}
         public String role {get;set;}
-        public String name{get;set;}
+        public String name {get;set;}
         
         public irUpdate(String t, String m, String s, String r, String n) {
             title = t;
@@ -242,7 +251,7 @@ public class EmailInformationRequestUpdateTable {
         }
         
         public Integer compareTo(Object compareTo){
-            irUpdate compareToOwn = (irUpdate)compareTo;
+            irUpdate compareToOwn = (IrUpdate)compareTo;
             if(role == compareToOwn.role){
                 if(role == compareToOwn.role){
                     if(name == compareToOwn.name){
