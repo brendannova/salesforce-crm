@@ -8,6 +8,22 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Case.ViewDraftEmail</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.EmailStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Email in draft</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.EmailStatus__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Email in approval</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Case.AssignToHousehold</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
@@ -24,22 +40,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Case.ChangeOwner</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Case.ViewDraftEmail</value>
-                            <visibilityRule>
-                                <booleanFilter>1 OR 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.EmailStatus__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Email in draft</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.EmailStatus__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Email in approval</rightValue>
-                                </criteria>
-                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
@@ -89,7 +89,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 111, 0);&quot;&gt;This thread is from an email we don&#39;t recognise. Please check this is a genuine request before responding. &lt;/strong&gt;&lt;/p&gt;</value>
+                    <value>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 111, 0);&quot;&gt;This thread is from an email we don&#39;t recognise. You cannot respond unless a household is assigned.&lt;/strong&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
                 <identifier>flexipage_richText</identifier>
@@ -97,6 +97,33 @@
                     <criteria>
                         <leftValue>{!Record.Account.Name}</leftValue>
                         <operator>EQUAL</operator>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 111, 0);&quot;&gt;Draft email open on this case. &lt;/strong&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.EmailStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Email in draft</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.EmailStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Email in approval</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -333,6 +360,34 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Subject</fieldItem>
+                <identifier>RecordSubjectField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-f6e83d61-ef14-440d-9514-96e9167e4d5a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f6e83d61-ef14-440d-9514-96e9167e4d5a</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-93378a3f-ea6b-4a90-94ed-0ccd6e667317</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>decorate</name>
@@ -412,6 +467,24 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-93378a3f-ea6b-4a90-94ed-0ccd6e667317</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Case details</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

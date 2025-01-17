@@ -38,10 +38,10 @@ public class QuickActionEmailMessage implements QuickAction.QuickActionDefaultsH
         Map<Id,String> caseToEmailAddressMap = new Map<Id,String>();
         for(AccountContactRelation relationships : [SELECT Id, AccountId, ContactId, Contact.Email, Account.Owner.Email FROM AccountContactRelation WHERE AccountId =: caseToAccountIdMap.keySet() AND Roles = 'Client']){
             //If a row already exists for the quick action case, then add the current client email address to the map
-            if(caseToEmailAddressMap.containsKey(caseToAccountIdMap.get(relationships.AccountId))){ 
+            if(caseToEmailAddressMap.containsKey(caseToAccountIdMap.get(relationships.AccountId)) && !String.isBlank(relationships.Contact.Email)) {
                 String emailAddresses = caseToEmailAddressMap.get(caseToAccountIdMap.get(relationships.AccountId)) + ';' + relationships.Contact.Email;
                 caseToEmailAddressMap.put(caseToAccountIdMap.get(relationships.AccountId), emailAddresses);
-            } else { 
+            } else if(!String.isBlank(relationships.Contact.Email)) { 
                 //If a row does not already exist for the case, then add caseId and current item's email address
                 caseToEmailAddressMap.put(caseToAccountIdMap.get(relationships.AccountId), relationships.Contact.Email);
             }

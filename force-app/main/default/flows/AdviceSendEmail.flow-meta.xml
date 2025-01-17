@@ -23,7 +23,6 @@
             <assignToReference>objectApiName</assignToReference>
             <name>ObjectApiName</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Navigate_to_new_case</name>
@@ -42,7 +41,6 @@
         <nameSegment>c:navigateToRecord</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
@@ -105,7 +103,7 @@
             <assignToReference>case.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Subject</elementReference>
+                <elementReference>CaseName</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -340,14 +338,15 @@
         </connector>
         <fields>
             <name>displayText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;Create an outbound email thread on&amp;nbsp;&lt;/span&gt;&lt;strong style=&quot;font-size: 13px;&quot;&gt;{!Get_Household.Name}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;Create a new email case on&amp;nbsp;&lt;/span&gt;&lt;strong style=&quot;font-size: 13px;&quot;&gt;{!Get_Household.Name}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Subject</name>
+            <name>CaseName</name>
             <dataType>String</dataType>
-            <fieldText>Subject</fieldText>
+            <fieldText>Case Name</fieldText>
             <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;This will be used as the subject, but will be overwritten when a template is selected.&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
