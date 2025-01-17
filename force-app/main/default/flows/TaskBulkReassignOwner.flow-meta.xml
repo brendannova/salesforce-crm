@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <assignments>
+        <description>Create a case variable and assign the owner ID.</description>
+        <name>Assign_owner</name>
+        <label>Assign owner</label>
+        <locationX>138</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>Task.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Select_owner.ownerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Task.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_tasks</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_to_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_collection</name>
+        <label>Assign to collection</label>
+        <locationX>138</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>Tasks</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Task</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_tasks</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Tasks_selected</name>
+        <label>Tasks selected</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>WarningMessage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No tasks selected</defaultConnectorLabel>
+        <rules>
+            <name>Tasks_have_been_selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ids</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Select_owner</targetReference>
+            </connector>
+            <label>Tasks have been selected</label>
+        </rules>
+    </decisions>
+    <description>Reassign task owners in bulk.</description>
+    <environments>Default</environments>
+    <interviewLabel>Task | Bulk reassign owner {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Task | Bulk reassign owner</label>
+    <loops>
+        <name>Loop_tasks</name>
+        <label>Loop tasks</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <collectionReference>ids</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_owner</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Tasks</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordUpdates>
+        <name>Update_Tasks</name>
+        <label>Update Tasks</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>Success_message</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error_message</targetReference>
+        </faultConnector>
+        <inputReference>Tasks</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Error_message</name>
+        <label>Error message</label>
+        <locationX>314</locationX>
+        <locationY>866</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Error!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;The case update has failed. Please raise a ticket with the following details:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Go back to case tab</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Success_message</name>
+        <label>Success message</label>
+        <locationX>50</locationX>
+        <locationY>866</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>SuccessDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Success!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;The owners of these tasks have now been updated&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Go back to task tab</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>WarningMessage</name>
+        <label>WarningMessage</label>
+        <locationX>578</locationX>
+        <locationY>242</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>WarningText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Error!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;You must select at least 1 task to reassign&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Tasks_selected</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Select_owner</name>
+        <label>Select owner</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <connector>
+            <targetReference>Loop_tasks</targetReference>
+        </connector>
+        <flowName>FlowUtilityChooseOwner</flowName>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>ids</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+    <variables>
+        <name>Tasks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+</Flow>
