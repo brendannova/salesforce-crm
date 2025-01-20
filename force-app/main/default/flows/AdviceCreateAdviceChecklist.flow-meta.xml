@@ -1,8 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>58.0</apiVersion>
+    <actionCalls>
+        <name>Get_record_type_ID</name>
+        <label>Get record type ID</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>FlowUtilityGetRecordTypeId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assign_record_type_ID</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordTypeDeveloperName</name>
+            <value>
+                <elementReference>$Record.AdviceType__r.AdviceChecklistRecordTypeDeveloperName__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectType</name>
+            <value>
+                <stringValue>AdviceChecklist__c</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityGetRecordTypeId</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Assign_core_relationships</name>
+        <label>Assign core relationships</label>
+        <locationX>182</locationX>
+        <locationY>731</locationY>
+        <assignmentItems>
+            <assignToReference>adviceChecklist.Household__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Advice_Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceChecklist.AdviceName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceChecklist.LastReviewDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Advice_Household__r.FinServ__LastReview__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceChecklist.AnnualReviewMonth__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>reviewMonthName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Call_creation_sub_flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_record_type_ID</name>
+        <label>Assign record type ID</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>adviceChecklist.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_record_type_ID.recordTypeId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_core_relationships</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Checklist_record_type</name>
+        <label>Checklist record type</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Assign_core_relationships</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Undefined</defaultConnectorLabel>
+        <rules>
+            <name>Defined</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.AdviceChecklistRecordTypeDeveloperName__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_record_type_ID</targetReference>
+            </connector>
+            <label>Defined</label>
+        </rules>
+    </decisions>
     <description>Creates Advice Checklist when an Advice record is set to Suitability In Progress</description>
     <environments>Default</environments>
+    <formulas>
+        <name>reviewMonthName</name>
+        <dataType>String</dataType>
+        <expression>CASE(TEXT({!$Record__Prior.Advice_Household__r.OW_annual_review_month__c}),
+&quot;1&quot;, &quot;January&quot;,
+&quot;2&quot;, &quot;February&quot;,
+&quot;3&quot;, &quot;March&quot;, 
+&quot;4&quot;, &quot;April&quot;, 
+&quot;5&quot;, &quot;May&quot;, 
+&quot;6&quot;, &quot;June&quot;,
+&quot;7&quot;, &quot;July&quot;,
+&quot;8&quot;, &quot;August&quot;,
+&quot;9&quot;, &quot;September&quot;,
+&quot;10&quot;, &quot;October&quot;,
+&quot;11&quot;, &quot;November&quot;,
+&quot;12&quot;, &quot;December&quot;,
+&quot;None&quot;)</expression>
+    </formulas>
     <interviewLabel>Advice | Create Advice Checklist {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Create Advice Checklist</label>
     <processMetadataValues>
@@ -25,10 +149,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Call_creation_sub_flow</targetReference>
+            <targetReference>Checklist_record_type</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>(1 OR 2) AND 3</filterLogic>
@@ -61,8 +185,8 @@
     <subflows>
         <name>Call_creation_sub_flow</name>
         <label>Call creation sub flow</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>182</locationX>
+        <locationY>839</locationY>
         <flowName>AdviceChecklistPreFillValues</flowName>
         <inputAssignments>
             <name>Advice</name>
@@ -70,6 +194,26 @@
                 <elementReference>$Record</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>AdviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>$Record.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <triggerOrder>1300</triggerOrder>
+    <variables>
+        <name>adviceChecklist</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AdviceChecklist__c</objectType>
+    </variables>
 </Flow>
