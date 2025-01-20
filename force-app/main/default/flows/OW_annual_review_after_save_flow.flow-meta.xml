@@ -353,7 +353,7 @@
     <decisions>
         <name>Fact_find_completed_by_customer</name>
         <label>Fact find completed by customer</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>647</locationY>
         <defaultConnector>
             <targetReference>Stage_of_annual_review</targetReference>
@@ -374,6 +374,22 @@
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Completed</label>
+        </rules>
+        <rules>
+            <name>Skipped</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Skipped</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Update_advice</targetReference>
+            </connector>
+            <label>Skipped</label>
         </rules>
     </decisions>
     <decisions>
@@ -445,7 +461,8 @@
             <label>Completed</label>
         </rules>
     </decisions>
-    <description>Run on creation or editing of a flow after the record is saved.</description>
+    <description>Replaced by a newer flow in Jan 2025 as part of annual review process overhaul. 
+Run on creation or editing of a flow after the record is saved.</description>
     <environments>Default</environments>
     <formulas>
         <description>If this is a new record, the formula returns true</description>
@@ -460,7 +477,7 @@
         <expression>{!$Record.OW_due_date__c} - 90</expression>
     </formulas>
     <interviewLabel>Annual review - after save flow {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Annual review - after save flow</label>
+    <label>zDel | Annual review - after save flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -513,7 +530,7 @@
     <recordUpdates>
         <name>Close_chasers</name>
         <label>Close chasers</label>
-        <locationX>512</locationX>
+        <locationX>446</locationX>
         <locationY>863</locationY>
         <connector>
             <targetReference>Create_ops_task_to_book_catch_up_call</targetReference>
@@ -558,7 +575,7 @@
     <recordUpdates>
         <name>Update_advice</name>
         <label>Update advice</label>
-        <locationX>512</locationX>
+        <locationX>446</locationX>
         <locationY>755</locationY>
         <connector>
             <targetReference>Close_chasers</targetReference>
@@ -620,11 +637,11 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_ops_task_to_book_catch_up_call</name>
         <label>Create ops task to book catch up call</label>
-        <locationX>512</locationX>
+        <locationX>446</locationX>
         <locationY>971</locationY>
         <connector>
             <targetReference>Stage_of_annual_review</targetReference>
@@ -665,7 +682,7 @@
     <subflows>
         <name>Create_set_up_annual_review_task</name>
         <label>Create set up annual review task</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>647</locationY>
         <connector>
             <targetReference>Stage_of_annual_review</targetReference>
