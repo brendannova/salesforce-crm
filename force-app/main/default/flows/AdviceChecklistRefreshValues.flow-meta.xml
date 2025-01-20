@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>58.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <description>Used to refresh values on advice checklists</description>
     <environments>Default</environments>
     <interviewLabel>Advice checklist | Refresh values {!$Flow.CurrentDateTime}</interviewLabel>
@@ -42,7 +42,7 @@
             </value>
         </filters>
         <object>AdviceChecklist__c</object>
-        <outputReference>AdviceChecklist</outputReference>
+        <outputReference>adviceChecklist</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Advice__c</queriedFields>
         <queriedFields>AdviceName__c</queriedFields>
@@ -86,7 +86,13 @@
         <inputAssignments>
             <name>AdviceChecklist</name>
             <value>
-                <elementReference>AdviceChecklist</elementReference>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>adviceChecklist.Household__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -99,7 +105,7 @@
         <objectType>Advice__c</objectType>
     </variables>
     <variables>
-        <name>AdviceChecklist</name>
+        <name>adviceChecklist</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

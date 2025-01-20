@@ -1,39 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Get_record_type_ID</name>
-        <label>Get record type ID</label>
-        <locationX>182</locationX>
-        <locationY>716</locationY>
-        <actionName>RecordTypeGetId</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Set_record_type_ID</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>recordTypeDeveloperName</name>
-            <value>
-                <elementReference>Advice.AdviceType__r.AdviceChecklistRecordTypeDeveloperName__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sObjectType</name>
-            <value>
-                <stringValue>AdviceChecklist__c</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>RecordTypeGetId</nameSegment>
-        <offset>0</offset>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
-    <apiVersion>58.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Add_BTL_liability_details_part_1</name>
         <label>Add BTL liability details part 1</label>
         <locationX>294</locationX>
-        <locationY>5870</locationY>
+        <locationY>5288</locationY>
         <assignmentItems>
             <assignToReference>btlLiabilitySummary</assignToReference>
             <operator>Add</operator>
@@ -56,7 +28,7 @@
         <name>Add_cash_isa_to_summary</name>
         <label>Add cash isa to summary</label>
         <locationX>1370</locationX>
-        <locationY>8102</locationY>
+        <locationY>7520</locationY>
         <assignmentItems>
             <assignToReference>cashIsaSummary</assignToReference>
             <operator>Add</operator>
@@ -72,7 +44,7 @@
         <name>Add_childcare_to_household_spending</name>
         <label>Add childcare to household spending</label>
         <locationX>294</locationX>
-        <locationY>3122</locationY>
+        <locationY>2540</locationY>
         <assignmentItems>
             <assignToReference>totalExpenditure</assignToReference>
             <operator>Add</operator>
@@ -95,7 +67,7 @@
         <name>Add_comma_to_names</name>
         <label>Add comma to names</label>
         <locationX>514</locationX>
-        <locationY>5354</locationY>
+        <locationY>4772</locationY>
         <assignmentItems>
             <assignToReference>liabilityOwners</assignToReference>
             <operator>Add</operator>
@@ -111,7 +83,7 @@
         <name>Add_education_to_household_spending</name>
         <label>Add education to household spending</label>
         <locationX>294</locationX>
-        <locationY>2822</locationY>
+        <locationY>2240</locationY>
         <assignmentItems>
             <assignToReference>totalExpenditure</assignToReference>
             <operator>Add</operator>
@@ -134,7 +106,7 @@
         <name>Add_employment_to_text</name>
         <label>Add employment to text</label>
         <locationX>402</locationX>
-        <locationY>7370</locationY>
+        <locationY>6788</locationY>
         <assignmentItems>
             <assignToReference>employemntTextTotal</assignToReference>
             <operator>Add</operator>
@@ -157,7 +129,7 @@
         <name>Add_id_to_collection</name>
         <label>Add id to collection</label>
         <locationX>402</locationX>
-        <locationY>6554</locationY>
+        <locationY>5972</locationY>
         <assignmentItems>
             <assignToReference>finProdTypeIds</assignToReference>
             <operator>Add</operator>
@@ -173,7 +145,7 @@
         <name>Add_liability_details_part_1</name>
         <label>Add liability details part 1</label>
         <locationX>558</locationX>
-        <locationY>5870</locationY>
+        <locationY>5288</locationY>
         <assignmentItems>
             <assignToReference>liabilitySummaryCashReserve</assignToReference>
             <operator>Add</operator>
@@ -196,7 +168,7 @@
         <name>Add_liability_headline_to_BTL_text_values</name>
         <label>Add liability headline to BTL text values</label>
         <locationX>294</locationX>
-        <locationY>5762</locationY>
+        <locationY>5180</locationY>
         <assignmentItems>
             <assignToReference>btlExpenditure</assignToReference>
             <operator>Add</operator>
@@ -233,7 +205,7 @@
         <name>Add_liability_headline_to_text_values</name>
         <label>Add liability headline to text values</label>
         <locationX>558</locationX>
-        <locationY>5762</locationY>
+        <locationY>5180</locationY>
         <assignmentItems>
             <assignToReference>totalExpenditure</assignToReference>
             <operator>Add</operator>
@@ -270,7 +242,7 @@
         <name>Add_liability_owners_to_BTL_text_values</name>
         <label>Add liability owners to BTL text values</label>
         <locationX>294</locationX>
-        <locationY>5654</locationY>
+        <locationY>5072</locationY>
         <assignmentItems>
             <assignToReference>btlLiabilitySummary</assignToReference>
             <operator>Add</operator>
@@ -293,7 +265,7 @@
         <name>Add_liability_owners_to_text_values</name>
         <label>Add liability owners to text values</label>
         <locationX>558</locationX>
-        <locationY>5654</locationY>
+        <locationY>5072</locationY>
         <assignmentItems>
             <assignToReference>liabilitySummaryCashReserve</assignToReference>
             <operator>Add</operator>
@@ -316,7 +288,7 @@
         <name>Add_name_to_owners</name>
         <label>Add name to owners</label>
         <locationX>514</locationX>
-        <locationY>5246</locationY>
+        <locationY>4664</locationY>
         <assignmentItems>
             <assignToReference>liabilityOwners</assignToReference>
             <operator>Add</operator>
@@ -332,7 +304,7 @@
         <name>Add_remaining_liability_details_and_clear_owners</name>
         <label>Add remaining liability details and clear owners</label>
         <locationX>426</locationX>
-        <locationY>6062</locationY>
+        <locationY>5480</locationY>
         <assignmentItems>
             <assignToReference>liabilitySummaryLiabilitySummary</assignToReference>
             <operator>Add</operator>
@@ -352,7 +324,7 @@
         <name>Add_to_BTL_collection</name>
         <label>Add to BTL collection</label>
         <locationX>358</locationX>
-        <locationY>4262</locationY>
+        <locationY>3680</locationY>
         <assignmentItems>
             <assignToReference>btlPropertyIds</assignToReference>
             <operator>Add</operator>
@@ -368,7 +340,7 @@
         <name>Add_to_cash_ISA_total</name>
         <label>Add to cash ISA total</label>
         <locationX>1370</locationX>
-        <locationY>7994</locationY>
+        <locationY>7412</locationY>
         <assignmentItems>
             <assignToReference>cashIsaTotal</assignToReference>
             <operator>Add</operator>
@@ -384,7 +356,7 @@
         <name>Add_to_db_pension_summary</name>
         <label>Add to db pension summary</label>
         <locationX>1106</locationX>
-        <locationY>7994</locationY>
+        <locationY>7412</locationY>
         <assignmentItems>
             <assignToReference>dbPensionsSummary</assignToReference>
             <operator>Add</operator>
@@ -407,7 +379,7 @@
         <name>Add_to_dc_pension_summary</name>
         <label>Add to dc pension summary</label>
         <locationX>842</locationX>
-        <locationY>7994</locationY>
+        <locationY>7412</locationY>
         <assignmentItems>
             <assignToReference>dcPensionsSummary</assignToReference>
             <operator>Add</operator>
@@ -430,7 +402,7 @@
         <name>Add_to_income_text</name>
         <label>Add to text</label>
         <locationX>622</locationX>
-        <locationY>4154</locationY>
+        <locationY>3572</locationY>
         <assignmentItems>
             <assignToReference>incomeAssetsTotal</assignToReference>
             <operator>Add</operator>
@@ -453,7 +425,7 @@
         <name>Add_to_investments_summary</name>
         <label>Add to investments summary</label>
         <locationX>1634</locationX>
-        <locationY>7994</locationY>
+        <locationY>7412</locationY>
         <assignmentItems>
             <assignToReference>investmentsSummary</assignToReference>
             <operator>Add</operator>
@@ -469,7 +441,7 @@
         <name>Add_to_rebalancing_summary</name>
         <label>Add to rebalancing summary</label>
         <locationX>578</locationX>
-        <locationY>7994</locationY>
+        <locationY>7412</locationY>
         <assignmentItems>
             <assignToReference>rebalancingSummary</assignToReference>
             <operator>Add</operator>
@@ -485,7 +457,7 @@
         <name>Add_to_rental_text</name>
         <label>Add to rental text</label>
         <locationX>358</locationX>
-        <locationY>4154</locationY>
+        <locationY>3572</locationY>
         <assignmentItems>
             <assignToReference>rentalAssetTextSummary</assignToReference>
             <operator>Add</operator>
@@ -508,7 +480,7 @@
         <name>Add_to_total_spending</name>
         <label>Add to total spending</label>
         <locationX>314</locationX>
-        <locationY>3398</locationY>
+        <locationY>2816</locationY>
         <assignmentItems>
             <assignToReference>totalExpenditure</assignToReference>
             <operator>Add</operator>
@@ -524,7 +496,7 @@
         <name>Add_value_to_current_cash</name>
         <label>Add value to current cash</label>
         <locationX>402</locationX>
-        <locationY>6962</locationY>
+        <locationY>6380</locationY>
         <assignmentItems>
             <assignToReference>currentCash</assignToReference>
             <operator>Add</operator>
@@ -540,7 +512,7 @@
         <name>AdviceChecklistVariables_Client_1</name>
         <label>AdviceChecklistVariables Client 1</label>
         <locationX>402</locationX>
-        <locationY>1964</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>AdviceChecklist.Client1__c</assignToReference>
             <operator>Assign</operator>
@@ -613,7 +585,7 @@
         <name>AdviceChecklistVariables_Client_2</name>
         <label>AdviceChecklistVariables Client 2</label>
         <locationX>688</locationX>
-        <locationY>2306</locationY>
+        <locationY>1724</locationY>
         <assignmentItems>
             <assignToReference>AdviceChecklist.Client2__c</assignToReference>
             <operator>Assign</operator>
@@ -685,7 +657,7 @@
         <name>AdviceValues</name>
         <label>Advice Values</label>
         <locationX>314</locationX>
-        <locationY>1124</locationY>
+        <locationY>542</locationY>
         <assignmentItems>
             <assignToReference>UnderstandingVar</assignToReference>
             <operator>Add</operator>
@@ -764,7 +736,7 @@
         <name>Assign_checklist_to_advice</name>
         <label>Assign checklist to advice</label>
         <locationX>314</locationX>
-        <locationY>8702</locationY>
+        <locationY>8120</locationY>
         <assignmentItems>
             <assignToReference>Advice.AdviceChecklist__c</assignToReference>
             <operator>Assign</operator>
@@ -777,95 +749,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>HouseholdValues</name>
-        <label>Household Values</label>
-        <locationX>314</locationX>
-        <locationY>1016</locationY>
-        <assignmentItems>
-            <assignToReference>AdviceChecklist.AdviceName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Advice.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AdviceChecklist.Household__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Advice.Advice_Household__r.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AdviceChecklist.LastReviewDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Advice.Advice_Household__r.FinServ__LastReview__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AdviceChecklist.AnnualReviewMonth__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>ReviewMonthName</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AdviceValues</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_household_from_advice</name>
-        <label>Set household</label>
-        <locationX>314</locationX>
-        <locationY>242</locationY>
-        <assignmentItems>
-            <assignToReference>householdId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Advice.Advice_Household__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_household</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_household_from_advice_checklist</name>
-        <label>Set household</label>
-        <locationX>50</locationX>
-        <locationY>242</locationY>
-        <assignmentItems>
-            <assignToReference>householdId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AdviceChecklist.Household__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_record_type_ID</name>
-        <label>Set record type ID</label>
-        <locationX>182</locationX>
-        <locationY>824</locationY>
-        <assignmentItems>
-            <assignToReference>AdviceChecklist.RecordTypeId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_record_type_ID.recordTypeId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>HouseholdValues</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Update_advice_checklist</name>
         <label>Update advice checklist</label>
         <locationX>314</locationX>
-        <locationY>8378</locationY>
+        <locationY>7796</locationY>
         <assignmentItems>
             <assignToReference>AdviceChecklist.RecommendedCashReserve__c</assignToReference>
             <operator>Assign</operator>
@@ -959,7 +846,7 @@
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Sort products</label>
         <locationX>314</locationX>
-        <locationY>7670</locationY>
+        <locationY>7088</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_financial_products</collectionReference>
         <connector>
@@ -985,7 +872,7 @@
         <name>Are_there_any_assets</name>
         <label>Are there any assets?</label>
         <locationX>314</locationX>
-        <locationY>3614</locationY>
+        <locationY>3032</locationY>
         <defaultConnector>
             <targetReference>Get_liabilities</targetReference>
         </defaultConnector>
@@ -1010,7 +897,7 @@
         <name>Are_there_any_children</name>
         <label>Are there any children?</label>
         <locationX>314</locationX>
-        <locationY>2606</locationY>
+        <locationY>2024</locationY>
         <defaultConnector>
             <targetReference>Add_to_total_spending</targetReference>
         </defaultConnector>
@@ -1035,7 +922,7 @@
         <name>Are_there_any_liabilities</name>
         <label>Are there any liabilities?</label>
         <locationX>314</locationX>
-        <locationY>4814</locationY>
+        <locationY>4232</locationY>
         <defaultConnector>
             <targetReference>Get_cash_account_financial_product_type</targetReference>
         </defaultConnector>
@@ -1057,35 +944,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Checklist_record_type</name>
-        <label>Checklist record type</label>
-        <locationX>314</locationX>
-        <locationY>608</locationY>
-        <defaultConnector>
-            <targetReference>HouseholdValues</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Undefined</defaultConnectorLabel>
-        <rules>
-            <name>Defined</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Advice.AdviceType__r.AdviceChecklistRecordTypeDeveloperName__c</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_record_type_ID</targetReference>
-            </connector>
-            <label>Defined</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Household_type</name>
         <label>Household type</label>
         <locationX>314</locationX>
-        <locationY>1232</locationY>
+        <locationY>650</locationY>
         <defaultConnector>
             <targetReference>GetHouseholdMembers</targetReference>
         </defaultConnector>
@@ -1110,7 +972,7 @@
         <name>Is_there_an_income</name>
         <label>Is there an income?</label>
         <locationX>688</locationX>
-        <locationY>3938</locationY>
+        <locationY>3356</locationY>
         <defaultConnector>
             <targetReference>Assets</targetReference>
         </defaultConnector>
@@ -1135,7 +997,7 @@
         <name>Is_this_for_a_BTL_property</name>
         <label>Is this for a BTL property?</label>
         <locationX>490</locationX>
-        <locationY>4046</locationY>
+        <locationY>3464</locationY>
         <defaultConnector>
             <targetReference>Add_to_income_text</targetReference>
         </defaultConnector>
@@ -1160,7 +1022,7 @@
         <name>Is_this_for_a_BTL_propertyLiability</name>
         <label>Is this for a BTL property?</label>
         <locationX>426</locationX>
-        <locationY>5546</locationY>
+        <locationY>4964</locationY>
         <defaultConnector>
             <targetReference>Add_liability_owners_to_text_values</targetReference>
         </defaultConnector>
@@ -1185,7 +1047,7 @@
         <name>Next_action</name>
         <label>Next action</label>
         <locationX>314</locationX>
-        <locationY>8486</locationY>
+        <locationY>7904</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Update_checklist</name>
@@ -1222,7 +1084,7 @@
         <name>Populated</name>
         <label>Populated?</label>
         <locationX>534</locationX>
-        <locationY>1856</locationY>
+        <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>AdviceChecklistVariables_Client_2</targetReference>
         </defaultConnector>
@@ -1247,7 +1109,7 @@
         <name>Product_type</name>
         <label>Product type</label>
         <locationX>1150</locationX>
-        <locationY>7886</locationY>
+        <locationY>7304</locationY>
         <defaultConnector>
             <targetReference>Financial_products</targetReference>
         </defaultConnector>
@@ -1466,7 +1328,7 @@
         <name>Role</name>
         <label>Role</label>
         <locationX>688</locationX>
-        <locationY>1748</locationY>
+        <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>AdviceChecklistVariables_Client_2</targetReference>
         </defaultConnector>
@@ -1492,27 +1354,9 @@
         <label>What&#39;s been passed in?</label>
         <locationX>314</locationX>
         <locationY>134</locationY>
-        <defaultConnector>
-            <targetReference>Checklist_record_type</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Nothing</defaultConnectorLabel>
         <rules>
-            <name>Checklist_received</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>AdviceChecklist</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_household_from_advice_checklist</targetReference>
-            </connector>
-            <label>Checklist received</label>
-        </rules>
-        <rules>
-            <name>Advice_received</name>
+            <name>Advice_and_checklist_received</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Advice</leftValueReference>
@@ -1521,10 +1365,39 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>AdviceChecklist</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Set_household_from_advice</targetReference>
+                <targetReference>Get_household</targetReference>
             </connector>
-            <label>Advice received</label>
+            <label>Advice and checklist received</label>
+        </rules>
+        <rules>
+            <name>Advice_checklist_only_received</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Advice</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdviceChecklist</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_advice</targetReference>
+            </connector>
+            <label>Advice checklist only received</label>
         </rules>
     </decisions>
     <description>Sub flow to pre-fill checklist values from across the household</description>
@@ -1678,24 +1551,6 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <expression>{!Loop_throughClients.AddressedName__pc} + &quot;: Retirement target: &quot; + TEXT({!Loop_throughClients.Retirement_Target__c}) + &quot;. Current age: &quot; + TEXT({!Loop_throughClients.FinServ__Age__pc}) + &quot;. Time to retirement: &quot; + TEXT({!Loop_throughClients.Retirement_Target__c} - {!Loop_throughClients.FinServ__Age__pc})</expression>
     </formulas>
     <formulas>
-        <name>ReviewMonthName</name>
-        <dataType>String</dataType>
-        <expression>CASE(TEXT({!Advice.Advice_Household__r.OW_annual_review_month__c}),
-&quot;1&quot;, &quot;January&quot;,
-&quot;2&quot;, &quot;February&quot;,
-&quot;3&quot;, &quot;March&quot;, 
-&quot;4&quot;, &quot;April&quot;, 
-&quot;5&quot;, &quot;May&quot;, 
-&quot;6&quot;, &quot;June&quot;,
-&quot;7&quot;, &quot;July&quot;,
-&quot;8&quot;, &quot;August&quot;,
-&quot;9&quot;, &quot;September&quot;,
-&quot;10&quot;, &quot;October&quot;,
-&quot;11&quot;, &quot;November&quot;,
-&quot;12&quot;, &quot;December&quot;,
-&quot;None&quot;)</expression>
-    </formulas>
-    <formulas>
         <name>RiskCallNotesFormula</name>
         <dataType>String</dataType>
         <expression>{!UnderstandingVar} &amp; BR() &amp;
@@ -1732,7 +1587,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Assets</name>
         <label>Assets</label>
         <locationX>270</locationX>
-        <locationY>3722</locationY>
+        <locationY>3140</locationY>
         <collectionReference>Get_assets</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1746,7 +1601,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Cash_accounts</name>
         <label>Cash accounts</label>
         <locationX>314</locationX>
-        <locationY>6854</locationY>
+        <locationY>6272</locationY>
         <collectionReference>Get_cash_accounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1760,7 +1615,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Children</name>
         <label>Children</label>
         <locationX>206</locationX>
-        <locationY>2714</locationY>
+        <locationY>2132</locationY>
         <collectionReference>Get_children.personAccounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1774,7 +1629,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Children_2</name>
         <label>Children 2</label>
         <locationX>206</locationX>
-        <locationY>3014</locationY>
+        <locationY>2432</locationY>
         <collectionReference>Get_children.personAccounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1788,7 +1643,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Employment</name>
         <label>Employment</label>
         <locationX>314</locationX>
-        <locationY>7262</locationY>
+        <locationY>6680</locationY>
         <collectionReference>Get_employment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1802,7 +1657,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Financial_products</name>
         <label>Financial products</label>
         <locationX>314</locationX>
-        <locationY>7778</locationY>
+        <locationY>7196</locationY>
         <collectionReference>Get_financial_products</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1816,7 +1671,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>FinProdTypes</name>
         <label>FinProdTypes</label>
         <locationX>314</locationX>
-        <locationY>6446</locationY>
+        <locationY>5864</locationY>
         <collectionReference>Get_cash_account_financial_product_type</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1830,7 +1685,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Liabilities</name>
         <label>Liabilities</label>
         <locationX>206</locationX>
-        <locationY>4922</locationY>
+        <locationY>4340</locationY>
         <collectionReference>Get_liabilities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1844,7 +1699,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Liability_owners</name>
         <label>Liability owners</label>
         <locationX>426</locationX>
-        <locationY>5138</locationY>
+        <locationY>4556</locationY>
         <collectionReference>Get_liability_roles</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1858,7 +1713,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Loop_throughClients</name>
         <label>Loop through Clients</label>
         <locationX>314</locationX>
-        <locationY>1532</locationY>
+        <locationY>950</locationY>
         <collectionReference>householdMembers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1891,7 +1746,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>CreateAdviceChecklist</name>
         <label>Create Advice Checklist</label>
         <locationX>314</locationX>
-        <locationY>8594</locationY>
+        <locationY>8012</locationY>
         <connector>
             <targetReference>Assign_checklist_to_advice</targetReference>
         </connector>
@@ -1901,7 +1756,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_ACR_for_client</name>
         <label>Get ACR for client</label>
         <locationX>688</locationX>
-        <locationY>1640</locationY>
+        <locationY>1058</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Role</targetReference>
@@ -1928,11 +1783,10 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationX>270</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Get_household</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
@@ -1965,7 +1819,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_assets</name>
         <label>Get assets</label>
         <locationX>314</locationX>
-        <locationY>3506</locationY>
+        <locationY>2924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_assets</targetReference>
@@ -1993,7 +1847,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_cash_account_financial_product_type</name>
         <label>Get cash account financial product type</label>
         <locationX>314</locationX>
-        <locationY>6338</locationY>
+        <locationY>5756</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>FinProdTypes</targetReference>
@@ -2056,7 +1910,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_cash_accounts</name>
         <label>Get cash accounts</label>
         <locationX>314</locationX>
-        <locationY>6746</locationY>
+        <locationY>6164</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Cash_accounts</targetReference>
@@ -2091,7 +1945,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_employment</name>
         <label>Get employment</label>
         <locationX>314</locationX>
-        <locationY>7154</locationY>
+        <locationY>6572</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Employment</targetReference>
@@ -2119,7 +1973,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_financial_products</name>
         <label>Get financial products</label>
         <locationX>314</locationX>
-        <locationY>7562</locationY>
+        <locationY>6980</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Sort_products</targetReference>
@@ -2147,10 +2001,10 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_household</name>
         <label>Get household</label>
         <locationX>314</locationX>
-        <locationY>350</locationY>
+        <locationY>434</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Checklist_record_type</targetReference>
+            <targetReference>AdviceValues</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2180,7 +2034,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_income_from_asset</name>
         <label>Get income from asset</label>
         <locationX>688</locationX>
-        <locationY>3830</locationY>
+        <locationY>3248</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_there_an_income</targetReference>
@@ -2201,7 +2055,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_liabilities</name>
         <label>Get liabilities</label>
         <locationX>314</locationX>
-        <locationY>4706</locationY>
+        <locationY>4124</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_liabilities</targetReference>
@@ -2236,7 +2090,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_liability_roles</name>
         <label>Get liability roles</label>
         <locationX>426</locationX>
-        <locationY>5030</locationY>
+        <locationY>4448</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Liability_owners</targetReference>
@@ -2257,14 +2111,14 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>314</locationX>
-        <locationY>8810</locationY>
+        <locationY>8228</locationY>
         <inputReference>Advice</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_checklistInsert</name>
         <label>Update checklist</label>
         <locationX>50</locationX>
-        <locationY>8594</locationY>
+        <locationY>8012</locationY>
         <inputReference>AdviceChecklist</inputReference>
     </recordUpdates>
     <start>
@@ -2279,7 +2133,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_children</name>
         <label>Get children</label>
         <locationX>314</locationX>
-        <locationY>2498</locationY>
+        <locationY>1916</locationY>
         <connector>
             <targetReference>Are_there_any_children</targetReference>
         </connector>
@@ -2302,7 +2156,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>Get_mortgage_borrowers</name>
         <label>Get mortgage borrowers</label>
         <locationX>182</locationX>
-        <locationY>1340</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Loop_throughClients</targetReference>
         </connector>
@@ -2328,7 +2182,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>GetHouseholdMembers</name>
         <label>Get Household Members</label>
         <locationX>446</locationX>
-        <locationY>1340</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Loop_throughClients</targetReference>
         </connector>
@@ -2614,7 +2468,7 @@ IF(NOT(ISBLANK({!client2Name})), {!client2Name} + &quot;: x full years, x years 
         <name>householdId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
