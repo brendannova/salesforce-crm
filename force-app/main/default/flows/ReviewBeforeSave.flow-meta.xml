@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <description>Set the fact find to be not visible to the customer and indicate it is completed</description>
         <name>Mark_fact_find_as_completed_and_hide</name>
         <label>Mark fact find as completed and hide</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_review_fact_find_status__c</assignToReference>
@@ -70,7 +70,7 @@
         <description>Set the record to be visible to the customer</description>
         <name>Set_to_visible</name>
         <label>Set to visible</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_visible_to_customer__c</assignToReference>
@@ -86,22 +86,7 @@
         <label>Fact find visibility</label>
         <locationX>402</locationX>
         <locationY>587</locationY>
-        <defaultConnectorLabel>No change</defaultConnectorLabel>
-        <rules>
-            <name>Already_completed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.OW_completed_by_client__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Mark_fact_find_as_completed_and_hide</targetReference>
-            </connector>
-            <label>Completed by client</label>
-        </rules>
+        <defaultConnectorLabel>Not mapped</defaultConnectorLabel>
         <rules>
             <name>Visible_to_customer</name>
             <conditionLogic>and</conditionLogic>
@@ -116,6 +101,21 @@
                 <targetReference>Set_to_visible</targetReference>
             </connector>
             <label>Visible to customer</label>
+        </rules>
+        <rules>
+            <name>Already_completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_completed_by_client__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Mark_fact_find_as_completed_and_hide</targetReference>
+            </connector>
+            <label>Completed by client</label>
         </rules>
         <rules>
             <name>Not_visible_or_skipped</name>
@@ -136,9 +136,9 @@
             </conditions>
             <conditions>
                 <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Complete</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -156,7 +156,7 @@
         <defaultConnector>
             <targetReference>Fact_find_visibility</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No state change</defaultConnectorLabel>
+        <defaultConnectorLabel>Not mapped</defaultConnectorLabel>
         <rules>
             <name>Closed</name>
             <conditionLogic>or</conditionLogic>
@@ -218,9 +218,7 @@
             <label>Open</label>
         </rules>
     </decisions>
-    <description>Replaced by an updated version of this flow when the annual review enhanced process was rolled out in Jan 2025. 
-
-Run on creation or editing of a flow before the record is saved.</description>
+    <description>This flow runs before save to automatically set key fields for the user. It controls whether the review is marked as open or closed, the review fact find visibility, and the automatic setting of review fact find status to complete.</description>
     <environments>Default</environments>
     <formulas>
         <description>This formula defines the name of the annual review.</description>
@@ -234,8 +232,8 @@ Run on creation or editing of a flow before the record is saved.</description>
         <dataType>Boolean</dataType>
         <expression>ISNEW()</expression>
     </formulas>
-    <interviewLabel>Annual review - {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>zUnused | Annual review - before save flow</label>
+    <interviewLabel>Review | Before save {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Review | Before save</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -265,7 +263,7 @@ Run on creation or editing of a flow before the record is saved.</description>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <description>Stores whether the review should be set to open or closed</description>
         <name>is_closed</name>

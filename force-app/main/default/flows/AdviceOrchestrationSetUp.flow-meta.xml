@@ -160,7 +160,7 @@
         <dataType>String</dataType>
         <expression>CASE({!advice.AdviceType__r.InformationRequests__c},
 &quot;REQUIRED&quot;, &quot;Information requests are required for this advice type: &quot; &amp; {!advice.AdviceType__r.Name},
-&quot;Optional&quot;, &quot;Select required if ops need to link and process information requests for this advice&quot;,
+&quot;OPTIONAL&quot;, &quot;Select required if ops need to link and process information requests for this advice&quot;,
 &quot;NEVER&quot;, &quot;Information requests cannot be linked to this streamlined advice type: &quot; &amp; {!advice.AdviceType__r.Name},
 &quot;&quot;)</expression>
     </formulas>
@@ -196,7 +196,7 @@ ISPICKVAL({!advice.AdviceType__r.InformationRequests__c}, &quot;NEVER&quot;)</ex
         <dataType>String</dataType>
         <expression>CASE({!advice.AdviceType__r.ProfileUpdate__c},
 &quot;REQUIRED&quot;, &quot;Profile updates are required for this advice type: &quot; &amp; {!advice.AdviceType__r.Name},
-&quot;Optional&quot;, &quot;Select required if ops need to contact the client to get additional profile information&quot;,
+&quot;OPTIONAL&quot;, &quot;Select required if ops need to contact the client to get additional profile information&quot;,
 &quot;NEVER&quot;, &quot;Profile updates cannot be requested for this streamlined advice type: &quot; &amp; {!advice.AdviceType__r.Name},
 &quot;&quot;)</expression>
     </formulas>
@@ -320,25 +320,6 @@ ISPICKVAL({!advice.AdviceType__r.ProfileUpdate__c}, &quot;NEVER&quot;)</expressi
                 <elementReference>profileUpdateStatusPicklistDisabled</elementReference>
             </isDisabled>
             <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>ProfileUpdatesNeededDetail</name>
-            <dataType>String</dataType>
-            <fieldText>Profile update details</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;Provide details of the profile updates needed.&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ProfileUpdatesAdvice</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <elementReference>Required</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>InformationRequestsAdvice</name>

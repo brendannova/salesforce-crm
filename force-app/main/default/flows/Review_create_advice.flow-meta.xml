@@ -49,10 +49,12 @@
             <label>Linked</label>
         </rules>
     </decisions>
-    <description>Allows the create advice flow to be launched from the review page. Will be called from a quick action on the review object.</description>
+    <description>Replaced by a new flow in the annual review overhaul in Jan 2025. 
+
+Allows the create advice flow to be launched from the review page. Will be called from a quick action on the review object.</description>
     <environments>Default</environments>
     <interviewLabel>Review - create advice {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Review - create advice</label>
+    <label>zUnused | Review - create advice</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -116,7 +118,7 @@
             <targetReference>Get_review_details</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Call_create_advice_sub_flow</name>
         <label>Call create advice sub-flow</label>

@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Get_task</name>
         <label>Get task</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>782</locationY>
         <actionName>FlowUtilityGetFirstListItem</actionName>
         <actionType>apex</actionType>
@@ -28,12 +28,13 @@
         <nameSegment>FlowUtilityGetFirstListItem</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
         <name>Assign_task</name>
         <label>Assign task</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>task</assignToReference>
@@ -49,7 +50,7 @@
     <assignments>
         <name>Close_task</name>
         <label>Close task</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>2966</locationY>
         <assignmentItems>
             <assignToReference>task.Status</assignToReference>
@@ -72,7 +73,7 @@
     <assignments>
         <name>Set_advice_checklist_ID_for_update</name>
         <label>Set advice checklist ID for update</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.Id</assignToReference>
@@ -88,7 +89,7 @@
     <assignments>
         <name>Set_advice_ID</name>
         <label>Set advice ID</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -104,7 +105,7 @@
     <assignments>
         <name>Set_advice_ID_for_update</name>
         <label>Set advice ID for update</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.Id</assignToReference>
@@ -120,7 +121,7 @@
     <assignments>
         <name>Set_review_ID</name>
         <label>Set review ID</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>2510</locationY>
         <assignmentItems>
             <assignToReference>reviewUpdated.Id</assignToReference>
@@ -136,7 +137,7 @@
     <assignments>
         <name>Set_task</name>
         <label>Set task</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>task</assignToReference>
@@ -152,7 +153,7 @@
     <assignments>
         <name>Set_variables</name>
         <label>Set variables</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -196,7 +197,7 @@
     <decisions>
         <name>Advice_checklist_update_required</name>
         <label>Advice checklist update required?</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>1946</locationY>
         <defaultConnector>
             <targetReference>Review_update_required</targetReference>
@@ -221,7 +222,7 @@
     <decisions>
         <name>Advice_type</name>
         <label>Advice type</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1082</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -284,11 +285,33 @@
             </connector>
             <label>Protection</label>
         </rules>
+        <rules>
+            <name>Annual_review</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>adviceType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_ACCUMULATION</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>adviceType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_RETIREMENT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annual_review_orchestration</targetReference>
+            </connector>
+            <label>Annual review</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Advice_update_required</name>
         <label>Advice update required?</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>1490</locationY>
         <defaultConnector>
             <targetReference>Advice_checklist_update_required</targetReference>
@@ -313,7 +336,7 @@
     <decisions>
         <name>Follow_on_task_to_create</name>
         <label>Follow on task to create</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>3614</locationY>
         <defaultConnector>
             <targetReference>CompleteScreen</targetReference>
@@ -338,7 +361,7 @@
     <decisions>
         <name>Result</name>
         <label>Result</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1382</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -364,7 +387,7 @@
     <decisions>
         <name>Review_update_required</name>
         <label>Review update required?</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>2402</locationY>
         <defaultConnector>
             <targetReference>Task_action</targetReference>
@@ -389,7 +412,7 @@
     <decisions>
         <name>Task_action</name>
         <label>Task action</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>2858</locationY>
         <defaultConnector>
             <targetReference>Follow_on_task_to_create</targetReference>
@@ -414,7 +437,7 @@
     <decisions>
         <name>Tasks_in_users_name</name>
         <label>Tasks in users name</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>No_Task_Screen</targetReference>
@@ -477,7 +500,7 @@
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -523,7 +546,7 @@
     <recordLookups>
         <name>Get_advice_checklist</name>
         <label>Get advice checklist</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -568,7 +591,7 @@
     <recordLookups>
         <name>Get_tasks</name>
         <label>Get tasks</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -624,7 +647,7 @@
     <recordRollbacks>
         <name>Roll_back_changes</name>
         <label>Roll back changes</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>3182</locationY>
         <connector>
             <targetReference>Error_screen</targetReference>
@@ -633,7 +656,7 @@
     <recordUpdates>
         <name>Update_advice</name>
         <label>Update advice</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>1706</locationY>
         <connector>
             <targetReference>Advice_checklist_update_required</targetReference>
@@ -647,7 +670,7 @@
     <recordUpdates>
         <name>Update_checklist</name>
         <label>Update checklist</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>2162</locationY>
         <connector>
             <targetReference>Review_update_required</targetReference>
@@ -661,7 +684,7 @@
     <recordUpdates>
         <name>Update_review</name>
         <label>Update review</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>2618</locationY>
         <connector>
             <targetReference>Task_action</targetReference>
@@ -675,7 +698,7 @@
     <recordUpdates>
         <name>Update_task</name>
         <label>Update task</label>
-        <locationX>94</locationX>
+        <locationX>226</locationX>
         <locationY>3074</locationY>
         <connector>
             <targetReference>Follow_on_task_to_create</targetReference>
@@ -689,7 +712,7 @@
     <screens>
         <name>Choose_Task</name>
         <label>Choose Task</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>782</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -756,7 +779,7 @@
     <screens>
         <name>CompleteScreen</name>
         <label>Complete screen</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>3914</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -793,7 +816,7 @@
     <screens>
         <name>Error_screen</name>
         <label>Error screen</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>3290</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -848,7 +871,7 @@
     <screens>
         <name>No_Task_Screen</name>
         <label>No Task Screen</label>
-        <locationX>842</locationX>
+        <locationX>974</locationX>
         <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -862,7 +885,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>452</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_advice_ID</targetReference>
@@ -870,9 +893,75 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Annual_review_orchestration</name>
+        <label>Annual review orchestration</label>
+        <locationX>1106</locationX>
+        <locationY>1190</locationY>
+        <connector>
+            <targetReference>Result</targetReference>
+        </connector>
+        <flowName>AdviceAnnualReviewOrchestrator</flowName>
+        <inputAssignments>
+            <name>advice</name>
+            <value>
+                <elementReference>advice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceType</name>
+            <value>
+                <elementReference>adviceType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceUpdated</assignToReference>
+            <name>adviceUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>closeTask</assignToReference>
+            <name>closeTask</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>followUpTask</assignToReference>
+            <name>followUpTask</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>reviewUpdated</assignToReference>
+            <name>reviewUpdated</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Create_next_task</name>
         <label>Create next task</label>
-        <locationX>226</locationX>
+        <locationX>358</locationX>
         <locationY>3722</locationY>
         <connector>
             <targetReference>CompleteScreen</targetReference>
