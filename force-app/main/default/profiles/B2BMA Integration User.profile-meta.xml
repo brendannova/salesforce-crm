@@ -12473,6 +12473,10 @@
         <layout>AdviceType__c-Advice Type Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Advice__c-Annual review page layout</layout>
+        <recordType>Advice__c.AnnualReview</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Advice__c-OW DB advice page layout</layout>
         <recordType>Advice__c.DB_Advice</recordType>
     </layoutAssignments>
@@ -14310,6 +14314,11 @@
         <default>true</default>
         <recordType>Advice__c.Advice_RT_General_Advice</recordType>
         <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Advice__c.AnnualReview</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
