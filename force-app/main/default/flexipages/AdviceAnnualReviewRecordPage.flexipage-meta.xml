@@ -1733,6 +1733,19 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList4</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.DataGatheringStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>In progress</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.DataGatheringStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
