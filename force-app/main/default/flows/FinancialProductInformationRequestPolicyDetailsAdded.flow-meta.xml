@@ -1,24 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Set_error_message_failed_to_get_information_request</name>
+        <label>Set error message</label>
+        <locationX>1106</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Error getting information request in FinancialProductInformationRequestPolicyDetailsAdded</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Throw_error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_error_message_fault</name>
+        <label>Set error message</label>
+        <locationX>578</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Throw_error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_new_information_request_values</name>
+        <label>Set new information request values</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>informationRequest.AuthorityStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>To be requested</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>informationRequest.InformationRequestStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>To be sent</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>informationRequest.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>INFO_REQ_SEND</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_IR</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_variables</name>
+        <label>Set variables</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>informationRequestId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>informationRequest.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_new_information_request_values</targetReference>
+        </connector>
+    </assignments>
+    <customErrors>
+        <name>Throw_error</name>
+        <label>Throw error</label>
+        <locationX>1106</locationX>
+        <locationY>539</locationY>
+        <customErrorMessages>
+            <errorMessage>{!errorMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
     <decisions>
+        <description>If there is no information request associated with this financial product, there is no further action to take.</description>
         <name>Was_there_a_relevant_info_request</name>
         <label>Was there a relevant info request?</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ir</leftValueReference>
+                <leftValueReference>informationRequest</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_IR</targetReference>
+                <targetReference>Set_variables</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -47,14 +144,18 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_IR</name>
-        <label>Get IR</label>
-        <locationX>182</locationX>
+        <description>Checking to see if there is an information request associated with this financial product at a status of awaiting prerequisites.</description>
+        <name>Check_for_information_request</name>
+        <label>Check for information request</label>
+        <locationX>446</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Was_there_a_relevant_info_request</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Set_error_message_failed_to_get_information_request</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>FinancialProductFinServ__c</field>
@@ -71,7 +172,7 @@
             </value>
         </filters>
         <object>InformationRequest__c</object>
-        <outputReference>ir</outputReference>
+        <outputReference>informationRequest</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Advice__c</queriedFields>
         <queriedFields>FinancialProductFinServ__c</queriedFields>
@@ -80,16 +181,41 @@
         <name>Close_existing_task</name>
         <label>Close existing task</label>
         <locationX>50</locationX>
-        <locationY>647</locationY>
+        <locationY>863</locationY>
         <connector>
             <targetReference>Create_send_task</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_message_fault</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>informationRequestId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>FinServ__Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>IR_POLICYINFO_CHASE</stringValue>
             </value>
         </filters>
         <inputAssignments>
@@ -104,43 +230,20 @@
         <name>Update_IR</name>
         <label>Update IR</label>
         <locationX>50</locationX>
-        <locationY>539</locationY>
+        <locationY>755</locationY>
         <connector>
             <targetReference>Close_existing_task</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>ir.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>AuthorityStatus__c</field>
-            <value>
-                <stringValue>To be requested</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>InformationRequestStatus__c</field>
-            <value>
-                <stringValue>To be sent</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <stringValue>INFO_REQ_SEND</stringValue>
-            </value>
-        </inputAssignments>
-        <object>InformationRequest__c</object>
+        <faultConnector>
+            <targetReference>Set_error_message_fault</targetReference>
+        </faultConnector>
+        <inputReference>informationRequest</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_IR</targetReference>
+            <targetReference>Check_for_information_request</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterFormula>NOT({!$Record.Public_Provider_Name__r.OW_own_company__c})
@@ -163,18 +266,18 @@ NOT(ISBLANK({!$Record.RegisteredContact__c}))
         <name>Create_send_task</name>
         <label>Create send task</label>
         <locationX>50</locationX>
-        <locationY>755</locationY>
+        <locationY>971</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>related_information_request</name>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>informationRequestId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -186,17 +289,38 @@ NOT(ISBLANK({!$Record.RegisteredContact__c}))
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>informationRequestId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
-        <name>ir</name>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>informationRequest</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>InformationRequest__c</objectType>
+    </variables>
+    <variables>
+        <name>informationRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
