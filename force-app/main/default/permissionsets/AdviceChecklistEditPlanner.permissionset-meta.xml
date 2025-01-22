@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Gives users edit access to Advice Checklist fields which are the responsibility of planners to complete.</description>
     <hasActivationRequired>false</hasActivationRequired>
@@ -1060,6 +1060,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Advice__c.AdviceDeckCompleteDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advice__c.AnnualReviewDeckUrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <objectPermissions>
