@@ -111,7 +111,7 @@
         <name>Advice_updatesSuitabilityPlanner</name>
         <label>Advice updates</label>
         <locationX>3482</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.Assigned_planner__c</assignToReference>
             <operator>Assign</operator>
@@ -126,9 +126,6 @@
                 <stringValue>ADVICE_ANNUAL_REVIEW_NARRATIVE_WRITE</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Assess_retirement_call</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Adviser_debrief_updates</name>
@@ -3021,7 +3018,10 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <name>Assess_retirement_call</name>
         <label>Assess retirement call</label>
         <locationX>3482</locationX>
-        <locationY>566</locationY>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Advice_updatesSuitabilityPlanner</targetReference>
+        </connector>
         <flowName>AdviceRetirementCallAssess</flowName>
         <inputAssignments>
             <name>advice</name>
@@ -3056,7 +3056,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <locationX>3482</locationX>
         <locationY>350</locationY>
         <connector>
-            <targetReference>Advice_updatesSuitabilityPlanner</targetReference>
+            <targetReference>Assess_retirement_call</targetReference>
         </connector>
         <flowName>AdviceOrchestratorAssignPlanner</flowName>
         <inputAssignments>
