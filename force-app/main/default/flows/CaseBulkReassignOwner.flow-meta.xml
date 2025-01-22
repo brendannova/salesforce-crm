@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <description>Create a case variable and assign the owner ID.</description>
+        <name>Assign_owner</name>
+        <label>Assign owner</label>
+        <locationX>138</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Select_owner.ownerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>case.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_cases</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_to_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_collection</name>
+        <label>Assign to collection</label>
+        <locationX>138</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>casesUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>case</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_cases</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>No_cases_selected_warning</name>
+        <label>No cases selected warning</label>
+        <locationX>578</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>You must select at least 1 case to reassign.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>No_permission_error</name>
+        <label>No permission error</label>
+        <locationX>842</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>You must have permission to bulk reassign. Please raise a ticket.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_failed_error</name>
+        <label>Update failed error</label>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>The case update has failed. Please raise a ticket with the following details:    {!$Flow.FaultMessage}</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_message</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Cases_selected</name>
+        <label>Cases selected</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>No_cases_selected_warning</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No cases selected</defaultConnectorLabel>
+        <rules>
+            <name>Cases_have_been_selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ids</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Select_owner</targetReference>
+            </connector>
+            <label>Cases have been selected</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Permission_check</name>
+        <label>Permission check</label>
+        <locationX>578</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>No_permission_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No permission</defaultConnectorLabel>
+        <rules>
+            <name>Permission_granted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Permission.CaseBulkReassign</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cases_selected</targetReference>
+            </connector>
+            <label>Permission granted</label>
+        </rules>
+    </decisions>
+    <description>Bulk change owner of a list of cases</description>
+    <environments>Default</environments>
+    <interviewLabel>Case | Bulk reassign owner {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Case | Bulk reassign owner</label>
+    <loops>
+        <name>Loop_cases</name>
+        <label>Loop cases</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <collectionReference>ids</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_owner</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Cases</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordUpdates>
+        <name>Update_Cases</name>
+        <label>Update Cases</label>
+        <locationX>50</locationX>
+        <locationY>866</locationY>
+        <connector>
+            <targetReference>Success_message</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Update_failed_error</targetReference>
+        </faultConnector>
+        <inputReference>casesUpdate</inputReference>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Error_message</name>
+        <label>Error message</label>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Error!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Go back to case tab</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Success_message</name>
+        <label>Success message</label>
+        <locationX>50</locationX>
+        <locationY>974</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>SuccessDisplayText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Success!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;The owners of these cases has now been updated&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Go back to case tab</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>452</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Permission_check</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Select_owner</name>
+        <label>Select owner</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Loop_cases</targetReference>
+        </connector>
+        <flowName>FlowUtilityChooseOwner</flowName>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>case</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>casesUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ids</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

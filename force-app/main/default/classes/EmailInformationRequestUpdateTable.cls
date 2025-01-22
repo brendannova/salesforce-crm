@@ -114,7 +114,7 @@ public class EmailInformationRequestUpdateTable {
                     awaitDetails += ' provider, ';
                     numOutstanding += 1;
                 }
-                if( r.FinancialProductFinServ__r.Subtype__c.contains('Junior') && String.isBlank(r.FinancialProductFinServ__r.RegisteredContact__c) ) {
+                if(  r.FinancialProductFinServ__r.Subtype__c.contains('Junior') && String.isBlank(r.FinancialProductFinServ__r.RegisteredContact__c) ) {
                     awaitDetails += ' registered contact, ';
                     numOutstanding += 1;
                 }
@@ -150,7 +150,7 @@ public class EmailInformationRequestUpdateTable {
                     status = 'Action required';
                     message = System.Label.EmailInformationRequestUpdateChaseClient;
                     
-                // If info is from third party
+                    // If info is from third party
                 } else if (r.InformationRequestType__r.InformationSource__c == 'Third party provider') {
                     
                     // Check if we have ever chased before
@@ -161,31 +161,24 @@ public class EmailInformationRequestUpdateTable {
                     // If we have chased before...
                     } else {
                         
-                        // Expected receipt date has passed
-                        if( date.today() > r.ExpectedReceiptDate__c ) {
+                        // If we have an active complaint
+                        if( r.ComplaintStatus__c == 'Lodged') {
+                            status = 'Off track';
+                            message = System.Label.EmailInformationRequestUpdateComplaintLodged;
+                        
+                        } else {
                             
-                            // Complaint in progress
-                            if( r.ComplaintStatus__c == 'Lodged') {
-                                status = 'Off track';
-                                message = System.Label.EmailInformationRequestUpdateComplaintLodged;
-                                
-                            // Complaint resolved, still chasing
-                            } else if ( r.ComplaintStatus__c == 'Resolved') {
-                                status = 'On track';
-                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + ' ' + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + ' ' + formatDate(r.ExpectedReceiptDate__c) + '.';
-                                
-                            // No complaint made
-                            } else {
+                            // No complaint yet, expected receipt date has passed
+                            if( date.today() > r.ExpectedReceiptDate__c ) {
                                 status = 'Off track';
                                 message = r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateOffTrack + ' ' + formatDate(r.ExpectedReceiptDate__c) + System.Label.EmailInformationRequestUpdateOffTrackPt2;
-                            }
-                            
-                            
-                        // Expected receipt date in future
-                        } else {
-                            status = 'On track';
-							message = System.Label.EmailInformationRequestUpdateChasingPart1 + ' ' + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + ' ' + formatDate(r.ExpectedReceiptDate__c) + '.';                        
-                        }  
+
+                            // No complaint, expected receipt date in future
+                            } else {
+                                status = 'On track';
+                                message = System.Label.EmailInformationRequestUpdateChasingPart1 + ' ' + formatDate(r.DateLastChased__c) + '. ' + r.FinancialProductFinServ__r.Public_Provider_Name__r.Name + ' ' + System.Label.EmailInformationRequestUpdateChasingPart2 + ' ' + formatDate(r.ExpectedReceiptDate__c) + '.';                        
+                            } 
+                        }
                     }
                 }
                 
