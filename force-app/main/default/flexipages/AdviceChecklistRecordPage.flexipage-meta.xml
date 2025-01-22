@@ -3733,6 +3733,19 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.AdviceName__r.AnnualReviewDeckUrl__c</fieldItem>
+                <identifier>RecordAdviceName_rAnnualReviewDeckUrl_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.AdviceName__r.AdviceType__r.DeveloperName__c}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>ANNUAL_REVIEW</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>none</value>
