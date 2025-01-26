@@ -22,26 +22,21 @@
                         <valueListItems>
                             <value>Advice__c.CreateRecommendation</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                                <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Advice_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Suitability in progress</rightValue>
+                                    <rightValue>Prepare advice</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Advice_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Deck complete</rightValue>
+                                    <rightValue>Present advice</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Advice_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Await decision</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Awaiting acceptance</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Advice_Status__c}</leftValue>
@@ -841,19 +836,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.RetirementCallNotes__c</fieldItem>
                 <identifier>RecordRetirementCallNotes_cField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.RetirementCallStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>NOT_REQUIRED</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.RetirementCallStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>NEVER_REQUIRED</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

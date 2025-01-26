@@ -2,38 +2,8 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>Set_flag_that_pre_advice_retirement_meeting_is_required</name>
-        <label>Set flag that pre-advice retirement meeting is required</label>
-        <locationX>468</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>preAdviceRetirementMeetingRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Retirement_call_needed</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_missing_inputs_error</name>
-        <label>Set missing inputs error</label>
-        <locationX>842</locationX>
-        <locationY>242</locationY>
-        <assignmentItems>
-            <assignToReference>errorMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Flow AdviceRetirementCallAssess. Inputs missing. Please raise a ticket. </stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Set_retirement_call_to_not_required</name>
-        <label>Set retirement call to not required</label>
+        <name>Already_held_updates</name>
+        <label>Already held updates</label>
         <locationX>314</locationX>
         <locationY>1232</locationY>
         <assignmentItems>
@@ -47,14 +17,84 @@
             <assignToReference>adviceUpdated.RetirementCallNotes__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>retirementCallNotesNotRequired</elementReference>
+                <elementReference>$Label.AdviceRetirementCallAlreadyHeld</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Never_required_updates</name>
+        <label>Never required updates</label>
+        <locationX>578</locationX>
+        <locationY>1232</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.RetirementCallStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NOT_REQUIRED</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.RetirementCallNotes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Label.AdviceRetirementCallNeverRequired</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_flag_that_pre_advice_retirement_meeting_is_required</name>
+        <label>Set flag that pre-advice retirement meeting is required</label>
+        <locationX>864</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>retirementCallMeetingRequired</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Retirement_call_needed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_missing_inputs_error</name>
+        <label>Set missing inputs error</label>
+        <locationX>1370</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Flow AdviceRetirementCallAssess. Inputs missing. Please raise a ticket. </stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_retirement_call_to_not_required</name>
+        <label>Set retirement call to not required</label>
+        <locationX>842</locationX>
+        <locationY>1232</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.RetirementCallStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NOT_REQUIRED</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.RetirementCallNotes__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Automatically marked as not required but reason is unclear. Please raise with the product team. </stringValue>
             </value>
         </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_retirement_call_to_not_required_auto</name>
         <label>Set retirement call to not required</label>
-        <locationX>578</locationX>
+        <locationX>1106</locationX>
         <locationY>1016</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.RetirementCallStatus__c</assignToReference>
@@ -67,7 +107,7 @@
             <assignToReference>adviceUpdated.RetirementCallNotes__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Automatically set as not required as no client in or within 5 years of retirement. </stringValue>
+                <elementReference>$Label.AdviceRetirementCallNotRequired</elementReference>
             </value>
         </assignmentItems>
     </assignments>
@@ -87,14 +127,14 @@
             <assignToReference>adviceUpdated.RetirementCallNotes__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Automatically set as required client in or within 5 years of retirement. </stringValue>
+                <stringValue>Automatically set as required as client in or within 5 years of retirement. </stringValue>
             </value>
         </assignmentItems>
     </assignments>
     <decisions>
         <name>Inputs_received</name>
         <label>Inputs received?</label>
-        <locationX>611</locationX>
+        <locationX>1073</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Set_missing_inputs_error</targetReference>
@@ -133,7 +173,7 @@
     <decisions>
         <name>Retirement_call_held_before</name>
         <label>Retirement call held before?</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1124</locationY>
         <defaultConnector>
             <targetReference>Set_retirement_call_to_not_required</targetReference>
@@ -154,11 +194,41 @@
             </connector>
             <label>Not held</label>
         </rules>
+        <rules>
+            <name>Already_held</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_for_previous_retirement_call.RetirementCallStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>COMPLETE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Already_held_updates</targetReference>
+            </connector>
+            <label>Already held</label>
+        </rules>
+        <rules>
+            <name>Never_required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_for_previous_retirement_call.RetirementCallStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NEVER_REQUIRED</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Never_required_updates</targetReference>
+            </connector>
+            <label>Never required</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Retirement_call_needed</name>
         <label>Retirement call needed</label>
-        <locationX>380</locationX>
+        <locationX>776</locationX>
         <locationY>908</locationY>
         <defaultConnector>
             <targetReference>Set_retirement_call_to_not_required_auto</targetReference>
@@ -168,7 +238,7 @@
             <name>Needed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>preAdviceRetirementMeetingRequired</leftValueReference>
+                <leftValueReference>retirementCallMeetingRequired</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -183,7 +253,7 @@
     <decisions>
         <name>Within_5_years_of_or_in_retirement</name>
         <label>Within 5 years of or in retirement?</label>
-        <locationX>600</locationX>
+        <locationX>996</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Loop_clients</targetReference>
@@ -220,18 +290,12 @@
         <expression>(({!Loop_clients.Retirement_Target__c} - {!Loop_clients.FinServ__Age__pc}) &lt; 5) &amp;&amp;
 (ISPICKVAL({!Loop_clients.Working_Situation__c}, &quot;Working&quot;) || ISPICKVAL({!Loop_clients.Working_Situation__c}, &quot;Semi-retired&quot;))</expression>
     </formulas>
-    <formulas>
-        <name>retirementCallNotesNotRequired</name>
-        <dataType>String</dataType>
-        <expression>&quot;Retirement call not required because &quot; &amp; 
-IF(ISPICKVAL({!Check_for_previous_retirement_call.RetirementCallStatus__c}, &quot;COMPLETED&quot;), &quot;one has already been completed.&quot;, &quot;we have previously recorded they will never need one.&quot;)</expression>
-    </formulas>
     <interviewLabel>Advice | Retirement call | Assess {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Retirement call | Assess</label>
     <loops>
         <name>Loop_clients</name>
         <label>Loop clients</label>
-        <locationX>380</locationX>
+        <locationX>776</locationX>
         <locationY>350</locationY>
         <collectionReference>Get_clients_to_check_for_pre_advice_requirement.personAccounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -264,13 +328,13 @@ IF(ISPICKVAL({!Check_for_previous_retirement_call.RetirementCallStatus__c}, &quo
     <recordLookups>
         <name>Check_for_previous_retirement_call</name>
         <label>Check for previous retirement call</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>1016</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Retirement_call_held_before</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filterLogic>1 AND (2 OR 3) AND 4</filterLogic>
         <filters>
             <field>Advice_Household__c</field>
             <operator>EqualTo</operator>
@@ -292,6 +356,13 @@ IF(ISPICKVAL({!Check_for_previous_retirement_call.RetirementCallStatus__c}, &quo
                 <stringValue>NEVER_REQUIRED</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Advice__c</object>
         <queriedFields>Id</queriedFields>
@@ -301,7 +372,7 @@ IF(ISPICKVAL({!Check_for_previous_retirement_call.RetirementCallStatus__c}, &quo
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>485</locationX>
+        <locationX>947</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Inputs_received</targetReference>
@@ -311,7 +382,7 @@ IF(ISPICKVAL({!Check_for_previous_retirement_call.RetirementCallStatus__c}, &quo
     <subflows>
         <name>Get_clients_to_check_for_pre_advice_requirement</name>
         <label>Get clients to check for pre-advice requirement</label>
-        <locationX>380</locationX>
+        <locationX>776</locationX>
         <locationY>242</locationY>
         <connector>
             <targetReference>Loop_clients</targetReference>
@@ -370,7 +441,7 @@ IF(ISPICKVAL({!Check_for_previous_retirement_call.RetirementCallStatus__c}, &quo
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>preAdviceRetirementMeetingRequired</name>
+        <name>retirementCallMeetingRequired</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
