@@ -542,6 +542,11 @@
         <queriedFields>ProfileUpdateStatus__c</queriedFields>
         <queriedFields>Narrative__c</queriedFields>
         <queriedFields>RtqStatus__c</queriedFields>
+        <queriedFields>AdviceDeckCompleteDate__c</queriedFields>
+        <queriedFields>Suitability_meeting_location__c</queriedFields>
+        <queriedFields>Suitability_meeting_status__c</queriedFields>
+        <queriedFields>AdvicePresented__c</queriedFields>
+        <queriedFields>DateAccepted__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_advice_checklist</name>
@@ -587,6 +592,7 @@
         <queriedFields>PlannerCommentsNotes__c</queriedFields>
         <queriedFields>ExplainChangesToTheInitialNarrative__c</queriedFields>
         <queriedFields>Deck4EyeCompletedBy__c</queriedFields>
+        <queriedFields>DeckReadyFor4Eyes__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_tasks</name>
@@ -937,6 +943,10 @@
                 <elementReference>task</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceChecklistUpdated</assignToReference>
+            <name>adviceChecklistUpdated</name>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>adviceUpdated</assignToReference>
             <name>adviceUpdated</name>
