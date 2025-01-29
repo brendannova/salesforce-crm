@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Get_record_type_ID</name>
-        <label>Get record type ID</label>
-        <locationX>314</locationX>
-        <locationY>1574</locationY>
+        <name>GetAdviceChecklistRecordTypeId</name>
+        <label>Get advice checklist record type ID</label>
+        <locationX>578</locationX>
+        <locationY>2588</locationY>
+        <actionName>FlowUtilityGetRecordTypeId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_advice_checklist</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>recordTypeDeveloperName</name>
+            <value>
+                <elementReference>AdviceTypeSelect.firstSelectedRow.AdviceChecklistRecordTypeDeveloperName__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectType</name>
+            <value>
+                <stringValue>AdviceChecklist__c</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityGetRecordTypeId</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>GetAdviceRecordTypeId</name>
+        <label>Get advice record type ID</label>
+        <locationX>666</locationX>
+        <locationY>1856</locationY>
         <actionName>FlowUtilityGetRecordTypeId</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -30,10 +58,34 @@
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <assignments>
+        <name>Set_advice_ID</name>
+        <label>Set advice ID</label>
+        <locationX>754</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>advice.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceChecklistId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>advice.AdviceChecklist__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_advice_method</name>
         <label>Set advice method</label>
-        <locationX>182</locationX>
-        <locationY>1790</locationY>
+        <locationX>534</locationX>
+        <locationY>2072</locationY>
         <assignmentItems>
             <assignToReference>advice.AdviceMethod__c</assignToReference>
             <operator>Assign</operator>
@@ -48,8 +100,8 @@
     <assignments>
         <name>Set_advice_values</name>
         <label>Set advice values</label>
-        <locationX>314</locationX>
-        <locationY>1982</locationY>
+        <locationX>666</locationX>
+        <locationY>2264</locationY>
         <assignmentItems>
             <assignToReference>advice.OW_notes__c</assignToReference>
             <operator>Assign</operator>
@@ -75,21 +127,7 @@
             <assignToReference>advice.RecordTypeId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_record_type_ID.recordTypeId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.Partner__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>partnerDefault</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.Advice_Household__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>household.Id</elementReference>
+                <elementReference>GetAdviceRecordTypeId.recordTypeId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -128,13 +166,36 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Insert_advice</targetReference>
+            <targetReference>Create_or_update</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_defaults</name>
+        <label>Set defaults</label>
+        <locationX>666</locationX>
+        <locationY>608</locationY>
+        <assignmentItems>
+            <assignToReference>advice.Advice_Household__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.Partner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>partnerDefault</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Search_for_open_advice</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_household_ID</name>
         <label>Set household ID</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -144,30 +205,27 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_household</targetReference>
+            <targetReference>Set_defaults</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Set_review_flag</name>
-        <label>Set review flag</label>
-        <locationX>314</locationX>
+        <name>Set_unknown_launch_error</name>
+        <label>Set unknown launch error</label>
+        <locationX>1018</locationX>
         <locationY>242</locationY>
         <assignmentItems>
-            <assignToReference>isReview</assignToReference>
+            <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <stringValue>Unknown how advice create flow was launched. Please raise a product ticket.</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Get_household</targetReference>
-        </connector>
     </assignments>
     <decisions>
         <name>Advice_method_restricted</name>
         <label>Advice method restricted</label>
-        <locationX>314</locationX>
-        <locationY>1682</locationY>
+        <locationX>666</locationX>
+        <locationY>1964</locationY>
         <defaultConnector>
             <targetReference>Set_advice_values</targetReference>
         </defaultConnector>
@@ -198,8 +256,8 @@
     <decisions>
         <name>Any_ongoing_advice</name>
         <label>Any ongoing advice?</label>
-        <locationX>314</locationX>
-        <locationY>650</locationY>
+        <locationX>666</locationX>
+        <locationY>932</locationY>
         <defaultConnector>
             <targetReference>Get_advice_types</targetReference>
         </defaultConnector>
@@ -221,10 +279,83 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Checklist_update</name>
+        <label>Checklist update</label>
+        <locationX>710</locationX>
+        <locationY>2480</locationY>
+        <defaultConnector>
+            <targetReference>Update_advice</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not required</defaultConnectorLabel>
+        <rules>
+            <name>Required</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>adviceChecklistId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.AdviceChecklist__r.RecordType.DeveloperName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>AdviceTypeSelect.firstSelectedRow.AdviceChecklistRecordTypeDeveloperName__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetAdviceChecklistRecordTypeId</targetReference>
+            </connector>
+            <label>Required</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Create_or_update</name>
+        <label>Create or update</label>
+        <locationX>666</locationX>
+        <locationY>2372</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Roll_back_changes</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Unknown</defaultConnectorLabel>
+        <rules>
+            <name>Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>updateAdvice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Insert_advice</targetReference>
+            </connector>
+            <label>Create</label>
+        </rules>
+        <rules>
+            <name>Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>updateAdvice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Checklist_update</targetReference>
+            </connector>
+            <label>Update</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Created_from</name>
         <label>Created from</label>
-        <locationX>314</locationX>
-        <locationY>2306</locationY>
+        <locationX>666</locationX>
+        <locationY>3236</locationY>
         <defaultConnector>
             <targetReference>Redirect_to_advice</targetReference>
         </defaultConnector>
@@ -245,8 +376,11 @@
     <decisions>
         <name>Launched_from</name>
         <label>Launched from</label>
-        <locationX>314</locationX>
+        <locationX>666</locationX>
         <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Set_unknown_launch_error</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Unknown</defaultConnectorLabel>
         <rules>
             <name>Household_outcome</name>
@@ -264,26 +398,55 @@
             <label>Household</label>
         </rules>
         <rules>
-            <name>Review_outcome</name>
+            <name>Review_create_advice</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>reviewId</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>isReview</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>updateAdvice</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_review_flag</targetReference>
+                <targetReference>Set_defaults</targetReference>
             </connector>
-            <label>Review</label>
+            <label>Review - create advice</label>
+        </rules>
+        <rules>
+            <name>Review_change_advice_type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isReview</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>updateAdvice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_advice_record</targetReference>
+            </connector>
+            <label>Review - change advice type</label>
         </rules>
     </decisions>
     <decisions>
         <name>Warning_to_display</name>
         <label>Warning to display?</label>
-        <locationX>314</locationX>
-        <locationY>1166</locationY>
+        <locationX>666</locationX>
+        <locationY>1448</locationY>
         <defaultConnector>
             <targetReference>Get_advice_details</targetReference>
         </defaultConnector>
@@ -314,7 +477,7 @@
     <formulas>
         <name>nameDefault</name>
         <dataType>String</dataType>
-        <expression>{!AdviceTypeSelect.firstSelectedRow.Name} &amp; &quot; | &quot; &amp; {!household.Name}</expression>
+        <expression>IF({!updateAdvice}, {!advice.Name}, {!AdviceTypeSelect.firstSelectedRow.Name} &amp; &quot; | &quot; &amp; {!household.Name})</expression>
     </formulas>
     <formulas>
         <name>partnerDefault</name>
@@ -328,6 +491,11 @@
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Complete&quot;), &quot;No update required&quot;, IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Pending&quot;),&quot;In progress&quot;,
 IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot;, &quot;&quot;, &quot;Not started&quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>successToastMessage</name>
+        <dataType>String</dataType>
+        <expression>IF({!updateAdvice}, &quot;Advice updated&quot;, &quot;Advice created&quot;)</expression>
     </formulas>
     <interviewLabel>AdviceCreate {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Create</label>
@@ -353,8 +521,8 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <recordCreates>
         <name>Insert_advice</name>
         <label>Insert advice</label>
-        <locationX>314</locationX>
-        <locationY>2090</locationY>
+        <locationX>50</locationX>
+        <locationY>2480</locationY>
         <connector>
             <targetReference>Success_toast</targetReference>
         </connector>
@@ -364,10 +532,34 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <inputReference>advice</inputReference>
     </recordCreates>
     <recordLookups>
+        <name>Get_advice_record</name>
+        <label>Get advice record</label>
+        <locationX>754</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_advice_ID</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </filters>
+        <object>Advice__c</object>
+        <outputReference>advice</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>OW_notes__c</queriedFields>
+        <queriedFields>AdviceChecklist__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_advice_types</name>
         <label>Get advice types</label>
-        <locationX>314</locationX>
-        <locationY>950</locationY>
+        <locationX>666</locationX>
+        <locationY>1232</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Choose_advice_type</targetReference>
@@ -402,17 +594,18 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <queriedFields>RecordTypeDeveloperName__c</queriedFields>
         <queriedFields>Warnings__c</queriedFields>
         <queriedFields>DeveloperName__c</queriedFields>
+        <queriedFields>AdviceChecklistRecordTypeDeveloperName__c</queriedFields>
         <sortField>Name</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
         <name>Get_household</name>
         <label>Get household</label>
-        <locationX>314</locationX>
-        <locationY>434</locationY>
+        <locationX>666</locationX>
+        <locationY>824</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Search_for_open_advice</targetReference>
+            <targetReference>Any_ongoing_advice</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -433,11 +626,11 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <recordLookups>
         <name>Search_for_open_advice</name>
         <label>Search for open advice</label>
-        <locationX>314</locationX>
-        <locationY>542</locationY>
+        <locationX>666</locationX>
+        <locationY>716</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Any_ongoing_advice</targetReference>
+            <targetReference>Get_household</targetReference>
         </connector>
         <filterLogic>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7)</filterLogic>
         <filters>
@@ -496,18 +689,56 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <recordRollbacks>
         <name>Roll_back_changes</name>
         <label>Roll back changes</label>
-        <locationX>842</locationX>
-        <locationY>2198</locationY>
+        <locationX>314</locationX>
+        <locationY>2588</locationY>
         <connector>
             <targetReference>Error_toast_and_message</targetReference>
         </connector>
     </recordRollbacks>
+    <recordUpdates>
+        <name>Update_advice</name>
+        <label>Update advice</label>
+        <locationX>710</locationX>
+        <locationY>2888</locationY>
+        <connector>
+            <targetReference>Success_toast</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Roll_back_changes</targetReference>
+        </faultConnector>
+        <inputReference>advice</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_advice_checklist</name>
+        <label>Update advice checklist</label>
+        <locationX>578</locationX>
+        <locationY>2696</locationY>
+        <connector>
+            <targetReference>Update_advice</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>adviceChecklistId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>GetAdviceChecklistRecordTypeId.recordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>AdviceChecklist__c</object>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Choose_advice_type</name>
         <label>Choose advice type</label>
-        <locationX>314</locationX>
-        <locationY>1058</locationY>
+        <locationX>666</locationX>
+        <locationY>1340</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -568,8 +799,8 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <screens>
         <name>Display_warning</name>
         <label>Display warning</label>
-        <locationX>182</locationX>
-        <locationY>1274</locationY>
+        <locationX>534</locationX>
+        <locationY>1556</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -626,8 +857,8 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <screens>
         <name>Error_toast_and_message</name>
         <label>Error toast and message</label>
-        <locationX>842</locationX>
-        <locationY>2306</locationY>
+        <locationX>314</locationX>
+        <locationY>2696</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -674,8 +905,8 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <screens>
         <name>Existing_advice_check</name>
         <label>Existing advice check</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationX>534</locationX>
+        <locationY>1040</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -741,13 +972,13 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <screens>
         <name>Get_advice_details</name>
         <label>Get advice details</label>
-        <locationX>314</locationX>
-        <locationY>1466</locationY>
+        <locationX>666</locationX>
+        <locationY>1748</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_record_type_ID</targetReference>
+            <targetReference>GetAdviceRecordTypeId</targetReference>
         </connector>
         <fields>
             <name>AdviceName</name>
@@ -782,6 +1013,9 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         </fields>
         <fields>
             <name>AdviceNotes</name>
+            <defaultValue>
+                <stringValue>{!advice.OW_notes__c}</stringValue>
+            </defaultValue>
             <fieldText>Notes</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -797,8 +1031,8 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <screens>
         <name>Redirect_to_advice</name>
         <label>Redirect to advice</label>
-        <locationX>446</locationX>
-        <locationY>2414</locationY>
+        <locationX>798</locationX>
+        <locationY>3344</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -822,8 +1056,8 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
     <screens>
         <name>Success_toast</name>
         <label>Success toast</label>
-        <locationX>314</locationX>
-        <locationY>2198</locationY>
+        <locationX>666</locationX>
+        <locationY>3128</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -861,7 +1095,7 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <stringValue>Advice created</stringValue>
+                    <elementReference>successToastMessage</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -872,7 +1106,7 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Launched_from</targetReference>
@@ -888,12 +1122,33 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <objectType>Advice__c</objectType>
     </variables>
     <variables>
+        <name>adviceChecklistId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>adviceTypes</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>AdviceType__c</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>The household for which this advice will be given</description>
@@ -916,7 +1171,7 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <name>isReview</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>
@@ -937,5 +1192,15 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>updateAdvice</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>
