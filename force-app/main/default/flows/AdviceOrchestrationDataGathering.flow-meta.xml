@@ -386,79 +386,25 @@ IF(ISBLANK({!advice.Additional_Questions_to_be_asked_on_call__c}), &quot;Outstan
         <label>Confirmation modal</label>
         <locationX>578</locationX>
         <locationY>350</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
             <targetReference>Next_step_data_gathering</targetReference>
         </connector>
         <fields>
-            <name>ConfirmDataGatheringStatusChange</name>
-            <extensionName>c:confirmModalFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>navigateBackOnCancel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>navigateForwardOnConfirm</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>header</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>message</name>
-                <value>
-                    <elementReference>confirmModalMessage</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>theme</name>
-                <value>
-                    <stringValue>info</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Confirmation needed</stringValue>
-                </value>
-            </inputParameters>
+            <name>DataGatheringChagnePrompt</name>
+            <fieldText>&lt;p&gt;{!confirmModalMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Refresh if you do not want to proceed.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DataGatheringChagneUnderstood</name>
+            <choiceReferences>Yes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>I understand</fieldText>
+            <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>DataGatheringNotRequiredNow.renderNext</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>DataGatheringRequiredNow.renderNext</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>DataGatheringProceedWhileInProgress.renderNext</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -601,7 +547,7 @@ IF(ISBLANK({!advice.Additional_Questions_to_be_asked_on_call__c}), &quot;Outstan
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Information requests not required</stringValue>
+                    <stringValue>Data gathering not required</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
@@ -625,7 +571,7 @@ IF(ISBLANK({!advice.Additional_Questions_to_be_asked_on_call__c}), &quot;Outstan
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Information requests required</stringValue>
+                    <stringValue>Data gathering required</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
@@ -649,7 +595,7 @@ IF(ISBLANK({!advice.Additional_Questions_to_be_asked_on_call__c}), &quot;Outstan
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Information requests complete</stringValue>
+                    <stringValue>Push to data analysis</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>

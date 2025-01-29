@@ -158,6 +158,7 @@
             <label>Success</label>
         </rules>
     </decisions>
+    <description>Replaced by AdviceOrchestrationAutomation</description>
     <environments>Default</environments>
     <formulas>
         <description>Returns true if this is a new record.</description>
@@ -166,7 +167,7 @@
         <expression>ISNEW()</expression>
     </formulas>
     <interviewLabel>Advice | Top-up {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Advice | Top-up</label>
+    <label>zUnused | Advice | Top-up</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -233,7 +234,7 @@ ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_setup_task</name>
         <label>Create setup task</label>

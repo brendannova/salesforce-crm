@@ -264,7 +264,9 @@
             <label>Updated</label>
         </rules>
     </decisions>
-    <description>Record triggered flow to automate actions for protection advice.</description>
+    <description>Replaced by AdviceOrchestrationAutomation
+
+Record triggered flow to automate actions for protection advice.</description>
     <environments>Default</environments>
     <formulas>
         <description>Returns true if this is a new record.</description>
@@ -273,7 +275,7 @@
         <expression>ISNEW()</expression>
     </formulas>
     <interviewLabel>Advice | Protection {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Advice | Protection</label>
+    <label>zUnused | Advice | Protection</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -405,7 +407,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_assign_planner_task</name>
         <label>Create assign planner task</label>

@@ -4,8 +4,8 @@
     <assignments>
         <name>Create_new_SLA</name>
         <label>Create new SLA</label>
-        <locationX>50</locationX>
-        <locationY>1835</locationY>
+        <locationX>358</locationX>
+        <locationY>2111</locationY>
         <assignmentItems>
             <assignToReference>createNewSla</assignToReference>
             <operator>Assign</operator>
@@ -18,10 +18,43 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_annual_review_data_gathering_task</name>
+        <label>Set annual review  data gathering task</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>taskToClose</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ADVICE_ANNUAL_REVIEW_DATA_GATHERING</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Close_data_gathering_task_annual_review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_protection_data_gathering_task</name>
+        <label>Set protection data gathering task</label>
+        <locationX>754</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>taskToClose</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ADVICE_PROTECTION_DATA_GATHERING</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Close_data_gathering_task_annual_review</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_SLA_status_variables</name>
         <label>Set SLA status variables</label>
-        <locationX>182</locationX>
-        <locationY>1619</locationY>
+        <locationX>490</locationX>
+        <locationY>1895</locationY>
         <assignmentItems>
             <assignToReference>statusNew</assignToReference>
             <operator>Assign</operator>
@@ -41,42 +74,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_status_to_data_analysis</name>
-        <label>Set status to data analysis</label>
-        <locationX>347</locationX>
-        <locationY>539</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.Advice_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Data analysis</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Update_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_status_to_prepare_advice</name>
-        <label>Set status to prepare advice</label>
-        <locationX>611</locationX>
-        <locationY>539</locationY>
-        <assignmentItems>
-            <assignToReference>$Record.Advice_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Prepare advice</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_variables</name>
         <label>Set variables</label>
-        <locationX>743</locationX>
+        <locationX>688</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -93,14 +93,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Stage</targetReference>
+            <targetReference>Advice_type</targetReference>
         </connector>
     </assignments>
     <customErrors>
         <name>FlowFaultError</name>
         <label>Flow Fault Error</label>
-        <locationX>842</locationX>
-        <locationY>1211</locationY>
+        <locationX>1370</locationX>
+        <locationY>1487</locationY>
         <customErrorMessages>
             <errorMessage>{!$Flow.FaultMessage}{!Manage_SLAs.errorMessage}</errorMessage>
             <isFieldError>false</isFieldError>
@@ -109,18 +109,91 @@
     <customErrors>
         <name>No_advice_type_status_error</name>
         <label>No advice type status error</label>
-        <locationX>578</locationX>
-        <locationY>1319</locationY>
+        <locationX>886</locationX>
+        <locationY>1595</locationY>
         <customErrorMessages>
             <errorMessage>No advice type status found. Please raise a ticket.</errorMessage>
             <isFieldError>false</isFieldError>
         </customErrorMessages>
     </customErrors>
     <decisions>
+        <name>Advice_type</name>
+        <label>Advice type</label>
+        <locationX>688</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>StatusDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>Annual_review</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_ACCUMULATION</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_RETIREMENT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stage</targetReference>
+            </connector>
+            <label>Annual review</label>
+        </rules>
+        <rules>
+            <name>Protection</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PROTECTION</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_gathering</targetReference>
+            </connector>
+            <label>Protection</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Data_gathering</name>
+        <label>Data gathering</label>
+        <locationX>886</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>StatusDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not completed</defaultConnectorLabel>
+        <rules>
+            <name>Completed_protection_data_gathering</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prepare advice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_protection_data_gathering_task</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Completed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Found_advice_type_status</name>
         <label>Found advice type status</label>
-        <locationX>380</locationX>
-        <locationY>1211</locationY>
+        <locationX>688</locationX>
+        <locationY>1487</locationY>
         <defaultConnector>
             <targetReference>No_advice_type_status_error</targetReference>
         </defaultConnector>
@@ -144,8 +217,8 @@
     <decisions>
         <name>Initial_task</name>
         <label>Initial task</label>
-        <locationX>182</locationX>
-        <locationY>1319</locationY>
+        <locationX>490</locationX>
+        <locationY>1595</locationY>
         <defaultConnector>
             <targetReference>Set_SLA_status_variables</targetReference>
         </defaultConnector>
@@ -169,8 +242,8 @@
     <decisions>
         <name>SLA_applies</name>
         <label>SLA applies?</label>
-        <locationX>182</locationX>
-        <locationY>1727</locationY>
+        <locationX>490</locationX>
+        <locationY>2003</locationY>
         <defaultConnector>
             <targetReference>Manage_SLAs</targetReference>
         </defaultConnector>
@@ -194,8 +267,8 @@
     <decisions>
         <name>SLA_outcome</name>
         <label>SLA outcome</label>
-        <locationX>182</locationX>
-        <locationY>2135</locationY>
+        <locationX>490</locationX>
+        <locationY>2411</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>FlowFaultError</targetReference>
@@ -217,14 +290,14 @@
     <decisions>
         <name>Stage</name>
         <label>Stage</label>
-        <locationX>743</locationX>
-        <locationY>431</locationY>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
         <defaultConnector>
             <targetReference>StatusDecision</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No change</defaultConnectorLabel>
         <rules>
-            <name>DG_complete_catch_up_call</name>
+            <name>DG_complete_catch_up_call_ready</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Advice_Status__c</leftValueReference>
@@ -256,120 +329,56 @@
             </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
-                <targetReference>Close_data_gathering_task</targetReference>
+                <targetReference>Set_annual_review_data_gathering_task</targetReference>
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-            <label>DG complete -&gt; catch up call</label>
+            <label>DG complete / catch up call ready</label>
         </rules>
         <rules>
-            <name>Completed</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Data_analysis_or_prepare_advice</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Advice_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Data gathering</stringValue>
+                    <stringValue>Data analysis</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
+                    <stringValue>Prepare advice</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_status_to_data_analysis</targetReference>
+                <targetReference>Set_annual_review_data_gathering_task</targetReference>
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-            <label>DG -&gt; DA</label>
-        </rules>
-        <rules>
-            <name>DG_complete_DA</name>
-            <conditionLogic>1 AND (2 OR 3) AND (4 OR 5) AND (6 OR 7) AND (8 OR 9)</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Not required</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Not required</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RtqStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RtqStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>No update required</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Skipped</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_status_to_prepare_advice</targetReference>
-            </connector>
-            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-            <label>Prepare advice</label>
+            <label>Data analysis or prepare advice</label>
         </rules>
     </decisions>
     <decisions>
         <name>StatusDecision</name>
         <label>Status</label>
-        <locationX>743</locationX>
-        <locationY>995</locationY>
+        <locationX>688</locationX>
+        <locationY>1079</locationY>
         <defaultConnectorLabel>No change</defaultConnectorLabel>
+        <rules>
+            <name>Advice_type_changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_orchestrated_task_on_advice</targetReference>
+            </connector>
+            <label>Advice type changed</label>
+        </rules>
         <rules>
             <name>Updated</name>
             <conditionLogic>or</conditionLogic>
@@ -393,9 +402,7 @@
             <label>Updated</label>
         </rules>
     </decisions>
-    <description>Replaced by AdviceOrchestrationAutomation
-
-Record triggered flow to automate actions for annual review advice.</description>
+    <description>Record triggered flow to automate actions for orchestrated advice.</description>
     <environments>Default</environments>
     <formulas>
         <description>Returns true if this is a new record.</description>
@@ -403,8 +410,8 @@ Record triggered flow to automate actions for annual review advice.</description
         <dataType>Boolean</dataType>
         <expression>ISNEW()</expression>
     </formulas>
-    <interviewLabel>Advice | Annual review {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>zUnused | Advice | Annual review</label>
+    <interviewLabel>Advice | Orchestration | Automation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Advice | Orchestration | Automation</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -427,8 +434,8 @@ Record triggered flow to automate actions for annual review advice.</description
     <recordLookups>
         <name>Get_advice_type_status</name>
         <label>Get advice type status</label>
-        <locationX>380</locationX>
-        <locationY>1103</locationY>
+        <locationX>688</locationX>
+        <locationY>1379</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_advice_type_status</targetReference>
@@ -459,9 +466,9 @@ Record triggered flow to automate actions for annual review advice.</description
         <queriedFields>Task__c</queriedFields>
     </recordLookups>
     <recordUpdates>
-        <name>Close_data_gathering_task</name>
+        <name>Close_data_gathering_task_annual_review</name>
         <label>Close data gathering task</label>
-        <locationX>611</locationX>
+        <locationX>50</locationX>
         <locationY>755</locationY>
         <connector>
             <targetReference>StatusDecision</targetReference>
@@ -496,7 +503,7 @@ Record triggered flow to automate actions for annual review advice.</description
             <field>OW_task_information_name__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_DATA_GATHERING</stringValue>
+                <elementReference>taskToClose</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -514,38 +521,72 @@ Record triggered flow to automate actions for annual review advice.</description
         <object>Task</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_advice</name>
-        <label>Update advice</label>
-        <locationX>611</locationX>
-        <locationY>647</locationY>
+        <name>Close_orchestrated_task_on_advice</name>
+        <label>Close orchestrated task on advice</label>
+        <locationX>468</locationX>
+        <locationY>1187</locationY>
         <connector>
-            <targetReference>Close_data_gathering_task</targetReference>
+            <targetReference>Get_advice_type_status</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>FlowFaultError</targetReference>
-        </faultConnector>
-        <inputReference>$Record</inputReference>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>FinServ__Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
     </recordUpdates>
     <start>
-        <locationX>617</locationX>
+        <locationX>562</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_variables</targetReference>
         </connector>
-        <filterFormula>{!$Record.RecordType.DeveloperName} = &quot;AnnualReview&quot; &amp;&amp;
-({!$Record.AdviceType__r.DeveloperName__c} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; ||
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;ANNUAL_REVIEW_RETIREMENT&quot;)</filterFormula>
+        <filterFormula>{!$Record.AdviceType__r.DeveloperName__c} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; ||
+{!$Record.AdviceType__r.DeveloperName__c} = &quot;ANNUAL_REVIEW_RETIREMENT&quot; || 
+{!$Record.AdviceType__r.DeveloperName__c} = &quot;TOP_UP&quot; || 
+{!$Record.AdviceType__r.DeveloperName__c} = &quot;WITHDRAWAL&quot; || 
+{!$Record.AdviceType__r.DeveloperName__c} = &quot;REGULAR_AMENDMENT&quot; || 
+{!$Record.AdviceType__r.DeveloperName__c} = &quot;PROTECTION&quot;</filterFormula>
         <object>Advice__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <subflows>
         <name>Create_initial_status_task</name>
         <label>Create initial status task</label>
-        <locationX>50</locationX>
-        <locationY>1427</locationY>
+        <locationX>358</locationX>
+        <locationY>1703</locationY>
         <connector>
             <targetReference>Set_SLA_status_variables</targetReference>
         </connector>
@@ -579,12 +620,18 @@ Record triggered flow to automate actions for annual review advice.</description
     <subflows>
         <name>Manage_SLAs</name>
         <label>Manage SLAs</label>
-        <locationX>182</locationX>
-        <locationY>2027</locationY>
+        <locationX>490</locationX>
+        <locationY>2303</locationY>
         <connector>
             <targetReference>SLA_outcome</targetReference>
         </connector>
         <flowName>ServiceLevelAgreementManage</flowName>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>createNewSla</name>
             <value>
@@ -607,12 +654,6 @@ Record triggered flow to automate actions for annual review advice.</description
             <name>statusNew</name>
             <value>
                 <elementReference>statusNew</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>adviceId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -667,6 +708,13 @@ Record triggered flow to automate actions for annual review advice.</description
     </variables>
     <variables>
         <name>statusNew</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>taskToClose</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

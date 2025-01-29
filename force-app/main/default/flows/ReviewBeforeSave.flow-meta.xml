@@ -5,7 +5,7 @@
         <description>Set the fact find to be not visible to the customer and indicate it is completed</description>
         <name>Mark_fact_find_as_completed_and_hide</name>
         <label>Mark fact find as completed and hide</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_review_fact_find_status__c</assignToReference>
@@ -70,7 +70,7 @@
         <description>Set the record to be visible to the customer</description>
         <name>Set_to_visible</name>
         <label>Set to visible</label>
-        <locationX>50</locationX>
+        <locationX>490</locationX>
         <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_visible_to_customer__c</assignToReference>
@@ -87,21 +87,6 @@
         <locationX>402</locationX>
         <locationY>587</locationY>
         <defaultConnectorLabel>Not mapped</defaultConnectorLabel>
-        <rules>
-            <name>Visible_to_customer</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Visible to customer</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_to_visible</targetReference>
-            </connector>
-            <label>Visible to customer</label>
-        </rules>
         <rules>
             <name>Already_completed</name>
             <conditionLogic>and</conditionLogic>
@@ -145,6 +130,21 @@
                 <targetReference>Set_to_not_visible_to_customer_0</targetReference>
             </connector>
             <label>Not visible or skipped</label>
+        </rules>
+        <rules>
+            <name>Visible_to_customer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Visible to customer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_to_visible</targetReference>
+            </connector>
+            <label>Visible to customer</label>
         </rules>
     </decisions>
     <decisions>

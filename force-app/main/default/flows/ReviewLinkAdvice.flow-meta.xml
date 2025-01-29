@@ -2,33 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>Link_advice_to_review</name>
-        <label>Link advice to review</label>
-        <locationX>314</locationX>
-        <locationY>998</locationY>
-        <assignmentItems>
-            <assignToReference>advice.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.OW_review__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>reviewId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Link_review_to_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Link_review_to_advice</name>
         <label>Link review to advice</label>
-        <locationX>578</locationX>
-        <locationY>1190</locationY>
+        <locationX>1062</locationX>
+        <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>review.OW_advice__c</assignToReference>
             <operator>Assign</operator>
@@ -37,14 +14,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Action_type</targetReference>
+            <targetReference>Error_occurred</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_advice_ID</name>
         <label>Set advice ID</label>
-        <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationX>798</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
             <operator>Assign</operator>
@@ -53,14 +30,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Link_advice_to_review</targetReference>
+            <targetReference>Change_advice_type</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_advice_ID_from_new_advice</name>
         <label>Set advice ID</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>1062</locationX>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
             <operator>Assign</operator>
@@ -73,17 +50,26 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_IDs</name>
-        <label>Set IDs</label>
-        <locationX>314</locationX>
-        <locationY>350</locationY>
+        <name>Set_error_to_fault</name>
+        <label>Set error to fault</label>
+        <locationX>754</locationX>
+        <locationY>2054</locationY>
         <assignmentItems>
-            <assignToReference>reviewId</assignToReference>
+            <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Roll_back</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_IDs</name>
+        <label>Set IDs</label>
+        <locationX>666</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
             <operator>Assign</operator>
@@ -105,7 +91,7 @@
     <assignments>
         <name>Set_review_ID</name>
         <label>Set review ID</label>
-        <locationX>314</locationX>
+        <locationX>666</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>reviewId</assignToReference>
@@ -121,7 +107,7 @@
     <assignments>
         <name>Unlink</name>
         <label>Unlink</label>
-        <locationX>50</locationX>
+        <locationX>270</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>advice.OW_review__c</assignToReference>
@@ -132,7 +118,7 @@
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Action_type</targetReference>
+            <targetReference>Error_occurred</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -155,14 +141,14 @@
         <name>Action_type</name>
         <label>Action type</label>
         <locationX>314</locationX>
-        <locationY>1382</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Update_review</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>New advice</defaultConnectorLabel>
         <rules>
-            <name>Existing_advice_and_unlink</name>
-            <conditionLogic>or</conditionLogic>
+            <name>Unlink_advice</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>UnlinkAdvice.renderNext</leftValueReference>
                 <operator>EqualTo</operator>
@@ -170,24 +156,43 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>LinkType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Existing</elementReference>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Update_advice</targetReference>
             </connector>
-            <label>Existing advice and unlink</label>
+            <label>Unlink advice</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Error_occurred</name>
+        <label>Error occurred</label>
+        <locationX>666</locationX>
+        <locationY>1490</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Roll_back</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Error</defaultConnectorLabel>
+        <rules>
+            <name>Error</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Action_type</targetReference>
+            </connector>
+            <label>No error</label>
         </rules>
     </decisions>
     <decisions>
         <name>Link_type</name>
         <label>Link type</label>
-        <locationX>578</locationX>
-        <locationY>782</locationY>
+        <locationX>1062</locationX>
+        <locationY>890</locationY>
         <defaultConnectorLabel>Unknown</defaultConnectorLabel>
         <rules>
             <name>Existing_advice_outcome</name>
@@ -223,10 +228,10 @@
     <decisions>
         <name>Linked_to_advice</name>
         <label>Linked to advice?</label>
-        <locationX>314</locationX>
+        <locationX>666</locationX>
         <locationY>458</locationY>
         <defaultConnector>
-            <targetReference>Get_open_advice</targetReference>
+            <targetReference>Get_ad_hoc_advice_type</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not linked</defaultConnectorLabel>
         <rules>
@@ -269,14 +274,45 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Get_ad_hoc_advice_type</name>
+        <label>Get ad hoc advice type</label>
+        <locationX>1062</locationX>
+        <locationY>566</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_open_advice</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>AD_HOC</stringValue>
+            </value>
+        </filters>
+        <object>AdviceType__c</object>
+        <outputReference>adHocAdviceType</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>RecordTypeDeveloperName__c</queriedFields>
+        <queriedFields>AdviceChecklistRecordTypeDeveloperName__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>50</locationX>
+        <locationX>270</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Already_linked_screen</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -294,13 +330,17 @@
     <recordLookups>
         <name>Get_open_advice</name>
         <label>Get open advice</label>
-        <locationX>578</locationX>
-        <locationY>566</locationY>
+        <locationX>1062</locationX>
+        <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>New_or_existing_advice</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND (2 OR 3 OR 4) AND 5</filterLogic>
         <filters>
             <field>Advice_Household__c</field>
             <operator>EqualTo</operator>
@@ -322,6 +362,20 @@
                 <stringValue>Data gathering</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Advice_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Risk Call</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AdviceType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>adHocAdviceType.Id</elementReference>
+            </value>
+        </filters>
         <object>Advice__c</object>
         <outputReference>openAdvice</outputReference>
         <queriedFields>Id</queriedFields>
@@ -331,12 +385,16 @@
     <recordLookups>
         <name>Get_review_details</name>
         <label>Get review details</label>
-        <locationX>314</locationX>
+        <locationX>666</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_IDs</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -351,28 +409,44 @@
         <queriedFields>OW_household__c</queriedFields>
         <queriedFields>OW_advice__c</queriedFields>
     </recordLookups>
+    <recordRollbacks>
+        <name>Roll_back</name>
+        <label>Roll back</label>
+        <locationX>754</locationX>
+        <locationY>2162</locationY>
+        <connector>
+            <targetReference>Display_error</targetReference>
+        </connector>
+    </recordRollbacks>
     <recordUpdates>
         <name>Update_advice</name>
         <label>Update advice</label>
-        <locationX>182</locationX>
-        <locationY>1490</locationY>
+        <locationX>50</locationX>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>Update_review</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault</targetReference>
+        </faultConnector>
         <inputReference>advice</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_review</name>
         <label>Update review</label>
         <locationX>314</locationX>
-        <locationY>1682</locationY>
+        <locationY>1946</locationY>
+        <faultConnector>
+            <targetReference>Set_error_to_fault</targetReference>
+        </faultConnector>
         <inputReference>review</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Already_linked_screen</name>
         <label>Already linked screen</label>
-        <locationX>50</locationX>
+        <locationX>270</locationX>
         <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -409,10 +483,26 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Display_error</name>
+        <label>Display error</label>
+        <locationX>754</locationX>
+        <locationY>2270</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorMessagePrompt</name>
+            <fieldText>&lt;p&gt;Error occurred: {!errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>New_or_existing_advice</name>
         <label>New or existing advice</label>
-        <locationX>578</locationX>
-        <locationY>674</locationY>
+        <locationX>1062</locationX>
+        <locationY>782</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -497,7 +587,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_review_ID</targetReference>
@@ -507,12 +597,24 @@
     <subflows>
         <name>Call_create_advice_sub_flow</name>
         <label>Call create advice sub-flow</label>
-        <locationX>578</locationX>
-        <locationY>890</locationY>
+        <locationX>1062</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Set_advice_ID_from_new_advice</targetReference>
         </connector>
         <flowName>AdviceCreate</flowName>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isReview</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>reviewId</name>
             <value>
@@ -520,16 +622,76 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>householdId</name>
+            <name>updateAdvice</name>
             <value>
-                <elementReference>householdId</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <outputAssignments>
             <assignToReference>advice</assignToReference>
             <name>advice</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
+    <subflows>
+        <name>Change_advice_type</name>
+        <label>Change advice type</label>
+        <locationX>798</locationX>
+        <locationY>1106</locationY>
+        <connector>
+            <targetReference>Link_review_to_advice</targetReference>
+        </connector>
+        <flowName>AdviceCreate</flowName>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isReview</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>reviewId</name>
+            <value>
+                <elementReference>reviewId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>updateAdvice</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>advice</assignToReference>
+            <name>advice</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <name>adHocAdviceType</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AdviceType__c</objectType>
+    </variables>
     <variables>
         <description>The advice this review is linked to.</description>
         <name>advice</name>
@@ -540,7 +702,30 @@
         <objectType>Advice__c</objectType>
     </variables>
     <variables>
+        <name>adviceChecklist</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AdviceChecklist__c</objectType>
+    </variables>
+    <variables>
         <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>annualReviewAdviceTypes</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AdviceType__c</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

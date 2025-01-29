@@ -2,10 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
     <assignments>
-        <name>Check_Is_Closed_Field</name>
-        <label>Check Is Closed Field</label>
+        <name>Check_Is_Closed</name>
+        <label>Check Is Closed</label>
         <locationX>974</locationX>
-        <locationY>1295</locationY>
+        <locationY>1787</locationY>
         <assignmentItems>
             <assignToReference>$Record.IsClosed__c</assignToReference>
             <operator>Assign</operator>
@@ -14,14 +14,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Moved_to_in_fulfilment</targetReference>
+            <targetReference>Status_completed</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_4_eye_review_complete_date</name>
         <label>Set 4 eye review complete date</label>
         <locationX>1370</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.X4_eye_review_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -29,15 +29,12 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_create_deck_complete_date</name>
         <label>Set create deck complete date</label>
         <locationX>842</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.Create_deck_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -45,9 +42,6 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_data_analysis_status_to_in_progress</name>
@@ -62,7 +56,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Status_completed</targetReference>
+            <targetReference>Advice_type</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -78,7 +72,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Status_completed</targetReference>
+            <targetReference>Advice_type</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -94,14 +88,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Status_completed</targetReference>
+            <targetReference>Advice_type</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_data_gathering_complete_date</name>
         <label>Set data gathering complete date</label>
         <locationX>578</locationX>
-        <locationY>695</locationY>
+        <locationY>2087</locationY>
         <assignmentItems>
             <assignToReference>$Record.Data_Gathering_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -117,7 +111,7 @@
         <name>Set_deck_complete_complete_date</name>
         <label>Set deck complete complete date</label>
         <locationX>1370</locationX>
-        <locationY>695</locationY>
+        <locationY>2087</locationY>
         <assignmentItems>
             <assignToReference>$Record.Deck_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -133,7 +127,7 @@
         <name>Set_fulfilment_start_date</name>
         <label>Set fulfilment start date</label>
         <locationX>974</locationX>
-        <locationY>1595</locationY>
+        <locationY>1187</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_fulfilment_start_date__c</assignToReference>
             <operator>Assign</operator>
@@ -149,7 +143,7 @@
         <name>Set_meeting_held_date</name>
         <label>Set meeting held date</label>
         <locationX>1634</locationX>
-        <locationY>695</locationY>
+        <locationY>2087</locationY>
         <assignmentItems>
             <assignToReference>$Record.Meeting_Held_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -165,7 +159,7 @@
         <name>Set_narrative_approval_complete_date</name>
         <label>Set narrative approval complete date</label>
         <locationX>314</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.Narrative_approval_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -173,15 +167,12 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_planner_suitability_narrative_complete_date</name>
         <label>Set planner suitability narrative complete date</label>
         <locationX>50</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.Planner_Suitability_Narrative_complete_d__c</assignToReference>
             <operator>Assign</operator>
@@ -189,15 +180,12 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_prepare_fulfilment_complete_date</name>
         <label>Set prepare fulfilment complete date</label>
         <locationX>1898</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.Prepare_fulfilment_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -205,15 +193,12 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_product_research_complete_date</name>
         <label>Set product research complete date</label>
         <locationX>578</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_research_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -221,15 +206,12 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_ready_for_4_eye_complete_date</name>
         <label>Set ready for 4 eye complete date</label>
         <locationX>1106</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.Ready_for_4_eye_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -237,15 +219,12 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_ready_for_suitability_complete_date</name>
         <label>Set ready for suitability complete date</label>
         <locationX>842</locationX>
-        <locationY>695</locationY>
+        <locationY>2087</locationY>
         <assignmentItems>
             <assignToReference>$Record.Ready_for_Suitability_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -261,7 +240,7 @@
         <name>Set_setup_complete_date</name>
         <label>Set setup complete date</label>
         <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationY>2087</locationY>
         <assignmentItems>
             <assignToReference>$Record.Setup_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -277,7 +256,7 @@
         <name>Set_status_change_date</name>
         <label>Set status change date</label>
         <locationX>974</locationX>
-        <locationY>1895</locationY>
+        <locationY>1487</locationY>
         <assignmentItems>
             <assignToReference>$Record.Advice_Status_change_date__c</assignToReference>
             <operator>Assign</operator>
@@ -285,12 +264,63 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Advice_closed_or_open</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_status_to_data_analysis</name>
+        <label>Set status to data analysis</label>
+        <locationX>402</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Advice_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Data analysis</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Moved_to_in_fulfilment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_status_to_prepare_advice</name>
+        <label>Set status to prepare advice</label>
+        <locationX>666</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Advice_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prepare advice</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Moved_to_in_fulfilment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_status_to_prepare_advice_protection</name>
+        <label>Set status to prepare advice</label>
+        <locationX>1106</locationX>
+        <locationY>803</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Advice_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Prepare advice</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Moved_to_in_fulfilment</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_suitability_approval_complete_date</name>
         <label>Set suitability approval complete date</label>
         <locationX>1634</locationX>
-        <locationY>995</locationY>
+        <locationY>2387</locationY>
         <assignmentItems>
             <assignToReference>$Record.Suitability_approval_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -298,15 +328,12 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Set_suitability_in_progress_complete_date</name>
         <label>Set suitability in progress complete date</label>
         <locationX>1106</locationX>
-        <locationY>695</locationY>
+        <locationY>2087</locationY>
         <assignmentItems>
             <assignToReference>$Record.Suitability_In_Progress_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -322,7 +349,7 @@
         <name>Uncheck_Is_Closed</name>
         <label>Uncheck Is Closed</label>
         <locationX>1238</locationX>
-        <locationY>1295</locationY>
+        <locationY>1787</locationY>
         <assignmentItems>
             <assignToReference>$Record.IsClosed__c</assignToReference>
             <operator>Assign</operator>
@@ -331,18 +358,158 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Moved_to_in_fulfilment</targetReference>
+            <targetReference>Status_completed</targetReference>
         </connector>
     </assignments>
     <decisions>
-        <name>Data_gathering_status</name>
-        <label>Data gathering status</label>
+        <name>Advice_closed_or_open</name>
+        <label>Advice closed or open</label>
+        <locationX>1106</locationX>
+        <locationY>1679</locationY>
+        <defaultConnector>
+            <targetReference>Uncheck_Is_Closed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Open</defaultConnectorLabel>
+        <rules>
+            <name>Closed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Suitability Declined</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cancelled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Is_Closed</targetReference>
+            </connector>
+            <label>Closed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Advice_type</name>
+        <label>Advice type</label>
+        <locationX>1106</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>Moved_to_in_fulfilment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>Annual_review</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_ACCUMULATION</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_RETIREMENT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Push_status</targetReference>
+            </connector>
+            <label>Annual review</label>
+        </rules>
+        <rules>
+            <name>Protection</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PROTECTION</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_gathering</targetReference>
+            </connector>
+            <label>Protection</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Data_gathering</name>
+        <label>Data gathering</label>
+        <locationX>1238</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Moved_to_in_fulfilment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not completed</defaultConnectorLabel>
+        <rules>
+            <name>Completed_protection_data_gathering</name>
+            <conditionLogic>1 AND (2 OR 3) AND (4 OR 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_status_to_prepare_advice_protection</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Completed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Data_gathering_status_set_to</name>
+        <label>Data gathering status set to</label>
         <locationX>1106</locationX>
         <locationY>287</locationY>
         <defaultConnector>
-            <targetReference>Status_completed</targetReference>
+            <targetReference>Advice_type</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>No change</defaultConnectorLabel>
         <rules>
             <name>Not_required</name>
             <conditionLogic>and</conditionLogic>
@@ -393,49 +560,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Has_Advice_been_closed</name>
-        <label>Has Advice been closed?</label>
-        <locationX>1106</locationX>
-        <locationY>1187</locationY>
-        <defaultConnector>
-            <targetReference>Uncheck_Is_Closed</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Advice is not closed</defaultConnectorLabel>
-        <rules>
-            <name>Is_closed</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Suitability Declined</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Cancelled</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Is_Closed_Field</targetReference>
-            </connector>
-            <label>Is closed</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Moved_to_in_fulfilment</name>
         <label>Moved to in fulfilment</label>
         <locationX>1106</locationX>
-        <locationY>1487</locationY>
+        <locationY>1079</locationY>
         <defaultConnector>
             <targetReference>Status_changed</targetReference>
         </defaultConnector>
@@ -465,10 +593,125 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Push_status</name>
+        <label>Push status</label>
+        <locationX>666</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Moved_to_in_fulfilment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No status change</defaultConnectorLabel>
+        <rules>
+            <name>Data_gathering_Data_analysis</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_status_to_data_analysis</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Data gathering -&gt; Data analysis</label>
+        </rules>
+        <rules>
+            <name>Move_to_prepare_advice</name>
+            <conditionLogic>1 AND (2 OR 3) AND (4 OR 5) AND (6 OR 7) AND (8 OR 9)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RtqStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RtqStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No update required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Skipped</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_status_to_prepare_advice</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Move to prepare advice</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Status_changed</name>
         <label>Status changed</label>
         <locationX>1106</locationX>
-        <locationY>1787</locationY>
+        <locationY>1379</locationY>
+        <defaultConnector>
+            <targetReference>Advice_closed_or_open</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Not changed</defaultConnectorLabel>
         <rules>
             <name>Changed</name>
@@ -491,7 +734,7 @@
         <name>Status_completed</name>
         <label>Status completed?</label>
         <locationX>1106</locationX>
-        <locationY>587</locationY>
+        <locationY>1979</locationY>
         <defaultConnector>
             <targetReference>Suitability_stage_change</targetReference>
         </defaultConnector>
@@ -676,10 +919,7 @@
         <name>Suitability_stage_change</name>
         <label>Suitability stage change</label>
         <locationX>1106</locationX>
-        <locationY>887</locationY>
-        <defaultConnector>
-            <targetReference>Has_Advice_been_closed</targetReference>
-        </defaultConnector>
+        <locationY>2279</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Planner_suitability_narrative</name>
@@ -977,7 +1217,7 @@ null )</expression>
         <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Data_gathering_status</targetReference>
+            <targetReference>Data_gathering_status_set_to</targetReference>
         </connector>
         <object>Advice__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
