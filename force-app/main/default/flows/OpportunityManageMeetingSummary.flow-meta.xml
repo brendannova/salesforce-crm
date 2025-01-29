@@ -2,6 +2,23 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
     <assignments>
+        <name>Assign</name>
+        <label>Get Opportunity Error</label>
+        <locationX>1018</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>There&#39;s been an error finding this opportunity.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_new_meeting_link</name>
         <label>Assign new meeting link</label>
         <locationX>490</locationX>
@@ -14,7 +31,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>opportunityNeedsUpdating</assignToReference>
+            <assignToReference>updateOpportunity</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -25,19 +42,19 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_opportunity_variable</name>
-        <label>Assign opportunity variable</label>
-        <locationX>314</locationX>
-        <locationY>458</locationY>
+        <name>Assign_Record_Id</name>
+        <label>Assign Record Id</label>
+        <locationX>1062</locationX>
+        <locationY>134</locationY>
         <assignmentItems>
-            <assignToReference>opportunity</assignToReference>
+            <assignToReference>opportunityId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Opportunity</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Disco_meeting_link_saved</targetReference>
+            <targetReference>Get_File_Processing_Request</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -53,6 +70,40 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Get_File_Processing_Request_Error</name>
+        <label>Get File Processing Request Error</label>
+        <locationX>2074</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>There&#39;s been an error finding summary information related to this opportunity.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>No_Status_Error</name>
+        <label>No Status Error</label>
+        <locationX>1810</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>We couldn&#39;t find a valid status for the meeting summary.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </connector>
     </assignments>
@@ -86,7 +137,7 @@
             <name>Saved</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Opportunity.Meeting_Recording_URL__c</leftValueReference>
+                <leftValueReference>opportunity.Meeting_Recording_URL__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -111,7 +162,7 @@
             <name>Update_needed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>opportunityNeedsUpdating</leftValueReference>
+                <leftValueReference>updateOpportunity</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -152,8 +203,11 @@
     <decisions>
         <name>File_Processing_Request_State</name>
         <label>File Processing Request State</label>
-        <locationX>930</locationX>
-        <locationY>242</locationY>
+        <locationX>1062</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>No_Status_Error</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>N/A</defaultConnectorLabel>
         <rules>
             <name>None_found</name>
@@ -287,18 +341,21 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordLookups>
         <name>Get_File_Processing_Request</name>
         <label>Get File Processing Request</label>
-        <locationX>930</locationX>
-        <locationY>134</locationY>
+        <locationX>1062</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>File_Processing_Request_State</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Get_File_Processing_Request_Error</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Opportunity__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>opportunityId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -309,24 +366,26 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
         <locationX>314</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_opportunity_variable</targetReference>
+            <targetReference>Disco_meeting_link_saved</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>opportunityId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Opportunity</object>
+        <outputReference>opportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Meeting_Recording_URL__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>Update_Opportunity</name>
@@ -341,6 +400,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         </faultConnector>
         <inputReference>opportunity</inputReference>
     </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Add_meeting_link</name>
         <label>Add meeting link</label>
@@ -413,8 +473,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Completed_Screen</name>
         <label>Completed Screen</label>
-        <locationX>1282</locationX>
-        <locationY>350</locationY>
+        <locationX>1546</locationX>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -446,8 +506,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Processing_Screen</name>
         <label>Processing Screen</label>
-        <locationX>1018</locationX>
-        <locationY>350</locationY>
+        <locationX>1282</locationX>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -504,10 +564,10 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>804</locationX>
+        <locationX>936</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_File_Processing_Request</targetReference>
+            <targetReference>Assign_Record_Id</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -546,8 +606,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <objectType>Opportunity</objectType>
     </variables>
     <variables>
-        <name>opportunityNeedsUpdating</name>
-        <dataType>Boolean</dataType>
+        <name>opportunityId</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -557,6 +617,13 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>updateOpportunity</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
