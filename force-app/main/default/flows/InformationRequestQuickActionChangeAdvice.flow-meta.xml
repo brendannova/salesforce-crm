@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Assign_new_advice_value</name>
+        <label>Assign new advice value</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>informationRequest.Advice__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceSelect.firstSelectedRow.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Information_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_no_advice_value</name>
+        <label>Assign no advice value</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>informationRequest.Advice__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Information_Request</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_the_information_request_linked_to_advice</name>
+        <label>Is the information request linked to advice</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Get_advice</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesLinked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>informationRequest.Advice__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Remove_from_advice</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Allow specialists and planners to update the advice this information request is linked to</description>
     <environments>Default</environments>
     <interviewLabel>IR | Quick action | Change advice {!$Flow.CurrentDateTime}</interviewLabel>
@@ -26,9 +80,9 @@
     <processType>Flow</processType>
     <recordLookups>
         <name>Get_advice</name>
-        <label>Get advice</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
+        <label>Get potential advice</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Collect_details</targetReference>
@@ -38,7 +92,7 @@
             <field>Advice_Household__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.Household__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -53,37 +107,23 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_IR</name>
-        <label>Update IR</label>
-        <locationX>176</locationX>
-        <locationY>350</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>ir.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Advice__c</field>
-            <value>
-                <elementReference>adviceSelect.firstSelectedRow.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>InformationRequest__c</object>
+        <name>Update_Information_Request</name>
+        <label>Update Information Request</label>
+        <locationX>182</locationX>
+        <locationY>650</locationY>
+        <inputReference>informationRequest</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Collect_details</name>
         <label>Collect details</label>
-        <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Update_IR</targetReference>
+            <targetReference>Assign_new_advice_value</targetReference>
         </connector>
         <fields>
             <name>explainText</name>
@@ -113,7 +153,7 @@
             <inputParameters>
                 <name>minRowSelection</name>
                 <value>
-                    <numberValue>0.0</numberValue>
+                    <numberValue>1.0</numberValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -141,27 +181,40 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <start>
+    <screens>
+        <name>Remove_from_advice</name>
+        <label>Remove from advice</label>
         <locationX>50</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_no_advice_value</targetReference>
+        </connector>
+        <fields>
+            <name>unlinkText</name>
+            <fieldText>&lt;p&gt;Click next to unlink this information request from any advice.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If you need to link it to a different piece of advice, unlink it first, then rerun this flow and you&#39;ll able to select other advice.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Unlink advice</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_advice</targetReference>
+            <targetReference>Is_the_information_request_linked_to_advice</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <variables>
-        <name>ir</name>
+        <name>informationRequest</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>InformationRequest__c</objectType>
-    </variables>
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>
