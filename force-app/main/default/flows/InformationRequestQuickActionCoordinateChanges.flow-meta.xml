@@ -2,9 +2,31 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <decisions>
+        <name>Did_an_error_occur</name>
+        <label>Did an error occur?</label>
+        <locationX>182</locationX>
+        <locationY>566</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Display_error_message</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Which_button</name>
         <label>Which button?</label>
-        <locationX>578</locationX>
+        <locationX>732</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -94,7 +116,7 @@
     <recordLookups>
         <name>Get_information_request</name>
         <label>Get information request</label>
-        <locationX>578</locationX>
+        <locationX>732</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -110,13 +132,17 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>InformationRequest__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Advice__c</queriedFields>
+        <queriedFields>InformationRequestStatus__c</queriedFields>
+        <queriedFields>FinancialProductFinServ__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Buttons</name>
         <label>Buttons</label>
-        <locationX>578</locationX>
+        <locationX>732</locationX>
         <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -183,8 +209,24 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Display_error_message</name>
+        <label>Display error message</label>
+        <locationX>50</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorMessageDisplay</name>
+            <fieldText>&lt;p&gt;There&#39;s been an error here with the following message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>452</locationX>
+        <locationX>606</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_information_request</targetReference>
@@ -194,20 +236,27 @@
     <subflows>
         <name>Change_advice</name>
         <label>Change advice</label>
-        <locationX>50</locationX>
+        <locationX>182</locationX>
         <locationY>458</locationY>
+        <connector>
+            <targetReference>Did_an_error_occur</targetReference>
+        </connector>
         <flowName>InformationRequestQuickActionChangeAdvice</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
                 <elementReference>Get_information_request</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Change_contact</name>
         <label>Change contact</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>458</locationY>
         <flowName>InformationRequestQuickActionChangeProviderContact</flowName>
         <inputAssignments>
@@ -220,7 +269,7 @@
     <subflows>
         <name>Change_financial_product_type</name>
         <label>Change financial product type</label>
-        <locationX>842</locationX>
+        <locationX>1018</locationX>
         <locationY>458</locationY>
         <flowName>FinancialProductChangeFinancialProductType</flowName>
         <inputAssignments>
@@ -233,7 +282,7 @@
     <subflows>
         <name>Change_type</name>
         <label>Change type</label>
-        <locationX>314</locationX>
+        <locationX>490</locationX>
         <locationY>458</locationY>
         <flowName>InformationRequestQuickActionChangeType</flowName>
         <inputAssignments>
@@ -243,6 +292,13 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

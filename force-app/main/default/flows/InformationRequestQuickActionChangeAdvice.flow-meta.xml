@@ -2,6 +2,19 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>578</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Assign_new_advice_value</name>
         <label>Assign new advice value</label>
         <locationX>314</locationX>
@@ -87,6 +100,9 @@
         <connector>
             <targetReference>Collect_details</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Advice_Household__c</field>
@@ -96,10 +112,10 @@
             </value>
         </filters>
         <filters>
-            <field>AdvicePresented__c</field>
+            <field>DataGatheringStatus__c</field>
             <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <stringValue>In progress</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -110,7 +126,11 @@
         <name>Update_Information_Request</name>
         <label>Update Information Request</label>
         <locationX>182</locationX>
-        <locationY>650</locationY>
+        <locationY>674</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputReference>informationRequest</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -127,7 +147,7 @@
         </connector>
         <fields>
             <name>explainText</name>
-            <fieldText>&lt;p&gt;Choose the new advice to link this information request to. To remove this from any advice, click next without making a selection.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgba(232, 232, 232, 0.04); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Which advice should the information request be linked to? Only those in data gathering are shown.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -194,7 +214,7 @@
         </connector>
         <fields>
             <name>unlinkText</name>
-            <fieldText>&lt;p&gt;Click next to unlink this information request from any advice.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If you need to link it to a different piece of advice, unlink it first, then rerun this flow and you&#39;ll able to select other advice.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgba(232, 232, 232, 0.04); font-size: 12px; color: rgb(0, 0, 0);&quot;&gt;Proceed to unlink information request from advice. Information request can be linked to another advice after doing this.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Unlink advice</nextOrFinishButtonLabel>
@@ -209,6 +229,13 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>informationRequest</name>
         <dataType>SObject</dataType>
