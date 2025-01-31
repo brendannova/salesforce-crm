@@ -64,7 +64,7 @@
     <assignments>
         <name>Assign_case_fields</name>
         <label>Assign case fields</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>case.Status</assignToReference>
@@ -125,7 +125,7 @@
         <description>Notfiy DS assigned to the case</description>
         <name>Is_related_case_owner_a_person_or_queue</name>
         <label>Is related case owner a person or queue?</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>431</locationY>
         <defaultConnector>
             <targetReference>UpdateRelatedCase</targetReference>
@@ -255,6 +255,10 @@
         <connector>
             <targetReference>User_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_email_queue_Id</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -277,12 +281,12 @@
     <recordUpdates>
         <name>UpdateRelatedCase</name>
         <label>Update related case</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>1247</locationY>
         <inputReference>case</inputReference>
     </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_case_fields</targetReference>
