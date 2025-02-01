@@ -74,6 +74,13 @@
                 <elementReference>RetirementCallNotNeededNotes</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.RetirementCallDeckUrl__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RetirementDeckUrl.value</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <choices>
         <name>NotRequired</name>
@@ -197,10 +204,21 @@
         <description>Sets a default value for the reason why no retirement call is needed.</description>
         <name>RetirementCallNotNeededReasonDefault</name>
         <dataType>String</dataType>
-        <expression>CASE({!advice.RetirementCallNotes__c},
+        <expression>CASE({!advice.RetirementCallStatus__c},
+&quot;NEVER_REQUIRED&quot;, {!RetirementCallNeverRequired},
+CASE({!advice.RetirementCallNotes__c},
 {!$Label.AdviceRetirementCallAlreadyHeld}, {!RetirementCallAlreadyHeld},
 {!$Label.AdviceRetirementCallNeverRequired}, {!RetirementCallNeverRequired},
 {!$Label.AdviceRetirementCallNotRequired}, {!RetirementCallRequiredInFuture},
+&quot;&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>RetirementCallRequiredDefault</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.RetirementCallStatus__c} ,
+&quot;REQUIRED&quot;, &quot;REQUIRED&quot;,
+&quot;NOT_REQUIRED&quot;, &quot;NOT_REQUIRED&quot;,
+&quot;NEVER_REQUIRED&quot;, &quot;NOT_REQUIRED&quot;,
 &quot;&quot;)</expression>
     </formulas>
     <interviewLabel>Advice | Orchestrator | Retirement Call | Assess {!$Flow.CurrentDateTime}</interviewLabel>
@@ -247,7 +265,7 @@
             <choiceReferences>NotRequired</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>advice.RetirementCallStatus__c</elementReference>
+                <elementReference>RetirementCallRequiredDefault</elementReference>
             </defaultValue>
             <fieldText>Is a retirement call required?</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -298,6 +316,49 @@
             </isReadOnly>
             <isRequired>true</isRequired>
         </fields>
+        <fields>
+            <name>RetirementDeckUrl</name>
+            <extensionName>flowruntime:url</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>adviceUpdated.AdviceDeckUrl__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Retirement deck URL</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.NarrativeStatus__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Complete</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>RetirementCallRequired</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Required</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -308,7 +369,7 @@
             <targetReference>Retirement_call_assessment</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <description>The advice record that is being worked with.</description>
         <name>advice</name>
