@@ -29,6 +29,13 @@
                 <stringValue>Complete</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.AllLoaInfoReceivedTimestamp__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_advice</targetReference>
         </connector>
