@@ -43,7 +43,6 @@
         </inputParameters>
         <nameSegment>customNotificationAction</nameSegment>
         <offset>0</offset>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
@@ -65,7 +64,7 @@
     <assignments>
         <name>Assign_case_fields</name>
         <label>Assign case fields</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>case.Status</assignToReference>
@@ -126,7 +125,7 @@
         <description>Notfiy DS assigned to the case</description>
         <name>Is_related_case_owner_a_person_or_queue</name>
         <label>Is related case owner a person or queue?</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>431</locationY>
         <defaultConnector>
             <targetReference>UpdateRelatedCase</targetReference>
@@ -149,17 +148,17 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_user_out_of_office</name>
-        <label>Is user out of office?</label>
+        <name>User_status</name>
+        <label>User status</label>
         <locationX>182</locationX>
         <locationY>647</locationY>
         <defaultConnector>
             <targetReference>Assign_user_ids</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Not out of office</defaultConnectorLabel>
+        <defaultConnectorLabel>User found and available</defaultConnectorLabel>
         <rules>
-            <name>Out_of_office</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Out_of_office_or_not_found</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_user_id.OutOfOfficeMessage</leftValueReference>
                 <operator>IsBlank</operator>
@@ -167,13 +166,20 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_user_id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_email_queue_Id</targetReference>
             </connector>
-            <label>Out of office</label>
+            <label>Out of office or not found</label>
         </rules>
     </decisions>
-    <description>After save flow runs when a new incoming email is created. Notifies owner if owner is a user and updates related case status fields.</description>
+    <description>After save flow runs when a new incoming email is created. Notifies owner if owner is a user and updates related case status fields. If owner is OOO, inactive or not found, assign case back to the queue.</description>
     <environments>Default</environments>
     <interviewLabel>Email message | Inbound | Created {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Email message | Inbound | Created</label>
@@ -247,8 +253,12 @@
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_user_out_of_office</targetReference>
+            <targetReference>User_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Get_email_queue_Id</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -271,12 +281,12 @@
     <recordUpdates>
         <name>UpdateRelatedCase</name>
         <label>Update related case</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>1247</locationY>
         <inputReference>case</inputReference>
     </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_case_fields</targetReference>
