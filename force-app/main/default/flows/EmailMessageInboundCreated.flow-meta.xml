@@ -8,13 +8,13 @@
         <actionName>customNotificationAction</actionName>
         <actionType>customNotificationAction</actionType>
         <connector>
-            <targetReference>UpdateRelatedCase</targetReference>
+            <targetReference>Update_case</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>customNotifTypeId</name>
             <value>
-                <elementReference>NotificationTypeId</elementReference>
+                <elementReference>notificationTypeId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -32,7 +32,7 @@
         <inputParameters>
             <name>body</name>
             <value>
-                <elementReference>Notificationbody</elementReference>
+                <elementReference>notificationBody</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -54,17 +54,17 @@
             <assignToReference>case.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_email_queue_Id.Id</elementReference>
+                <elementReference>Get_email_queue_ID.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>UpdateRelatedCase</targetReference>
+            <targetReference>Update_case</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_case_fields</name>
         <label>Assign case fields</label>
-        <locationX>512</locationX>
+        <locationX>380</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>case.Status</assignToReference>
@@ -106,29 +106,30 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_user_ids</name>
-        <label>Assign user ids</label>
+        <description>Adds the user ID to the list of recipients.</description>
+        <name>Set_notification_recipient</name>
+        <label>Set notification recipient</label>
         <locationX>314</locationX>
         <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>recipientIds</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_user_id.Id</elementReference>
+                <elementReference>Get_user.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_notification_type_id</targetReference>
+            <targetReference>Get_notification_type_ID</targetReference>
         </connector>
     </assignments>
     <decisions>
         <description>Notfiy DS assigned to the case</description>
         <name>Is_related_case_owner_a_person_or_queue</name>
         <label>Is related case owner a person or queue?</label>
-        <locationX>512</locationX>
+        <locationX>380</locationX>
         <locationY>431</locationY>
         <defaultConnector>
-            <targetReference>UpdateRelatedCase</targetReference>
+            <targetReference>Update_case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Queue</defaultConnectorLabel>
         <rules>
@@ -142,7 +143,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_user_id</targetReference>
+                <targetReference>Get_user</targetReference>
             </connector>
             <label>Related case owner is a person</label>
         </rules>
@@ -153,28 +154,28 @@
         <locationX>182</locationX>
         <locationY>647</locationY>
         <defaultConnector>
-            <targetReference>Assign_user_ids</targetReference>
+            <targetReference>Set_notification_recipient</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>User found and available</defaultConnectorLabel>
         <rules>
             <name>Out_of_office_or_not_found</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Get_user_id.OutOfOfficeMessage</leftValueReference>
+                <leftValueReference>Get_user.OutOfOfficeMessage</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_user_id</leftValueReference>
+                <leftValueReference>Get_user</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_email_queue_Id</targetReference>
+                <targetReference>Get_email_queue_ID</targetReference>
             </connector>
             <label>Out of office or not found</label>
         </rules>
@@ -203,8 +204,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_email_queue_Id</name>
-        <label>Get email queue id</label>
+        <name>Get_email_queue_ID</name>
+        <label>Get email queue ID</label>
         <locationX>50</locationX>
         <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -221,11 +222,12 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Group</object>
+        <queriedFields>Id</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_notification_type_id</name>
-        <label>Get notification type id</label>
+        <name>Get_notification_type_ID</name>
+        <label>Get notification type ID</label>
         <locationX>314</locationX>
         <locationY>863</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -242,23 +244,20 @@
         </filters>
         <object>CustomNotificationType</object>
         <outputAssignments>
-            <assignToReference>NotificationTypeId</assignToReference>
+            <assignToReference>notificationTypeId</assignToReference>
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
     <recordLookups>
-        <name>Get_user_id</name>
-        <label>Get user id</label>
+        <description>Gets the record of the user</description>
+        <name>Get_user</name>
+        <label>Get user</label>
         <locationX>182</locationX>
         <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>User_status</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_email_queue_Id</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -279,14 +278,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>UpdateRelatedCase</name>
-        <label>Update related case</label>
-        <locationX>512</locationX>
+        <name>Update_case</name>
+        <label>Update case</label>
+        <locationX>380</locationX>
         <locationY>1247</locationY>
         <inputReference>case</inputReference>
     </recordUpdates>
     <start>
-        <locationX>386</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_case_fields</targetReference>
@@ -312,7 +311,7 @@
     </start>
     <status>Active</status>
     <textTemplates>
-        <name>Notificationbody</name>
+        <name>notificationBody</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>You have a new email from {!$Record.FromName} with subject: {!$Record.Subject}.</text>
     </textTemplates>
@@ -325,14 +324,7 @@
         <objectType>Case</objectType>
     </variables>
     <variables>
-        <name>CaseOwnerId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>NotificationTypeId</name>
+        <name>notificationTypeId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -342,13 +334,6 @@
         <name>recipientIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Status</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
