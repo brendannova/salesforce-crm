@@ -4,7 +4,7 @@
         <name>Assign_household_and_dedicated_specialist</name>
         <label>Assign household and dedicated specialist</label>
         <locationX>314</locationX>
-        <locationY>276</locationY>
+        <locationY>384</locationY>
         <actionName>FlowHelperCaseEmailCreated</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -16,7 +16,6 @@
         </inputParameters>
         <nameSegment>FlowHelperCaseEmailCreated</nameSegment>
         <offset>0</offset>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
@@ -35,6 +34,28 @@
             <targetReference>Update_case</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Case_created_source</name>
+        <label>Case created source</label>
+        <locationX>446</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Manual</defaultConnectorLabel>
+        <rules>
+            <name>Other</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CreatedSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Manual</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_household_and_dedicated_specialist</targetReference>
+            </connector>
+            <label>Other</label>
+        </rules>
+    </decisions>
     <description>Assign case owner and link entitlement process on creation of an email case.</description>
     <environments>Default</environments>
     <interviewLabel>Case | Email | Created {!$Flow.CurrentDateTime}</interviewLabel>
@@ -87,7 +108,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_entitlements</targetReference>
@@ -98,7 +119,7 @@
         <scheduledPaths>
             <name>Assign_to_household_logic</name>
             <connector>
-                <targetReference>Assign_household_and_dedicated_specialist</targetReference>
+                <targetReference>Case_created_source</targetReference>
             </connector>
             <label>Assign to household logic</label>
             <offsetNumber>2</offsetNumber>
