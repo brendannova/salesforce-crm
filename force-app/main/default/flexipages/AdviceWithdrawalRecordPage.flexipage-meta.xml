@@ -67,6 +67,16 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Advice__c.AssignPlanner</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.DeckStatus__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Complete</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Advice__c.CreateDeck</value>
                             <visibilityRule>
                                 <criteria>
@@ -357,7 +367,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Assigned_planner__c</fieldItem>
                 <identifier>RecordAssigned_planner_cField2</identifier>
