@@ -134,10 +134,12 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Flow to update advice when information for an information request has been received</description>
+    <description>Replaced shortly after DG 2 release with new way for completing data analysis. 
+
+Flow to update advice when information for an information request has been received</description>
     <environments>Default</environments>
     <interviewLabel>IR | Information received {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>IR | Information received</label>
+    <label>zUnused | IR | Information received</label>
     <loops>
         <name>Check_all_IRs</name>
         <label>Check all IRs</label>
@@ -218,7 +220,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>adviceIds</name>
         <dataType>String</dataType>

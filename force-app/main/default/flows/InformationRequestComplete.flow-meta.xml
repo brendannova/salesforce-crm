@@ -60,10 +60,12 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Flow to update advice when an information request has been completed</description>
+    <description>Replaced shortly after DG 2 release with new way for completing data analysis. 
+
+Flow to update advice when an information request has been completed</description>
     <environments>Default</environments>
     <interviewLabel>IR | Complete {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>IR | Complete</label>
+    <label>zUnused | IR | Complete</label>
     <loops>
         <name>Check_all_IRs</name>
         <label>Check all IRs</label>
@@ -151,7 +153,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>adviceIds</name>
         <dataType>String</dataType>
