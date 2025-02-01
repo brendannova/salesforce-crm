@@ -295,7 +295,7 @@
     <description>Subflow to reassess the data gatheirng and analysis statuses on a piece of advice whenever an information request is linked or unlinked from it</description>
     <environments>Default</environments>
     <interviewLabel>Advice | Information Requests | Assess {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Advice | Information Requests | Assess</label>
+    <label>zReplaced Advice | Information Requests | Assess</label>
     <loops>
         <name>Information_requests</name>
         <label>Information requests</label>
@@ -403,7 +403,7 @@
             <targetReference>Is_the_included_information_request_id_blank</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>adviceId</name>
         <dataType>String</dataType>
