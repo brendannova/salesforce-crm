@@ -1226,6 +1226,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.AreAnyChangesRequired__c</fieldItem>
+                <identifier>RecordAreAnyChangesRequired_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.NarrativePeerReview__c</fieldItem>
                 <identifier>RecordNarrativePeerReview_cField</identifier>
             </fieldInstance>
@@ -1235,16 +1245,6 @@
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
                     <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.AreAnyChangesRequired__c</fieldItem>
-                <identifier>RecordAreAnyChangesRequired_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.PeerReviewCompletedBy__c</fieldItem>
                 <identifier>RecordPeerReviewCompletedBy_cField</identifier>
@@ -3884,6 +3884,33 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;Retirement call flagged as required on the advice. Please prepare to present content in annual review meeting.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;If this is not right, update retirement call status and notes to not required or never required. You can do this now or when completing the narrative task. &lt;/strong&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText3</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.AdviceName__r.RetirementCallStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>REQUIRED</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AdviceName__r.AdviceType__r.IsAnnualReview__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>true</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

@@ -159,6 +159,13 @@
                 <stringValue>ADVICE_ANNUAL_REVIEW_NARRATIVE_WRITE</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In progress</stringValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Adviser_debrief_updates</name>
@@ -289,7 +296,7 @@
         <name>Create_deck_updates</name>
         <label>Create deck updates</label>
         <locationX>8146</locationX>
-        <locationY>566</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -326,8 +333,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Assess_retirement_call_need</targetReference>
+            <targetReference>Confirm_deck_complete</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -2137,7 +2143,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Confirm_deck_complete</targetReference>
+            <targetReference>Create_deck_updates</targetReference>
         </connector>
         <fields>
             <name>deckComp</name>
@@ -2868,10 +2874,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <name>Confirm_deck_complete</name>
         <label>Confirm deck complete</label>
         <locationX>8146</locationX>
-        <locationY>458</locationY>
-        <connector>
-            <targetReference>Create_deck_updates</targetReference>
-        </connector>
+        <locationY>566</locationY>
         <flowName>AdviceOrchestrationConfirmDeckComplete</flowName>
         <inputAssignments>
             <name>advice</name>
@@ -2885,6 +2888,30 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
                 <elementReference>adviceChecklist</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceUpdated</name>
+            <value>
+                <elementReference>adviceUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>adviceChecklistUpdated</assignToReference>
             <name>adviceChecklistUpdated</name>
@@ -2892,6 +2919,10 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <outputAssignments>
             <assignToReference>adviceUpdated</assignToReference>
             <name>adviceUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
         </outputAssignments>
     </subflows>
     <subflows>
