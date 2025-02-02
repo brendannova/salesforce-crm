@@ -46,6 +46,16 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Advice__c.AssignPlanner</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.DeckStatus__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Complete</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Advice__c.ChangeAdviceMethod</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
@@ -428,7 +438,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Assigned_planner__c</fieldItem>
                 <identifier>RecordAssigned_planner_cField3</identifier>
@@ -1616,21 +1626,10 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection21</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Advice_Status__c}</leftValue>
+                        <leftValue>{!Record.NarrativeStatus__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Setup</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Advice_Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Data gathering</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Advice_Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Data analysis</rightValue>
+                        <rightValue>Not started</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
