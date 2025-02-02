@@ -812,22 +812,9 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Set_retirement_call_date_follow_up</name>
-        <label>Set retirement call date</label>
-        <locationX>12106</locationX>
-        <locationY>458</locationY>
-        <assignmentItems>
-            <assignToReference>advice.RetirementCallDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>RetirementCallDate</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Set_unidentified_task_error</name>
         <label>Set unidentified task error</label>
-        <locationX>12370</locationX>
+        <locationX>12106</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -840,7 +827,7 @@
     <assignments>
         <name>Set_variables</name>
         <label>Set variables</label>
-        <locationX>6210</locationX>
+        <locationX>6078</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklist.Id</assignToReference>
@@ -1375,7 +1362,7 @@
     <decisions>
         <name>Status</name>
         <label>Task type</label>
-        <locationX>6210</locationX>
+        <locationX>6078</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_unidentified_task_error</targetReference>
@@ -1829,21 +1816,6 @@
             </connector>
             <label>Upload docs to portal</label>
         </rules>
-        <rules>
-            <name>Retirement_call_hold</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ADVICE_RETIREMENT_CALL_PRESENT</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Retirement_Call_Confirmation</targetReference>
-            </connector>
-            <label>Retirement call | hold</label>
-        </rules>
     </decisions>
     <decisions>
         <name>Vulnerability_and_COI_update_needed</name>
@@ -1979,6 +1951,14 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <expression>IF({!adviceChecklist.CommentsAddedToDeck__c}, &quot;Yes&quot;, &quot;&quot;)</expression>
     </formulas>
     <formulas>
+        <name>deckReviewPartnerNextTask</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.AdviceMethod__c},
+&quot;NON_PRESENTED&quot;, &quot;Send dropbox email&quot;, 
+&quot;PRESENTED&quot;, &quot;Book suitability meeting&quot;,
+&quot;ERROR: UNKNOWN&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>illustrationsTask</name>
         <dataType>String</dataType>
         <expression>IF({!adviceChecklist.IsLifelineRequired__c} &amp;&amp; {!adviceChecklist.IsTimelineRequired__c}, &quot;ILLUSTRATIONS_LIFELINE_TIMELINE&quot;, 
@@ -2007,14 +1987,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
 &quot;&quot;)</expression>
     </formulas>
     <formulas>
-        <name>nextTaskPartnerDeckReview</name>
-        <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!adviceChecklist.WillThisAdviceBeNonPresented__c},&quot;Yes&quot;),&quot;Send dropbox email&quot;, &quot;Book suitability meeting&quot;)</expression>
-    </formulas>
-    <formulas>
         <name>presentationMethod</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!advice.AdviceMethod__c},&quot;NON_PRESENTED&quot;), &quot;non-presented&quot;, &quot;to be presented&quot;)</expression>
+        <expression>CASE({!advice.AdviceMethod__c},
+&quot;NON_PRESENTED&quot;, &quot;non-presented&quot;, 
+&quot;PRESENTED&quot;, &quot;to be presented&quot;,
+&quot;ERROR: UNKNOWN&quot;)</expression>
     </formulas>
     <formulas>
         <name>profileUpdateNeeded</name>
@@ -2453,7 +2431,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>updatesNeededPartnerdeck</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Ensure any comments have been added to the deck before completing this task.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please provide the outcome of the deck review.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2464,19 +2442,19 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <defaultValue>
                 <elementReference>adviceChecklist.PartnerCommentsToResolve__c</elementReference>
             </defaultValue>
-            <fieldText>Are there any updates needed?</fieldText>
+            <fieldText>Are updates needed?</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Confirm_that_comments_have_been_added_to_the_deck</name>
+            <name>DeckCommentsAdded</name>
             <choiceReferences>Yes</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
                 <elementReference>commentsAddedToDeck</elementReference>
             </defaultValue>
-            <fieldText>Confirm that comments have been added to the deck</fieldText>
+            <fieldText>Comments added to deck</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
@@ -2493,12 +2471,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </fields>
         <fields>
             <name>nonPresented</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as&lt;/span&gt; &lt;strong style=&quot;font-size: 14px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; &lt;/span&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;If this isn&#39;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as &lt;/span&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; If this isn&#39;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>nextTaskPartnerDeckReviewDisplay</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The next task that will generate is &lt;/span&gt;&lt;strong style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!nextTaskPartnerDeckReview}.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The next task that will generate is &lt;/span&gt;&lt;strong style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!deckReviewPartnerNextTask}.&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2565,66 +2543,8 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Retirement_Call_Confirmation</name>
-        <label>Retirement Call Confirmation</label>
-        <locationX>12106</locationX>
-        <locationY>350</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Set_retirement_call_date_follow_up</targetReference>
-        </connector>
-        <fields>
-            <name>RetirementCallPrompt</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Proceed to confirm the retirement call has taken place. &lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>PresentedRetirementCallFollowUp</name>
-            <choiceReferences>Yes</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Did you present the retirement call content?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>false</booleanValue>
-            </isDisabled>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>RetirementCallDate</name>
-            <dataType>Date</dataType>
-            <fieldText>When did the retirement call take place?</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>false</booleanValue>
-            </isDisabled>
-            <isReadOnly>
-                <booleanValue>false</booleanValue>
-            </isReadOnly>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Cannot be in the future&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>{!RetirementCallDate} &lt;= TODAY()</formulaExpression>
-            </validationRule>
-        </fields>
-        <fields>
-            <name>RetirementCallFactsAddedFollowUp</name>
-            <choiceReferences>Yes</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>I have added retirement call facts</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>6084</locationX>
+        <locationX>5952</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_variables</targetReference>
@@ -2928,7 +2848,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Confirm_task</name>
         <label>Confirm task</label>
-        <locationX>6210</locationX>
+        <locationX>6078</locationX>
         <locationY>1574</locationY>
         <flowName>OrchestratorTaskComplete</flowName>
         <inputAssignments>

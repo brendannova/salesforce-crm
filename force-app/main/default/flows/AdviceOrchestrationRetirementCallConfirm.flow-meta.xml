@@ -59,7 +59,7 @@
     <assignments>
         <name>Set_unknown_outcome_error</name>
         <label>Set unknown outcome error</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -142,7 +142,7 @@
     <decisions>
         <name>Retirement_call_outcome</name>
         <label>Retirement call outcome</label>
-        <locationX>666</locationX>
+        <locationX>710</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_unknown_outcome_error</targetReference>
@@ -173,6 +173,9 @@
                     <elementReference>No</elementReference>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Create_task_to_review_skipped_retirement_call</targetReference>
+            </connector>
             <label>Didn&#39;t take place</label>
         </rules>
     </decisions>
@@ -203,7 +206,7 @@
     <screens>
         <name>Retirement_Call_Confirmation</name>
         <label>Retirement Call Confirmation</label>
-        <locationX>666</locationX>
+        <locationX>710</locationX>
         <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -232,6 +235,9 @@
         <fields>
             <name>RetirementCallDate</name>
             <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>advice.RetirementCallDate__c</elementReference>
+            </defaultValue>
             <fieldText>When did the retirement call take place?</fieldText>
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -287,13 +293,45 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>540</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Retirement_Call_Confirmation</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Create_task_to_review_skipped_retirement_call</name>
+        <label>Create task to review skipped retirement call</label>
+        <locationX>842</locationX>
+        <locationY>350</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_advice_id</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue> ADVICE_ANNUAL_REVIEW_RETIREMENT_CALL_SKIPPED</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <description>The advice record that is being worked with.</description>
         <name>advice</name>
