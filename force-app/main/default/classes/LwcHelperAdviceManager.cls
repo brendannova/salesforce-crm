@@ -14,11 +14,16 @@ public without sharing class LwcHelperAdviceManager {
     public static List<Map<String, Object>> getAdvice(String adviceTypeRequested){
         List<Map<String, Object>> adviceDataList = new List<Map<String, Object>>();
         if(!String.isBlank(adviceTypeRequested)){
-            List<String> adviceStatuses = new List<String>{'Data gathering','Risk Call','Suitability in progress','Prepare advice'};
+            List<String> adviceStatuses = new List<String>{'Data gathering', 'Data analysis', 'Risk Call','Suitability in progress','Prepare advice'};
             if(adviceTypeRequested == 'TOP_UP' || adviceTypeRequested == 'WITHDRAWAL' || adviceTypeRequested == 'PROTECTION' || adviceTypeRequested == 'REGULAR_AMENDMENT' ){
                 adviceStatuses.add('Setup');
             }
-            List<Advice__c> adviceRecords = [SELECT Id, Name, New_or_existing_client__c, Advice_Household__r.OW_dedicated_specialist__r.Name, PlanningNotes__c, IsPriority__c, AdviceType__r.Name, AdviceType__r.DeveloperName__c, Advice_Household__r.Name,  Assigned_planner__c, Assigned_planner__r.Name, Advice_status__c, Partner__r.Name, RetirementCallStatus__c, RiskCallStatus__c, RiskCallDate__c, NarrativeStatus__c, DeckStatus__c, OW_review__c, OW_review__r.OW_due_date__c FROM Advice__c WHERE Advice_status__c IN :adviceStatuses WITH SECURITY_ENFORCED ORDER BY Advice_status__c DESC, DeckStatus__c DESC, NarrativeStatus__c DESC, RiskCallStatus__c DESC, RiskCallDate__c ASC NULLS LAST, DataAnalysisStatus__c DESC, DataGatheringStatus__c DESC, CreatedDate ASC];
+            List<Advice__c> adviceRecords;
+            if(adviceTypeRequested == 'EXISTING'){
+                adviceRecords = [SELECT Id, Name, Advice_Status_change_date__c, New_or_existing_client__c, Advice_Household__r.OW_dedicated_specialist__r.Name, PlanningNotes__c, IsPriority__c, AdviceType__r.Name, AdviceType__r.DeveloperName__c, Advice_Household__r.Name,  Assigned_planner__c, Assigned_planner__r.Name, Advice_status__c, Partner__r.Name, RetirementCallStatus__c, RiskCallStatus__c, RiskCallDate__c, NarrativeStatus__c, DeckStatus__c, OW_review__c, OW_review__r.OW_due_date__c, (SELECT CreatedDate FROM Tasks WHERE OW_task_information_name__c IN ('ADVICE_ANNUAL_REVIEW_ASSIGN','ADVICE_ASSIGN_SUITABILITY_PLANNER') ORDER BY CreatedDate ASC LIMIT 1) FROM Advice__c WHERE Advice_status__c IN :adviceStatuses WITH SECURITY_ENFORCED ORDER BY Advice_status__c DESC, DeckStatus__c DESC, NarrativeStatus__c DESC, RiskCallStatus__c DESC, DataAnalysisStatus__c DESC, DataGatheringStatus__c DESC, Advice_Status_change_date__c ASC, CreatedDate ASC];
+            } else {
+                adviceRecords = [SELECT Id, Name, Advice_Status_change_date__c, New_or_existing_client__c, Advice_Household__r.OW_dedicated_specialist__r.Name, PlanningNotes__c, IsPriority__c, AdviceType__r.Name, AdviceType__r.DeveloperName__c, Advice_Household__r.Name,  Assigned_planner__c, Assigned_planner__r.Name, Advice_status__c, Partner__r.Name, RetirementCallStatus__c, RiskCallStatus__c, RiskCallDate__c, NarrativeStatus__c, DeckStatus__c, OW_review__c, OW_review__r.OW_due_date__c FROM Advice__c WHERE Advice_status__c IN :adviceStatuses WITH SECURITY_ENFORCED ORDER BY Advice_status__c DESC, DeckStatus__c DESC, NarrativeStatus__c DESC, RiskCallStatus__c DESC, RiskCallDate__c ASC NULLS LAST, DataAnalysisStatus__c DESC, DataGatheringStatus__c DESC, CreatedDate ASC];
+            }
             String urlPrefix = URL.getOrgDomainURL().toExternalForm() + '/';
             Map<String,String> picklistApiLabelMap = getPicklistApiLabelMap();
             for(Advice__c advice : adviceRecords){
@@ -43,6 +48,7 @@ public without sharing class LwcHelperAdviceManager {
                     adviceData.put('Stage', getStage(advice));
                     adviceData.put('RetirementCallStatus', picklistApiLabelMap.get(advice.RetirementCallStatus__c));
                     adviceData.put('Specialist', advice.Advice_Household__r.OW_dedicated_specialist__r.Name);
+                    adviceData.put('PrepareAdviceDate', getPrepareAdviceDate(advice));
                     adviceDataList.add(adviceData);
                 }
             }
@@ -62,6 +68,14 @@ public without sharing class LwcHelperAdviceManager {
             return 'PROTECTION';
         } else {
             return 'EXISTING';
+        }
+    }
+
+    private static Date getPrepareAdviceDate(Advice__c advice){
+        if(!advice.Tasks.isEmpty()){
+            return advice.Tasks[0].CreatedDate.date();
+        } else {
+            return null;
         }
     }
 
