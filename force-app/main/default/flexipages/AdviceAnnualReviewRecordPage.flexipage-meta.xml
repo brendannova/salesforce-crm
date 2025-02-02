@@ -1626,21 +1626,10 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection21</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
-                        <leftValue>{!Record.Advice_Status__c}</leftValue>
+                        <leftValue>{!Record.NarrativeStatus__c}</leftValue>
                         <operator>NE</operator>
-                        <rightValue>Setup</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Advice_Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Data gathering</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Advice_Status__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>Data analysis</rightValue>
+                        <rightValue>Not started</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>

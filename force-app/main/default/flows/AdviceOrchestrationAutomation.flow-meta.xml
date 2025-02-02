@@ -5,7 +5,7 @@
         <name>Create_new_SLA</name>
         <label>Create new SLA</label>
         <locationX>358</locationX>
-        <locationY>2111</locationY>
+        <locationY>2159</locationY>
         <assignmentItems>
             <assignToReference>createNewSla</assignToReference>
             <operator>Assign</operator>
@@ -34,6 +34,56 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_error</name>
+        <label>Set error</label>
+        <locationX>622</locationX>
+        <locationY>2567</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Manage_SLAs.errorMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>FlowFaultError</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_error_to_fault_message</name>
+        <label>Set error to fault message</label>
+        <locationX>1370</locationX>
+        <locationY>1535</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>FlowFaultError</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_no_advice_type_status_error</name>
+        <label>Set no advice type status error</label>
+        <locationX>886</locationX>
+        <locationY>1643</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No advice type status found. Please raise a ticket.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>FlowFaultError</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_protection_data_gathering_task</name>
         <label>Set protection data gathering task</label>
         <locationX>754</locationX>
@@ -54,7 +104,7 @@
         <name>Set_SLA_status_variables</name>
         <label>Set SLA status variables</label>
         <locationX>490</locationX>
-        <locationY>1895</locationY>
+        <locationY>1943</locationY>
         <assignmentItems>
             <assignToReference>statusNew</assignToReference>
             <operator>Assign</operator>
@@ -100,19 +150,9 @@
         <name>FlowFaultError</name>
         <label>Flow Fault Error</label>
         <locationX>1370</locationX>
-        <locationY>1487</locationY>
+        <locationY>1643</locationY>
         <customErrorMessages>
-            <errorMessage>{!$Flow.FaultMessage}{!Manage_SLAs.errorMessage}</errorMessage>
-            <isFieldError>false</isFieldError>
-        </customErrorMessages>
-    </customErrors>
-    <customErrors>
-        <name>No_advice_type_status_error</name>
-        <label>No advice type status error</label>
-        <locationX>886</locationX>
-        <locationY>1595</locationY>
-        <customErrorMessages>
-            <errorMessage>No advice type status found. Please raise a ticket.</errorMessage>
+            <errorMessage>{!errorMessage}</errorMessage>
             <isFieldError>false</isFieldError>
         </customErrorMessages>
     </customErrors>
@@ -193,9 +233,9 @@
         <name>Found_advice_type_status</name>
         <label>Found advice type status</label>
         <locationX>688</locationX>
-        <locationY>1487</locationY>
+        <locationY>1535</locationY>
         <defaultConnector>
-            <targetReference>No_advice_type_status_error</targetReference>
+            <targetReference>Set_no_advice_type_status_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not found</defaultConnectorLabel>
         <rules>
@@ -218,7 +258,7 @@
         <name>Initial_task</name>
         <label>Initial task</label>
         <locationX>490</locationX>
-        <locationY>1595</locationY>
+        <locationY>1643</locationY>
         <defaultConnector>
             <targetReference>Set_SLA_status_variables</targetReference>
         </defaultConnector>
@@ -243,7 +283,7 @@
         <name>SLA_applies</name>
         <label>SLA applies?</label>
         <locationX>490</locationX>
-        <locationY>2003</locationY>
+        <locationY>2051</locationY>
         <defaultConnector>
             <targetReference>Manage_SLAs</targetReference>
         </defaultConnector>
@@ -268,10 +308,9 @@
         <name>SLA_outcome</name>
         <label>SLA outcome</label>
         <locationX>490</locationX>
-        <locationY>2411</locationY>
+        <locationY>2459</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>FlowFaultError</targetReference>
+            <targetReference>Set_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Error</defaultConnectorLabel>
         <rules>
@@ -359,6 +398,9 @@
         </rules>
     </decisions>
     <decisions>
+        <description>If the advice status is changed, we need to run the task and SLA checks. 
+
+If advice type is changed, we also need to close any orchestration tasks for the prior advice type. This should only be done where the deck status is not started since we reconfirm the advice type when deck is marked as completed by the planner.</description>
         <name>StatusDecision</name>
         <label>Status</label>
         <locationX>688</locationX>
@@ -372,6 +414,13 @@
                 <operator>IsChanged</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DeckStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not started</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -435,13 +484,13 @@
         <name>Get_advice_type_status</name>
         <label>Get advice type status</label>
         <locationX>688</locationX>
-        <locationY>1379</locationY>
+        <locationY>1427</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_advice_type_status</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>FlowFaultError</targetReference>
+            <targetReference>Set_error_to_fault_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -475,7 +524,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>FlowFaultError</targetReference>
+            <targetReference>Set_error_to_fault_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -523,11 +572,15 @@
     <recordUpdates>
         <name>Close_orchestrated_task_on_advice</name>
         <label>Close orchestrated task on advice</label>
-        <locationX>468</locationX>
+        <locationX>336</locationX>
         <locationY>1187</locationY>
         <connector>
             <targetReference>Get_advice_type_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -586,7 +639,7 @@
         <name>Create_initial_status_task</name>
         <label>Create initial status task</label>
         <locationX>358</locationX>
-        <locationY>1703</locationY>
+        <locationY>1751</locationY>
         <connector>
             <targetReference>Set_SLA_status_variables</targetReference>
         </connector>
@@ -621,7 +674,7 @@
         <name>Manage_SLAs</name>
         <label>Manage SLAs</label>
         <locationX>490</locationX>
-        <locationY>2303</locationY>
+        <locationY>2351</locationY>
         <connector>
             <targetReference>SLA_outcome</targetReference>
         </connector>
@@ -691,6 +744,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>ServiceLevelAgreement__c</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>householdId</name>
