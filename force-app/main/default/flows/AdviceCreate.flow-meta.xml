@@ -173,7 +173,7 @@
         <name>Set_defaults</name>
         <label>Set defaults</label>
         <locationX>666</locationX>
-        <locationY>608</locationY>
+        <locationY>824</locationY>
         <assignmentItems>
             <assignToReference>advice.Advice_Household__c</assignToReference>
             <operator>Assign</operator>
@@ -189,7 +189,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Search_for_open_advice</targetReference>
+            <targetReference>Any_ongoing_advice</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -205,7 +205,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_defaults</targetReference>
+            <targetReference>Search_for_open_advice</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -415,7 +415,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_defaults</targetReference>
+                <targetReference>Search_for_open_advice</targetReference>
             </connector>
             <label>Review - create advice</label>
         </rules>
@@ -602,10 +602,10 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <name>Get_household</name>
         <label>Get household</label>
         <locationX>666</locationX>
-        <locationY>824</locationY>
+        <locationY>716</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Any_ongoing_advice</targetReference>
+            <targetReference>Set_defaults</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -627,7 +627,7 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <name>Search_for_open_advice</name>
         <label>Search for open advice</label>
         <locationX>666</locationX>
-        <locationY>716</locationY>
+        <locationY>608</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_household</targetReference>
