@@ -20,7 +20,8 @@ public without sharing class LwcHelperAdviceManager {
             }
             List<Advice__c> adviceRecords;
             if(adviceTypeRequested == 'EXISTING'){
-                adviceRecords = [SELECT Id, Name, Advice_Status_change_date__c, New_or_existing_client__c, Advice_Household__r.OW_dedicated_specialist__r.Name, PlanningNotes__c, IsPriority__c, AdviceType__r.Name, AdviceType__r.DeveloperName__c, Advice_Household__r.Name,  Assigned_planner__c, Assigned_planner__r.Name, Advice_status__c, Partner__r.Name, RetirementCallStatus__c, RiskCallStatus__c, RiskCallDate__c, NarrativeStatus__c, DeckStatus__c, OW_review__c, OW_review__r.OW_due_date__c, (SELECT CreatedDate FROM Tasks WHERE OW_task_information_name__c IN ('ADVICE_ANNUAL_REVIEW_ASSIGN','ADVICE_ASSIGN_SUITABILITY_PLANNER') ORDER BY CreatedDate ASC LIMIT 1) FROM Advice__c WHERE Advice_status__c IN :adviceStatuses WITH SECURITY_ENFORCED ORDER BY Advice_status__c DESC, DeckStatus__c DESC, NarrativeStatus__c DESC, RiskCallStatus__c DESC, DataAnalysisStatus__c DESC, DataGatheringStatus__c DESC, Advice_Status_change_date__c ASC, CreatedDate ASC];
+                adviceRecords = [SELECT Id, CreatedDate, Name, Advice_Status_change_date__c, New_or_existing_client__c, Advice_Household__r.OW_dedicated_specialist__r.Name, PlanningNotes__c, IsPriority__c, AdviceType__r.Name, AdviceType__r.DeveloperName__c, Advice_Household__r.Name,  Assigned_planner__c, Assigned_planner__r.Name, Advice_status__c, Partner__r.Name, RetirementCallStatus__c, RiskCallStatus__c, RiskCallDate__c, NarrativeStatus__c, DeckStatus__c, OW_review__c, OW_review__r.OW_due_date__c, (SELECT Id, CreatedDate FROM Tasks WHERE OW_task_information_name__c IN ('ADVICE_ANNUAL_REVIEW_ASSIGN','ADVICE_ASSIGN_SUITABILITY_PLANNER') ORDER BY CreatedDate ASC LIMIT 1) FROM Advice__c WHERE Advice_status__c IN :adviceStatuses WITH SECURITY_ENFORCED ORDER BY Advice_Status__c ASC, DeckStatus__c DESC, NarrativeStatus__c DESC, Advice_Status_change_date__c ASC, RiskCallStatus__c DESC, DataAnalysisStatus__c DESC, DataGatheringStatus__c DESC, CreatedDate ASC];
+                adviceRecords.sort(new AdviceComparator());
             } else {
                 adviceRecords = [SELECT Id, Name, Advice_Status_change_date__c, New_or_existing_client__c, Advice_Household__r.OW_dedicated_specialist__r.Name, PlanningNotes__c, IsPriority__c, AdviceType__r.Name, AdviceType__r.DeveloperName__c, Advice_Household__r.Name,  Assigned_planner__c, Assigned_planner__r.Name, Advice_status__c, Partner__r.Name, RetirementCallStatus__c, RiskCallStatus__c, RiskCallDate__c, NarrativeStatus__c, DeckStatus__c, OW_review__c, OW_review__r.OW_due_date__c FROM Advice__c WHERE Advice_status__c IN :adviceStatuses WITH SECURITY_ENFORCED ORDER BY Advice_status__c DESC, DeckStatus__c DESC, NarrativeStatus__c DESC, RiskCallStatus__c DESC, RiskCallDate__c ASC NULLS LAST, DataAnalysisStatus__c DESC, DataGatheringStatus__c DESC, CreatedDate ASC];
             }
@@ -99,6 +100,8 @@ public without sharing class LwcHelperAdviceManager {
             stage = status;
         } else if(status == 'Data gathering'){
             stage = status;
+        } else if(status == 'Data analysis'){
+            stage = status;
         } else if(status == 'Risk Call'){
             stage = status + ' | ' + advice.RiskCallStatus__c;
         } else if (status == 'Suitability in progress' || status == 'Prepare advice'){
@@ -111,5 +114,101 @@ public without sharing class LwcHelperAdviceManager {
         return stage;
     }
 
+    // Data request update class with custom sorting function
+    /**
+     * Status - combining mixed statuses prepare advice and suitability in progress
+     * Deck status are both in progress
+     * Narrative status are both in progress
+     */
+    public class AdviceComparator implements Comparator<Advice__c>{
+        List<String> statuses = new List<String>{'Data gathering','Risk Call','Data analysis','Suitability in progress','Prepare advice'};
+        List<String> statusesAdvice = new List<String>{'Prepare advice','Suitability in progress'};
+        List<String> subStatuses = new List<String>{'Not started','In progress','Planner review','Resolve planner comments','Partner review','Resolve partner comments','Completed'};
+        //To do - get this from metadata        
+        public Integer compare(Advice__c advice1, Advice__c advice2){
+            Integer returnValue = 0;
+            Boolean sameStatuses = advice1.Advice_Status__c == advice2.Advice_Status__c ? true : false;
+            Boolean bothInAdviceStatuses = statusesAdvice.contains(advice1.Advice_Status__c) && statusesAdvice.contains(advice2.Advice_Status__c) ? true : false;
+            if(sameStatuses){
+                if(bothInAdviceStatuses){
+                    returnValue = evaluateSubStatus(advice1, advice2);
+                } else if (advice1.Advice_Status__c == 'Risk Call' && advice2.Advice_Status__c == 'Risk Call'){
+                    returnValue = evaluateEarliestRiskCall(advice1, advice2);
+                } else {
+                    returnValue = 0;
+                }
+            } else if(!sameStatuses){
+                if(bothInAdviceStatuses){
+                    returnValue = evaluateSubStatus(advice1, advice2);
+                } else {
+                    if(statuses.indexOf(advice1.Advice_Status__c) < statuses.indexOf(advice2.Advice_Status__c)){
+                        returnValue = 1;
+                    } else {
+                        returnValue = -1;
+                    }
+                }
+            }
+            return returnValue;
+        }
 
+        private Integer evaluateSubStatus(Advice__c advice1, Advice__c advice2){
+            Integer returnValue = 0;
+            if(advice1.DeckStatus__c != advice2.DeckStatus__c){
+                if(subStatuses.indexOf(advice1.DeckStatus__c) < subStatuses.indexOf(advice2.DeckStatus__c)){
+                    returnValue = 1;
+                } else {
+                    returnValue = -1;
+                }
+            } else if(advice1.DeckStatus__c == 'Not started' && advice2.DeckStatus__c == 'Not started'){
+                if(advice1.NarrativeStatus__c != advice2.NarrativeStatus__c){
+                    if(subStatuses.indexOf(advice1.NarrativeStatus__c) < subStatuses.indexOf(advice2.NarrativeStatus__c)){
+                        returnValue = 1;
+                    } else {
+                        returnValue = -1;
+                    }
+                } else {
+                    returnValue = evaluateEarliestTask(advice1, advice2);
+                }
+            } else {
+                returnValue = evaluateEarliestTask(advice1, advice2);
+            }
+            return returnValue;
+        }
+
+        private Integer evaluateEarliestTask(Advice__c advice1, Advice__c advice2){
+            Integer returnValue = 0;
+            if (advice1.Tasks.isEmpty() && advice2.Tasks.isEmpty()){
+                returnValue = 0;
+            } else if (advice1.Tasks.isEmpty()){
+                returnValue = 1;
+            } else if (advice2.Tasks.isEmpty()){
+                returnValue = -1;
+            } else {
+                if (advice1.Tasks[0].CreatedDate < advice2.Tasks[0].CreatedDate) {
+                    returnValue = -1;
+                } else {
+                    returnValue = 1;
+                }
+            }
+            return returnValue; 
+        }
+
+        private Integer evaluateEarliestRiskCall(Advice__c advice1, Advice__c advice2){
+            Integer returnValue = 0;
+            if (advice1.RiskCallDate__c == null && advice2.RiskCallDate__c == null){
+                returnValue = 0;
+            } else if (advice1.RiskCallDate__c == null){
+                returnValue = 1;
+            } else if (advice2.RiskCallDate__c == null){
+                returnValue = -1;
+            } else {
+                if (advice1.RiskCallDate__c < advice2.RiskCallDate__c) {
+                    returnValue = -1;
+                } else {
+                    returnValue = 1;
+                }
+            }
+            return returnValue; 
+        }
+    }
 }
