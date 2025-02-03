@@ -72,6 +72,7 @@ const columnsExisting = [
     { label: "Planner", fieldName: "Planner"},
     { label: "Specialist", fieldName: "Specialist"},
     { label: "Annual review", fieldName: "AnnualReviewDate", type: "date"},
+    { label: "Prepare advice date", fieldName: "PrepareAdviceDate", type: "date"},
     { 
         label: "Priority",
         fieldName: "IsPriority__c",
