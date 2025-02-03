@@ -134,12 +134,26 @@
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>Data_gathering_in_progress</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>In progress</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.ProfileUpdateStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not required</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -267,6 +281,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>DataGatheringStatus__c</queriedFields>
         <queriedFields>DataAnalysisStatus__c</queriedFields>
+        <queriedFields>ProfileUpdateStatus__c</queriedFields>
     </recordLookups>
     <start>
         <locationX>188</locationX>
