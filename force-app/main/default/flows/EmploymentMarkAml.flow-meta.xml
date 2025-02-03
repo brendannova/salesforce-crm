@@ -1,11 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>58.0</apiVersion>
+    <assignments>
+        <name>Add_to_collection</name>
+        <label>Add to collection</label>
+        <locationX>930</locationX>
+        <locationY>890</locationY>
+        <assignmentItems>
+            <assignToReference>recommendationIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Collect_recommendation_IDs.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Collect_recommendation_IDs</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_employment_ID</name>
+        <label>Assign employment ID</label>
+        <locationX>974</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>employmentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_employment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>2338</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_individual_recommendation_to_value</name>
+        <label>Assign individual recommendation to value</label>
+        <locationX>1106</locationX>
+        <locationY>1514</locationY>
+        <assignmentItems>
+            <assignToReference>individualRecommendation</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Assign_individual_recommendation</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_individual_recommendation</targetReference>
+        </connector>
+    </assignments>
+    <collectionProcessors>
+        <name>Select_individual_recommendation</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Select individual recommendation</label>
+        <locationX>1018</locationX>
+        <locationY>1298</locationY>
+        <assignNextValueToReference>currentItem_Select_individual_recommendation</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Get_recommendations_linked_to_this_employment</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Select_individual_recommendation.Id</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <elementReference>Check_each_fulfilment.Recommendation__c</elementReference>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Assign_individual_recommendation</targetReference>
+        </connector>
+    </collectionProcessors>
     <decisions>
         <name>Which_button_was_selected</name>
         <label>Which button was selected?</label>
-        <locationX>314</locationX>
-        <locationY>350</locationY>
+        <locationX>974</locationX>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Update_task</targetReference>
         </defaultConnector>
@@ -45,6 +130,48 @@
     <environments>Default</environments>
     <interviewLabel>Employment | Mark AML {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Employment | Mark AML</label>
+    <loops>
+        <name>Assign_individual_recommendation</name>
+        <label>Assign individual recommendation</label>
+        <locationX>1018</locationX>
+        <locationY>1406</locationY>
+        <collectionReference>Select_individual_recommendation</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_individual_recommendation_to_value</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Call_set_status_sub_flow</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Check_each_fulfilment</name>
+        <label>Check each fulfilment</label>
+        <locationX>842</locationX>
+        <locationY>1190</locationY>
+        <collectionReference>Get_fulfilment_that_may_require_an_update</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Select_individual_recommendation</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_task</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>Collect_recommendation_IDs</name>
+        <label>Collect recommendation IDs</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <collectionReference>Get_recommendations_linked_to_this_employment</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_to_collection</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_fulfilment_that_may_require_an_update</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -67,38 +194,118 @@
     <recordLookups>
         <name>Get_employment</name>
         <label>Get employment</label>
-        <locationX>314</locationX>
-        <locationY>134</locationY>
+        <locationX>974</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Confirm_aml_complete</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>employmentId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>FinServ__Employment__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_fulfilment_that_may_require_an_update</name>
+        <label>Get fulfilment that may require an update</label>
+        <locationX>842</locationX>
+        <locationY>1082</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_each_fulfilment</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Recommendation__c</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>recommendationIds</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Awaiting pre-requisites</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Fulfilment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_recommendations_linked_to_this_employment</name>
+        <label>Get recommendations linked to this employment</label>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Collect_recommendation_IDs</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Employment__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>employmentId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Accepted</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Recommendation__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordRollbacks>
+        <name>Rollback</name>
+        <label>Rollback</label>
+        <locationX>2338</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Assign_error_message</targetReference>
+        </connector>
+    </recordRollbacks>
     <recordUpdates>
         <name>Update_employment</name>
         <label>Update employment</label>
         <locationX>50</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Update_task</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>employmentId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -112,17 +319,21 @@
     <recordUpdates>
         <name>Update_employmentAccept</name>
         <label>Update employment</label>
-        <locationX>314</locationX>
-        <locationY>458</locationY>
+        <locationX>842</locationX>
+        <locationY>566</locationY>
         <connector>
-            <targetReference>Update_task</targetReference>
+            <targetReference>Get_recommendations_linked_to_this_employment</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>employmentId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -136,14 +347,18 @@
     <recordUpdates>
         <name>Update_task</name>
         <label>Update task</label>
-        <locationX>314</locationX>
-        <locationY>650</locationY>
+        <locationX>974</locationX>
+        <locationY>1982</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_employment.Id</elementReference>
+                <elementReference>employmentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -170,9 +385,9 @@
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Confirm_aml_complete</name>
-        <label>Confirm aml complete</label>
-        <locationX>314</locationX>
-        <locationY>242</locationY>
+        <label>Confirm AML complete</label>
+        <locationX>974</locationX>
+        <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -274,14 +489,89 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>2338</locationX>
+        <locationY>566</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>errorText</name>
+            <fieldText>&lt;p&gt;There&#39;s been an error here, with the following message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>848</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_employment</targetReference>
+            <targetReference>Assign_employment_ID</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Call_set_status_sub_flow</name>
+        <label>Call set status sub flow</label>
+        <locationX>1018</locationX>
+        <locationY>1706</locationY>
+        <connector>
+            <targetReference>Check_each_fulfilment</targetReference>
+        </connector>
+        <flowName>FulfilmentSetStatus</flowName>
+        <inputAssignments>
+            <name>fulfilment</name>
+            <value>
+                <elementReference>Check_each_fulfilment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recommendation</name>
+            <value>
+                <elementReference>individualRecommendation</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>currentItem_Select_individual_recommendation</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Recommendation__c</objectType>
+    </variables>
+    <variables>
+        <name>employmentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>individualRecommendation</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Recommendation__c</objectType>
+    </variables>
+    <variables>
+        <name>recommendationIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
