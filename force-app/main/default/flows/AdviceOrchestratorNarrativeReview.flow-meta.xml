@@ -248,7 +248,7 @@ ISBLANK({!adviceChecklist.ExplainChangesToTheInitialNarrative__c})</expression>
         <name>narrativePlannerResolveFieldMissing</name>
         <dataType>Boolean</dataType>
         <expression>{!reviewType} = {!narrativePlannerResolveReviewType} &amp;&amp;
-(NOT({!adviceChecklist.PlannerCommentsResolved__c}) || ISBLANK({!adviceChecklist.PlannerCommentsNotes__c}))</expression>
+ISBLANK({!adviceChecklist.PlannerCommentsNotes__c})</expression>
     </formulas>
     <formulas>
         <name>reviewFieldsMissingHelp</name>
