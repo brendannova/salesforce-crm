@@ -6,11 +6,11 @@
   IF(  ISPICKVAL(Recommendation__r.RegisteredContact__r.BankDetailsStatus__c, &quot;Submitted&quot;), 
     &quot;Received&quot;, 
     &quot;To be requested&quot;  ),
-  IF(  ISBLANK(Recommendation__r.DestinationLegacy__r.FinServ__JointOwner__c), 
-    IF( ISPICKVAL( Recommendation__r.DestinationLegacy__r.FinServ__PrimaryOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;), 
+  IF(  ISBLANK(Recommendation__r.JointOwner__c), 
+    IF( ISPICKVAL( Recommendation__r.PrimaryOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;), 
       &quot;Received&quot;, 
       &quot;To be requested&quot;) , 
-    IF( ISPICKVAL( Recommendation__r.DestinationLegacy__r.FinServ__PrimaryOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;) &amp;&amp; ISPICKVAL( Recommendation__r.DestinationLegacy__r.FinServ__JointOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;), 
+    IF( ISPICKVAL( Recommendation__r.PrimaryOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;) &amp;&amp; ISPICKVAL( Recommendation__r.JointOwner__r.BankDetailsStatus__c , &quot;Submitted&quot;), 
       &quot;Received&quot;, 
       &quot;To be requested&quot;
 )))</formula>
