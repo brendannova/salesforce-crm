@@ -34,6 +34,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1898</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_custom_error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_fake_fulfilment_values</name>
         <label>Assign fake fulfilment values</label>
         <locationX>226</locationX>
@@ -142,10 +158,46 @@
             <targetReference>Loop_7_5</targetReference>
         </connector>
     </collectionProcessors>
+    <customErrors>
+        <name>Assign_custom_error</name>
+        <label>Assign custom error</label>
+        <locationX>1898</locationX>
+        <locationY>647</locationY>
+        <customErrorMessages>
+            <errorMessage>{!errorMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Was_the_subflow_a_success</name>
+        <label>Was the subflow a success?</label>
+        <locationX>226</locationX>
+        <locationY>2003</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_custom_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesSubflowSuccessful</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_7_Fulfilment</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>What_status_is_the_account</name>
         <label>What status is the account?</label>
-        <locationX>314</locationX>
+        <locationX>1106</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -262,6 +314,10 @@
         <connector>
             <targetReference>Loop_5_Recommendations</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>PrimaryOwner__c</field>
@@ -297,6 +353,10 @@
         <connector>
             <targetReference>Loop_7_Fulfilment</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Recommendation__c</field>
@@ -319,8 +379,12 @@
     <recordUpdates>
         <name>Close_any_tasks</name>
         <label>Close any tasks</label>
-        <locationX>314</locationX>
+        <locationX>1370</locationX>
         <locationY>539</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -352,6 +416,10 @@
         <connector>
             <targetReference>Update_task</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -371,11 +439,14 @@
     <recordUpdates>
         <name>Update_employmentBankPending</name>
         <label>Update employment</label>
-        <locationX>314</locationX>
+        <locationX>1370</locationX>
         <locationY>431</locationY>
         <connector>
             <targetReference>Close_any_tasks</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -400,6 +471,10 @@
         <connector>
             <targetReference>Get_employer_recommendation</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>1 AND (2 OR 3) AND 4 AND 5 AND 6</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -458,7 +533,7 @@
         <object>Task</object>
     </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>980</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>What_status_is_the_account</targetReference>
@@ -482,7 +557,7 @@
         <locationX>226</locationX>
         <locationY>1895</locationY>
         <connector>
-            <targetReference>Loop_7_Fulfilment</targetReference>
+            <targetReference>Was_the_subflow_a_success</targetReference>
         </connector>
         <flowName>FulfilmentSetStatus</flowName>
         <inputAssignments>
@@ -497,6 +572,10 @@
                 <elementReference>recommendation</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>accountOwners</name>
@@ -519,6 +598,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>fakeFulfilment</name>
