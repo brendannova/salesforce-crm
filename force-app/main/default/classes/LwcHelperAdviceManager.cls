@@ -123,7 +123,7 @@ public without sharing class LwcHelperAdviceManager {
     public class AdviceComparator implements Comparator<Advice__c>{
         List<String> statuses = new List<String>{'Data gathering','Risk Call','Data analysis','Suitability in progress','Prepare advice'};
         List<String> statusesAdvice = new List<String>{'Prepare advice','Suitability in progress'};
-        List<String> subStatuses = new List<String>{'Not started','In progress','Planner review','Resolve planner comments','Partner review','Resolve partner comments','Completed'};
+        List<String> subStatuses = new List<String>{'Not started','In progress','Planner review','Resolve planner comments','Partner review','Resolve partner comments','Complete'};
         //To do - get this from metadata        
         public Integer compare(Advice__c advice1, Advice__c advice2){
             Integer returnValue = 0;
