@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_id_to_collection</name>
         <label>Add id to collection</label>
-        <locationX>490</locationX>
+        <locationX>666</locationX>
         <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>recommendationIds</assignToReference>
@@ -18,9 +18,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1106</locationX>
+        <locationY>863</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_custom_error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_record_id</name>
         <label>Assign record id</label>
-        <locationX>534</locationX>
+        <locationX>974</locationX>
         <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>recordId</assignToReference>
@@ -37,7 +53,7 @@
         <name>Get_specific_recommendation</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get specific recommendation</label>
-        <locationX>490</locationX>
+        <locationX>754</locationX>
         <locationY>1379</locationY>
         <assignNextValueToReference>currentItem_Get_specific_recommendation_0</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
@@ -54,10 +70,21 @@
             <targetReference>Set_status</targetReference>
         </connector>
     </collectionProcessors>
+    <customErrors>
+        <name>Assign_custom_error</name>
+        <label>Assign custom error</label>
+        <locationX>1106</locationX>
+        <locationY>971</locationY>
+        <customErrorMessages>
+            <errorMessage>There&#39;s been an error in the flow AccountBankAccountStatusUpdated with the following message:
+{!errorMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
     <decisions>
         <name>Has_the_status_changed</name>
         <label>Has the status changed?</label>
-        <locationX>1040</locationX>
+        <locationX>1568</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -79,7 +106,7 @@
     <decisions>
         <name>Previous_status</name>
         <label>Previous status</label>
-        <locationX>534</locationX>
+        <locationX>974</locationX>
         <locationY>647</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -108,7 +135,7 @@
     <decisions>
         <name>Status</name>
         <label>Status</label>
-        <locationX>622</locationX>
+        <locationX>974</locationX>
         <locationY>431</locationY>
         <defaultConnectorLabel>Hidden</defaultConnectorLabel>
         <rules>
@@ -157,6 +184,32 @@
             <label>Awaiting replacement</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Was_the_sub_flow_successful</name>
+        <label>Was the sub flow successful?</label>
+        <locationX>754</locationX>
+        <locationY>1595</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_custom_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesSubFlowSuccessful</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_fulfilments</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Handles tasks for updating hubwise and fulfilment updates based on changed bank details</description>
     <environments>Default</environments>
     <interviewLabel>Account | Bank account status updated {!$Flow.CurrentDateTime}</interviewLabel>
@@ -164,7 +217,7 @@
     <loops>
         <name>Loop_1_Recommendations</name>
         <label>Loop 1 | Recommendations</label>
-        <locationX>402</locationX>
+        <locationX>578</locationX>
         <locationY>863</locationY>
         <collectionReference>Get_recommendations</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -178,7 +231,7 @@
     <loops>
         <name>Update_fulfilments</name>
         <label>Loop 2 | Update fulfilments</label>
-        <locationX>402</locationX>
+        <locationX>578</locationX>
         <locationY>1271</locationY>
         <collectionReference>Get_fulfilments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -208,12 +261,16 @@
     <recordLookups>
         <name>Get_fulfilments</name>
         <label>Get fulfilments</label>
-        <locationX>402</locationX>
+        <locationX>578</locationX>
         <locationY>1163</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_fulfilments</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Recommendation__c</field>
@@ -236,12 +293,15 @@
     <recordLookups>
         <name>Get_recommendations</name>
         <label>Get recommendations</label>
-        <locationX>402</locationX>
+        <locationX>578</locationX>
         <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_1_Recommendations</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
             <field>PrimaryOwner__c</field>
@@ -269,7 +329,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>914</locationX>
+        <locationX>1442</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Has_the_status_changed</targetReference>
@@ -316,7 +376,7 @@
     <subflows>
         <name>Create_request_replacement_bank_details_task</name>
         <label>Create request replacement bank details task</label>
-        <locationX>930</locationX>
+        <locationX>1634</locationX>
         <locationY>539</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
@@ -342,10 +402,10 @@
     <subflows>
         <name>Set_status</name>
         <label>Set status</label>
-        <locationX>490</locationX>
+        <locationX>754</locationX>
         <locationY>1487</locationY>
         <connector>
-            <targetReference>Update_fulfilments</targetReference>
+            <targetReference>Was_the_sub_flow_successful</targetReference>
         </connector>
         <flowName>FulfilmentSetStatus</flowName>
         <inputAssignments>
@@ -360,6 +420,10 @@
                 <elementReference>currentItem_Get_specific_recommendation_0</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>currentItem_Filter_fulfilments</name>
@@ -376,6 +440,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Recommendation__c</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>fulfilmentsToUpdate</name>
