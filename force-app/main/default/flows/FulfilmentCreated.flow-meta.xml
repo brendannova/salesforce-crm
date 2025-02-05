@@ -5,7 +5,7 @@
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>204</locationX>
-        <locationY>755</locationY>
+        <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>accountsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Add_to_collectionHousehold</name>
         <label>Add to collection</label>
         <locationX>424</locationX>
-        <locationY>1763</locationY>
+        <locationY>1871</locationY>
         <assignmentItems>
             <assignToReference>accountsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>Add_to_collectionJoint</name>
         <label>Add to collection</label>
         <locationX>50</locationX>
-        <locationY>1271</locationY>
+        <locationY>1379</locationY>
         <assignmentItems>
             <assignToReference>accountsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -50,10 +50,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1216</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_custom_error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_household_variables</name>
         <label>Assign household variables</label>
         <locationX>424</locationX>
-        <locationY>1655</locationY>
+        <locationY>1763</locationY>
         <assignmentItems>
             <assignToReference>accountToUpdate.Id</assignToReference>
             <operator>Assign</operator>
@@ -80,7 +96,7 @@
         <name>Assign_joint_owner_variables</name>
         <label>Assign joint owner variables</label>
         <locationX>50</locationX>
-        <locationY>1163</locationY>
+        <locationY>1271</locationY>
         <assignmentItems>
             <assignToReference>accountToUpdate.BankDetailsStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -103,7 +119,7 @@
         <name>Assign_primary_owner_variables</name>
         <label>Assign primary owner variables</label>
         <locationX>204</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>accountToUpdate.BankDetailsStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -122,11 +138,21 @@
             <targetReference>Add_to_collection</targetReference>
         </connector>
     </assignments>
+    <customErrors>
+        <name>Assign_custom_error</name>
+        <label>Assign custom error</label>
+        <locationX>1216</locationX>
+        <locationY>539</locationY>
+        <customErrorMessages>
+            <errorMessage>{!errorMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
     <decisions>
         <name>Are_the_bank_details_visible</name>
         <label>Are the bank details visible on the household?</label>
         <locationX>336</locationX>
-        <locationY>1547</locationY>
+        <locationY>1655</locationY>
         <defaultConnector>
             <targetReference>Assign_household_variables</targetReference>
         </defaultConnector>
@@ -151,7 +177,7 @@
         <name>Is_there_a_joint_owner</name>
         <label>Is there a joint owner?</label>
         <locationX>336</locationX>
-        <locationY>947</locationY>
+        <locationY>1055</locationY>
         <defaultConnector>
             <targetReference>Are_the_bank_details_visible</targetReference>
         </defaultConnector>
@@ -173,10 +199,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Was_the_sub_flow_successful</name>
+        <label>Was the sub flow successful?</label>
+        <locationX>644</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_custom_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesSubFlowSuccessful</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>What_is_the_primary_owners_bank_details_status</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>What_is_the_joint_owners_bank_details_status</name>
         <label>What is the joint owners bank details status?</label>
         <locationX>182</locationX>
-        <locationY>1055</locationY>
+        <locationY>1163</locationY>
         <defaultConnector>
             <targetReference>Are_the_bank_details_visible</targetReference>
         </defaultConnector>
@@ -201,7 +253,7 @@
         <name>What_is_the_primary_owners_bank_details_status</name>
         <label>What is the primary owners bank details status?</label>
         <locationX>336</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <defaultConnector>
             <targetReference>Is_there_a_joint_owner</targetReference>
         </defaultConnector>
@@ -248,12 +300,15 @@
     <recordLookups>
         <name>Get_recommendation</name>
         <label>Get recommendation</label>
-        <locationX>336</locationX>
+        <locationX>644</locationX>
         <locationY>323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_status</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -270,11 +325,15 @@
         <name>Update_accounts</name>
         <label>Update accounts</label>
         <locationX>336</locationX>
-        <locationY>1955</locationY>
+        <locationY>2063</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputReference>accountsToUpdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>210</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_recommendation</targetReference>
@@ -295,10 +354,10 @@
     <subflows>
         <name>Set_status</name>
         <label>Set status</label>
-        <locationX>336</locationX>
+        <locationX>644</locationX>
         <locationY>431</locationY>
         <connector>
-            <targetReference>What_is_the_primary_owners_bank_details_status</targetReference>
+            <targetReference>Was_the_sub_flow_successful</targetReference>
         </connector>
         <flowName>FulfilmentSetStatus</flowName>
         <inputAssignments>
@@ -313,6 +372,10 @@
                 <elementReference>Get_recommendation</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>accountsToUpdate</name>
@@ -329,5 +392,12 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>

@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_id_to_list</name>
         <label>Add id to list</label>
-        <locationX>468</locationX>
-        <locationY>1595</locationY>
+        <locationX>666</locationX>
+        <locationY>1643</locationY>
         <assignmentItems>
             <assignToReference>idList</assignToReference>
             <operator>Add</operator>
@@ -18,10 +18,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>2162</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_custom_error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_current_recommendation</name>
         <label>Set current recommendation</label>
-        <locationX>644</locationX>
-        <locationY>2219</locationY>
+        <locationX>842</locationX>
+        <locationY>2267</locationY>
         <assignmentItems>
             <assignToReference>currentRec</assignToReference>
             <operator>Assign</operator>
@@ -37,8 +53,8 @@
         <name>Get_specific_recommendation</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get specific recommendation</label>
-        <locationX>556</locationX>
-        <locationY>2003</locationY>
+        <locationX>754</locationX>
+        <locationY>2051</locationY>
         <assignNextValueToReference>currentItem_Get_specific_recommendation</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_dependent_recommendations</collectionReference>
@@ -54,11 +70,21 @@
             <targetReference>Set_current_rec</targetReference>
         </connector>
     </collectionProcessors>
+    <customErrors>
+        <name>Assign_custom_error</name>
+        <label>Assign custom error</label>
+        <locationX>2162</locationX>
+        <locationY>539</locationY>
+        <customErrorMessages>
+            <errorMessage>{!errorMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
     <decisions>
         <name>Are_there_any_dependent_recommendations</name>
         <label>Are there any dependent recommendations?</label>
-        <locationX>512</locationX>
-        <locationY>1379</locationY>
+        <locationX>842</locationX>
+        <locationY>1427</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -79,7 +105,7 @@
     <decisions>
         <name>Is_there_a_task_to_create</name>
         <label>Is there a task to create?</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Create_system_log4</targetReference>
@@ -102,10 +128,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Was_the_sub_flow_successful</name>
+        <label>Was the sub flow successful?</label>
+        <locationX>754</locationX>
+        <locationY>2567</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_custom_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesSubFlowSuccessful</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_statuses</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Were_the_fulfiments_just_set</name>
         <label>Were the fulfilments just set?</label>
-        <locationX>182</locationX>
-        <locationY>1163</locationY>
+        <locationX>446</locationX>
+        <locationY>1211</locationY>
         <defaultConnector>
             <targetReference>Get_dependent_recommendations</targetReference>
         </defaultConnector>
@@ -130,8 +182,8 @@
     <loops>
         <name>Create_id_list</name>
         <label>Create id list</label>
-        <locationX>380</locationX>
-        <locationY>1487</locationY>
+        <locationX>578</locationX>
+        <locationY>1535</locationY>
         <collectionReference>Get_dependent_recommendations</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -144,8 +196,8 @@
     <loops>
         <name>Set_current_rec</name>
         <label>Set current rec</label>
-        <locationX>556</locationX>
-        <locationY>2111</locationY>
+        <locationX>754</locationX>
+        <locationY>2159</locationY>
         <collectionReference>Get_specific_recommendation</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -158,8 +210,8 @@
     <loops>
         <name>Update_statuses</name>
         <label>Update statuses</label>
-        <locationX>380</locationX>
-        <locationY>1895</locationY>
+        <locationX>578</locationX>
+        <locationY>1943</locationY>
         <collectionReference>Get_fulfilments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -188,11 +240,14 @@
     <recordCreates>
         <name>Create_system_log</name>
         <label>Create system log</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>323</locationY>
         <connector>
             <targetReference>Get_fulfilment_type_status_record</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>OW_description__c</field>
             <value>
@@ -234,6 +289,10 @@
         <connector>
             <targetReference>Create_task</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>OW_description__c</field>
             <value>
@@ -275,6 +334,10 @@
         <connector>
             <targetReference>Update_previous_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>OW_description__c</field>
             <value>
@@ -311,11 +374,15 @@
     <recordCreates>
         <name>Create_system_log4</name>
         <label>Create system log</label>
-        <locationX>314</locationX>
+        <locationX>842</locationX>
         <locationY>647</locationY>
         <connector>
             <targetReference>Update_previous_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>OW_description__c</field>
             <value>
@@ -352,12 +419,16 @@
     <recordLookups>
         <name>Get_dependent_recommendations</name>
         <label>Get dependent recommendations</label>
-        <locationX>512</locationX>
-        <locationY>1271</locationY>
+        <locationX>842</locationX>
+        <locationY>1319</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_dependent_recommendations</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
             <field>PreRequisiteRecommendation__c</field>
@@ -380,12 +451,16 @@
     <recordLookups>
         <name>Get_fulfilment_type_status_record</name>
         <label>Get fulfilment type status record</label>
-        <locationX>182</locationX>
+        <locationX>446</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_there_a_task_to_create</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status__c</field>
@@ -408,12 +483,16 @@
     <recordLookups>
         <name>Get_fulfilments</name>
         <label>Get fulfilments</label>
-        <locationX>380</locationX>
-        <locationY>1787</locationY>
+        <locationX>578</locationX>
+        <locationY>1835</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_statuses</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Recommendation__c</field>
@@ -436,11 +515,15 @@
     <recordUpdates>
         <name>Update_previous_status</name>
         <label>Update previous status</label>
-        <locationX>182</locationX>
-        <locationY>1055</locationY>
+        <locationX>446</locationX>
+        <locationY>1103</locationY>
         <connector>
             <targetReference>Were_the_fulfiments_just_set</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>PreviousStatus__c</field>
             <value>
@@ -450,7 +533,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>56</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Create_system_log</targetReference>
@@ -506,10 +589,10 @@
     <subflows>
         <name>Update_status</name>
         <label>Update status</label>
-        <locationX>556</locationX>
-        <locationY>2411</locationY>
+        <locationX>754</locationX>
+        <locationY>2459</locationY>
         <connector>
-            <targetReference>Update_statuses</targetReference>
+            <targetReference>Was_the_sub_flow_successful</targetReference>
         </connector>
         <flowName>FulfilmentSetStatus</flowName>
         <inputAssignments>
@@ -524,6 +607,10 @@
                 <elementReference>currentRec</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>currentItem_Get_specific_recommendation</name>
@@ -540,6 +627,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Recommendation__c</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>idList</name>

@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>4010</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
     <decisions>
         <name>Are_any_forms_required</name>
         <label>Are any forms required?</label>
-        <locationX>916</locationX>
+        <locationX>2145</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Update_status_to_Awaiting_pre_requisites</targetReference>
@@ -57,7 +70,7 @@
     <decisions>
         <name>Do_we_have_bank_details</name>
         <label>Do we have bank details?</label>
-        <locationX>875</locationX>
+        <locationX>2096</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Update_status_to_Awaiting_pre_requisitesBankdetails</targetReference>
@@ -128,7 +141,7 @@
     <decisions>
         <name>Do_we_need_additional_AML</name>
         <label>Do we need additional AML?</label>
-        <locationX>462</locationX>
+        <locationX>1073</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Do_we_have_bank_details</targetReference>
@@ -153,7 +166,7 @@
     <decisions>
         <name>Has_the_earliest_fulfilment_date_passed</name>
         <label>Has the earliest fulfilment date passed?</label>
-        <locationX>1275</locationX>
+        <locationX>2945</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Update_status_to_Postponed</targetReference>
@@ -178,7 +191,7 @@
     <decisions>
         <name>Is_there_a_pre_requisite_action</name>
         <label>Is there a pre-requisite action?</label>
-        <locationX>644</locationX>
+        <locationX>1502</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Is_there_a_pre_requisite_recommendation</targetReference>
@@ -203,7 +216,7 @@
     <decisions>
         <name>Is_there_a_pre_requisite_recommendation</name>
         <label>Is there a pre-requisite open product recommendation?</label>
-        <locationX>644</locationX>
+        <locationX>1502</locationX>
         <locationY>1382</locationY>
         <defaultConnector>
             <targetReference>Update_status_to_Submit_fulfilmentNoPreReq</targetReference>
@@ -235,7 +248,7 @@
     <decisions>
         <name>What_status_is_the_open_product_recommendation</name>
         <label>What status is the open product recommendation?</label>
-        <locationX>446</locationX>
+        <locationX>842</locationX>
         <locationY>1706</locationY>
         <defaultConnector>
             <targetReference>Update_status_to_Awaiting_pre_requisitesPreReqFulfilmentNeeded</targetReference>
@@ -274,7 +287,7 @@
     <decisions>
         <name>What_status_is_the_pre_requisite_action</name>
         <label>What status is the pre-requisite action?</label>
-        <locationX>468</locationX>
+        <locationX>930</locationX>
         <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Update_status_to_Awaiting_pre_requisitesPreReqAction</targetReference>
@@ -322,12 +335,16 @@
     <recordLookups>
         <name>Get_pre_requisite_action</name>
         <label>Get pre-requisite action</label>
-        <locationX>468</locationX>
+        <locationX>930</locationX>
         <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_pre_requisite_fulfilmentaction</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -343,12 +360,16 @@
     <recordLookups>
         <name>Get_pre_requisite_fulfilment</name>
         <label>Get pre requisite fulfilment</label>
-        <locationX>446</locationX>
+        <locationX>842</locationX>
         <locationY>1598</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>What_status_is_the_open_product_recommendation</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Recommendation__c</field>
@@ -364,12 +385,16 @@
     <recordLookups>
         <name>Get_pre_requisite_fulfilmentaction</name>
         <label>Get pre-requisite fulfilment</label>
-        <locationX>468</locationX>
+        <locationX>930</locationX>
         <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>What_status_is_the_pre_requisite_action</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Recommendation__c</field>
@@ -385,12 +410,16 @@
     <recordLookups>
         <name>Get_pre_requisite_recommendation</name>
         <label>Get pre requisite recommendation</label>
-        <locationX>446</locationX>
+        <locationX>842</locationX>
         <locationY>1490</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_pre_requisite_fulfilment</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -406,8 +435,12 @@
     <recordUpdates>
         <name>Update_status_to_Awaiting_pre_requisites</name>
         <label>Update status to &#39;Awaiting pre-requisites&#39;</label>
-        <locationX>1370</locationX>
+        <locationX>3218</locationX>
         <locationY>350</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -429,6 +462,10 @@
         <label>Update status to &#39;Awaiting pre-requisites&#39;</label>
         <locationX>50</locationX>
         <locationY>458</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -448,8 +485,12 @@
     <recordUpdates>
         <name>Update_status_to_Awaiting_pre_requisitesBankdetails</name>
         <label>Update status to &#39;Awaiting pre-requisites&#39;</label>
-        <locationX>1106</locationX>
+        <locationX>2690</locationX>
         <locationY>566</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -469,8 +510,12 @@
     <recordUpdates>
         <name>Update_status_to_Awaiting_pre_requisitesPreReqAction</name>
         <label>Update status to &#39;Awaiting pre-requisites&#39;</label>
-        <locationX>556</locationX>
+        <locationX>1018</locationX>
         <locationY>998</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -490,8 +535,12 @@
     <recordUpdates>
         <name>Update_status_to_Awaiting_pre_requisitesPreReqFulfilmentNeeded</name>
         <label>Update status to &#39;Awaiting pre-requisites&#39;</label>
-        <locationX>578</locationX>
+        <locationX>1106</locationX>
         <locationY>1814</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -511,8 +560,11 @@
     <recordUpdates>
         <name>Update_status_to_Postponed</name>
         <label>Update status to &#39;Postponed&#39;</label>
-        <locationX>1634</locationX>
+        <locationX>3746</locationX>
         <locationY>242</locationY>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -532,8 +584,12 @@
     <recordUpdates>
         <name>Update_status_to_Submit_fulfilment</name>
         <label>Update status to &#39;Submit fulfilment&#39;</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1814</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -553,8 +609,12 @@
     <recordUpdates>
         <name>Update_status_to_Submit_fulfilmentNoPreReq</name>
         <label>Update status to &#39;Submit fulfilment&#39;</label>
-        <locationX>842</locationX>
+        <locationX>2162</locationX>
         <locationY>1490</locationY>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -572,13 +632,20 @@
         <object>Fulfilment__c</object>
     </recordUpdates>
     <start>
-        <locationX>1149</locationX>
+        <locationX>2819</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Has_the_earliest_fulfilment_date_passed</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>fulfilment</name>
         <dataType>SObject</dataType>
