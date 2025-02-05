@@ -44,7 +44,7 @@
         <object>Opportunity</object>
         <outputAssignments>
             <assignToReference>householdId</assignToReference>
-            <field>FinServ__Household__c</field>
+            <field>AccountId</field>
         </outputAssignments>
     </recordLookups>
     <start>
@@ -65,7 +65,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Create_task_notification</name>
         <label>Create task notification</label>
