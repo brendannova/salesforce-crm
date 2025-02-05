@@ -65,7 +65,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_screen</targetReference>
+            <targetReference>Roll_back</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -268,6 +268,15 @@
         <object>RecommendationType__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordRollbacks>
+        <name>Roll_back</name>
+        <label>Roll back</label>
+        <locationX>1106</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </recordRollbacks>
     <screens>
         <name>Done_screen</name>
         <label>Done screen</label>
@@ -305,7 +314,7 @@
         <name>Error_screen</name>
         <label>Error screen</label>
         <locationX>1106</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
