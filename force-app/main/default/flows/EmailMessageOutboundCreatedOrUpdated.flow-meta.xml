@@ -43,19 +43,18 @@
         </inputParameters>
         <nameSegment>customNotificationAction</nameSegment>
         <offset>0</offset>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Assign_case_fields_outbound</name>
-        <label>Assign case fields outbound</label>
-        <locationX>1634</locationX>
-        <locationY>1055</locationY>
+        <name>Assign_case_fields</name>
+        <label>Assign case fields</label>
+        <locationX>1502</locationX>
+        <locationY>947</locationY>
         <assignmentItems>
-            <assignToReference>case.Status</assignToReference>
+            <assignToReference>case.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Await response</stringValue>
+                <elementReference>$Record.Subject</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -73,7 +72,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>UpdateRelatedCase</targetReference>
+            <targetReference>Does_template_need_a_reply</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -210,29 +209,31 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Close_related_case</name>
-        <label>Close related case</label>
+        <name>Case_status_await_response</name>
+        <label>Case status await response</label>
+        <locationX>1634</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Await response</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateRelatedCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Close_case</name>
+        <label>Close case</label>
         <locationX>1370</locationX>
-        <locationY>1055</locationY>
+        <locationY>1163</locationY>
         <assignmentItems>
             <assignToReference>case.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.EmailStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>N/A</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.SlaStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>N/A</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -243,9 +244,9 @@
         <name>Does_template_need_a_reply</name>
         <label>Does template need a reply</label>
         <locationX>1502</locationX>
-        <locationY>947</locationY>
+        <locationY>1055</locationY>
         <defaultConnector>
-            <targetReference>Assign_case_fields_outbound</targetReference>
+            <targetReference>Case_status_await_response</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Reply expected</defaultConnectorLabel>
         <rules>
@@ -259,7 +260,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Close_related_case</targetReference>
+                <targetReference>Close_case</targetReference>
             </connector>
             <label>No reply expected</label>
         </rules>
@@ -507,7 +508,7 @@
         <locationY>839</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Does_template_need_a_reply</targetReference>
+            <targetReference>Assign_case_fields</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
