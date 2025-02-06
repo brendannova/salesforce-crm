@@ -1733,31 +1733,16 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowName</name>
-                    <value>poc_fulfiment_pre_reqs</value>
+                    <value>FulfilmentOutstandingPreRequisitesScreen</value>
                 </componentInstanceProperties>
                 <componentName>flowruntime:interview</componentName>
                 <identifier>flowruntime_interview2</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Status__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Awaiting pre-requisites</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Awaiting ad hoc action</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Submit fulfilment</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>On hold</rightValue>
                     </criteria>
                     <criteria>
                         <leftValue>{!Record.Status__c}</leftValue>
