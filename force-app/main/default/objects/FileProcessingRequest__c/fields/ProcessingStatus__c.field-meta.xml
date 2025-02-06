@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProcessingStatus__c</fullName>
+    <label>Processing status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SCHEDULED VIDEO-TO-WAV</fullName>
+                <default>false</default>
+                <label>SCHEDULED VIDEO-TO-WAV</label>
+            </value>
+            <value>
+                <fullName>SCHEDULED AUDIO-TO-TRANSCRIPT</fullName>
+                <default>false</default>
+                <label>SCHEDULED AUDIO-TO-TRANSCRIPT</label>
+            </value>
+            <value>
+                <fullName>SCHEDULED TRANSCRIPT-TO-SUMMARY</fullName>
+                <default>false</default>
+                <label>SCHEDULED TRANSCRIPT-TO-SUMMARY</label>
+            </value>
+            <value>
+                <fullName>PENDING MANUAL LABEL</fullName>
+                <default>false</default>
+                <label>PENDING MANUAL LABEL</label>
+            </value>
+            <value>
+                <fullName>PENDING MANUAL MIGRATION</fullName>
+                <default>false</default>
+                <label>PENDING MANUAL MIGRATION</label>
+            </value>
+            <value>
+                <fullName>COMPLETED</fullName>
+                <default>false</default>
+                <label>COMPLETED</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
