@@ -1,77 +1,597 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <assignments>
-        <name>Build_screen_options</name>
-        <label>Build screen options</label>
-        <locationX>1238</locationX>
-        <locationY>278</locationY>
+        <name>Add_option_to_assign</name>
+        <label>Add option to assign</label>
+        <locationX>2442</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>management_choice_labels</assignToReference>
+            <assignToReference>buttonLabels</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>Manage dedicated specialist</stringValue>
+                <stringValue>Assign dedicated specialist</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>management_choice_values</assignToReference>
+            <assignToReference>buttonValues</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>dedicated_specialist_manage</stringValue>
+                <elementReference>assignSpecialistButtonValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_team_option</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_options_to_change_and_remove</name>
+        <label>Add options to change and remove</label>
+        <locationX>2178</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>buttonLabels</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Change dedicated specialist</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>management_choice_labels</assignToReference>
+            <assignToReference>buttonValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>changeSpecialistButtonValue</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>buttonLabels</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>Remove dedicated specialist</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>buttonValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>removeSpecialistButtonValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_team_option</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_team_option</name>
+        <label>Add team option</label>
+        <locationX>2310</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>buttonLabels</assignToReference>
             <operator>Add</operator>
             <value>
                 <stringValue>Manage specialist team</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>management_choice_values</assignToReference>
+            <assignToReference>buttonValues</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>team_manage</stringValue>
+                <elementReference>manageTeamButtonValue</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>choice_screen</targetReference>
+            <targetReference>Choice_screen</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Add_to_update_collection</name>
+        <label>Add to update collection</label>
+        <locationX>446</locationX>
+        <locationY>2504</locationY>
+        <assignmentItems>
+            <assignToReference>householdsUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>household</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Transfer_other_households</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_update_collection_other_household</name>
+        <label>Add to update collection</label>
+        <locationX>426</locationX>
+        <locationY>2936</locationY>
+        <assignmentItems>
+            <assignToReference>householdsUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_selected_households</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_selected_households</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_fault_error</name>
+        <label>Assign fault error</label>
+        <locationX>3482</locationX>
+        <locationY>3680</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_household_ID</name>
+        <label>Assign household ID</label>
+        <locationX>2310</locationX>
+        <locationY>134</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_new_DS</name>
+        <label>Assign new DS</label>
+        <locationX>314</locationX>
+        <locationY>2138</locationY>
+        <assignmentItems>
+            <assignToReference>newDedicatedSpecialistId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DedicatedSpecialist.selectedChoiceValues</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>confirmModalMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>All tasks for households selected will be transferred to {!DedicatedSpecialist.selectedChoiceLabels}. Click OK to confirm. </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_new_DS_to_household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_new_DS_other_household</name>
+        <label>Assign new DS</label>
+        <locationX>426</locationX>
+        <locationY>2828</locationY>
+        <assignmentItems>
+            <assignToReference>Loop_selected_households.OW_dedicated_specialist__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newDedicatedSpecialistId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_update_collection_other_household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_new_DS_to_household</name>
+        <label>Assign new DS</label>
+        <locationX>446</locationX>
+        <locationY>2396</locationY>
+        <assignmentItems>
+            <assignToReference>household.OW_dedicated_specialist__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newDedicatedSpecialistId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_update_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>001UE00000NhaiwYAB</description>
+        <name>Assign_queue</name>
+        <label>Assign queue</label>
+        <locationX>2426</locationX>
+        <locationY>1406</locationY>
+        <assignmentItems>
+            <assignToReference>household.OW_queue__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>teamChoice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>confirmModalMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>All tasks in the household queue will be transferred to the new household. Click OK to confirm. </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_to_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_to_collection</name>
+        <label>Assign to collection</label>
+        <locationX>2426</locationX>
+        <locationY>1514</locationY>
+        <assignmentItems>
+            <assignToReference>householdsUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>household</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Confirmation_screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_toast_values</name>
+        <label>Assign toast values</label>
+        <locationX>2310</locationX>
+        <locationY>3680</locationY>
+        <assignmentItems>
+            <assignToReference>toastVariant</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastTitle</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Success!</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Updates made and tasks reassigned</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Toast_display</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_toast_values_no_action</name>
+        <label>Assign toast values</label>
+        <locationX>578</locationX>
+        <locationY>2138</locationY>
+        <assignmentItems>
+            <assignToReference>toastVariant</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>info</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastTitle</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No change</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Specialist is already the DS</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Toast_display</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_toast_values_no_change</name>
+        <label>Assign toast values</label>
+        <locationX>842</locationX>
+        <locationY>2138</locationY>
+        <assignmentItems>
+            <assignToReference>toastVariant</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastTitle</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Action for managing specialist not specified. Please raise a ticket. </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Toast_display</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_toast_values_no_choice</name>
+        <label>Assign toast values</label>
+        <locationX>3218</locationX>
+        <locationY>1082</locationY>
+        <assignmentItems>
+            <assignToReference>toastVariant</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastTitle</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Unknown action chosen for operations management. Please raise a ticket. </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Toast_display</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_toast_values_queue_not_changed</name>
+        <label>Assign toast values</label>
+        <locationX>2690</locationX>
+        <locationY>1406</locationY>
+        <assignmentItems>
+            <assignToReference>toastVariant</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>info</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastTitle</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No change</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>toastMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Household queue has not changed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Toast_display</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Remove_household_DS</name>
+        <label>Remove household DS</label>
+        <locationX>50</locationX>
+        <locationY>2138</locationY>
+        <assignmentItems>
+            <assignToReference>newDedicatedSpecialistId</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>confirmModalMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>All tasks for households selected will be transferred from {!originalSpecialistFullName} to the household team. Click OK to confirm. </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_new_DS_to_household</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_no_profile_error</name>
+        <label>Set no profile error</label>
+        <locationX>1898</locationX>
+        <locationY>1298</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Specialist profile not found. </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_no_users_error</name>
+        <label>Set no users error</label>
+        <locationX>1370</locationX>
+        <locationY>1514</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No users found who can be assigned.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_original_DS_ID</name>
+        <label>Set original DS ID</label>
+        <locationX>2310</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>originalDedicatedSpecialistId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>household.OW_dedicated_specialist__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Dedicated_specialist_assigned</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_other_household_count</name>
+        <label>Set other household count</label>
+        <locationX>446</locationX>
+        <locationY>1622</locationY>
+        <assignmentItems>
+            <assignToReference>otherHouseholdCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>otherHouseholdsAssigned</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Input_required</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <constants>
+        <name>assignSpecialistButtonValue</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ASSIGN_SPECIALIST</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>changeSpecialistButtonValue</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CHANGE_SPECIALIST</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>manageTeamButtonValue</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MANAGE_TEAM</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>removeSpecialistButtonValue</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>REMOVE_SPECIALIST</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>teamA</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OperationsTeamA</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>teamB</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OperationsTeamB</stringValue>
+        </value>
+    </constants>
     <decisions>
         <description>Routes appropriately depending on the choice made by the user</description>
         <name>Choice</name>
         <label>Choice?</label>
-        <locationX>1238</locationX>
-        <locationY>638</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <locationX>2310</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>Assign_toast_values_no_choice</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Unknown action</defaultConnectorLabel>
         <rules>
-            <name>Manage_dedicated_specialist</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Manage_specialist</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>management_options.selectedValue</leftValueReference>
+                <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>dedicated_specialist_manage</stringValue>
+                    <elementReference>changeSpecialistButtonValue</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>assignSpecialistButtonValue</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>removeSpecialistButtonValue</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Manage_specialist</targetReference>
+                <targetReference>Get_specialist_profile</targetReference>
             </connector>
-            <label>Manage dedicated specialist</label>
+            <label>Manage specialist</label>
         </rules>
         <rules>
             <name>Manage_team</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>management_options.selectedValue</leftValueReference>
+                <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>team_manage</stringValue>
+                    <elementReference>manageTeamButtonValue</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Choose_team</targetReference>
+                <targetReference>Get_teams</targetReference>
             </connector>
             <label>Manage team</label>
         </rules>
@@ -79,95 +599,173 @@
     <decisions>
         <name>Choice_specialist</name>
         <label>Choice</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationX>446</locationX>
+        <locationY>2030</locationY>
         <defaultConnector>
-            <targetReference>No_action_taken_0_0</targetReference>
+            <targetReference>Assign_toast_values_no_change</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
-            <name>Specialist_added</name>
+            <name>Specialist_removed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_household_details.OW_dedicated_specialist__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>choose_dedicated_specialist_lookup.recordId</leftValueReference>
-                <operator>NotEqualTo</operator>
-            </conditions>
-            <connector>
-                <targetReference>Transfer_open_tasks_specialist_added</targetReference>
-            </connector>
-            <label>Specialist added</label>
-        </rules>
-        <rules>
-            <name>Specialist_changed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_household_details.OW_dedicated_specialist__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_household_details.OW_dedicated_specialist__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>choose_dedicated_specialist_lookup.recordId</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>choose_dedicated_specialist_lookup.recordId</leftValueReference>
-                <operator>NotEqualTo</operator>
-            </conditions>
-            <connector>
-                <targetReference>Transfer_open_tasks_specialist_removed_0</targetReference>
-            </connector>
-            <label>Specialist changed</label>
-        </rules>
-        <rules>
-            <name>Remove_specialist_outcome</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>remove_specialist</leftValueReference>
+                <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>removeSpecialistButtonValue</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Transfer_open_tasks_specialist_removed</targetReference>
+                <targetReference>Remove_household_DS</targetReference>
             </connector>
-            <label>Remove specialist</label>
+            <label>Specialist removed</label>
+        </rules>
+        <rules>
+            <name>Specialist_updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DedicatedSpecialist.selectedChoiceValues</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>originalDedicatedSpecialistId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_new_DS</targetReference>
+            </connector>
+            <label>Specialist updated</label>
         </rules>
         <rules>
             <name>Specialist_not_changed</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_household_details.OW_dedicated_specialist__c</leftValueReference>
+                <leftValueReference>DedicatedSpecialist.selectedChoiceValues</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>choose_dedicated_specialist_lookup.recordId</elementReference>
+                    <elementReference>household.OW_dedicated_specialist__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>No_action_taken_0</targetReference>
+                <targetReference>Assign_toast_values_no_action</targetReference>
             </connector>
             <label>Specialist not changed</label>
         </rules>
     </decisions>
     <decisions>
+        <name>Dedicated_specialist_assigned</name>
+        <label>Dedicated specialist assigned?</label>
+        <locationX>2310</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Add_option_to_assign</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not assigned</defaultConnectorLabel>
+        <rules>
+            <name>Assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>household.OW_dedicated_specialist__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_options_to_change_and_remove</targetReference>
+            </connector>
+            <label>Assigned</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If we are removing the DS and there are no other households, then no input is required.</description>
+        <name>Input_required</name>
+        <label>Input required?</label>
+        <locationX>446</locationX>
+        <locationY>1730</locationY>
+        <defaultConnector>
+            <targetReference>Manage_specialist_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Input required</defaultConnectorLabel>
+        <rules>
+            <name>No_input</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>removeSpecialistButtonValue</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>otherHouseholdCount</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Choice_specialist</targetReference>
+            </connector>
+            <label>No input</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Profile_found</name>
+        <label>Profile found?</label>
+        <locationX>1403</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Set_no_profile_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not found</defaultConnectorLabel>
+        <rules>
+            <name>Found_profile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>specialistProfileId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_specialists</targetReference>
+            </connector>
+            <label>Found profile</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Specialists_found</name>
+        <label>Specialists found?</label>
+        <locationX>908</locationX>
+        <locationY>1406</locationY>
+        <defaultConnector>
+            <targetReference>Set_no_users_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not found</defaultConnectorLabel>
+        <rules>
+            <name>Found_specialists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>specialists</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Other_households_assigned</targetReference>
+            </connector>
+            <label>Found specialists</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Team_changed</name>
         <label>Team changed?</label>
-        <locationX>1502</locationX>
-        <locationY>878</locationY>
+        <locationX>2558</locationX>
+        <locationY>1298</locationY>
         <defaultConnector>
-            <targetReference>No_action_taken</targetReference>
+            <targetReference>Assign_toast_values_queue_not_changed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not changed</defaultConnectorLabel>
         <rules>
@@ -177,42 +775,86 @@
                 <leftValueReference>teamChoice</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_household_details.OW_queue__c</elementReference>
+                    <elementReference>household.OW_queue__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_new_household_team_ID</targetReference>
+                <targetReference>Assign_queue</targetReference>
             </connector>
             <label>Changed</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Transfer_other_households</name>
+        <label>Transfer other households?</label>
+        <locationX>446</locationX>
+        <locationY>2612</locationY>
+        <defaultConnector>
+            <targetReference>Confirmation_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_transfer_other_households</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TransferOtherHouseholds</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_selected_households</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>This flow contains the functionality needed for organisers to control how ops will manage the household.</description>
     <dynamicChoiceSets>
-        <name>case_type</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
-        <picklistField>Type</picklistField>
-        <picklistObject>Case</picklistObject>
+        <name>householdTeamChoices</name>
+        <collectionReference>householdTeams</collectionReference>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <object>Group</object>
+        <valueField>DeveloperName</valueField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <description>Stores the queue/team picklist options.</description>
-        <name>team</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
-        <picklistField>OW_queue__c</picklistField>
-        <picklistObject>Account</picklistObject>
+        <name>specialistsChoices</name>
+        <collectionReference>specialists</collectionReference>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <object>User</object>
+        <valueField>Id</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
-        <description>Builds the text for the body of the notification that is sent to the dedicated specialist assigned to a household.</description>
-        <name>NotificationBody</name>
+        <name>originalSpecialistFirstName</name>
         <dataType>String</dataType>
-        <expression>&quot;You are now the dedicated specialist for &quot; &amp; {!Get_household_details.Name}</expression>
+        <expression>{!household.OW_dedicated_specialist__r.FirstName}</expression>
+    </formulas>
+    <formulas>
+        <description>originalSpecialistFullName
+{!household.OW_dedicated_specialist__r.FirstName} {!household.OW_dedicated_specialist__r.LastName}</description>
+        <name>originalSpecialistFullName</name>
+        <dataType>String</dataType>
+        <expression>{!household.OW_dedicated_specialist__r.FirstName} &amp; &quot; &quot; &amp; {!household.OW_dedicated_specialist__r.LastName}</expression>
     </formulas>
     <interviewLabel>Account | Manage Operations {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account | Manage Operations</label>
+    <loops>
+        <name>Loop_selected_households</name>
+        <label>Loop selected households</label>
+        <locationX>338</locationX>
+        <locationY>2720</locationY>
+        <collectionReference>OtherHouseholdsTransferSelection.selectedRows</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_new_DS_other_household</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Confirmation_screen</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -233,66 +875,122 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_existing_household_team_ID</name>
-        <label>Get existing household team ID</label>
-        <locationX>1238</locationX>
-        <locationY>518</locationY>
+        <name>Get_household</name>
+        <label>Get household</label>
+        <locationX>2310</locationX>
+        <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Choice</targetReference>
+            <targetReference>Set_original_DS_ID</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Type</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Queue</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_household_details.OW_queue__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Group</object>
-        <queriedFields>Id</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <description>Retrieves the full household details.</description>
-        <name>Get_household_details</name>
-        <label>Get household details</label>
-        <locationX>1238</locationX>
-        <locationY>158</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Build_screen_options</targetReference>
-        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_fault_error</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>household</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>OW_dedicated_specialist__c</queriedFields>
+        <queriedFields>OW_queue__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_new_household_team_ID</name>
-        <label>Get new household team ID</label>
-        <locationX>1370</locationX>
-        <locationY>998</locationY>
+        <name>Get_specialist_profile</name>
+        <label>Get specialist profile</label>
+        <locationX>1403</locationX>
+        <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Transfer_open_tasks_team_change</targetReference>
+            <targetReference>Profile_found</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_fault_error</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Specialist</stringValue>
+            </value>
+        </filters>
+        <object>Profile</object>
+        <outputAssignments>
+            <assignToReference>specialistProfileId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_specialists</name>
+        <label>Get specialists</label>
+        <locationX>908</locationX>
+        <locationY>1298</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Specialists_found</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_fault_error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ProfileId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>specialistProfileId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>User</object>
+        <outputReference>specialists</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_teams</name>
+        <label>Get teams</label>
+        <locationX>2558</locationX>
+        <locationY>1082</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Choose_team</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_fault_error</targetReference>
+        </faultConnector>
+        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>teamA</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>teamB</elementReference>
+            </value>
+        </filters>
         <filters>
             <field>Type</field>
             <operator>EqualTo</operator>
@@ -300,297 +998,98 @@
                 <stringValue>Queue</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>teamChoice</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Group</object>
+        <outputReference>householdTeams</outputReference>
         <queriedFields>Id</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <queriedFields>DeveloperName</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
     </recordLookups>
-    <recordUpdates>
-        <description>Transfers any tasks to the specialist that are:
-- open
-- currently owned by the team queue</description>
-        <name>Transfer_open_tasks_specialist_added</name>
-        <label>Transfer open tasks</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
+    <recordLookups>
+        <name>Other_households_assigned</name>
+        <label>Other households assigned</label>
+        <locationX>446</locationX>
+        <locationY>1514</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_household_specialist_added</targetReference>
+            <targetReference>Set_other_household_count</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_fault_error</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>FinServ__Household__c</field>
-            <operator>EqualTo</operator>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
         <filters>
-            <field>IsClosed</field>
+            <field>OW_dedicated_specialist__c</field>
             <operator>EqualTo</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <elementReference>originalDedicatedSpecialistId</elementReference>
             </value>
         </filters>
         <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_existing_household_team_ID.Id</elementReference>
-            </value>
+            <field>OW_dedicated_specialist__c</field>
+            <operator>NotEqualTo</operator>
         </filters>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>choose_dedicated_specialist_lookup.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
-        <description>Transfers any tasks to the team that are:
-- not started
-- owner by the current dedicated specialist</description>
-        <name>Transfer_open_tasks_specialist_removed</name>
-        <label>Transfer open tasks</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
-        <connector>
-            <targetReference>Update_household_remove_specialist</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>FinServ__Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Not Started</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_household_details.OW_dedicated_specialist__c</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>Get_existing_household_team_ID.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
-        <description>Transfers any tasks to the team that are:
-- not started
-- owner by the current dedicated specialist</description>
-        <name>Transfer_open_tasks_specialist_removed_0</name>
-        <label>Transfer open tasks</label>
-        <locationX>314</locationX>
-        <locationY>998</locationY>
-        <connector>
-            <targetReference>Update_household_remove_specialist_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>FinServ__Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Not Started</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_household_details.OW_dedicated_specialist__c</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>choose_dedicated_specialist_lookup.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
-        <description>Transfers any tasks to the new team that are:
-- open (is closed = false)
-- assigned to the current team</description>
-        <name>Transfer_open_tasks_team_change</name>
-        <label>Transfer open tasks</label>
-        <locationX>1370</locationX>
-        <locationY>1118</locationY>
-        <connector>
-            <targetReference>Update_household_team</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>FinServ__Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_existing_household_team_ID.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OwnerId</field>
-            <value>
-                <elementReference>Get_new_household_team_ID.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
+        <object>Account</object>
+        <outputReference>otherHouseholdsAssigned</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>OW_dedicated_specialist__c</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>OW_queue__c</queriedFields>
+        <queriedFields>FinServ__Status__c</queriedFields>
+        <queriedFields>StatusDisplay__c</queriedFields>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
     <recordUpdates>
         <description>Update the household to remove the specialist</description>
         <name>Update_household_remove_specialist</name>
         <label>Update household</label>
-        <locationX>578</locationX>
-        <locationY>1118</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OW_dedicated_specialist__c</field>
-            <value>
-                <stringValue></stringValue>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
-    <recordUpdates>
-        <description>Update the household to remove the specialist</description>
-        <name>Update_household_remove_specialist_0</name>
-        <label>Update household</label>
-        <locationX>314</locationX>
-        <locationY>1118</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OW_dedicated_specialist__c</field>
-            <value>
-                <elementReference>choose_dedicated_specialist_lookup.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
-    <recordUpdates>
-        <description>Update the household to add the specialist</description>
-        <name>Update_household_specialist_added</name>
-        <label>Update household</label>
-        <locationX>50</locationX>
-        <locationY>1118</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OW_dedicated_specialist__c</field>
-            <value>
-                <elementReference>choose_dedicated_specialist_lookup.recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
-    <recordUpdates>
-        <description>Update the household to commit the change in team.</description>
-        <name>Update_household_team</name>
-        <label>Update household</label>
-        <locationX>1370</locationX>
-        <locationY>1238</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OW_queue__c</field>
-            <value>
-                <elementReference>teamChoice</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
+        <locationX>2310</locationX>
+        <locationY>3572</locationY>
+        <connector>
+            <targetReference>Assign_toast_values</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_fault_error</targetReference>
+        </faultConnector>
+        <inputReference>householdsUpdate</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <description>Presents information via to invalidation of TOB.</description>
-        <name>choice_screen</name>
+        <name>Choice_screen</name>
         <label>Choice screen</label>
-        <locationX>1238</locationX>
-        <locationY>398</locationY>
+        <locationX>2310</locationX>
+        <locationY>866</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_existing_household_team_ID</targetReference>
+            <targetReference>Choice</targetReference>
         </connector>
         <fields>
-            <name>management_options</name>
+            <name>ManagementButtons</name>
             <extensionName>runtime_industries_lending:flowPickArray</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>choicesText</name>
                 <value>
-                    <elementReference>management_choice_labels</elementReference>
+                    <elementReference>buttonLabels</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>choicesValues</name>
                 <value>
-                    <elementReference>management_choice_values</elementReference>
+                    <elementReference>buttonValues</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -610,8 +1109,8 @@
         <description>Screen presenting options to change the team.</description>
         <name>Choose_team</name>
         <label>Choose team</label>
-        <locationX>1502</locationX>
-        <locationY>758</locationY>
+        <locationX>2558</locationX>
+        <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -625,106 +1124,227 @@
         </fields>
         <fields>
             <name>teamChoice</name>
-            <choiceReferences>team</choiceReferences>
+            <choiceReferences>householdTeamChoices</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Team</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <description>Screen presenting options for managing the dedicated specialist looking after this household</description>
-        <name>Manage_specialist</name>
-        <label>Manage specialist</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <name>Confirmation_screen</name>
+        <label>Confirmation screen</label>
+        <locationX>2310</locationX>
+        <locationY>3464</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Choice_specialist</targetReference>
+            <targetReference>Update_household_remove_specialist</targetReference>
         </connector>
         <fields>
-            <name>current_dedicated_specialist_message</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_household_details.OW_dedicated_specialist__r.FirstName} {!Get_household_details.OW_dedicated_specialist__r.LastName} is the dedicated specialist for this household. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Please choose a new owner or remove {!Get_household_details.OW_dedicated_specialist__r.FirstName}.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_household_details.OW_dedicated_specialist__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>choose_dedicated_specialist_message</name>
-            <fieldText>&lt;p&gt;This household is not currently assigned to anyone. Please choose a dedicated specialist below. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_household_details.OW_dedicated_specialist__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>choose_dedicated_specialist_lookup</name>
-            <extensionName>flowruntime:lookup</extensionName>
+            <name>ConfirmationModal</name>
+            <extensionName>c:confirmModalFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>fieldApiName</name>
+                <name>navigateBackOnCancel</name>
                 <value>
-                    <stringValue>OW_dedicated_specialist__c</stringValue>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>navigateForwardOnConfirm</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Dedicated specialist</stringValue>
+                    <stringValue>Confirmation needed</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>objectApiName</name>
+                <name>variant</name>
                 <value>
-                    <stringValue>Account</stringValue>
+                    <stringValue>header</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>confirmModalMessage</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>3482</locationX>
+        <locationY>3788</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
         <fields>
-            <name>remove_specialist_button</name>
-            <extensionName>runtime_industries_lending:flowButton</extensionName>
-            <fieldType>ComponentInstance</fieldType>
+            <name>ErrorDisplay</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;{!errorMessage}. &lt;/strong&gt;{!$Label.LogATicketMessage}.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please include the following details:&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Manage_specialist_screen</name>
+        <label>Manage specialist</label>
+        <locationX>534</locationX>
+        <locationY>1838</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Choice_specialist</targetReference>
+        </connector>
+        <fields>
+            <name>DedicatedSpecialist</name>
+            <choiceReferences>specialistsChoices</choiceReferences>
+            <defaultValue>
+                <elementReference>originalDedicatedSpecialistId</elementReference>
+            </defaultValue>
+            <extensionName>flowruntime:choiceLookup</extensionName>
+            <fieldText>Dedicated specialist</fieldText>
+            <fieldType>ComponentChoice</fieldType>
             <inputParameters>
-                <name>buttonLabel</name>
+                <name>disabled</name>
                 <value>
-                    <stringValue>Remove dedicated specialist</stringValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>Choose a specialist</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>remove_specialist</assignToReference>
-                <name>renderNext</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>assignSpecialistButtonValue</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ManagementButtons.selectedValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>changeSpecialistButtonValue</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>TransferOtherHouseholds</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>No</defaultSelectedChoiceReference>
+            <fieldText>Transfer other households from {!originalSpecialistFullName}</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <booleanValue>false</booleanValue>
+            </isDisabled>
+            <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_household_details.OW_dedicated_specialist__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>otherHouseholdCount</leftValueReference>
+                    <operator>GreaterThan</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <numberValue>0.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>OtherHouseholdsTransferSelection</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Account</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>{!household.OW_dedicated_specialist__r.FirstName}&#39;s households</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>MULTI_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>otherHouseholdsAssigned</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isShowSearchBar</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-29da&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;StatusDisplay__c&quot;,&quot;guid&quot;:&quot;column-0603&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>TransferOtherHouseholds</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Yes</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -733,75 +1353,59 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <description>Screen confirming no action was taken because the team did not change.</description>
-        <name>No_action_taken</name>
-        <label>No action taken</label>
-        <locationX>1634</locationX>
-        <locationY>998</locationY>
+        <name>Toast_display</name>
+        <label>Toast display</label>
+        <locationX>2310</locationX>
+        <locationY>3788</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
+        <allowPause>true</allowPause>
         <fields>
-            <name>current_team_message_0</name>
-            <fieldText>&lt;p&gt;No action has been taken as a different team wasn&#39;t chosen. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <description>Screen confirming no action was taken because the team did not change.</description>
-        <name>No_action_taken_0</name>
-        <label>No action taken</label>
-        <locationX>842</locationX>
-        <locationY>998</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>current_team_message_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;No action has been taken as no changes were made. &lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <description>Screen confirming no action was taken because the team did not change.</description>
-        <name>No_action_taken_0_0</name>
-        <label>No action taken</label>
-        <locationX>1106</locationX>
-        <locationY>998</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>current_team_message_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;No action has been taken as no changes were made. &lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>Toast</name>
+            <extensionName>c:displayToastFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>toastMessage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <elementReference>toastVariant</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <elementReference>toastTitle</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>triggerNavigationNextEvent</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1112</locationX>
+        <locationX>2184</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_household_details</targetReference>
+            <targetReference>Assign_household_ID</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <variables>
-        <name>case</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Case</objectType>
-    </variables>
-    <variables>
         <description>Stores the labels for the management options.</description>
-        <name>management_choice_labels</name>
+        <name>buttonLabels</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -809,19 +1413,92 @@
     </variables>
     <variables>
         <description>Stores the values for the management options.</description>
-        <name>management_choice_values</name>
+        <name>buttonValues</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Stores the IDs of the users who should receive the notification that they are the dedicated specialist, one person in this case.</description>
-        <name>notificationRecipientIds</name>
+        <name>confirmModalMessage</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>All tasks will be transferred.</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>household</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>householdsUpdate</name>
+        <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>householdTeams</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Group</objectType>
+    </variables>
+    <variables>
+        <name>newDedicatedSpecialistId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>originalDedicatedSpecialistId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>otherHouseholdCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>otherHouseholdsAssigned</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
     </variables>
     <variables>
         <description>Stores the ID of the TOB record.</description>
@@ -832,28 +1509,37 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>True if the specialist should be removed</description>
-        <name>remove_specialist</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <description>Stores the value selected by the user on the first screen.</description>
-        <name>selected_option</name>
+        <name>specialistProfileId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>True if new TOB were sent successfully.</description>
-        <name>send_tob_success</name>
-        <dataType>Boolean</dataType>
+        <name>specialists</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>User</objectType>
+    </variables>
+    <variables>
+        <name>toastMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>toastTitle</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>toastVariant</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
