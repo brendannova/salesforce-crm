@@ -6,7 +6,7 @@
         <name>Record_that_TOB_were_accepted</name>
         <label>Record that TOB were accepted</label>
         <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationY>287</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_status__c</assignToReference>
             <operator>Assign</operator>
@@ -15,9 +15,12 @@
             </value>
         </assignmentItems>
     </assignments>
-    <description>Runs when a TOB record is accepted for the first time.</description>
+    <description>Replaced by newer flow using updated conventions. 
+
+Runs when a TOB record is accepted for the first time.</description>
+    <environments>Default</environments>
     <interviewLabel>TOB - accepted {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>TOB - accepted</label>
+    <label>zUnused | TOB - accepted</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -63,5 +66,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
 </Flow>

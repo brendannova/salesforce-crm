@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>53.0</apiVersion>
-    <description>Replaced with flow using newer conventions. 
-
-Runs when a TOB record is accepted for the first time. Runs after save so that actions can be triggered elsewhere like updating the person account and household.</description>
+    <apiVersion>62.0</apiVersion>
+    <description>Runs when a TOB record is accepted for the first time. Runs after save so that actions can be triggered elsewhere like updating the person account and household.</description>
     <environments>Default</environments>
     <formulas>
         <name>customer_stop_internal_user_update_value</name>
@@ -35,8 +33,8 @@ Runs when a TOB record is accepted for the first time. Runs after save so that a
         <dataType>String</dataType>
         <expression>BR()</expression>
     </formulas>
-    <interviewLabel>TOB | accepted - after save {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>zUnused | TOB | accepted - after save</label>
+    <interviewLabel>TOB | Accepted {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TOB | Accepted</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -185,7 +183,7 @@ Runs when a TOB record is accepted for the first time. Runs after save so that a
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <subflows>
         <description>Calls the account domain sub flow that takes into consideration the TOB record that has just been processed and makes appropriate account updates.</description>
         <name>Account_sub_flow</name>

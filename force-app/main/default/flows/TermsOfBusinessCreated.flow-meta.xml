@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>53.0</apiVersion>
-    <description>Replaced with new version using updated conventions. 
-
-Update task creation process to new school way</description>
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Set_household_ID</name>
+        <label>Set household ID</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>personId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Person_Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_chase_TOB_task</targetReference>
+        </connector>
+    </assignments>
+    <description>Runs when a TOB record is accepted for the first time. Runs after save so that actions can be triggered elsewhere like updating the person account and household.</description>
     <environments>Default</environments>
     <formulas>
         <description>The date when the chase TOB task should be due.</description>
@@ -11,8 +32,8 @@ Update task creation process to new school way</description>
         <dataType>Date</dataType>
         <expression>TODAY() + 7</expression>
     </formulas>
-    <interviewLabel>TOB - created | after save {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>zUnused | TOB - created | after save</label>
+    <interviewLabel>TOB | Created {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TOB | Created</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -36,7 +57,7 @@ Update task creation process to new school way</description>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_Chase_TOB_task_via_flow</targetReference>
+            <targetReference>Set_household_ID</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -51,13 +72,13 @@ Update task creation process to new school way</description>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <subflows>
         <description>Calls the account domain sub flow that takes into consideration the TOB record that has just been processed and makes appropriate account updates.</description>
         <name>Account_sub_flow</name>
         <label>Account sub-flow</label>
         <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationY>539</locationY>
         <flowName>OW_account_tob_sub</flowName>
         <inputAssignments>
             <name>tobRecord</name>
@@ -67,10 +88,10 @@ Update task creation process to new school way</description>
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Create_Chase_TOB_task_via_flow</name>
-        <label>Create Chase TOB task via flow</label>
+        <name>Create_chase_TOB_task</name>
+        <label>Create chase TOB task</label>
         <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationY>431</locationY>
         <connector>
             <targetReference>Account_sub_flow</targetReference>
         </connector>
@@ -78,7 +99,7 @@ Update task creation process to new school way</description>
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -90,10 +111,25 @@ Update task creation process to new school way</description>
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>$Record.Person_Account__c</elementReference>
+                <elementReference>personId</elementReference>
             </value>
         </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>personId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>specialist_queue_id</name>
         <dataType>String</dataType>

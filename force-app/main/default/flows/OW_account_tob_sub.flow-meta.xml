@@ -2,54 +2,47 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <assignments>
-        <name>Add_customer_account_for_update</name>
-        <label>Add customer account for update</label>
-        <locationX>1370</locationX>
-        <locationY>734</locationY>
-        <assignmentItems>
-            <assignToReference>accounts</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>customer</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_ACR</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Add_household_for_update</name>
         <label>Add household for update</label>
-        <locationX>1458</locationX>
-        <locationY>1214</locationY>
+        <locationX>1282</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
-            <assignToReference>accounts</assignToReference>
+            <assignToReference>accountsUpdate</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>household</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Any_accounts_to_update</targetReference>
+            <targetReference>Add_person_to_update_list</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_person_to_update_list</name>
+        <label>Add person to update list</label>
+        <locationX>1040</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>accountsUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>person</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_accounts</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Define_household_account_updates</name>
         <label>Define household account updates</label>
-        <locationX>1458</locationX>
-        <locationY>1094</locationY>
+        <locationX>1282</locationX>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>household.Id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_ACR.AccountId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>household.Stop_Internal_User_Update__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>stopInternalUserUpdateHousehold</elementReference>
+                <elementReference>termsOfBusiness.Household__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -65,64 +58,19 @@
     </assignments>
     <assignments>
         <description>Makes updates to the customer record to show that to capture details of accepted terms of business.</description>
-        <name>Define_party_updates_0</name>
-        <label>Define party updates</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>customer.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_customer_record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.Stop_Internal_User_Update__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>stopInternalUserUpdateCustomer</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.OW_terms_of_Business_Status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Awaiting acceptance</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_customer</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <description>Makes updates to the customer record to show that to capture details of accepted terms of business.</description>
         <name>Define_party_updates_0_0</name>
         <label>Define party updates</label>
-        <locationX>2074</locationX>
-        <locationY>518</locationY>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>customer.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_customer_record.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.Stop_Internal_User_Update__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>stopInternalUserUpdateCustomer</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.OW_terms_of_Business_Status__c</assignToReference>
+            <assignToReference>person.OW_terms_of_Business_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Not Accepted</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_customer_0</targetReference>
+            <targetReference>Add_person_to_update_list</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -130,37 +78,23 @@
         <name>Record_new_version_of_terms</name>
         <label>Record new version of terms</label>
         <locationX>1370</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>customer.Id</assignToReference>
+            <assignToReference>person.Version_of_Terms_Accepted__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_customer_record.Id</elementReference>
+                <elementReference>termsOfBusiness.Version_of_terms_accepted__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>customer.Version_of_Terms_Accepted__c</assignToReference>
+            <assignToReference>person.Date_terms_of_business_last_accepted__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>tobRecord.Version_of_terms_accepted__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.Stop_Internal_User_Update__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>stopInternalUserUpdateCustomer</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.Date_terms_of_business_last_accepted__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>tobRecord.Date_terms_of_business_accepted__c</elementReference>
+                <elementReference>termsOfBusiness.Date_terms_of_business_accepted__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_customer_account_for_update</targetReference>
+            <targetReference>Linked_household</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -168,139 +102,84 @@
         <name>Record_party_as_having_accepted_TOB</name>
         <label>Record party as having accepted TOB</label>
         <locationX>1106</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>customer.Id</assignToReference>
+            <assignToReference>person.Version_of_Terms_Accepted__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_customer_record.Id</elementReference>
+                <elementReference>termsOfBusiness.Version_of_terms_accepted__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>customer.Version_of_Terms_Accepted__c</assignToReference>
+            <assignToReference>person.Date_terms_of_business_last_accepted__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>tobRecord.Version_of_terms_accepted__c</elementReference>
+                <elementReference>termsOfBusiness.Date_terms_of_business_accepted__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>customer.Date_terms_of_business_last_accepted__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>tobRecord.Date_terms_of_business_accepted__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.Stop_Internal_User_Update__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>stopInternalUserUpdateCustomer</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>customer.OW_terms_of_Business_Status__c</assignToReference>
+            <assignToReference>person.OW_terms_of_Business_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Accepted</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_customer_account_for_update</targetReference>
+            <targetReference>Linked_household</targetReference>
         </connector>
     </assignments>
-    <decisions>
-        <name>Any_accounts_to_update</name>
-        <label>Any accounts to update?</label>
-        <locationX>1370</locationX>
-        <locationY>1430</locationY>
-        <defaultConnectorLabel>None</defaultConnectorLabel>
-        <rules>
-            <name>Some</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>accounts</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_accounts</targetReference>
-            </connector>
-            <label>Some</label>
-        </rules>
-    </decisions>
+    <assignments>
+        <description>Records this as awaiting acceptance</description>
+        <name>Set_TOB_status</name>
+        <label>Set TOB status</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>person.OW_terms_of_Business_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Awaiting acceptance</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_person_to_update_list</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Checks the customer&#39;s current TOB status so different actions can be taken.</description>
         <name>Current_party_TOB_status</name>
         <label>Current party TOB status</label>
-        <locationX>446</locationX>
-        <locationY>398</locationY>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>Sent_or_not_accepted_0</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>tobRecord.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
+                <leftValueReference>termsOfBusiness.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Not Accepted</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Define_party_updates_0</targetReference>
+                <targetReference>Set_TOB_status</targetReference>
             </connector>
             <label>Not accepted</label>
-        </rules>
-        <rules>
-            <name>Awaiting_acceptance</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>tobRecord.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Awaiting acceptance</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Awaiting acceptance</label>
-        </rules>
-        <rules>
-            <name>Accepted_outcome_party_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>tobRecord.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Accepted</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Accepted</label>
         </rules>
     </decisions>
     <decisions>
         <description>Checks the customer&#39;s current TOB status so different actions can be taken.</description>
         <name>Current_party_TOB_status_0</name>
         <label>Current party TOB status</label>
-        <locationX>2206</locationX>
-        <locationY>398</locationY>
+        <locationX>710</locationX>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
-        <rules>
-            <name>Sent_or_not_accepted_0_0</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>tobRecord.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Not Accepted</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Not accepted</label>
-        </rules>
         <rules>
             <name>Awaiting_acceptance_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>tobRecord.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
+                <leftValueReference>termsOfBusiness.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Awaiting acceptance</stringValue>
@@ -311,25 +190,13 @@
             </connector>
             <label>Awaiting acceptance</label>
         </rules>
-        <rules>
-            <name>Accepted_outcome_party_0_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>tobRecord.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Accepted</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Accepted</label>
-        </rules>
     </decisions>
     <decisions>
         <description>Checks the TOB status for the household and</description>
         <name>Household_party_TOB_status</name>
         <label>Household party TOB status</label>
-        <locationX>1370</locationX>
-        <locationY>974</locationY>
+        <locationX>1194</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Define_household_account_updates</targetReference>
         </defaultConnector>
@@ -338,16 +205,41 @@
             <name>Already_accepted</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_ACR.Account.OW_terms_of_Business_Status__c</leftValueReference>
+                <leftValueReference>termsOfBusiness.Household__r.OW_terms_of_Business_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Accepted</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Any_accounts_to_update</targetReference>
+                <targetReference>Add_person_to_update_list</targetReference>
             </connector>
             <label>Already accepted</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Linked_household</name>
+        <label>Linked household?</label>
+        <locationX>1370</locationX>
+        <locationY>650</locationY>
+        <defaultConnector>
+            <targetReference>Add_person_to_update_list</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No household</defaultConnectorLabel>
+        <rules>
+            <name>Household_linked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>termsOfBusiness.Household__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Household_party_TOB_status</targetReference>
+            </connector>
+            <label>Household linked</label>
         </rules>
     </decisions>
     <decisions>
@@ -355,24 +247,20 @@
         <name>Party_TOB_status</name>
         <label>Party TOB status</label>
         <locationX>1370</locationX>
-        <locationY>398</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Get_ACR</targetReference>
-        </defaultConnector>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>Sent_or_not_accepted</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Get_customer_record.OW_terms_of_Business_Status__c</leftValueReference>
+                <leftValueReference>person.OW_terms_of_Business_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Not Accepted</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_customer_record.OW_terms_of_Business_Status__c</leftValueReference>
+                <leftValueReference>person.OW_terms_of_Business_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Awaiting acceptance</stringValue>
@@ -387,7 +275,7 @@
             <name>Accepted_outcome_party</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_customer_record.OW_terms_of_Business_Status__c</leftValueReference>
+                <leftValueReference>person.OW_terms_of_Business_Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Accepted</stringValue>
@@ -403,14 +291,14 @@
         <description>Routes differently depending on the TOB status</description>
         <name>TOB_status</name>
         <label>TOB status?</label>
-        <locationX>1568</locationX>
-        <locationY>278</locationY>
+        <locationX>1040</locationX>
+        <locationY>242</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>Not_accepted</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>tobRecord.OW_status__c</leftValueReference>
+                <leftValueReference>termsOfBusiness.OW_status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Not accepted</stringValue>
@@ -422,25 +310,10 @@
             <label>Not accepted</label>
         </rules>
         <rules>
-            <name>Accepted</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>tobRecord.OW_status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Accepted</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Party_TOB_status</targetReference>
-            </connector>
-            <label>Accepted</label>
-        </rules>
-        <rules>
             <name>Expired</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>tobRecord.OW_status__c</leftValueReference>
+                <leftValueReference>termsOfBusiness.OW_status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Expired</stringValue>
@@ -451,6 +324,21 @@
             </connector>
             <label>Expired</label>
         </rules>
+        <rules>
+            <name>Accepted</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>termsOfBusiness.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Accepted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Party_TOB_status</targetReference>
+            </connector>
+            <label>Accepted</label>
+        </rules>
     </decisions>
     <description>This sub flow can be called, providing a TOB record as an input, to allow the account/party domain to determine how it wants to respond to this record.</description>
     <environments>Default</environments>
@@ -458,24 +346,12 @@
         <description>Message to display where there&#39;s a fault in making the update.</description>
         <name>faultMessage</name>
         <dataType>String</dataType>
-        <expression>&quot;Error in updating customer account for party &quot; &amp; {!tobRecord.Person_Account__c} &amp; &quot;. Fault message: &quot; &amp;  {!lineBreak} &amp; {!$Flow.FaultMessage}</expression>
+        <expression>&quot;Error in updating customer account for party &quot; &amp; {!termsOfBusiness.Person_Account__c} &amp; &quot;. Fault message: &quot; &amp;  {!lineBreak} &amp; {!$Flow.FaultMessage}</expression>
     </formulas>
     <formulas>
         <name>lineBreak</name>
         <dataType>String</dataType>
         <expression>BR()</expression>
-    </formulas>
-    <formulas>
-        <name>stopInternalUserUpdateCustomer</name>
-        <dataType>Number</dataType>
-        <expression>IF( ISBLANK( {!Get_customer_record.Stop_Internal_User_Update__c} ), 1, {!Get_customer_record.Stop_Internal_User_Update__c} + 1 )</expression>
-        <scale>0</scale>
-    </formulas>
-    <formulas>
-        <name>stopInternalUserUpdateHousehold</name>
-        <dataType>Number</dataType>
-        <expression>IF( ISBLANK( {!Get_ACR.Account.Stop_Internal_User_Update__c} ), 1, {!Get_ACR.Account.Stop_Internal_User_Update__c} + 1 )</expression>
-        <scale>0</scale>
     </formulas>
     <interviewLabel>Account | TOB sub {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account | TOB sub</label>
@@ -502,8 +378,8 @@
         <description>Create system log where the update fails for some reason</description>
         <name>Create_system_log</name>
         <label>Create system log</label>
-        <locationX>1370</locationX>
-        <locationY>1670</locationY>
+        <locationX>2162</locationX>
+        <locationY>1550</locationY>
         <inputAssignments>
             <field>OW_description__c</field>
             <value>
@@ -538,47 +414,11 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <description>Get the ACR for this customer in their primary household.</description>
-        <name>Get_ACR</name>
-        <label>Get ACR</label>
-        <locationX>1370</locationX>
-        <locationY>854</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Household_party_TOB_status</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ContactId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_customer_record.PersonContactId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>FinServ__PrimaryGroup__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Roles</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Client</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>AccountContactRelation</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Gets details of the customer these TOB relate to.</description>
         <name>Get_customer_record</name>
         <label>Get customer record</label>
-        <locationX>1568</locationX>
-        <locationY>158</locationY>
+        <locationX>1040</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>TOB_status</targetReference>
@@ -588,39 +428,26 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>tobRecord.Person_Account__c</elementReference>
+                <elementReference>termsOfBusiness.Person_Account__c</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>person</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>OW_terms_of_Business_Status__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Update_accounts</name>
         <label>Update accounts</label>
-        <locationX>1106</locationX>
-        <locationY>1550</locationY>
+        <locationX>1040</locationX>
+        <locationY>1442</locationY>
         <faultConnector>
             <targetReference>Create_system_log</targetReference>
         </faultConnector>
-        <inputReference>accounts</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_customer</name>
-        <label>Update customer</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <inputReference>customer</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_customer_0</name>
-        <label>Update customer</label>
-        <locationX>2074</locationX>
-        <locationY>638</locationY>
-        <inputReference>customer</inputReference>
+        <inputReference>accountsUpdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>1442</locationX>
+        <locationX>914</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_customer_record</targetReference>
@@ -628,18 +455,9 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>accounts</name>
+        <name>accountsUpdate</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <description>Stores the details of the customer who has signed TOB</description>
-        <name>customer</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
@@ -654,8 +472,17 @@
         <objectType>Account</objectType>
     </variables>
     <variables>
+        <description>Stores the details of the customer who has signed TOB</description>
+        <name>person</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
         <description>Stores the details of the TOB record that is the basis for running this flow.</description>
-        <name>tobRecord</name>
+        <name>termsOfBusiness</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
