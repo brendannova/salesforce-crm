@@ -14,7 +14,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>New_AML_Check</targetReference>
+            <targetReference>Household_known</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -22,7 +22,7 @@
         <name>New_AML_Check</name>
         <label>New AML Check</label>
         <locationX>176</locationX>
-        <locationY>542</locationY>
+        <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>amlCheck.Household__c</assignToReference>
             <operator>Assign</operator>
@@ -104,6 +104,47 @@
             <targetReference>Insert_AML_record</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_household_ID</name>
+        <label>Set household ID</label>
+        <locationX>264</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>HouseholdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_account_contact_relationship.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>New_AML_Check</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Household_known</name>
+        <label>Household known?</label>
+        <locationX>176</locationX>
+        <locationY>542</locationY>
+        <defaultConnector>
+            <targetReference>Get_account_contact_relationship</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not known</defaultConnectorLabel>
+        <rules>
+            <name>Known</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>party.Household_Lookup__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_AML_Check</targetReference>
+            </connector>
+            <label>Known</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Party_ID_or_record_provided</name>
         <label>Party ID or record provided</label>
@@ -121,7 +162,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>New_AML_Check</targetReference>
+                <targetReference>Household_known</targetReference>
             </connector>
             <label>Party record</label>
         </rules>
@@ -179,9 +220,46 @@
         <name>Insert_AML_record</name>
         <label>Insert AML record</label>
         <locationX>176</locationX>
-        <locationY>650</locationY>
+        <locationY>1058</locationY>
         <inputReference>amlCheck</inputReference>
     </recordCreates>
+    <recordLookups>
+        <name>Get_account_contact_relationship</name>
+        <label>Get account contact relationship</label>
+        <locationX>264</locationX>
+        <locationY>650</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_household_ID</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>party.PersonContactId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Settlor</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Trustee</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AccountContactRelation</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_party_record</name>
         <label>Get party record</label>

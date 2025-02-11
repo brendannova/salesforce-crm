@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Send_TOB</name>
         <label>Send TOB</label>
-        <locationX>842</locationX>
+        <locationX>930</locationX>
         <locationY>566</locationY>
         <actionName>FlowHelperTermsOfBusinessSend</actionName>
         <actionType>apex</actionType>
@@ -26,7 +26,7 @@
     <assignments>
         <name>Set_API_error</name>
         <label>Set API error</label>
-        <locationX>930</locationX>
+        <locationX>1018</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -42,7 +42,7 @@
     <assignments>
         <name>Set_person_account_ID</name>
         <label>Set person account ID</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>accountId</assignToReference>
@@ -58,7 +58,7 @@
     <assignments>
         <name>Unknown_TOB_status</name>
         <label>Unknown TOB status</label>
-        <locationX>1194</locationX>
+        <locationX>1282</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -74,7 +74,7 @@
     <decisions>
         <name>Callout_outcome</name>
         <label>Callout outcome</label>
-        <locationX>842</locationX>
+        <locationX>930</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Set_API_error</targetReference>
@@ -99,7 +99,7 @@
     <decisions>
         <name>Error_occurred</name>
         <label>Error occurred</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>1058</locationY>
         <defaultConnector>
             <targetReference>Error_screen</targetReference>
@@ -112,7 +112,7 @@
                 <leftValueReference>errorMessage</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <label>No error</label>
@@ -121,7 +121,7 @@
     <decisions>
         <name>Terms_of_business_status</name>
         <label>Terms of business status</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Unknown_TOB_status</targetReference>
@@ -176,7 +176,7 @@
     <decisions>
         <name>TOB_pending</name>
         <label>TOB pending?</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>TOB_pending_screen</targetReference>
@@ -225,7 +225,7 @@
     <recordLookups>
         <name>Check_for_pending_TOB</name>
         <label>Check for pending TOB</label>
-        <locationX>402</locationX>
+        <locationX>446</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -253,7 +253,7 @@
     <recordLookups>
         <name>Get_person</name>
         <label>Get person</label>
-        <locationX>622</locationX>
+        <locationX>666</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -275,7 +275,7 @@
     <screens>
         <name>Error_screen</name>
         <label>Error screen</label>
-        <locationX>710</locationX>
+        <locationX>798</locationX>
         <locationY>1166</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -324,7 +324,7 @@
     <screens>
         <name>Summary_Screen</name>
         <label>Summary Screen</label>
-        <locationX>842</locationX>
+        <locationX>930</locationX>
         <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -359,7 +359,7 @@
     <screens>
         <name>TOB_pending_screen</name>
         <label>TOB pending screen</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -377,7 +377,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>496</locationX>
+        <locationX>540</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_person_account_ID</targetReference>
