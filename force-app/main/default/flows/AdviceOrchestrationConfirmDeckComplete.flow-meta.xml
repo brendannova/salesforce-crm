@@ -2,10 +2,26 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>62.0</apiVersion>
     <assignments>
+        <name>Add_current_advice_type_to_collection</name>
+        <label>Add current advice type to collection</label>
+        <locationX>336</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>currentAdviceTypes</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>currentAdviceType</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_all_advice_types</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Define_updates</name>
         <label>Define updates</label>
         <locationX>336</locationX>
-        <locationY>1874</locationY>
+        <locationY>1982</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.AdviceDeckCompleteDate__c</assignToReference>
             <operator>Assign</operator>
@@ -39,7 +55,7 @@
         <name>Restrict_advice_method</name>
         <label>Restrict advice method</label>
         <locationX>72</locationX>
-        <locationY>1274</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>adviceMethodDisabled</assignToReference>
             <operator>Assign</operator>
@@ -55,7 +71,7 @@
         <name>Set_advice_method</name>
         <label>Set advice method</label>
         <locationX>72</locationX>
-        <locationY>1166</locationY>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.AdviceMethod__c</assignToReference>
             <operator>Assign</operator>
@@ -71,7 +87,7 @@
         <name>Set_advice_method_chosen</name>
         <label>Set advice method</label>
         <locationX>424</locationX>
-        <locationY>1682</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.AdviceMethod__c</assignToReference>
             <operator>Assign</operator>
@@ -87,7 +103,7 @@
         <name>Set_advice_method_to_presented</name>
         <label>Set advice method to presented</label>
         <locationX>336</locationX>
-        <locationY>1166</locationY>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.AdviceMethod__c</assignToReference>
             <operator>Assign</operator>
@@ -111,7 +127,7 @@
         <name>Set_advice_type_variable</name>
         <label>Set advice type variable</label>
         <locationX>336</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceType</assignToReference>
             <operator>Assign</operator>
@@ -128,7 +144,7 @@
         <name>Advice_method</name>
         <label>Advice method?</label>
         <locationX>336</locationX>
-        <locationY>1058</locationY>
+        <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>Confirm_date_and_method</targetReference>
         </defaultConnector>
@@ -168,7 +184,7 @@
         <name>Advice_method_after_screen</name>
         <label>Advice method?</label>
         <locationX>336</locationX>
-        <locationY>1574</locationY>
+        <locationY>1682</locationY>
         <defaultConnector>
             <targetReference>Set_advice_method_chosen</targetReference>
         </defaultConnector>
@@ -193,7 +209,7 @@
         <name>Advice_type_chosen</name>
         <label>Advice type chosen</label>
         <locationX>336</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Advice_method</targetReference>
         </defaultConnector>
@@ -225,7 +241,7 @@
         <name>Retirement_call</name>
         <label>Retirement call</label>
         <locationX>182</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Advice_method</targetReference>
         </defaultConnector>
@@ -301,7 +317,7 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
         <name>Get_all_advice_types</name>
         <label>Get all advice types</label>
         <locationX>336</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Confirm_advice_type</targetReference>
@@ -319,6 +335,13 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
             <operator>EqualTo</operator>
             <value>
                 <elementReference>isReview</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ClientType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>currentAdviceType.ClientType__c</elementReference>
             </value>
         </filters>
         <object>AdviceType__c</object>
@@ -339,7 +362,7 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_all_advice_types</targetReference>
+            <targetReference>Add_current_advice_type_to_collection</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -349,17 +372,17 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
                 <elementReference>advice.AdviceType__c</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>AdviceType__c</object>
+        <outputReference>currentAdviceType</outputReference>
         <queriedFields>Id</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <queriedFields>ClientType__c</queriedFields>
     </recordLookups>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Confirm_advice_type</name>
         <label>Confirm advice type</label>
         <locationX>336</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -425,7 +448,7 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
             <inputParameters>
                 <name>selectedRows</name>
                 <value>
-                    <elementReference>Get_current_advice_type</elementReference>
+                    <elementReference>currentAdviceTypes</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -440,7 +463,7 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
         <name>Confirm_date_and_method</name>
         <label>Confirm date and method</label>
         <locationX>336</locationX>
-        <locationY>1466</locationY>
+        <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -503,7 +526,7 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
         <name>Confirm_retirement_call_need</name>
         <label>Confirm retirement call need</label>
         <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <connector>
             <targetReference>Advice_method</targetReference>
         </connector>
@@ -618,6 +641,22 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>Advice__c</objectType>
+    </variables>
+    <variables>
+        <name>currentAdviceType</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AdviceType__c</objectType>
+    </variables>
+    <variables>
+        <name>currentAdviceTypes</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AdviceType__c</objectType>
     </variables>
     <variables>
         <name>errorMessage</name>

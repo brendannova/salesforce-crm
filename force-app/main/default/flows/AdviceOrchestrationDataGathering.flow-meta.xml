@@ -206,7 +206,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Confirmation_modal</targetReference>
+                <targetReference>Confirmation_screen</targetReference>
             </connector>
             <label>Required</label>
         </rules>
@@ -326,11 +326,11 @@ IF({!DataGatheringProceedWhileInProgress.renderNext}, &quot;Associated informati
         <description>Contextual help for the data gathering status field.</description>
         <name>informationRequestsHelp</name>
         <dataType>String</dataType>
-        <expression>CASE({!advice.DataGatheringStatus__c},
-&quot;Not required&quot;, &quot;No information requests are needed for this advice.&quot;,
-&quot;In progress&quot;, &quot;This will update to complete automatically when all associated information requests have their information.&quot;,
+        <expression>IF(ISPICKVAL({!advice.AdviceType__r.InformationRequests__c}, &quot;NEVER&quot;), &quot;Information requests are not allowed on this advice type&quot;, CASE({!advice.DataGatheringStatus__c},
+&quot;Not required&quot;, &quot;No information requests are needed for this advice&quot;,
+&quot;In progress&quot;, &quot;This will update to complete automatically when all associated information requests have their information&quot;,
 &quot;Complete&quot;, &quot;&quot;,
-&quot;&quot;)</expression>
+&quot;&quot;))</expression>
     </formulas>
     <formulas>
         <name>postReviewFactFindNotesCompleteDisabled</name>
@@ -382,8 +382,8 @@ IF(ISBLANK({!advice.Additional_Questions_to_be_asked_on_call__c}), &quot;Outstan
     <processType>Flow</processType>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Confirmation_modal</name>
-        <label>Confirmation modal</label>
+        <name>Confirmation_screen</name>
+        <label>Confirmation screen</label>
         <locationX>578</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
@@ -584,6 +584,13 @@ IF(ISBLANK({!advice.Additional_Questions_to_be_asked_on_call__c}), &quot;Outstan
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Not required</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>advice.AdviceType__r.InformationRequests__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>NEVER</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>

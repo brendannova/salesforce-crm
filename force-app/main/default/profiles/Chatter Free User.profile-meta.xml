@@ -6900,7 +6900,19 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.AnnualReview</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.Protection</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
         <recordType>AdviceChecklist__c.TopUp</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.TrustOnboarding</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
@@ -6919,6 +6931,10 @@
         <layout>AdviceType__c-Advice Type Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Advice__c-OW advice page layout</layout>
+        <recordType>Advice__c.AnnualReview</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Advice__c-OW DB advice page layout</layout>
         <recordType>Advice__c.DB_Advice</recordType>
     </layoutAssignments>
@@ -6935,11 +6951,19 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
+        <recordType>Advice__c.Protection</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Advice__c-OW advice page layout</layout>
         <recordType>Advice__c.RegularAmendment</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
         <recordType>Advice__c.TopUp</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Advice__c-Trust page layout</layout>
+        <recordType>Advice__c.TrustOnboarding</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
@@ -8729,6 +8753,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>AdviceChecklist__c.TrustOnboarding</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>AdviceChecklist__c.Withdrawal</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -8760,6 +8789,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Advice__c.TopUp</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Advice__c.TrustOnboarding</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
