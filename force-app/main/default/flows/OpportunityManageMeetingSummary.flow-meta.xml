@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign</name>
         <label>Get Opportunity Error</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -21,7 +21,7 @@
     <assignments>
         <name>Assign_new_meeting_link</name>
         <label>Assign new meeting link</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>opportunity.Meeting_Recording_URL__c</assignToReference>
@@ -38,13 +38,50 @@
             </value>
         </assignmentItems>
         <connector>
+            <targetReference>Assign_processing_variables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_processing_variables</name>
+        <label>Assign processing variables</label>
+        <locationX>380</locationX>
+        <locationY>1058</locationY>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.FileId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>meetingRecordingFileId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.ProcessingStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>SCHEDULED VIDEO-TO-WAV</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.Opportunity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>opportunityId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.FileType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Video</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
             <targetReference>Create_File_Processing_Request</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Record_Id</name>
         <label>Assign Record Id</label>
-        <locationX>1062</locationX>
+        <locationX>1139</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>opportunityId</assignToReference>
@@ -60,8 +97,8 @@
     <assignments>
         <name>File_processing_failed_message</name>
         <label>File processing failed message</label>
-        <locationX>754</locationX>
-        <locationY>1124</locationY>
+        <locationX>842</locationX>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -76,7 +113,7 @@
     <assignments>
         <name>Get_File_Processing_Request_Error</name>
         <label>Get File Processing Request Error</label>
-        <locationX>2074</locationX>
+        <locationX>2162</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -93,7 +130,7 @@
     <assignments>
         <name>No_Status_Error</name>
         <label>No Status Error</label>
-        <locationX>1810</locationX>
+        <locationX>1898</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -110,8 +147,8 @@
     <assignments>
         <name>Opportunity_update_failed_message</name>
         <label>Opportunity update failed message</label>
-        <locationX>314</locationX>
-        <locationY>1340</locationY>
+        <locationX>380</locationX>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -127,7 +164,7 @@
     <decisions>
         <name>Disco_meeting_link_saved</name>
         <label>Disco meeting link saved</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Add_meeting_link</targetReference>
@@ -152,8 +189,8 @@
     <decisions>
         <name>Does_opportunity_need_updating</name>
         <label>Does opportunity need updating?</label>
-        <locationX>314</locationX>
-        <locationY>1124</locationY>
+        <locationX>380</locationX>
+        <locationY>1274</locationY>
         <defaultConnector>
             <targetReference>Success_Screen</targetReference>
         </defaultConnector>
@@ -177,7 +214,7 @@
     <decisions>
         <name>Existing_link_valid</name>
         <label>Existing link valid?</label>
-        <locationX>138</locationX>
+        <locationX>182</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -191,11 +228,11 @@
                 <leftValueReference>UrlValidationOpportunity</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_File_Processing_Request</targetReference>
+                <targetReference>Create_summary</targetReference>
             </connector>
             <label>Valid link</label>
         </rules>
@@ -203,7 +240,7 @@
     <decisions>
         <name>File_Processing_Request_State</name>
         <label>File Processing Request State</label>
-        <locationX>1062</locationX>
+        <locationX>1139</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>No_Status_Error</targetReference>
@@ -293,16 +330,16 @@
     <formulas>
         <name>UrlValidationOpportunity</name>
         <dataType>Boolean</dataType>
-        <expression>NOT(BEGINS({!meetingLinkPrefix}, {!opportunity.Meeting_Recording_URL__c}))
-||
-CONTAINS(&quot;folders&quot;, {!opportunity.Meeting_Recording_URL__c})</expression>
+        <expression>BEGINS({!opportunity.Meeting_Recording_URL__c}, {!meetingLinkPrefix})
+&amp;&amp;
+NOT(CONTAINS(&quot;folders&quot;, {!opportunity.Meeting_Recording_URL__c}))</expression>
     </formulas>
     <formulas>
         <name>UrlValidationPageCmp</name>
         <dataType>Boolean</dataType>
-        <expression>NOT(BEGINS({!meetingLinkPrefix}, {!MeetingRecordingURL.value}))
-||
-CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
+        <expression>BEGINS({!MeetingRecordingURL.value}, {!meetingLinkPrefix})
+&amp;&amp;
+NOT(CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value}))</expression>
     </formulas>
     <interviewLabel>Opportunity | Manage Meeting Summary {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity | Manage Meeting Summary</label>
@@ -328,8 +365,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordCreates>
         <name>Create_File_Processing_Request</name>
         <label>Create File Processing Request</label>
-        <locationX>314</locationX>
-        <locationY>1016</locationY>
+        <locationX>380</locationX>
+        <locationY>1166</locationY>
         <connector>
             <targetReference>Does_opportunity_need_updating</targetReference>
         </connector>
@@ -341,7 +378,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordLookups>
         <name>Get_File_Processing_Request</name>
         <label>Get File Processing Request</label>
-        <locationX>1062</locationX>
+        <locationX>1139</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -365,7 +402,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordLookups>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -390,8 +427,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordUpdates>
         <name>Update_Opportunity</name>
         <label>Update Opportunity</label>
-        <locationX>50</locationX>
-        <locationY>1232</locationY>
+        <locationX>116</locationX>
+        <locationY>1382</locationY>
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
@@ -404,7 +441,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Add_meeting_link</name>
         <label>Add meeting link</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -422,7 +459,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
                     <leftValueReference>UrlValidationOpportunity</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>true</booleanValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -437,7 +474,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
                     <leftValueReference>UrlValidationOpportunity</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
-                        <booleanValue>true</booleanValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -462,7 +499,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <validationRule>
-                <errorMessage>&lt;p&gt;Please make sure this is a valid meeting recording link. URL must start with &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!meetingLinkPrefix}&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <errorMessage>&lt;p&gt;This meeting link is not valid. Make sure you&#39;re not adding a folder link, and the URL starts with {!meetingLinkPrefix}&lt;/p&gt;</errorMessage>
                 <formulaExpression>{!UrlValidationPageCmp}</formulaExpression>
             </validationRule>
         </fields>
@@ -473,7 +510,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Completed_Screen</name>
         <label>Completed Screen</label>
-        <locationX>1546</locationX>
+        <locationX>1634</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -488,10 +525,29 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Create_summary</name>
+        <label>Create summary</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_processing_variables</targetReference>
+        </connector>
+        <fields>
+            <name>createSummaryText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Create disco summary 🚀&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Click ‘Next’ to generate an AI-powered summary of your disco meeting&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>754</locationX>
-        <locationY>1232</locationY>
+        <locationX>842</locationX>
+        <locationY>1382</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -506,7 +562,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Processing_Screen</name>
         <label>Processing Screen</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -523,8 +579,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>314</locationX>
-        <locationY>1622</locationY>
+        <locationX>380</locationX>
+        <locationY>1772</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -564,7 +620,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>936</locationX>
+        <locationX>1013</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_Record_Id</targetReference>
