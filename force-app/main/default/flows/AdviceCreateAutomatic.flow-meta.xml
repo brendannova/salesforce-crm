@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Get_record_type_ID</name>
-        <label>Get record type ID</label>
-        <locationX>314</locationX>
+        <name>Get_advice_record_type_ID</name>
+        <label>Get advice record type ID</label>
+        <locationX>446</locationX>
         <locationY>542</locationY>
-        <actionName>RecordTypeGetId</actionName>
+        <actionName>FlowUtilityGetRecordTypeId</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Define_common_advice_values</targetReference>
@@ -23,7 +23,7 @@
                 <stringValue>Advice__c</stringValue>
             </value>
         </inputParameters>
-        <nameSegment>RecordTypeGetId</nameSegment>
+        <nameSegment>FlowUtilityGetRecordTypeId</nameSegment>
         <offset>0</offset>
         <outputParameters>
             <assignToReference>adviceRecordTypeId</assignToReference>
@@ -36,7 +36,7 @@
         <description>Define the values that across all types of advice that are created via this flow like name, household, and record type.</description>
         <name>Define_common_advice_values</name>
         <label>Define common advice values</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>650</locationY>
         <assignmentItems>
             <assignToReference>advice.Advice_Household__c</assignToReference>
@@ -188,6 +188,78 @@
             <targetReference>OW_create_advice_record</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Define_trust_onboarding_values</name>
+        <label>Define trust onboarding values</label>
+        <locationX>578</locationX>
+        <locationY>866</locationY>
+        <assignmentItems>
+            <assignToReference>advice.Advice_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Setup</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.New_or_existing_client__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.Setup_Complete_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.Advice_Status_change_date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.DataGatheringStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not required</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.DataAnalysisStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not required</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.RiskCallStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not ready</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.ProfileUpdateStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not started</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.Partner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>household.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>OW_create_advice_record</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <description>The developer name of the default advice type.</description>
         <name>adviceTypeDefaultDeveloperName</name>
@@ -199,7 +271,7 @@
     <decisions>
         <name>Household_ID_or_record</name>
         <label>Household ID or record?</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Get_household</targetReference>
@@ -224,7 +296,7 @@
     <decisions>
         <name>OW_new_customer_full_review</name>
         <label>Advice type</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>758</locationY>
         <defaultConnectorLabel>Not defined</defaultConnectorLabel>
         <rules>
@@ -257,6 +329,21 @@
             </connector>
             <label>Protection</label>
         </rules>
+        <rules>
+            <name>Trust_Advice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>adviceTypeDeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TRUST_ONBOARDING</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Define_trust_onboarding_values</targetReference>
+            </connector>
+            <label>Trust | Advice</label>
+        </rules>
     </decisions>
     <description>Creates a new piece of advice with the advice type being passed in as an input.</description>
     <environments>Default</environments>
@@ -266,6 +353,7 @@
         <expression>CASE({!adviceTypeDeveloperName},
 &quot;ONBOARDING_ACCUMULATION&quot;, &quot;Full review | &quot; &amp;  RIGHT({!household.Name}, LEN({!household.Name}) - FIND(&quot; &quot;, {!household.Name})),
 &quot;PROTECTION&quot;, &quot;Protection review | &quot; + {!household.Name},
+&quot;TRUST_ONBOARDING&quot;, &quot;Trust onboarding | &quot;  + {!household.Name},
 &quot;Advice | &quot; + {!household.Name})</expression>
     </formulas>
     <interviewLabel>Advice | Create | Automatic {!$Flow.CurrentDateTime}</interviewLabel>
@@ -292,18 +380,18 @@
     <recordCreates>
         <name>OW_create_advice_record</name>
         <label>Create advice record</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>1058</locationY>
         <inputReference>advice</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_advice_type</name>
         <label>Get advice type</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>434</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_record_type_ID</targetReference>
+            <targetReference>Get_advice_record_type_ID</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -326,7 +414,7 @@
     <recordLookups>
         <name>Get_household</name>
         <label>Get household</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -348,7 +436,7 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>188</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Household_ID_or_record</targetReference>

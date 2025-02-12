@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Send_TOB</name>
         <label>Send TOB</label>
-        <locationX>930</locationX>
-        <locationY>782</locationY>
+        <locationX>666</locationX>
+        <locationY>1106</locationY>
         <actionName>FlowHelperTermsOfBusinessSend</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -14,24 +14,64 @@
         <inputParameters>
             <name>accountId</name>
             <value>
-                <elementReference>accountId</elementReference>
+                <elementReference>personAccountId</elementReference>
             </value>
         </inputParameters>
         <nameSegment>FlowHelperTermsOfBusinessSend</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Set_API_error</name>
         <label>Set API error</label>
+        <locationX>754</locationX>
+        <locationY>1322</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Error code {!Send_TOB.statusCode} returned. Please raise a ticket. </stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>showToast</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_occurred</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_no_ACRs_error</name>
+        <label>Set no ACRs error</label>
+        <locationX>1546</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Person needs to be a client, settlor, or trustee in a household order to send TOB.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_occurred</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_no_email_error</name>
+        <label>Set no email error</label>
         <locationX>1018</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Error code {!Send_TOB.statusCode} returned. Please raise a ticket. </stringValue>
+                <stringValue>Email required in order to send TOB.</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -41,10 +81,10 @@
     <assignments>
         <name>Set_person_account_ID</name>
         <label>Set person account ID</label>
-        <locationX>1106</locationX>
+        <locationX>1458</locationX>
         <locationY>134</locationY>
         <assignmentItems>
-            <assignToReference>accountId</assignToReference>
+            <assignToReference>personAccountId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -55,10 +95,59 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Unknown_TOB_status</name>
-        <label>Unknown TOB status</label>
+        <name>Set_person_not_found_error</name>
+        <label>Set person not found error</label>
+        <locationX>1810</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Couldn&#39;t find a person. Please raise a ticket. </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_occurred</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_pre_send_message</name>
+        <label>Set pre-send message</label>
+        <locationX>314</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>preSendTermsOfBusinessMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>There is already a TOB email with the customer awaiting acceptance. Click next to send another.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Summary_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_pre_send_message_not_accepted</name>
+        <label>Set pre-send message</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>preSendTermsOfBusinessMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Click next to send TOB to the customer.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Email_recorded</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Unknown_TOB_status_error</name>
+        <label>Unknown TOB status error</label>
         <locationX>1282</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -71,16 +160,16 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Any_ACRs</name>
-        <label>Any ACRs</label>
+        <name>ACRs_found</name>
+        <label>ACRs found</label>
         <locationX>1106</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <defaultConnector>
-            <targetReference>No_ACRs_Screen</targetReference>
+            <targetReference>Set_no_ACRs_error</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <defaultConnectorLabel>Not found</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
+            <name>Found_ACRs</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Get_ACRs</leftValueReference>
@@ -92,14 +181,14 @@
             <connector>
                 <targetReference>Terms_of_business_status</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Found</label>
         </rules>
     </decisions>
     <decisions>
         <name>Callout_outcome</name>
         <label>Callout outcome</label>
-        <locationX>930</locationX>
-        <locationY>890</locationY>
+        <locationX>666</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Set_API_error</targetReference>
         </defaultConnector>
@@ -121,10 +210,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Email_recorded</name>
+        <label>Email recorded</label>
+        <locationX>842</locationX>
+        <locationY>890</locationY>
+        <defaultConnector>
+            <targetReference>Set_no_email_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not recorded</defaultConnectorLabel>
+        <rules>
+            <name>Recorded</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>person.PersonEmail</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Summary_Screen</targetReference>
+            </connector>
+            <label>Recorded</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Error_occurred</name>
         <label>Error occurred</label>
-        <locationX>666</locationX>
-        <locationY>1274</locationY>
+        <locationX>1458</locationX>
+        <locationY>1850</locationY>
         <defaultConnector>
             <targetReference>Error_screen</targetReference>
         </defaultConnector>
@@ -146,12 +260,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Person_found</name>
+        <label>Person found?</label>
+        <locationX>1458</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Set_person_not_found_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not found</defaultConnectorLabel>
+        <rules>
+            <name>Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>person</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_ACRs</targetReference>
+            </connector>
+            <label>Found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Terms_of_business_status</name>
         <label>Terms of business status</label>
         <locationX>666</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
-            <targetReference>Unknown_TOB_status</targetReference>
+            <targetReference>Unknown_TOB_status_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Unknown</defaultConnectorLabel>
         <rules>
@@ -180,7 +319,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_for_pending_TOB</targetReference>
+                <targetReference>Set_pre_send_message</targetReference>
             </connector>
             <label>Awaiting acceptance</label>
         </rules>
@@ -195,35 +334,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Summary_Screen</targetReference>
+                <targetReference>Set_pre_send_message_not_accepted</targetReference>
             </connector>
             <label>Not accepted</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>TOB_pending</name>
-        <label>TOB pending?</label>
-        <locationX>446</locationX>
-        <locationY>782</locationY>
-        <defaultConnector>
-            <targetReference>TOB_pending_screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Pending</defaultConnectorLabel>
-        <rules>
-            <name>None_pending</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Check_for_pending_TOB</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>Summary_Screen</targetReference>
-            </connector>
-            <label>None pending</label>
         </rules>
     </decisions>
     <description>Embedded on the person account page, this flow helps the colleague to manage TOB for the customer.</description>
@@ -250,43 +363,15 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Check_for_pending_TOB</name>
-        <label>Check for pending TOB</label>
-        <locationX>446</locationX>
-        <locationY>674</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>TOB_pending</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Person_Account__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>accountId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Not accepted</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Terms_of_Business__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_ACRs</name>
         <label>Get ACRs</label>
         <locationX>1106</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Any_ACRs</targetReference>
+            <targetReference>ACRs_found</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
         <filters>
             <field>ContactId</field>
             <operator>EqualTo</operator>
@@ -308,6 +393,13 @@
                 <stringValue>Trustee</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Client</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>AccountContactRelation</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -315,31 +407,38 @@
     <recordLookups>
         <name>Get_person</name>
         <label>Get person</label>
-        <locationX>1106</locationX>
+        <locationX>1458</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_ACRs</targetReference>
+            <targetReference>Person_found</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>accountId</elementReference>
+                <elementReference>personAccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsPersonAccount</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Account</object>
         <outputReference>person</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>OW_terms_of_Business_Status__c</queriedFields>
-        <queriedFields>PersonContactId</queriedFields>
+        <queriedFields>PersonEmail</queriedFields>
     </recordLookups>
     <screens>
         <name>Error_screen</name>
         <label>Error screen</label>
-        <locationX>798</locationX>
-        <locationY>1382</locationY>
+        <locationX>1590</locationX>
+        <locationY>1958</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -380,21 +479,20 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>showToast</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>No_ACRs_Screen</name>
-        <label>No ACRs Screen</label>
-        <locationX>1546</locationX>
-        <locationY>566</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
         <fields>
-            <name>NoAcrsPrompt</name>
-            <fieldText>&lt;p&gt;Client needs to be a client, settlor, or trustee in a household order to send TOB. &lt;/p&gt;</fieldText>
+            <name>ErrorPrompt</name>
+            <fieldText>&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -403,8 +501,8 @@
     <screens>
         <name>Success_screen</name>
         <label>Success screen</label>
-        <locationX>534</locationX>
-        <locationY>1382</locationY>
+        <locationX>1326</locationX>
+        <locationY>1958</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -415,7 +513,7 @@
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <stringValue>Please wait a minute for the TOB to appear</stringValue>
+                    <stringValue>These can take up to a minute to appear</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -427,13 +525,19 @@
             <inputParameters>
                 <name>triggerNavigationNextEvent</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>variant</name>
                 <value>
                     <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>sticky</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -446,8 +550,8 @@
     <screens>
         <name>Summary_Screen</name>
         <label>Summary Screen</label>
-        <locationX>930</locationX>
-        <locationY>674</locationY>
+        <locationX>666</locationX>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -466,7 +570,7 @@
         <name>TOB_already_accepted</name>
         <label>TOB already accepted</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -478,41 +582,14 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>TOB_pending_screen</name>
-        <label>TOB pending screen</label>
-        <locationX>578</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Send_TOB</targetReference>
-        </connector>
-        <fields>
-            <name>TobPendingPrompt</name>
-            <fieldText>&lt;p&gt;There is already a TOB email with the customer awaiting acceptance. Click next to send another. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>980</locationX>
+        <locationX>1332</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_person_account_ID</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
-    <variables>
-        <name>accountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
+    <status>Active</status>
     <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
@@ -529,10 +606,34 @@
         <objectType>Account</objectType>
     </variables>
     <variables>
+        <name>personAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>preSendTermsOfBusinessMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>showToast</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>

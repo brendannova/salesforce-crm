@@ -1,38 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_disco_opportunity_record_type_ID</name>
+        <label>Get disco opportunity record type ID</label>
+        <locationX>176</locationX>
+        <locationY>863</locationY>
+        <actionName>FlowUtilityGetRecordTypeId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Move_opportunity_to_won</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordTypeDeveloperName</name>
+            <value>
+                <stringValue>Advice_Opportunity</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectType</name>
+            <value>
+                <stringValue>Opportunity</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityGetRecordTypeId</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>opportunityDiscoRecordTypeId</assignToReference>
+            <name>recordTypeId</name>
+        </outputParameters>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Set_IDs</name>
+        <label>Set IDs</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>personId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Person_Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Closed_any_open_chase_TOB_tasks</targetReference>
+        </connector>
+    </assignments>
     <description>Runs when a TOB record is accepted for the first time. Runs after save so that actions can be triggered elsewhere like updating the person account and household.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>customer_stop_internal_user_update_value</name>
-        <dataType>Number</dataType>
-        <expression>IF( ISBLANK( {!$Record.Person_Account__r.Stop_Internal_User_Update__c} ), 1, {!$Record.Person_Account__r.Stop_Internal_User_Update__c} + 1 )</expression>
-        <scale>0</scale>
-    </formulas>
-    <formulas>
-        <description>Message to display where there&#39;s a fault in making the update:</description>
-        <name>fault_message</name>
-        <dataType>String</dataType>
-        <expression>&quot;Error: &quot; &amp; {!$Flow.FaultMessage} &amp; {!line_break} &amp; 
-&quot;TOB details: &quot; &amp; {!line_break} &amp; 
-&quot;Date TOB accepted: &quot; &amp; TEXT( {!$Record.Date_terms_of_business_accepted__c} ) &amp; {!line_break} &amp; 
-&quot;IP address: &quot; &amp; {!$Record.IP_address__c} &amp; {!line_break} &amp; 
-&quot;Signature image: &quot; &amp; {!$Record.Signature_Image__c} &amp; {!line_break} &amp; 
-&quot;Signature path: &quot; &amp; {!$Record.Signature_Path__c} &amp; {!line_break} &amp; 
-&quot;User agent: &quot; &amp; {!$Record.User_Agent__c} &amp; {!line_break} &amp; 
-&quot;Version of terms: &quot; &amp; {!$Record.Version_of_terms_accepted__c}</expression>
-    </formulas>
-    <formulas>
-        <name>household_stop_internal_user_update_value</name>
-        <dataType>Number</dataType>
-        <expression>IF( ISBLANK( {!$Record.Household__r.Stop_Internal_User_Update__c} ), 1, {!$Record.Household__r.Stop_Internal_User_Update__c} + 1 )</expression>
-        <scale>0</scale>
-    </formulas>
-    <formulas>
-        <name>line_break</name>
-        <dataType>String</dataType>
-        <expression>BR()</expression>
-    </formulas>
     <interviewLabel>TOB | Accepted {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TOB | Accepted</label>
     <processMetadataValues>
@@ -54,43 +78,14 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_record_type_ID_for_advice_opportunity</name>
-        <label>Get record type ID for advice opportunity</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Account_sub_flow</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Opportunity</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Advice_Opportunity</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <queriedFields>Id</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <description>Closes any open chase TOB tasks for the person who has accepted terms.</description>
         <name>Closed_any_open_chase_TOB_tasks</name>
         <label>Closed any open chase TOB tasks</label>
         <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationY>431</locationY>
         <connector>
-            <targetReference>Get_record_type_ID_for_advice_opportunity</targetReference>
+            <targetReference>Account_sub_flow</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -111,7 +106,7 @@
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Person_Account__c</elementReference>
+                <elementReference>personId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -127,13 +122,13 @@
         <name>Move_opportunity_to_won</name>
         <label>Move opportunity to won</label>
         <locationX>176</locationX>
-        <locationY>863</locationY>
+        <locationY>971</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
         <filters>
@@ -147,7 +142,7 @@
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_record_type_ID_for_advice_opportunity.Id</elementReference>
+                <elementReference>opportunityDiscoRecordTypeId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -168,7 +163,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Closed_any_open_chase_TOB_tasks</targetReference>
+            <targetReference>Set_IDs</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
@@ -220,7 +215,7 @@
         <inputAssignments>
             <name>partyId</name>
             <value>
-                <elementReference>$Record.Person_Account__c</elementReference>
+                <elementReference>personId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -231,7 +226,7 @@
         <locationX>176</locationX>
         <locationY>755</locationY>
         <connector>
-            <targetReference>Move_opportunity_to_won</targetReference>
+            <targetReference>Get_disco_opportunity_record_type_ID</targetReference>
         </connector>
         <flowName>OW_account_party_state_manager</flowName>
         <inputAssignments>
@@ -243,22 +238,27 @@
         <inputAssignments>
             <name>partyId</name>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
     <variables>
-        <name>accounts</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Account</objectType>
     </variables>
     <variables>
-        <name>callOutBody</name>
-        <apexClass>ExternalService__GoogleDrive_GDriveJobCreateClientFolderBody</apexClass>
-        <dataType>Apex</dataType>
+        <name>opportunityDiscoRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>personId</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

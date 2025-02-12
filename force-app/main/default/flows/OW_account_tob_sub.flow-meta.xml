@@ -5,7 +5,7 @@
         <name>Add_household_for_update</name>
         <label>Add household for update</label>
         <locationX>1282</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>accountsUpdate</assignToReference>
             <operator>Add</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Add_person_to_update_list</name>
         <label>Add person to update list</label>
-        <locationX>1040</locationX>
-        <locationY>1334</locationY>
+        <locationX>1018</locationX>
+        <locationY>1442</locationY>
         <assignmentItems>
             <assignToReference>accountsUpdate</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>Define_household_account_updates</name>
         <label>Define household account updates</label>
         <locationX>1282</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>household.Id</assignToReference>
             <operator>Assign</operator>
@@ -75,10 +75,10 @@
     </assignments>
     <assignments>
         <description>Update only the version of terms accepted by the customer.</description>
-        <name>Record_new_version_of_terms</name>
-        <label>Record new version of terms</label>
+        <name>Record_TOB_details</name>
+        <label>Record TOB details</label>
         <locationX>1370</locationX>
-        <locationY>458</locationY>
+        <locationY>650</locationY>
         <assignmentItems>
             <assignToReference>person.Version_of_Terms_Accepted__c</assignToReference>
             <operator>Assign</operator>
@@ -99,24 +99,10 @@
     </assignments>
     <assignments>
         <description>Makes updates to the customer record to show that to capture details of accepted terms of business.</description>
-        <name>Record_party_as_having_accepted_TOB</name>
-        <label>Record party as having accepted TOB</label>
-        <locationX>1106</locationX>
+        <name>Set_terms_of_business_status</name>
+        <label>Set terms of business status</label>
+        <locationX>1150</locationX>
         <locationY>458</locationY>
-        <assignmentItems>
-            <assignToReference>person.Version_of_Terms_Accepted__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>tobRecord.Version_of_terms_accepted__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>person.Date_terms_of_business_last_accepted__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>tobRecord.Date_terms_of_business_accepted__c</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>person.OW_terms_of_Business_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -125,7 +111,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Linked_household</targetReference>
+            <targetReference>Record_TOB_details</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -176,7 +162,7 @@
         <locationY>350</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
-            <name>Awaiting_acceptance_0</name>
+            <name>Awaiting_acceptance</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>tobRecord.Person_Account__r.OW_terms_of_Business_Status__c</leftValueReference>
@@ -196,7 +182,7 @@
         <name>Household_party_TOB_status</name>
         <label>Household party TOB status</label>
         <locationX>1194</locationX>
-        <locationY>758</locationY>
+        <locationY>866</locationY>
         <defaultConnector>
             <targetReference>Define_household_account_updates</targetReference>
         </defaultConnector>
@@ -221,7 +207,7 @@
         <name>Linked_household</name>
         <label>Linked household?</label>
         <locationX>1370</locationX>
-        <locationY>650</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Add_person_to_update_list</targetReference>
         </defaultConnector>
@@ -267,7 +253,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Record_party_as_having_accepted_TOB</targetReference>
+                <targetReference>Set_terms_of_business_status</targetReference>
             </connector>
             <label>Sent or not accepted</label>
         </rules>
@@ -282,7 +268,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Record_new_version_of_terms</targetReference>
+                <targetReference>Record_TOB_details</targetReference>
             </connector>
             <label>Accepted</label>
         </rules>
@@ -291,7 +277,7 @@
         <description>Routes differently depending on the TOB status</description>
         <name>TOB_status</name>
         <label>TOB status?</label>
-        <locationX>1040</locationX>
+        <locationX>1018</locationX>
         <locationY>242</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
@@ -378,8 +364,8 @@
         <description>Create system log where the update fails for some reason</description>
         <name>Create_system_log</name>
         <label>Create system log</label>
-        <locationX>2162</locationX>
-        <locationY>1550</locationY>
+        <locationX>2118</locationX>
+        <locationY>1658</locationY>
         <inputAssignments>
             <field>OW_description__c</field>
             <value>
@@ -417,7 +403,7 @@
         <description>Gets details of the customer these TOB relate to.</description>
         <name>Get_customer_record</name>
         <label>Get customer record</label>
-        <locationX>1040</locationX>
+        <locationX>1018</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -439,15 +425,15 @@
     <recordUpdates>
         <name>Update_accounts</name>
         <label>Update accounts</label>
-        <locationX>1040</locationX>
-        <locationY>1442</locationY>
+        <locationX>1018</locationX>
+        <locationY>1550</locationY>
         <faultConnector>
             <targetReference>Create_system_log</targetReference>
         </faultConnector>
         <inputReference>accountsUpdate</inputReference>
     </recordUpdates>
     <start>
-        <locationX>914</locationX>
+        <locationX>892</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_customer_record</targetReference>
