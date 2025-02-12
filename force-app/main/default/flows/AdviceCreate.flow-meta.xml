@@ -475,6 +475,13 @@
         <expression>IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;REGULAR_AMENDMENT&quot;, &quot;Prepare advice&quot;, &quot;Setup&quot;)</expression>
     </formulas>
     <formulas>
+        <name>clientType</name>
+        <dataType>String</dataType>
+        <expression>CASE({!household.Type},
+&quot;Trust&quot;, &quot;Trust&quot;,
+&quot;Retail&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>nameDefault</name>
         <dataType>String</dataType>
         <expression>IF({!updateAdvice}, {!advice.Name}, {!AdviceTypeSelect.firstSelectedRow.Name} &amp; &quot; | &quot; &amp; {!household.Name})</expression>
@@ -489,8 +496,14 @@
     <formulas>
         <name>rtqStatus</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Complete&quot;), &quot;No update required&quot;, IF(ISPICKVAL({!household.OW_rtq_status__c},&quot;Pending&quot;),&quot;In progress&quot;,
-IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot;, &quot;&quot;, &quot;Not started&quot;)))</expression>
+        <expression>CASE({!AdviceTypeSelect.firstSelectedRow.RiskToleranceQuestionnaireSent__c},
+&quot;NEVER&quot;, &quot;No update required&quot;,
+&quot;REQUIRED&quot;, &quot;Not started&quot;,
+&quot;OPTIONAL&quot;, CASE({!household.OW_rtq_status__c},
+&quot;Complete&quot;, &quot;No update required&quot;,
+&quot;Pending&quot;, &quot;In progress&quot;,
+&quot;Not started&quot;),
+&quot;Not started&quot;)</expression>
     </formulas>
     <formulas>
         <name>successToastMessage</name>
@@ -586,6 +599,13 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
                 <elementReference>isReview</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>ClientType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>clientType</elementReference>
+            </value>
+        </filters>
         <object>AdviceType__c</object>
         <outputReference>adviceTypes</outputReference>
         <queriedFields>Id</queriedFields>
@@ -595,6 +615,7 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <queriedFields>Warnings__c</queriedFields>
         <queriedFields>DeveloperName__c</queriedFields>
         <queriedFields>AdviceChecklistRecordTypeDeveloperName__c</queriedFields>
+        <queriedFields>RiskToleranceQuestionnaireSent__c</queriedFields>
         <sortField>Name</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>
@@ -622,6 +643,7 @@ IF({!AdviceTypeSelect.firstSelectedRow.DeveloperName__c} = &quot;PROTECTION&quot
         <queriedFields>OwnerId</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>OW_rtq_status__c</queriedFields>
+        <queriedFields>Type</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Search_for_open_advice</name>

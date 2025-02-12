@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OW_primary_group_required</fullName>
+    <fullName>PrimaryGroupRequired</fullName>
     <active>true</active>
     <description>Ensures primary group is true for a client unless the household is inactive.</description>
-    <errorConditionFormula>FinServ__PrimaryGroup__c = false
-&amp;&amp;
-INCLUDES( Roles, &quot;Client&quot;)
-&amp;&amp; 
-NOT( ISPICKVAL( Account.FinServ__Status__c, &quot;Inactive&quot; ))
-&amp;&amp;
-NOT( ISPICKVAL( Account.FinServ__Status__c, &quot;Split&quot; ))</errorConditionFormula>
+    <errorConditionFormula>!FinServ__PrimaryGroup__c &amp;&amp;
+INCLUDES(Roles, &quot;Client&quot;) &amp;&amp; 
+NOT(ISPICKVAL( Account.FinServ__Status__c, &quot;Inactive&quot;)) &amp;&amp;
+NOT(ISPICKVAL( Account.FinServ__Status__c, &quot;Split&quot;))</errorConditionFormula>
     <errorDisplayField>Roles</errorDisplayField>
     <errorMessage>To have a role of client in a household, primary group must be true. Please choose another role or mark primary group as false.</errorMessage>
 </ValidationRule>

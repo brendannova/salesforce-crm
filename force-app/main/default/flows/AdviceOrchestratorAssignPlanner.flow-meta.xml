@@ -96,6 +96,13 @@
                     <stringValue>WITHDRAWAL</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>adviceType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TRUST_ONBOARDING</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_all_planners</targetReference>
             </connector>
@@ -363,7 +370,7 @@
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <stringValue>No advice type provided. Cannot identify planners. </stringValue>
+                    <stringValue>No advice type provided. Cannot identify planners to assign. </stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

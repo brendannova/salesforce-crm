@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <decisions>
+        <description>Checks if the TOB record is expired by checking if today&#39;s date is greater than the TOB expiry date.</description>
+        <name>TOB_expired</name>
+        <label>TOB expired?</label>
+        <locationX>182</locationX>
+        <locationY>252</locationY>
+        <defaultConnectorLabel>Not expired</defaultConnectorLabel>
+        <rules>
+            <name>Expired</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Flow.CurrentDate</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>tobExpiryDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_TOB</targetReference>
+            </connector>
+            <label>Expired</label>
+        </rules>
+    </decisions>
+    <description>This scheduled flow checks for TOB records that are more than x days old, as controlled by a custom setting, and marks them as expired if so.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>The date on which the TOB should be marked as expired.</description>
+        <name>tobExpiryDate</name>
+        <dataType>Date</dataType>
+        <expression>DATEVALUE({!$Record.CreatedDate}) + {!$Setup.OW_business_configuration__c.OW_tob_expiry_time__c}</expression>
+    </formulas>
+    <interviewLabel>TOB | Expire {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>TOB | Expire</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_TOB</name>
+        <label>Update TOB</label>
+        <locationX>50</locationX>
+        <locationY>360</locationY>
+        <connector>
+            <targetReference>Call_account_TOB_sub_flow</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OW_status__c</field>
+            <value>
+                <stringValue>Expired</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>TOB_expired</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OW_status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Not accepted</stringValue>
+            </value>
+        </filters>
+        <object>Terms_of_Business__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2025-02-11</startDate>
+            <startTime>01:25:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Call_account_TOB_sub_flow</name>
+        <label>Call account TOB sub-flow</label>
+        <locationX>50</locationX>
+        <locationY>468</locationY>
+        <flowName>OW_account_tob_sub</flowName>
+        <inputAssignments>
+            <name>tobRecord</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>
