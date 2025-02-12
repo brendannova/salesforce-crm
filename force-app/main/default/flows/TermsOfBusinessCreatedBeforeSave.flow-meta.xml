@@ -6,7 +6,7 @@
         <name>Set_household</name>
         <label>Set household</label>
         <locationX>50</locationX>
-        <locationY>395</locationY>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.Household__c</assignToReference>
             <operator>Assign</operator>
@@ -16,9 +16,23 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <description>Sets the household field value on the terms of business record</description>
+        <name>Set_household_trust</name>
+        <label>Set household</label>
+        <locationX>314</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Household__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_ACR.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Set_status_to_accepted</name>
         <label>Set status to accepted</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_status__c</assignToReference>
@@ -31,7 +45,7 @@
     <decisions>
         <name>Accepted</name>
         <label>Accepted</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>395</locationY>
         <defaultConnectorLabel>Existing</defaultConnectorLabel>
         <rules>
@@ -61,7 +75,7 @@
     <decisions>
         <name>New_or_existing</name>
         <label>New or existing</label>
-        <locationX>248</locationX>
+        <locationX>446</locationX>
         <locationY>287</locationY>
         <defaultConnector>
             <targetReference>Accepted</targetReference>
@@ -78,9 +92,34 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_household</targetReference>
+                <targetReference>Person_in_household</targetReference>
             </connector>
             <label>New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Person_in_household</name>
+        <label>Person in household</label>
+        <locationX>182</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Get_ACR</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not a client</defaultConnectorLabel>
+        <rules>
+            <name>Client_in_household</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Person_Account__r.Household_Lookup__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_household</targetReference>
+            </connector>
+            <label>Client in household</label>
         </rules>
     </decisions>
     <description>Runs before save to apply fast field updates.</description>
@@ -111,8 +150,45 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_ACR</name>
+        <label>Get ACR</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_household_trust</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>ContactId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Person_Account__r.PersonContactId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Settlor</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Trustee</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AccountContactRelation</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
-        <locationX>122</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>New_or_existing</targetReference>
