@@ -5,9 +5,9 @@
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
-            <assignToReference>fps</assignToReference>
+            <assignToReference>financialProducts</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>$Record</elementReference>
@@ -17,6 +17,41 @@
             <targetReference>Create_info_request</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_IDs</name>
+        <label>Set IDs</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Records_1</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Error</name>
+        <label>Error?</label>
+        <locationX>176</locationX>
+        <locationY>863</locationY>
+        <defaultConnectorLabel>Error</defaultConnectorLabel>
+        <rules>
+            <name>No_error</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No error</label>
+        </rules>
+    </decisions>
     <description>Creates a IR whenever a financial product is created with terms signed</description>
     <environments>Default</environments>
     <interviewLabel>Financial product | IR | Create {!$Flow.CurrentDateTime}</interviewLabel>
@@ -40,11 +75,49 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Records_1</name>
+        <label>Get Records 1</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_record</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeIdFinServ__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0121t0000001jQFAAY</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>FinancialProductType__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_record</name>
+        <label>Update record</label>
+        <locationX>176</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Add_to_collection</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>FinancialProductType__c</field>
+            <value>
+                <elementReference>Get_Records_1.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Add_to_collection</targetReference>
+            <targetReference>Set_IDs</targetReference>
         </connector>
         <filterFormula>(
     (
@@ -88,12 +161,15 @@ NOT(ISPICKVAL({!$Record.Work_Benefit_2__c},&quot;Yes&quot;))</filterFormula>
         <name>Create_info_request</name>
         <label>Create info request</label>
         <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationY>755</locationY>
+        <connector>
+            <targetReference>Error</targetReference>
+        </connector>
         <flowName>InformationRequestCreate</flowName>
         <inputAssignments>
-            <name>financialAccounts</name>
+            <name>financialProducts</name>
             <value>
-                <elementReference>fps</elementReference>
+                <elementReference>financialProducts</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -102,13 +178,31 @@ NOT(ISPICKVAL({!$Record.Work_Benefit_2__c},&quot;Yes&quot;))</filterFormula>
                 <elementReference>$Record.Household__c</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <variables>
-        <name>fps</name>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>financialProducts</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

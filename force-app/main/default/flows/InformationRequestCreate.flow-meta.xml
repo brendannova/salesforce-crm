@@ -5,28 +5,28 @@
         <name>Add_task_to_collection</name>
         <label>Add task to collection</label>
         <locationX>264</locationX>
-        <locationY>866</locationY>
+        <locationY>1058</locationY>
         <assignmentItems>
-            <assignToReference>tasksToCreate</assignToReference>
+            <assignToReference>taskRequests</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>taskToAdd</elementReference>
+                <elementReference>taskRequest</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>IRs</targetReference>
+            <targetReference>Information_requests</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_to_collection</name>
         <label>Add to collection</label>
-        <locationX>264</locationX>
-        <locationY>350</locationY>
+        <locationX>352</locationX>
+        <locationY>542</locationY>
         <assignmentItems>
-            <assignToReference>irsToCreate</assignToReference>
+            <assignToReference>informationRequests</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>irToAdd</elementReference>
+                <elementReference>informationRequest</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -34,19 +34,32 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_IR_values</name>
-        <label>Assign IR values</label>
-        <locationX>264</locationX>
-        <locationY>242</locationY>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>440</locationX>
+        <locationY>842</locationY>
         <assignmentItems>
-            <assignToReference>irToAdd.FinancialProductFinServ__c</assignToReference>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_information_request_values</name>
+        <label>Assign information request values</label>
+        <locationX>352</locationX>
+        <locationY>434</locationY>
+        <assignmentItems>
+            <assignToReference>informationRequest.FinancialProductFinServ__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Financial_products.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>irToAdd.Status__c</assignToReference>
+            <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>SETUP</stringValue>
@@ -60,39 +73,64 @@
         <name>Assign_task_value</name>
         <label>Assign task value</label>
         <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationY>950</locationY>
         <assignmentItems>
-            <assignToReference>taskToAdd.whatId</assignToReference>
+            <assignToReference>taskRequest.whatId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>IRs.Id</elementReference>
+                <elementReference>Information_requests.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>taskToAdd.taskType</assignToReference>
+            <assignToReference>taskRequest.taskType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>IR_SETUP</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>taskToAdd.householdId</assignToReference>
+            <assignToReference>taskRequest.householdId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>IRs.FinancialProductFinServ__r.Household__c</elementReference>
+                <elementReference>Information_requests.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>taskToAdd.RelatedInformationRequest</assignToReference>
+            <assignToReference>taskRequest.RelatedInformationRequest</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>IRs.Id</elementReference>
+                <elementReference>Information_requests.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Add_task_to_collection</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Information_request_needed</name>
+        <label>Information request needed?</label>
+        <locationX>352</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Assign_information_request_values</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Don&#39;t create</defaultConnectorLabel>
+        <rules>
+            <name>Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Financial_products.FinancialProductType__r.InformationRequests__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Always</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_information_request_values</targetReference>
+            </connector>
+            <label>Create</label>
+        </rules>
+    </decisions>
     <description>Autolaunched flow to create data requests</description>
     <environments>Default</environments>
     <interviewLabel>IR | Create {!$Flow.CurrentDateTime}</interviewLabel>
@@ -102,21 +140,21 @@
         <label>Financial products</label>
         <locationX>176</locationX>
         <locationY>134</locationY>
-        <collectionReference>financialAccounts</collectionReference>
+        <collectionReference>financialProducts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Assign_IR_values</targetReference>
+            <targetReference>Information_request_needed</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Create_IRs</targetReference>
+            <targetReference>Create_information_requests</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <name>IRs</name>
-        <label>IRs</label>
+        <name>Information_requests</name>
+        <label>Information requests</label>
         <locationX>176</locationX>
-        <locationY>650</locationY>
-        <collectionReference>irsToCreate</collectionReference>
+        <locationY>842</locationY>
+        <collectionReference>informationRequests</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_task_value</targetReference>
@@ -145,14 +183,17 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <name>Create_IRs</name>
-        <label>Create IRs</label>
+        <name>Create_information_requests</name>
+        <label>Create information requests</label>
         <locationX>176</locationX>
-        <locationY>542</locationY>
+        <locationY>734</locationY>
         <connector>
-            <targetReference>IRs</targetReference>
+            <targetReference>Information_requests</targetReference>
         </connector>
-        <inputReference>irsToCreate</inputReference>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
+        <inputReference>informationRequests</inputReference>
     </recordCreates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
@@ -167,7 +208,7 @@
         <name>Create_tasks</name>
         <label>Create tasks</label>
         <locationX>176</locationX>
-        <locationY>1058</locationY>
+        <locationY>1250</locationY>
         <flowName>TaskCreateFromRequests</flowName>
         <inputAssignments>
             <name>householdId</name>
@@ -178,7 +219,7 @@
         <inputAssignments>
             <name>taskRequests</name>
             <value>
-                <elementReference>tasksToCreate</elementReference>
+                <elementReference>taskRequests</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -192,7 +233,14 @@
         <objectType>Advice__c</objectType>
     </variables>
     <variables>
-        <name>financialAccounts</name>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>financialProducts</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>true</isInput>
@@ -207,15 +255,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>irsToCreate</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>InformationRequest__c</objectType>
-    </variables>
-    <variables>
-        <name>irToAdd</name>
+        <name>informationRequest</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -223,18 +263,26 @@
         <objectType>InformationRequest__c</objectType>
     </variables>
     <variables>
-        <name>tasksToCreate</name>
+        <name>informationRequests</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InformationRequest__c</objectType>
+    </variables>
+    <variables>
+        <name>taskRequest</name>
         <apexClass>TaskRequest</apexClass>
         <dataType>Apex</dataType>
-        <isCollection>true</isCollection>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>taskToAdd</name>
+        <name>taskRequests</name>
         <apexClass>TaskRequest</apexClass>
         <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
