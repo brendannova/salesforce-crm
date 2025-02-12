@@ -5,7 +5,7 @@
         <name>Add_advice_tasks</name>
         <label>Add advice tasks</label>
         <locationX>187</locationX>
-        <locationY>6245</locationY>
+        <locationY>5537</locationY>
         <assignmentItems>
             <assignToReference>tasks_temp_storage</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Add_advice_tasks_0</name>
         <label>Add advice tasks</label>
         <locationX>407</locationX>
-        <locationY>6869</locationY>
+        <locationY>6161</locationY>
         <assignmentItems>
             <assignToReference>tasks_temp_storage</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>Add_task_to_update_variable</name>
         <label>Add task to update variable</label>
         <locationX>803</locationX>
-        <locationY>6353</locationY>
+        <locationY>5645</locationY>
         <assignmentItems>
             <assignToReference>task_to_update</assignToReference>
             <operator>Add</operator>
@@ -53,7 +53,7 @@
         <name>Add_task_to_update_variable_0</name>
         <label>Add task to update variable</label>
         <locationX>407</locationX>
-        <locationY>7361</locationY>
+        <locationY>6653</locationY>
         <assignmentItems>
             <assignToReference>task_to_update</assignToReference>
             <operator>Add</operator>
@@ -69,7 +69,7 @@
         <name>Assign_analysis_variable</name>
         <label>Assign analysis variable</label>
         <locationX>517</locationX>
-        <locationY>5429</locationY>
+        <locationY>4721</locationY>
         <assignmentItems>
             <assignToReference>analysisAssessmentRequired</assignToReference>
             <operator>Assign</operator>
@@ -85,7 +85,7 @@
         <name>Assign_analysis_variableLoasComplete</name>
         <label>Assign analysis variable</label>
         <locationX>517</locationX>
-        <locationY>3929</locationY>
+        <locationY>4121</locationY>
         <assignmentItems>
             <assignToReference>analysisAssessmentRequired</assignToReference>
             <operator>Assign</operator>
@@ -94,14 +94,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LOAs_completed_node</targetReference>
+            <targetReference>RTQs_complete</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_analysis_variableRtqs</name>
         <label>Assign analysis variable</label>
         <locationX>517</locationX>
-        <locationY>5129</locationY>
+        <locationY>4421</locationY>
         <assignmentItems>
             <assignToReference>analysisAssessmentRequired</assignToReference>
             <operator>Assign</operator>
@@ -154,7 +154,7 @@
         <name>Set_flag_that_pre_advice_retirement_meeting_is_required</name>
         <label>Set flag that pre-advice retirement meeting is required</label>
         <locationX>506</locationX>
-        <locationY>2687</locationY>
+        <locationY>2879</locationY>
         <assignmentItems>
             <assignToReference>preAdviceRetirementMeetingRequired</assignToReference>
             <operator>Assign</operator>
@@ -194,7 +194,7 @@
         <name>Set_related_advice_and_parking_lot</name>
         <label>Set related advice and parking lot</label>
         <locationX>407</locationX>
-        <locationY>7253</locationY>
+        <locationY>6545</locationY>
         <assignmentItems>
             <assignToReference>Loop_all_affected_tasks.Related_Advice__c</assignToReference>
             <operator>Assign</operator>
@@ -217,7 +217,7 @@
         <name>Set_related_advice_and_parking_lot_0</name>
         <label>Set related advice and parking lot</label>
         <locationX>803</locationX>
-        <locationY>6245</locationY>
+        <locationY>5537</locationY>
         <assignmentItems>
             <assignToReference>Loop_all_tasks.OW_parking_lot__c</assignToReference>
             <operator>Assign</operator>
@@ -299,12 +299,28 @@
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Deck complete (no advice checklist)</label>
         </rules>
+        <rules>
+            <name>Suitability_in_progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Suitability in progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Planner_already_assigned</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Suitability in progress</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Analysis_assessment_needed</name>
         <label>Analysis assessment needed?</label>
         <locationX>649</locationX>
-        <locationY>5621</locationY>
+        <locationY>4913</locationY>
         <defaultConnector>
             <targetReference>Parking_lot</targetReference>
         </defaultConnector>
@@ -329,7 +345,7 @@
         <name>Any_advice_tasks</name>
         <label>Any advice tasks?</label>
         <locationX>319</locationX>
-        <locationY>6137</locationY>
+        <locationY>5429</locationY>
         <defaultConnector>
             <targetReference>Get_related_fulfilment</targetReference>
         </defaultConnector>
@@ -354,7 +370,7 @@
         <name>Any_tasks_to_update</name>
         <label>Any tasks to update?</label>
         <locationX>649</locationX>
-        <locationY>7637</locationY>
+        <locationY>6929</locationY>
         <defaultConnector>
             <targetReference>Profile_update_required</targetReference>
         </defaultConnector>
@@ -429,6 +445,13 @@
                     <stringValue>AnnualReview</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TrustOnboarding</stringValue>
+                </rightValue>
+            </conditions>
             <label>No automation</label>
         </rules>
     </decisions>
@@ -436,7 +459,7 @@
         <name>DB_advice</name>
         <label>DB advice?</label>
         <locationX>649</locationX>
-        <locationY>8453</locationY>
+        <locationY>7745</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>DB</name>
@@ -465,7 +488,7 @@
         <name>Is_DB_triage_needed</name>
         <label>Is DB triage needed?</label>
         <locationX>737</locationX>
-        <locationY>8885</locationY>
+        <locationY>8177</locationY>
         <defaultConnector>
             <targetReference>Loop_through_person_accounts</targetReference>
         </defaultConnector>
@@ -504,9 +527,9 @@
         <name>LOA_data_gathering_complete</name>
         <label>LOA data gathering complete</label>
         <locationX>649</locationX>
-        <locationY>3821</locationY>
+        <locationY>4013</locationY>
         <defaultConnector>
-            <targetReference>LOAs_completed_node</targetReference>
+            <targetReference>RTQs_complete</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -524,40 +547,6 @@
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <description>Checks if LOAs have been marked as complete</description>
-        <name>LOAs_completed_node</name>
-        <label>LOAs completed?</label>
-        <locationX>649</locationX>
-        <locationY>4121</locationY>
-        <defaultConnector>
-            <targetReference>Risk_call_complete</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>LOAs_completed_outcome</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Not required</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Call_suitability_assessment_flow</targetReference>
-            </connector>
-            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-            <label>LOAs completed</label>
         </rules>
     </decisions>
     <decisions>
@@ -632,7 +621,7 @@
         <name>Parking_lot</name>
         <label>Parking lot</label>
         <locationX>649</locationX>
-        <locationY>5921</locationY>
+        <locationY>5213</locationY>
         <defaultConnector>
             <targetReference>Any_tasks_to_update</targetReference>
         </defaultConnector>
@@ -671,11 +660,36 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Planner_already_assigned</name>
+        <label>Planner already assigned?</label>
+        <locationX>649</locationX>
+        <locationY>2063</locationY>
+        <defaultConnector>
+            <targetReference>Create_task_to_assign_planner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not yet assigned</defaultConnectorLabel>
+        <rules>
+            <name>Already_assigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Assigned_planner__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_write_narrative_task</targetReference>
+            </connector>
+            <label>Already assigned</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Checks if LOAs have been marked as complete</description>
         <name>Profile_complete</name>
         <label>Profile complete?</label>
         <locationX>649</locationX>
-        <locationY>5321</locationY>
+        <locationY>4613</locationY>
         <defaultConnector>
             <targetReference>Analysis_assessment_needed</targetReference>
         </defaultConnector>
@@ -701,7 +715,7 @@
         <name>Profile_update_required</name>
         <label>Profile update required</label>
         <locationX>649</locationX>
-        <locationY>7937</locationY>
+        <locationY>7229</locationY>
         <defaultConnector>
             <targetReference>DB_advice</targetReference>
         </defaultConnector>
@@ -745,51 +759,10 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Checks if retirement call has been marked as complete</description>
-        <name>Retirement_call</name>
-        <label>Retirement call</label>
-        <locationX>649</locationX>
-        <locationY>4721</locationY>
-        <defaultConnector>
-            <targetReference>RTQs_complete</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Completed_retirement_call_complete</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.RetirementCallStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>COMPLETE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RetirementCallStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NOT_REQUIRED</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RetirementCallStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NEVER_REQUIRED</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Call_suitability_assessment_flow_retirement_call</targetReference>
-            </connector>
-            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-            <label>Completed</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Retirement_call_held_before</name>
         <label>Retirement call held before?</label>
         <locationX>220</locationX>
-        <locationY>3245</locationY>
+        <locationY>3437</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Set_retirement_call_not_required</targetReference>
@@ -815,7 +788,7 @@
         <name>Retirement_call_needed</name>
         <label>Retirement call needed</label>
         <locationX>418</locationX>
-        <locationY>3029</locationY>
+        <locationY>3221</locationY>
         <defaultConnector>
             <targetReference>Set_retirement_call_not_required</targetReference>
         </defaultConnector>
@@ -837,44 +810,10 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Checks if LOAs have been marked as complete</description>
-        <name>Risk_call_complete</name>
-        <label>Risk call complete?</label>
-        <locationX>649</locationX>
-        <locationY>4421</locationY>
-        <defaultConnector>
-            <targetReference>Retirement_call</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>YesRiskCallComplete</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Complete</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Not required</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Call_suitability_assessment_flowRiskCallComplete</targetReference>
-            </connector>
-            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Risk_catch_up_call_needed</name>
         <label>Risk/catch up call needed</label>
         <locationX>649</locationX>
-        <locationY>2255</locationY>
+        <locationY>2447</locationY>
         <defaultConnector>
             <targetReference>LOA_data_gathering_complete</targetReference>
         </defaultConnector>
@@ -908,7 +847,7 @@
         <name>RTQs_complete</name>
         <label>RTQs complete?</label>
         <locationX>649</locationX>
-        <locationY>5021</locationY>
+        <locationY>4313</locationY>
         <defaultConnector>
             <targetReference>Profile_complete</targetReference>
         </defaultConnector>
@@ -991,7 +930,7 @@
         <name>Tasks_found_fulfilment</name>
         <label>Tasks found?</label>
         <locationX>539</locationX>
-        <locationY>6761</locationY>
+        <locationY>6053</locationY>
         <defaultConnector>
             <targetReference>Loop_all_fulfilment</targetReference>
         </defaultConnector>
@@ -1016,7 +955,7 @@
         <name>Within_5_years_of_or_in_retirement</name>
         <label>Within 5 years of or in retirement?</label>
         <locationX>638</locationX>
-        <locationY>2579</locationY>
+        <locationY>2771</locationY>
         <defaultConnector>
             <targetReference>Loop_clients</targetReference>
         </defaultConnector>
@@ -1110,7 +1049,7 @@ null )</expression>
         <name>Loop_all_affected_tasks</name>
         <label>Loop all affected tasks</label>
         <locationX>319</locationX>
-        <locationY>7145</locationY>
+        <locationY>6437</locationY>
         <collectionReference>tasks_temp_storage</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1124,7 +1063,7 @@ null )</expression>
         <name>Loop_all_fulfilment</name>
         <label>Loop all fulfilment</label>
         <locationX>319</locationX>
-        <locationY>6545</locationY>
+        <locationY>5837</locationY>
         <collectionReference>Get_related_fulfilment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1138,7 +1077,7 @@ null )</expression>
         <name>Loop_all_tasks</name>
         <label>Loop all tasks</label>
         <locationX>715</locationX>
-        <locationY>6137</locationY>
+        <locationY>5429</locationY>
         <collectionReference>Get_tasks_related_to_advice_out_of</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1152,7 +1091,7 @@ null )</expression>
         <name>Loop_clients</name>
         <label>Loop clients</label>
         <locationX>418</locationX>
-        <locationY>2471</locationY>
+        <locationY>2663</locationY>
         <collectionReference>Get_clients_to_check_for_pre_advice_requirement.personAccounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1166,7 +1105,7 @@ null )</expression>
         <name>Loop_through_person_accounts</name>
         <label>Loop through person accounts</label>
         <locationX>517</locationX>
-        <locationY>8669</locationY>
+        <locationY>7961</locationY>
         <collectionReference>Get_ACRs</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1196,7 +1135,7 @@ null )</expression>
         <name>Check_for_previous_retirement_call</name>
         <label>Check for previous retirement call</label>
         <locationX>220</locationX>
-        <locationY>3137</locationY>
+        <locationY>3329</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Retirement_call_held_before</targetReference>
@@ -1267,7 +1206,7 @@ null )</expression>
         <name>Get_ACRs</name>
         <label>Get ACRs</label>
         <locationX>517</locationX>
-        <locationY>8561</locationY>
+        <locationY>7853</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_through_person_accounts</targetReference>
@@ -1295,7 +1234,7 @@ null )</expression>
         <name>Get_person</name>
         <label>Get person</label>
         <locationX>737</locationX>
-        <locationY>8777</locationY>
+        <locationY>8069</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_DB_triage_needed</targetReference>
@@ -1318,7 +1257,7 @@ null )</expression>
         <name>Get_related_fulfilment</name>
         <label>Get related fulfilment</label>
         <locationX>319</locationX>
-        <locationY>6437</locationY>
+        <locationY>5729</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_all_fulfilment</targetReference>
@@ -1340,7 +1279,7 @@ null )</expression>
         <name>Get_tasks_for_fulfilment</name>
         <label>Get tasks for fulfilment</label>
         <locationX>539</locationX>
-        <locationY>6653</locationY>
+        <locationY>5945</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Tasks_found_fulfilment</targetReference>
@@ -1368,7 +1307,7 @@ null )</expression>
         <name>Get_tasks_related_to_advice</name>
         <label>Get tasks related to advice</label>
         <locationX>319</locationX>
-        <locationY>6029</locationY>
+        <locationY>5321</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Any_advice_tasks</targetReference>
@@ -1396,7 +1335,7 @@ null )</expression>
         <name>Get_tasks_related_to_advice_out_of</name>
         <label>Get parking lot tasks related to advice</label>
         <locationX>715</locationX>
-        <locationY>6029</locationY>
+        <locationY>5321</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_all_tasks</targetReference>
@@ -1426,7 +1365,7 @@ null )</expression>
         <name>Set_retirement_call_not_required</name>
         <label>Set retirement call not required</label>
         <locationX>616</locationX>
-        <locationY>3137</locationY>
+        <locationY>3329</locationY>
         <connector>
             <targetReference>Create_risk_call_task</targetReference>
         </connector>
@@ -1448,7 +1387,7 @@ null )</expression>
         <name>Set_retirement_call_required</name>
         <label>Set retirement call required</label>
         <locationX>88</locationX>
-        <locationY>3353</locationY>
+        <locationY>3545</locationY>
         <connector>
             <targetReference>Create_retirement_call_deck_task</targetReference>
         </connector>
@@ -1474,7 +1413,7 @@ null )</expression>
         <name>Update_household_profile_status</name>
         <label>Update household profile status</label>
         <locationX>517</locationX>
-        <locationY>8261</locationY>
+        <locationY>7553</locationY>
         <connector>
             <targetReference>DB_advice</targetReference>
         </connector>
@@ -1490,7 +1429,7 @@ null )</expression>
         <name>Update_profile_statusRegular</name>
         <label>Update advice profile status</label>
         <locationX>517</locationX>
-        <locationY>8153</locationY>
+        <locationY>7445</locationY>
         <connector>
             <targetReference>Update_household_profile_status</targetReference>
         </connector>
@@ -1506,7 +1445,7 @@ null )</expression>
         <name>Update_tasks</name>
         <label>Update tasks</label>
         <locationX>517</locationX>
-        <locationY>7745</locationY>
+        <locationY>7037</locationY>
         <connector>
             <targetReference>Profile_update_required</targetReference>
         </connector>
@@ -1581,7 +1520,7 @@ null )</expression>
         <name>Call_analysis_assessment_flowProfile</name>
         <label>Call analysis assessment flow</label>
         <locationX>517</locationX>
-        <locationY>5729</locationY>
+        <locationY>5021</locationY>
         <connector>
             <targetReference>Parking_lot</targetReference>
         </connector>
@@ -1594,57 +1533,9 @@ null )</expression>
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Call_suitability_assessment_flow</name>
-        <label>Call suitability assessment flow</label>
-        <locationX>517</locationX>
-        <locationY>4229</locationY>
-        <connector>
-            <targetReference>Risk_call_complete</targetReference>
-        </connector>
-        <flowName>AdviceAssessSuitability</flowName>
-        <inputAssignments>
-            <name>advice</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Call_suitability_assessment_flow_retirement_call</name>
-        <label>Call suitability assessment flow</label>
-        <locationX>517</locationX>
-        <locationY>4829</locationY>
-        <connector>
-            <targetReference>RTQs_complete</targetReference>
-        </connector>
-        <flowName>AdviceAssessSuitability</flowName>
-        <inputAssignments>
-            <name>advice</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Call_suitability_assessment_flowRiskCallComplete</name>
-        <label>Call suitability assessment flow</label>
-        <locationX>517</locationX>
-        <locationY>4529</locationY>
-        <connector>
-            <targetReference>Retirement_call</targetReference>
-        </connector>
-        <flowName>AdviceAssessSuitability</flowName>
-        <inputAssignments>
-            <name>advice</name>
-            <value>
-                <elementReference>$Record</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Create_book_suitability_meeting_task</name>
         <label>Create book suitability meeting task</label>
-        <locationX>517</locationX>
+        <locationX>253</locationX>
         <locationY>2063</locationY>
         <connector>
             <targetReference>Risk_catch_up_call_needed</targetReference>
@@ -1679,7 +1570,7 @@ null )</expression>
         <name>Create_DB_Triage_task</name>
         <label>Create DB Triage task</label>
         <locationX>605</locationX>
-        <locationY>8993</locationY>
+        <locationY>8285</locationY>
         <connector>
             <targetReference>Loop_through_person_accounts</targetReference>
         </connector>
@@ -1708,7 +1599,7 @@ null )</expression>
         <name>Create_retirement_call_deck_task</name>
         <label>Create retirement call deck task</label>
         <locationX>88</locationX>
-        <locationY>3461</locationY>
+        <locationY>3653</locationY>
         <connector>
             <targetReference>LOA_data_gathering_complete</targetReference>
         </connector>
@@ -1743,7 +1634,7 @@ null )</expression>
         <name>Create_risk_call_task</name>
         <label>Create risk call task</label>
         <locationX>616</locationX>
-        <locationY>3245</locationY>
+        <locationY>3437</locationY>
         <connector>
             <targetReference>LOA_data_gathering_complete</targetReference>
         </connector>
@@ -1778,7 +1669,7 @@ null )</expression>
         <name>Create_send_full_profile_task</name>
         <label>Create send full profile task</label>
         <locationX>517</locationX>
-        <locationY>8045</locationY>
+        <locationY>7337</locationY>
         <connector>
             <targetReference>Update_profile_statusRegular</targetReference>
         </connector>
@@ -1844,6 +1735,41 @@ null )</expression>
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>Create_task_to_assign_planner</name>
+        <label>Create task to assign planner</label>
+        <locationX>781</locationX>
+        <locationY>2171</locationY>
+        <connector>
+            <targetReference>Risk_catch_up_call_needed</targetReference>
+        </connector>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>$Record.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_advice_id</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>ADVICE_ASSIGN_SUITABILITY_PLANNER</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Create_WPB_task</name>
         <label>Create WPB task</label>
         <locationX>165</locationX>
@@ -1879,10 +1805,45 @@ null )</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
+        <name>Create_write_narrative_task</name>
+        <label>Create write narrative task</label>
+        <locationX>517</locationX>
+        <locationY>2171</locationY>
+        <connector>
+            <targetReference>Risk_catch_up_call_needed</targetReference>
+        </connector>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>$Record.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_advice_id</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>suitability_narrative_follow_on</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Get_clients_to_check_for_pre_advice_requirement</name>
         <label>Get clients to check for pre-advice requirement</label>
         <locationX>418</locationX>
-        <locationY>2363</locationY>
+        <locationY>2555</locationY>
         <connector>
             <targetReference>Loop_clients</targetReference>
         </connector>
