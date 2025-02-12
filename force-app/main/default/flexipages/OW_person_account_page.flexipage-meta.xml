@@ -3061,7 +3061,7 @@
                 <componentName>flowruntime:interview</componentName>
                 <identifier>flowruntime_interview4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>(1 OR 2) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.OW_terms_of_Business_Status__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -3071,6 +3071,10 @@
                         <leftValue>{!Record.OW_terms_of_Business_Status__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Awaiting acceptance</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_role_in_primary_household__c}</leftValue>
+                        <operator>EQUAL</operator>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
