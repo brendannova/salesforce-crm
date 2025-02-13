@@ -55,7 +55,7 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Error_message</targetReference>
+            <targetReference>Handle_error</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -72,25 +72,32 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Error_message</targetReference>
+            <targetReference>Handle_error</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Update_failed_error</name>
-        <label>Update failed error</label>
+        <name>Set_fault_error</name>
+        <label>Set fault error</label>
         <locationX>314</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>The case update has failed. Please raise a ticket with the following details:    {!$Flow.FaultMessage}</stringValue>
+                <stringValue>Case update failed. Please raise a ticket with the following details: {!$Flow.FaultMessage}</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_message</targetReference>
+            <targetReference>Handle_error</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>objectApiName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Case</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Cases_selected</name>
         <label>Cases selected</label>
@@ -187,28 +194,11 @@
             <targetReference>Success_message</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Update_failed_error</targetReference>
+            <targetReference>Set_fault_error</targetReference>
         </faultConnector>
         <inputReference>casesUpdate</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
-    <screens>
-        <name>Error_message</name>
-        <label>Error message</label>
-        <locationX>314</locationX>
-        <locationY>1082</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>ErrorDisplayText</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Error!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Go back to case tab</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <screens>
         <name>Success_message</name>
         <label>Success message</label>
@@ -235,6 +225,25 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Handle_error</name>
+        <label>Handle error</label>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Select_owner</name>
         <label>Select owner</label>
         <locationX>50</locationX>
@@ -243,6 +252,12 @@
             <targetReference>Loop_cases</targetReference>
         </connector>
         <flowName>FlowUtilityChooseOwner</flowName>
+        <inputAssignments>
+            <name>objectLaunchedFrom</name>
+            <value>
+                <elementReference>objectApiName</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
