@@ -57,7 +57,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Rollback_records</targetReference>
+                <targetReference>Error_handling_screen</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -361,15 +361,6 @@
         <queriedFields>OW_task_information_name__c</queriedFields>
         <queriedFields>Subject</queriedFields>
     </recordLookups>
-    <recordRollbacks>
-        <name>Rollback_records</name>
-        <label>Rollback records</label>
-        <locationX>710</locationX>
-        <locationY>1382</locationY>
-        <connector>
-            <targetReference>Error_message</targetReference>
-        </connector>
-    </recordRollbacks>
     <recordUpdates>
         <name>Close_task</name>
         <label>Close task</label>
@@ -404,22 +395,6 @@
         <object>Task</object>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
-    <screens>
-        <name>Error_message</name>
-        <label>Error message</label>
-        <locationX>710</locationX>
-        <locationY>1490</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>errorText</name>
-            <fieldText>&lt;p&gt;There&#39;s been an error here with the following message:&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <screens>
         <name>Intro_screen</name>
         <label>Intro screen</label>
@@ -624,6 +599,31 @@
             <assignToReference>errorMessage</assignToReference>
             <name>faultMessage</name>
         </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Error_handling_screen</name>
+        <label>Error handling screen</label>
+        <locationX>710</locationX>
+        <locationY>1382</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>closeFlowAfterToast</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Fund_reviewSubflow</name>
