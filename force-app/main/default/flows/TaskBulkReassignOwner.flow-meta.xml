@@ -55,7 +55,7 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Error_message</targetReference>
+            <targetReference>Error_Handle_Screen_Flow_1</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -72,7 +72,7 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Error_message</targetReference>
+            <targetReference>Error_Handle_Screen_Flow_1</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -88,7 +88,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_message</targetReference>
+            <targetReference>Error_Handle_Screen_Flow_1</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -200,23 +200,6 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Error_message</name>
-        <label>Error message</label>
-        <locationX>314</locationX>
-        <locationY>1082</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>ErrorDisplayText</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Error!&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Go back to task tab</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Success_message</name>
         <label>Success message</label>
         <locationX>50</locationX>
@@ -241,6 +224,25 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Error_Handle_Screen_Flow_1</name>
+        <label>Error | Handle | Screen Flow 1</label>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Select_owner</name>
         <label>Select owner</label>
