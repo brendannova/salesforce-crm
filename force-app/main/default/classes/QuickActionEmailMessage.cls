@@ -27,11 +27,15 @@ public class QuickActionEmailMessage implements QuickAction.QuickActionDefaultsH
         }
         
         Map<Id,Id> caseToAccountIdMap = new Map<Id,Id>();
+        List<Id> clearSubjectCaseIds = new List<Id>();
         //Loop through cases on quick actions and add to a map
-        for(Case c : [SELECT Id, AccountId, Account.IsPersonAccount FROM Case WHERE Id =: caseIds]) {
+        for(Case c : [SELECT Id, AccountId, Account.IsPersonAccount, Status FROM Case WHERE Id =: caseIds]) {
             //Ensure case is assigned a household. Cannot be a person account
             if(!String.IsBlank(c.AccountId) && c.Account.IsPersonAccount != true){ 
             	caseToAccountIdMap.put(c.AccountId, c.Id);
+            }
+            if(c.Status == 'New'){
+                clearSubjectCaseIds.add(c.Id);
             }
         }
         
@@ -52,6 +56,9 @@ public class QuickActionEmailMessage implements QuickAction.QuickActionDefaultsH
             EmailMessage emailMessageRecord = (EmailMessage)quickAction.getTargetSObject();
             if(caseToEmailAddressMap.containsKey(quickAction.getContextId())){
                 emailMessageRecord.ToAddress = caseToEmailAddressMap.get(quickAction.getContextId());
+            }
+            if(clearSubjectCaseIds.contains(quickAction.getContextId())) {
+                emailMessageRecord.Subject = '';
             }
         }
     }

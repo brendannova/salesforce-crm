@@ -3,13 +3,17 @@
     <actionCalls>
         <name>Get_object_name</name>
         <label>Get object name</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>134</locationY>
         <actionName>GetObjectFromRecordId</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Which_object_is_launched_from</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>recordId</name>
@@ -23,13 +27,12 @@
             <assignToReference>objectApiName</assignToReference>
             <name>ObjectApiName</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Navigate_to_new_case</name>
         <label>Navigate to new case</label>
-        <locationX>314</locationX>
-        <locationY>1406</locationY>
+        <locationX>446</locationX>
+        <locationY>1298</locationY>
         <actionName>c:navigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -42,7 +45,6 @@
         <nameSegment>c:navigateToRecord</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
@@ -71,8 +73,8 @@
     <assignments>
         <name>Assign_case_values</name>
         <label>Assign case values</label>
-        <locationX>314</locationX>
-        <locationY>1082</locationY>
+        <locationX>446</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>case.Advice__c</assignToReference>
             <operator>Assign</operator>
@@ -105,7 +107,7 @@
             <assignToReference>case.Subject</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CaseName</elementReference>
+                <elementReference>defaultCaseName</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -148,6 +150,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1106</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_household_ID</name>
         <label>Assign household ID</label>
         <locationX>50</locationX>
@@ -163,13 +181,30 @@
             <targetReference>Get_Household</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Error_message_assignment</name>
+        <label>Error message assignment</label>
+        <locationX>842</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Couldn&#39;t recognise the objected this was launched from</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Which_object_is_launched_from</name>
         <label>Which object is launched from?</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>242</locationY>
         <defaultConnector>
-            <targetReference>Get_Household</targetReference>
+            <targetReference>Error_message_assignment</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not recognised</defaultConnectorLabel>
         <rules>
@@ -229,11 +264,14 @@
     <recordCreates>
         <name>Create_new_case</name>
         <label>Create new case</label>
-        <locationX>314</locationX>
-        <locationY>1190</locationY>
+        <locationX>446</locationX>
+        <locationY>1082</locationY>
         <connector>
             <targetReference>Success_screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputReference>case</inputReference>
     </recordCreates>
     <recordLookups>
@@ -245,6 +283,10 @@
         <connector>
             <targetReference>Assign_advice_vars</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -260,12 +302,16 @@
     <recordLookups>
         <name>Get_Household</name>
         <label>Get Household</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_primary_contact_details</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -284,12 +330,16 @@
     <recordLookups>
         <name>Get_primary_contact_details</name>
         <label>Get primary contact details</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_record_type_id</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>PersonContactId</field>
@@ -308,12 +358,16 @@
     <recordLookups>
         <name>Get_record_type_id</name>
         <label>Get record type id</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_fields</targetReference>
+            <targetReference>Assign_case_values</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName</field>
@@ -328,29 +382,17 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Case_fields</name>
-        <label>Case fields</label>
-        <locationX>314</locationX>
-        <locationY>974</locationY>
-        <allowBack>true</allowBack>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>1106</locationX>
+        <locationY>1298</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Assign_case_values</targetReference>
-        </connector>
+        <allowPause>false</allowPause>
         <fields>
-            <name>displayText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;Create a new email case on&amp;nbsp;&lt;/span&gt;&lt;strong style=&quot;font-size: 13px;&quot;&gt;{!Get_Household.Name}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>ErrorDisplay</name>
+            <fieldText>&lt;p&gt;We&#39;re unable to create this email case. {!$Label.LogATicketMessage}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please include the following details:&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>CaseName</name>
-            <dataType>String</dataType>
-            <fieldText>Case Name</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;This will be used as the subject, but will be overwritten when a template is selected.&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -358,8 +400,8 @@
     <screens>
         <name>Success_screen</name>
         <label>Success screen</label>
-        <locationX>314</locationX>
-        <locationY>1298</locationY>
+        <locationX>446</locationX>
+        <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -385,7 +427,7 @@
             <inputParameters>
                 <name>title</name>
                 <value>
-                    <stringValue>Case created sucessfully</stringValue>
+                    <stringValue>Email case created</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -396,7 +438,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_object_name</targetReference>
@@ -417,6 +459,23 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>defaultCaseName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>[Outbound client email]</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>householdId</name>
