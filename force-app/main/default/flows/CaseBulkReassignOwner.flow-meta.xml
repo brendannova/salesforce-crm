@@ -91,6 +91,13 @@
             <targetReference>Error_message</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>objectApiName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Case</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Cases_selected</name>
         <label>Cases selected</label>
@@ -243,6 +250,12 @@
             <targetReference>Loop_cases</targetReference>
         </connector>
         <flowName>FlowUtilityChooseOwner</flowName>
+        <inputAssignments>
+            <name>objectLaunchedFrom</name>
+            <value>
+                <elementReference>objectApiName</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>

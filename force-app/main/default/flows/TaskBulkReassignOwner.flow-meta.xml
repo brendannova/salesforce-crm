@@ -91,6 +91,13 @@
             <targetReference>Error_message</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>objectApiName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Task</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Permission_check</name>
         <label>Permission check</label>
@@ -243,6 +250,12 @@
             <targetReference>Loop_tasks</targetReference>
         </connector>
         <flowName>FlowUtilityChooseOwner</flowName>
+        <inputAssignments>
+            <name>objectLaunchedFrom</name>
+            <value>
+                <elementReference>objectApiName</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>

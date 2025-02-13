@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_role_Id</name>
         <label>Assign Role Id</label>
-        <locationX>264</locationX>
-        <locationY>350</locationY>
+        <locationX>138</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>roleIds</assignToReference>
             <operator>Add</operator>
@@ -18,10 +18,36 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_owner_ID</name>
-        <label>Set owner ID</label>
-        <locationX>176</locationX>
-        <locationY>758</locationY>
+        <name>Assign_to_email_queue</name>
+        <label>Assign to email queue</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>ownerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_case_queues.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_owner_ID_to_queue</name>
+        <label>Set owner ID to queue</label>
+        <locationX>380</locationX>
+        <locationY>1166</locationY>
+        <assignmentItems>
+            <assignToReference>ownerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SelectQueue.firstSelectedRow.Id</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_owner_ID_to_user</name>
+        <label>Set owner ID to user</label>
+        <locationX>116</locationX>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>ownerId</assignToReference>
             <operator>Assign</operator>
@@ -30,6 +56,109 @@
             </value>
         </assignmentItems>
     </assignments>
+    <constants>
+        <name>emailQueue</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EmailQueue</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>queueA</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OperationsTeamA</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>queueB</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OperationsTeamB</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>queueC</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OperationsTeamC</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Launched_from</name>
+        <label>Launched from?</label>
+        <locationX>446</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>Get_queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Task</defaultConnectorLabel>
+        <rules>
+            <name>Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>objectLaunchedFrom</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Case</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_case_queues</targetReference>
+            </connector>
+            <label>Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>User_or_queue</name>
+        <label>User or queue</label>
+        <locationX>248</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Launched_from</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Queue</defaultConnectorLabel>
+        <rules>
+            <name>UserSelected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>User.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_role</targetReference>
+            </connector>
+            <label>User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>User_or_queue_chosen</name>
+        <label>User or queue chosen</label>
+        <locationX>248</locationX>
+        <locationY>1058</locationY>
+        <defaultConnector>
+            <targetReference>Set_owner_ID_to_queue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Queue</defaultConnectorLabel>
+        <rules>
+            <name>UserChosen</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OwnerTable.firstSelectedRow</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_owner_ID_to_user</targetReference>
+            </connector>
+            <label>User</label>
+        </rules>
+    </decisions>
     <description>Reusable flow to return a user Id from a list of users</description>
     <environments>Default</environments>
     <interviewLabel>Flow utility | Choose owner {!$Flow.CurrentDateTime}</interviewLabel>
@@ -37,8 +166,8 @@
     <loops>
         <name>Loop_Roles</name>
         <label>Loop Roles</label>
-        <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
         <collectionReference>Roles</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -68,10 +197,66 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Get_case_queues</name>
+        <label>Get case queues</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_to_email_queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>emailQueue</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_queue</name>
+        <label>Get queue</label>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Select_owner</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>queueA</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>queueB</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>queueC</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_role</name>
         <label>Get Roles</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_Roles</targetReference>
@@ -98,8 +283,8 @@
     <recordLookups>
         <name>Get_users</name>
         <label>Get Users</label>
-        <locationX>176</locationX>
-        <locationY>542</locationY>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Select_owner</targetReference>
@@ -129,15 +314,57 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>Select_owner</name>
-        <label>Select owner</label>
-        <locationX>176</locationX>
-        <locationY>650</locationY>
+        <name>Choose_queue_or_user</name>
+        <label>Choose queue or user</label>
+        <locationX>248</locationX>
+        <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Set_owner_ID</targetReference>
+            <targetReference>User_or_queue</targetReference>
+        </connector>
+        <fields>
+            <name>User</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Assign to colleague</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>Queue</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Assign to queue</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Select_owner</name>
+        <label>Select owner</label>
+        <locationX>248</locationX>
+        <locationY>950</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>User_or_queue_chosen</targetReference>
         </connector>
         <fields>
             <name>OwnerTable</name>
@@ -198,18 +425,99 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>User.renderNext</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SelectQueue</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Group</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Choose queue</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>Get_queue</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-2e81&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Queue.renderNext</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_role</targetReference>
+            <targetReference>Choose_queue_or_user</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>objectLaunchedFrom</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>ownerId</name>
         <dataType>String</dataType>
