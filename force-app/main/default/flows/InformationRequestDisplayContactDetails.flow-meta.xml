@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Post_to_chatter</name>
         <label>Post to chatter</label>
-        <locationX>50</locationX>
-        <locationY>1082</locationY>
+        <locationX>182</locationX>
+        <locationY>1130</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -26,11 +26,27 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1282</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_handling</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Are_there_chatter_notes_to_add</name>
         <label>Are there chatter notes to add?</label>
-        <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationX>314</locationX>
+        <locationY>1022</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesChatterNotes</name>
@@ -51,7 +67,7 @@
     <decisions>
         <name>Has_the_provider_secret_been_updated</name>
         <label>Has the provider secret been updated?</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Are_there_chatter_notes_to_add</targetReference>
@@ -104,12 +120,16 @@
     <recordLookups>
         <name>Get_information_request</name>
         <label>Get information request</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_primary_owner</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -125,7 +145,7 @@
     <recordLookups>
         <name>Get_joint_owner</name>
         <label>Get joint owner</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -150,14 +170,14 @@
     <recordLookups>
         <name>Get_primary_owner</name>
         <label>Get primary owner</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_joint_owner</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -174,7 +194,7 @@
     <recordLookups>
         <name>Get_registered_contact</name>
         <label>Get registered contact</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -204,6 +224,10 @@
         <connector>
             <targetReference>Are_there_chatter_notes_to_add</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -223,7 +247,7 @@
     <screens>
         <name>Display_details</name>
         <label>Display details</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1001,30 +1025,64 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Error</name>
-        <label>Error</label>
-        <locationX>1106</locationX>
-        <locationY>350</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>errorText</name>
-            <fieldText>&lt;p&gt;There&#39;s been an error here. Please raise a ticket with the product team with the following message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_information_request</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Error_handling</name>
+        <label>Error handling</label>
+        <locationX>1282</locationX>
+        <locationY>458</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>closeFlowAfterToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMode</name>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastTitle</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

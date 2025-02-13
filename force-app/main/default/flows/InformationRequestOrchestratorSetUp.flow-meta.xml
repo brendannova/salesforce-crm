@@ -4,10 +4,10 @@
     <assignments>
         <name>Assign_advice_to_IR</name>
         <label>Assign advice to IR</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1106</locationY>
         <assignmentItems>
-            <assignToReference>ir.Advice__c</assignToReference>
+            <assignToReference>informationRequest.Advice__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>adviceSelect.firstSelectedRow.Id</elementReference>
@@ -25,10 +25,23 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>974</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Assign_follow_on_task</name>
         <label>Assign follow on task</label>
         <locationX>314</locationX>
-        <locationY>1538</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +57,7 @@
         <name>Assign_follow_on_taskClientSend</name>
         <label>Assign follow on task</label>
         <locationX>578</locationX>
-        <locationY>1538</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -60,58 +73,58 @@
         <name>Update_IR</name>
         <label>Update IR</label>
         <locationX>314</locationX>
-        <locationY>1646</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityLevelFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>infoRequestStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>informationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>checklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.FundReviewStatus__c</assignToReference>
+            <assignToReference>informationRequest.FundReviewStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>builderStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestType__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>typeSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ProviderContact__c</assignToReference>
+            <assignToReference>informationRequest.ProviderContact__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>contactSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>statusFormula</elementReference>
@@ -125,58 +138,58 @@
         <name>Update_IR_Default</name>
         <label>Update IR</label>
         <locationX>842</locationX>
-        <locationY>1538</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityLevelFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>infoRequestStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>informationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>checklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.FundReviewStatus__c</assignToReference>
+            <assignToReference>informationRequest.FundReviewStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>builderStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestType__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>typeSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ProviderContact__c</assignToReference>
+            <assignToReference>informationRequest.ProviderContact__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>contactSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>statusFormula</elementReference>
@@ -190,58 +203,58 @@
         <name>Update_IRClientSend</name>
         <label>Update IR</label>
         <locationX>578</locationX>
-        <locationY>1646</locationY>
+        <locationY>1538</locationY>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityLevelFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>infoRequestStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>informationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>checklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.FundReviewStatus__c</assignToReference>
+            <assignToReference>informationRequest.FundReviewStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>builderStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestType__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>typeSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ProviderContact__c</assignToReference>
+            <assignToReference>informationRequest.ProviderContact__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>contactSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>statusFormula</elementReference>
@@ -255,58 +268,58 @@
         <name>Update_IRPolicydetails</name>
         <label>Update IR</label>
         <locationX>50</locationX>
-        <locationY>1538</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityLevelFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>informationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>authorityStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>infoRequestStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>informationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>checklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.FundReviewStatus__c</assignToReference>
+            <assignToReference>informationRequest.FundReviewStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>builderStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestType__c</assignToReference>
+            <assignToReference>informationRequest.InformationRequestType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>typeSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ProviderContact__c</assignToReference>
+            <assignToReference>informationRequest.ProviderContact__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>contactSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>AWAIT_PRE_REQS</stringValue>
@@ -345,7 +358,7 @@
             <name>YesLinkedAdvice</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ir.Advice__c</leftValueReference>
+                <leftValueReference>informationRequest.Advice__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -368,7 +381,7 @@
         <name>Which_task_is_required_now</name>
         <label>Which task is required now</label>
         <locationX>446</locationX>
-        <locationY>1430</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Update_IR_Default</targetReference>
         </defaultConnector>
@@ -377,7 +390,7 @@
             <name>Chase_policy_pre_reqs</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ir.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c</leftValueReference>
+                <leftValueReference>informationRequest.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c</leftValueReference>
                 <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -450,14 +463,14 @@
         <name>awaitingPreReqsFormula</name>
         <dataType>Boolean</dataType>
         <expression>IF(
-ISBLANK({!ir.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c})
+ISBLANK({!informationRequest.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c})
 ||
- {!ir.FinancialProductFinServ__r.Public_Provider_Name__r.Name} == &quot;Unknown&quot;
+ {!informationRequest.FinancialProductFinServ__r.Public_Provider_Name__r.Name} == &quot;Unknown&quot;
 ||
 (
-NOT(CONTAINS(TEXT({!ir.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Status__c}),&quot;Junior&quot;))
+NOT(CONTAINS(TEXT({!informationRequest.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Status__c}),&quot;Junior&quot;))
 ||
-NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
+NOT(ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c}))
 ), true, false)</expression>
     </formulas>
     <formulas>
@@ -504,21 +517,21 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Link_advice_screen</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Rollback</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>(1 OR 5) AND (2 OR 3 OR 4)</filterLogic>
         <filters>
             <field>Advice_Household__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.FinServ__Household__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.FinServ__Household__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -546,7 +559,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
             <field>Advice_Household__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.Household__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -564,7 +577,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -591,7 +604,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -618,14 +631,14 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>PublicProviderList__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.Public_Provider_Name__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.Public_Provider_Name__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -635,18 +648,22 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
     <recordLookups>
         <name>GetAdvicePreSelected</name>
         <label>Get advice</label>
-        <locationX>314</locationX>
+        <locationX>182</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Which_task_is_required_now</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.Advice__c</elementReference>
+                <elementReference>informationRequest.Advice__c</elementReference>
             </value>
         </filters>
         <object>Advice__c</object>
@@ -654,30 +671,21 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         <queriedFields>Id</queriedFields>
         <queriedFields>AllLoaInfoReceivedTimestamp__c</queriedFields>
     </recordLookups>
-    <recordRollbacks>
-        <name>Rollback</name>
-        <label>Rollback</label>
-        <locationX>842</locationX>
-        <locationY>998</locationY>
-        <connector>
-            <targetReference>Error_screen</targetReference>
-        </connector>
-    </recordRollbacks>
     <recordUpdates>
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>446</locationX>
-        <locationY>1946</locationY>
+        <locationY>1838</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.FinancialProductFinServ__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__c</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -698,15 +706,15 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         <name>Update_information_request</name>
         <label>Update information request</label>
         <locationX>446</locationX>
-        <locationY>1838</locationY>
+        <locationY>1730</locationY>
         <connector>
             <targetReference>Update_financial_product</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
-        <inputReference>ir</inputReference>
+        <inputReference>informationRequest</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
@@ -772,22 +780,6 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Error_screen</name>
-        <label>Error screen</label>
-        <locationX>842</locationX>
-        <locationY>1106</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>faultText</name>
-            <fieldText>&lt;p&gt;There&#39;s been an error here - please raise a ticket and add this message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -862,7 +854,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
     <screens>
         <name>Link_advice_screen</name>
         <label>Link advice screen</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1073,6 +1065,13 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         <objectType>Advice__c</objectType>
     </variables>
     <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <name>followUpTask</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1080,7 +1079,7 @@ NOT(ISBLANK({!ir.FinancialProductFinServ__r.RegisteredContact__c}))
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>ir</name>
+        <name>informationRequest</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

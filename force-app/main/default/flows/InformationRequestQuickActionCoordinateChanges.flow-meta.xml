@@ -4,8 +4,8 @@
     <decisions>
         <name>Did_an_error_occur</name>
         <label>Did an error occur?</label>
-        <locationX>182</locationX>
-        <locationY>566</locationY>
+        <locationX>578</locationX>
+        <locationY>650</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -18,7 +18,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Display_error_message</targetReference>
+                <targetReference>Error_handling_screen</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -26,7 +26,7 @@
     <decisions>
         <name>Which_button</name>
         <label>Which button?</label>
-        <locationX>732</locationX>
+        <locationX>578</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -116,7 +116,7 @@
     <recordLookups>
         <name>Get_information_request</name>
         <label>Get information request</label>
-        <locationX>732</locationX>
+        <locationX>578</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -142,7 +142,7 @@
     <screens>
         <name>Buttons</name>
         <label>Buttons</label>
-        <locationX>732</locationX>
+        <locationX>578</locationX>
         <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -209,24 +209,8 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Display_error_message</name>
-        <label>Display error message</label>
-        <locationX>50</locationX>
-        <locationY>674</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>errorMessageDisplay</name>
-            <fieldText>&lt;p&gt;There&#39;s been an error here with the following message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>606</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_information_request</targetReference>
@@ -236,7 +220,7 @@
     <subflows>
         <name>Change_advice</name>
         <label>Change advice</label>
-        <locationX>182</locationX>
+        <locationX>50</locationX>
         <locationY>458</locationY>
         <connector>
             <targetReference>Did_an_error_occur</targetReference>
@@ -256,21 +240,31 @@
     <subflows>
         <name>Change_contact</name>
         <label>Change contact</label>
-        <locationX>754</locationX>
+        <locationX>578</locationX>
         <locationY>458</locationY>
+        <connector>
+            <targetReference>Did_an_error_occur</targetReference>
+        </connector>
         <flowName>InformationRequestQuickActionChangeProviderContact</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
                 <elementReference>Get_information_request</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Change_financial_product_type</name>
         <label>Change financial product type</label>
-        <locationX>1018</locationX>
+        <locationX>842</locationX>
         <locationY>458</locationY>
+        <connector>
+            <targetReference>Did_an_error_occur</targetReference>
+        </connector>
         <flowName>FinancialProductChangeFinancialProductType</flowName>
         <inputAssignments>
             <name>financialProductId</name>
@@ -278,17 +272,71 @@
                 <elementReference>Get_information_request.FinancialProductFinServ__c</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Change_type</name>
         <label>Change type</label>
-        <locationX>490</locationX>
+        <locationX>314</locationX>
         <locationY>458</locationY>
+        <connector>
+            <targetReference>Did_an_error_occur</targetReference>
+        </connector>
         <flowName>InformationRequestQuickActionChangeType</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>InformationRequest</name>
             <value>
                 <elementReference>Get_information_request</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Error_handling_screen</name>
+        <label>Error handling screen</label>
+        <locationX>446</locationX>
+        <locationY>758</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>closeFlowAfterToast</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMessage</name>
+            <value>
+                <stringValue>Please see screen for details</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMode</name>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastTitle</name>
+            <value>
+                <stringValue>Error</stringValue>
             </value>
         </inputAssignments>
     </subflows>

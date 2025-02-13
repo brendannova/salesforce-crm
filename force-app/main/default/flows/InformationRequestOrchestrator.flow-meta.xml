@@ -3,12 +3,12 @@
     <actionCalls>
         <name>Generate_random_number</name>
         <label>Generate random number</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>458</locationY>
         <actionName>NumberGenerateRandomNumber</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>no_task_screen</targetReference>
+            <targetReference>No_task_screen</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -23,10 +23,49 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1898</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Did_any_sub_flow_have_an_error</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Did_any_sub_flow_have_an_error</name>
+        <label>Did any sub flow or update have an error?</label>
+        <locationX>842</locationX>
+        <locationY>1274</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesSubFlowError</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_handling_screen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Found_task</name>
         <label>Found task?</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Generate_random_number</targetReference>
@@ -53,6 +92,9 @@
         <label>Is there a task to create?</label>
         <locationX>842</locationX>
         <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>Did_any_sub_flow_have_an_error</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesTaskToCreate</name>
@@ -234,13 +276,17 @@
     <processType>Flow</processType>
     <recordLookups>
         <name>Get_info_request</name>
-        <label>Get info request</label>
-        <locationX>1370</locationX>
+        <label>Get information request</label>
+        <locationX>1502</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_task</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -250,7 +296,7 @@
             </value>
         </filters>
         <object>InformationRequest__c</object>
-        <outputReference>ir</outputReference>
+        <outputReference>informationRequest</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>FinancialProductFinServ__c</queriedFields>
         <queriedFields>InformationRequestStatus__c</queriedFields>
@@ -270,12 +316,16 @@
     <recordLookups>
         <name>Get_task</name>
         <label>Get task</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_task</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -319,6 +369,9 @@
         <connector>
             <targetReference>Is_there_a_task_to_create</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -396,7 +449,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>ir.ComplaintStatus__c</leftValueReference>
+                    <leftValueReference>informationRequest.ComplaintStatus__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Lodged</stringValue>
@@ -408,9 +461,9 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>no_task_screen</name>
-        <label>no task screen</label>
-        <locationX>1898</locationX>
+        <name>No_task_screen</name>
+        <label>No task screen</label>
+        <locationX>2162</locationX>
         <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -454,7 +507,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1244</locationX>
+        <locationX>1376</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_info_request</targetReference>
@@ -471,11 +524,15 @@
         </connector>
         <flowName>InformationRequestOrchestratorAdHocAction</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
-                <elementReference>ir</elementReference>
+                <elementReference>informationRequest</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>followUpTask</assignToReference>
             <name>followUpTask</name>
@@ -491,11 +548,15 @@
         </connector>
         <flowName>InformationRequestOrchestratorChaseAndReceiveInfo</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
-                <elementReference>ir</elementReference>
+                <elementReference>informationRequest</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>followUpTask</assignToReference>
             <name>followUpTask</name>
@@ -506,17 +567,20 @@
         <label>Create follow up task</label>
         <locationX>710</locationX>
         <locationY>1082</locationY>
+        <connector>
+            <targetReference>Did_any_sub_flow_have_an_error</targetReference>
+        </connector>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.Household__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>related_information_request</name>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>informationRequest.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -528,10 +592,56 @@
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>informationRequest.Id</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>faultMessage</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Error_handling_screen</name>
+        <label>Error handling screen</label>
+        <locationX>710</locationX>
+        <locationY>1382</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>closeFlowAfterToast</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMessage</name>
+            <value>
+                <stringValue>Please see screen for details</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMode</name>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastTitle</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Fund_reviewSubflow</name>
@@ -543,9 +653,9 @@
         </connector>
         <flowName>InformationRequestOrchestratorFundReview</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
-                <elementReference>ir</elementReference>
+                <elementReference>informationRequest</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -554,6 +664,10 @@
                 <elementReference>task.OW_task_information_name__c</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>followUpTask</assignToReference>
             <name>followUpTask</name>
@@ -569,11 +683,15 @@
         </connector>
         <flowName>InformationRequestOrchestratorReview</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
-                <elementReference>ir</elementReference>
+                <elementReference>informationRequest</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>followUpTask</assignToReference>
             <name>followUpTask</name>
@@ -589,11 +707,15 @@
         </connector>
         <flowName>InformationRequestOrchestratorSendRequest</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
-                <elementReference>ir</elementReference>
+                <elementReference>informationRequest</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>followUpTask</assignToReference>
             <name>followUpTask</name>
@@ -609,16 +731,27 @@
         </connector>
         <flowName>InformationRequestOrchestratorSetUp</flowName>
         <inputAssignments>
-            <name>ir</name>
+            <name>informationRequest</name>
             <value>
-                <elementReference>ir</elementReference>
+                <elementReference>informationRequest</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
         <outputAssignments>
             <assignToReference>followUpTask</assignToReference>
             <name>followUpTask</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>followUpTask</name>
         <dataType>String</dataType>
@@ -627,7 +760,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ir</name>
+        <name>informationRequest</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

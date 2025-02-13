@@ -2,12 +2,25 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Assign_new_checklist_type</name>
-        <label>Assign new checklist type</label>
-        <locationX>1337</locationX>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>2602</locationX>
+        <locationY>1658</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Assign_new_information_request_type</name>
+        <label>Assign new information request type</label>
+        <locationX>1419</locationX>
         <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestType__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestType__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>typeSelect.firstSelectedRow.Id</elementReference>
@@ -20,17 +33,17 @@
     <assignments>
         <name>Assign_values</name>
         <label>Assign values</label>
-        <locationX>50</locationX>
-        <locationY>890</locationY>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In progress</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
@@ -44,14 +57,14 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>CHECKLIST_REVIEW</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ReceivedDate__c</assignToReference>
+            <assignToReference>InformationRequest.ReceivedDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_information_received</elementReference>
@@ -64,17 +77,17 @@
     <assignments>
         <name>Assign_values2</name>
         <label>Assign values</label>
-        <locationX>578</locationX>
-        <locationY>782</locationY>
+        <locationX>842</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newChecklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
@@ -88,7 +101,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>INFO_REQ_SEND</stringValue>
@@ -101,17 +114,17 @@
     <assignments>
         <name>Assign_values3</name>
         <label>Assign values</label>
-        <locationX>842</locationX>
-        <locationY>782</locationY>
+        <locationX>1106</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newChecklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
@@ -125,7 +138,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>AWAIT_INFO</stringValue>
@@ -138,17 +151,17 @@
     <assignments>
         <name>Assign_values4</name>
         <label>Assign values</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>890</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In progress</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
@@ -162,35 +175,35 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>CHECKLIST_REVIEW</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_status</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.DateAuthorityGranted__c</assignToReference>
+            <assignToReference>InformationRequest.DateAuthorityGranted__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_authority_granted</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ReceivedDate__c</assignToReference>
+            <assignToReference>InformationRequest.ReceivedDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_information_received</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_level</elementReference>
@@ -203,17 +216,17 @@
     <assignments>
         <name>Assign_values5</name>
         <label>Assign values</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>782</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newChecklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
@@ -227,35 +240,35 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>INFO_REQ_SEND</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_status</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.DateAuthorityGranted__c</assignToReference>
+            <assignToReference>InformationRequest.DateAuthorityGranted__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_authority_granted</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ReceivedDate__c</assignToReference>
+            <assignToReference>InformationRequest.ReceivedDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_information_received</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_level</elementReference>
@@ -268,17 +281,17 @@
     <assignments>
         <name>Assign_values6</name>
         <label>Assign values</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>782</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>newChecklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
@@ -292,35 +305,35 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>AWAIT_INFO</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_status</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.DateAuthorityGranted__c</assignToReference>
+            <assignToReference>InformationRequest.DateAuthorityGranted__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_authority_granted</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ReceivedDate__c</assignToReference>
+            <assignToReference>InformationRequest.ReceivedDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_information_received</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_level</elementReference>
@@ -331,33 +344,63 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_valuesClientNoChecklist</name>
+        <name>Assign_valuesAwaitIdg</name>
         <label>Assign values</label>
-        <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Not required</stringValue>
+                <elementReference>newChecklistStatus</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>COMPLETE</stringValue>
+                <stringValue>AWAIT_IDG</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Close_existing_task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_valuesClientNoChecklist</name>
+        <label>Assign values</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not required</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ReceivedDate__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Information_status</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>READY_FOR_ADVICE</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>InformationRequest.ReceivedDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_information_received</elementReference>
@@ -370,52 +413,52 @@
     <assignments>
         <name>Assign_valuesThirdPartyNoChecklist</name>
         <label>Assign values</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>890</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistStatus__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Not required</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.InformationRequestStatus__c</assignToReference>
+            <assignToReference>InformationRequest.InformationRequestStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Information_status</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.Status__c</assignToReference>
+            <assignToReference>InformationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>COMPLETE</stringValue>
+                <stringValue>READY_FOR_ADVICE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityStatus__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_status</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.DateAuthorityGranted__c</assignToReference>
+            <assignToReference>InformationRequest.DateAuthorityGranted__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_authority_granted</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.ReceivedDate__c</assignToReference>
+            <assignToReference>InformationRequest.ReceivedDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Date_information_received</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>ir.AuthorityLevel__c</assignToReference>
+            <assignToReference>InformationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Authority_level</elementReference>
@@ -427,22 +470,47 @@
     </assignments>
     <assignments>
         <name>Clear_checklist_id</name>
-        <label>Clear checklist id</label>
-        <locationX>1337</locationX>
+        <label>Clear checklist ID</label>
+        <locationX>1419</locationX>
         <locationY>350</locationY>
         <assignmentItems>
-            <assignToReference>ir.ChecklistPlatformId__c</assignToReference>
+            <assignToReference>InformationRequest.ChecklistPlatformId__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Assign_new_checklist_type</targetReference>
+            <targetReference>Assign_new_information_request_type</targetReference>
         </connector>
     </assignments>
     <decisions>
+        <name>Advice_data_gathering_status</name>
+        <label>Advice data gathering status</label>
+        <locationX>413</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>New_information_statusClient</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>In_progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>InformationRequest.Advice__r.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_valuesAwaitIdg</targetReference>
+            </connector>
+            <label>In progress</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Checklist_requirement</name>
         <label>Checklist requirement</label>
-        <locationX>182</locationX>
-        <locationY>782</locationY>
+        <locationX>446</locationX>
+        <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Assign_valuesClientNoChecklist</targetReference>
         </defaultConnector>
@@ -466,7 +534,7 @@
     <decisions>
         <name>Checklist_requirementThirdParty</name>
         <label>Checklist requirement</label>
-        <locationX>1238</locationX>
+        <locationX>1502</locationX>
         <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Assign_valuesThirdPartyNoChecklist</targetReference>
@@ -489,9 +557,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_there_a_task_to_create</name>
+        <label>Is there a task to create?</label>
+        <locationX>1419</locationX>
+        <locationY>1658</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>followUpTask</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_new_task</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>New_information_status</name>
         <label>New information status</label>
-        <locationX>1568</locationX>
+        <locationX>1832</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Assign_values6</targetReference>
@@ -531,8 +621,8 @@
     <decisions>
         <name>New_information_statusClient</name>
         <label>New information status</label>
-        <locationX>512</locationX>
-        <locationY>674</locationY>
+        <locationX>776</locationX>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Assign_values3</targetReference>
         </defaultConnector>
@@ -571,7 +661,7 @@
     <decisions>
         <name>New_type</name>
         <label>New type</label>
-        <locationX>1337</locationX>
+        <locationX>1419</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Close_existing_task</targetReference>
@@ -588,7 +678,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>New_information_statusClient</targetReference>
+                <targetReference>Advice_data_gathering_status</targetReference>
             </connector>
             <label>Client sourced</label>
         </rules>
@@ -667,14 +757,18 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_IR_types</name>
-        <label>Get IR types</label>
-        <locationX>1337</locationX>
+        <name>Get_information_request_types</name>
+        <label>Get information request types</label>
+        <locationX>1419</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Collect_details</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status__c</field>
@@ -692,17 +786,21 @@
     <recordUpdates>
         <name>Close_existing_task</name>
         <label>Close existing task</label>
-        <locationX>1337</locationX>
-        <locationY>1250</locationY>
+        <locationX>1419</locationX>
+        <locationY>1442</locationY>
         <connector>
-            <targetReference>Update_IR</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>InformationRequest.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -710,6 +808,13 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OrchestrationTaskStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Incomplete</stringValue>
             </value>
         </filters>
         <inputAssignments>
@@ -721,20 +826,23 @@
         <object>Task</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_IR</name>
-        <label>Update IR</label>
-        <locationX>1337</locationX>
-        <locationY>1358</locationY>
+        <name>Update_information_request</name>
+        <label>Update information request</label>
+        <locationX>1419</locationX>
+        <locationY>1550</locationY>
         <connector>
-            <targetReference>Create_new_task</targetReference>
+            <targetReference>Is_there_a_task_to_create</targetReference>
         </connector>
-        <inputReference>ir</inputReference>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
+        <inputReference>InformationRequest</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Collect_details</name>
         <label>Collect details</label>
-        <locationX>1337</locationX>
+        <locationX>1419</locationX>
         <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -771,7 +879,7 @@
             <inputParameters>
                 <name>tableData</name>
                 <value>
-                    <elementReference>Get_IR_types</elementReference>
+                    <elementReference>Get_information_request_types</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -783,7 +891,7 @@
             <inputParameters>
                 <name>columns</name>
                 <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-e2bf&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Data Request Type Name&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-e2bf&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Name&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Data Request Type Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Description__c&quot;,&quot;guid&quot;:&quot;column-2772&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -851,7 +959,7 @@
             <choiceReferences>infoStatusPicklist</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>ir.InformationRequestStatus__c</elementReference>
+                <elementReference>InformationRequest.InformationRequestStatus__c</elementReference>
             </defaultValue>
             <fieldText>Information status</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -880,29 +988,29 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1211</locationX>
+        <locationX>1293</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_IR_types</targetReference>
+            <targetReference>Get_information_request_types</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Create_new_task</name>
         <label>Create new task</label>
-        <locationX>1337</locationX>
-        <locationY>1466</locationY>
+        <locationX>1287</locationX>
+        <locationY>1766</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>ir.FinancialProductFinServ__r.Household__c</elementReference>
+                <elementReference>InformationRequest.FinancialProductFinServ__r.Household__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>related_information_request</name>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>InformationRequest.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -914,11 +1022,18 @@
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>ir.Id</elementReference>
+                <elementReference>InformationRequest.Id</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>followUpTask</name>
         <dataType>String</dataType>
@@ -927,18 +1042,11 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ir</name>
+        <name>InformationRequest</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>InformationRequest__c</objectType>
-    </variables>
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>

@@ -2,6 +2,19 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>440</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Set_new_financial_product_type_ID</name>
         <label>Set new financial product type ID</label>
         <locationX>176</locationX>
@@ -49,6 +62,10 @@
         <connector>
             <targetReference>Get_financial_product_type_records</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -71,6 +88,10 @@
         <connector>
             <targetReference>Collect_details</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status__c</field>
@@ -85,23 +106,13 @@
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordRollbacks>
-        <name>Rollback</name>
-        <label>Rollback</label>
-        <locationX>704</locationX>
-        <locationY>674</locationY>
-        <connector>
-            <targetReference>Error</targetReference>
-        </connector>
-    </recordRollbacks>
     <recordUpdates>
         <name>Update_any_information_requests</name>
         <label>Update any information requests</label>
         <locationX>176</locationX>
         <locationY>674</locationY>
         <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Rollback</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -139,7 +150,8 @@
             <targetReference>Update_any_information_requests</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Rollback</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <inputReference>financialProduct</inputReference>
     </recordUpdates>
@@ -211,22 +223,6 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Error</name>
-        <label>Error</label>
-        <locationX>704</locationX>
-        <locationY>782</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>errorText</name>
-            <fieldText>&lt;p&gt;There&#39;s been an error here. Please raise a ticket with the product team and copy the below error in:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -235,6 +231,13 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>financialProduct</name>
         <dataType>SObject</dataType>
