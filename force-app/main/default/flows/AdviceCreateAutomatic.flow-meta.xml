@@ -350,11 +350,11 @@
     <formulas>
         <name>adviceName</name>
         <dataType>String</dataType>
-        <expression>CASE({!adviceTypeDeveloperName},
+        <expression>LEFT(CASE({!adviceTypeDeveloperName},
 &quot;ONBOARDING_ACCUMULATION&quot;, &quot;Full review | &quot; &amp;  RIGHT({!household.Name}, LEN({!household.Name}) - FIND(&quot; &quot;, {!household.Name})),
 &quot;PROTECTION&quot;, &quot;Protection review | &quot; + {!household.Name},
 &quot;TRUST_ONBOARDING&quot;, &quot;Trust onboarding | &quot;  + {!household.Name},
-&quot;Advice | &quot; + {!household.Name})</expression>
+&quot;Advice | &quot; + {!household.Name}), 50)</expression>
     </formulas>
     <interviewLabel>Advice | Create | Automatic {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Create | Automatic</label>
