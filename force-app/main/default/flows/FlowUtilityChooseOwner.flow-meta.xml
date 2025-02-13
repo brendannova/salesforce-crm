@@ -2,8 +2,8 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>Assign_role_Id</name>
-        <label>Assign Role Id</label>
+        <name>Assign_Role_ID</name>
+        <label>Assign Role ID</label>
         <locationX>138</locationX>
         <locationY>566</locationY>
         <assignmentItems>
@@ -18,22 +18,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_to_email_queue</name>
-        <label>Assign to email queue</label>
-        <locationX>314</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>ownerId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_case_queues.Id</elementReference>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Set_owner_ID_to_queue</name>
         <label>Set owner ID to queue</label>
-        <locationX>380</locationX>
+        <locationX>314</locationX>
         <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>ownerId</assignToReference>
@@ -46,7 +33,7 @@
     <assignments>
         <name>Set_owner_ID_to_user</name>
         <label>Set owner ID to user</label>
-        <locationX>116</locationX>
+        <locationX>50</locationX>
         <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>ownerId</assignToReference>
@@ -85,37 +72,12 @@
         </value>
     </constants>
     <decisions>
-        <name>Launched_from</name>
-        <label>Launched from?</label>
-        <locationX>446</locationX>
-        <locationY>350</locationY>
-        <defaultConnector>
-            <targetReference>Get_queue</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Task</defaultConnectorLabel>
-        <rules>
-            <name>Case</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>objectLaunchedFrom</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Case</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_case_queues</targetReference>
-            </connector>
-            <label>Case</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>User_or_queue</name>
         <label>User or queue</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>242</locationY>
         <defaultConnector>
-            <targetReference>Launched_from</targetReference>
+            <targetReference>Get_queue</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Queue</defaultConnectorLabel>
         <rules>
@@ -137,7 +99,7 @@
     <decisions>
         <name>User_or_queue_chosen</name>
         <label>User or queue chosen</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>1058</locationY>
         <defaultConnector>
             <targetReference>Set_owner_ID_to_queue</targetReference>
@@ -171,7 +133,7 @@
         <collectionReference>Roles</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Assign_role_Id</targetReference>
+            <targetReference>Assign_Role_ID</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Get_users</targetReference>
@@ -197,36 +159,15 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_case_queues</name>
-        <label>Get case queues</label>
-        <locationX>314</locationX>
-        <locationY>458</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_to_email_queue</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>emailQueue</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Group</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_queue</name>
         <label>Get queue</label>
-        <locationX>578</locationX>
-        <locationY>458</locationY>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Select_owner</targetReference>
         </connector>
-        <filterLogic>or</filterLogic>
+        <filterLogic>(1 OR 2 OR 3 OR 4) AND 5</filterLogic>
         <filters>
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
@@ -246,6 +187,20 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>queueC</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>emailQueue</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -316,7 +271,7 @@
     <screens>
         <name>Choose_queue_or_user</name>
         <label>Choose queue or user</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -358,11 +313,11 @@
     <screens>
         <name>Select_owner</name>
         <label>Select owner</label>
-        <locationX>248</locationX>
+        <locationX>182</locationX>
         <locationY>950</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
             <targetReference>User_or_queue_chosen</targetReference>
         </connector>
@@ -504,7 +459,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>122</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Choose_queue_or_user</targetReference>
