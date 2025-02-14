@@ -24,6 +24,7 @@
             </value>
         </inputParameters>
         <nameSegment>chatterPost</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
@@ -94,6 +95,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>ImportantNotes__c</field>
+            <value>
+                <elementReference>Important_notes</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status__c</field>
             <value>
                 <stringValue>Awaiting ad hoc action</stringValue>
@@ -106,6 +113,9 @@
         <label>Update tasks</label>
         <locationX>176</locationX>
         <locationY>566</locationY>
+        <connector>
+            <targetReference>Create_ad_hoc_action_task</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -130,7 +140,7 @@
         <inputAssignments>
             <field>Status</field>
             <value>
-                <stringValue>Completed</stringValue>
+                <stringValue>Cancelled</stringValue>
             </value>
         </inputAssignments>
         <object>Task</object>
@@ -153,23 +163,61 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>Subject_of_task</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <stringValue>Chase ad hoc action</stringValue>
+            </defaultValue>
+            <fieldText>Subject of task</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Choose the name of the task that will generate on this fulfilment.&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Subject must be under 80 characters&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!Subject_of_task}) &lt; 80</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
             <name>Details_of_action_required</name>
             <dataType>String</dataType>
             <fieldText>Details of the action needed</fieldText>
             <fieldType>InputField</fieldType>
             <helpText>&lt;p&gt;This will be posted in to the fulfilment chatter for others to see in future, so please ensure it is detailed enough&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Task_due_date</name>
+            <dataType>Date</dataType>
+            <fieldText>Task due date</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;The date on which the new task should be due&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Has_the_relevant_party_been_emailed_to_inform_them_action_is_required</name>
             <dataType>Boolean</dataType>
             <fieldText>Has the relevant party been emailed to inform them action is required?</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <validationRule>
                 <errorMessage>&lt;p&gt;Please ensure this is done&lt;/p&gt;</errorMessage>
                 <formulaExpression>{!Has_the_relevant_party_been_emailed_to_inform_them_action_is_required}</formulaExpression>
             </validationRule>
+        </fields>
+        <fields>
+            <name>Important_notes</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Get_fulfilment.ImportantNotes__c</elementReference>
+            </defaultValue>
+            <fieldText>Important notes</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -182,6 +230,50 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Create_ad_hoc_action_task</name>
+        <label>Create ad hoc action task</label>
+        <locationX>176</locationX>
+        <locationY>674</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>due_date_input</name>
+            <value>
+                <elementReference>Task_due_date</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>Get_fulfilment.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_fulfilment</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>subject</name>
+            <value>
+                <elementReference>Subject_of_task</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>chase_ad_hoc_action</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
