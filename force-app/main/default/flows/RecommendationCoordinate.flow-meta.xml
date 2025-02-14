@@ -4,7 +4,7 @@
     <assignments>
         <name>Add_recommendation_type_ID_to_collection</name>
         <label>Add recommendation type ID to collection</label>
-        <locationX>1986</locationX>
+        <locationX>2118</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>recommendationTypeIds</assignToReference>
@@ -18,26 +18,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_error_message</name>
-        <label>Assign error message</label>
-        <locationX>5066</locationX>
-        <locationY>242</locationY>
-        <assignmentItems>
-            <assignToReference>errorMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Rollback_records</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Routes  to a different assignment depending on which recommendation type table was used.</description>
         <name>Set_recommendation_type_other</name>
         <label>Set recommendation type</label>
-        <locationX>2690</locationX>
+        <locationX>2558</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>selectedRecommendationType</assignToReference>
@@ -60,7 +44,7 @@
     <assignments>
         <name>Set_recommendation_type_primary</name>
         <label>Set recommendation type</label>
-        <locationX>2426</locationX>
+        <locationX>2294</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>selectedRecommendationType</assignToReference>
@@ -83,7 +67,7 @@
     <assignments>
         <name>Set_recommendation_type_restricted</name>
         <label>Set recommendation type</label>
-        <locationX>1898</locationX>
+        <locationX>2030</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>selectedRecommendationType</assignToReference>
@@ -107,7 +91,7 @@
         <name>Front_page_recommendations</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Front page recommendations</label>
-        <locationX>2690</locationX>
+        <locationX>2558</locationX>
         <locationY>566</locationY>
         <assignNextValueToReference>currentItem_Front_page_recommendations</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
@@ -128,7 +112,7 @@
         <name>Other_recommendations</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Other recommendations</label>
-        <locationX>2690</locationX>
+        <locationX>2558</locationX>
         <locationY>674</locationY>
         <assignNextValueToReference>currentItem_Other_recommendations</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
@@ -148,8 +132,8 @@
     <decisions>
         <name>Have_the_fees_been_recorded_yet</name>
         <label>Have the fees been recorded yet?</label>
-        <locationX>2195</locationX>
-        <locationY>1964</locationY>
+        <locationX>2492</locationX>
+        <locationY>1856</locationY>
         <defaultConnector>
             <targetReference>Call_set_up_fees_flow</targetReference>
         </defaultConnector>
@@ -170,7 +154,7 @@
     <decisions>
         <name>List_used</name>
         <label>List used</label>
-        <locationX>2690</locationX>
+        <locationX>2558</locationX>
         <locationY>890</locationY>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
         <rules>
@@ -230,36 +214,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Was_the_sub_flow_successful</name>
-        <label>Was the sub flow successful?</label>
-        <locationX>2294</locationX>
-        <locationY>1640</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Rollback_records</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesSubFlowSuccessful</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>errorMessage</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Go_again</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>What_next</name>
         <label>What next?</label>
-        <locationX>1997</locationX>
-        <locationY>1856</locationY>
+        <locationX>2294</locationX>
+        <locationY>1748</locationY>
         <defaultConnector>
             <targetReference>Have_the_fees_been_recorded_yet</targetReference>
         </defaultConnector>
@@ -560,7 +518,7 @@
     <loops>
         <name>Loop_advice_recommendation_types</name>
         <label>Loop advice recommendation types</label>
-        <locationX>1898</locationX>
+        <locationX>2030</locationX>
         <locationY>458</locationY>
         <collectionReference>Check_for_advice_type_recommendations</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -599,10 +557,6 @@
         <connector>
             <targetReference>Recommendation_type_restrictions</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>AdviceType__c</field>
@@ -620,16 +574,12 @@
     <recordLookups>
         <name>Get_active_recommendation_types</name>
         <label>Get active recommendation types</label>
-        <locationX>2690</locationX>
+        <locationX>2558</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Front_page_recommendations</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Active__c</field>
@@ -653,9 +603,6 @@
         <connector>
             <targetReference>Check_for_advice_type_recommendations</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -671,16 +618,12 @@
     <recordLookups>
         <name>Get_restricted_recommendation_types</name>
         <label>Get restricted recommendation types</label>
-        <locationX>1898</locationX>
+        <locationX>2030</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Welcome_screen_restricted_recommendations</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -697,37 +640,12 @@
         <queriedFields>Description__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordRollbacks>
-        <name>Rollback_records</name>
-        <label>Rollback records</label>
-        <locationX>5066</locationX>
-        <locationY>350</locationY>
-        <connector>
-            <targetReference>Error_screen</targetReference>
-        </connector>
-    </recordRollbacks>
     <runInMode>SystemModeWithSharing</runInMode>
-    <screens>
-        <name>Error_screen</name>
-        <label>Error screen</label>
-        <locationX>5066</locationX>
-        <locationY>458</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>errorText</name>
-            <fieldText>&lt;p&gt;There&#39;s been an error here with the following message:&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <screens>
         <name>Go_again</name>
         <label>Go again?</label>
-        <locationX>1997</locationX>
-        <locationY>1748</locationY>
+        <locationX>2294</locationX>
+        <locationY>1640</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -784,7 +702,7 @@
     <screens>
         <name>Welcome_screen</name>
         <label>Welcome screen</label>
-        <locationX>2690</locationX>
+        <locationX>2558</locationX>
         <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -962,7 +880,7 @@
     <screens>
         <name>Welcome_screen_restricted_recommendations</name>
         <label>Welcome screen restricted recommendations</label>
-        <locationX>1898</locationX>
+        <locationX>2030</locationX>
         <locationY>866</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1052,7 +970,7 @@
         <locationX>2162</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationCancelExistingProtection</flowName>
         <inputAssignments>
@@ -1080,7 +998,7 @@
         <locationX>1898</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationCancelExistingRegular</flowName>
         <inputAssignments>
@@ -1108,7 +1026,7 @@
         <locationX>2426</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationChangeExistingRegular</flowName>
         <inputAssignments>
@@ -1136,7 +1054,7 @@
         <locationX>2954</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpProtectionReview</flowName>
         <inputAssignments>
@@ -1152,7 +1070,7 @@
         <locationX>1634</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpExternalTransfers</flowName>
         <inputAssignments>
@@ -1180,7 +1098,7 @@
         <locationX>1106</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpLumpSums</flowName>
         <inputAssignments>
@@ -1189,10 +1107,6 @@
                 <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>errorMessage</assignToReference>
-            <name>errorMessage</name>
-        </outputAssignments>
     </subflows>
     <subflows>
         <name>Call_lump_sum_withdrawal_sub_flow</name>
@@ -1200,7 +1114,7 @@
         <locationX>3218</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpLumpSumWithdrawal</flowName>
         <inputAssignments>
@@ -1222,7 +1136,7 @@
         <locationX>50</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpNewProducts</flowName>
         <inputAssignments>
@@ -1238,7 +1152,7 @@
         <locationX>3746</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpNonStandardAction</flowName>
         <inputAssignments>
@@ -1260,7 +1174,7 @@
         <locationX>314</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpRebalanceAndSwitch</flowName>
         <inputAssignments>
@@ -1282,7 +1196,7 @@
         <locationX>3482</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpRegularWithdrawals</flowName>
         <inputAssignments>
@@ -1304,7 +1218,7 @@
         <locationX>1370</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpRegulars</flowName>
         <inputAssignments>
@@ -1326,7 +1240,7 @@
         <locationX>2690</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationRetainedPolicy</flowName>
         <inputAssignments>
@@ -1342,7 +1256,7 @@
         <locationX>4010</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpEowUpdate</flowName>
         <inputAssignments>
@@ -1361,8 +1275,8 @@
     <subflows>
         <name>Call_set_up_fees_flow</name>
         <label>Call set up fees flow</label>
-        <locationX>2327</locationX>
-        <locationY>2072</locationY>
+        <locationX>2624</locationX>
+        <locationY>1964</locationY>
         <flowName>FeeSetUpInitialAdviceFee</flowName>
         <inputAssignments>
             <name>recordId</name>
@@ -1377,7 +1291,7 @@
         <locationX>4274</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpProviderTrust</flowName>
         <inputAssignments>
@@ -1399,7 +1313,7 @@
         <locationX>578</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpRebalanceAndSwitch</flowName>
         <inputAssignments>
@@ -1421,7 +1335,7 @@
         <locationX>842</locationX>
         <locationY>1382</locationY>
         <connector>
-            <targetReference>Was_the_sub_flow_successful</targetReference>
+            <targetReference>Go_again</targetReference>
         </connector>
         <flowName>RecommendationSetUpTransfers</flowName>
         <inputAssignments>
@@ -1458,13 +1372,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>RecommendationType__c</objectType>
-    </variables>
-    <variables>
-        <name>errorMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>recommendationTypeIds</name>
