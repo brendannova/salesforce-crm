@@ -2,6 +2,22 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
     <assignments>
+        <name>Assign_household_id</name>
+        <label>Assign household id</label>
+        <locationX>132</locationX>
+        <locationY>650</locationY>
+        <assignmentItems>
+            <assignToReference>HouseholdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>party.Household_Lookup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>New_AML_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_to_party_record</name>
         <label>Assign to party record</label>
         <locationX>132</locationX>
@@ -27,7 +43,7 @@
             <assignToReference>amlCheck.Household__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>HouseholdIdFormula</elementReference>
+                <elementReference>HouseholdId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -107,7 +123,7 @@
     <assignments>
         <name>Set_household_ID</name>
         <label>Set household ID</label>
-        <locationX>264</locationX>
+        <locationX>396</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>HouseholdId</assignToReference>
@@ -130,6 +146,21 @@
         </defaultConnector>
         <defaultConnectorLabel>Not known</defaultConnectorLabel>
         <rules>
+            <name>Passed_in</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HouseholdId</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_AML_Check</targetReference>
+            </connector>
+            <label>Passed in</label>
+        </rules>
+        <rules>
             <name>Known</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
@@ -140,7 +171,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>New_AML_Check</targetReference>
+                <targetReference>Assign_household_id</targetReference>
             </connector>
             <label>Known</label>
         </rules>
@@ -189,11 +220,6 @@
         <dataType>String</dataType>
         <expression>SUBSTITUTE({!party.FinServ__ShippingAddress__pc}, &quot;&lt;br&gt;&quot;,&quot;, &quot;)</expression>
     </formulas>
-    <formulas>
-        <name>HouseholdIdFormula</name>
-        <dataType>String</dataType>
-        <expression>IF({!party.Household_Lookup__c}=&quot;&quot;,{!HouseholdId},{!party.Household_Lookup__c})</expression>
-    </formulas>
     <interviewLabel>AML | Create {!$Flow.CurrentDateTime}</interviewLabel>
     <label>AML | Create</label>
     <processMetadataValues>
@@ -226,7 +252,7 @@
     <recordLookups>
         <name>Get_account_contact_relationship</name>
         <label>Get account contact relationship</label>
-        <locationX>264</locationX>
+        <locationX>396</locationX>
         <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
