@@ -1140,11 +1140,15 @@
         </connector>
         <flowName>RecommendationSetUpProtectionReview</flowName>
         <inputAssignments>
-            <name>recordId</name>
+            <name>adviceId</name>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Call_exttransfers_sub_flow</name>
