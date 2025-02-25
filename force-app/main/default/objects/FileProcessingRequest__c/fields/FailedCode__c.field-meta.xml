@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FailedCode__c</fullName>
+    <description>Store the error code from NOVA service if processing has failed</description>
+    <label>Failed code</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RAISE_SALESFORCE_ISSUE</fullName>
+                <default>false</default>
+                <label>RAISE_SALESFORCE_ISSUE</label>
+            </value>
+            <value>
+                <fullName>NOT_FOUND</fullName>
+                <default>false</default>
+                <label>NOT_FOUND</label>
+            </value>
+            <value>
+                <fullName>SERVICE_UNAVAILABLE</fullName>
+                <default>false</default>
+                <label>SERVICE_UNAVAILABLE</label>
+            </value>
+            <value>
+                <fullName>TOO_MANY_REQUESTS</fullName>
+                <default>false</default>
+                <label>TOO_MANY_REQUESTS</label>
+            </value>
+            <value>
+                <fullName>INTERNAL_SERVER_ERROR</fullName>
+                <default>false</default>
+                <label>INTERNAL_SERVER_ERROR</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

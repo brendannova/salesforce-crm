@@ -1,7 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Alert_product_team_when_FPR_takes_too_long_to_validate</name>
+        <label>Alert product team when FPR takes too long to validate</label>
+        <locationX>842</locationX>
+        <locationY>384</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Label.FileProcessingRequestAlertEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>File processing request taking too long to validate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>emailAlertBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
-    <description>After save flow to notify requester that the meeting summary is ready for review. Runs when file processing request status is updated to PENDING MANUAL LABEL</description>
+    <decisions>
+        <name>Check_status</name>
+        <label>Check status</label>
+        <locationX>314</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>No status</defaultConnectorLabel>
+        <rules>
+            <name>Ready_for_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ProcessingStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PENDING MANUAL LABEL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_task_notification</targetReference>
+            </connector>
+            <label>Ready for review</label>
+        </rules>
+        <rules>
+            <name>Failed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ProcessingStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FAILED</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_failed_processing_task_notification</targetReference>
+            </connector>
+            <label>Failed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_status_pending</name>
+        <label>Check status</label>
+        <locationX>974</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Other status</defaultConnectorLabel>
+        <rules>
+            <name>Pending_file_validation</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ProcessingStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PENDING FILE VALIDATION</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Alert_product_team_when_FPR_takes_too_long_to_validate</targetReference>
+            </connector>
+            <label>Pending file validation</label>
+        </rules>
+    </decisions>
+    <description>After save flow to handle all notifications on file processing requests. 
+- notify requester when summary is ready to review
+- notify requester when summary has failed
+- notify product team when a file processing request has been stuck in pending file validation for too long (if stuck, this will prevent any other requests from being processed).</description>
     <environments>Default</environments>
     <interviewLabel>File Processing Request | Summary Review Notification {!$Flow.CurrentDateTime}</interviewLabel>
     <label>File Processing Request | Summary Review Notification</label>
@@ -27,11 +118,11 @@
     <recordLookups>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>314</locationX>
+        <locationY>276</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_task_notification</targetReference>
+            <targetReference>Check_status</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -48,11 +139,12 @@
         </outputAssignments>
     </recordLookups>
     <start>
-        <locationX>50</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Opportunity</targetReference>
         </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>or</filterLogic>
         <filters>
             <field>ProcessingStatus__c</field>
@@ -61,16 +153,73 @@
                 <stringValue>PENDING MANUAL LABEL</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>ProcessingStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>FAILED</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ProcessingStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>PENDING FILE VALIDATION</stringValue>
+            </value>
+        </filters>
         <object>FileProcessingRequest__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>Alert_product_team</name>
+            <connector>
+                <targetReference>Check_status_pending</targetReference>
+            </connector>
+            <label>Alert product team</label>
+            <offsetNumber>1</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <recordField>CreatedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <subflows>
+        <name>Create_failed_processing_task_notification</name>
+        <label>Create failed processing task notification</label>
+        <locationX>314</locationX>
+        <locationY>492</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>chosenUser</name>
+            <value>
+                <elementReference>$Record.CreatedById</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>DISCOVERY_MEETING_AI_SUMMARY_FAILED</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>$Record.Opportunity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Create_task_notification</name>
         <label>Create task notification</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>50</locationX>
+        <locationY>492</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>chosenUser</name>
@@ -98,6 +247,17 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <textTemplates>
+        <name>emailAlertBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Hi, 
+
+A file processing request record has taken too long to validate. Please investigate using these details:
+Record ID: {!$Record.Id}
+Platform ID: {!$Record.PlatformId__c}
+
+Thanks team 🫡</text>
+    </textTemplates>
     <variables>
         <name>householdId</name>
         <dataType>String</dataType>

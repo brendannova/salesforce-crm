@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_UUID</name>
+        <label>Create UUID</label>
+        <locationX>380</locationX>
+        <locationY>1166</locationY>
+        <actionName>FlowUtilityGenerateUuid</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assign_processing_variables</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <nameSegment>FlowUtilityGenerateUuid</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Assign</name>
         <label>Get Opportunity Error</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -19,9 +34,57 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_meeting_link_ID</name>
+        <label>Assign meeting link ID</label>
+        <locationX>1898</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>meetingLinkUrl</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DiscoMeetingURL.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_meeting_link_to_FPR</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_meeting_link_to_FPR</name>
+        <label>Assign meeting link to FPR</label>
+        <locationX>1898</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.FileId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>meetingRecordingFileId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_retry_variables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_meeting_recording_URL</name>
+        <label>Assign meeting recording URL</label>
+        <locationX>182</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>meetingLinkUrl</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>opportunity.Meeting_Recording_URL__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Existing_link_valid</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_new_meeting_link</name>
         <label>Assign new meeting link</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>opportunity.Meeting_Recording_URL__c</assignToReference>
@@ -37,6 +100,57 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>meetingLinkUrl</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MeetingRecordingURL.value</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_UUID</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_processing_variables</name>
+        <label>Assign processing variables</label>
+        <locationX>380</locationX>
+        <locationY>1274</locationY>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.FileId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>meetingRecordingFileId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.ProcessingStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PENDING FILE VALIDATION</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.Opportunity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>opportunityId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.FileType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Video</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.PlatformId__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Create_UUID.uuid</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_File_Processing_Request</targetReference>
         </connector>
@@ -44,7 +158,7 @@
     <assignments>
         <name>Assign_Record_Id</name>
         <label>Assign Record Id</label>
-        <locationX>1062</locationX>
+        <locationX>1491</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>opportunityId</assignToReference>
@@ -58,10 +172,64 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_retry_variables</name>
+        <label>Assign retry variables</label>
+        <locationX>2030</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_File_Processing_Request.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.ProcessingStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PENDING FILE VALIDATION</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.FailedMessage__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fileProcessingRequest.FailedCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_File_Processing_Request</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_update_error</name>
+        <label>Assign update error</label>
+        <locationX>2338</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>We couldn&#39;t re-try this summary request</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Error_Screen</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>File_processing_failed_message</name>
         <label>File processing failed message</label>
-        <locationX>754</locationX>
-        <locationY>1124</locationY>
+        <locationX>842</locationX>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -76,7 +244,7 @@
     <assignments>
         <name>Get_File_Processing_Request_Error</name>
         <label>Get File Processing Request Error</label>
-        <locationX>2074</locationX>
+        <locationX>2866</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -93,7 +261,7 @@
     <assignments>
         <name>No_Status_Error</name>
         <label>No Status Error</label>
-        <locationX>1810</locationX>
+        <locationX>2602</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -110,8 +278,8 @@
     <assignments>
         <name>Opportunity_update_failed_message</name>
         <label>Opportunity update failed message</label>
-        <locationX>314</locationX>
-        <locationY>1340</locationY>
+        <locationX>380</locationX>
+        <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -125,9 +293,34 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Add_file_ID</name>
+        <label>Add file ID</label>
+        <locationX>2030</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Assign_retry_variables</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No file ID to add</defaultConnectorLabel>
+        <rules>
+            <name>New_file_ID_to_add</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_File_Processing_Request.FailedCode__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NOT_FOUND</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_meeting_link_ID</targetReference>
+            </connector>
+            <label>New file ID to add</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Disco_meeting_link_saved</name>
         <label>Disco meeting link saved</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Add_meeting_link</targetReference>
@@ -144,7 +337,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Existing_link_valid</targetReference>
+                <targetReference>Assign_meeting_recording_URL</targetReference>
             </connector>
             <label>Saved</label>
         </rules>
@@ -152,8 +345,8 @@
     <decisions>
         <name>Does_opportunity_need_updating</name>
         <label>Does opportunity need updating?</label>
-        <locationX>314</locationX>
-        <locationY>1124</locationY>
+        <locationX>380</locationX>
+        <locationY>1490</locationY>
         <defaultConnector>
             <targetReference>Success_Screen</targetReference>
         </defaultConnector>
@@ -177,8 +370,8 @@
     <decisions>
         <name>Existing_link_valid</name>
         <label>Existing link valid?</label>
-        <locationX>138</locationX>
-        <locationY>674</locationY>
+        <locationX>182</locationX>
+        <locationY>782</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Add_meeting_link</targetReference>
@@ -188,14 +381,14 @@
             <name>Valid_link</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>UrlValidationOpportunity</leftValueReference>
+                <leftValueReference>MeetingUrlValidation</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_File_Processing_Request</targetReference>
+                <targetReference>Create_summary</targetReference>
             </connector>
             <label>Valid link</label>
         </rules>
@@ -203,7 +396,7 @@
     <decisions>
         <name>File_Processing_Request_State</name>
         <label>File Processing Request State</label>
-        <locationX>1062</locationX>
+        <locationX>1491</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>No_Status_Error</targetReference>
@@ -248,6 +441,13 @@
                     <stringValue>COMPLETED</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_File_Processing_Request.ProcessingStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>FAILED</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Processing_Screen</targetReference>
             </connector>
@@ -282,27 +482,64 @@
             </connector>
             <label>Completed</label>
         </rules>
+        <rules>
+            <name>Failed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_File_Processing_Request.ProcessingStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FAILED</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error</targetReference>
+            </connector>
+            <label>Failed</label>
+        </rules>
     </decisions>
     <description>Screen flow to create file processing request for meeting summary. If one already exists, display appropriate message.</description>
     <environments>Default</environments>
     <formulas>
+        <name>meetingLinkValidation</name>
+        <dataType>Boolean</dataType>
+        <expression>BEGINS({!MeetingRecordingURL.value}, {!meetingLinkPrefix})
+&amp;&amp;
+NOT(CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value}))</expression>
+    </formulas>
+    <formulas>
+        <name>meetingLinkValidationRetry</name>
+        <dataType>Boolean</dataType>
+        <expression>BEGINS({!DiscoMeetingURL.value}, {!meetingLinkPrefix})
+&amp;&amp;
+NOT(CONTAINS(&quot;folders&quot;, {!DiscoMeetingURL.value}))</expression>
+    </formulas>
+    <formulas>
+        <description>Strip the meeting recording URL and send google drive ID</description>
         <name>meetingRecordingFileId</name>
         <dataType>String</dataType>
-        <expression>SUBSTITUTE(LEFT({!opportunity.Meeting_Recording_URL__c}, FIND(&quot;/view&quot;, {!opportunity.Meeting_Recording_URL__c}) -1), {!meetingLinkPrefix}, &quot;&quot;)</expression>
+        <expression>SUBSTITUTE(LEFT({!meetingLinkUrl}, FIND(&quot;/view&quot;, {!meetingLinkUrl}) -1), {!meetingLinkPrefix}, &quot;&quot;)</expression>
     </formulas>
     <formulas>
-        <name>UrlValidationOpportunity</name>
+        <description>Validate the meeting recording URL from user entry in the input screen</description>
+        <name>MeetingUrlValidation</name>
         <dataType>Boolean</dataType>
-        <expression>NOT(BEGINS({!meetingLinkPrefix}, {!opportunity.Meeting_Recording_URL__c}))
-||
-CONTAINS(&quot;folders&quot;, {!opportunity.Meeting_Recording_URL__c})</expression>
+        <expression>BEGINS({!meetingLinkUrl}, {!meetingLinkPrefix})
+&amp;&amp;
+NOT(CONTAINS(&quot;folders&quot;, {!meetingLinkUrl}))</expression>
     </formulas>
     <formulas>
-        <name>UrlValidationPageCmp</name>
-        <dataType>Boolean</dataType>
-        <expression>NOT(BEGINS({!meetingLinkPrefix}, {!MeetingRecordingURL.value}))
-||
-CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
+        <description>Add a message to retry the file processing request once user is happy to proceed</description>
+        <name>retryMessages</name>
+        <dataType>String</dataType>
+        <expression>CASE(
+{!Get_File_Processing_Request.FailedCode__c},
+&quot;RAISE_SALESFORCE_ISSUE&quot;, &quot;Whoops something went wrong. Please raise this as an issue in the #help-ai-video-summary channel&quot;,
+&quot;NOT_FOUND&quot;, &quot;The link provided was not found in Google Drive, or is invalid. Please add a valid link below and try again.&quot;,
+&quot;SERVICE_UNAVAILABLE&quot;, &quot;Our AI server is down. The Product team has been made aware. We&#39;ll let you know when to try again.&quot;,
+&quot;TOO_MANY_REQUESTS&quot;, &quot;Our AI service is busy with other summary requests right now. Please try back in 20 minutes.&quot;,
+&quot;INTERNAL_SERVER_ERROR&quot;, &quot;Whoops something went wrong. Please raise this as an issue in the recent release help channel&quot;,
+&quot;Failed code not found. Please raise a ticket with the product team&quot;)</expression>
     </formulas>
     <interviewLabel>Opportunity | Manage Meeting Summary {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity | Manage Meeting Summary</label>
@@ -328,8 +565,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordCreates>
         <name>Create_File_Processing_Request</name>
         <label>Create File Processing Request</label>
-        <locationX>314</locationX>
-        <locationY>1016</locationY>
+        <locationX>380</locationX>
+        <locationY>1382</locationY>
         <connector>
             <targetReference>Does_opportunity_need_updating</targetReference>
         </connector>
@@ -341,7 +578,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordLookups>
         <name>Get_File_Processing_Request</name>
         <label>Get File Processing Request</label>
-        <locationX>1062</locationX>
+        <locationX>1491</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -365,7 +602,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <recordLookups>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -388,10 +625,23 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <queriedFields>Meeting_Recording_URL__c</queriedFields>
     </recordLookups>
     <recordUpdates>
+        <name>Update_File_Processing_Request</name>
+        <label>Update File Processing Request</label>
+        <locationX>2030</locationX>
+        <locationY>1082</locationY>
+        <connector>
+            <targetReference>Update_success</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assign_update_error</targetReference>
+        </faultConnector>
+        <inputReference>fileProcessingRequest</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Opportunity</name>
         <label>Update Opportunity</label>
-        <locationX>50</locationX>
-        <locationY>1232</locationY>
+        <locationX>116</locationX>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
@@ -404,7 +654,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Add_meeting_link</name>
         <label>Add meeting link</label>
-        <locationX>490</locationX>
+        <locationX>578</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -419,10 +669,17 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>UrlValidationOpportunity</leftValueReference>
+                    <leftValueReference>MeetingUrlValidation</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>true</booleanValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>opportunity.Meeting_Recording_URL__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -432,10 +689,17 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
             <fieldText>&lt;p&gt;&lt;strong&gt;Add the discovery meeting recording URL below.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;The recording should be downloaded and saved into the Discovery Meeting G-Drive folder. You should then copy the link of the G-Drive recording here.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>UrlValidationOpportunity</leftValueReference>
+                    <leftValueReference>MeetingUrlValidation</leftValueReference>
                     <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>opportunity.Meeting_Recording_URL__c</leftValueReference>
+                    <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
                     </rightValue>
@@ -462,8 +726,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <validationRule>
-                <errorMessage>&lt;p&gt;Please make sure this is a valid meeting recording link. URL must start with &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!meetingLinkPrefix}&lt;/span&gt;&lt;/p&gt;</errorMessage>
-                <formulaExpression>{!UrlValidationPageCmp}</formulaExpression>
+                <errorMessage>&lt;p&gt;This meeting link is not valid. Make sure you&#39;re not adding a folder link, and the URL starts with {!meetingLinkPrefix}&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!meetingLinkValidation}</formulaExpression>
             </validationRule>
         </fields>
         <nextOrFinishButtonLabel>Create disco summary</nextOrFinishButtonLabel>
@@ -473,7 +737,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Completed_Screen</name>
         <label>Completed Screen</label>
-        <locationX>1546</locationX>
+        <locationX>1634</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -488,10 +752,83 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Create_summary</name>
+        <label>Create summary</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Create_UUID</targetReference>
+        </connector>
+        <fields>
+            <name>createSummaryText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Create disco summary 🚀&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Click ‘Next’ to generate an AI-powered summary of your disco meeting&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>2030</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Add_file_ID</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayErrorMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;There&#39;s been an error processing this AI summary ❌&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!retryMessages}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DiscoMeetingURL</name>
+            <extensionName>flowruntime:url</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Meeting Recording URL</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;This meeting link is not valid. Make sure you&#39;re not adding a folder link, and the URL starts with {!meetingLinkPrefix}&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!meetingLinkValidationRetry}</formulaExpression>
+            </validationRule>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_File_Processing_Request.FailedCode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>NOT_FOUND</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <nextOrFinishButtonLabel>Try again</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Error_Screen</name>
         <label>Error Screen</label>
-        <locationX>754</locationX>
-        <locationY>1232</locationY>
+        <locationX>842</locationX>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -506,14 +843,14 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Processing_Screen</name>
         <label>Processing Screen</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>ProcessingText</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Meeting summary processing 👨‍🍳&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;This could take up to 20 minutes to complete.&lt;/p&gt;&lt;p&gt;Once done, a notification will be sent to the person who requested this update.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Meeting summary processing 👨‍🍳&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;This could take up to 30 minutes to complete.&lt;/p&gt;&lt;p&gt;Once done, a notification will be sent to the person who requested this update.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Close window</nextOrFinishButtonLabel>
@@ -523,8 +860,8 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
     <screens>
         <name>Success_Screen</name>
         <label>Success Screen</label>
-        <locationX>314</locationX>
-        <locationY>1622</locationY>
+        <locationX>380</locationX>
+        <locationY>1988</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -553,7 +890,7 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <stringValue>Please wait up to 20 mins to view</stringValue>
+                    <stringValue>Please wait up to 30 mins to view</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -563,8 +900,45 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Update_success</name>
+        <label>Update success</label>
+        <locationX>2030</locationX>
+        <locationY>1190</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>SuccessToastRetry</name>
+            <extensionName>c:displayToastFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>triggerNavigationNextEvent</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>AI summary request sent</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>936</locationX>
+        <locationX>1365</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Assign_Record_Id</targetReference>
@@ -596,6 +970,13 @@ CONTAINS(&quot;folders&quot;, {!MeetingRecordingURL.value})</expression>
         <value>
             <stringValue>https://drive.google.com/file/d/</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>meetingLinkUrl</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>opportunity</name>
