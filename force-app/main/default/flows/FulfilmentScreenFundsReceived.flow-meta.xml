@@ -18,8 +18,8 @@
             </value>
         </inputParameters>
         <nameSegment>SplitStringInvocable</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>
@@ -158,13 +158,13 @@
     <formulas>
         <name>amountLowerBound</name>
         <dataType>Number</dataType>
-        <expression>0.95 * {!fulfilment.Recommendation__r.Amount__c}</expression>
+        <expression>0.9 * {!fulfilment.Recommendation__r.Amount__c}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
         <name>amountUpperBound</name>
         <dataType>Number</dataType>
-        <expression>1.05 * {!fulfilment.Recommendation__r.Amount__c}</expression>
+        <expression>1.1 * {!fulfilment.Recommendation__r.Amount__c}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -609,7 +609,7 @@
                 </fields>
                 <fields>
                     <name>differenceExplain</name>
-                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 11px;&quot;&gt;The difference between the expected and received values is more than 5%. Please provide a summary of why this is, and any corrective action required. &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 11px;&quot;&gt;DO NOT COMPLETE THIS FLOW if we are awaiting other tranches of payment.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 11px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The difference between the expected and received values is more than 10%. Please provide a summary of why this is, and any corrective action required. &lt;/span&gt;&lt;strong style=&quot;font-size: 11px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;DO NOT COMPLETE THIS FLOW if we are awaiting other tranches of payment.&lt;/strong&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>or</conditionLogic>
