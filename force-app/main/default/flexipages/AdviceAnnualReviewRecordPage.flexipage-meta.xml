@@ -178,6 +178,9 @@
                         <valueListItems>
                             <value>Advice__c.CreateNewEmail</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Advice__c.ConvertLoas</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1784,19 +1787,6 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList4</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.DataGatheringStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>In progress</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.DataGatheringStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Complete</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1910,8 +1900,8 @@
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.NarrativeStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Complete</rightValue>
+                        <operator>NE</operator>
+                        <rightValue>Not started</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
