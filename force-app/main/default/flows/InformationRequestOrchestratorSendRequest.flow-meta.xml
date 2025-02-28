@@ -2,23 +2,26 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Assign_error_message</name>
-        <label>Assign error message</label>
-        <locationX>842</locationX>
+        <name>Add_user_ID_to_collection</name>
+        <label>Add user ID to collection</label>
+        <locationX>402</locationX>
         <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>errorMessage</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>userIds</assignToReference>
+            <operator>Add</operator>
             <value>
-                <elementReference>$Flow.FaultMessage</elementReference>
+                <elementReference>Loop_assignments.AssigneeId</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Loop_assignments</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Assign_follow_up_task</name>
         <label>Assign follow up task</label>
         <locationX>578</locationX>
-        <locationY>458</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -31,7 +34,7 @@
         <name>Assign_follow_up_taskClient</name>
         <label>Assign follow up task</label>
         <locationX>50</locationX>
-        <locationY>458</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -40,27 +43,43 @@
             </value>
         </assignmentItems>
     </assignments>
+    <choices>
+        <name>Client_by_hand</name>
+        <choiceText>Client - by hand</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Client - by hand</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Client_TOB</name>
+        <choiceText>Client - TOB</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Client - TOB</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Client_or_third_party</name>
         <label>Client or third party</label>
         <locationX>314</locationX>
-        <locationY>242</locationY>
+        <locationY>866</locationY>
         <defaultConnector>
-            <targetReference>Update_information_request</targetReference>
+            <targetReference>Update_Ir</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Third party</defaultConnectorLabel>
         <rules>
             <name>Client</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>informationRequest.InformationRequestType__r.InformationSource__c</leftValueReference>
+                <leftValueReference>ir.InformationRequestType__r.InformationSource__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Client</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_information_requestClient</targetReference>
+                <targetReference>Update_IrClient</targetReference>
             </connector>
             <label>Client</label>
         </rules>
@@ -75,21 +94,35 @@
         <picklistObject>InformationRequest__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>signedByChoice</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
-        <picklistField>AuthorityRequestSigned_by__c</picklistField>
-        <picklistObject>InformationRequest__c</picklistObject>
+        <name>signingUsers</name>
+        <collectionReference>Get_users_with_permission_to_sign_LOAs</collectionReference>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <object>User</object>
+        <valueField>Name</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
         <name>infoRequestStatus</name>
         <dataType>String</dataType>
-        <expression>IF( ISPICKVAL({!informationRequest.InformationRequestType__r.InformationSource__c}, &quot;Client&quot;), &quot;Sent to client&quot;,&quot;Sent to provider&quot;)</expression>
+        <expression>IF( ISPICKVAL({!ir.InformationRequestType__r.InformationSource__c}, &quot;Client&quot;), &quot;Sent to client&quot;,&quot;Sent to provider&quot;)</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Send request {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IR | Orchestrator | Send request</label>
+    <loops>
+        <name>Loop_assignments</name>
+        <label>Loop assignments</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
+        <collectionReference>Get_permission_set_assignments_for_signing_LOAs</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_user_ID_to_collection</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_users_with_permission_to_sign_LOAs</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -109,23 +142,95 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_permission_set_assignments_for_signing_LOAs</name>
+        <label>Get permission set assignments for signing LOAs</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_assignments</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>PermissionSetId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_permission_set_ID.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>PermissionSetAssignment</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_permission_set_ID</name>
+        <label>Get permission set ID</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_permission_set_assignments_for_signing_LOAs</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>InformationRequestSignLoas</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>PermissionSet</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_users_with_permission_to_sign_LOAs</name>
+        <label>Get users with permission to sign LOAs</label>
+        <locationX>314</locationX>
+        <locationY>650</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Collect_request_detailsClient</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>userIds</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordRollbacks>
+        <name>Rollback</name>
+        <label>Rollback</label>
+        <locationX>842</locationX>
+        <locationY>1082</locationY>
+        <connector>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </recordRollbacks>
     <recordUpdates>
-        <name>Update_information_request</name>
-        <label>Update information request</label>
+        <name>Update_Ir</name>
+        <label>Update IR</label>
         <locationX>578</locationX>
-        <locationY>350</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Assign_follow_up_task</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Assign_error_message</targetReference>
+            <targetReference>Rollback</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>informationRequest.Id</elementReference>
+                <elementReference>ir.Id</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -173,23 +278,23 @@
         <object>InformationRequest__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_information_requestClient</name>
-        <label>Update information request</label>
+        <name>Update_IrClient</name>
+        <label>Update IR</label>
         <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Assign_follow_up_taskClient</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Assign_error_message</targetReference>
+            <targetReference>Rollback</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>informationRequest.Id</elementReference>
+                <elementReference>ir.Id</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -241,7 +346,7 @@
         <name>Collect_request_detailsClient</name>
         <label>Collect request details</label>
         <locationX>314</locationX>
-        <locationY>134</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -267,7 +372,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>informationRequest.InformationRequestType__r.InformationSource__c</leftValueReference>
+                    <leftValueReference>ir.InformationRequestType__r.InformationSource__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Third party provider</stringValue>
@@ -277,7 +382,9 @@
         </fields>
         <fields>
             <name>Authority_signed_by</name>
-            <choiceReferences>signedByChoice</choiceReferences>
+            <choiceReferences>Client_TOB</choiceReferences>
+            <choiceReferences>Client_by_hand</choiceReferences>
+            <choiceReferences>signingUsers</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Authority signed by</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -286,7 +393,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>informationRequest.InformationRequestType__r.InformationSource__c</leftValueReference>
+                    <leftValueReference>ir.InformationRequestType__r.InformationSource__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Third party provider</stringValue>
@@ -297,21 +404,30 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>842</locationX>
+        <locationY>1190</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>faultText</name>
+            <fieldText>&lt;p&gt;There&#39;s been an error here. Please raise a ticket and copy the below message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Collect_request_detailsClient</targetReference>
+            <targetReference>Get_permission_set_ID</targetReference>
         </connector>
     </start>
     <status>Active</status>
-    <variables>
-        <name>errorMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
     <variables>
         <name>followUpTask</name>
         <dataType>String</dataType>
@@ -320,11 +436,18 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>informationRequest</name>
+        <name>ir</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>InformationRequest__c</objectType>
+    </variables>
+    <variables>
+        <name>userIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
