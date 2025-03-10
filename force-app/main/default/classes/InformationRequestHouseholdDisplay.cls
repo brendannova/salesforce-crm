@@ -10,7 +10,7 @@ public with sharing class InformationRequestHouseholdDisplay {
         
         List<FinServ__FinancialAccount__c> accounts = [SELECT Id FROM FinServ__FinancialAccount__c WHERE Household__c =: recordId];
         Set<Id> ids = new Set<Id>(new Map<Id, FinServ__FinancialAccount__c>(accounts).keySet());
-        List<InformationRequest__c> listIrs= [SELECT Id, Name, Status__c, InformationRequestType__r.Name, FinancialProductFinServ__c, InformationRequestType__c, FinancialProductFinServ__r.Name FROM InformationRequest__c WHERE FinancialProductFinServ__c IN :ids AND ( Status__c != 'Complete' OR Status__c != 'Cancelled')];
+        List<InformationRequest__c> listIrs= [SELECT Id, Name, Status__c, InformationRequestType__r.Name, FinancialProductFinServ__c, InformationRequestType__c, FinancialProductFinServ__r.Name FROM InformationRequest__c WHERE FinancialProductFinServ__c IN :ids AND Status__c NOT IN ('Complete', 'Cancelled')];
         String urlPrefix = URL.getOrgDomainURL().toExternalForm() + '/';
         
         List<Schema.PicklistEntry> statusValues = InformationRequest__c.Status__c.getDescribe().getPicklistValues();
