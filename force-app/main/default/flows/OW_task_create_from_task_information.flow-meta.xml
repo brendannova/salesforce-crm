@@ -4,7 +4,7 @@
         <name>Send_error_email</name>
         <label>Send error email</label>
         <locationX>1502</locationX>
-        <locationY>2606</locationY>
+        <locationY>2906</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -34,7 +34,6 @@
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
         <offset>0</offset>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>53.0</apiVersion>
     <assignments>
@@ -42,14 +41,7 @@
         <name>Define_remaining_task_variables</name>
         <label>Define remaining task variables</label>
         <locationX>1238</locationX>
-        <locationY>2282</locationY>
-        <assignmentItems>
-            <assignToReference>task.Subject</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_task_information_record.OW_subject__c</elementReference>
-            </value>
-        </assignmentItems>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>task.Type</assignToReference>
             <operator>Assign</operator>
@@ -227,6 +219,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Define_task_subject</name>
+        <label>Define task subject</label>
+        <locationX>1634</locationX>
+        <locationY>2282</locationY>
+        <assignmentItems>
+            <assignToReference>task.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>subject</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>task_mode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_task_subject_default</name>
+        <label>Define task subject - default</label>
+        <locationX>1898</locationX>
+        <locationY>2282</locationY>
+        <assignmentItems>
+            <assignToReference>task.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_task_information_record.OW_subject__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>task_mode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>NoTaskInformationReferenceFound</name>
         <label>No Task Information Reference Found</label>
         <locationX>3658</locationX>
@@ -294,7 +318,7 @@
         <name>Set_error_outputs</name>
         <label>Set error outputs</label>
         <locationX>1502</locationX>
-        <locationY>2498</locationY>
+        <locationY>2798</locationY>
         <assignmentItems>
             <assignToReference>Success</assignToReference>
             <operator>Assign</operator>
@@ -430,14 +454,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>task_mode</targetReference>
+            <targetReference>Subject_provided</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_task_ID</name>
         <label>Set task ID</label>
         <locationX>1766</locationX>
-        <locationY>2282</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>task.Id</assignToReference>
             <operator>Assign</operator>
@@ -865,6 +889,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Subject_provided</name>
+        <label>Subject provided?</label>
+        <locationX>1766</locationX>
+        <locationY>2174</locationY>
+        <defaultConnector>
+            <targetReference>Define_task_subject_default</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not provided</defaultConnectorLabel>
+        <rules>
+            <name>subject_providedTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>subject</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Define_task_subject</targetReference>
+            </connector>
+            <label>Subject provided</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Target_start_date_provided</name>
         <label>Target start date provided?</label>
         <locationX>1766</locationX>
@@ -946,7 +995,7 @@
         <name>task_mode</name>
         <label>Mode?</label>
         <locationX>1766</locationX>
-        <locationY>2174</locationY>
+        <locationY>2474</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>Create</name>
@@ -1025,7 +1074,7 @@
         <name>Insert_task</name>
         <label>Insert task</label>
         <locationX>1238</locationX>
-        <locationY>2390</locationY>
+        <locationY>2690</locationY>
         <faultConnector>
             <targetReference>Set_error_outputs</targetReference>
         </faultConnector>
@@ -1191,7 +1240,7 @@
         <name>Update_task</name>
         <label>Update task</label>
         <locationX>1766</locationX>
-        <locationY>2390</locationY>
+        <locationY>2690</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Set_error_outputs</targetReference>
@@ -1239,7 +1288,7 @@
         <locationX>1898</locationX>
         <locationY>1982</locationY>
         <connector>
-            <targetReference>task_mode</targetReference>
+            <targetReference>Subject_provided</targetReference>
         </connector>
         <flowName>OW_date_add_subtract_business_days</flowName>
         <inputAssignments>
@@ -1401,6 +1450,13 @@
     <variables>
         <description>ID for a related provider</description>
         <name>related_provider</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>subject</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

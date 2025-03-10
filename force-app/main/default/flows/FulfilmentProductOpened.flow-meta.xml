@@ -4,7 +4,7 @@
         <name>Split_tasks</name>
         <label>Split tasks</label>
         <locationX>182</locationX>
-        <locationY>542</locationY>
+        <locationY>890</locationY>
         <actionName>SplitStringInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -18,15 +18,15 @@
             </value>
         </inputParameters>
         <nameSegment>SplitStringInvocable</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
     <assignments>
         <name>Add_task_value_to_collection</name>
         <label>Add task value to collection</label>
         <locationX>270</locationX>
-        <locationY>758</locationY>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>checkboxValues</assignToReference>
             <operator>Add</operator>
@@ -36,6 +36,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Loop_through_tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>534</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_screen</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -67,7 +83,7 @@
         <name>Is_there_a_designation</name>
         <label>Is there a designation?</label>
         <locationX>182</locationX>
-        <locationY>1682</locationY>
+        <locationY>2030</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yesdesignation</name>
@@ -89,7 +105,7 @@
         <name>Is_there_a_joint_owner</name>
         <label>Is there a joint owner?</label>
         <locationX>182</locationX>
-        <locationY>1382</locationY>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>Is_there_a_designation</targetReference>
         </defaultConnector>
@@ -129,7 +145,7 @@
         <name>Loop_through_tasks</name>
         <label>Loop through tasks</label>
         <locationX>182</locationX>
-        <locationY>650</locationY>
+        <locationY>998</locationY>
         <collectionReference>Split_tasks.tasksToCreate</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -167,6 +183,9 @@
         <connector>
             <targetReference>Get_fulfilment_type_status</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -186,11 +205,15 @@
         <name>Get_fulfilment_type_status</name>
         <label>Get fulfilment type status</label>
         <locationX>182</locationX>
-        <locationY>434</locationY>
+        <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Split_tasks</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>FulfilmentType__c</field>
@@ -214,12 +237,13 @@
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>182</locationX>
-        <locationY>1058</locationY>
+        <locationY>1406</locationY>
         <connector>
             <targetReference>Update_fulfilment</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_screen</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -259,10 +283,14 @@
         <name>Update_fulfilment</name>
         <label>Update fulfilment</label>
         <locationX>182</locationX>
-        <locationY>1166</locationY>
+        <locationY>1514</locationY>
         <connector>
             <targetReference>Update_primary_owner_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -280,7 +308,7 @@
         <inputAssignments>
             <field>Status__c</field>
             <value>
-                <stringValue>Investment checks</stringValue>
+                <elementReference>Get_fulfilment_type_status.NextStatus__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -296,7 +324,7 @@
         <name>Collect_details</name>
         <label>Collect details</label>
         <locationX>182</locationX>
-        <locationY>950</locationY>
+        <locationY>1298</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -376,8 +404,8 @@
     <screens>
         <name>Error_screen</name>
         <label>Error screen</label>
-        <locationX>578</locationX>
-        <locationY>1166</locationY>
+        <locationX>534</locationX>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -401,7 +429,7 @@
         <name>Update_primary_owner_status</name>
         <label>Update primary owner status</label>
         <locationX>182</locationX>
-        <locationY>1274</locationY>
+        <locationY>1622</locationY>
         <connector>
             <targetReference>Is_there_a_joint_owner</targetReference>
         </connector>
@@ -423,7 +451,7 @@
         <name>Update_status</name>
         <label>Update status</label>
         <locationX>50</locationX>
-        <locationY>1490</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>Is_there_a_designation</targetReference>
         </connector>
@@ -445,7 +473,7 @@
         <name>Update_statusDesignation</name>
         <label>Update status</label>
         <locationX>50</locationX>
-        <locationY>1790</locationY>
+        <locationY>2138</locationY>
         <flowName>OW_account_party_state_manager</flowName>
         <inputAssignments>
             <name>eventType</name>
@@ -466,6 +494,13 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>fulfilment</name>

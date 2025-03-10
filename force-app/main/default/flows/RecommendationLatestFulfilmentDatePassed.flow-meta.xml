@@ -51,14 +51,14 @@
                 <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Submit fulfilment</stringValue>
+                    <stringValue>Submit forms</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Chase client payment</stringValue>
+                    <stringValue>Awaiting client payment</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -193,7 +193,7 @@
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>Get_fulfilment.Id</elementReference>
+                <elementReference>$Record.FulfilmentLegacy__c</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -219,7 +219,7 @@
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>Get_fulfilment.Id</elementReference>
+                <elementReference>$Record.FulfilmentLegacy__c</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
