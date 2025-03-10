@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Get_owner_ids</name>
-        <label>Get owner ids</label>
-        <locationX>1040</locationX>
+        <name>Get_owner_IDs</name>
+        <label>Get owner IDs</label>
+        <locationX>1062</locationX>
         <locationY>323</locationY>
         <actionName>SplitStringInvocable</actionName>
         <actionType>apex</actionType>
@@ -20,13 +20,44 @@
         <nameSegment>SplitStringInvocable</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>59.0</apiVersion>
     <assignments>
+        <name>Add_person_ID_to_what_IDs_to_close</name>
+        <label>Add person ID to what IDs to close</label>
+        <locationX>1326</locationX>
+        <locationY>1763</locationY>
+        <assignmentItems>
+            <assignToReference>whatIdsToClose</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_2.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_person_account_bank_details_status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_collection</name>
+        <label>Add to collection</label>
+        <locationX>1326</locationX>
+        <locationY>1979</locationY>
+        <assignmentItems>
+            <assignToReference>personAccounts</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>personAccount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Hubwise_flag_to_false</name>
         <label>Assign Hubwise flag to false</label>
-        <locationX>1040</locationX>
+        <locationX>1062</locationX>
         <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>hubwiseFlag</assignToReference>
@@ -42,7 +73,7 @@
     <assignments>
         <name>Assign_Hubwise_flag_to_true</name>
         <label>Assign Hubwise flag to true</label>
-        <locationX>1128</locationX>
+        <locationX>1150</locationX>
         <locationY>863</locationY>
         <assignmentItems>
             <assignToReference>hubwiseFlag</assignToReference>
@@ -55,10 +86,80 @@
             <targetReference>Loop_through_bank_detail_statuses</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_person_account_bank_details_status</name>
+        <label>Set person account bank details status</label>
+        <locationX>1326</locationX>
+        <locationY>1871</locationY>
+        <assignmentItems>
+            <assignToReference>personAccount.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_2.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>personAccount.BankDetailsStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Submitted</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_collection</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Accounts_to_update</name>
+        <label>Accounts to update</label>
+        <locationX>1238</locationX>
+        <locationY>2255</locationY>
+        <defaultConnector>
+            <targetReference>Any_tasks_to_close</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>None</defaultConnectorLabel>
+        <rules>
+            <name>Update</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>personAccounts</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_person_accounts</targetReference>
+            </connector>
+            <label>Update</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Any_tasks_to_close</name>
+        <label>Any tasks to close?</label>
+        <locationX>1238</locationX>
+        <locationY>2555</locationY>
+        <defaultConnectorLabel>None to close</defaultConnectorLabel>
+        <rules>
+            <name>Task_to_close</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>whatIdsToClose</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_any_request_or_chase_tasks</targetReference>
+            </connector>
+            <label>Task to close</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Does_this_client_have_another_active_bank_account</name>
         <label>Does this client have another active bank account?</label>
-        <locationX>1942</locationX>
+        <locationX>1986</locationX>
         <locationY>1763</locationY>
         <defaultConnector>
             <targetReference>Update_persons_bank_account_status_to_awaiting_replacemnt</targetReference>
@@ -83,7 +184,7 @@
     <decisions>
         <name>Hubwise_status</name>
         <label>Hubwise update required?</label>
-        <locationX>1040</locationX>
+        <locationX>1062</locationX>
         <locationY>1139</locationY>
         <defaultConnector>
             <targetReference>Status</targetReference>
@@ -119,7 +220,8 @@
         <locationX>1678</locationX>
         <locationY>1655</locationY>
         <defaultConnector>
-            <targetReference>Update_person_bank_details_status3</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_person_account_bank_details_status</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -133,7 +235,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_person_bank_details_status1</targetReference>
+                <targetReference>Add_person_ID_to_what_IDs_to_close</targetReference>
             </connector>
             <label>Pending</label>
         </rules>
@@ -163,7 +265,8 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_person_bank_details_status2</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Add_person_ID_to_what_IDs_to_close</targetReference>
             </connector>
             <label>Awaiting replacement</label>
         </rules>
@@ -171,7 +274,7 @@
     <decisions>
         <name>Status</name>
         <label>Bank Account status</label>
-        <locationX>1040</locationX>
+        <locationX>1062</locationX>
         <locationY>1439</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -248,7 +351,7 @@
     <decisions>
         <name>Would_their_Hubwise_need_updating</name>
         <label>Would their Hubwise need updating?</label>
-        <locationX>1260</locationX>
+        <locationX>1282</locationX>
         <locationY>755</locationY>
         <defaultConnector>
             <targetReference>Loop_through_bank_detail_statuses</targetReference>
@@ -296,11 +399,14 @@
         <nextValueConnector>
             <targetReference>Person_bank_account_status_Active</targetReference>
         </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Accounts_to_update</targetReference>
+        </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Loop_3</name>
         <label>Loop 3</label>
-        <locationX>1766</locationX>
+        <locationX>1810</locationX>
         <locationY>1547</locationY>
         <collectionReference>Get_person_accounts.personAccounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -314,7 +420,7 @@
     <loops>
         <name>Loop_through_bank_detail_statuses</name>
         <label>Loop through bank detail statuses</label>
-        <locationX>1040</locationX>
+        <locationX>1062</locationX>
         <locationY>647</locationY>
         <collectionReference>Get_person_accounts.personAccounts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -347,7 +453,7 @@
     <recordLookups>
         <name>Get_existing_bank_accountsInactive</name>
         <label>Get existing bank accounts</label>
-        <locationX>1942</locationX>
+        <locationX>1986</locationX>
         <locationY>1655</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -394,6 +500,82 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Close_any_request_or_chase_tasks</name>
+        <label>Close any request or chase tasks</label>
+        <locationX>1106</locationX>
+        <locationY>2663</locationY>
+        <filterLogic>1 AND (2 OR 3 OR 8 OR 7) AND 4 AND 5 AND 6</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>In</operator>
+            <value>
+                <elementReference>whatIdsToClose</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>request_bank_details</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>chase_client_bank_details</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Pushed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>request_replacement_bank_details</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>chase_replacement_bank_details</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OrchestrationTaskStatus__c</field>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Close_any_request_or_chase_tasks1</name>
         <label>Close any request or chase tasks</label>
         <locationX>50</locationX>
@@ -406,165 +588,7 @@
             <field>WhatId</field>
             <operator>In</operator>
             <value>
-                <elementReference>Get_owner_ids.tasksToCreate</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>request_bank_details</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>chase_client_bank_details</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Cancelled</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Pushed</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>request_replacement_bank_details</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>chase_replacement_bank_details</stringValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OrchestrationTaskStatus__c</field>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Close_any_request_or_chase_tasks2</name>
-        <label>Close any request or chase tasks</label>
-        <locationX>1326</locationX>
-        <locationY>1871</locationY>
-        <connector>
-            <targetReference>Loop_2</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3 OR 8 OR 7) AND 4 AND 5 AND 6</filterLogic>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_2.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>request_bank_details</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>chase_client_bank_details</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Cancelled</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Pushed</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>request_replacement_bank_details</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>chase_replacement_bank_details</stringValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OrchestrationTaskStatus__c</field>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Close_any_request_or_chase_tasks3</name>
-        <label>Close any request or chase tasks</label>
-        <locationX>1766</locationX>
-        <locationY>1871</locationY>
-        <connector>
-            <targetReference>Loop_2</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3 OR 8 OR 7) AND 4 AND 5 AND 6</filterLogic>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_2.Id</elementReference>
+                <elementReference>Get_owner_IDs.tasksToCreate</elementReference>
             </value>
         </filters>
         <filters>
@@ -633,7 +657,7 @@
     <recordUpdates>
         <name>Close_any_tasks</name>
         <label>Close any tasks</label>
-        <locationX>1766</locationX>
+        <locationX>1810</locationX>
         <locationY>2147</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -672,81 +696,19 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_person_bank_details_status1</name>
-        <label>Update person bank details status</label>
-        <locationX>1326</locationX>
-        <locationY>1763</locationY>
+        <name>Update_person_accounts</name>
+        <label>Update person accounts</label>
+        <locationX>1106</locationX>
+        <locationY>2363</locationY>
         <connector>
-            <targetReference>Close_any_request_or_chase_tasks2</targetReference>
+            <targetReference>Any_tasks_to_close</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_2.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>BankDetailsStatus__c</field>
-            <value>
-                <stringValue>Submitted</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_person_bank_details_status2</name>
-        <label>Update person bank details status</label>
-        <locationX>1766</locationX>
-        <locationY>1763</locationY>
-        <connector>
-            <targetReference>Close_any_request_or_chase_tasks3</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_2.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>BankDetailsStatus__c</field>
-            <value>
-                <stringValue>Submitted</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_person_bank_details_status3</name>
-        <label>Update person bank details status</label>
-        <locationX>2030</locationX>
-        <locationY>1763</locationY>
-        <connector>
-            <targetReference>Loop_2</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_2.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>BankDetailsStatus__c</field>
-            <value>
-                <stringValue>Submitted</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
+        <inputReference>personAccounts</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_persons_bank_account_status_to_awaiting_replacemnt</name>
         <label>Update persons bank account status to awaiting replacemnt</label>
-        <locationX>2030</locationX>
+        <locationX>2074</locationX>
         <locationY>1871</locationY>
         <connector>
             <targetReference>Loop_3</targetReference>
@@ -768,10 +730,10 @@
         <object>Account</object>
     </recordUpdates>
     <start>
-        <locationX>914</locationX>
+        <locationX>936</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_owner_ids</targetReference>
+            <targetReference>Get_owner_IDs</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -789,7 +751,7 @@
     <subflows>
         <name>Create_task_to_update_hubwise</name>
         <label>Create task to update hubwise</label>
-        <locationX>908</locationX>
+        <locationX>930</locationX>
         <locationY>1247</locationY>
         <connector>
             <targetReference>Status</targetReference>
@@ -847,7 +809,7 @@
     <subflows>
         <name>Get_person_accounts</name>
         <label>Get person accounts</label>
-        <locationX>1040</locationX>
+        <locationX>1062</locationX>
         <locationY>431</locationY>
         <connector>
             <targetReference>Assign_Hubwise_flag_to_false</targetReference>
@@ -918,7 +880,30 @@
         </value>
     </variables>
     <variables>
+        <name>personAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>personAccounts</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
         <name>recommendationIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>whatIdsToClose</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
