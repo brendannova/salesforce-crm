@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Define_post_setup_updates</name>
+        <label>Define post setup updates</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.ProfileUpdateStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>profileUpdateStatusFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.DataGatheringStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>informationRequestsFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AdviceName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.Narrative__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>OpeningNarrative</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Next_step_setup</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Move_to_data_gathering</name>
+        <label>Move to data gathering</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>dataGatheringRequired</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Data gathering</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <choices>
+        <name>Complete</name>
+        <choiceText>Complete</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Complete</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>In_progress</name>
+        <choiceText>In progress</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>In progress</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NotRequired</name>
+        <choiceText>Not required</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Not required</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Required</name>
+        <choiceText>Required</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>REQUIRED</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Next_step_setup</name>
+        <label>Next step</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <defaultConnectorLabel>Prepare advice</defaultConnectorLabel>
+        <rules>
+            <name>Data_gathering_next_step</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProfileUpdatesAdvice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Required</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>InformationRequestsAdvice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Required</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Move_to_data_gathering</targetReference>
+            </connector>
+            <label>Data gathering</label>
+        </rules>
+    </decisions>
+    <description>Orchestrates the set up of new advice, asking common questions and providing the outcome to the flow that called it.</description>
+    <dynamicChoiceSets>
+        <name>dataGatheringStatusChoices</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>DataGatheringStatus__c</picklistField>
+        <picklistObject>Advice__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ProfileUpdateStatusChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>ProfileUpdateStatus__c</picklistField>
+        <picklistObject>Advice__c</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <description>Maps the information request input from the screen to a DataGatheringStatus__c field picklist value. Returns error for an unmapped value, which will trigger an error in the field as it is restricted to picklist values.</description>
+        <name>informationRequestsFormula</name>
+        <dataType>String</dataType>
+        <expression>CASE({!InformationRequestsAdvice}, 
+{!Required}, &quot;In progress&quot;,
+{!NotRequired}, &quot;Not required&quot;,
+&quot;ERROR&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Contextual help for the information requests field.</description>
+        <name>informationRequestsHelp</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.AdviceType__r.InformationRequests__c},
+&quot;REQUIRED&quot;, &quot;Information requests are required for this advice type: &quot; &amp; {!advice.AdviceType__r.Name},
+&quot;OPTIONAL&quot;, &quot;Select required if ops need to link and process information requests for this advice&quot;,
+&quot;NEVER&quot;, &quot;Information requests cannot be linked to this streamlined advice type: &quot; &amp; {!advice.AdviceType__r.Name},
+&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Sets the default information requests status based on the advice type.</description>
+        <name>informationRequestsPicklistDefault</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.AdviceType__r.InformationRequests__c},
+&quot;REQUIRED&quot;, &quot;Required&quot;,
+&quot;Optional&quot;, &quot;&quot;,
+&quot;NEVER&quot;, &quot;Not required&quot;,
+&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Disables the information requests field when the conditions below evaluate to true. At time of writing, this is when they are always or never required.</description>
+        <name>informationRequestsPicklistDisabled</name>
+        <dataType>Boolean</dataType>
+        <expression>ISPICKVAL({!advice.AdviceType__r.InformationRequests__c}, &quot;REQUIRED&quot;) || 
+ISPICKVAL({!advice.AdviceType__r.InformationRequests__c}, &quot;NEVER&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Maps the profile status input from the screen to a ProfileUpdateStatus__c field picklist value. Returns error for an unmapped value, which will trigger an error in the field as it is restricted to picklist values.</description>
+        <name>profileUpdateStatusFormula</name>
+        <dataType>String</dataType>
+        <expression>CASE({!ProfileUpdatesAdvice}, 
+{!Required}, &quot;Not started&quot;,
+{!NotRequired}, &quot;Not required&quot;,
+&quot;ERROR&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Displays help message contextual to the type of advice.</description>
+        <name>profileUpdateStatusHelp</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.AdviceType__r.ProfileUpdate__c},
+&quot;REQUIRED&quot;, &quot;Profile updates are required for this advice type: &quot; &amp; {!advice.AdviceType__r.Name},
+&quot;OPTIONAL&quot;, &quot;Select required if ops need to contact the client to get additional profile information&quot;,
+&quot;NEVER&quot;, &quot;Profile updates cannot be requested for this streamlined advice type: &quot; &amp; {!advice.AdviceType__r.Name},
+&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Sets the default profile update status based on the advice type.</description>
+        <name>profileUpdateStatusPicklistDefault</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.AdviceType__r.ProfileUpdate__c},
+&quot;REQUIRED&quot;, &quot;Required&quot;,
+&quot;OPTIONAL&quot;, &quot;&quot;,
+&quot;NEVER&quot;, &quot;Not required&quot;,
+&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Disables the profile update field when the conditions below evaluate to true. At time of writing, this is when a profile update is always or never required.</description>
+        <name>profileUpdateStatusPicklistDisabled</name>
+        <dataType>Boolean</dataType>
+        <expression>ISPICKVAL({!advice.AdviceType__r.ProfileUpdate__c}, &quot;REQUIRED&quot;) || 
+ISPICKVAL({!advice.AdviceType__r.ProfileUpdate__c}, &quot;NEVER&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>rtqPicklistDefault</name>
+        <dataType>String</dataType>
+        <expression>CASE({!advice.RtqStatus__c},
+&quot;No update required&quot;, &quot;Not required&quot;,
+&quot;Required&quot;)</expression>
+    </formulas>
+    <interviewLabel>Advice | Orchestration | Set up {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Advice | Orchestration | Set up</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Set_up_advice</name>
+        <label>Set up advice</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Define_post_setup_updates</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmCompletePromptSetup</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Provide answers to the questions below and proceed.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>AdviceName</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>advice.Name</elementReference>
+            </defaultValue>
+            <fieldText>Advice name</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>OpeningNarrative</name>
+            <defaultValue>
+                <stringValue>{!advice.Narrative__c}</stringValue>
+            </defaultValue>
+            <fieldText>Opening narrative</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>IntroductionsMade</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Appropriate introductions made</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;There is no rule on what to do here but please ensure that any appropriate introductions to the client have been made. &lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>adviceType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PROTECTION</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ProfileUpdatesAdvice</name>
+            <choiceReferences>Required</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>profileUpdateStatusPicklistDefault</elementReference>
+            </defaultValue>
+            <fieldText>Profile updates</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;{!profileUpdateStatusHelp}&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <elementReference>profileUpdateStatusPicklistDisabled</elementReference>
+            </isDisabled>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>InformationRequestsAdvice</name>
+            <choiceReferences>Required</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>informationRequestsPicklistDefault</elementReference>
+            </defaultValue>
+            <fieldText>Information requests</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;{!informationRequestsHelp}&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <elementReference>informationRequestsPicklistDisabled</elementReference>
+            </isDisabled>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>RiskToleranceQuestionnaire</name>
+            <choiceReferences>Required</choiceReferences>
+            <choiceReferences>NotRequired</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>rtqPicklistDefault</elementReference>
+            </defaultValue>
+            <fieldText>Risk Tolerance Questionnaire (RTQ)</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;RTQs are required on this &lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <booleanValue>true</booleanValue>
+            </isDisabled>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.AdviceType__r.RiskToleranceQuestionnaireSent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>REQUIRED</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>advice.AdviceType__r.RiskToleranceQuestionnaireSent__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>OPTIONAL</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_up_advice</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>The advice record that is being worked with.</description>
+        <name>advice</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
+    <variables>
+        <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>adviceType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Updated version of the advice</description>
+        <name>adviceUpdated</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
+    <variables>
+        <name>dataGatheringRequired</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>followUpTask</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>informationRequests</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InformationRequest__c</objectType>
+    </variables>
+    <variables>
+        <name>task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+</Flow>

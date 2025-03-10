@@ -5,23 +5,16 @@
         <name>Assign_advice_updates</name>
         <label>Assign advice updates</label>
         <locationX>314</locationX>
-        <locationY>1106</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>advice.Assigned_planner__c</assignToReference>
+            <assignToReference>adviceUpdated.Assigned_planner__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>PlannerSelect.selectedChoiceValues</elementReference>
+                <elementReference>Assign_planner.plannerId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In progress</stringValue>
@@ -34,15 +27,12 @@
                 <stringValue>ADVICE_TOP_UP_NARRATIVE_WRITE</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Create_deck_updates</name>
         <label>Create deck updates</label>
-        <locationX>3482</locationX>
-        <locationY>890</locationY>
+        <locationX>3218</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -51,35 +41,28 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.DeckStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Planner review</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>advice.AdviceDeckCompleteDate__c</assignToReference>
+            <assignToReference>adviceUpdated.AdviceDeckCompleteDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>advice.AdviceMethod__c</assignToReference>
+            <assignToReference>adviceUpdated.AdviceMethod__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>advice.AdviceType__r.AdviceMethod__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>advice.AdviceDeckExpiry__c</assignToReference>
+            <assignToReference>adviceUpdated.AdviceDeckExpiry__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>deckExpiryDate</elementReference>
@@ -93,8 +76,8 @@
     <assignments>
         <name>Deck_review_changes_needed</name>
         <label>Deck review changes needed</label>
-        <locationX>3746</locationX>
-        <locationY>1106</locationY>
+        <locationX>3482</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -103,28 +86,18 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.DeckStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Resolve planner comments</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Deck_review_no_changes</name>
         <label>Deck review no changes</label>
-        <locationX>4010</locationX>
-        <locationY>1106</locationY>
+        <locationX>3746</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -133,35 +106,25 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.DeckStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Complete</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>advice.Advice_Status__c</assignToReference>
+            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Present advice</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Illustrations_updates</name>
         <label>Illustrations updates</label>
-        <locationX>3218</locationX>
-        <locationY>890</locationY>
+        <locationX>2954</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -170,14 +133,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.DeckStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In progress</stringValue>
@@ -189,22 +145,54 @@
         </connector>
     </assignments>
     <assignments>
+        <name>No_outcome_to_partner_review_error</name>
+        <label>No outcome to partner review error</label>
+        <locationX>2426</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Unknown outcome of partner narrative review.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>No_outcome_to_planner_deck_review</name>
+        <label>No outcome to planner deck review</label>
+        <locationX>4010</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Unknown outcome of planner deck review.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>No_outcome_to_planner_review_error</name>
+        <label>No outcome to planner review error</label>
+        <locationX>1370</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Unknown outcome of planner narrative review.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Push_to_narrative_complete</name>
         <label>Push to narrative complete</label>
-        <locationX>2426</locationX>
-        <locationY>1214</locationY>
+        <locationX>2162</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Complete</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -214,29 +202,12 @@
                 <stringValue>ADVICE_TOP_UP_ILLUSTRATIONS</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Push_to_partner_review</name>
         <label>Push to partner review</label>
-        <locationX>1370</locationX>
-        <locationY>1214</locationY>
-        <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Partner review</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
+        <locationX>1106</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -244,15 +215,19 @@
                 <stringValue>ADVICE_TOP_UP_NARRATIVE_APPROVAL_PARTNER</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Partner review</stringValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Resolve_deck_comments_updates</name>
         <label>Resolve deck comments updates</label>
         <locationX>4274</locationX>
-        <locationY>890</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -261,21 +236,14 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.DeckStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Complete</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>advice.Advice_Status__c</assignToReference>
+            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Present advice</stringValue>
@@ -289,41 +257,13 @@
     <assignments>
         <name>Resolve_partner_comments_updates</name>
         <label>Resolve partner comments updates</label>
-        <locationX>2954</locationX>
-        <locationY>998</locationY>
+        <locationX>2690</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Complete</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceChecklist.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>advice.AdviceChecklist__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceChecklist.PlannerCommentsResolved__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceChecklist.ExplainChangesToTheInitialNarrative__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>NotesResolvePartnerReviewComments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -333,48 +273,24 @@
                 <stringValue>ADVICE_TOP_UP_ILLUSTRATIONS</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_checklist_resolve_partner_comments</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Resolve_planner_comments_updates</name>
         <label>Resolve planner comments updates</label>
-        <locationX>1898</locationX>
-        <locationY>998</locationY>
+        <locationX>1634</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Partner review</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
+            <assignToReference>adviceChecklistUpdated.PlannerCommentsResolved__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceChecklist.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>advice.AdviceChecklist__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceChecklist.PlannerCommentsResolved__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceChecklist.PlannerCommentsNotes__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>NotesResolvePeerReviewComments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -384,27 +300,17 @@
                 <stringValue>ADVICE_TOP_UP_NARRATIVE_APPROVAL_PARTNER</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_checklist</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Return_to_planner</name>
         <label>Return to planner</label>
-        <locationX>1106</locationX>
-        <locationY>1214</locationY>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Resolve planner comments</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -414,27 +320,17 @@
                 <stringValue>ADVICE_TOP_UP_NARRATIVE_RESOLVE_PLANNER</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Return_to_planner_partner_rework</name>
         <label>Return to planner</label>
-        <locationX>2162</locationX>
-        <locationY>1214</locationY>
+        <locationX>1898</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Resolve partner comments</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -444,67 +340,56 @@
                 <stringValue>ADVICE_TOP_UP_NARRATIVE_RESOLVE_PARTNER</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
     </assignments>
     <assignments>
-        <name>Set_advice_ID</name>
-        <label>Set advice ID</label>
-        <locationX>5132</locationX>
-        <locationY>134</locationY>
-        <assignmentItems>
-            <assignToReference>adviceId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_error</name>
-        <label>Set error</label>
-        <locationX>5594</locationX>
-        <locationY>782</locationY>
+        <name>Set_no_advice_type_error</name>
+        <label>Set no advice type error</label>
+        <locationX>5506</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>No advice type status record found. Please raise a ticket. </stringValue>
+                <stringValue>No advice type status found. Please raise a ticket. </stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_to_not_close_task</name>
+        <label>Set to not close task</label>
+        <locationX>2646</locationX>
+        <locationY>1058</locationY>
+        <assignmentItems>
+            <assignToReference>closeTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_unidentified_task_error</name>
+        <label>Set unidentified task error</label>
+        <locationX>5242</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Raise a ticket with this message: {!adviceType} orchestration flow. {!task.OW_task_information_name__c} task not found.</stringValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_up_advice_updates</name>
         <label>Set up advice updates</label>
         <locationX>50</locationX>
-        <locationY>890</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ADVICE_TOP_UP_ASSIGN</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice.Advice_Status__c</assignToReference>
+            <assignToReference>adviceUpdated.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Prepare advice</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -514,20 +399,13 @@
     <assignments>
         <name>Write_narrative_updates</name>
         <label>Write narrative updates</label>
-        <locationX>842</locationX>
-        <locationY>890</locationY>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>advice.NarrativeStatus__c</assignToReference>
+            <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Planner review</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdateRequired</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -543,14 +421,6 @@
         </connector>
     </assignments>
     <choices>
-        <name>No</name>
-        <choiceText>No</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>No</stringValue>
-        </value>
-    </choices>
-    <choices>
         <name>Yes</name>
         <choiceText>Yes</choiceText>
         <dataType>String</dataType>
@@ -559,48 +429,22 @@
         </value>
     </choices>
     <decisions>
-        <name>Advice_update_required</name>
-        <label>Advice update required?</label>
-        <locationX>2690</locationX>
-        <locationY>1556</locationY>
-        <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Close_task</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Not required</defaultConnectorLabel>
-        <rules>
-            <name>Required</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>adviceUpdateRequired</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_advice</targetReference>
-            </connector>
-            <label>Required</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Changes_deck_planner</name>
         <label>Changes?</label>
-        <locationX>3878</locationX>
-        <locationY>998</locationY>
+        <locationX>3746</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
-            <targetReference>Deck_review_no_changes</targetReference>
+            <targetReference>No_outcome_to_planner_deck_review</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No changes</defaultConnectorLabel>
         <rules>
             <name>Changes_required_deck_planner</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>DeckUpdatesNeededPlanner</leftValueReference>
+                <leftValueReference>Planner_deck_review.changesNeeded</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Yes</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -608,25 +452,39 @@
             </connector>
             <label>Changes required</label>
         </rules>
+        <rules>
+            <name>No_changes_planner_deck_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Planner_deck_review.changesNeeded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Deck_review_no_changes</targetReference>
+            </connector>
+            <label>No changes</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Changes_narrative_review_partner</name>
         <label>Changes?</label>
-        <locationX>2426</locationX>
-        <locationY>1106</locationY>
+        <locationX>2162</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Partner_narrative_review_task</targetReference>
+            <targetReference>No_outcome_to_partner_review_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No value</defaultConnectorLabel>
         <rules>
             <name>Changes_required_partner_review</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>advice.AdviceChecklist__r.NarrativePartnerReviewChangesNeeded__c</leftValueReference>
+                <leftValueReference>Partner_narrative_review.changesNeeded</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Yes</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -638,10 +496,10 @@
             <name>No_changes_partner_review</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>advice.AdviceChecklist__r.NarrativePartnerReviewChangesNeeded__c</leftValueReference>
+                <leftValueReference>Partner_narrative_review.changesNeeded</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>No</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -653,21 +511,20 @@
     <decisions>
         <name>Changes_narrative_review_planner</name>
         <label>Changes?</label>
-        <locationX>1370</locationX>
-        <locationY>1106</locationY>
+        <locationX>1106</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Planner_narrative_review_task</targetReference>
+            <targetReference>No_outcome_to_planner_review_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No value</defaultConnectorLabel>
         <rules>
             <name>Changes_required</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>advice.AdviceChecklist__r.AreAnyChangesRequired__c</leftValueReference>
+                <leftValueReference>Planner_narrative_review.changesNeeded</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Yes</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -679,10 +536,10 @@
             <name>No_changes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>advice.AdviceChecklist__r.AreAnyChangesRequired__c</leftValueReference>
+                <leftValueReference>Planner_narrative_review.changesNeeded</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>No</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -692,37 +549,12 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Follow_on_task_to_create</name>
-        <label>Follow on task to create</label>
-        <locationX>2272</locationX>
-        <locationY>1880</locationY>
-        <defaultConnector>
-            <targetReference>CompleteScreen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No task</defaultConnectorLabel>
-        <rules>
-            <name>Task_to_create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>followUpTask</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_next_task</targetReference>
-            </connector>
-            <label>Task to create</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Found_advice_type_status</name>
         <label>Found advice type status</label>
-        <locationX>4142</locationX>
-        <locationY>674</locationY>
+        <locationX>4076</locationX>
+        <locationY>242</locationY>
         <defaultConnector>
-            <targetReference>Set_error</targetReference>
+            <targetReference>Set_no_advice_type_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No advice type status</defaultConnectorLabel>
         <rules>
@@ -742,67 +574,12 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Found_task</name>
-        <label>Found task?</label>
-        <locationX>5132</locationX>
-        <locationY>566</locationY>
-        <defaultConnector>
-            <targetReference>No_Task_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No task</defaultConnectorLabel>
-        <rules>
-            <name>Task_found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_tasks</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>userId18Char</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>task.OwnerId</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Found_advice_type_status</targetReference>
-            </connector>
-            <label>Task found</label>
-        </rules>
-        <rules>
-            <name>Doesn_t_own_task</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_tasks</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>userId18Char</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>task.OwnerId</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>No_Task_For_You_Screen</targetReference>
-            </connector>
-            <label>Doesn&#39;t own task</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Ready_to_confirm_deck</name>
         <label>Ready to confirm deck?</label>
         <locationX>4670</locationX>
-        <locationY>1106</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>CompleteScreen</targetReference>
+            <targetReference>Set_to_not_close_task</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not ready</defaultConnectorLabel>
         <rules>
@@ -824,10 +601,10 @@
     <decisions>
         <name>Status</name>
         <label>Task type</label>
-        <locationX>2690</locationX>
-        <locationY>782</locationY>
+        <locationX>2646</locationX>
+        <locationY>350</locationY>
         <defaultConnector>
-            <targetReference>Unknown_task</targetReference>
+            <targetReference>Set_unidentified_task_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Unknown task</defaultConnectorLabel>
         <rules>
@@ -856,7 +633,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_planner_profile_ID</targetReference>
+                <targetReference>Assign_planner</targetReference>
             </connector>
             <label>Assign advice</label>
         </rules>
@@ -886,7 +663,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Planner_narrative_review_task</targetReference>
+                <targetReference>Planner_narrative_review</targetReference>
             </connector>
             <label>Narrative | Planner review</label>
         </rules>
@@ -901,7 +678,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Submit_for_parter_approval</targetReference>
+                <targetReference>Resolve_planner_narrative_comments</targetReference>
             </connector>
             <label>Narrative | Resolve planner comments</label>
         </rules>
@@ -916,7 +693,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Partner_narrative_review_task</targetReference>
+                <targetReference>Partner_narrative_review</targetReference>
             </connector>
             <label>Narrative | Partner review</label>
         </rules>
@@ -931,7 +708,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Resolve_partner_comments</targetReference>
+                <targetReference>Resolve_partner_narrative_comments</targetReference>
             </connector>
             <label>Narrative | Resolve partner comments</label>
         </rules>
@@ -976,7 +753,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Planner_deck_review_task</targetReference>
+                <targetReference>Planner_deck_review</targetReference>
             </connector>
             <label>Deck review</label>
         </rules>
@@ -1041,41 +818,12 @@
         </rules>
     </decisions>
     <description>Orchestrates the progression of top up advice.</description>
-    <dynamicChoiceSets>
-        <name>Planners</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ProfileId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_planner_profile_ID.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsActive</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <object>User</object>
-        <sortField>Name</sortField>
-        <sortOrder>Asc</sortOrder>
-        <valueField>Id</valueField>
-    </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
         <description>The date on which the advice deck expires.</description>
         <name>deckExpiryDate</name>
         <dataType>Date</dataType>
         <expression>ADDMONTHS({!$Flow.CurrentDate},3)</expression>
-    </formulas>
-    <formulas>
-        <name>userId18Char</name>
-        <dataType>String</dataType>
-        <expression>CASESAFEID({!$User.Id})</expression>
     </formulas>
     <interviewLabel>Advice | Top Up | Orchestrator {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Top Up | Orchestrator</label>
@@ -1099,48 +847,14 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Advice</name>
-        <label>Get Advice</label>
-        <locationX>5132</locationX>
-        <locationY>242</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_advice_type_status</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </filters>
-        <object>Advice__c</object>
-        <outputReference>advice</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Advice_Status__c</queriedFields>
-        <queriedFields>Assigned_planner__c</queriedFields>
-        <queriedFields>AdviceType__c</queriedFields>
-        <queriedFields>Advice_Household__c</queriedFields>
-        <queriedFields>AdviceChecklist__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
         <name>Get_advice_type_status</name>
         <label>Get advice type status</label>
-        <locationX>5132</locationX>
-        <locationY>350</locationY>
+        <locationX>4076</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_tasks</targetReference>
+            <targetReference>Found_advice_type_status</targetReference>
         </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>AdviceType__c</field>
@@ -1163,301 +877,12 @@
         <queriedFields>Status__c</queriedFields>
         <queriedFields>NextStatus__c</queriedFields>
     </recordLookups>
-    <recordLookups>
-        <name>Get_planner_profile_ID</name>
-        <label>Get planner profile ID</label>
-        <locationX>314</locationX>
-        <locationY>890</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Choose_planner_screen</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Name</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Planner</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Profile</object>
-        <queriedFields>Id</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_tasks</name>
-        <label>Get tasks</label>
-        <locationX>5132</locationX>
-        <locationY>458</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Found_task</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OrchestrationTaskStatus__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Incomplete</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>Task</object>
-        <outputReference>task</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Status</queriedFields>
-        <queriedFields>OW_task_information_name__c</queriedFields>
-        <queriedFields>IsClosed</queriedFields>
-        <queriedFields>OrchestrationTaskStatus__c</queriedFields>
-        <queriedFields>Subject</queriedFields>
-        <queriedFields>OwnerId</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Refresh_advice</name>
-        <label>Refresh advice</label>
-        <locationX>1370</locationX>
-        <locationY>998</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Changes_narrative_review_planner</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </filters>
-        <object>Advice__c</object>
-        <outputReference>advice</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Advice_Status__c</queriedFields>
-        <queriedFields>Assigned_planner__c</queriedFields>
-        <queriedFields>AdviceType__c</queriedFields>
-        <queriedFields>Advice_Household__c</queriedFields>
-        <queriedFields>AdviceChecklist__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Refresh_advice_partner_review</name>
-        <label>Refresh advice</label>
-        <locationX>2426</locationX>
-        <locationY>998</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Changes_narrative_review_partner</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </filters>
-        <object>Advice__c</object>
-        <outputReference>advice</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Advice_Status__c</queriedFields>
-        <queriedFields>Assigned_planner__c</queriedFields>
-        <queriedFields>AdviceType__c</queriedFields>
-        <queriedFields>Advice_Household__c</queriedFields>
-        <queriedFields>AdviceChecklist__c</queriedFields>
-    </recordLookups>
-    <recordRollbacks>
-        <name>Roll_back_changes</name>
-        <label>Roll back changes</label>
-        <locationX>6386</locationX>
-        <locationY>566</locationY>
-        <connector>
-            <targetReference>Error_screen</targetReference>
-        </connector>
-    </recordRollbacks>
-    <recordUpdates>
-        <name>Close_task</name>
-        <label>Close task</label>
-        <locationX>2272</locationX>
-        <locationY>1772</locationY>
-        <connector>
-            <targetReference>Follow_on_task_to_create</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>task.OW_task_information_name__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OrchestrationTaskStatus__c</field>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_advice</name>
-        <label>Update advice</label>
-        <locationX>2272</locationX>
-        <locationY>1664</locationY>
-        <connector>
-            <targetReference>Close_task</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
-        <inputReference>advice</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_checklist</name>
-        <label>Update checklist</label>
-        <locationX>1898</locationX>
-        <locationY>1106</locationY>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
-        <inputReference>adviceChecklist</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_checklist_resolve_partner_comments</name>
-        <label>Update checklist</label>
-        <locationX>2954</locationX>
-        <locationY>1106</locationY>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
-        <inputReference>adviceChecklist</inputReference>
-    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
-    <screens>
-        <name>Choose_planner_screen</name>
-        <label>Choose planner screen</label>
-        <locationX>314</locationX>
-        <locationY>998</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Assign_advice_updates</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompletePromptAssign</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Choose the planner and click complete task to trigger the next steps.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>PlannerSelect</name>
-            <choiceReferences>Planners</choiceReferences>
-            <defaultValue>
-                <elementReference>advice.Assigned_planner__c</elementReference>
-            </defaultValue>
-            <extensionName>flowruntime:choiceLookup</extensionName>
-            <fieldText>Assigned planner</fieldText>
-            <fieldType>ComponentChoice</fieldType>
-            <inputParameters>
-                <name>placeholder</name>
-                <value>
-                    <stringValue>Choose planner...</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>CompleteScreen</name>
-        <label>Complete screen</label>
-        <locationX>2272</locationX>
-        <locationY>2180</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>SuccessToast</name>
-            <extensionName>c:displayToastFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>success</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>triggerNavigationNextEvent</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>Complete!</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <screens>
         <name>Confirm_deck_shared</name>
         <label>Confirm deck shared</label>
         <locationX>4670</locationX>
-        <locationY>890</locationY>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1475,8 +900,8 @@
     <screens>
         <name>Confirm_recommendations</name>
         <label>Confirm recommendations</label>
-        <locationX>5066</locationX>
-        <locationY>890</locationY>
+        <locationX>4978</locationX>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1495,13 +920,10 @@
         <name>Confirm_task_complete_generic</name>
         <label>Confirm task complete</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>566</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Advice_update_required</targetReference>
-        </connector>
         <fields>
             <name>ConfirmCompletePrompt</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;When you have finished the work for this task, click complete task to trigger the next steps.&lt;/p&gt;</fieldText>
@@ -1520,333 +942,38 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Error_screen</name>
-        <label>Error screen</label>
-        <locationX>6386</locationX>
-        <locationY>674</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>Copy_2_of_ConfirmComplete</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Error: &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ErrorToast</name>
-            <extensionName>c:displayToastFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>error</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>triggerNavigationNextEvent</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>Error</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>mode</name>
-                <value>
-                    <stringValue>dismissible</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>No_Task_For_You_Screen</name>
-        <label>No Task For You Screen</label>
-        <locationX>5858</locationX>
-        <locationY>674</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NoTaskForYouMessage</name>
-            <fieldText>&lt;p&gt;There are no tasks assigned to you on this advice. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>No_Task_Screen</name>
-        <label>No Task Screen</label>
-        <locationX>6122</locationX>
-        <locationY>674</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NoTaskMessage</name>
-            <fieldText>&lt;p&gt;No tasks to complete here, though you might have some in the list below.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Partner_narrative_review_task</name>
-        <label>Partner narrative review task</label>
-        <locationX>2426</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Refresh_advice_partner_review</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompleteNarrativeReviewPartner</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Update on the advice checklist then click complete task to proceed. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ChangesRequiredPartner</name>
-            <extensionName>c:readOnlyFlowField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>dataType</name>
-                <value>
-                    <stringValue>string</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Changes required</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>advice.AdviceChecklist__r.NarrativePartnerReviewChangesNeeded__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>Copy_1_of_Changesrequired2</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Changes:﻿&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!advice.AdviceChecklist__r.&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;PartnerChanges__c&lt;/span&gt;}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>advice.AdviceChecklist__r.NarrativePartnerReviewChangesNeeded__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Yes</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Planner_deck_review_task</name>
-        <label>Planner deck review task</label>
-        <locationX>3878</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Changes_deck_planner</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompleteDeckReviewPlanner</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Update on the advice checklist then click complete task to proceed. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>DeckUpdatesNeededPlanner</name>
-            <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>No</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Updates needed?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Planner_narrative_review_task</name>
-        <label>Planner narrative review task</label>
-        <locationX>1370</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Refresh_advice</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompleteNarrativeReviewPlanner</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Update on the advice checklist then click complete task to proceed. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>NarrativeReviewPlannerComplete</name>
-            <choiceReferences>Yes</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Review Complete</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>NarrativeReviewPlannerChangesRequired</name>
-            <extensionName>c:readOnlyFlowField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>dataType</name>
-                <value>
-                    <stringValue>string</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Changes required</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>advice.AdviceChecklist__r.AreAnyChangesRequired__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>NarrativeReviewPlannerChangesRequiredDetail</name>
-            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Changes:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!advice.AdviceChecklist__r.NarrativePeerReview__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>advice.AdviceChecklist__r.AreAnyChangesRequired__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Yes</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <nextOrFinishButtonLabel>Complete task</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Resolve_partner_comments</name>
-        <label>Resolve partner comments</label>
-        <locationX>2954</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Resolve_partner_comments_updates</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompleteNarrativeResolvePartnerComments</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Proceed to confirm you have resolved the comments.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>NotesResolvePartnerReviewComments</name>
-            <fieldText>Notes</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Submit for review</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Submit_for_parter_approval</name>
-        <label>Submit for parter approval</label>
-        <locationX>1898</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Resolve_planner_comments_updates</targetReference>
-        </connector>
-        <fields>
-            <name>ConfirmCompletePartnerReview</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Proceed to confirm you have resolved the comments and submit the narrative for partner review.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>NotesResolvePeerReviewComments</name>
-            <fieldText>Notes</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Submit for review</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Unknown_task</name>
-        <label>Unknown task</label>
-        <locationX>5330</locationX>
-        <locationY>890</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>UnknownTaskMessage</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;);&quot;&gt;Task not identified&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;);&quot;&gt;Please raise with the product team so they can incorporate this task. &lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>5006</locationX>
+        <locationX>3950</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Set_advice_ID</targetReference>
+            <targetReference>Get_advice_type_status</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
+        <name>Assign_planner</name>
+        <label>Assign planner</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Assign_advice_updates</targetReference>
+        </connector>
+        <flowName>AdviceOrchestratorAssignPlanner</flowName>
+        <inputAssignments>
+            <name>adviceType</name>
+            <value>
+                <elementReference>adviceType</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Confirm_deck_non_presented</name>
         <label>Confirm deck non-presented</label>
         <locationX>4538</locationX>
-        <locationY>1214</locationY>
+        <locationY>782</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>CompleteScreen</targetReference>
+            <targetReference>Set_to_not_close_task</targetReference>
         </connector>
         <flowName>AdviceConfirmPresented</flowName>
         <inputAssignments>
@@ -1863,45 +990,13 @@
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Create_next_task</name>
-        <label>Create next task</label>
-        <locationX>2140</locationX>
-        <locationY>1988</locationY>
-        <connector>
-            <targetReference>CompleteScreen</targetReference>
-        </connector>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>advice.Advice_Household__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_advice_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <elementReference>followUpTask</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
         <name>Mark_decisions_sub_flow</name>
         <label>Mark decisions sub flow</label>
-        <locationX>5066</locationX>
-        <locationY>998</locationY>
+        <locationX>4978</locationX>
+        <locationY>566</locationY>
+        <connector>
+            <targetReference>Set_to_not_close_task</targetReference>
+        </connector>
         <flowName>AdviceMarkDecisions</flowName>
         <inputAssignments>
             <name>recordId</name>
@@ -1911,10 +1006,155 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>Partner_narrative_review</name>
+        <label>Partner narrative review</label>
+        <locationX>2162</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Changes_narrative_review_partner</targetReference>
+        </connector>
+        <flowName>AdviceOrchestratorNarrativeReview</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>reviewType</name>
+            <value>
+                <stringValue>NARRATIVE_PARTNER</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Planner_deck_review</name>
+        <label>Planner deck review</label>
+        <locationX>3746</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Changes_deck_planner</targetReference>
+        </connector>
+        <flowName>AdviceOrchestratorNarrativeReview</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>reviewType</name>
+            <value>
+                <stringValue>DECK_PLANNER</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Planner_narrative_review</name>
+        <label>Planner narrative review</label>
+        <locationX>1106</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Changes_narrative_review_planner</targetReference>
+        </connector>
+        <flowName>AdviceOrchestratorNarrativeReview</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>reviewType</name>
+            <value>
+                <stringValue>NARRATIVE_PLANNER</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Resolve_partner_narrative_comments</name>
+        <label>Resolve partner narrative comments</label>
+        <locationX>2690</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Resolve_partner_comments_updates</targetReference>
+        </connector>
+        <flowName>AdviceOrchestratorNarrativeReview</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>reviewType</name>
+            <value>
+                <stringValue>NARRATIVE_PARTNER_RESOLVE</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Resolve_planner_narrative_comments</name>
+        <label>Resolve planner narrative comments</label>
+        <locationX>1634</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Resolve_planner_comments_updates</targetReference>
+        </connector>
+        <flowName>AdviceOrchestratorNarrativeReview</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>reviewType</name>
+            <value>
+                <stringValue>NARRATIVE_PLANNER_RESOLVE</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Upload_advice_deck</name>
         <label>Upload advice deck</label>
         <locationX>4670</locationX>
-        <locationY>998</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Ready_to_confirm_deck</targetReference>
         </connector>
@@ -1938,7 +1178,7 @@
         <name>advice</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Advice__c</objectType>
     </variables>
@@ -1946,15 +1186,31 @@
         <name>adviceChecklist</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
+        <objectType>AdviceChecklist__c</objectType>
+    </variables>
+    <variables>
+        <name>adviceChecklistUpdated</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
         <objectType>AdviceChecklist__c</objectType>
     </variables>
     <variables>
         <name>adviceId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Text value of the advice type developer name.</description>
+        <name>adviceType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -1967,13 +1223,22 @@
         <objectType>AdviceTypeStatus__c</objectType>
     </variables>
     <variables>
-        <name>adviceUpdateRequired</name>
+        <description>Any updates to the advice record should be made to this variable.</description>
+        <name>adviceUpdated</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
+    <variables>
+        <name>closeTask</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <value>
-            <booleanValue>false</booleanValue>
+            <booleanValue>true</booleanValue>
         </value>
     </variables>
     <variables>
@@ -1981,17 +1246,17 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>followUpTask</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>recordId</name>
+        <name>householdId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
@@ -2001,7 +1266,7 @@
         <name>task</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Task</objectType>
     </variables>

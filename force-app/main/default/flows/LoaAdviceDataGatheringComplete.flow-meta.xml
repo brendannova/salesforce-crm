@@ -368,7 +368,7 @@
     <description>Flow that runs when an LOA reaches info received to move advice along</description>
     <environments>Default</environments>
     <interviewLabel>LOA | Advice | Data gathering complete {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>LOA | Advice | Data gathering complete</label>
+    <label>zUnused LOA | Advice | Data gathering complete</label>
     <loops>
         <name>Add_advice_IDs_to_collection_variable</name>
         <label>Add advice IDs to collection variable</label>
@@ -544,7 +544,7 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>AdviceRelatedToTriggeringLoa</name>
         <dataType>SObject</dataType>

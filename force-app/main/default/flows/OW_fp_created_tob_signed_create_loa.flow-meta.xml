@@ -4,7 +4,7 @@
     <description>This flow runs when a financial product is created, where all owners of that product have signed TOB and the record type is Pre LOA. It calls the create LOAs sub-flow, passing in the record that triggered it, which creates an LOA related to this financial product at the appropriate status.</description>
     <environments>Default</environments>
     <interviewLabel>Financial product - create new LOA {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Financial product - create new LOA</label>
+    <label>zUnused Financial product - create new LOA</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -41,13 +41,13 @@ CONTAINS({!$Record.RecordType.DeveloperName}, &#39;Pre_LOA&#39;)
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <description>Call subflow to create an LOA for this financial product.</description>
         <name>Create_LOA</name>
         <label>Create LOA</label>
         <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <flowName>OW_loa_create_loas_for_financial_products</flowName>
         <inputAssignments>
             <name>financialProduct</name>

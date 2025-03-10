@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Set_whether_changes_are_needed</name>
+        <label>Set whether changes are needed</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>changesNeeded</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>changesNeededCalculation</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <choices>
+        <name>ChangesNotRequired</name>
+        <choiceText>No</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChangesRequired</name>
+        <choiceText>Yes</choiceText>
+        <dataType>Boolean</dataType>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <constants>
+        <name>deckPartnerResolveReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DECK_PARTNER_RESOLVE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>deckPartnerReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DECK_PARTNER</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>deckPlannerResolveReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DECK_PLANNER_RESOLVE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>deckPlannerReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DECK_PLANNER</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>narrativePartnerResolveReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NARRATIVE_PARTNER_RESOLVE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>narrativePartnerReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NARRATIVE_PARTNER</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>narrativePlannerResolveReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NARRATIVE_PLANNER_RESOLVE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>narrativePlannerReviewType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NARRATIVE_PLANNER</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Review_type</name>
+        <label>Review type</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnectorLabel>Unknown review type</defaultConnectorLabel>
+        <rules>
+            <name>Known</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>narrativePlannerReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>narrativePartnerReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>deckPlannerReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>deckPartnerReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>narrativePlannerResolveReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>narrativePartnerResolveReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>deckPlannerResolveReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>reviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>deckPartnerResolveReviewType</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Narrative_review</targetReference>
+            </connector>
+            <label>Known</label>
+        </rules>
+    </decisions>
+    <description>A flow to orchestrate the review of a narrative.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Assesses whether changes are needed based on the fields that determine this for the type of review.</description>
+        <name>changesNeededCalculation</name>
+        <dataType>Boolean</dataType>
+        <expression>IF({!reviewType} = {!narrativePlannerReviewType}, ISPICKVAL({!adviceChecklist.AreAnyChangesRequired__c}, &quot;Yes&quot;),
+IF({!reviewType} = {!narrativePartnerReviewType}, ISPICKVAL({!adviceChecklist.NarrativePartnerReviewChangesNeeded__c}, &quot;Yes&quot;),
+IF({!reviewType} = {!deckPlannerReviewType}, {!UpdatesNeeded},
+IF({!reviewType} = {!deckPartnerReviewType}, true,
+FALSE))))</expression>
+    </formulas>
+    <formulas>
+        <name>deckPlannerFieldMissing</name>
+        <dataType>Boolean</dataType>
+        <expression>{!reviewType} = {!deckPlannerReviewType} &amp;&amp;
+ISBLANK({!adviceChecklist.Deck4EyeCompletedBy__c})</expression>
+    </formulas>
+    <formulas>
+        <description>If the review fields are populated, this will return false so the picklist to complete the task can be used.</description>
+        <name>disableMainPicklist</name>
+        <dataType>Boolean</dataType>
+        <expression>{!narrativePartnerFieldMissing} ||
+{!narrativePartnerResolveFieldMissing} ||
+{!narrativePlannerFieldMissing} ||
+{!narrativePlannerResolveFieldMissing} ||
+{!deckPlannerFieldMissing}</expression>
+    </formulas>
+    <formulas>
+        <name>fieldMissingHelpDeckPlanner</name>
+        <dataType>String</dataType>
+        <expression>IF({!reviewType} = {!deckPlannerReviewType},
+IF(ISBLANK({!adviceChecklist.Deck4EyeCompletedBy__c}), &quot;Deck 4 Eye Completed By; &quot;, &quot;&quot;), &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>fieldMissingHelpNarrativePartner</name>
+        <dataType>String</dataType>
+        <expression>IF({!reviewType} = {!narrativePartnerReviewType},
+IF(ISPICKVAL({!adviceChecklist.NarrativePartnerReviewChangesNeeded__c}, &quot;&quot;), &quot;Changes needed from partner review; &quot;, &quot;&quot;), &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>fieldMissingHelpNarrativePartnerResolve</name>
+        <dataType>String</dataType>
+        <expression>IF({!reviewType} = {!narrativePartnerResolveReviewType},
+IF(ISBLANK({!adviceChecklist.ExplainChangesToTheInitialNarrative__c}), &quot;Explain Changes To The Initial Narrative; &quot;, &quot;&quot;), &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>fieldMissingHelpNarrativePlanner</name>
+        <dataType>String</dataType>
+        <expression>IF({!reviewType} = {!narrativePlannerReviewType},
+IF(ISBLANK({!adviceChecklist.PeerReviewCompletedBy__c}), &quot;Peer Review Completed By; &quot;, &quot;&quot;) &amp; 
+IF(ISPICKVAL({!adviceChecklist.AreAnyChangesRequired__c}, &quot;&quot;), &quot;Are Any Changes Required?; &quot;, &quot;&quot;) &amp;
+IF(ISPICKVAL({!adviceChecklist.AreAnyChangesRequired__c}, &quot;Yes&quot;) &amp;&amp; ISBLANK({!adviceChecklist.NarrativePeerReview__c}), &quot;Narrative Peer Review; &quot;, &quot;&quot;), &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>fieldMissingHelpNarrativePlannerResolve</name>
+        <dataType>String</dataType>
+        <expression>IF({!reviewType} = {!narrativePlannerResolveReviewType},
+IF(NOT({!adviceChecklist.PlannerCommentsResolved__c}), &quot;Planner Comments Resolved?; &quot;, &quot;&quot;) &amp; IF(ISBLANK({!adviceChecklist.PlannerCommentsNotes__c}), &quot;Notes; &quot;, &quot;&quot;)
+, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>narrativePartnerFieldMissing</name>
+        <dataType>Boolean</dataType>
+        <expression>{!reviewType} = {!narrativePartnerReviewType} &amp;&amp;
+ISPICKVAL({!adviceChecklist.NarrativePartnerReviewChangesNeeded__c}, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>narrativePartnerResolveFieldMissing</name>
+        <dataType>Boolean</dataType>
+        <expression>{!reviewType} = {!narrativePartnerResolveReviewType} &amp;&amp;
+ISBLANK({!adviceChecklist.ExplainChangesToTheInitialNarrative__c})</expression>
+    </formulas>
+    <formulas>
+        <name>narrativePlannerFieldMissing</name>
+        <dataType>Boolean</dataType>
+        <expression>{!reviewType} = {!narrativePlannerReviewType} &amp;&amp;
+(ISBLANK({!adviceChecklist.PeerReviewCompletedBy__c}) || ISPICKVAL({!adviceChecklist.AreAnyChangesRequired__c}, &quot;&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>narrativePlannerResolveFieldMissing</name>
+        <dataType>Boolean</dataType>
+        <expression>{!reviewType} = {!narrativePlannerResolveReviewType} &amp;&amp;
+ISBLANK({!adviceChecklist.PlannerCommentsNotes__c})</expression>
+    </formulas>
+    <formulas>
+        <name>reviewFieldsMissingHelp</name>
+        <dataType>String</dataType>
+        <expression>IF({!disableMainPicklist}, &quot;Review fields to be populated: &quot;, &quot;Click next to complete task&quot;)</expression>
+    </formulas>
+    <interviewLabel>Advice | Orchestrator | Narrative Review {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Advice | Orchestrator | Narrative Review</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Narrative_review</name>
+        <label>Narrative review</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Set_whether_changes_are_needed</targetReference>
+        </connector>
+        <fields>
+            <name>NarrativeReviewMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Complete the review on the advice checklist then complete this task.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ReviewComplete</name>
+            <choiceReferences>Yes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Review complete</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!missingFieldsHelpText}&lt;/span&gt;&lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <elementReference>disableMainPicklist</elementReference>
+            </isDisabled>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>UpdatesNeeded</name>
+            <choiceReferences>ChangesRequired</choiceReferences>
+            <choiceReferences>ChangesNotRequired</choiceReferences>
+            <dataType>Boolean</dataType>
+            <fieldText>Updated needed?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <booleanValue>false</booleanValue>
+            </isDisabled>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>reviewType</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>deckPlannerReviewType</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ReviewComplete</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Yes</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Review_type</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>missingFieldsHelpText</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!reviewFieldsMissingHelp}{!fieldMissingHelpNarrativePlanner}{!fieldMissingHelpNarrativePartner}﻿{!fieldMissingHelpNarrativePartnerResolve}{!fieldMissingHelpNarrativePlannerResolve}{!fieldMissingHelpDeckPlanner}&lt;/strong&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>adviceChecklist</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AdviceChecklist__c</objectType>
+    </variables>
+    <variables>
+        <name>changesNeeded</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>The type of review being requested.</description>
+        <name>reviewType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
+    </variables>
+</Flow>

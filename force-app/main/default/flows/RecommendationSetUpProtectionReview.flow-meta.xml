@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
         <name>Go_to_recommendation</name>
         <label>Go to recommendation</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>1382</locationY>
         <actionName>c:navigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -15,15 +15,105 @@
             </value>
         </inputParameters>
         <nameSegment>c:navigateToRecord</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
+    <assignments>
+        <name>Assign_client_1</name>
+        <label>Assign client 1</label>
+        <locationX>270</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>client1Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Clients.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Clients</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_client_2</name>
+        <label>Assign client 2</label>
+        <locationX>534</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>client2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Clients.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Clients</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1106</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Roll_back</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_household_ID</name>
+        <label>Assign household ID</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_advice.Advice_Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_household_clients</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Is_client_1_blank</name>
+        <label>Is client 1 blank?</label>
+        <locationX>402</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Assign_client_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>client1Id</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_client_1</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Which_button</name>
         <label>Which button?</label>
         <locationX>182</locationX>
-        <locationY>566</locationY>
+        <locationY>1274</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Go_rec</name>
@@ -42,17 +132,23 @@
         </rules>
     </decisions>
     <description>Flow to allow planners to create a recommendation for a future protection review</description>
-    <dynamicChoiceSets>
-        <name>reasonChoice</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
-        <picklistField>ReasonForRetaining__c</picklistField>
-        <picklistObject>Recommendation__c</picklistObject>
-    </dynamicChoiceSets>
     <environments>Default</environments>
     <interviewLabel>Recommendation - set up protection review {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Recommendation | set up protection review</label>
+    <loops>
+        <name>Clients</name>
+        <label>Clients</label>
+        <locationX>182</locationX>
+        <locationY>458</locationY>
+        <collectionReference>Get_household_clients.personAccounts</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Is_client_1_blank</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Get_protection_review_recommendation_type</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -76,21 +172,37 @@
         <name>Create_recommendation</name>
         <label>Create recommendation</label>
         <locationX>182</locationX>
-        <locationY>350</locationY>
+        <locationY>1058</locationY>
         <assignRecordIdToReference>recommendationId</assignRecordIdToReference>
         <connector>
             <targetReference>Done_screen</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Advice__c</field>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Household__c</field>
             <value>
                 <elementReference>Get_advice.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>JointOwner__c</field>
+            <value>
+                <elementReference>client2Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PrimaryOwner__c</field>
+            <value>
+                <elementReference>client1Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -111,17 +223,20 @@
         <name>Get_advice</name>
         <label>Get advice</label>
         <locationX>182</locationX>
-        <locationY>242</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_recommendation</targetReference>
+            <targetReference>Assign_household_ID</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>adviceId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -132,11 +247,15 @@
         <name>Get_protection_review_recommendation_type</name>
         <label>Get protection review recommendation type</label>
         <locationX>182</locationX>
-        <locationY>134</locationY>
+        <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_advice</targetReference>
+            <targetReference>Create_recommendation</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -149,11 +268,20 @@
         <object>RecommendationType__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordRollbacks>
+        <name>Roll_back</name>
+        <label>Roll back</label>
+        <locationX>1106</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Error_screen</targetReference>
+        </connector>
+    </recordRollbacks>
     <screens>
         <name>Done_screen</name>
         <label>Done screen</label>
         <locationX>182</locationX>
-        <locationY>458</locationY>
+        <locationY>1166</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -182,34 +310,93 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>1106</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>errorText</name>
+            <fieldText>&lt;p&gt;There&#39;s been an error here, with the following message: {!errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_protection_review_recommendation_type</targetReference>
+            <targetReference>Get_advice</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Get_household_clients</name>
+        <label>Get household clients</label>
+        <locationX>182</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Clients</targetReference>
+        </connector>
+        <flowName>AccountGetPeopleInHousehold</flowName>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>role</name>
+            <value>
+                <stringValue>Client</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <variables>
-        <name>currentItem_Filter_for_external_products_0</name>
-        <dataType>SObject</dataType>
+        <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>client1Id</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>client2Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>recommendationId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

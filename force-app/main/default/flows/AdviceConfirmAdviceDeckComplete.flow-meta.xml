@@ -164,6 +164,11 @@
         <dataType>Date</dataType>
         <expression>ADDMONTHS({!DateCompleted},3)</expression>
     </formulas>
+    <formulas>
+        <name>onboardingAdvice</name>
+        <dataType>Boolean</dataType>
+        <expression>ISPICKVAL({!advice.New_or_existing_client__c}, &quot;New&quot;)</expression>
+    </formulas>
     <interviewLabel>Advice | Confirm Advice Deck Complete {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Confirm Advice Deck Complete</label>
     <processMetadataValues>
@@ -232,6 +237,7 @@
         <queriedFields>AdviceMethod__c</queriedFields>
         <queriedFields>AdviceType__c</queriedFields>
         <queriedFields>AdviceChecklist__c</queriedFields>
+        <queriedFields>New_or_existing_client__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_all_advice_types</name>
@@ -248,6 +254,20 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsAnnualReview__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsOnboarding__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>onboardingAdvice</elementReference>
             </value>
         </filters>
         <object>AdviceType__c</object>

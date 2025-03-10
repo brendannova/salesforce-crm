@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InformationRequestSentBy__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The user who sent the information request to the third party provider</description>
+    <label>Information request sent by</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>InformationRequests</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

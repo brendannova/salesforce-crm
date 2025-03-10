@@ -218,7 +218,9 @@
             <label>Open</label>
         </rules>
     </decisions>
-    <description>Run on creation or editing of a flow before the record is saved.</description>
+    <description>Replaced by an updated version of this flow when the annual review enhanced process was rolled out in Jan 2025. 
+
+Run on creation or editing of a flow before the record is saved.</description>
     <environments>Default</environments>
     <formulas>
         <description>This formula defines the name of the annual review.</description>
@@ -233,7 +235,7 @@
         <expression>ISNEW()</expression>
     </formulas>
     <interviewLabel>Annual review - {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Annual review - before save flow</label>
+    <label>zUnused | Annual review - before save flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -263,7 +265,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <description>Stores whether the review should be set to open or closed</description>
         <name>is_closed</name>

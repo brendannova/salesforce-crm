@@ -6,7 +6,7 @@
         <name>Set_unique_check</name>
         <label>Set unique check</label>
         <locationX>176</locationX>
-        <locationY>311</locationY>
+        <locationY>287</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_unique_check__c</assignToReference>
             <operator>Assign</operator>
@@ -16,6 +16,7 @@
         </assignmentItems>
     </assignments>
     <description>Before save flow to make updates to the records in the LOA to advice object before they are saved. Used to ensure uniqueness and prevent linking an LOA to the same advice record more than once.</description>
+    <environments>Default</environments>
     <formulas>
         <description>A concatenation of the advice and LOA IDs</description>
         <name>unique_check_value</name>
@@ -23,7 +24,7 @@
         <expression>{!$Record.Advice__c} + {!$Record.LOA__c}</expression>
     </formulas>
     <interviewLabel>LOA to advice - before save {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>LOA to advice - before save</label>
+    <label>zUnused LOA to advice - before save</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -68,5 +69,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
 </Flow>

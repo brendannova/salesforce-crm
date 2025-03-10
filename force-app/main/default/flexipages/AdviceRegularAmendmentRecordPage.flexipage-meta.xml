@@ -31,6 +31,16 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Advice__c.AssignPlanner</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.DeckStatus__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Complete</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Advice__c.AcceptRecommendations</value>
                             <visibilityRule>
                                 <booleanFilter>1 OR 2</booleanFilter>
@@ -142,7 +152,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>flowApiName</name>
-                    <value>AdviceRegularAmendmentOrchestration</value>
+                    <value>AdviceOrchestrator</value>
                 </componentInstanceProperties>
                 <componentName>taskOrchestrator</componentName>
                 <identifier>c_taskOrchestrator</identifier>
@@ -214,7 +224,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Assigned_planner__c</fieldItem>
                 <identifier>RecordAssigned_planner_cField</identifier>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Assign_to_output</name>
+        <label>Assign to output</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>ir</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Transform</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>UpdateType</name>
+        <label>Update type</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>Transform.InformationRequestType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InformationRequestType.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Transform.Advice__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_to_output</targetReference>
+        </connector>
+    </assignments>
+    <description>Transform!!</description>
+    <environments>Default</environments>
+    <interviewLabel>IR | LOA | Transform {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IR | LOA | Transform</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Transform</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <transforms>
+        <name>Transform</name>
+        <label>Transform</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <connector>
+            <targetReference>UpdateType</targetReference>
+        </connector>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <objectType>InformationRequest__c</objectType>
+        <scale>0</scale>
+        <transformValues>
+            <transformValueActions>
+                <outputFieldApiName>AdditionalInformationRequestStatus__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(ISBLANK({!loa.Date_Additional_Information_Requested__c}), &quot;Not required&quot;,
+IF(ISBLANK({!loa.Date_additional_information_received__c}), &quot;Information requested&quot;, &quot;Received&quot;))</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>AuthorityLevel__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(ISPICKVAL({!loa.Authority_Type__c},&quot;&quot;), &quot;Client managed (None)&quot;,
+IF(ISPICKVAL({!loa.Authority_Type__c}, &quot;Letter of Authority (LOA)&quot;), &quot;Information only (LOA)&quot;, &quot;Servicing agent (TOS)&quot;))</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>AuthorityRequestSigned_by__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(Text({!loa.Signed_by__c}) == &quot;Client&quot;, &quot;Client - TOB&quot;, Text({!loa.Signed_by__c}))</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>AuthorityStatus__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(ISPICKVAL({!loa.Provider_LOA_Status__c},&quot;Not received&quot;),&quot;Processing&quot;,
+IF(ISPICKVAL({!loa.Provider_LOA_Status__c},&quot;&quot;),&quot;To be requested&quot;,TEXT({!loa.Provider_LOA_Status__c})))</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>BuilderLink__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.Suitability_Builder_Tab_URL__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>DateAuthorityGranted__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.Date_LOA_accepted_by_provider__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>DateInformationRequestSent__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>Date</formulaDataType>
+                    <formulaExpression>IF(ISBLANK({!loa.Date_LOA_sent_to_provider__c}),{!loa.Date_LOA_sent_to_client__c},{!loa.Date_LOA_sent_to_provider__c})</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>DateLastChased__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.Date_Last_Chased__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>ReceivedDate__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.DateFirstResponseProvider__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>FinancialProductFinServ__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.LOA_Financial_Account__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>InformationRequestSentVia__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(ISPICKVAL({!loa.Format_of_Signed_LOA__c},&quot;Digital&quot;),&quot;Email&quot;,&quot;Post&quot;)</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Status__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(CONTAINS(TEXT({!loa.MainLOAStatus__c}), &quot;Awaiting Policy Numbers&quot;) || 
+CONTAINS(TEXT({!loa.MainLOAStatus__c}), &quot;Awaiting Provider Policy Numbers&quot;) ||
+CONTAINS(TEXT({!loa.MainLOAStatus__c}),&quot;Awaiting confirmation of Signee&quot;), &quot;AWAIT_PRE_REQS&quot;,
+IF(ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Send to Provider&quot;), &quot;INFO_REQ_SEND&quot;,
+IF(
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Sent to provider&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Rejected Internal&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Rejected Action Required from Client&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Within SLA&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Outside SLA&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Received Awaiting Information&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Accepted Awaiting Information&quot;), &quot;AWAIT_INFO&quot;,
+IF(
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Information Received&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Information rerequested&quot;), &quot;CHECKLIST_REVIEW&quot;,
+IF(
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Specialist reviewed&quot;) ||
+  ISPICKVAL({!loa.MainLOAStatus__c}, &quot;LOA Analysis&quot;), &quot;FUND_ANALYSIS&quot;,
+IF(ISPICKVAL({!loa.MainLOAStatus__c}, &quot;Cancelled&quot;), &quot;CANCELLED&quot;, 
+IF(ISPICKVAL({!loa.MainLOAStatus__c}, &quot;On hold&quot;), &quot;AWAIT_IDG&quot;,&quot;COMPLETE&quot;)))))))</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>InformationReceivedVia__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.Format_of_information_received__c</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>InformationRequestStatus__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(ISBLANK({!loa.Date_LOA_sent_to_provider__c})&amp;&amp;ISBLANK({!loa.Date_LOA_sent_to_client__c}), &quot;To be sent&quot;,
+IF(ISBLANK({!loa.DateFirstResponseProvider__c})&amp;&amp;ISBLANK({!loa.Date_LOA_sent_to_provider__c}),&quot;Sent to provider&quot;,
+IF(ISBLANK({!loa.DateFirstResponseProvider__c})&amp;&amp;ISBLANK({!loa.Date_LOA_sent_to_client__c}),&quot;Sent to client&quot;,
+&quot;Received&quot;)))</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>ChecklistStatus__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(NOT(ISPICKVAL({!InformationRequestType.ChecklistLevel__c},&quot;Not required&quot;)),IF(ISBLANK({!loa.Date_Checklist_Comp_Specialist__c})&amp;&amp;ISBLANK({!loa.DateFirstResponseProvider__c}), &quot;Not started&quot;,
+IF(ISBLANK({!loa.Date_Checklist_Comp_Specialist__c})&amp;&amp;NOT(ISBLANK({!loa.DateFirstResponseProvider__c})), &quot;In progress&quot;, &quot;Complete&quot;)),&quot;Not required&quot;)</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>FundReviewStatus__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>String</formulaDataType>
+                    <formulaExpression>IF(NOT(ISPICKVAL({!InformationRequestType.BuilderLevel__c},&quot;Not required&quot;)),
+IF(ISBLANK({!loa.LOA_Completed_Date__c})&amp;&amp;ISBLANK({!loa.Date_Checklist_Comp_Specialist__c}),&quot;Not started&quot;,
+IF(ISBLANK({!loa.LOA_Completed_Date__c})&amp;&amp;NOT(ISBLANK({!loa.Date_Checklist_Comp_Specialist__c})), &quot;In progress&quot;,&quot;Complete&quot;)),&quot;Not required&quot;)</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>LegacyLoa__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.Id</elementReference>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>FolderLink__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>loa.Policy_G_Drive_Folder__c</elementReference>
+                </value>
+            </transformValueActions>
+        </transformValues>
+    </transforms>
+    <variables>
+        <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>InformationRequestType</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InformationRequestType__c</objectType>
+    </variables>
+    <variables>
+        <name>ir</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>InformationRequest__c</objectType>
+    </variables>
+    <variables>
+        <name>loa</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>LOA__c</objectType>
+    </variables>
+    <variables>
+        <name>taskRequest</name>
+        <apexClass>TaskRequest</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

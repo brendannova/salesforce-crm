@@ -158,7 +158,9 @@
             <label>Success</label>
         </rules>
     </decisions>
-    <description>Create withdrawal advice</description>
+    <description>Replaced by AdviceOrchestrationAutomation
+
+Create withdrawal advice</description>
     <environments>Default</environments>
     <formulas>
         <description>Returns true if this is a new record.</description>
@@ -167,7 +169,7 @@
         <expression>ISNEW()</expression>
     </formulas>
     <interviewLabel>Advice | Withdrawal {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Advice | Withdrawal</label>
+    <label>zUnused | Advice | Withdrawal</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -233,7 +235,7 @@ ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_setup_task</name>
         <label>Create setup task</label>

@@ -10598,6 +10598,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Public_Provider_Names__c.DeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Quote.AccountId</field>
         <readable>true</readable>
@@ -11909,11 +11914,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Public_Provider_Names__c.ReferenceName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>FF_Feedback__c.How_easy_was_it_to_complete_your_profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12020,7 +12020,19 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.AnnualReview</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.Protection</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
         <recordType>AdviceChecklist__c.TopUp</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.TrustOnboarding</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
@@ -12039,6 +12051,10 @@
         <layout>AdviceType__c-Advice Type Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Advice__c-Annual review page layout</layout>
+        <recordType>Advice__c.AnnualReview</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Advice__c-OW DB advice page layout</layout>
         <recordType>Advice__c.DB_Advice</recordType>
     </layoutAssignments>
@@ -12048,6 +12064,10 @@
     <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
         <recordType>Advice__c.Advice_RT_General_Advice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Advice__c-Protection Advice</layout>
+        <recordType>Advice__c.Protection</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
@@ -12060,6 +12080,10 @@
     <layoutAssignments>
         <layout>Advice__c-Top Up Advice</layout>
         <recordType>Advice__c.TopUp</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Advice__c-Trust page layout</layout>
+        <recordType>Advice__c.TrustOnboarding</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Advice__c-Withdrawal Advice</layout>
@@ -12736,6 +12760,12 @@
         <layout>Individual-Individual Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InformationRequestType__c-Information Request Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InformationRequest__c-Information Request Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InsuranceContract-Insurance Contract Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -13033,6 +13063,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ProfileSkillUser-Skill User Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProviderContact__c-Provider Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Provider_Database__c-Fulfilment Layout</layout>
@@ -13834,7 +13867,17 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>AdviceChecklist__c.Protection</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>AdviceChecklist__c.TopUp</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>AdviceChecklist__c.TrustOnboarding</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -13849,8 +13892,18 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Advice__c.AnnualReview</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Advice__c.DB_Advice</recordType>
         <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Advice__c.Protection</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -13860,6 +13913,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Advice__c.TopUp</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Advice__c.TrustOnboarding</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -14593,6 +14651,14 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>InformationRequestType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>InformationRequest__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>LOA__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -14633,15 +14699,15 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Planning_Prioritisation</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>PortfolioCharge__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ProductType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>ProviderContact__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

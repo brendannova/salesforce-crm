@@ -11,7 +11,7 @@
                             <value>FeedItem.TextPost</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>OW_review__c.CreateAdvice</value>
+                            <value>OW_review__c.LinkAdvice</value>
                             <visibilityRule>
                                 <criteria>
                                     <leftValue>{!Record.OW_status__c}</leftValue>
@@ -50,7 +50,7 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>hideUpdateButton</name>
-                    <value>false</value>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>variant</name>
@@ -78,27 +78,17 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.OW_status__c</fieldItem>
-                <identifier>RecordOW_status_cField</identifier>
+                <fieldItem>Record.OW_due_date__c</fieldItem>
+                <identifier>RecordOW_due_date_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.OW_closed_reason__c</fieldItem>
-                <identifier>RecordOW_closed_reason_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_advice__c</fieldItem>
                 <identifier>RecordOW_advice_cField</identifier>
@@ -114,8 +104,8 @@
                     <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.OW_household__c</fieldItem>
-                <identifier>RecordOW_household_cField</identifier>
+                <fieldItem>Record.OW_status__c</fieldItem>
+                <identifier>RecordOW_status_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -132,10 +122,17 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.OW_due_date__c</fieldItem>
-                <identifier>RecordOW_due_date_cField</identifier>
+                <fieldItem>Record.OW_closed_reason__c</fieldItem>
+                <identifier>RecordOW_closed_reason_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2ab26020-e3c8-489e-a4fa-9131260c33fb</name>
@@ -548,32 +545,6 @@
                 </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>OW_review__c.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AttachedContentDocuments</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>NONE</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <name>rightsidebar</name>

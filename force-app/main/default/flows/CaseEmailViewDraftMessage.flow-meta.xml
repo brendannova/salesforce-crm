@@ -87,73 +87,232 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>From</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Get_email_message.FromAddress</elementReference>
-            </defaultValue>
-            <fieldText>From</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
+            <name>View_details_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>View_details_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>FromEmail</name>
+                    <fieldText>&lt;p&gt;From:&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>View_details_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>FromText</name>
+                    <fieldText>&lt;p&gt;{!Get_email_message.FromAddress}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
-            <name>To</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Get_email_message.ToAddress</elementReference>
-            </defaultValue>
-            <fieldText>To</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
+            <name>View_details_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>View_details_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ToAddress</name>
+                    <fieldText>&lt;p&gt;To: &lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>View_details_Section2_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ToText</name>
+                    <fieldText>&lt;p&gt;{!Get_email_message.ToAddress}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
-            <name>SubjectEmail</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Get_email_message.Subject</elementReference>
-            </defaultValue>
-            <fieldText>Subject</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
+            <name>View_details_Section3</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>View_details_Section3_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>ccEmail</name>
+                    <fieldText>&lt;p&gt;Cc: &lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>View_details_Section3_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CcText</name>
+                    <fieldText>&lt;p&gt;{!Get_email_message.CcAddress}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
-            <name>Email_body</name>
-            <defaultValue>
-                <stringValue>{!Get_email_message.TextBody}</stringValue>
-            </defaultValue>
-            <fieldText>Email body</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
+            <name>View_details_Section4</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>View_details_Section4_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>SubjectName</name>
+                    <fieldText>&lt;p&gt;Subject: &lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>View_details_Section4_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>SubjectText</name>
+                    <fieldText>&lt;p&gt;{!Get_email_message.Subject}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
-            <name>Created_by</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Get_user.Name</elementReference>
-            </defaultValue>
-            <fieldText>Created by</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
+            <name>View_details_Section5</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>View_details_Section5_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>BodyText</name>
+                    <fieldText>&lt;p&gt;Body:&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>View_details_Section5_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>HTMLBody1</name>
+                    <fieldText>&lt;p&gt;{!Get_email_message.TextBody}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>View_details_Section6</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>View_details_Section6_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CreatedByName</name>
+                    <fieldText>&lt;p&gt;Created By: &lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>View_details_Section6_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CreatedByUserName</name>
+                    <fieldText>&lt;p&gt;{!Get_user.Name}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>9</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -168,6 +327,11 @@
     <status>Active</status>
     <textTemplates>
         <name>HtmlBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;{!Get_email_message.HtmlBody}&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>HTMLBody3</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p&gt;{!Get_email_message.HtmlBody}&lt;/p&gt;</text>
     </textTemplates>

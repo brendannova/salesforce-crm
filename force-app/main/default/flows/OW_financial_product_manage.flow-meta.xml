@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>Add_fp_to_collection</name>
+        <label>Add fp to collection</label>
+        <locationX>732</locationX>
+        <locationY>866</locationY>
+        <assignmentItems>
+            <assignToReference>fps</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_FP_details</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_information_request</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Any_FP_to_advice_records</name>
         <label>Any FP to advice records?</label>
@@ -72,14 +88,14 @@
         <locationX>732</locationX>
         <locationY>566</locationY>
         <defaultConnector>
-            <targetReference>call_create_loa_flow</targetReference>
+            <targetReference>Add_fp_to_collection</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>LOA_0</name>
+            <name>IR_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Check_for_LOAs_0</leftValueReference>
+                <leftValueReference>Check_for_IRs_0</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -88,14 +104,14 @@
             <connector>
                 <targetReference>check_screen</targetReference>
             </connector>
-            <label>LOA</label>
+            <label>IR</label>
         </rules>
     </decisions>
     <decisions>
         <description>Routes appropriately depending on the choice made by the user</description>
         <name>Choice</name>
         <label>Choice?</label>
-        <locationX>545</locationX>
+        <locationX>677</locationX>
         <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -114,28 +130,38 @@
             <label>Delete</label>
         </rules>
         <rules>
-            <name>Create_LOA</name>
+            <name>Create_IR</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>createLOA.renderNext</leftValueReference>
+                <leftValueReference>createIR.renderNext</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Check_for_LOAs_0</targetReference>
+                <targetReference>Check_for_IRs_0</targetReference>
             </connector>
-            <label>Create LOA</label>
+            <label>Create IR</label>
+        </rules>
+        <rules>
+            <name>Change_financial_product_type</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ChangeFinancialProductType.renderNext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_financial_product_type_sub_flow</targetReference>
+            </connector>
+            <label>Change financial product type</label>
         </rules>
     </decisions>
-    <description>This flow walks a user through management of existing financial product records, providing the option to do things like delete them and create LOAs</description>
+    <description>This flow walks a user through management of existing financial product records, providing the option to do things like delete them and create IRs</description>
     <environments>Default</environments>
-    <formulas>
-        <name>confirmation_message</name>
-        <dataType>String</dataType>
-        <expression>IF({!call_create_loa_flow.loa_created_count} = 0, &quot;I&#39;m afraid we&#39;ve been unable to create your LOA. Please check that the owner(s) have signed TOB, it&#39;s not a work benefit policy, and that it&#39;s a Pre-LOA product&quot;, &quot;How LOAvely, that&#39;s all done for you!&quot;)</expression>
-    </formulas>
     <formulas>
         <name>deletePermission</name>
         <dataType>Boolean</dataType>
@@ -190,6 +216,27 @@
         <inputReference>Get_FP_to_advice_records</inputReference>
     </recordDeletes>
     <recordLookups>
+        <name>Check_for_IRs_0</name>
+        <label>Check for IRs</label>
+        <locationX>732</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Any_fulfilment_or_LOA_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>FinancialProductFinServ__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_FP_details.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>InformationRequest__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Check_for_linked_fulfilment</name>
         <label>Check for linked fulfilment</label>
         <locationX>50</locationX>
@@ -239,31 +286,10 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Check_for_LOAs_0</name>
-        <label>Check for LOAs</label>
-        <locationX>732</locationX>
-        <locationY>458</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Any_fulfilment_or_LOA_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>LOA_Financial_Account__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>LOA__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Retrieves the full financial product record details</description>
         <name>Get_FP_details</name>
         <label>Get FP details</label>
-        <locationX>545</locationX>
+        <locationX>677</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -334,21 +360,21 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>call_create_loa_flow</targetReference>
+            <targetReference>Add_fp_to_collection</targetReference>
         </connector>
         <fields>
             <name>check</name>
-            <fieldText>&lt;p&gt;An LOA already exists for this product, are you sure you want to create another one? If not, just leave this widget alone. If so, go ahead and press next.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;An information request already exists for this product, are you sure you want to create another one? If not, just leave this widget alone. If so, go ahead and press next.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <description>Presents information via to invalidation of TOB.</description>
         <name>choice_screen</name>
         <label>Choice screen</label>
-        <locationX>545</locationX>
+        <locationX>677</locationX>
         <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -357,13 +383,13 @@
             <targetReference>Choice</targetReference>
         </connector>
         <fields>
-            <name>createLOA</name>
+            <name>createIR</name>
             <extensionName>runtime_industries_lending:flowButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>buttonLabel</name>
                 <value>
-                    <stringValue>Create LOA</stringValue>
+                    <stringValue>Create information request</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -383,6 +409,13 @@
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue>Not Taken Up</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_FP_details.OW_own_product__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -410,6 +443,26 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>ChangeFinancialProductType</name>
+            <extensionName>runtime_industries_lending:flowButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>renderNext</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>buttonLabel</name>
+                <value>
+                    <stringValue>Change financial product type</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>nothingToSeeHere</name>
@@ -447,17 +500,17 @@
         <name>Confirmation_screen</name>
         <label>Confirmation screen</label>
         <locationX>732</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>confirrmation_text</name>
-            <fieldText>&lt;p&gt;{!confirmation_message}&lt;/p&gt;</fieldText>
+            <name>confirmation_text</name>
+            <fieldText>&lt;p&gt;For your information, that&#39;s all done!&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>resolve_records</name>
@@ -476,7 +529,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>419</locationX>
+        <locationX>551</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_FP_details</targetReference>
@@ -484,22 +537,48 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>call_create_loa_flow</name>
-        <label>Create LOA</label>
+        <name>Change_financial_product_type_sub_flow</name>
+        <label>Change financial product type sub flow</label>
+        <locationX>1040</locationX>
+        <locationY>458</locationY>
+        <flowName>FinancialProductChangeFinancialProductType</flowName>
+        <inputAssignments>
+            <name>financialProductId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Create_information_request</name>
+        <label>Create information request</label>
         <locationX>732</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Confirmation_screen</targetReference>
         </connector>
-        <flowName>OW_loa_create_loas_for_financial_products</flowName>
+        <flowName>InformationRequestCreate</flowName>
         <inputAssignments>
-            <name>financialProduct</name>
+            <name>financialAccounts</name>
             <value>
-                <elementReference>Get_FP_details</elementReference>
+                <elementReference>fps</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>Get_FP_details.Household__c</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
+    <variables>
+        <name>fps</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
     <variables>
         <description>Stores the ID of the TOB record.</description>
         <name>recordId</name>

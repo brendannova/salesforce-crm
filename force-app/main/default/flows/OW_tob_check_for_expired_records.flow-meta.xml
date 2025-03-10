@@ -6,7 +6,7 @@
         <name>TOB_expired</name>
         <label>TOB expired?</label>
         <locationX>182</locationX>
-        <locationY>276</locationY>
+        <locationY>252</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -24,7 +24,9 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>This is a scheduled flow which checks if TOB records are older than 30 days, their expiry time, and will mark them as expired if so.</description>
+    <description>Replaced by new flow with updated conventions. 
+
+This is a scheduled flow which checks if TOB records are older than 30 days, their expiry time, and will mark them as expired if so.</description>
     <environments>Default</environments>
     <formulas>
         <description>The date on which the TOB should be marked as expired.</description>
@@ -33,7 +35,7 @@
         <expression>DATEVALUE({!$Record.CreatedDate}) + {!$Setup.OW_business_configuration__c.OW_tob_expiry_time__c}</expression>
     </formulas>
     <interviewLabel>TOB | check for expired records {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>TOB | check for expired records</label>
+    <label>zUnused | TOB | check for expired records</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -57,7 +59,7 @@
         <name>Update_TOB</name>
         <label>Update TOB</label>
         <locationX>50</locationX>
-        <locationY>396</locationY>
+        <locationY>360</locationY>
         <connector>
             <targetReference>Call_account_TOB_sub_flow</targetReference>
         </connector>
@@ -91,12 +93,12 @@
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Call_account_TOB_sub_flow</name>
         <label>Call account TOB sub-flow</label>
         <locationX>50</locationX>
-        <locationY>516</locationY>
+        <locationY>468</locationY>
         <flowName>OW_account_tob_sub</flowName>
         <inputAssignments>
             <name>tobRecord</name>

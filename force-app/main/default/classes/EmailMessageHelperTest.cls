@@ -269,7 +269,8 @@ private class EmailMessageHelperTest {
             Incoming = false,
             RelatedToId = acc.Id,
             CcAddress = 'test@test.com',
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -291,7 +292,8 @@ private class EmailMessageHelperTest {
             TextBody = 'Testing',
             Incoming = false,
             RelatedToId = acc.Id,
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -314,7 +316,8 @@ private class EmailMessageHelperTest {
             Incoming = false,
             RelatedToId = acc.Id,
             CcAddress = UserInfo.getUserEmail(),
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -337,7 +340,8 @@ private class EmailMessageHelperTest {
             Incoming = false,
             RelatedToId = acc.Id,
             CcAddress = UserInfo.getUserEmail() + ',test@test.com',
-            EmailTemplateId = emailTemplateId
+            EmailTemplateId = emailTemplateId,
+            Status = '3'
         );
         try{
             insert message;
@@ -346,13 +350,13 @@ private class EmailMessageHelperTest {
         }
     }
 
-    @isTest
+     @isTest
     static void sendEmail_bypassValidation_passed(){
         String devName = 'STARTER_EMAIL';
         Id emailTemplateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :devName].Id;
         Account acc = [SELECT Id FROM Account WHERE OW_admin_notes__c = 'EmailMessageHelperTestHousehold'];
-        acc.EmailRecipientValidationBypass__c = true;
-        update acc;
+        //acc.EmailRecipientValidationBypass__c = true;
+        //update acc;
         OrgWideEmailAddress fromEmail = [SELECT Id, Address FROM OrgWideEmailAddress ORDER BY Address ASC LIMIT 1];
         EmailMessage message = new EmailMessage(
             FromAddress = fromEmail.Address,
@@ -364,6 +368,9 @@ private class EmailMessageHelperTest {
             RelatedToId = acc.Id,
             CcAddress = UserInfo.getUserEmail() + ',test@test.com',
             EmailTemplateId = emailTemplateId,
+            ApprovalStatus__c = 'Approved',
+            BypassValidations__c = 'Yes',
+            RequestApproval__c = 'Yes',
             Status = '3'
         );
         try{
@@ -371,9 +378,8 @@ private class EmailMessageHelperTest {
         }  catch (DmlException e) {
             System.debug(e);
         }
-        System.assertEquals(Schema.EmailMessage.SObjectType, message.Id.getSobjectType(), 'Message failed to insert');
-        acc = [SELECT Id, EmailRecipientValidationBypass__c FROM Account WHERE OW_admin_notes__c = 'EmailMessageHelperTestHousehold'];
-        System.assertEquals(acc.EmailRecipientValidationBypass__c, false, 'Bypass not reset to false');
+        EmailMessage em = [SELECT Id FROM EmailMessage WHERE Subject = 'Test' LIMIT 1];
+        System.Assert.IsNotNull(em.Id);
     }   
     
         @isTest
@@ -381,14 +387,12 @@ private class EmailMessageHelperTest {
         String devName = 'STARTER_EMAIL';
         Id emailTemplateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :devName].Id;
         Account acc = [SELECT Id FROM Account WHERE OW_admin_notes__c = 'EmailMessageHelperTestHousehold'];
-        acc.EmailRecipientValidationBypass__c = true;
-        update acc;
         OrgWideEmailAddress fromEmail = [SELECT Id, Address FROM OrgWideEmailAddress ORDER BY Address ASC LIMIT 1];
         EmailMessage message = new EmailMessage(
             FromAddress = fromEmail.Address,
             ToAddress = 'test@test.com,test2@test.com',
             BccAddress = 'test@test.com',
-            Subject = 'Test',
+            Subject = 'Test draft save',
             TextBody = 'Testing',
             Incoming = false,
             RelatedToId = acc.Id,
@@ -401,8 +405,7 @@ private class EmailMessageHelperTest {
         }  catch (DmlException e) {
             System.debug(e);
         }
-        System.assertEquals(Schema.EmailMessage.SObjectType, message.Id.getSobjectType(), 'Message failed to insert');
-        acc = [SELECT Id, EmailRecipientValidationBypass__c FROM Account WHERE OW_admin_notes__c = 'EmailMessageHelperTestHousehold'];
-        System.assertEquals(acc.EmailRecipientValidationBypass__c, true, 'Bypass not reset to false');
+        EmailMessage em = [SELECT Id FROM EmailMessage WHERE Subject = 'Test draft save' LIMIT 1];
+        System.Assert.IsNotNull(em.Id);
     }   
 }

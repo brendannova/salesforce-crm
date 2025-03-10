@@ -1,7 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>false</custom>
     <userLicense>Salesforce</userLicense>
+    <classAccesses>
+        <apexClass>EmailInformationRequestUpdateTable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailInformationRequestUpdateTableTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <classAccesses>
         <apexClass>FinServ__AccountAccountRelationTriggerHandler</apexClass>
         <enabled>true</enabled>
@@ -863,6 +871,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FlowHelperTermsOfBusinessSend</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>InformationRequestHouseholdDisplay</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>InformationRequestHouseholdDisplayTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MilestoneTimeCalculator</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1271,10 +1291,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>DataFactory</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DataFactoryTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1351,10 +1367,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FakeDataGenerata</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CsvUtil</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1404,14 +1416,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TaskHelperTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AdvicePlanningPioritisationHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AdvicePlanningPioritisationHelperTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1503,6 +1507,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <pageAccesses>
+        <apexPage>InformationRequestContactDisplay</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>SiteRegister</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -1592,6 +1600,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>MicrobatchSelfReg</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>irTest</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <applicationVisibilities>
@@ -17264,6 +17276,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Public_Provider_Names__c.DeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Quote.AccountId</field>
         <readable>true</readable>
@@ -19760,11 +19777,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Public_Provider_Names__c.ReferenceName__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>FF_Feedback__c.How_easy_was_it_to_complete_your_profile__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -21341,7 +21353,19 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.AnnualReview</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.Protection</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
         <recordType>AdviceChecklist__c.TopUp</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
+        <recordType>AdviceChecklist__c.TrustOnboarding</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AdviceChecklist__c-Advice Checklist Layout</layout>
@@ -21360,6 +21384,10 @@
         <layout>AdviceType__c-Advice Type Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Advice__c-Annual review page layout</layout>
+        <recordType>Advice__c.AnnualReview</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Advice__c-OW DB advice page layout</layout>
         <recordType>Advice__c.DB_Advice</recordType>
     </layoutAssignments>
@@ -21369,6 +21397,10 @@
     <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
         <recordType>Advice__c.Advice_RT_General_Advice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Advice__c-Protection Advice</layout>
+        <recordType>Advice__c.Protection</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Advice__c-OW advice page layout</layout>
@@ -21381,6 +21413,10 @@
     <layoutAssignments>
         <layout>Advice__c-Top Up Advice</layout>
         <recordType>Advice__c.TopUp</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Advice__c-Trust page layout</layout>
+        <recordType>Advice__c.TrustOnboarding</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Advice__c-Withdrawal Advice</layout>
@@ -22073,6 +22109,12 @@
         <layout>Individual-Individual Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InformationRequestType__c-Information Request Type Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InformationRequest__c-Information Request Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InsuranceContract-Insurance Contract Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -22370,6 +22412,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ProfileSkillUser-Skill User Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProviderContact__c-Provider Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Provider_Database__c-Fulfilment Layout</layout>
@@ -23182,8 +23227,18 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>AdviceChecklist__c.Protection</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>AdviceChecklist__c.TopUp</recordType>
         <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>AdviceChecklist__c.TrustOnboarding</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -23197,8 +23252,18 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Advice__c.AnnualReview</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Advice__c.DB_Advice</recordType>
         <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Advice__c.Protection</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -23208,6 +23273,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Advice__c.TopUp</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Advice__c.TrustOnboarding</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -24137,6 +24207,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>AdviceManager</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>AdviceRecipient__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -24289,6 +24363,14 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>InformationRequestType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>InformationRequest__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>LOA__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -24329,15 +24411,15 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Planning_Prioritisation</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>PortfolioCharge__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ProductType__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>ProviderContact__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

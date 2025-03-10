@@ -165,16 +165,6 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
-                        <valueListItems>
-                            <value>Account.EmailRecipientValidation</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.EmailRecipientValidationBypass}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1282,7 +1272,7 @@
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList9</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.FinServ__Status__c}</leftValue>
                         <operator>NE</operator>
@@ -1292,6 +1282,11 @@
                         <leftValue>{!Record.Type}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Trust</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Mortgage only</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -1372,6 +1367,19 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentName>informationRequestRelatedList</componentName>
+                <identifier>c_informationRequestRelatedList</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Prospect</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
                 </componentInstanceProperties>
@@ -1383,6 +1391,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>MainLOAStatus__c|NOT_EQUAL|[&quot;Completed&quot;]</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>MainLOAStatus__c|NOT_EQUAL|[&quot;Replaced&quot;]</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

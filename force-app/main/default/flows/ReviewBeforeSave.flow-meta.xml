@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <assignments>
+        <description>Set the fact find to be not visible to the customer and indicate it is completed</description>
+        <name>Mark_fact_find_as_completed_and_hide</name>
+        <label>Mark fact find as completed and hide</label>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_review_fact_find_status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_to_not_visible_to_customer_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set the record to be closed</description>
+        <name>Set_to_closed</name>
+        <label>Set to closed</label>
+        <locationX>138</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_is_closed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fact_find_visibility</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set the record to be visible to the customer</description>
+        <name>Set_to_not_visible_to_customer_0</name>
+        <label>Set to not visible</label>
+        <locationX>402</locationX>
+        <locationY>995</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_visible_to_customer__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Set the record to be open (not closed)</description>
+        <name>Set_to_opened</name>
+        <label>Set to opened</label>
+        <locationX>402</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_is_closed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fact_find_visibility</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Set the record to be visible to the customer</description>
+        <name>Set_to_visible</name>
+        <label>Set to visible</label>
+        <locationX>490</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OW_visible_to_customer__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Adjusts whether the fact find is visible based on the fact find status or completion.</description>
+        <name>Fact_find_visibility</name>
+        <label>Fact find visibility</label>
+        <locationX>402</locationX>
+        <locationY>587</locationY>
+        <defaultConnectorLabel>Not mapped</defaultConnectorLabel>
+        <rules>
+            <name>Already_completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_completed_by_client__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Mark_fact_find_as_completed_and_hide</targetReference>
+            </connector>
+            <label>Completed by client</label>
+        </rules>
+        <rules>
+            <name>Not_visible_or_skipped</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Skipped</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Not visible to customer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_to_not_visible_to_customer_0</targetReference>
+            </connector>
+            <label>Not visible or skipped</label>
+        </rules>
+        <rules>
+            <name>Visible_to_customer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Visible to customer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_to_visible</targetReference>
+            </connector>
+            <label>Visible to customer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the review has been moved to an open or closed stage and will control the is closed variable depending on the response.</description>
+        <name>Opened_or_closed</name>
+        <label>Opened or closed</label>
+        <locationX>402</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Fact_find_visibility</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not mapped</defaultConnectorLabel>
+        <rules>
+            <name>Closed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_to_closed</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Closed</label>
+        </rules>
+        <rules>
+            <name>Open</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prepare</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Catch up</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Await fact find</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Provide advice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_to_opened</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Open</label>
+        </rules>
+    </decisions>
+    <description>This flow runs before save to automatically set key fields for the user. It controls whether the review is marked as open or closed, the review fact find visibility, and the automatic setting of review fact find status to complete.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>This formula defines the name of the annual review.</description>
+        <name>annual_review_name</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.OW_household__r.Account_ID__c} &amp; &quot; - &quot; &amp; TEXT( YEAR( {!$Record.OW_household__r.FinServ__NextReview__c} ) )</expression>
+    </formulas>
+    <formulas>
+        <description>If this is a new record, the formula returns true</description>
+        <name>is_new</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>Review | Before save {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Review | Before save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>276</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Opened_or_closed</targetReference>
+        </connector>
+        <object>OW_review__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Stores whether the review should be set to open or closed</description>
+        <name>is_closed</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
