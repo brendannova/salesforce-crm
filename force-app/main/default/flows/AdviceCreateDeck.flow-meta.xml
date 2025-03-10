@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Request_review_deck</name>
-        <label>Request review deck</label>
-        <locationX>1282</locationX>
+        <name>Create_investment_slides</name>
+        <label>Create investment slides</label>
+        <locationX>182</locationX>
         <locationY>1106</locationY>
-        <actionName>AdviceSlidesV2.createReview</actionName>
+        <actionName>AdviceSlidesV3.createInvestment</actionName>
         <actionType>externalService</actionType>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Success_screen</targetReference>
+            <targetReference>Success</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -19,10 +18,10 @@
         <inputParameters>
             <name>body</name>
             <value>
-                <elementReference>reviewBody</elementReference>
+                <elementReference>requestInvestmentBody</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>AdviceSlidesV2.createReview</nameSegment>
+        <nameSegment>AdviceSlidesV3.createInvestment</nameSegment>
         <offset>0</offset>
         <outputParameters>
             <assignToReference>responseCode</assignToReference>
@@ -32,29 +31,30 @@
             <assignToReference>exceptionMessage</assignToReference>
             <name>defaultExc</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
-        <name>Request_top_up_deck</name>
-        <label>Request top up deck</label>
-        <locationX>182</locationX>
+        <name>Request_review_deck</name>
+        <label>Request review deck</label>
+        <locationX>1370</locationX>
         <locationY>1106</locationY>
-        <actionName>AdviceSlidesV2.createTopUp</actionName>
+        <actionName>AdviceSlidesV3.createReview</actionName>
         <actionType>externalService</actionType>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Success</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Handle_errors</targetReference>
         </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>body</name>
             <value>
-                <elementReference>requestTopUpBody</elementReference>
+                <elementReference>requestReviewBody</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>AdviceSlidesV2.createTopUp</nameSegment>
+        <nameSegment>AdviceSlidesV3.createReview</nameSegment>
         <offset>0</offset>
         <outputParameters>
             <assignToReference>responseCode</assignToReference>
@@ -64,14 +64,13 @@
             <assignToReference>exceptionMessage</assignToReference>
             <name>defaultExc</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Request_withdrawal_deck</name>
         <label>Request withdrawal deck</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>1106</locationY>
-        <actionName>AdviceSlidesV2.createWithdrawal</actionName>
+        <actionName>AdviceSlidesV3.createWithdrawal</actionName>
         <actionType>externalService</actionType>
         <connector>
             <isGoTo>true</isGoTo>
@@ -81,14 +80,14 @@
             <isGoTo>true</isGoTo>
             <targetReference>Handle_errors</targetReference>
         </faultConnector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>body</name>
             <value>
                 <elementReference>requestWithdrawalBody</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>AdviceSlidesV2.createWithdrawal</nameSegment>
+        <nameSegment>AdviceSlidesV3.createWithdrawal</nameSegment>
         <offset>0</offset>
         <outputParameters>
             <assignToReference>responseCode</assignToReference>
@@ -98,16 +97,15 @@
             <assignToReference>exceptionMessage</assignToReference>
             <name>defaultExc</name>
         </outputParameters>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
         <name>Define_annual_review_body</name>
         <label>Define annual review body</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>998</locationY>
         <assignmentItems>
-            <assignToReference>reviewBody.adviceId</assignToReference>
+            <assignToReference>requestReviewBody.adviceId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>adviceId</elementReference>
@@ -118,25 +116,25 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Define_top_up_body</name>
-        <label>Define top up body</label>
+        <name>Define_investment_deck_body</name>
+        <label>Define investment deck body</label>
         <locationX>182</locationX>
         <locationY>998</locationY>
         <assignmentItems>
-            <assignToReference>requestTopUpBody.adviceId</assignToReference>
+            <assignToReference>requestInvestmentBody.adviceId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>adviceId</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Request_top_up_deck</targetReference>
+            <targetReference>Create_investment_slides</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Define_withdrawal_body</name>
         <label>Define withdrawal body</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>requestWithdrawalBody.adviceId</assignToReference>
@@ -152,7 +150,7 @@
     <assignments>
         <name>Set_advice_ID</name>
         <label>Set advice ID</label>
-        <locationX>1870</locationX>
+        <locationX>1947</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -168,7 +166,7 @@
     <assignments>
         <name>Set_error_no_advice_folder</name>
         <label>Set error (no advice folder)</label>
-        <locationX>2250</locationX>
+        <locationX>2338</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessageToast</assignToReference>
@@ -184,7 +182,7 @@
     <assignments>
         <name>Set_error_no_recommendations</name>
         <label>Set error (no recommendations)</label>
-        <locationX>1986</locationX>
+        <locationX>2074</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>errorMessageToast</assignToReference>
@@ -200,7 +198,7 @@
     <decisions>
         <name>Advice_type</name>
         <label>Advice type?</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>890</locationY>
         <defaultConnector>
             <targetReference>Error_Response</targetReference>
@@ -208,7 +206,7 @@
         <defaultConnectorLabel>No advice type</defaultConnectorLabel>
         <rules>
             <name>Top_up</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Advice_Type.DeveloperName__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -217,7 +215,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Define_top_up_body</targetReference>
+                <targetReference>Define_investment_deck_body</targetReference>
             </connector>
             <label>Top up</label>
         </rules>
@@ -240,17 +238,10 @@
             <name>Annual_review</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>advice.New_or_existing_client__c</leftValueReference>
+                <leftValueReference>advice.AdviceType__r.IsAnnualReview__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Existing</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>advice.OW_review__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -262,7 +253,7 @@
     <decisions>
         <name>Google_folder_defined</name>
         <label>Google folder defined</label>
-        <locationX>1870</locationX>
+        <locationX>1947</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Set_error_no_advice_folder</targetReference>
@@ -287,7 +278,7 @@
     <decisions>
         <name>Recommendations_decision</name>
         <label>Recommendations</label>
-        <locationX>1491</locationX>
+        <locationX>1557</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Set_error_no_recommendations</targetReference>
@@ -329,7 +320,7 @@
         <locationX>182</locationX>
         <locationY>1214</locationY>
         <defaultConnector>
-            <targetReference>Error_Response</targetReference>
+            <targetReference>Handle_errors</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Error</defaultConnectorLabel>
         <rules>
@@ -384,7 +375,7 @@ Withdrawal</description>
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>1870</locationX>
+        <locationX>1947</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -409,7 +400,7 @@ Withdrawal</description>
     <recordLookups>
         <name>Get_Advice_Type</name>
         <label>Get Advice Type</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -432,7 +423,7 @@ Withdrawal</description>
     <recordLookups>
         <name>Get_recommendations</name>
         <label>Get recommendations</label>
-        <locationX>1491</locationX>
+        <locationX>1557</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -458,11 +449,11 @@ Withdrawal</description>
     <screens>
         <name>Create_deck_confirmation</name>
         <label>Create deck confirmation</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>674</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
             <targetReference>Get_Advice_Type</targetReference>
         </connector>
@@ -520,12 +511,12 @@ Withdrawal</description>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Error_Response</name>
         <label>Error | Response</label>
-        <locationX>996</locationX>
+        <locationX>1040</locationX>
         <locationY>1706</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -536,12 +527,12 @@ Withdrawal</description>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Error_screen</name>
         <label>Error screen</label>
-        <locationX>1870</locationX>
+        <locationX>1947</locationX>
         <locationY>2090</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -585,7 +576,7 @@ Withdrawal</description>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Success_screen</name>
@@ -637,7 +628,7 @@ Withdrawal</description>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>1744</locationX>
+        <locationX>1821</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_advice_ID</targetReference>
@@ -647,8 +638,11 @@ Withdrawal</description>
     <subflows>
         <name>Handle_errors</name>
         <label>Handle errors</label>
-        <locationX>490</locationX>
-        <locationY>1214</locationY>
+        <locationX>314</locationX>
+        <locationY>1322</locationY>
+        <connector>
+            <targetReference>Error_Response</targetReference>
+        </connector>
         <flowName>ExceptionHandlingNovaServiceErrors</flowName>
         <inputAssignments>
             <name>Calloutexceptionmessage</name>
@@ -708,8 +702,16 @@ Withdrawal</description>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>requestTopUpBody</name>
-        <apexClass>ExternalService__AdviceSlidesV2_GSlidesJobTopUpBody</apexClass>
+        <name>requestInvestmentBody</name>
+        <apexClass>ExternalService__AdviceSlidesV3_GSlidesJobInvestmentBody</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>requestReviewBody</name>
+        <apexClass>ExternalService__AdviceSlidesV3_GSlidesJobReviewBody</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -717,7 +719,7 @@ Withdrawal</description>
     </variables>
     <variables>
         <name>requestWithdrawalBody</name>
-        <apexClass>ExternalService__AdviceSlidesV2_GSlidesJobWithdrawalBody</apexClass>
+        <apexClass>ExternalService__AdviceSlidesV3_GSlidesJobWithdrawalBody</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -730,13 +732,5 @@ Withdrawal</description>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
-    </variables>
-    <variables>
-        <name>reviewBody</name>
-        <apexClass>ExternalService__AdviceSlidesV2_GSlidesJobReviewBody</apexClass>
-        <dataType>Apex</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
 </Flow>
