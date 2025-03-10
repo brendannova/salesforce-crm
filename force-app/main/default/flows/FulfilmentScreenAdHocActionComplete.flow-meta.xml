@@ -4,7 +4,7 @@
         <name>Split_tasksText</name>
         <label>Split tasks</label>
         <locationX>176</locationX>
-        <locationY>542</locationY>
+        <locationY>590</locationY>
         <actionName>SplitStringInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -18,15 +18,15 @@
             </value>
         </inputParameters>
         <nameSegment>SplitStringInvocable</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationY>806</locationY>
         <assignmentItems>
             <assignToReference>checkboxValues</assignToReference>
             <operator>Add</operator>
@@ -36,6 +36,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Task_strings</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>792</locationX>
+        <locationY>1430</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_screen</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -76,7 +92,7 @@
         <name>Task_strings</name>
         <label>Task strings</label>
         <locationX>176</locationX>
-        <locationY>650</locationY>
+        <locationY>698</locationY>
         <collectionReference>Split_tasksText.tasksToCreate</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -114,6 +130,10 @@
         <connector>
             <targetReference>Get_fulfilment_type_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -133,11 +153,15 @@
         <name>Get_fulfilment_type_status</name>
         <label>Get fulfilment type status</label>
         <locationX>176</locationX>
-        <locationY>434</locationY>
+        <locationY>482</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Split_tasksText</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>FulfilmentType__c</field>
@@ -157,11 +181,78 @@
         <object>FulfilmentTypeStatus__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordRollbacks>
+        <name>Rollback</name>
+        <label>Rollback</label>
+        <locationX>792</locationX>
+        <locationY>1322</locationY>
+        <connector>
+            <targetReference>Assign_error_message</targetReference>
+        </connector>
+    </recordRollbacks>
+    <recordUpdates>
+        <name>Complete_task</name>
+        <label>Complete task</label>
+        <locationX>176</locationX>
+        <locationY>1214</locationY>
+        <faultConnector>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>chase_ad_hoc_action</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>FinServ__Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>fulfilment.Household__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OrchestrationTaskStatus__c</field>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_fulfilment</name>
         <label>Update fulfilment</label>
         <locationX>176</locationX>
-        <locationY>1058</locationY>
+        <locationY>1106</locationY>
+        <connector>
+            <targetReference>Complete_task</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Rollback</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -183,7 +274,7 @@
         <name>Affirm_actions</name>
         <label>Affirm actions</label>
         <locationX>176</locationX>
-        <locationY>950</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -226,11 +317,28 @@
             <dataType>Boolean</dataType>
             <fieldText>Fulfilment is ready to go back to usual process</fieldText>
             <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <validationRule>
                 <errorMessage>&lt;p&gt;Make sure all tasks are complete!&lt;/p&gt;</errorMessage>
                 <formulaExpression>{!Taskstocomplete.selectedValues} = {!Taskstocomplete.choicesValues}</formulaExpression>
             </validationRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>792</locationX>
+        <locationY>1538</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorText</name>
+            <fieldText>&lt;p&gt;There&#39;s been an error here with the following message:&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -249,6 +357,13 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>fulfilment</name>
