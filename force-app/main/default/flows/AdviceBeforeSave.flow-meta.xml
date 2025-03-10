@@ -889,7 +889,7 @@
         <defaultConnectorLabel>Not completed</defaultConnectorLabel>
         <rules>
             <name>Ready_for_suitability_generic</name>
-            <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5) AND (6 OR 7 OR 8) AND (9 OR 10) AND (11 OR 12)</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5) AND (6 OR 7 OR 8) AND (9 OR 10) AND (11 OR 12) AND (13 OR 14)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -972,6 +972,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risk Call</stringValue>
                 </rightValue>
             </conditions>
             <connector>
