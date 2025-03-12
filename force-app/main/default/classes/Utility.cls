@@ -55,4 +55,31 @@ global with sharing class Utility {
         String baseUrl = System.URL.getOrgDomainURL().toExternalForm();
         return baseUrl;
     }
+
+    public static BusinessHours defaultBusinessHours {
+        get {
+            if (defaultBusinessHours == null) {
+                defaultBusinessHours = [SELECT Id, Name, IsActive, IsDefault FROM BusinessHours WHERE IsDefault = true LIMIT 1];
+            }
+            return defaultBusinessHours;
+        }
+        set;
+    }
+
+    //todo: test class
+    public static Date getOffsetBusinessDate(date startDate, Integer daysOffset){
+        //salesforce funciton will only accept datetimes
+        Integer d = startDate.day();
+        Integer m = startDate.month();
+        Integer y = startDate.year();
+
+        DateTime startDateTime = DateTime.newInstance(y, m, d);
+                
+        // Calculate the offset date using the default business hours
+        Datetime offsetDateTime = System.BusinessHours.add(defaultBusinessHours.Id, startDateTime, (long) daysOffset * 24 * 60 * 60 * 1000L);
+        Date offsetDate = offsetDatetime.date();
+        return offsetDate;
+    }
+
+
 }
