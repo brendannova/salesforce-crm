@@ -29,9 +29,9 @@
                                     <rightValue>Not started</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.DeckStatus__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Complete</rightValue>
+                                    <leftValue>{!Record.IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
