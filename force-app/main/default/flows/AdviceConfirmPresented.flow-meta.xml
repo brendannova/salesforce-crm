@@ -76,7 +76,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_task</targetReference>
+            <targetReference>Create_chase_acceptance_task</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -892,6 +892,41 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
+        <name>Create_chase_acceptance_task</name>
+        <label>Create chase acceptance task</label>
+        <locationX>380</locationX>
+        <locationY>1790</locationY>
+        <connector>
+            <targetReference>Define_household_record</targetReference>
+        </connector>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>advice.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_advice_id</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>chase_recommendation_acceptance</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Create_send_dropbox_task</name>
         <label>Create send dropbox task</label>
         <locationX>248</locationX>
@@ -957,41 +992,6 @@
             <name>what_id</name>
             <value>
                 <elementReference>advice.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
-        <name>Create_task</name>
-        <label>Create task</label>
-        <locationX>380</locationX>
-        <locationY>1790</locationY>
-        <connector>
-            <targetReference>Define_household_record</targetReference>
-        </connector>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>advice.Advice_Household__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_advice_id</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <stringValue>chase_recommendation_acceptance</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
