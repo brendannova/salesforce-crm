@@ -36,6 +36,22 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
+                            <value>Advice__c.RecommendationConfirm</value>
+                            <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.AdvicePresented__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Advice__c.AssignPlanner</value>
                             <visibilityRule>
                                 <criteria>
@@ -1071,13 +1087,6 @@
                 </componentInstanceProperties>
                 <componentName>lst:dynamicRelatedList</componentName>
                 <identifier>lst_dynamicRelatedList</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.NarrativeStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Complete</rightValue>
-                    </criteria>
-                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

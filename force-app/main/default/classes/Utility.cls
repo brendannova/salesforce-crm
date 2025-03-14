@@ -87,5 +87,9 @@ global with sharing class Utility {
         return offsetDate;
     }
 
-
+    
+    // Checks if the org in question is a sandbox. This can be used to ensure that logic is only executed in production/sandbox as appopriate.    
+    public static Boolean checkSandbox() {
+        return [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
+    }
 }
