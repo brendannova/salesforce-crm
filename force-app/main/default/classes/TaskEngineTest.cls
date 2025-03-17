@@ -128,23 +128,23 @@ private class TaskEngineTest {
             taskEngineRequest.taskType = taskInfo.OW_task_type__c;
             taskEngineRequest.householdId = accountTest.Id;
 
-            if(taskInfo.OW_assigned_to__c == taskEngine.ASSIGNED_TO_CASE_OWNER){
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_CASE_OWNER){
                 taskEngineRequest.whatId = caseTest.Id;
             }
 
-            if(taskInfo.OW_assigned_to__c == taskEngine.ASSIGNED_TO_OPPORTUNITY_OWNER){
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_OPPORTUNITY_OWNER){
                 taskEngineRequest.whatId = opportunityTest.Id;
             }
 
-            if(taskInfo.OW_assigned_to__c == taskEngine.ASSIGNED_TO_CHOSEN_USER){
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_CHOSEN_USER){
                 taskEngineRequest.chosenUser = chosenUser.Id;   
             }
 
-            if(taskInfo.OW_assigned_to__c == taskEngine.ASSIGNED_TO_CASE_OWNER){
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_CASE_OWNER){
                 taskEngineRequest.whatId = caseTest.Id;
             }
 
-            if(taskInfo.OW_assigned_to__c == taskEngine.ASSIGNED_TO_OPPORTUNITY_OWNER){
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_OPPORTUNITY_OWNER){
                 taskEngineRequest.whatId = opportunityTest.Id;
             }
 
@@ -153,8 +153,8 @@ private class TaskEngineTest {
         }
 
         Test.startTest();
-        TaskEngine te = new TaskEngine();
-        te.generateTasks(taskRequests);
+        TaskEngine taskEngineVar = new TaskEngine();
+        taskEngineVar.generateTasks(taskRequests);
         Test.stopTest();
 
         List<Task> generatedTaskList = [SELECT Id FROM Task WHERE FinServ__Household__c = :accountTest.Id];
@@ -213,6 +213,126 @@ private class TaskEngineTest {
             assignedUserIds.add(task.OwnerId);
         }
 
+    }
+
+    @isTest
+    static void testTaskEngineInvokableList(){
+        //copy of testTaskEngine but passed in via different invokable method
+        //query household to use as test data
+        Account accountTest = [SELECT Id, Name FROM Account WHERE OW_admin_notes__c = :HOUSEHOLD_IDENTIFIER LIMIT 1];
+        Case caseTest = [SELECT Id FROM Case WHERE Subject = :CASE_IDENTIFIER LIMIT 1];
+        Opportunity opportunityTest = [SELECT Id FROM Opportunity WHERE AccountId = :accountTest.Id AND PlatformId__c = :OPPORTUNITY_IDENTIFIER LIMIT 1];
+        
+        User chosenUser = [SELECT Id FROM User WHERE Username = :CHOSEN_USER_IDENTIFIER LIMIT 1];
+        //todo get other users
+
+        List<OW_task_information__c> taskInformationList = [SELECT Id, OW_assigned_to__c FROM OW_task_information__c];
+
+        Map<String, OW_task_information__c> assignmentTypeTaskInfoMap = new Map<String, OW_task_information__c>();
+
+        //find an example of one task for each assingment type
+        for(String assignmentType : assignmentTypeList){
+            for(OW_task_information__c taskInfo : taskInformationList){
+                if(taskInfo.OW_assigned_to__c == assignmentType){
+                    assignmentTypeTaskInfoMap.put(assignmentType, taskInfo);
+                    break;
+                }
+            }
+        }
+
+        List<TaskEngine.taskEngineRequest> taskRequests = new List<TaskEngine.taskEngineRequest>();
+        for(OW_task_information__c taskInfo : assignmentTypeTaskInfoMap.values()){
+            TaskEngine.taskEngineRequest taskEngineRequest = new TaskEngine.TaskEngineRequest();
+            taskEngineRequest.taskType = taskInfo.OW_task_type__c;
+            taskEngineRequest.householdId = accountTest.Id;
+
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_CASE_OWNER){
+                taskEngineRequest.whatId = caseTest.Id;
+            }
+
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_OPPORTUNITY_OWNER){
+                taskEngineRequest.whatId = opportunityTest.Id;
+            }
+
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_CHOSEN_USER){
+                taskEngineRequest.chosenUser = chosenUser.Id;   
+            }
+
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_CASE_OWNER){
+                taskEngineRequest.whatId = caseTest.Id;
+            }
+
+            if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_OPPORTUNITY_OWNER){
+                taskEngineRequest.whatId = opportunityTest.Id;
+            }
+
+            taskRequests.add(taskEngineRequest);
+            
+        }
+
+        List<List<TaskEngine.taskEngineRequest>> taskRequestListOfLists = new List<List<TaskEngine.taskEngineRequest>>();
+        taskRequestListOfLists.add(taskRequests);
+
+        Test.startTest();
+        TaskEngine taskEngineVar = new TaskEngine();
+        TaskEngineInvokableList.invocableGenerateTasks(taskRequestListOfLists);
+        Test.stopTest();
+
+        List<Task> generatedTaskList = [SELECT Id FROM Task WHERE FinServ__Household__c = :accountTest.Id];
+        List<OW_task_information__c> taskInfos = [SELECT Id FROM OW_task_information__c];
+
+        Map<String, OW_task_information__c> taskAssignmentToInfoMap = new Map<String, OW_task_information__c>();
+
+        for(OW_task_information__c t : taskInfos){
+            taskAssignmentToInfoMap.put(t.OW_assigned_to__c, t);
+        }
+
+        System.Assert.areEqual(taskRequests.size(), generatedTaskList.size(), 'An incorrect number of tasks have been generated');
+
+        Set<Id> assignedUserIds = new Set<Id>();
+        for(Task task : generatedTaskList){
+            OW_task_information__c taskInfo = taskAssignmentToInfoMap.get(task.Subject);
+            
+            Assert.areEqual(task.OW_credit__c, taskInfo.OW_task_credit__c, 'Task credit not properly assinged');
+            Assert.areEqual(task.Subject, taskInfo.OW_subject__c, 'Task subject not properly assinged');
+                
+            Date dueDate = Utility.getOffsetBusinessDate(Date.today(), (integer) taskInfo.OW_due_date_offset__c);
+            Date startDate = Utility.getOffsetBusinessDate(dueDate,  (integer) -taskInfo.OW_turnaround_time__c);
+
+            Assert.areEqual(dueDate, task.ActivityDate, 'Task due date not properly calculated');
+            Assert.areEqual(startDate, task.OW_target_start_date__c, 'Task start date not properly calculated');
+
+            if (task.WhatId != null && task.WhatId.getSObjectType() == Opportunity.sObjectType) {
+                //assert opp user
+                Assert.areEqual(testOpportunityOwner.Id, task.OwnerId, 'Task Owner is not the same as the Opportunity Owner');
+            
+            } else if (task.WhatId != null && task.WhatId.getSObjectType() == Case.sObjectType) {
+                //assert opp user
+                Assert.areEqual(testCaseOwner.Id, task.OwnerId, 'Task Owner is not the same as the Case Owner');
+            
+            } else if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_QUEUE){
+                //assert queue user
+                Assert.areEqual(testQueue.Id, task.OwnerId, 'Task Owner is not the same as the Queue Id');
+
+            } else if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_HOUSEHOLD_TEAM){
+                //assert household queue
+                Assert.areEqual(testHouseholdQueue.Id, task.OwnerId, 'Task Owner is not the same as the Houshold Queue Id');
+            
+            } else if(taskInfo.OW_assigned_to__c == TaskEngine.ASSIGNED_TO_PARTNER){
+                //assert partner user
+                Assert.areEqual(testPartner.Id, task.OwnerId, 'Task Owner is not the same as the Partner User Id');
+            
+            } else if(taskInfo.OW_assigned_to__c == taskEngine.ASSIGNED_TO_SUITABILITY_PLANNER){
+                //assert suitability planner user
+                Assert.areEqual(testSuitibilityPlanner.Id, task.OwnerId, 'Task Owner is not the same as the Suitability Planner Id');
+            
+            }
+
+            // Ensure no two tasks are assigned to the same user
+            Assert.isFalse(assignedUserIds.contains(task.OwnerId), 'Assignment logic has failed');
+
+            assignedUserIds.add(task.OwnerId);
+        }
     }
 
 }
