@@ -31,6 +31,8 @@ public with sharing class SandboxSetupAnonymise implements Database.Batchable<sO
             person.FirstName = fakeName.firstName;
             person.LastName = fakeName.lastName;
             person.FinServ__PreferredName__pc = fakeName.preferredName;
+            person.OW_portal_activated__c = null;
+            person.PortalAccountStatus__c = null;
         }
         update people;
     }

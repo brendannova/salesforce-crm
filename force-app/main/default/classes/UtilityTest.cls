@@ -1,7 +1,7 @@
 @isTest
 public class UtilityTest {
 
-    @istest
+    @isTest
     static void getObjectLabel_success(){
         FactCategory__c fc = new FactCategory__c(
             Name = 'Test'
@@ -11,7 +11,7 @@ public class UtilityTest {
         System.Assert.areEqual(objectLabel, 'Fact Category', 'Label Task was expected but not returned');
     }
 
-    @istest
+    @isTest
     static void getObjectName_success(){
         FactCategory__c fc = new FactCategory__c(
             Name = 'Test'
@@ -21,16 +21,27 @@ public class UtilityTest {
         System.Assert.areEqual(objectLabel, 'FactCategory__c', 'Label Task was expected but not returned');
     }
 
-    @istest
+    @isTest
     static void getRecordTypeId_success(){
         RecordType rt = [SELECT Id, DeveloperName, SObjectType FROM RecordType LIMIT 1];
         Id recordTypeId = Utility.getRecordTypeId(rt.SObjectType, rt.DeveloperName);
         System.Assert.areEqual(recordTypeId, rt.Id, 'Record type ID returned did not match');
     }
 
-    @istest
+    @isTest
     static void getDomain_success(){
         String baseUrl = UrlUtility.getBaseUrl();
         System.assertEquals(baseUrl, System.URL.getOrgDomainURL().toExternalForm());
+    }
+
+    @isTest
+    static void checkSandbox_success(){
+        Boolean isSandbox;
+        isSandbox = Utility.checkSandbox();
+        System.assert(isSandbox != null, 'No sandbox check returned');
+    }
+    
+    public static Boolean checkSandbox() {
+        return [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
     }
 }
