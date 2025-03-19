@@ -272,7 +272,7 @@
             <name>Chase_policy_pre_reqs</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>awaitingPreReqsFormula</leftValueReference>
+                <leftValueReference>isAwaitingPreReqs</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -301,7 +301,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>awaitingPreReqsFormula</leftValueReference>
+                <leftValueReference>isAwaitingPreReqs</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -314,7 +314,7 @@
         </rules>
         <rules>
             <name>Send_request_to_client</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>advice.DataGatheringStatus__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -327,6 +327,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Not required</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -385,19 +392,6 @@
         <expression>IF( ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Third party provider&quot;), &quot;To be requested&quot;, &quot;Not required&quot;)</expression>
     </formulas>
     <formulas>
-        <name>awaitingPreReqsFormula</name>
-        <dataType>Boolean</dataType>
-        <expression>ISBLANK({!informationRequest.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c})
-||
- {!informationRequest.FinancialProductFinServ__r.Public_Provider_Name__r.DeveloperName__c} == &quot;UNKNOWN&quot;
-||
-(
-{!informationRequest.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &lt; 18
-&amp;&amp;
-ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
-)</expression>
-    </formulas>
-    <formulas>
         <name>builderStatus</name>
         <dataType>String</dataType>
         <expression>IF( ISPICKVAL({!typeSelect.firstSelectedRow.BuilderLevel__c}, &quot;Not required&quot;), &quot;Not required&quot;, &quot;Not started&quot;)</expression>
@@ -411,6 +405,26 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
         <name>infoRequestStatus</name>
         <dataType>String</dataType>
         <expression>IF( ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Client&quot;) || ISPICKVAL({!typeSelect.firstSelectedRow.InformationSource__c}, &quot;Third party provider&quot;), &quot;To be sent&quot;, &quot;Not required&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>isAwaitingPreReqs</name>
+        <dataType>Boolean</dataType>
+        <expression>ISBLANK({!informationRequest.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c})
+||
+ {!informationRequest.FinancialProductFinServ__r.Public_Provider_Name__r.DeveloperName__c} == &quot;UNKNOWN&quot;
+||
+(
+{!isJuniorProduct}
+&amp;&amp;
+ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>isJuniorProduct</name>
+        <dataType>Boolean</dataType>
+        <expression>CONTAINS({!informationRequest.FinancialProductFinServ__r.RecordType.DeveloperName}, &quot;Junior&quot;)
+||
+{!informationRequest.FinancialProductFinServ__r.FinServ__PrimaryOwner__r.FinServ__Age__pc} &lt; 18</expression>
     </formulas>
     <interviewLabel>IR | Orchestrator | Set up {!$Flow.CurrentDateTime}</interviewLabel>
     <label>IR | Orchestrator | Set up</label>
