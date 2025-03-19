@@ -56,7 +56,7 @@ public with sharing class UtilityCsvTest {
         try{
             Map<Integer, Map<String, String>> csvMap = csvProcessor.parseCsv('');
         } catch (Exception e){
-            System.assertEquals('csvFileBody input required.', e.getMessage(), 'Expected error due to empty csvFileBody.');
+            System.assertEquals(UtilityCsv.ERROR_NO_CSV_BODY, e.getMessage(), 'Expected error due to empty csvFileBody.');
         }
     }
 
@@ -73,7 +73,7 @@ public with sharing class UtilityCsvTest {
         try{
             Map<Integer, Map<String, String>> csvMap = csvProcessor.parseCsvStaticResource('file name that will not exist');
         } catch(Exception e){
-            System.assert(e.getMessage().startsWith('No static resource found with name '), 'Unexpected error message returned');
+            System.assertEquals(UtilityCsv.ERROR_NO_STATIC_RESOURCE_FOUND, e.getMessage(), 'Unexpected error message returned');
         }
     }
 
@@ -83,7 +83,18 @@ public with sharing class UtilityCsvTest {
         try{
             Map<Integer, Map<String, String>> csvMap = csvProcessor.parseCsvStaticResource('');
         } catch(Exception e){
-            System.assertEquals('csvStaticResourceName input required', e.getMessage(), 'Unexpected error message returned');
+            System.assertEquals(UtilityCsv.ERROR_NO_STATIC_RESOURCE_NAME, e.getMessage(), 'Unexpected error message returned');
+        }
+    }
+
+    @istest
+    static void testParseCsvStaticResource_notCsv_error(){
+        UtilityCsv csvProcessor = new UtilityCsv();
+        String staticResourceName = [SELECT Id, Name FROM StaticResource WHERE ContentType != :CSV_FILE_EXTENSION LIMIT 1].Name;
+        try{
+            Map<Integer, Map<String, String>> csvMap = csvProcessor.parseCsvStaticResource(staticResourceName);
+        } catch(Exception e){
+            System.assertEquals(UtilityCsv.ERROR_INCORRECT_FILE_TYPE, e.getMessage(), 'Unexpected error message returned');
         }
     }
 

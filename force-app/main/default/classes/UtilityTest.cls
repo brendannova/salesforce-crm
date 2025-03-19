@@ -36,12 +36,18 @@ public class UtilityTest {
 
     @isTest
     static void checkSandbox_success(){
-        Boolean isSandbox;
-        isSandbox = Utility.checkSandbox();
-        System.assert(isSandbox != null, 'No sandbox check returned');
+        Boolean isSandbox = Utility.isSandbox;
+        System.assert(isSandbox != null, 'Did not determine if this is a sandbox or not');
     }
     
-    public static Boolean checkSandbox() {
-        return [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox;
+    @isTest
+    static void checkSandboxName_success(){
+        String sandboxName = Utility.sandboxName;
+        if(Utility.isSandbox){
+            System.assert(!String.isBlank(sandboxName), 'Expected a sandbox name but blank string returned');
+        } else {
+            System.assertEquals(null, sandboxName, 'Expected null sandbox name but a value was returned');
+        }
+        
     }
 }

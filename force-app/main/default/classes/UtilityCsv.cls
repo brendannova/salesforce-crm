@@ -10,13 +10,18 @@ public with sharing class UtilityCsv {
     final private static String CSV_NEW_LINE = '\n';
     final private static String QUOTE_MARK = '\"';
     final private static String BLANK_STRING = '';
+    
+    final public static String ERROR_NO_CSV_BODY = 'csvFileBody input required';
+    final public static String ERROR_INCORRECT_FILE_TYPE = 'File type must be ' + CSV_CONTENT_TYPE;
+    final public static String ERROR_NO_STATIC_RESOURCE_NAME = 'csvStaticResourceName input required';
+    final public static String ERROR_NO_STATIC_RESOURCE_FOUND = 'No static resource found for csvStaticResourceName provided';
 
     // Parse a CSV that is input as a string and return a map of the headers to the data. CSV input must have a header row for this to work. We may want to create a headerless supported version in the future. 
     public Map<Integer, Map<String, String>> parseCsv(String csvFileBody){
 
         Map<Integer, Map<String, String>> mapData = new Map<Integer, Map<String, String>>();
         if(String.isBlank(csvFileBody)){
-            throw new UtilityCsvException('csvFileBody input required.');
+            throw new UtilityCsvException(ERROR_NO_CSV_BODY);
         } else {
             List<String> csvRows = csvFileBody.split(CSV_NEW_LINE);
             List<String> csvHeaders = csvRows[0].split(CSV_DELIMITER); 
@@ -42,15 +47,15 @@ public with sharing class UtilityCsv {
     // Parse a CSV that exists as a static resource in Salesforce and return a map of the headers to the data.
     public Map<Integer, Map<String, String>> parseCsvStaticResource(String csvStaticResourceName){
         if(String.isBlank(csvStaticResourceName)){
-            throw new UtilityCsvException('csvStaticResourceName input required');
+            throw new UtilityCsvException(ERROR_NO_STATIC_RESOURCE_NAME);
         } else {
             List<StaticResource> staticResources = [SELECT Id, Name, Body, ContentType FROM StaticResource WHERE Name = :csvStaticResourceName];
             if(staticResources.isEmpty()){
-                throw new UtilityCsvException('No static resource found with name ' + csvStaticResourceName + '.');
+                throw new UtilityCsvException(ERROR_NO_STATIC_RESOURCE_FOUND);
             }
             StaticResource staticResourceCsv = staticResources[0];
             if (staticResourceCsv.ContentType != CSV_CONTENT_TYPE) {
-                throw new UtilityCsvException('File ' + staticResourceCsv.Name + ' (' + staticResourceCsv.ContentType + ') is not of ' + CSV_CONTENT_TYPE + ' content type.');
+                throw new UtilityCsvException(ERROR_INCORRECT_FILE_TYPE);
             } else {
                 String csvFileBody = staticResourceCsv.Body.toString();
                 return parseCsv(csvFileBody);
