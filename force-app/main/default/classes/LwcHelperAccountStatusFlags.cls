@@ -1,8 +1,10 @@
 public with sharing class LwcHelperAccountStatusFlags {
+
+    public static final String ROLE_CLIENT = 'Client';
     
     public static Set<Id> getHouseholdAccountIds(Id householdId){
         Set<Id> accountIds = new Set<Id>();
-        for(AccountContactRelation relation : [SELECT Id, ContactId, Contact.AccountId FROM AccountContactRelation WHERE AccountId = :householdId AND IsActive = True]){
+        for(AccountContactRelation relation : [SELECT Id, ContactId, Contact.AccountId FROM AccountContactRelation WHERE AccountId = :householdId AND IsActive = True AND Roles = :ROLE_CLIENT]){
             accountIds.add(relation.Contact.AccountId);
         }
         return accountIds;

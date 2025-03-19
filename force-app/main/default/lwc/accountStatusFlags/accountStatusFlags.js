@@ -37,6 +37,7 @@ const PEP_LABEL = 'Politically Exposed';
 const BADGE_RED = 'badgeRed';
 const BADGE_AMBER = 'badgeAmber';
 const BADGE_GREEN = 'badgeGreen';
+const BADGE_PINK = 'badgePink';
 
 //icons
 let iconMap = new Map();
@@ -112,9 +113,9 @@ export default class accountStatusFlags extends LightningElement {
         REF_CUSTOMER_FLAG_FAMILY:           {show: false, badge: {Id: REF_CUSTOMER_FLAG_FAMILY, text: CUSTOMER_FLAG_FAMILY, icon: 'utility:groups', badgeClass: BADGE_AMBER, order: 2.6}},
         REF_CUSTOMER_FLAG_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_FLAG_TRUST, text: CUSTOMER_FLAG_TRUST, icon: 'custom:custom90', badgeClass: BADGE_AMBER, order: 2.6}},
         REF_CUSTOMER_FLAG_VIP:              {show: false, badge: {Id: REF_CUSTOMER_FLAG_VIP, text: CUSTOMER_FLAG_VIP, icon: 'custom:custom43', badgeClass: BADGE_AMBER, order: 2.6}},
-        REF_CUSTOMER_TYPE_MORTGAGE:         {show: false, badge: {Id: REF_CUSTOMER_TYPE_MORTGAGE, text: CUSTOMER_TYPE_MORTGAGE_VALUE, icon: 'custom:custom107', badgeClass: BADGE_GREEN, order: 3.7}},
-        REF_CUSTOMER_TYPE_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_TYPE_TRUST, text: CUSTOMER_TYPE_TRUST_VALUE, icon: 'custom:custom90', badgeClass: BADGE_GREEN, order: 3.7}},
-        REF_CUSTOMER_TYPE_WEALTH:           {show: false, badge: {Id: REF_CUSTOMER_TYPE_WEALTH, text: CUSTOMER_TYPE_WEALTH_VALUE, icon: 'utility:trending', badgeClass: BADGE_GREEN, order: 3.7}}
+        REF_CUSTOMER_TYPE_MORTGAGE:         {show: false, badge: {Id: REF_CUSTOMER_TYPE_MORTGAGE, text: CUSTOMER_TYPE_MORTGAGE_VALUE, icon: 'custom:custom107', badgeClass: BADGE_PINK, order: 3.7}},
+        REF_CUSTOMER_TYPE_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_TYPE_TRUST, text: CUSTOMER_TYPE_TRUST_VALUE, icon: 'custom:custom90', badgeClass: BADGE_PINK, order: 3.7}},
+        REF_CUSTOMER_TYPE_WEALTH:           {show: false, badge: {Id: REF_CUSTOMER_TYPE_WEALTH, text: CUSTOMER_TYPE_WEALTH_VALUE, icon: 'utility:trending', badgeClass: BADGE_PINK, order: 3.7}}
     };
 
     _isHousehold
