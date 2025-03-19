@@ -1,3 +1,3 @@
 trigger UserTrigger on User (before insert, before update) {
-    UserTriggerHelper helper = new UserTriggerHelper(Trigger.newMap);
+    UserTriggerHelper helper = new UserTriggerHelper(Trigger.new);
 }
