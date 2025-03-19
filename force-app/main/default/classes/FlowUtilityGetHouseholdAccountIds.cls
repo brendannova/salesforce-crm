@@ -53,9 +53,14 @@ public with sharing class FlowUtilityGetHouseholdAccountIds {
                 if (!householdAccountMap.containsKey(relation.AccountId)) {
                     householdAccountMap.put(relation.AccountId, new List<Id>()); //invokable method does not support Set<Id> as a return type
                 }
-
-                if (roles.contains(relation.Roles) && selectedActive.contains(relation.isActive)) {
-                    householdAccountMap.get(relation.AccountId).add(relation.Contact.AccountId);
+                //roles is a multiselect picklist, so must split string on semicolon and check each one
+                for (String role : roles) {
+                    if (relation.Roles.split(';').contains(role) & selectedActive.contains(relation.isActive)) {
+                        //since multiple roles check that accoutnId not already in list before adding to avoid returning duplicates (can't retrun a Set from invokable apex)
+                        if (!householdAccountMap.get(relation.AccountId).contains(relation.Contact.AccountId)) {
+                            householdAccountMap.get(relation.AccountId).add(relation.Contact.AccountId);
+                        }
+                    }
                 }
             }
 
