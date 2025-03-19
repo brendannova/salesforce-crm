@@ -3,10 +3,14 @@
     <actionCalls>
         <name>Post_to_chatter</name>
         <label>Post to chatter</label>
-        <locationX>182</locationX>
-        <locationY>1130</locationY>
+        <locationX>50</locationX>
+        <locationY>1238</locationY>
         <actionName>chatterPost</actionName>
         <actionType>chatterPost</actionType>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>text</name>
@@ -28,7 +32,7 @@
     <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -38,14 +42,30 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error_handling</targetReference>
+            <targetReference>Error</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_update_variable</name>
+        <label>Assign update variable</label>
+        <locationX>50</locationX>
+        <locationY>782</locationY>
+        <assignmentItems>
+            <assignToReference>informationRequest.ProviderSecret__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ProviderSecretUpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Are_there_chatter_notes_to_add</name>
         <label>Are there chatter notes to add?</label>
         <locationX>314</locationX>
-        <locationY>1022</locationY>
+        <locationY>1130</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesChatterNotes</name>
@@ -79,11 +99,11 @@
                 <leftValueReference>ProviderSecretUpdate</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_information_request.ProviderSecret__c</elementReference>
+                    <elementReference>informationRequest.ProviderSecret__c</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_IR</targetReference>
+                <targetReference>Assign_update_variable</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -137,9 +157,11 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>InformationRequest__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>informationRequest</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ProviderSecret__c</queriedFields>
+        <queriedFields>FinancialProductFinServ__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_joint_owner</name>
@@ -152,14 +174,14 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Get_registered_contact</targetReference>
+            <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_information_request.FinancialProductFinServ__r.FinServ__JointOwner__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.FinServ__JointOwner__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -183,7 +205,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_information_request.FinancialProductFinServ__r.FinServ__PrimaryOwner__c</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.FinServ__PrimaryOwner__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -201,30 +223,6 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Display_details</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_information_request.FinancialProductFinServ__r.RegisteredContact__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_IR</name>
-        <label>Update IR</label>
-        <locationX>50</locationX>
-        <locationY>782</locationY>
-        <connector>
-            <targetReference>Are_there_chatter_notes_to_add</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -232,16 +230,26 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>informationRequest.FinancialProductFinServ__r.RegisteredContact__c</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>ProviderSecret__c</field>
-            <value>
-                <elementReference>ProviderSecretUpdate</elementReference>
-            </value>
-        </inputAssignments>
-        <object>InformationRequest__c</object>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_information_request</name>
+        <label>Update information request</label>
+        <locationX>50</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>Are_there_chatter_notes_to_add</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
+        <inputReference>informationRequest</inputReference>
     </recordUpdates>
     <screens>
         <name>Display_details</name>
@@ -262,30 +270,10 @@
                 <name>Provider_details_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>line1</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>thickness</name>
-                        <value>
-                            <numberValue>5.0</numberValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <fields>
                     <name>Name</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_information_request.ProviderContact__r.Name</elementReference>
+                        <elementReference>informationRequest.FinancialProductFinServ__r.ProviderContact__r.Name</elementReference>
                     </defaultValue>
                     <fieldText>Name</fieldText>
                     <fieldType>InputField</fieldType>
@@ -302,7 +290,7 @@
                     <name>Policy_number</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_information_request.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c</elementReference>
+                        <elementReference>informationRequest.FinancialProductFinServ__r.FinServ__FinancialAccountNumber__c</elementReference>
                     </defaultValue>
                     <fieldText>Policy number</fieldText>
                     <fieldType>InputField</fieldType>
@@ -324,24 +312,10 @@
                 <name>Provider_details_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>line2</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <fields>
                     <name>Phone_number</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_information_request.ProviderContact__r.Telephone__c</elementReference>
+                        <elementReference>informationRequest.FinancialProductFinServ__r.ProviderContact__r.Telephone__c</elementReference>
                     </defaultValue>
                     <fieldText>Phone number</fieldText>
                     <fieldType>InputField</fieldType>
@@ -358,7 +332,7 @@
                     <name>Email</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_information_request.ProviderContact__r.Email__c</elementReference>
+                        <elementReference>informationRequest.FinancialProductFinServ__r.ProviderContact__r.Email__c</elementReference>
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
@@ -375,7 +349,7 @@
                     <name>ProviderSecretUpdate</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>Get_information_request.ProviderSecret__c</elementReference>
+                        <elementReference>informationRequest.ProviderSecret__c</elementReference>
                     </defaultValue>
                     <fieldText>Provider secret</fieldText>
                     <fieldType>InputField</fieldType>
@@ -400,20 +374,6 @@
             <fields>
                 <name>Primary_owner_details_Column1</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>line3</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
                 <fields>
                     <name>NamePO</name>
                     <dataType>String</dataType>
@@ -453,20 +413,6 @@
             <fields>
                 <name>Primary_owner_details_Column2</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>line4</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
                 <fields>
                     <name>BirthdatePO</name>
                     <dataType>String</dataType>
@@ -550,20 +496,6 @@
                 <name>Joint_owner_details_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>line5</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <fields>
                     <name>NameJO</name>
                     <dataType>String</dataType>
                     <defaultValue>
@@ -602,20 +534,6 @@
             <fields>
                 <name>Joint_owner_details_Column2</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>line6</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
                 <fields>
                     <name>BirthdateJO</name>
                     <dataType>String</dataType>
@@ -693,7 +611,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_information_request.FinancialProductFinServ__r.FinServ__JointOwner__c</leftValueReference>
+                    <leftValueReference>Get_joint_owner.Id</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -708,20 +626,6 @@
             <fields>
                 <name>Registered_contact_details_Column1</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>line7</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
                 <fields>
                     <name>NameRC</name>
                     <dataType>String</dataType>
@@ -761,20 +665,6 @@
             <fields>
                 <name>Registered_contact_details_Column2</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>line8</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
                 <fields>
                     <name>BirthdateRC</name>
                     <dataType>String</dataType>
@@ -852,7 +742,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Get_information_request.FinancialProductFinServ__r.RegisteredContact__c</leftValueReference>
+                    <leftValueReference>Get_registered_contact.Id</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>false</booleanValue>
@@ -867,20 +757,6 @@
             <fields>
                 <name>NOVA_details_Column1</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>line9</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
                 <fields>
                     <name>FCA_number</name>
                     <dataType>String</dataType>
@@ -921,20 +797,6 @@
                 <name>NOVA_details_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>line10</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
-                <fields>
                     <name>AddressNova</name>
                     <dataType>String</dataType>
                     <defaultValue>
@@ -967,18 +829,15 @@
                 <name>Call_details_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>line11</name>
-                    <extensionName>c:drawLine</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>color</name>
-                        <value>
-                            <stringValue>#FFFFFF</stringValue>
-                        </value>
-                    </inputParameters>
+                    <name>Number_you_called</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>informationRequest.FinancialProductFinServ__r.ProviderContact__r.Telephone__c</elementReference>
+                    </defaultValue>
+                    <fieldText>Number you called</fieldText>
+                    <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>Name_of_contact</name>
@@ -987,18 +846,13 @@
                     <fieldType>InputField</fieldType>
                     <helpText>&lt;p&gt;Include first and last name&lt;/p&gt;</helpText>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                </fields>
-                <fields>
-                    <name>Number_you_called</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_information_request.ProviderContact__r.Telephone__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Number you called</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Ensure both name and outcome details are provided.&lt;/p&gt;</errorMessage>
+                        <formulaExpression>(NOT(ISBLANK({!Outcome_of_call})) &amp;&amp; NOT(ISBLANK({!Name_of_contact})))
+||
+(ISBLANK({!Outcome_of_call}) &amp;&amp; ISBLANK({!Name_of_contact}))</formulaExpression>
+                    </validationRule>
                 </fields>
                 <fields>
                     <name>Outcome_of_call</name>
@@ -1007,7 +861,21 @@
                     <fieldType>InputField</fieldType>
                     <helpText>&lt;p&gt;If you were given a valuation on the call, include the date of that valuation&lt;/p&gt;</helpText>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
+                    <isRequired>false</isRequired>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Ensure both name and outcome details are provided.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                        <formulaExpression>(
+NOT(ISBLANK({!Outcome_of_call})) 
+&amp;&amp; 
+NOT(ISBLANK({!Name_of_contact}))
+)
+||
+(
+ISBLANK({!Outcome_of_call}) 
+&amp;&amp; 
+ISBLANK({!Name_of_contact})
+)</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1024,6 +892,22 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Error</name>
+        <label>Error</label>
+        <locationX>1370</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorText</name>
+            <fieldText>&lt;p&gt;There&#39;s been an error here. Please raise a ticket with the product team with the following message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>188</locationX>
         <locationY>0</locationY>
@@ -1032,55 +916,20 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Error_handling</name>
-        <label>Error handling</label>
-        <locationX>1282</locationX>
-        <locationY>458</locationY>
-        <flowName>ErrorHandleScreen</flowName>
-        <inputAssignments>
-            <name>closeFlowAfterToast</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>errorMessage</name>
-            <value>
-                <elementReference>errorMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>showToast</name>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>toastMessage</name>
-            <value>
-                <elementReference>errorMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>toastMode</name>
-            <value>
-                <stringValue>error</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>toastTitle</name>
-            <value>
-                <stringValue>Error</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
     <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>informationRequest</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>InformationRequest__c</objectType>
     </variables>
     <variables>
         <name>recordId</name>
