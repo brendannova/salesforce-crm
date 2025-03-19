@@ -2,13 +2,8 @@ public with sharing class SandboxSetupAnonymise implements Database.Batchable<sO
 
     final private static String NATIONAL_INSURANCE_NUMBER = 'QQ123456A';
 
-    private Boolean isSandbox;
-
     public SandboxSetupAnonymise(){
-        isSandbox = Utility.checkSandbox();        
-        if(isSandbox){
-            this.isSandbox = true;
-        } else {
+        if(!Utility.isSandbox){
             throw new SandboxSetupException('Cannot be run in production'); 
         }
     }
