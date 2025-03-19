@@ -117,7 +117,7 @@ public with sharing class TaskEngine {
                             required = false) public Id whoId;
     }
 
-    @InvocableMethod(label='Generate Task' description='Generate a task based on provided task request.' category='Flow Utility' iconName='slds:standard:task')
+    @InvocableMethod(label='Generate Task' description='Generate a task based on provided task request.' category='Flow utilities' iconName='slds:standard:task')
     public static void invocableGenerateTasks(List<taskEngineRequest> taskRequests){
         TaskEngine engine = new TaskEngine();
         engine.generateTasks(taskRequests);
