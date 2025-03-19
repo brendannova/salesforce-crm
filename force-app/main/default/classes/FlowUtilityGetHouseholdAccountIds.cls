@@ -73,11 +73,12 @@ public with sharing class FlowUtilityGetHouseholdAccountIds {
     }
     
     public class householdVars {
+        //Default value can only be string, so booleans bust be set on variable declaration (avoids null errors)
         @InvocableVariable(label='Household ID' description='The ID of the household' required=true)
         public Id householdId;
         
         @InvocableVariable(label='Include Clients' description='Include Clients' required=false)
-        public Boolean includeClient = true;
+        public Boolean includeClient = false;
         
         @InvocableVariable(label='Include Children' description='Include Children' required=false)
         public Boolean includeChild = false;
@@ -103,10 +104,10 @@ public with sharing class FlowUtilityGetHouseholdAccountIds {
         @InvocableVariable(label='Include Deceased Clients' description='Include Deceased Clients' required=false)
         public Boolean includeDeceasedClient = false;
 
-        @InvocableVariable(label='Include Active' description='Include Active Roles' required=false)
-        public Boolean includeActive = true;
+        @InvocableVariable(label='Include Active' description='Include Active Household Members' required=false)
+        public Boolean includeActive = false;
 
-        @InvocableVariable(label='Include Inactive' description='Includes Active by default, also include roles that are inactive' required=false)
+        @InvocableVariable(label='Include Inactive' description='Include Inactive Household Members' required=false)
         public Boolean includeInactive = false;
     }
 }
