@@ -42,7 +42,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Error</targetReference>
+            <targetReference>Error_sub_flow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -892,22 +892,6 @@ ISBLANK({!Name_of_contact})
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Error</name>
-        <label>Error</label>
-        <locationX>1370</locationX>
-        <locationY>458</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>errorText</name>
-            <fieldText>&lt;p&gt;There&#39;s been an error here. Please raise a ticket with the product team with the following message:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!errorMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>188</locationX>
         <locationY>0</locationY>
@@ -916,6 +900,49 @@ ISBLANK({!Name_of_contact})
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Error_sub_flow</name>
+        <label>Error sub flow</label>
+        <locationX>1370</locationX>
+        <locationY>458</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>closeFlowAfterToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMode</name>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastTitle</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
