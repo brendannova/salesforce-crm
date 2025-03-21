@@ -32,14 +32,14 @@ public with sharing class SandboxSetupAnonymiseTest {
         Test.stopTest();
         accounts = [SELECT Id, FirstName, LastName, FinServ__PreferredName__pc, PersonEmail, Secondary_Email__pc, PersonMobilePhone, Phone, National_Insurance_Number__pc FROM Account];
         for(Account acc : accounts){
-            System.Assert.areNotEqual(TEST_NAME, acc.FirstName);
-            System.Assert.areNotEqual(TEST_NAME, acc.LastName);
-            System.Assert.areNotEqual(TEST_NAME, acc.FinServ__PreferredName__pc);
-            System.Assert.areNotEqual(TEST_NINO, acc.National_Insurance_Number__pc);
-            System.Assert.areEqual(null, acc.PersonEmail);
-            System.Assert.areEqual(null, acc.Secondary_Email__pc);
-            System.Assert.areEqual(null, acc.PersonMobilePhone);
-            System.Assert.areEqual(null, acc.Phone);
+            System.Assert.areNotEqual(TEST_NAME, acc.FirstName, 'First names should should not be equal');
+            System.Assert.areNotEqual(TEST_NAME, acc.LastName, 'Last names should should not be equal');
+            System.Assert.areNotEqual(TEST_NAME, acc.FinServ__PreferredName__pc, 'Preferred names should should not be equal');
+            System.Assert.areNotEqual(TEST_NINO, acc.National_Insurance_Number__pc, 'NINOs should should not be equal');
+            System.Assert.areEqual(null, acc.PersonEmail, 'Should be null.');
+            System.Assert.areEqual(null, acc.Secondary_Email__pc, 'Should be null.');
+            System.Assert.areEqual(null, acc.PersonMobilePhone, 'Should be null.');
+            System.Assert.areEqual(null, acc.Phone, 'Should be null.');
         }
     }
 }
