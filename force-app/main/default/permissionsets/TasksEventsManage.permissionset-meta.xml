@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>TaskEngine</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Utility</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Grants access to manage tasks and events across both system and object level permissions.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Tasks and Events | manage</label>
@@ -46,6 +54,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.FinServ__NextSteps__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.HouseholdStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -245,6 +258,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Task.HouseholdStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Task.Meeting_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -409,6 +427,10 @@
         <recordType>Task.OW_task_ad_hoc</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
+    <tabSettings>
+        <tab>standard-SemanticModel</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>ActivitiesAccess</name>

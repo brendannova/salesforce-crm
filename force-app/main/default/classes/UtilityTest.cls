@@ -50,4 +50,13 @@ public class UtilityTest {
         }
         
     }
+@IsTest
+    static void getOffsetBusinessDate_success(){
+        Date startDate = Date.newInstance(2024, 12, 31);
+        Integer daysOffset = 3; //over a bank holiday and a weekend
+        Date offsetDate = Utility.getOffsetBusinessDate(startDate, daysOffset);
+        Date expectedOffsetDate = Date.newInstance(2025, 1, 6);
+        Assert.areEqual(expectedOffsetDate, offsetDate , 'Incorrect number of business days offset');
+    }
+
 }

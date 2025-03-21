@@ -59,6 +59,14 @@
         <apexClass>GroupsTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>TaskEngine</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TaskEngineTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <customPermissions>
         <enabled>true</enabled>
         <name>AdviceConfirmPresentation</name>
@@ -2052,6 +2060,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Event.CompletedBy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.HouseholdStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5507,6 +5520,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Task.CompletedBy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.HouseholdStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
