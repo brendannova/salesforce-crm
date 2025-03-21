@@ -10,27 +10,10 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Error getting information request in FinancialProductInformationRequestPolicyDetailsAdded</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Throw_error</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_error_message_fault</name>
-        <label>Set error message</label>
-        <locationX>578</locationX>
-        <locationY>863</locationY>
-        <assignmentItems>
-            <assignToReference>errorMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Throw_error</targetReference>
         </connector>
     </assignments>
@@ -61,7 +44,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_IR</targetReference>
+            <targetReference>Update_information_request</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -187,7 +170,7 @@
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>Set_error_message_fault</targetReference>
+            <targetReference>Set_error_message_failed_to_get_information_request</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -227,15 +210,16 @@
         <object>Task</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_IR</name>
-        <label>Update IR</label>
+        <name>Update_information_request</name>
+        <label>Update information request</label>
         <locationX>50</locationX>
         <locationY>755</locationY>
         <connector>
             <targetReference>Close_existing_task</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Set_error_message_fault</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_message_failed_to_get_information_request</targetReference>
         </faultConnector>
         <inputReference>informationRequest</inputReference>
     </recordUpdates>
@@ -250,10 +234,10 @@
 &amp;&amp;
 NOT(ISBLANK({!$Record.FinServ__FinancialAccountNumber__c}))
 &amp;&amp;
-{!$Record.Public_Provider_Name__r.Name} != &quot;Unknown&quot;
+{!$Record.Public_Provider_Name__r.DeveloperName__c} != &quot;UNKNOWN&quot;
 &amp;&amp;
 (
-NOT(CONTAINS(TEXT({!$Record.FinServ__PrimaryOwner__r.FinServ__Status__c}),&quot;Junior&quot;))
+NOT(CONTAINS({!$Record.RecordType.DeveloperName}, &quot;Junior&quot;))
 ||
 NOT(ISBLANK({!$Record.RegisteredContact__c}))
 )</filterFormula>
