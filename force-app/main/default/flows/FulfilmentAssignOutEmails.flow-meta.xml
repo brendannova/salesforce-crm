@@ -4,7 +4,7 @@
         <name>De_duplicate_household_list</name>
         <label>De-duplicate household list</label>
         <locationX>182</locationX>
-        <locationY>4778</locationY>
+        <locationY>4886</locationY>
         <actionName>StringListDeduplicate</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -18,6 +18,7 @@
             </value>
         </inputParameters>
         <nameSegment>StringListDeduplicate</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
@@ -25,7 +26,7 @@
         <name>Add_advice_id_to_list</name>
         <label>Add advice id to list</label>
         <locationX>270</locationX>
-        <locationY>1814</locationY>
+        <locationY>1922</locationY>
         <assignmentItems>
             <assignToReference>newAdviceIds</assignToReference>
             <operator>Add</operator>
@@ -41,7 +42,7 @@
         <name>Add_advice_to_collection</name>
         <label>Add advice to collection</label>
         <locationX>270</locationX>
-        <locationY>4286</locationY>
+        <locationY>4394</locationY>
         <assignmentItems>
             <assignToReference>adviceToUpdate</assignToReference>
             <operator>Add</operator>
@@ -50,14 +51,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Loop_through_advice</targetReference>
+            <targetReference>Loop_through_advice_that_requires_updating</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_advice_to_relevant_new_advice_collection</name>
         <label>Add advice to relevant new advice collection</label>
         <locationX>270</locationX>
-        <locationY>2546</locationY>
+        <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>relevantNewAdvice</assignToReference>
             <operator>Add</operator>
@@ -71,9 +72,9 @@
     </assignments>
     <assignments>
         <name>Add_id_to_collection</name>
-        <label>Add id to collection</label>
+        <label>Add ID to collection</label>
         <locationX>270</locationX>
-        <locationY>4586</locationY>
+        <locationY>4694</locationY>
         <assignmentItems>
             <assignToReference>householdsGettingAnUpdateIds</assignToReference>
             <operator>Add</operator>
@@ -89,9 +90,23 @@
         <name>Add_new_to_loop</name>
         <label>Add new to loop</label>
         <locationX>50</locationX>
-        <locationY>3146</locationY>
+        <locationY>3254</locationY>
         <assignmentItems>
             <assignToReference>adviceToLoop</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>newAdviceSelect.selectedRows</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceRequiringUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>newAdviceSelect.selectedRows</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceRequiringUpdateEmail</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>newAdviceSelect.selectedRows</elementReference>
@@ -110,18 +125,25 @@
             <assignToReference>adviceToLoop</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>goimgAdviceReview.selectedRows</elementReference>
+                <elementReference>goingAdviceReview.selectedRows</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceRequiringUpdateEmail</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>goingAdviceReview.selectedRows</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_advice_newly_ready</targetReference>
+            <targetReference>Get_protection_advice_type</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_task_to_collection</name>
         <label>Add task to collection</label>
         <locationX>1062</locationX>
-        <locationY>5534</locationY>
+        <locationY>5642</locationY>
         <assignmentItems>
             <assignToReference>tasksToCreate</assignToReference>
             <operator>Add</operator>
@@ -137,7 +159,7 @@
         <name>Add_to_count</name>
         <label>Add to count</label>
         <locationX>1062</locationX>
-        <locationY>5642</locationY>
+        <locationY>5750</locationY>
         <assignmentItems>
             <assignToReference>count</assignToReference>
             <operator>Add</operator>
@@ -168,15 +190,29 @@
                 <elementReference>blockedSelect.selectedRows</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceRequiringUpdateEmail</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>blockedSelect.selectedRows</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>adviceRequiringUpdate</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>blockedSelect.selectedRows</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Being_sent_review</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_user_id_to_collection</name>
-        <label>Add user id to collection</label>
+        <label>Add user ID to collection</label>
         <locationX>270</locationX>
-        <locationY>3662</locationY>
+        <locationY>3770</locationY>
         <assignmentItems>
             <assignToReference>userIds</assignToReference>
             <operator>Add</operator>
@@ -192,12 +228,12 @@
         <name>Assign_advice_values</name>
         <label>Assign advice values</label>
         <locationX>270</locationX>
-        <locationY>4178</locationY>
+        <locationY>4286</locationY>
         <assignmentItems>
             <assignToReference>singleAdviceToUpdate.Id</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Loop_through_advice.Id</elementReference>
+                <elementReference>Loop_through_advice_that_requires_updating.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -205,20 +241,6 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Receiving updates</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>singleAdviceToUpdate.Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_through_advice.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>singleAdviceToUpdate.AdviceLink__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Loop_through_advice.AdviceLink__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -229,7 +251,7 @@
         <name>Assign_count</name>
         <label>Assign count</label>
         <locationX>622</locationX>
-        <locationY>6002</locationY>
+        <locationY>6110</locationY>
         <assignmentItems>
             <assignToReference>count</assignToReference>
             <operator>Assign</operator>
@@ -245,7 +267,7 @@
         <name>Assign_fulfilment_count</name>
         <label>Assign fulfilment count</label>
         <locationX>402</locationX>
-        <locationY>2330</locationY>
+        <locationY>2438</locationY>
         <assignmentItems>
             <assignToReference>fulfilmentCount</assignToReference>
             <operator>AssignCount</operator>
@@ -261,7 +283,7 @@
         <name>Assign_new_count</name>
         <label>Assign new count</label>
         <locationX>182</locationX>
-        <locationY>2930</locationY>
+        <locationY>3038</locationY>
         <assignmentItems>
             <assignToReference>newCount</assignToReference>
             <operator>AssignCount</operator>
@@ -282,7 +304,7 @@
             <assignToReference>ongoingCount</assignToReference>
             <operator>AssignCount</operator>
             <value>
-                <elementReference>goimgAdviceReview.selectedRows</elementReference>
+                <elementReference>goingAdviceReview.selectedRows</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -293,7 +315,7 @@
         <name>Assign_task_request_values</name>
         <label>Assign task request values</label>
         <locationX>1062</locationX>
-        <locationY>5426</locationY>
+        <locationY>5534</locationY>
         <assignmentItems>
             <assignToReference>taskToCreate.householdId</assignToReference>
             <operator>Assign</operator>
@@ -346,7 +368,7 @@
         <name>Assign_values</name>
         <label>Assign values</label>
         <locationX>182</locationX>
-        <locationY>4886</locationY>
+        <locationY>4994</locationY>
         <assignmentItems>
             <assignToReference>numSpecs</assignToReference>
             <operator>AssignCount</operator>
@@ -426,7 +448,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get relevant fulfilment for this advice</label>
         <locationX>402</locationX>
-        <locationY>2222</locationY>
+        <locationY>2330</locationY>
         <assignNextValueToReference>currentItem_Get_relevant_fulfilment_for_this_advice</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_fulfilment_for_new_advice</collectionReference>
@@ -434,27 +456,15 @@
         <connector>
             <targetReference>Assign_fulfilment_count</targetReference>
         </connector>
-        <formula>NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} , &quot;On hold&quot; ))
+        <formula>{!currentItem_Get_relevant_fulfilment_for_this_advice.Advice__c} = {!Work_out_which_new_advice_is_relevant.Id}
 &amp;&amp;
-NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} , &quot;Postponed&quot; ))
-&amp;&amp;
-NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} , &quot;Cancelled&quot; ))
-&amp;&amp;
-NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} , &quot;Awaiting pre-requisites&quot; ))
-&amp;&amp;
-NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} , &quot;Submit fulfilment&quot; ))
-&amp;&amp;
-{!currentItem_Get_relevant_fulfilment_for_this_advice.Advice__c} = {!Work_out_which_new_advice_is_relevant.Id}
-&amp;&amp;
-!{!currentItem_Get_relevant_fulfilment_for_this_advice.FulfilmentType__r.ExcludeFromUpdate__c}
-&amp;&amp;
-!{!currentItem_Get_relevant_fulfilment_for_this_advice.ExcludeFromUpdate__c}</formula>
+!{!currentItem_Get_relevant_fulfilment_for_this_advice.FulfilmentType__r.ExcludeFromUpdate__c}</formula>
     </collectionProcessors>
     <decisions>
         <name>Are_there_any_new_advice</name>
         <label>Are there any new advice?</label>
         <locationX>182</locationX>
-        <locationY>3038</locationY>
+        <locationY>3146</locationY>
         <defaultConnector>
             <targetReference>Get_fulfilment_update_permission_set</targetReference>
         </defaultConnector>
@@ -481,7 +491,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <locationX>182</locationX>
         <locationY>1298</locationY>
         <defaultConnector>
-            <targetReference>Get_advice_newly_ready</targetReference>
+            <targetReference>Get_protection_advice_type</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -504,7 +514,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Are_there_any_relevant_pieces_of_fulfilment</name>
         <label>Are there any relevant pieces of fulfilment?</label>
         <locationX>402</locationX>
-        <locationY>2438</locationY>
+        <locationY>2546</locationY>
         <defaultConnector>
             <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
         </defaultConnector>
@@ -554,7 +564,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Has_this_household_been_assigned_already</name>
         <label>Has this household been assigned already?</label>
         <locationX>842</locationX>
-        <locationY>5210</locationY>
+        <locationY>5318</locationY>
         <defaultConnector>
             <targetReference>Has_this_specialist_got_enough_cases</targetReference>
         </defaultConnector>
@@ -579,7 +589,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Has_this_specialist_got_enough_cases</name>
         <label>Has this specialist got enough cases?</label>
         <locationX>974</locationX>
-        <locationY>5318</locationY>
+        <locationY>5426</locationY>
         <defaultConnector>
             <targetReference>Assign_task_request_values</targetReference>
         </defaultConnector>
@@ -604,7 +614,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Was_task_creation_a_success</name>
         <label>Was task creation a success?</label>
         <locationX>182</locationX>
-        <locationY>6410</locationY>
+        <locationY>6518</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen</targetReference>
         </defaultConnector>
@@ -639,7 +649,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Collect_new_advice_ids</name>
         <label>Collect new advice ids</label>
         <locationX>182</locationX>
-        <locationY>1706</locationY>
+        <locationY>1814</locationY>
         <collectionReference>Get_advice_newly_ready</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -651,10 +661,10 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
     </loops>
     <loops>
         <name>Get_household_ids</name>
-        <label>Get household ids</label>
+        <label>Get household IDs</label>
         <locationX>182</locationX>
-        <locationY>4478</locationY>
-        <collectionReference>adviceToLoop</collectionReference>
+        <locationY>4586</locationY>
+        <collectionReference>adviceRequiringUpdateEmail</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Add_id_to_collection</targetReference>
@@ -665,9 +675,9 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
     </loops>
     <loops>
         <name>Get_user_ids_from_permission_set_assignments</name>
-        <label>Get user ids from permission set assignments</label>
+        <label>Get user IDs from permission set assignments</label>
         <locationX>182</locationX>
-        <locationY>3554</locationY>
+        <locationY>3662</locationY>
         <collectionReference>Get_permission_set_assignments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -678,11 +688,12 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <name>Loop_through_advice</name>
-        <label>Loop through advice</label>
+        <description>Assigning a new fulfilment update status for advice which will now be receiving an update (where it wasn&#39;t previously)</description>
+        <name>Loop_through_advice_that_requires_updating</name>
+        <label>Loop through advice that requires updating</label>
         <locationX>182</locationX>
-        <locationY>4070</locationY>
-        <collectionReference>adviceToLoop</collectionReference>
+        <locationY>4178</locationY>
+        <collectionReference>adviceRequiringUpdate</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_advice_values</targetReference>
@@ -695,7 +706,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Loop_through_households</name>
         <label>Loop through households</label>
         <locationX>622</locationX>
-        <locationY>5102</locationY>
+        <locationY>5210</locationY>
         <collectionReference>De_duplicate_household_list.outputString</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -709,7 +720,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Loop_through_specialists</name>
         <label>Loop through specialists</label>
         <locationX>182</locationX>
-        <locationY>4994</locationY>
+        <locationY>5102</locationY>
         <collectionReference>userSelect.selectedRows</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -723,7 +734,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Work_out_which_new_advice_is_relevant</name>
         <label>Work out which new advice is relevant</label>
         <locationX>182</locationX>
-        <locationY>2114</locationY>
+        <locationY>2222</locationY>
         <collectionReference>Get_advice_newly_ready</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -794,7 +805,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Get_advice_newly_ready</name>
         <label>Get advice newly ready</label>
         <locationX>182</locationX>
-        <locationY>1598</locationY>
+        <locationY>1706</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Collect_new_advice_ids</targetReference>
@@ -809,7 +820,17 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         </filters>
         <filters>
             <field>FulfilmentUpdateStatus__c</field>
-            <operator>EqualTo</operator>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AdviceType__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>protectionAdviceTypeId</elementReference>
+            </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Advice__c</object>
@@ -827,7 +848,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Get_fulfilment_for_new_advice</name>
         <label>Get fulfilment for new advice</label>
         <locationX>182</locationX>
-        <locationY>2006</locationY>
+        <locationY>2114</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
@@ -838,6 +859,41 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
             <operator>In</operator>
             <value>
                 <elementReference>newAdviceIds</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ExcludeFromUpdate__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>On hold</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Postponed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Awaiting pre-requisites</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -853,7 +909,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Get_fulfilment_update_permission_set</name>
         <label>Get fulfilment update permission set</label>
         <locationX>182</locationX>
-        <locationY>3338</locationY>
+        <locationY>3446</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_permission_set_assignments</targetReference>
@@ -875,7 +931,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Get_permission_set_assignments</name>
         <label>Get permission set assignments</label>
         <locationX>182</locationX>
-        <locationY>3446</locationY>
+        <locationY>3554</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_user_ids_from_permission_set_assignments</targetReference>
@@ -895,10 +951,40 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_protection_advice_type</name>
+        <label>Get protection advice type</label>
+        <locationX>182</locationX>
+        <locationY>1598</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_advice_newly_ready</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>PROTECTION</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>AdviceType__c</object>
+        <outputAssignments>
+            <assignToReference>protectionAdviceTypeId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>Get_specialists</name>
         <label>Get specialists</label>
         <locationX>182</locationX>
-        <locationY>3854</locationY>
+        <locationY>3962</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>User_selection</targetReference>
@@ -928,7 +1014,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>50</locationX>
-        <locationY>6518</locationY>
+        <locationY>6626</locationY>
         <connector>
             <targetReference>SuccessScreen</targetReference>
         </connector>
@@ -952,7 +1038,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>goimgAdviceReview</name>
+            <name>goingAdviceReview</name>
             <dataTypeMappings>
                 <typeName>T</typeName>
                 <typeValue>Advice__c</typeValue>
@@ -1073,7 +1159,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>ErrorScreen</name>
         <label>Error</label>
         <locationX>314</locationX>
-        <locationY>6518</locationY>
+        <locationY>6626</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1129,7 +1215,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>New_advice_review</name>
         <label>New advice review</label>
         <locationX>182</locationX>
-        <locationY>2822</locationY>
+        <locationY>2930</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1202,7 +1288,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>SuccessScreen</name>
         <label>Success</label>
         <locationX>50</locationX>
-        <locationY>6626</locationY>
+        <locationY>6734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1239,7 +1325,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Summary</name>
         <label>Summary</label>
         <locationX>182</locationX>
-        <locationY>6194</locationY>
+        <locationY>6302</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1249,61 +1335,13 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         </connector>
         <fields>
             <name>doneText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;The following advice will receive an update this week. Click Assign Updates to continue. &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Click Assign Updates to continue. &lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>casesExplain</name>
             <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Each specialist will receive a maximum of {!householdPerSpecs} cases each.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>display</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Advice__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Data Table</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>NO_SELECTION</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>adviceToUpdate</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>maxRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;AdviceLink__c&quot;,&quot;guid&quot;:&quot;column-1284&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Advice&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Advice link&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <nextOrFinishButtonLabel>Assign updates</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
@@ -1313,12 +1351,12 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>User_selection</name>
         <label>User selection</label>
         <locationX>182</locationX>
-        <locationY>3962</locationY>
+        <locationY>4070</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Loop_through_advice</targetReference>
+            <targetReference>Loop_through_advice_that_requires_updating</targetReference>
         </connector>
         <fields>
             <name>specialistExplain</name>
@@ -1388,7 +1426,7 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>Create_tasks</name>
         <label>Create tasks</label>
         <locationX>182</locationX>
-        <locationY>6302</locationY>
+        <locationY>6410</locationY>
         <connector>
             <targetReference>Was_task_creation_a_success</targetReference>
         </connector>
@@ -1401,6 +1439,22 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>adviceRequiringUpdate</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
+    <variables>
+        <name>adviceRequiringUpdateEmail</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
     <variables>
         <name>adviceToLoop</name>
         <dataType>SObject</dataType>
@@ -1515,6 +1569,13 @@ NOT(ISPICKVAL({!currentItem_Get_relevant_fulfilment_for_this_advice.Status__c} ,
         <name>processedHouseholdIds</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>protectionAdviceTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
