@@ -42,7 +42,10 @@ private class UserTriggerTest {
                 System.debug(user);
                 System.debug(user.FederationIdentifier);
                 System.assertEquals(user.Email, user.FederationIdentifier, 'Expected email to match federation identifier');
-                System.assertNotEquals(user.Username, user.FederationIdentifier, 'Expected username and federation identifier to not equal');
+                if(Utility.isSandbox){
+                    System.assertNotEquals(user.Username, user.FederationIdentifier, 'Expected username and federation identifier to not equal');    
+                }
+                System.assert(user.Username.startsWith(user.FederationIdentifier), 'Expected username to start with the federation identifier.');
             } else {
                 System.debug(user);
                 System.debug(user.FederationIdentifier);
