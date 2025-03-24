@@ -5,7 +5,7 @@
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>138</locationX>
-        <locationY>971</locationY>
+        <locationY>1079</locationY>
         <assignmentItems>
             <assignToReference>recommendationIds</assignToReference>
             <operator>Add</operator>
@@ -36,7 +36,7 @@
     <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -53,7 +53,7 @@
         <name>Assign_fake_fulfilment_values</name>
         <label>Assign fake fulfilment values</label>
         <locationX>226</locationX>
-        <locationY>1379</locationY>
+        <locationY>1487</locationY>
         <assignmentItems>
             <assignToReference>fakeFulfilment.Id</assignToReference>
             <operator>Assign</operator>
@@ -125,7 +125,7 @@
         <name>Assign_rec</name>
         <label>Assign rec</label>
         <locationX>314</locationX>
-        <locationY>1703</locationY>
+        <locationY>1811</locationY>
         <assignmentItems>
             <assignToReference>recommendation</assignToReference>
             <operator>Assign</operator>
@@ -142,7 +142,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get specific recommendation</label>
         <locationX>226</locationX>
-        <locationY>1487</locationY>
+        <locationY>1595</locationY>
         <assignNextValueToReference>currentItem_Get_specific_recommendation_0</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_employer_recommendation</collectionReference>
@@ -161,7 +161,7 @@
     <customErrors>
         <name>Assign_custom_error</name>
         <label>Assign custom error</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>647</locationY>
         <customErrorMessages>
             <errorMessage>{!errorMessage}</errorMessage>
@@ -172,7 +172,7 @@
         <name>Was_the_subflow_a_success</name>
         <label>Was the subflow a success?</label>
         <locationX>226</locationX>
-        <locationY>2003</locationY>
+        <locationY>2111</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assign_custom_error</targetReference>
@@ -197,7 +197,7 @@
     <decisions>
         <name>What_status_is_the_account</name>
         <label>What status is the account?</label>
-        <locationX>1106</locationX>
+        <locationX>1238</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -251,7 +251,7 @@
         <name>Loop_5_Recommendations</name>
         <label>Loop 5 | Recommendations</label>
         <locationX>50</locationX>
-        <locationY>863</locationY>
+        <locationY>971</locationY>
         <collectionReference>Get_employer_recommendation</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -265,7 +265,7 @@
         <name>Loop_7_5</name>
         <label>Loop 7.5</label>
         <locationX>226</locationX>
-        <locationY>1595</locationY>
+        <locationY>1703</locationY>
         <collectionReference>Get_specific_recommendation</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -279,7 +279,7 @@
         <name>Loop_7_Fulfilment</name>
         <label>Loop 7 | Fulfilment</label>
         <locationX>50</locationX>
-        <locationY>1271</locationY>
+        <locationY>1379</locationY>
         <collectionReference>Get_fulfilment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -309,7 +309,7 @@
         <name>Get_employer_recommendation</name>
         <label>Get employer recommendation</label>
         <locationX>50</locationX>
-        <locationY>755</locationY>
+        <locationY>863</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_5_Recommendations</targetReference>
@@ -348,7 +348,7 @@
         <name>Get_fulfilment</name>
         <label>Get fulfilment</label>
         <locationX>50</locationX>
-        <locationY>1163</locationY>
+        <locationY>1271</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_7_Fulfilment</targetReference>
@@ -379,7 +379,7 @@
     <recordUpdates>
         <name>Close_any_tasks</name>
         <label>Close any tasks</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>539</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -400,10 +400,72 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>FinServ__Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
             <field>Status</field>
             <value>
                 <stringValue>Cancelled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_chase_task</name>
+        <label>Complete chase task</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>Update_request_task</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Employment__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>chase_employer_bank_details</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>FinServ__Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OrchestrationTaskStatus__c</field>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
             </value>
         </inputAssignments>
         <object>Task</object>
@@ -414,7 +476,7 @@
         <locationX>50</locationX>
         <locationY>539</locationY>
         <connector>
-            <targetReference>Update_task</targetReference>
+            <targetReference>Update_chase_task</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -439,7 +501,7 @@
     <recordUpdates>
         <name>Update_employmentBankPending</name>
         <label>Update employment</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>431</locationY>
         <connector>
             <targetReference>Close_any_tasks</targetReference>
@@ -464,10 +526,10 @@
         <object>FinServ__Employment__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_task</name>
-        <label>Update task</label>
+        <name>Update_request_task</name>
+        <label>Cancel request task</label>
         <locationX>50</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <connector>
             <targetReference>Get_employer_recommendation</targetReference>
         </connector>
@@ -475,7 +537,7 @@
             <isGoTo>true</isGoTo>
             <targetReference>Assign_error_message</targetReference>
         </faultConnector>
-        <filterLogic>1 AND (2 OR 3) AND 4 AND 5 AND 6</filterLogic>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
             <operator>EqualTo</operator>
@@ -491,49 +553,29 @@
             </value>
         </filters>
         <filters>
-            <field>OW_task_information_name__c</field>
+            <field>IsClosed</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>chase_employer_bank_details</stringValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
+            <field>FinServ__Household__c</field>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue>Completed</stringValue>
+                <elementReference>$Record.Household__c</elementReference>
             </value>
         </filters>
-        <filters>
+        <inputAssignments>
             <field>Status</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Pushed</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>NotEqualTo</operator>
             <value>
                 <stringValue>Cancelled</stringValue>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OrchestrationTaskStatus__c</field>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Completed</stringValue>
             </value>
         </inputAssignments>
         <object>Task</object>
     </recordUpdates>
     <start>
-        <locationX>980</locationX>
+        <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>What_status_is_the_account</targetReference>
@@ -555,7 +597,7 @@
         <name>Set_fulfilment_status</name>
         <label>Set fulfilment status</label>
         <locationX>226</locationX>
-        <locationY>1895</locationY>
+        <locationY>2003</locationY>
         <connector>
             <targetReference>Was_the_subflow_a_success</targetReference>
         </connector>
