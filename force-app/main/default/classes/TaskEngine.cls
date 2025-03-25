@@ -228,6 +228,7 @@ public with sharing class TaskEngine {
             tempTask.Related_LOA__c = TaskEngineRequest.relatedLoa;
             tempTask.Related_Opportunity__c = TaskEngineRequest.relatedOpportunity;
             tempTask.Related_Provider__c = TaskEngineRequest.relatedProvider;
+            tempTask.RelatedFee__c = TaskEngineRequest.relatedFee;
             tempTask.RelatedFulfilment__c = TaskEngineRequest.relatedFulfilment;
             tempTask.RelatedInformationRequest__c = TaskEngineRequest.relatedInformationRequest;
 

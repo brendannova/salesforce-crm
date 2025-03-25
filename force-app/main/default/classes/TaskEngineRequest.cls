@@ -6,6 +6,7 @@ public class TaskEngineRequest {
     @auraEnabled public Id relatedAdviceId;
     @auraEnabled public Id relatedAmlKycId;
     @auraEnabled public Id relatedAnnualReview;
+    @auraEnabled public Id relatedFee;
     @auraEnabled public Id relatedFulfilment;
     @auraEnabled public Id relatedInformationRequest;
     @auraEnabled public Id relatedLoa;
