@@ -122,9 +122,9 @@ private class TaskEngineTest {
             }
         }
 
-        List<TaskEngine.taskEngineRequest> taskRequests = new List<TaskEngine.taskEngineRequest>();
+        List<TaskEngineRequest> taskRequests = new List<TaskEngineRequest>();
         for(OW_task_information__c taskInfo : assignmentTypeTaskInfoMap.values()){
-            TaskEngine.taskEngineRequest taskEngineRequest = new TaskEngine.TaskEngineRequest();
+            TaskEngineRequest taskEngineRequest = new TaskEngineRequest();
             taskEngineRequest.taskType = taskInfo.OW_task_type__c;
             taskEngineRequest.householdId = accountTest.Id;
 
@@ -153,8 +153,7 @@ private class TaskEngineTest {
         }
 
         Test.startTest();
-        TaskEngine taskEngineVar = new TaskEngine();
-        taskEngineVar.generateTasks(taskRequests);
+        TaskEngine.generateTasks(taskRequests);
         Test.stopTest();
 
         List<Task> generatedTaskList = [SELECT Id FROM Task WHERE FinServ__Household__c = :accountTest.Id];
@@ -217,7 +216,7 @@ private class TaskEngineTest {
 
     @isTest
     static void testTaskEngineInvokableList(){
-        //copy of testTaskEngine but passed in via different invokable method
+        //Tests methods that can be called from flows to add tasks to buffer and commit
         //query household to use as test data
         Account accountTest = [SELECT Id, Name FROM Account WHERE OW_admin_notes__c = :HOUSEHOLD_IDENTIFIER LIMIT 1];
         Case caseTest = [SELECT Id FROM Case WHERE Subject = :CASE_IDENTIFIER LIMIT 1];
@@ -240,9 +239,9 @@ private class TaskEngineTest {
             }
         }
 
-        List<TaskEngine.taskEngineRequest> taskRequests = new List<TaskEngine.taskEngineRequest>();
+        List<TaskEngineRequest> taskRequests = new List<TaskEngineRequest>();
         for(OW_task_information__c taskInfo : assignmentTypeTaskInfoMap.values()){
-            TaskEngine.taskEngineRequest taskEngineRequest = new TaskEngine.TaskEngineRequest();
+            TaskEngineRequest taskEngineRequest = new TaskEngineRequest();
             taskEngineRequest.taskType = taskInfo.OW_task_type__c;
             taskEngineRequest.householdId = accountTest.Id;
 
@@ -270,12 +269,18 @@ private class TaskEngineTest {
             
         }
 
-        List<List<TaskEngine.taskEngineRequest>> taskRequestListOfLists = new List<List<TaskEngine.taskEngineRequest>>();
-        taskRequestListOfLists.add(taskRequests);
+        //List<List<TaskEngine.taskEngineRequest>> taskRequestListOfLists = new List<List<TaskEngine.taskEngineRequest>>();
+        //taskRequestListOfLists.add(taskRequests);
+
+        TaskEngineInvokableList.FlowInputs taskRequestFlowInput = new TaskEngineInvokableList.FlowInputs();
+        taskRequestFlowInput.taskRequests = taskRequests;
+
+        List<TaskEngineInvokableList.FlowInputs> taskRequestFlowInputList = new List<TaskEngineInvokableList.FlowInputs>();
+        taskRequestFlowInputList.add(taskRequestFlowInput);
 
         Test.startTest();
-        TaskEngine taskEngineVar = new TaskEngine();
-        TaskEngineInvokableList.invocableGenerateTasks(taskRequestListOfLists);
+        //TaskEngine taskEngineVar = new TaskEngine();
+        TaskEngineInvokableList.invocableGenerateTasks(taskRequestFlowInputList);
         Test.stopTest();
 
         List<Task> generatedTaskList = [SELECT Id FROM Task WHERE FinServ__Household__c = :accountTest.Id];
