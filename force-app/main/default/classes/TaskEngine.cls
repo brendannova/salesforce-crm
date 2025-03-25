@@ -30,10 +30,17 @@ public with sharing class TaskEngine {
         public TaskEngineRequest taskRequest;
     }
 
+    public class FlowOutputs{  
+        @InvocableVariable(label='Tasks Created Sucessfully' description='Did any errors occur?' required=false) 
+        public Boolean isSuccess;
+
+        @InvocableVariable(label='Errors' description='Any errors that occured' required=false) 
+        public List<taskError> errors;
+    }
+
     @InvocableMethod(label='Generate Task' description='Generate a task based on provided task request.' category='Flow utilities' iconName='slds:standard:task')
-    public static void invocableGenerateTasks(List<FlowInputs> inputs){
-        //TaskEngine engine = new TaskEngine();
-        //engine.generateTasks(taskRequests);
+    public static List<FlowOutputs> invocableGenerateTasks(List<FlowInputs> inputs){
+
         List<TaskEngineRequest> taskRequestsToProcess = new List<TaskEngineRequest>();
         for(FlowInputs input : inputs){
             taskRequestsToProcess.add(input.taskRequest);
@@ -42,6 +49,22 @@ public with sharing class TaskEngine {
         if(taskRequestsToProcess.size() > 0){
             generateTasks(taskRequestsToProcess);
         }
+
+        boolean isSuccess = taskErrors.size() == 0;
+
+        List<FlowOutputs> flowOutputs = new List<FlowOutputs>();
+        for(FlowInputs input : inputs){
+            FlowOutputs output = new FlowOutputs();
+            output.isSuccess = isSuccess;
+            output.isSuccess = isSuccess;
+            if(!isSuccess){
+                output.errors = TaskEngine.taskErrors;
+            }
+            flowOutputs.add(output);
+        }
+
+        return flowOutputs;
+
     }
 
     public class taskError{
