@@ -851,6 +851,16 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.AuthorityRequestSignedBy__c</fieldItem>
+                <identifier>RecordAuthorityRequestSignedBy_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.ComplaintStatus__c</fieldItem>
                 <identifier>RecordComplaintStatus__cField</identifier>
             </fieldInstance>
@@ -894,6 +904,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.InformationRequestSentBy__c</fieldItem>
                 <identifier>RecordInformationRequestSentBy_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AuthorityRequestSignedByUser__c</fieldItem>
+                <identifier>RecordAuthorityRequestSignedByUser_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.AuthorityRequestSignedBy__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>INTERNAL_USER</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-23026649-e58b-4c9e-aa5d-908d3e257e49</name>
