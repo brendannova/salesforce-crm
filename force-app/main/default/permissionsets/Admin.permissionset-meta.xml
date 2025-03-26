@@ -52,6 +52,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlags</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlagsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TaskEngine</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -771,7 +779,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Advice__c.DataAnalysisSpecialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Advice__c.DataAnalysisStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advice__c.DataGatheringSpecialist__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3476,6 +3494,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>InformationRequest__c.AuthorityRequestSignedByUser__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>InformationRequest__c.AuthorityRequestSignedBy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>InformationRequest__c.AuthorityRequestSigned_by__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4007,6 +4035,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Liability__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Licence__c.DeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5632,6 +5665,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.SlackUserId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>UserLicence__c.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>UserLicence__c.Licence__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>UserLicence__c.User__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <objectPermissions>
