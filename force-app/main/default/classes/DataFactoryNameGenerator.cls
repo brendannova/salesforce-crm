@@ -37,7 +37,7 @@ public class DataFactoryNameGenerator{
         List<RandomName> names = new List<RandomName>();
         UtilityCsv csvParser = new UtilityCsv();
         Map<Integer,Map<String,String>> recognisableNameMap = csvParser.parseCsvStaticResource(NAMES_CSV);
-        Integer nameIndex = (Integer)(Math.random() * recognisableNameMap.size());
+        Integer nameIndex = (Integer)(Math.random() * recognisableNameMap.size() + 1);
         RandomName recognisableName = new RandomName();
         recognisableName.firstName = recognisableNameMap.get(nameIndex).get('firstName');
         recognisableName.lastName = recognisableNameMap.get(nameIndex).get('lastName');
