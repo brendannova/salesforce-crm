@@ -213,7 +213,6 @@ private class TaskEngineTest {
         Assert.isTrue(generatedTaskList.size() > 0, 'No tasks were generated');
         Assert.areEqual(taskRequests.size() * 2, generatedTaskList.size(), 'An incorrect number of tasks have been generated');
 
-        Set<Id> assignedUserIds = new Set<Id>();
         for(Task task : generatedTaskList){
             OW_task_information__c taskInfo = taskAssignmentToInfoMap.get(task.Subject);
             
