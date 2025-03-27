@@ -4,14 +4,6 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>#Admin</label>
     <classAccesses>
-        <apexClass>CsvUtil</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CsvUtilTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>EmailFulfilmentNextSteps</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -57,6 +49,22 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GroupsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlags</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlagsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TaskEngine</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TaskEngineTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <customPermissions>
@@ -771,7 +779,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Advice__c.DataAnalysisSpecialist__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Advice__c.DataAnalysisStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advice__c.DataGatheringSpecialist__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2052,6 +2070,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Event.CompletedBy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.HouseholdStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5521,7 +5544,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServiceLevelAgreement__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Task.CompletedBy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.HouseholdStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
