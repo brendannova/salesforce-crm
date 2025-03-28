@@ -52,6 +52,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlags</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlagsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TaskEngine</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -5982,6 +5990,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>Licence__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>Opportunity</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -6046,6 +6063,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>Transaction__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>UserLicence__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
@@ -6193,6 +6219,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Licence__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>ProductType__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
@@ -6209,7 +6239,15 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>UserLicence__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>standard-Case</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <applicationVisibilities>
+        <application>OperationsManager</application>
+        <visible>true</visible>
+    </applicationVisibilities>
 </PermissionSet>
