@@ -26,12 +26,12 @@ public with sharing class TaskEngine {
     public static List<Task> tasksToUpsert = new List<Task>();
 
     public class FlowInputs{
-        @InvocableVariable(label='Task request' description='The developer name of the object' required=true) 
+        @InvocableVariable(label='Task request' description='TaskEngineRequest variable' required=true) 
         public TaskEngineRequest taskRequest;
     }
 
     public class FlowOutputs{  
-        @InvocableVariable(label='Tasks Created Sucessfully' description='Did any errors occur?' required=false) 
+        @InvocableVariable(label='Task Created Sucessfully' description='If true, the task was created successfully. If false, an error occurred.' required=false) 
         public Boolean isSuccess;
 
         @InvocableVariable(label='Errors' description='Any errors that occured' required=false) 
@@ -55,7 +55,6 @@ public with sharing class TaskEngine {
         List<FlowOutputs> flowOutputs = new List<FlowOutputs>();
         for(FlowInputs input : inputs){
             FlowOutputs output = new FlowOutputs();
-            output.isSuccess = isSuccess;
             output.isSuccess = isSuccess;
             if(!isSuccess){
                 output.errors = TaskEngine.taskErrors;
