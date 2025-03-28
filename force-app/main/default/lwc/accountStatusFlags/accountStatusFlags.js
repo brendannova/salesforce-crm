@@ -53,6 +53,9 @@ iconMap.set(PEP_LABEL, 'utility:advertising')
 const DECEASED_VALUE = 'Deceased';
 const REPORTED_DECEASED_VALUE = 'Reported Deceased';
 
+const JUNIOR_VALUE = 'Junior';
+const JUNTIOR_POLICY_HOLDER_VALUE = 'Junior Policy Holder';
+
 const RTQ_EXPIRED_VALUE = 'Expired';
 const RTQ_PENDING_VALUE = 'Pending';
 const RTQ_INCOMPLETE_VALUE = 'Incomplete';
@@ -165,7 +168,7 @@ export default class accountStatusFlags extends LightningElement {
     }
 
     generateItems() {
-        //clear out what is already there to avoid any duplicates
+        //clear what is already there to avoid any duplicates
         this.badgeItems = [];
         this.setFlags();
 
@@ -226,31 +229,34 @@ export default class accountStatusFlags extends LightningElement {
                     this.badgeRefs[REF_STATUS_REPORTED_DECEASED].show = true;
                 }
 
-                let termsOfBusiness = this.getValue(account, TOB_STATUS_FIELD);
-                if (termsOfBusiness === TOB_NOT_ACCEPTED_VALUE) {
-                    this.badgeRefs[REF_TOB_NOT_ACCPETED].show = true;
-                }
-                if (termsOfBusiness === TOB_AWAITING_ACCEPTANCE_VALUE) {
-                    this.badgeRefs[REF_TOB_AWAITING_ACCEPTANCE].show = true;
-                }
+                //only display if not a Junior or Junior Policy Holder
+                if(status !== JUNIOR_VALUE && status !== JUNTIOR_POLICY_HOLDER_VALUE){
+                    let termsOfBusiness = this.getValue(account, TOB_STATUS_FIELD);
+                    if (termsOfBusiness === TOB_NOT_ACCEPTED_VALUE) {
+                        this.badgeRefs[REF_TOB_NOT_ACCPETED].show = true;
+                    }
+                    if (termsOfBusiness === TOB_AWAITING_ACCEPTANCE_VALUE) {
+                        this.badgeRefs[REF_TOB_AWAITING_ACCEPTANCE].show = true;
+                    }
 
-                if (this.getValue(account, AML_STATUS_FIELD) === AML_INCOMPLETE_VALUE) {
-                    this.badgeRefs[REF_AML_INCOMPLETE].show = true;
+                    if (this.getValue(account, AML_STATUS_FIELD) === AML_INCOMPLETE_VALUE) {
+                        this.badgeRefs[REF_AML_INCOMPLETE].show = true;
+                    }
+
+                    let riskToleranceQuestionaire = this.getValue(account, RTQ_STATUS_FIELD);
+                    if(riskToleranceQuestionaire === RTQ_EXPIRED_VALUE){
+                        this.badgeRefs[REF_RTQ_EXPIRED].show = true;
+                    }
+                    if(riskToleranceQuestionaire === RTQ_INCOMPLETE_VALUE){
+                        this.badgeRefs[REF_RTQ_INCOMPLETE].show = true;
+                    }
+                    if(riskToleranceQuestionaire === RTQ_PENDING_VALUE){
+                        this.badgeRefs[REF_RTQ_PENDING].show = true;
+                    }
                 }
 
                 if(this.getValue(account, VULNERABLE_FIELD) === VULNERABLE_VALUE){
                     this.badgeRefs[REF_VULNERABLE].show = true;
-                }
-
-                let riskTolleranceQuestionaire = this.getValue(account, RTQ_STATUS_FIELD);
-                if(riskTolleranceQuestionaire === RTQ_EXPIRED_VALUE){
-                    this.badgeRefs[REF_RTQ_EXPIRED].show = true;
-                }
-                if(riskTolleranceQuestionaire === RTQ_INCOMPLETE_VALUE){
-                    this.badgeRefs[REF_RTQ_INCOMPLETE].show = true;
-                }
-                if(riskTolleranceQuestionaire === RTQ_PENDING_VALUE){
-                    this.badgeRefs[REF_RTQ_PENDING].show = true;
                 }
             });
         }
