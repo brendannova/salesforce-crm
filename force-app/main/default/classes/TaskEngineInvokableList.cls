@@ -1,11 +1,11 @@
 public with sharing class TaskEngineInvokableList {
     public class FlowInputs{
-        @InvocableVariable(label='Task request' description='The developer name of the object' required=true) 
+        @InvocableVariable(label='Task requests' description='Collection of taskEgnineRequest variables' required=true) 
         public List<TaskEngineRequest> taskRequests;
     }
 
     public class FlowOutputs{  
-        @InvocableVariable(label='Tasks Created Sucessfully' description='Did any errors occur?' required=false) 
+        @InvocableVariable(label='Tasks Created Sucessfully' description='If true, the tasks were created successfully. If false, an error occurred.' required=false) 
         public Boolean isSuccess;
 
         @InvocableVariable(label='Errors' description='Any errors that occured' required=false) 
