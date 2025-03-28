@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title={cardTitle}>
+        <div class="slds-var-p-horizontal_x-small">
+            <template for:each={badgeItems} for:item="item">
+                <div key={item.Id} class="badgeDiv slds-var-p-around_xx-small">
+                    <lightning-badge class={item.badgeClass} label={item.label} icon-name={item.icon} icon-position="start"></lightning-badge>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
