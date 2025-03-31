@@ -61,6 +61,7 @@ public with sharing class TaskEngine {
             output.isSuccess = isSuccess;
             if(!isSuccess){
                 output.errors = TaskEngine.taskErrors;
+                output.errorMessages = new List<String>();
                 //and output error messages in more usable string
                 for(taskError taskError : taskErrors){
                     output.errorMessages.add(taskError.message);

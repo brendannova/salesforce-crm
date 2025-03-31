@@ -32,8 +32,9 @@ public with sharing class TaskEngineInvokableList {
             output.isSuccess = isSuccess;
             if(!isSuccess){
                 output.errors = TaskEngine.taskErrors;
+                output.errorMessages = new List<String>();
                 //and output error messages in more usable string
-                for(TaskEngine.taskError taskError : TaskEngine.taskErrors){
+                for(TaskEngine.taskError taskError : output.errors){
                     output.errorMessages.add(taskError.message);
                 }
             }
