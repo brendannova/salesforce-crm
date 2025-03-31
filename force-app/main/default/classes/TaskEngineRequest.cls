@@ -1,0 +1,22 @@
+public class TaskEngineRequest {
+    @auraEnabled public Id chosenUser;
+    @auraEnabled public date dueDateInput;
+    @auraEnabled public Id householdId;
+    @auraEnabled public Id originalTask;
+    @auraEnabled public Id relatedAdviceId;
+    @auraEnabled public Id relatedAmlKycId;
+    @auraEnabled public Id relatedAnnualReview;
+    @auraEnabled public Id relatedFee;
+    @auraEnabled public Id relatedFulfilment;
+    @auraEnabled public Id relatedInformationRequest;
+    @auraEnabled public Id relatedLoa;
+    @auraEnabled public Id relatedMortgageApplication;
+    @auraEnabled public Id relatedOpportunity;
+    @auraEnabled public Id relatedProvider;
+    @auraEnabled public String subject;
+    @auraEnabled public Date targetStartDateInput;
+    @auraEnabled public Id taskId;
+    @auraEnabled public String taskType;
+    @auraEnabled public Id whatId;
+    @auraEnabled public Id whoId;
+}
