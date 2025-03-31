@@ -10,6 +10,9 @@ public with sharing class TaskEngineInvokableList {
 
         @InvocableVariable(label='Errors' description='Any errors that occured' required=false) 
         public List<TaskEngine.taskError> errors;
+
+        @InvocableVariable(label='Error Messages' description='Any error messages that occured' required=false)
+        public List<String> errorMessages;
     }
     
     @InvocableMethod(label='Generate Tasks' description='Generates multiple tasks based on provided task requests list/colleciton.' category='Flow utilities' iconName='slds:standard:task')
@@ -29,6 +32,10 @@ public with sharing class TaskEngineInvokableList {
             output.isSuccess = isSuccess;
             if(!isSuccess){
                 output.errors = TaskEngine.taskErrors;
+                //and output error messages in more usable string
+                for(TaskEngine.taskError taskError : TaskEngine.taskErrors){
+                    output.errorMessages.add(taskError.message);
+                }
             }
             flowOutputs.add(output);
         }
