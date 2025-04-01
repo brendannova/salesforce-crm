@@ -169,11 +169,7 @@ public virtual class TriggerHandler {
 
   // Method to check if triggers should be bypassed
   public Boolean shouldBypassTrigger() {
-    NW_Override__c overrideSetting = NW_Override__c.getInstance(UserInfo.getUserId());
-    if (overrideSetting == null && overrideSetting.Trigger_Bypass__c) {
-      overrideSetting = NW_Override__c.getOrgDefaults();
-    }
-    
+    NW_Override__c overrideSetting = NW_Override__c.getInstance(); //will check user, then profile, then org-wide defaults    
     return overrideSetting.Trigger_Bypass__c;
   }
 
