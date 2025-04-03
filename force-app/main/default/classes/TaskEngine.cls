@@ -34,8 +34,11 @@ public with sharing class TaskEngine {
         @InvocableVariable(label='Task Created Sucessfully' description='If true, the task was created successfully. If false, an error occurred.' required=false) 
         public Boolean isSuccess;
 
-        @InvocableVariable(label='Errors' description='Any errors that occured' required=false) 
+        @InvocableVariable(label='Errors' description='Any taskError variables that occured' required=false) 
         public List<taskError> errors;
+
+        @InvocableVariable(label='Error Messages' description='Any error messages that occured' required=false)
+        public List<String> errorMessages;
     }
 
     @InvocableMethod(label='Generate Task' description='Generate a task based on provided task request.' category='Flow utilities' iconName='slds:standard:task')
@@ -58,6 +61,11 @@ public with sharing class TaskEngine {
             output.isSuccess = isSuccess;
             if(!isSuccess){
                 output.errors = TaskEngine.taskErrors;
+                output.errorMessages = new List<String>();
+                //and output error messages in more usable string
+                for(taskError taskError : taskErrors){
+                    output.errorMessages.add(taskError.message);
+                }
             }
             flowOutputs.add(output);
         }
