@@ -18,26 +18,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_employment_id</name>
-        <label>Assign employment id</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
-        <assignmentItems>
-            <assignToReference>employmentId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Employment__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_employment</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
         <locationX>2162</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -122,6 +106,36 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_IDs</name>
+        <label>Assign IDs</label>
+        <locationX>1238</locationX>
+        <locationY>323</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>bankAccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>employmentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Employment__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>What_status_is_the_account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_rec</name>
         <label>Assign rec</label>
         <locationX>314</locationX>
@@ -162,7 +176,7 @@
         <name>Assign_custom_error</name>
         <label>Assign custom error</label>
         <locationX>2162</locationX>
-        <locationY>647</locationY>
+        <locationY>755</locationY>
         <customErrorMessages>
             <errorMessage>{!errorMessage}</errorMessage>
             <isFieldError>false</isFieldError>
@@ -198,7 +212,7 @@
         <name>What_status_is_the_account</name>
         <label>What status is the account?</label>
         <locationX>1238</locationX>
-        <locationY>323</locationY>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>ActiveEmployer</name>
@@ -218,7 +232,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_employment_id</targetReference>
+                <targetReference>Update_employment</targetReference>
             </connector>
             <label>Active</label>
         </rules>
@@ -380,7 +394,7 @@
         <name>Close_any_tasks</name>
         <label>Close any tasks</label>
         <locationX>1634</locationX>
-        <locationY>539</locationY>
+        <locationY>647</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assign_error_message</targetReference>
@@ -390,7 +404,7 @@
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>bankAccountId</elementReference>
             </value>
         </filters>
         <filters>
@@ -404,7 +418,7 @@
             <field>FinServ__Household__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -432,7 +446,7 @@
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Employment__c</elementReference>
+                <elementReference>employmentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -453,7 +467,7 @@
             <field>FinServ__Household__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -502,7 +516,7 @@
         <name>Update_employmentBankPending</name>
         <label>Update employment</label>
         <locationX>1634</locationX>
-        <locationY>431</locationY>
+        <locationY>539</locationY>
         <connector>
             <targetReference>Close_any_tasks</targetReference>
         </connector>
@@ -514,7 +528,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Employment__c</elementReference>
+                <elementReference>employmentId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -542,7 +556,7 @@
             <field>WhatId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Employment__c</elementReference>
+                <elementReference>employmentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -563,7 +577,7 @@
             <field>FinServ__Household__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -578,7 +592,7 @@
         <locationX>1112</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>What_status_is_the_account</targetReference>
+            <targetReference>Assign_IDs</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -621,6 +635,13 @@
     </subflows>
     <variables>
         <name>accountOwners</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>bankAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -671,6 +692,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Fulfilment__c</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>recommendation</name>
