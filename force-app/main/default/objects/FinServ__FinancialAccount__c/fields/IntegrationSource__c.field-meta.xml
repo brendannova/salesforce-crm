@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IntegrationSource__c</fullName>
+    <description>Tracks which external system the transaction, valuation etc. data comes from</description>
+    <label>Integration source</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HUBWISE</fullName>
+                <default>false</default>
+                <label>Hubwise</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
