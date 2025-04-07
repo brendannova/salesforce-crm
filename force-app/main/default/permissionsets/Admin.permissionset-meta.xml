@@ -52,6 +52,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlags</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlagsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TaskEngine</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1032,6 +1040,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Asset__c.NotesInternal__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset__c.OwnershipType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5520,6 +5533,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Role__c.Percentage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Role__c.Person__c</field>
         <readable>true</readable>
@@ -5992,6 +6010,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>Licence__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>Opportunity</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -6056,6 +6083,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>Transaction__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>UserLicence__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
@@ -6203,6 +6239,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Licence__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>ProductType__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
@@ -6219,7 +6259,15 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>UserLicence__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>standard-Case</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <applicationVisibilities>
+        <application>OperationsManager</application>
+        <visible>true</visible>
+    </applicationVisibilities>
 </PermissionSet>

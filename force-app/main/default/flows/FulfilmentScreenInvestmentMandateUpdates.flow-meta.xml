@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Split_text</name>
         <label>Split text</label>
-        <locationX>176</locationX>
-        <locationY>542</locationY>
+        <locationX>182</locationX>
+        <locationY>590</locationY>
         <actionName>SplitStringInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -18,14 +18,15 @@
             </value>
         </inputParameters>
         <nameSegment>SplitStringInvocable</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
         <name>Add_to_collection</name>
         <label>Add to collection</label>
-        <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationX>270</locationX>
+        <locationY>806</locationY>
         <assignmentItems>
             <assignToReference>checkboxValues</assignToReference>
             <operator>Add</operator>
@@ -37,11 +38,73 @@
             <targetReference>Loop_through_tasks</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_complete_date</name>
+        <label>Assign complete date</label>
+        <locationX>50</locationX>
+        <locationY>1322</locationY>
+        <assignmentItems>
+            <assignToReference>fulfilment.DateComplete__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_fulfilment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>314</locationX>
+        <locationY>1838</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_handling_sub_flow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_fulfilment_values</name>
+        <label>Assign fulfilment values</label>
+        <locationX>182</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>fulfilment.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_fulfilment_type_status.NextStatus__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fulfilment.DateSubmitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fulfilment.SubmittedBy__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Next_status</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Fulfilment_type</name>
         <label>Fulfilment type</label>
-        <locationX>176</locationX>
-        <locationY>1166</locationY>
+        <locationX>182</locationX>
+        <locationY>1622</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Rebalance</name>
@@ -74,7 +137,7 @@
     <decisions>
         <name>Have_we_received_fulfilment</name>
         <label>Have we received fulfilment?</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Get_fulfilment</targetReference>
@@ -96,6 +159,31 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Next_status</name>
+        <label>Next status</label>
+        <locationX>182</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>Update_fulfilment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Anything else</defaultConnectorLabel>
+        <rules>
+            <name>Complete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_fulfilment_type_status.NextStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_complete_date</targetReference>
+            </connector>
+            <label>Complete</label>
+        </rules>
+    </decisions>
     <description>Flow for submission of portfolio switches and rebalances</description>
     <environments>Default</environments>
     <formulas>
@@ -108,8 +196,8 @@
     <loops>
         <name>Loop_through_tasks</name>
         <label>Loop through tasks</label>
-        <locationX>176</locationX>
-        <locationY>650</locationY>
+        <locationX>182</locationX>
+        <locationY>698</locationY>
         <collectionReference>Split_text.tasksToCreate</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -141,12 +229,16 @@
     <recordLookups>
         <name>Get_fulfilment</name>
         <label>Get fulfilment</label>
-        <locationX>264</locationX>
+        <locationX>270</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_fulfilment_type_status</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -157,7 +249,6 @@
         </filters>
         <object>Fulfilment__c</object>
         <outputReference>fulfilment</outputReference>
-        <queriedFields>Id</queriedFields>
         <queriedFields>FulfilmentType__c</queriedFields>
         <queriedFields>Status__c</queriedFields>
         <queriedFields>PaymentStatus__c</queriedFields>
@@ -166,12 +257,16 @@
     <recordLookups>
         <name>Get_fulfilment_type_status</name>
         <label>Get fulfilment type status</label>
-        <locationX>176</locationX>
-        <locationY>434</locationY>
+        <locationX>182</locationX>
+        <locationY>482</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Split_text</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status__c</field>
@@ -197,8 +292,11 @@
     <recordUpdates>
         <name>Update_financial_product</name>
         <label>Update financial product</label>
-        <locationX>176</locationX>
-        <locationY>1274</locationY>
+        <locationX>50</locationX>
+        <locationY>1730</locationY>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -218,50 +316,28 @@
     <recordUpdates>
         <name>Update_fulfilment</name>
         <label>Update fulfilment</label>
-        <locationX>176</locationX>
-        <locationY>1058</locationY>
+        <locationX>182</locationX>
+        <locationY>1514</locationY>
         <connector>
             <targetReference>Fulfilment_type</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>DateSubmitted__c</field>
-            <value>
-                <elementReference>Date_submitted</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <elementReference>Get_fulfilment_type_status.NextStatus__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SubmittedBy__c</field>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Fulfilment__c</object>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
+        <inputReference>fulfilment</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Collect_details</name>
         <label>Collect details</label>
-        <locationX>176</locationX>
-        <locationY>950</locationY>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Update_fulfilment</targetReference>
+            <targetReference>Assign_fulfilment_values</targetReference>
         </connector>
         <fields>
             <name>Date_submitted</name>
@@ -308,19 +384,39 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Have_we_received_fulfilment</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Error_handling_sub_flow</name>
+        <label>Error handling sub flow</label>
+        <locationX>314</locationX>
+        <locationY>1946</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>checkboxValues</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>fulfilment</name>

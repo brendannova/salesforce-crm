@@ -2830,27 +2830,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(255, 111, 0);&quot;&gt;This client has been marked as vulnerable. Please check the Vulnerability tab for further details.&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText4</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Vulnerable_Client__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Vulnerable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
                     <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(255, 111, 0);&quot;&gt;This client currently falls outside of bank account rules, or has been flagged as having an issue during bank account migration&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
@@ -2935,48 +2914,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(147, 4, 4);&quot;&gt;This client has been reported deceased - please proceed with caution&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText2</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Reported Deceased</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(169, 7, 35);&quot;&gt;This client is deceased&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText3</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Deceased</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
                     <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(176, 1, 1); font-size: 20px;&quot;&gt;This client was forgotten as part of a GDPR request. Do not do anything on this household. &lt;/strong&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
@@ -3010,6 +2947,15 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>accountStatusFlags</componentName>
+                <identifier>c_accountStatusFlags</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>pi:EngagementHistory</componentName>
