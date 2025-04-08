@@ -31,14 +31,7 @@ public with sharing class LwcHelperDynamicRecordList {
     }
 
     public class ConfigWrapper{
-        //@AuraEnabled public String objectAPIName;
-        //@AuraEnabled public String sobjectLabel;
         @AuraEnabled public String keyFieldName;
-        //@AuraEnabled public String idFieldNameToReference;
-        //@AuraEnabled public String nameFieldNameToReference;
-        //@AuraEnabled public boolean allowNew;
-        //@AuraEnabled public boolean allowEdit;
-        //@AuraEnabled public boolean allowDelete;
     }
 
     public class ColumnWrapper{
@@ -161,77 +154,5 @@ public with sharing class LwcHelperDynamicRecordList {
         }
 
         return errors;
-    }
-
-    public static DataWrapper getHouseholdMembers(Id householdId){
-        DataWrapper dataWrapper = new DataWrapper();
-
-        dataWrapper.config.keyFieldName = 'id';
-
-        ColumnWrapper nameLinkColumn = new ColumnWrapper('Name', 'nameLink', 'url');
-        nameLinkColumn.typeAttributes.label.put('fieldName', 'name');
-
-        dataWrapper.columns.add(new ColumnWrapper('ID', 'id', 'text'));
-        dataWrapper.columns.add(nameLinkColumn);
-        
-        List<AccountContactRelation> householdMembers = [SELECT Contact.AccountId, Contact.FirstName, Contact.LastName FROM AccountContactRelation WHERE AccountId =: householdId];
-
-        for(AccountContactRelation householdMember: householdMembers){
-            RowWrapper rowWrapper = new RowWrapper();
-            rowWrapper.fields.add(new FieldWrapper('id', householdMember.Contact.AccountId));
-            rowWrapper.fields.add(new FieldWrapper('name', householdMember.Contact.FirstName + ' ' + Contact.LastName));
-            rowWrapper.fields.add(new FieldWrapper('nameLink', '/'+householdMember.Contact.Id));
-
-            dataWrapper.rows.add(rowWrapper);
-        }
-
-        return dataWrapper;
-    }
-
-    public static DataWrapper getInformationRequests(Id recordId) {
-        DataWrapper dataWrapper = new DataWrapper();
-        dataWrapper.config.keyFieldName = 'id';
-
-        ColumnWrapper nameLinkColumn = new ColumnWrapper('Name', 'nameLink', 'url');
-        nameLinkColumn.typeAttributes.label.put('fieldName', 'name');
-
-        ColumnWrapper finaicialProductLinkColumn = new ColumnWrapper('Financial Product', 'financialProductLink', 'url');
-        finaicialProductLinkColumn.typeAttributes.label.put('fieldName', 'financialProduct');
-
-        dataWrapper.columns.add(nameLinkColumn);
-        dataWrapper.columns.add(new ColumnWrapper('Status', 'status', 'text'));
-        dataWrapper.columns.add(finaicialProductLinkColumn);
-        dataWrapper.columns.add(new ColumnWrapper('Type', 'type', 'text'));
-        dataWrapper.columns.add(new ColumnWrapper('Authority Status', 'authStatus', 'text'));
-
-        List<InformationRequest__c> informationRequests = [SELECT Id, Name, Status__c, AuthorityStatus__c,InformationRequestType__r.Name, FinancialProductFinServ__c, InformationRequestType__c, FinancialProductFinServ__r.Name FROM InformationRequest__c WHERE FinancialProductFinServ__r.Household__c =: recordId AND Status__c NOT IN ('Complete','Cancelled') ORDER BY Status__c ASC];
-        String urlPrefix = URL.getOrgDomainURL().toExternalForm() + '/';
-        Map<String,String> statusApiToLabelMap = getPicklistApiLabelMap();
-        for( InformationRequest__c informationRequest : informationRequests ) {
-
-
-            RowWrapper rowWrapper = new RowWrapper();
-            rowWrapper.fields.add(new FieldWrapper('id', informationRequest.Id));
-            rowWrapper.fields.add(new FieldWrapper('name', informationRequest.Name));
-            rowWrapper.fields.add(new FieldWrapper('nameLink', urlPrefix+informationRequest.Id));
-            rowWrapper.fields.add(new FieldWrapper('status', statusApiToLabelMap.get(informationRequest.Status__c)));
-            rowWrapper.fields.add(new FieldWrapper('financialProduct', informationRequest.FinancialProductFinServ__r.Name));
-            rowWrapper.fields.add(new FieldWrapper('financialProductLink', urlPrefix+informationRequest.FinancialProductFinServ__c));
-            rowWrapper.fields.add(new FieldWrapper('type', informationRequest.InformationRequestType__r.Name));
-            rowWrapper.fields.add(new FieldWrapper('authStatus', informationRequest.AuthorityStatus__c));
-
-            dataWrapper.rows.add(rowWrapper);
-    	}
-        return dataWrapper;
-    }
-
-    // Get a map of picklist values to labels so that we can display the labels in the list
-    private static Map<String,String> getPicklistApiLabelMap(){
-        List<Schema.PicklistEntry> picklistItems = InformationRequest__c.Status__c.getDescribe().getPicklistValues();
-        Map<String,String> picklistApiLabelMap = new Map<String,String>();
-        For(Schema.PicklistEntry picklistItem : picklistItems){
-            picklistApiLabelMap.put(picklistItem.getValue(), picklistItem.getLabel());
-        }
-        return picklistApiLabelMap; 
     }
 }

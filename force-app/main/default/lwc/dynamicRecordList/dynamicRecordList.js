@@ -106,7 +106,7 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         if(this.dataReturn.config.keyFieldName){
             this.state.keyField = this.dataReturn.config.keyFieldName;
         } else {
-            this.state.error = 'No key field specified in the configuration';
+            this.state.error += ' No key field specified in the configuration';
         }
     }
 
