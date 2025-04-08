@@ -42,7 +42,7 @@ public with sharing class LwcHelperDynamicRecordList {
         @AuraEnabled public Boolean sortable = true;
         @AuraEnabled public TypeAttributesWrapper typeAttributes = new TypeAttributesWrapper();
         @AuraEnabled public String iconName;
-        @AuraEnabled public boolean hideLabel;
+        @AuraEnabled public Boolean hideLabel;
 
         public ColumnWrapper(String label, String fieldName, String type){
             this.label = label;
