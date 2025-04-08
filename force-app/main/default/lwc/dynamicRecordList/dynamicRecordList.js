@@ -129,37 +129,6 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         }
     }
 
-    //if ever to extend to row actions
-    /*
-    initColumnsWithActions(columns, customActions) {
-        if (!customActions.length) {
-            customActions = [
-                { label: 'Edit', name: 'edit' },
-                { label: 'Delete', name: 'delete' }
-            ]
-        }
-        return [...columns, { type: 'action', typeAttributes: { rowActions: customActions } }]
-    }
-
-    handleRowAction(event) {
-        const actionName = event.detail.action.name;
-        const row = event.detail.row;
-
-        if (this.rowActionHandler) {
-            this.rowActionHandler.call()
-        } else {
-            switch (actionName) {
-                case "delete":
-                    this.handleDeleteRecord(row);
-                    break;
-                case "edit":
-                    this.handleEditRecord(row);
-                    break;
-                default:
-            }
-        }
-    }*/
-
     handleRefreshData() {
         this.init();
     }
