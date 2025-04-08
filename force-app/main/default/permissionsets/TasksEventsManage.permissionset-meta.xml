@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants access to manage tasks and events across both system and object level permissions.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Tasks and Events | manage</label>
     <classAccesses>
         <apexClass>TaskEngine</apexClass>
         <enabled>true</enabled>
@@ -8,9 +11,6 @@
         <apexClass>Utility</apexClass>
         <enabled>true</enabled>
     </classAccesses>
-    <description>Grants access to manage tasks and events across both system and object level permissions.</description>
-    <hasActivationRequired>false</hasActivationRequired>
-    <label>Tasks and Events | manage</label>
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.Advice_Meeting_Location__c</field>
@@ -54,6 +54,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.FinServ__NextSteps__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.FulfilmentAmount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.FulfilmentDaysSinceSubmission__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.FulfilmentProvider__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.FulfilmentTransferType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -254,6 +274,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.FinServ__NextSteps__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.FulfilmentAmount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.FulfilmentDaysSinceSubmission__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.FulfilmentProvider__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.FulfilmentTransferType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
