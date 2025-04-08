@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConvertedRequireReferrer</fullName>
+    <active>true</active>
+    <description>A referrer must be added before conversion if lead source requires</description>
+    <errorConditionFormula>IsConverted &amp;&amp;
+ISBLANK(Referrer__c) &amp;&amp;
+(ISPICKVAL(LeadSource, &quot;Introducer&quot;) ||
+ISPICKVAL(LeadSource, &quot;Employee Referral&quot;) ||
+ISPICKVAL(LeadSource, &quot;Client Referral&quot;) ||
+ISPICKVAL(LeadSource, &quot;Acquisition&quot;) ||
+ISPICKVAL(LeadSource, &quot;Financial Wellbeing Rollout&quot;))</errorConditionFormula>
+    <errorMessage>You must add a referrer before converting. Please add using the manage lead source button.</errorMessage>
+</ValidationRule>
