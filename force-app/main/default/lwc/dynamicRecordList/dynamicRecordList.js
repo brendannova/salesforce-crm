@@ -86,7 +86,6 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
                 }
             }
         }
-        //tempColumns = this.initColumnsWithActions(tempColumns, this.customActions); no actions for now
 
         this.state.columns  = tempColumns
     }
