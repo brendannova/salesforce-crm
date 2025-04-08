@@ -12,6 +12,7 @@ public with sharing class LwcHelperDynamicRecordList {
             }*/
             when else{
                 dataWrapper.errorMessage = 'No logic reference matched';
+                //could also throw an error here once logic above is added to prevent (unreachable logic error bellow)
             }
         }
 
@@ -27,7 +28,7 @@ public with sharing class LwcHelperDynamicRecordList {
         @AuraEnabled public List<ColumnWrapper> columns = new List<ColumnWrapper>();
         @AuraEnabled public List<RowWrapper> rows = new List<RowWrapper>();
         @AuraEnabled public ConfigWrapper config = new ConfigWrapper();
-        @AuraEnabled public string errorMessage;
+        @AuraEnabled public String errorMessage;
     }
 
     public class ConfigWrapper{
@@ -40,7 +41,7 @@ public with sharing class LwcHelperDynamicRecordList {
         @AuraEnabled public String type;
         @AuraEnabled public Boolean sortable = true;
         @AuraEnabled public TypeAttributesWrapper typeAttributes = new TypeAttributesWrapper();
-        @AuraEnabled public string iconName;
+        @AuraEnabled public String iconName;
         @AuraEnabled public boolean hideLabel;
 
         public ColumnWrapper(String label, String fieldName, String type){
@@ -59,33 +60,33 @@ public with sharing class LwcHelperDynamicRecordList {
         @AuraEnabled public String tooltip;
         
         //currency - https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-number/specification
-        @AuraEnabled public string currencyCode;
-        @AuraEnabled public string currencyDisplayAs;
-        @AuraEnabled public double step; // also used for percentacge
+        @AuraEnabled public String currencyCode;
+        @AuraEnabled public String currencyDisplayAs;
+        @AuraEnabled public Double step; // also used for percentacge
         //Also used for number & percentage
-        @AuraEnabled public double minimumIntegerDigits;
-        @AuraEnabled public double minimumFractionDigits;
-        @AuraEnabled public double maximumFractionDigits;
-        @AuraEnabled public double minimumSignificantDigits;
-        @AuraEnabled public double maximumSignificantDigits;
+        @AuraEnabled public Double minimumIntegerDigits;
+        @AuraEnabled public Double minimumFractionDigits;
+        @AuraEnabled public Double maximumFractionDigits;
+        @AuraEnabled public Double minimumSignificantDigits;
+        @AuraEnabled public Double maximumSignificantDigits;
 
         //date - https://developer.salesforce.com/docs/component-library/bundle/lightning-formatted-date-time/specification
-        @AuraEnabled public string era;
-        @AuraEnabled public string hour;
-        @AuraEnabled public boolean hour12;
-        @AuraEnabled public string minute;
-        @AuraEnabled public string second;
-        @AuraEnabled public string timeZone;
-        @AuraEnabled public string timeZoneName;
-        @AuraEnabled public string weekday;
+        @AuraEnabled public String era;
+        @AuraEnabled public String hour;
+        @AuraEnabled public Boolean hour12;
+        @AuraEnabled public String minute;
+        @AuraEnabled public String second;
+        @AuraEnabled public String timeZone;
+        @AuraEnabled public String timeZoneName;
+        @AuraEnabled public String weekday;
         //also used for date-local
-        @AuraEnabled public string day;
-        @AuraEnabled public string month;
-        @AuraEnabled public string year;
+        @AuraEnabled public String day;
+        @AuraEnabled public String month;
+        @AuraEnabled public String year;
 
         //location
-        @AuraEnabled public string latitude;
-        @AuraEnabled public string longitude;
+        @AuraEnabled public String latitude;
+        @AuraEnabled public String longitude;
     }
 
     public class RowWrapper{
