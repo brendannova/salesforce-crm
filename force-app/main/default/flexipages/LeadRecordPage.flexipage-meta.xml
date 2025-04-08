@@ -23,6 +23,9 @@
                         <valueListItems>
                             <value>Lead.CreateGdprCase</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Lead.ManageLeadSource</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -111,45 +114,22 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.LeadSource</fieldItem>
                 <identifier>RecordLeadSourceField</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.Status}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Nurturing</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Nurturing | Sales Qualified</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>No Further Action</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Status}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Converted</rightValue>
-                    </criteria>
-                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Referrer__c</fieldItem>
                 <identifier>RecordReferrer_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.LeadSource}</leftValue>
                         <operator>EQUAL</operator>
@@ -165,7 +145,27 @@
                         <operator>EQUAL</operator>
                         <rightValue>Introducer</rightValue>
                     </criteria>
+                    <criteria>
+                        <leftValue>{!Record.LeadSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Financial Wellbeing Rollout</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.LeadSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Acquisition</rightValue>
+                    </criteria>
                 </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.LeadSourceNotes__c</fieldItem>
+                <identifier>RecordReferralNotes_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
