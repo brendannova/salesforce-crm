@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ChaseTransferTasks</fullName>
-    <columns>SUBJECT</columns>
     <columns>WHAT_NAME</columns>
-    <columns>DUE_DATE</columns>
-    <columns>LAST_UPDATE</columns>
-    <columns>STATUS</columns>
-    <columns>FulfilmentDaysSinceSubmission__c</columns>
+    <columns>RelatedToDetails__c</columns>
     <columns>FulfilmentProvider__c</columns>
+    <columns>FulfilmentDaysSinceSubmission__c</columns>
+    <columns>DUE_DATE</columns>
     <columns>FulfilmentAmount__c</columns>
     <columns>FulfilmentTransferType__c</columns>
     <columns>CORE.USERS.FULL_NAME</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>SUBJECT</field>
+        <field>IS_CLOSED</field>
         <operation>equals</operation>
-        <value>Chase transfer</value>
+        <value>0</value>
     </filters>
     <filters>
         <field>DUE_DATE</field>
         <operation>lessOrEqual</operation>
         <value>NEXT_N_DAYS:7</value>
+    </filters>
+    <filters>
+        <field>FulfilmentAmount__c</field>
+        <operation>greaterThan</operation>
+        <value>5000</value>
+    </filters>
+    <filters>
+        <field>FulfilmentDaysSinceSubmission__c</field>
+        <operation>greaterOrEqual</operation>
+        <value>9</value>
+    </filters>
+    <filters>
+        <field>OW_task_information_name__c</field>
+        <operation>equals</operation>
+        <value>chase_transfer</value>
     </filters>
     <label>Chase transfer tasks</label>
     <sharedTo>
