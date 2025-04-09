@@ -25,62 +25,24 @@ public with sharing class TaskEngine {
     public static List<taskError> taskErrors = new List<taskError>();
     public static List<Task> tasksToUpsert = new List<Task>();
 
-    public class FlowInputs{
-        @InvocableVariable(label='Task request' description='TaskEngineRequest variable' required=true) 
-        public TaskEngineRequest taskRequest;
-    }
-
-    public class FlowOutputs{  
-        @InvocableVariable(label='Task Created Sucessfully' description='If true, the task was created successfully. If false, an error occurred.' required=false) 
-        public Boolean isSuccess;
-
-        @InvocableVariable(label='Errors' description='Any taskError variables that occured' required=false) 
-        public List<taskError> errors;
-
-        @InvocableVariable(label='Error Messages' description='Any error messages that occured' required=false)
-        public List<String> errorMessages;
-    }
-
-    @InvocableMethod(label='Generate Task' description='Generate a task based on provided task request.' category='Flow utilities' iconName='slds:standard:task')
-    public static List<FlowOutputs> invocableGenerateTasks(List<FlowInputs> inputs){
-
-        List<TaskEngineRequest> taskRequestsToProcess = new List<TaskEngineRequest>();
-        for(FlowInputs input : inputs){
-            taskRequestsToProcess.add(input.taskRequest);
-        }
-        
-        if(taskRequestsToProcess.size() > 0){
-            generateTasks(taskRequestsToProcess);
-        }
-
-        boolean isSuccess = taskErrors.size() == 0;
-
-        List<FlowOutputs> flowOutputs = new List<FlowOutputs>();
-        for(FlowInputs input : inputs){
-            FlowOutputs output = new FlowOutputs();
-            output.isSuccess = isSuccess;
-            if(!isSuccess){
-                output.errors = TaskEngine.taskErrors;
-                output.errorMessages = new List<String>();
-                //and output error messages in more usable string
-                for(taskError taskError : taskErrors){
-                    output.errorMessages.add(taskError.message);
-                }
-            }
-            flowOutputs.add(output);
-        }
-
-        return flowOutputs;
-
-    }
-
     public class taskError{
         public String message;
         public taskEngineRequest taskRequest = new taskEngineRequest();
+        public String errorOutputString;
         
         public taskError(taskEngineRequest taskRequest, String message){
             this.taskRequest = taskRequest;
             this.message = message;
+
+            String errorString = message;
+            if(taskRequest.whatId != null){
+                errorString += ' | WhatId: ' + taskRequest.whatId;
+            }
+            if(taskRequest.taskType != null){
+                errorString += ' | TaskType: ' + taskRequest.taskType;
+            }
+
+            this.errorOutputString = errorString;
         }
     }
     
@@ -256,7 +218,7 @@ public with sharing class TaskEngine {
                 if(TaskEngineRequest.chosenUser!= null){
                     tempTask.OwnerId = TaskEngineRequest.chosenUser;
                 }else{
-                    newError(TaskEngineRequest, 'Chosen User Ownership selected, but no user specified');
+                    newError(TaskEngineRequest, 'Chosen User Ownership selected but no user specified');
                     break;
                 }
 

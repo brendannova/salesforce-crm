@@ -1,4 +1,4 @@
-public with sharing class TaskEngineInvokableList {
+public with sharing class FlowUtilityTaskCreateList {
     public class FlowInputs{
         @InvocableVariable(label='Task requests' description='Collection of taskEgnineRequest variables' required=true) 
         public List<TaskEngineRequest> taskRequests;
@@ -35,7 +35,7 @@ public with sharing class TaskEngineInvokableList {
                 output.errorMessages = new List<String>();
                 //and output error messages in more usable string
                 for(TaskEngine.taskError taskError : output.errors){
-                    output.errorMessages.add(taskError.message);
+                    output.errorMessages.add(taskError.errorOutputString);
                 }
             }
             flowOutputs.add(output);
