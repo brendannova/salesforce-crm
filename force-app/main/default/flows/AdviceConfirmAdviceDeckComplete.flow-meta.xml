@@ -270,6 +270,27 @@
                 <elementReference>onboardingAdvice</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>DeveloperName__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>TOP_UP</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>REGULAR_AMENDMENT</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>WITHDRAWAL</stringValue>
+            </value>
+        </filters>
         <object>AdviceType__c</object>
         <outputReference>adviceTypes</outputReference>
         <queriedFields>Id</queriedFields>

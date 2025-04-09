@@ -17,8 +17,8 @@
     <assignments>
         <name>Define_1st_advice_value</name>
         <label>Define 1st advice value</label>
-        <locationX>336</locationX>
-        <locationY>2198</locationY>
+        <locationX>326</locationX>
+        <locationY>2006</locationY>
         <assignmentItems>
             <assignToReference>household.DateOfFirstAdvice__c</assignToReference>
             <operator>Assign</operator>
@@ -33,8 +33,8 @@
     <assignments>
         <name>Define_annual_review_schedule</name>
         <label>Define annual review schedule</label>
-        <locationX>336</locationX>
-        <locationY>2498</locationY>
+        <locationX>326</locationX>
+        <locationY>2306</locationY>
         <assignmentItems>
             <assignToReference>household.OW_annual_review_month__c</assignToReference>
             <operator>Assign</operator>
@@ -56,8 +56,8 @@
     <assignments>
         <name>Define_household_record</name>
         <label>Define household record</label>
-        <locationX>468</locationX>
-        <locationY>1982</locationY>
+        <locationX>458</locationX>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>household.Id</assignToReference>
             <operator>Assign</operator>
@@ -79,7 +79,7 @@
     <assignments>
         <name>Set_advice_date</name>
         <label>Set advice date</label>
-        <locationX>468</locationX>
+        <locationX>458</locationX>
         <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>adviceDate</assignToReference>
@@ -95,7 +95,7 @@
     <assignments>
         <name>Set_advice_expiry</name>
         <label>Set advice expiry</label>
-        <locationX>468</locationX>
+        <locationX>458</locationX>
         <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.AdviceExpiry__c</assignToReference>
@@ -105,14 +105,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_a_task_needed</targetReference>
+            <targetReference>Create_task</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_fault_error</name>
         <label>Set fault error</label>
         <locationX>1810</locationX>
-        <locationY>2798</locationY>
+        <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -124,7 +124,7 @@
     <assignments>
         <name>Set_post_sharing_advice_values</name>
         <label>Set post-sharing advice values</label>
-        <locationX>468</locationX>
+        <locationX>458</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.AdvicePresented__c</assignToReference>
@@ -276,7 +276,7 @@
     <decisions>
         <name>Advice_method</name>
         <label>Advice method</label>
-        <locationX>468</locationX>
+        <locationX>458</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Advice_method_undefined_error</targetReference>
@@ -314,47 +314,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Decision_outcome</name>
-        <label>Decision outcome</label>
-        <locationX>468</locationX>
-        <locationY>3122</locationY>
-        <defaultConnectorLabel>All still considering</defaultConnectorLabel>
-        <rules>
-            <name>YesAllDeclined</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Call_advice_recipients_flow.numDeclinedClients</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Call_advice_recipients_flow.numAdvisedClients</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Call_decline_advice_flow</targetReference>
-            </connector>
-            <label>All recommendations declined</label>
-        </rules>
-        <rules>
-            <name>Some_accepted</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Call_advice_recipients_flow.numAcceptedClients</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Call_mark_decisions_flow</targetReference>
-            </connector>
-            <label>Some accepted</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>First_advice_decision</name>
         <label>First advice?</label>
-        <locationX>468</locationX>
-        <locationY>2090</locationY>
+        <locationX>458</locationX>
+        <locationY>1898</locationY>
         <defaultConnector>
             <targetReference>Review_schedule</targetReference>
         </defaultConnector>
@@ -376,34 +339,9 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_a_task_needed</name>
-        <label>Is a task needed?</label>
-        <locationX>468</locationX>
-        <locationY>1682</locationY>
-        <defaultConnector>
-            <targetReference>Define_household_record</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesTask</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Call_advice_recipients_flow.createTaskFlag</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_task</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Presented_Method</name>
         <label>Presented Method</label>
-        <locationX>468</locationX>
+        <locationX>458</locationX>
         <locationY>1166</locationY>
         <defaultConnector>
             <targetReference>Set_advice_expiry</targetReference>
@@ -460,8 +398,8 @@
     <decisions>
         <name>Review_schedule</name>
         <label>Review schedule</label>
-        <locationX>468</locationX>
-        <locationY>2390</locationY>
+        <locationX>458</locationX>
+        <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>Update_household</targetReference>
         </defaultConnector>
@@ -548,8 +486,8 @@ null)</expression>
     <recordCreates>
         <name>Create_advice_recipients</name>
         <label>Create advice recipients</label>
-        <locationX>468</locationX>
-        <locationY>2798</locationY>
+        <locationX>458</locationX>
+        <locationY>2606</locationY>
         <connector>
             <targetReference>Update_recommendations</targetReference>
         </connector>
@@ -562,11 +500,8 @@ null)</expression>
     <recordUpdates>
         <name>Update_fees</name>
         <label>Update fees</label>
-        <locationX>468</locationX>
-        <locationY>3014</locationY>
-        <connector>
-            <targetReference>Decision_outcome</targetReference>
-        </connector>
+        <locationX>458</locationX>
+        <locationY>2822</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Set_fault_error</targetReference>
@@ -597,8 +532,8 @@ null)</expression>
     <recordUpdates>
         <name>Update_household</name>
         <label>Update household</label>
-        <locationX>468</locationX>
-        <locationY>2690</locationY>
+        <locationX>458</locationX>
+        <locationY>2498</locationY>
         <connector>
             <targetReference>Create_advice_recipients</targetReference>
         </connector>
@@ -610,8 +545,8 @@ null)</expression>
     <recordUpdates>
         <name>Update_recommendations</name>
         <label>Update recommendations</label>
-        <locationX>468</locationX>
-        <locationY>2906</locationY>
+        <locationX>458</locationX>
+        <locationY>2714</locationY>
         <connector>
             <targetReference>Update_fees</targetReference>
         </connector>
@@ -732,7 +667,7 @@ null)</expression>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>342</locationX>
+        <locationX>332</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_post_sharing_advice_values</targetReference>
@@ -743,7 +678,7 @@ null)</expression>
         <description>Calls the flow which creates advice recipient records and returns the numbers of clients who have been advised and accepted. If it determines that all advice was declined, the declined flow will be called from there.</description>
         <name>Call_advice_recipients_flow</name>
         <label>Call advice recipients flow</label>
-        <locationX>468</locationX>
+        <locationX>458</locationX>
         <locationY>1058</locationY>
         <connector>
             <targetReference>Presented_Method</targetReference>
@@ -771,64 +706,6 @@ null)</expression>
             <name>recipientConfirmationNeeded</name>
             <value>
                 <elementReference>presented</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
-        <name>Call_decline_advice_flow</name>
-        <label>Call decline advice flow</label>
-        <locationX>204</locationX>
-        <locationY>3230</locationY>
-        <flowName>AdviceDeclineAdvice</flowName>
-        <inputAssignments>
-            <name>advice</name>
-            <value>
-                <elementReference>advice</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>recordId</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <description>If the advice recipients flow determined that some advice has been accepted, the record decisions sub flow is called for these to be marked.</description>
-        <name>Call_mark_decisions_flow</name>
-        <label>Call mark decisions flow</label>
-        <locationX>468</locationX>
-        <locationY>3230</locationY>
-        <flowName>RecommendationsRecordDecisions</flowName>
-        <inputAssignments>
-            <name>acceptedClients</name>
-            <value>
-                <elementReference>Call_advice_recipients_flow.acceptedClients</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>advice</name>
-            <value>
-                <elementReference>advice</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>numAcceptedClients</name>
-            <value>
-                <elementReference>Call_advice_recipients_flow.numAcceptedClients</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>numAdvisedClients</name>
-            <value>
-                <elementReference>Call_advice_recipients_flow.numAdvisedClients</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>numDeclinedClients</name>
-            <value>
-                <elementReference>Call_advice_recipients_flow.numDeclinedClients</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -890,7 +767,7 @@ null)</expression>
     <subflows>
         <name>Create_send_dropbox_task</name>
         <label>Create send dropbox task</label>
-        <locationX>336</locationX>
+        <locationX>326</locationX>
         <locationY>1274</locationY>
         <connector>
             <targetReference>Create_suitability_meeting_debrief_task</targetReference>
@@ -925,7 +802,7 @@ null)</expression>
     <subflows>
         <name>Create_suitability_meeting_debrief_task</name>
         <label>Create suitability meeting debrief task</label>
-        <locationX>336</locationX>
+        <locationX>326</locationX>
         <locationY>1382</locationY>
         <connector>
             <targetReference>Set_advice_expiry</targetReference>
@@ -960,8 +837,8 @@ null)</expression>
     <subflows>
         <name>Create_task</name>
         <label>Create task</label>
-        <locationX>336</locationX>
-        <locationY>1790</locationY>
+        <locationX>458</locationX>
+        <locationY>1682</locationY>
         <connector>
             <targetReference>Define_household_record</targetReference>
         </connector>

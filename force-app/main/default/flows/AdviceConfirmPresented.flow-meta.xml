@@ -5,7 +5,7 @@
         <name>Define_1st_advice_value</name>
         <label>Define 1st advice value</label>
         <locationX>248</locationX>
-        <locationY>2306</locationY>
+        <locationY>2114</locationY>
         <assignmentItems>
             <assignToReference>household.DateOfFirstAdvice__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Define_annual_review_schedule</name>
         <label>Define annual review schedule</label>
         <locationX>248</locationX>
-        <locationY>2606</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>household.OW_annual_review_month__c</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>Define_household_record</name>
         <label>Define household record</label>
         <locationX>380</locationX>
-        <locationY>2090</locationY>
+        <locationY>1898</locationY>
         <assignmentItems>
             <assignToReference>household.Id</assignToReference>
             <operator>Assign</operator>
@@ -76,7 +76,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_a_task_needed</targetReference>
+            <targetReference>Create_chase_acceptance_task</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -281,7 +281,7 @@
         <name>Decision_outcome</name>
         <label>Decision outcome</label>
         <locationX>380</locationX>
-        <locationY>3446</locationY>
+        <locationY>3254</locationY>
         <defaultConnectorLabel>All still considering</defaultConnectorLabel>
         <rules>
             <name>YesAllDeclined</name>
@@ -340,7 +340,7 @@
         <name>First_advice_decision</name>
         <label>First advice?</label>
         <locationX>380</locationX>
-        <locationY>2198</locationY>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Review_schedule</targetReference>
         </defaultConnector>
@@ -359,31 +359,6 @@
                 <targetReference>Define_1st_advice_value</targetReference>
             </connector>
             <label>First advice</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_a_task_needed</name>
-        <label>Is a task needed?</label>
-        <locationX>380</locationX>
-        <locationY>1790</locationY>
-        <defaultConnector>
-            <targetReference>Define_household_record</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesTask</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Call_advice_recipients_flow.createTaskFlag</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_task</targetReference>
-            </connector>
-            <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
@@ -438,7 +413,7 @@
         <name>Review_schedule</name>
         <label>Review schedule</label>
         <locationX>380</locationX>
-        <locationY>2498</locationY>
+        <locationY>2306</locationY>
         <defaultConnector>
             <targetReference>Update_household</targetReference>
         </defaultConnector>
@@ -523,7 +498,7 @@
         <name>Create_advice_recipients</name>
         <label>Create advice recipients</label>
         <locationX>380</locationX>
-        <locationY>3014</locationY>
+        <locationY>2822</locationY>
         <connector>
             <targetReference>Close_task</targetReference>
         </connector>
@@ -565,7 +540,7 @@
         <name>Roll_back</name>
         <label>Roll back</label>
         <locationX>2030</locationX>
-        <locationY>3014</locationY>
+        <locationY>2822</locationY>
         <connector>
             <targetReference>Fault_Screen</targetReference>
         </connector>
@@ -574,7 +549,7 @@
         <name>Close_task</name>
         <label>Close task</label>
         <locationX>380</locationX>
-        <locationY>3122</locationY>
+        <locationY>2930</locationY>
         <connector>
             <targetReference>Update_recommendations</targetReference>
         </connector>
@@ -615,7 +590,7 @@
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>380</locationX>
-        <locationY>2906</locationY>
+        <locationY>2714</locationY>
         <connector>
             <targetReference>Create_advice_recipients</targetReference>
         </connector>
@@ -628,7 +603,7 @@
         <name>Update_fees</name>
         <label>Update fees</label>
         <locationX>380</locationX>
-        <locationY>3338</locationY>
+        <locationY>3146</locationY>
         <connector>
             <targetReference>Decision_outcome</targetReference>
         </connector>
@@ -663,7 +638,7 @@
         <name>Update_household</name>
         <label>Update household</label>
         <locationX>380</locationX>
-        <locationY>2798</locationY>
+        <locationY>2606</locationY>
         <connector>
             <targetReference>Update_advice</targetReference>
         </connector>
@@ -677,7 +652,7 @@
         <name>Update_recommendations</name>
         <label>Update recommendations</label>
         <locationX>380</locationX>
-        <locationY>3230</locationY>
+        <locationY>3038</locationY>
         <connector>
             <targetReference>Update_fees</targetReference>
         </connector>
@@ -802,7 +777,7 @@
         <name>Fault_Screen</name>
         <label>Fault Screen</label>
         <locationX>2030</locationX>
-        <locationY>3122</locationY>
+        <locationY>2930</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -862,7 +837,7 @@
         <name>Call_decline_advice_flow</name>
         <label>Call decline advice flow</label>
         <locationX>116</locationX>
-        <locationY>3554</locationY>
+        <locationY>3362</locationY>
         <flowName>AdviceDeclineAdvice</flowName>
         <inputAssignments>
             <name>advice</name>
@@ -882,7 +857,7 @@
         <name>Call_mark_decisions_flow</name>
         <label>Call mark decisions flow</label>
         <locationX>380</locationX>
-        <locationY>3554</locationY>
+        <locationY>3362</locationY>
         <flowName>RecommendationsRecordDecisions</flowName>
         <inputAssignments>
             <name>acceptedClients</name>
@@ -912,6 +887,41 @@
             <name>numDeclinedClients</name>
             <value>
                 <elementReference>Call_advice_recipients_flow.numDeclinedClients</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Create_chase_acceptance_task</name>
+        <label>Create chase acceptance task</label>
+        <locationX>380</locationX>
+        <locationY>1790</locationY>
+        <connector>
+            <targetReference>Define_household_record</targetReference>
+        </connector>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>advice.Advice_Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>related_advice_id</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>chase_recommendation_acceptance</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -982,41 +992,6 @@
             <name>what_id</name>
             <value>
                 <elementReference>advice.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
-        <name>Create_task</name>
-        <label>Create task</label>
-        <locationX>248</locationX>
-        <locationY>1898</locationY>
-        <connector>
-            <targetReference>Define_household_record</targetReference>
-        </connector>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>advice.Advice_Household__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_advice_id</name>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <stringValue>chase_recommendation_acceptance</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
