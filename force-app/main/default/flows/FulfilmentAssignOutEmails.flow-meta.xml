@@ -3,9 +3,9 @@
     <actionCalls>
         <name>Create_tasks</name>
         <label>Create tasks</label>
-        <locationX>358</locationX>
-        <locationY>7574</locationY>
-        <actionName>TaskEngineInvokableList</actionName>
+        <locationX>314</locationX>
+        <locationY>5918</locationY>
+        <actionName>FlowUtilityTaskCreateList</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Was_task_creation_a_success</targetReference>
@@ -17,15 +17,15 @@
                 <elementReference>taskRequestsToCreate</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>TaskEngineInvokableList</nameSegment>
+        <nameSegment>FlowUtilityTaskCreateList</nameSegment>
         <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>De_duplicate_household_list</name>
         <label>De-duplicate household list</label>
-        <locationX>358</locationX>
-        <locationY>5768</locationY>
+        <locationX>314</locationX>
+        <locationY>4004</locationY>
         <actionName>StringListDeduplicate</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -46,8 +46,8 @@
     <assignments>
         <name>Add_advice_id_to_list</name>
         <label>Add advice id to list</label>
-        <locationX>446</locationX>
-        <locationY>2030</locationY>
+        <locationX>402</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>newAdviceIds</assignToReference>
             <operator>Add</operator>
@@ -62,8 +62,8 @@
     <assignments>
         <name>Add_advice_to_collection</name>
         <label>Add advice to collection</label>
-        <locationX>446</locationX>
-        <locationY>5276</locationY>
+        <locationX>402</locationX>
+        <locationY>3512</locationY>
         <assignmentItems>
             <assignToReference>adviceToUpdate</assignToReference>
             <operator>Add</operator>
@@ -78,8 +78,8 @@
     <assignments>
         <name>Add_advice_to_relevant_new_advice_collection</name>
         <label>Add advice to relevant new advice collection</label>
-        <locationX>446</locationX>
-        <locationY>2762</locationY>
+        <locationX>402</locationX>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>relevantNewAdvice</assignToReference>
             <operator>Add</operator>
@@ -94,8 +94,8 @@
     <assignments>
         <name>Add_current_specialist_to_used_list</name>
         <label>Add current specialist to used list</label>
-        <locationX>710</locationX>
-        <locationY>6200</locationY>
+        <locationX>666</locationX>
+        <locationY>4436</locationY>
         <assignmentItems>
             <assignToReference>usedSpecialistIds</assignToReference>
             <operator>Add</operator>
@@ -110,8 +110,8 @@
     <assignments>
         <name>Add_id_to_collection</name>
         <label>Add ID to collection</label>
-        <locationX>446</locationX>
-        <locationY>5576</locationY>
+        <locationX>402</locationX>
+        <locationY>3812</locationY>
         <assignmentItems>
             <assignToReference>householdsGettingAnUpdateIds</assignToReference>
             <operator>Add</operator>
@@ -126,15 +126,8 @@
     <assignments>
         <name>Add_new_to_loop</name>
         <label>Add new to loop</label>
-        <locationX>358</locationX>
-        <locationY>3554</locationY>
-        <assignmentItems>
-            <assignToReference>adviceToLoop</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>relevantNewAdvice</elementReference>
-            </value>
-        </assignmentItems>
+        <locationX>314</locationX>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>adviceRequiringDmlUpdate</assignToReference>
             <operator>Add</operator>
@@ -156,8 +149,8 @@
     <assignments>
         <name>Add_specialist_ID_to_collection</name>
         <label>Add ID to collection</label>
-        <locationX>446</locationX>
-        <locationY>4502</locationY>
+        <locationX>402</locationX>
+        <locationY>2738</locationY>
         <assignmentItems>
             <assignToReference>specialistIds</assignToReference>
             <operator>Add</operator>
@@ -172,20 +165,13 @@
     <assignments>
         <name>Add_standard_to_loop</name>
         <label>Add ongoing to advice collection</label>
-        <locationX>358</locationX>
-        <locationY>1598</locationY>
-        <assignmentItems>
-            <assignToReference>adviceToLoop</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Advice_where_updates_are_going</elementReference>
-            </value>
-        </assignmentItems>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>adviceRequiringUpdateEmail</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Advice_where_updates_are_going</elementReference>
+                <elementReference>Get_advice_which_is_receiving_updates</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -195,8 +181,8 @@
     <assignments>
         <name>Add_task_to_collection</name>
         <label>Add task to collection</label>
-        <locationX>842</locationX>
-        <locationY>7166</locationY>
+        <locationX>798</locationX>
+        <locationY>5402</locationY>
         <assignmentItems>
             <assignToReference>taskRequestsToCreate</assignToReference>
             <operator>Add</operator>
@@ -211,8 +197,8 @@
     <assignments>
         <name>Add_to_count</name>
         <label>Add to count</label>
-        <locationX>842</locationX>
-        <locationY>7274</locationY>
+        <locationX>798</locationX>
+        <locationY>5510</locationY>
         <assignmentItems>
             <assignToReference>count</assignToReference>
             <operator>Add</operator>
@@ -232,40 +218,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Add_unblocked_advice_to_collection</name>
-        <label>Add unblocked advice to collection</label>
-        <locationX>226</locationX>
-        <locationY>890</locationY>
-        <assignmentItems>
-            <assignToReference>adviceToLoop</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>blockedSelect.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceRequiringUpdateEmail</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>blockedSelect.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceRequiringDmlUpdate</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>blockedSelect.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Being_sent_review</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Add_user_id_to_collection</name>
         <label>Add user ID to collection</label>
-        <locationX>446</locationX>
-        <locationY>3986</locationY>
+        <locationX>402</locationX>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>userIds</assignToReference>
             <operator>Add</operator>
@@ -280,8 +236,8 @@
     <assignments>
         <name>Assign_advice_values</name>
         <label>Assign advice values</label>
-        <locationX>446</locationX>
-        <locationY>5168</locationY>
+        <locationX>402</locationX>
+        <locationY>3404</locationY>
         <assignmentItems>
             <assignToReference>singleAdviceToUpdate.Id</assignToReference>
             <operator>Assign</operator>
@@ -301,10 +257,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_counts</name>
+        <label>Assign counts</label>
+        <locationX>314</locationX>
+        <locationY>5702</locationY>
+        <assignmentItems>
+            <assignToReference>existingAdviceCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>Get_advice_which_is_receiving_updates</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>newAdviceCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>adviceRequiringDmlUpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Summary</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
         <locationX>314</locationX>
-        <locationY>7898</locationY>
+        <locationY>6242</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -313,31 +292,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Error_sub_flow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_error_message_beginning</name>
-        <label>Assign error message beginning</label>
-        <locationX>666</locationX>
-        <locationY>7790</locationY>
-        <assignmentItems>
-            <assignToReference>errorMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>The first error is: </stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Errors</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_first_current_specialist</name>
         <label>Assign first current specialist</label>
-        <locationX>446</locationX>
-        <locationY>4802</locationY>
+        <locationX>402</locationX>
+        <locationY>3038</locationY>
         <assignmentItems>
             <assignToReference>currentSpecialistId</assignToReference>
             <operator>Assign</operator>
@@ -351,27 +313,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_first_error_message</name>
-        <label>Assign first error message</label>
-        <locationX>754</locationX>
-        <locationY>8006</locationY>
-        <assignmentItems>
-            <assignToReference>errorMessage</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Errors</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_sub_flow</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_fulfilment_count</name>
         <label>Assign fulfilment count</label>
-        <locationX>578</locationX>
-        <locationY>2546</locationY>
+        <locationX>534</locationX>
+        <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>fulfilmentCount</assignToReference>
             <operator>AssignCount</operator>
@@ -384,33 +329,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_new_count</name>
-        <label>Assign new count</label>
-        <locationX>358</locationX>
-        <locationY>3146</locationY>
-        <assignmentItems>
-            <assignToReference>newCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>newAdviceSelect.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>removeFromNewCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>newAdviceSelect.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Are_there_any_excluded_new_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_new_specialist</name>
         <label>Assign new specialist</label>
-        <locationX>974</locationX>
-        <locationY>6524</locationY>
+        <locationX>930</locationX>
+        <locationY>4760</locationY>
         <assignmentItems>
             <assignToReference>currentSpecialistId</assignToReference>
             <operator>Assign</operator>
@@ -424,33 +346,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_ongoing_count</name>
-        <label>Assign ongoing count</label>
-        <locationX>358</locationX>
-        <locationY>1190</locationY>
-        <assignmentItems>
-            <assignToReference>ongoingCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>goingAdviceReview.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>removeFromOngoingCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>goingAdviceReview.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Are_there_any_ongoing_advice_to_remove</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_task_request_values</name>
         <label>Assign task request values</label>
-        <locationX>842</locationX>
-        <locationY>7058</locationY>
+        <locationX>798</locationX>
+        <locationY>5294</locationY>
         <assignmentItems>
             <assignToReference>taskRequestToCreate.householdId</assignToReference>
             <operator>Assign</operator>
@@ -484,26 +383,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_unblocked_count</name>
-        <label>Assign unblocked count</label>
-        <locationX>358</locationX>
-        <locationY>674</locationY>
-        <assignmentItems>
-            <assignToReference>unblockedCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>blockedSelect.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Are_there_any_unblocked_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_values</name>
         <label>Assign values</label>
-        <locationX>358</locationX>
-        <locationY>5876</locationY>
+        <locationX>314</locationX>
+        <locationY>4112</locationY>
         <assignmentItems>
             <assignToReference>numSpecs</assignToReference>
             <operator>AssignCount</operator>
@@ -537,42 +420,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Remove_excluded_from_relevant_new_advice</name>
-        <label>Remove excluded from relevant new advice</label>
-        <locationX>226</locationX>
-        <locationY>3362</locationY>
-        <assignmentItems>
-            <assignToReference>relevantNewAdvice</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>newAdviceSelect.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Add_new_to_loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Remove_from_collection</name>
-        <label>Remove from collection</label>
-        <locationX>226</locationX>
-        <locationY>1406</locationY>
-        <assignmentItems>
-            <assignToReference>Advice_where_updates_are_going</assignToReference>
-            <operator>RemoveAll</operator>
-            <value>
-                <elementReference>goingAdviceReview.selectedRows</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Add_standard_to_loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_count_to_0</name>
         <label>Set count to 0</label>
-        <locationX>710</locationX>
-        <locationY>6866</locationY>
+        <locationX>666</locationX>
+        <locationY>5102</locationY>
         <assignmentItems>
             <assignToReference>count</assignToReference>
             <operator>Assign</operator>
@@ -585,60 +436,11 @@
         </connector>
     </assignments>
     <collectionProcessors>
-        <name>Advice_where_updates_are_blocked</name>
-        <elementSubtype>FilterCollectionProcessor</elementSubtype>
-        <label>Advice where updates are blocked</label>
-        <locationX>358</locationX>
-        <locationY>350</locationY>
-        <assignNextValueToReference>currentItem_Advice_where_updates_are_blocked</assignNextValueToReference>
-        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
-        <collectionReference>Get_advice</collectionReference>
-        <conditionLogic>and</conditionLogic>
-        <conditions>
-            <leftValueReference>currentItem_Advice_where_updates_are_blocked.FulfilmentUpdateStatus__c</leftValueReference>
-            <operator>EqualTo</operator>
-            <rightValue>
-                <stringValue>Not receiving updates</stringValue>
-            </rightValue>
-        </conditions>
-        <conditions>
-            <leftValueReference>currentItem_Advice_where_updates_are_blocked.Advice_Status__c</leftValueReference>
-            <operator>EqualTo</operator>
-            <rightValue>
-                <stringValue>In fulfilment</stringValue>
-            </rightValue>
-        </conditions>
-        <connector>
-            <targetReference>Advice_where_updates_are_going</targetReference>
-        </connector>
-    </collectionProcessors>
-    <collectionProcessors>
-        <name>Advice_where_updates_are_going</name>
-        <elementSubtype>FilterCollectionProcessor</elementSubtype>
-        <label>Advice where updates are going</label>
-        <locationX>358</locationX>
-        <locationY>458</locationY>
-        <assignNextValueToReference>currentItem_Advice_where_updates_are_going</assignNextValueToReference>
-        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
-        <collectionReference>Get_advice</collectionReference>
-        <conditionLogic>and</conditionLogic>
-        <conditions>
-            <leftValueReference>currentItem_Advice_where_updates_are_going.FulfilmentUpdateStatus__c</leftValueReference>
-            <operator>EqualTo</operator>
-            <rightValue>
-                <stringValue>Receiving updates</stringValue>
-            </rightValue>
-        </conditions>
-        <connector>
-            <targetReference>Blocked_advice_review</targetReference>
-        </connector>
-    </collectionProcessors>
-    <collectionProcessors>
         <name>Get_relevant_fulfilment_for_this_advice</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get relevant fulfilment for this advice</label>
-        <locationX>578</locationX>
-        <locationY>2438</locationY>
+        <locationX>534</locationX>
+        <locationY>1190</locationY>
         <assignNextValueToReference>currentItem_Get_relevant_fulfilment_for_this_advice</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_fulfilment_for_new_advice</collectionReference>
@@ -651,60 +453,10 @@
 !{!currentItem_Get_relevant_fulfilment_for_this_advice.FulfilmentType__r.ExcludeFromUpdate__c}</formula>
     </collectionProcessors>
     <decisions>
-        <name>Are_there_any_excluded_new_advice</name>
-        <label>Are there any excluded new advice?</label>
-        <locationX>358</locationX>
-        <locationY>3254</locationY>
-        <defaultConnector>
-            <targetReference>Add_new_to_loop</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesNew</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>removeFromNewCount</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Remove_excluded_from_relevant_new_advice</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Are_there_any_ongoing_advice_to_remove</name>
-        <label>Are there any ongoing advice to remove?</label>
-        <locationX>358</locationX>
-        <locationY>1298</locationY>
-        <defaultConnector>
-            <targetReference>Add_standard_to_loop</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesOngoing</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>removeFromOngoingCount</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Remove_from_collection</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Are_there_any_relevant_pieces_of_fulfilment</name>
         <label>Are there any relevant pieces of fulfilment?</label>
-        <locationX>578</locationX>
-        <locationY>2654</locationY>
+        <locationX>534</locationX>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
         </defaultConnector>
@@ -726,36 +478,11 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Are_there_any_unblocked_advice</name>
-        <label>Are there any unblocked advice?</label>
-        <locationX>358</locationX>
-        <locationY>782</locationY>
-        <defaultConnector>
-            <targetReference>Being_sent_review</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesUnblocked</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>unblockedCount</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Add_unblocked_advice_to_collection</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>This check is in place to ensure that Salesforce doesn&#39;t add in a bug while processing lists.</description>
         <name>Has_this_specialist_been_used_yet</name>
         <label>Has this specialist been used yet?</label>
-        <locationX>886</locationX>
-        <locationY>6416</locationY>
+        <locationX>842</locationX>
+        <locationY>4652</locationY>
         <defaultConnector>
             <targetReference>Assign_new_specialist</targetReference>
         </defaultConnector>
@@ -780,8 +507,8 @@
         <description>If yes, we then remove the current specialist from the specialist list, and set the new current specialist to be the first person left in the list</description>
         <name>Have_we_reached_the_households_per_specialist_limit</name>
         <label>Have we reached the households per specialist limit?</label>
-        <locationX>842</locationX>
-        <locationY>6092</locationY>
+        <locationX>798</locationX>
+        <locationY>4328</locationY>
         <defaultConnector>
             <targetReference>Assign_task_request_values</targetReference>
         </defaultConnector>
@@ -805,10 +532,10 @@
     <decisions>
         <name>Was_task_creation_a_success</name>
         <label>Was task creation a success?</label>
-        <locationX>358</locationX>
-        <locationY>7682</locationY>
+        <locationX>314</locationX>
+        <locationY>6026</locationY>
         <defaultConnector>
-            <targetReference>Assign_error_message_beginning</targetReference>
+            <targetReference>Rollback</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -830,6 +557,17 @@
     <description>For coordinators to easily assign emails out to available specialists</description>
     <environments>Default</environments>
     <formulas>
+        <name>errorText</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(
+  SUBSTITUTE(
+    SUBSTITUTE({!Create_tasks.errorMessages}, &quot;[&quot;, NULL),
+    &quot;]&quot;, NULL
+  ),
+  &quot;,&quot;, BR()
+)</expression>
+    </formulas>
+    <formulas>
         <name>householdsPerSpecs</name>
         <dataType>Number</dataType>
         <expression>CEILING({!numHouseholds} / {!numSpecs})</expression>
@@ -840,8 +578,8 @@
     <loops>
         <name>Collect_new_advice_ids</name>
         <label>Collect new advice ids</label>
-        <locationX>358</locationX>
-        <locationY>1922</locationY>
+        <locationX>314</locationX>
+        <locationY>674</locationY>
         <collectionReference>Get_advice_newly_ready</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -852,24 +590,10 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <name>Errors</name>
-        <label>Errors</label>
-        <locationX>666</locationX>
-        <locationY>7898</locationY>
-        <collectionReference>Create_tasks.errorMessages</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_first_error_message</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Error_sub_flow</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
         <name>Get_household_ids</name>
         <label>Get household IDs</label>
-        <locationX>358</locationX>
-        <locationY>5468</locationY>
+        <locationX>314</locationX>
+        <locationY>3704</locationY>
         <collectionReference>adviceRequiringUpdateEmail</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -882,8 +606,8 @@
     <loops>
         <name>Get_specialist_IDs</name>
         <label>Get specialist IDs</label>
-        <locationX>358</locationX>
-        <locationY>4394</locationY>
+        <locationX>314</locationX>
+        <locationY>2630</locationY>
         <collectionReference>userSelect.selectedRows</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -896,8 +620,8 @@
     <loops>
         <name>Get_user_ids_from_permission_set_assignments</name>
         <label>Get user IDs from permission set assignments</label>
-        <locationX>358</locationX>
-        <locationY>3878</locationY>
+        <locationX>314</locationX>
+        <locationY>2114</locationY>
         <collectionReference>Get_permission_set_assignments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -910,23 +634,23 @@
     <loops>
         <name>Households</name>
         <label>Households</label>
-        <locationX>358</locationX>
-        <locationY>5984</locationY>
+        <locationX>314</locationX>
+        <locationY>4220</locationY>
         <collectionReference>De_duplicate_household_list.outputString</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Have_we_reached_the_households_per_specialist_limit</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Summary</targetReference>
+            <targetReference>Assign_counts</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <description>Assigning a new fulfilment update status for advice which will now be receiving an update (where it wasn&#39;t previously)</description>
         <name>Loop_through_advice_that_requires_updating</name>
         <label>Loop through advice that requires updating</label>
-        <locationX>358</locationX>
-        <locationY>5060</locationY>
+        <locationX>314</locationX>
+        <locationY>3296</locationY>
         <collectionReference>adviceRequiringDmlUpdate</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -939,8 +663,8 @@
     <loops>
         <name>Remaining_specialists</name>
         <label>Remaining specialists</label>
-        <locationX>710</locationX>
-        <locationY>6308</locationY>
+        <locationX>666</locationX>
+        <locationY>4544</locationY>
         <collectionReference>specialistIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -953,8 +677,8 @@
     <loops>
         <name>Specialist_IDs</name>
         <label>Specialist IDs</label>
-        <locationX>358</locationX>
-        <locationY>4694</locationY>
+        <locationX>314</locationX>
+        <locationY>2930</locationY>
         <collectionReference>specialistIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -967,15 +691,15 @@
     <loops>
         <name>Work_out_which_new_advice_is_relevant</name>
         <label>Work out which new advice is relevant</label>
-        <locationX>358</locationX>
-        <locationY>2330</locationY>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
         <collectionReference>Get_advice_newly_ready</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Get_relevant_fulfilment_for_this_advice</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>New_advice_review</targetReference>
+            <targetReference>Add_new_to_loop</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -998,48 +722,11 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <description>Gets advice with a fulfilment update status of receiving updates or not receiving updates</description>
-        <name>Get_advice</name>
-        <label>Get advice which has a fulfilment update status set</label>
-        <locationX>358</locationX>
-        <locationY>242</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Advice_where_updates_are_blocked</targetReference>
-        </connector>
-        <filterLogic>or</filterLogic>
-        <filters>
-            <field>FulfilmentUpdateStatus__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Receiving updates</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>FulfilmentUpdateStatus__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Not receiving updates</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Advice__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Advice_Status__c</queriedFields>
-        <queriedFields>FulfilmentUpdateStatus__c</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>AdviceLink__c</queriedFields>
-        <queriedFields>ExcludedUpdateReason__c</queriedFields>
-        <queriedFields>ExcludedUpdateNotes__c</queriedFields>
-        <queriedFields>Advice_Household__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <description>Gets advice which is in fulfilment but hasn&#39;t got an update status yet</description>
         <name>Get_advice_newly_ready</name>
         <label>Get advice newly ready</label>
-        <locationX>358</locationX>
-        <locationY>1814</locationY>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Collect_new_advice_ids</targetReference>
@@ -1079,10 +766,40 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <description>Gets advice with a fulfilment update status of receiving updates or not receiving updates</description>
+        <name>Get_advice_which_is_receiving_updates</name>
+        <label>Get advice which is receiving updates</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Add_standard_to_loop</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>FulfilmentUpdateStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Receiving updates</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Advice__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Advice_Status__c</queriedFields>
+        <queriedFields>FulfilmentUpdateStatus__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>AdviceLink__c</queriedFields>
+        <queriedFields>ExcludedUpdateReason__c</queriedFields>
+        <queriedFields>ExcludedUpdateNotes__c</queriedFields>
+        <queriedFields>Advice_Household__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_fulfilment_for_new_advice</name>
         <label>Get fulfilment for new advice</label>
-        <locationX>358</locationX>
-        <locationY>2222</locationY>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
@@ -1142,8 +859,8 @@
     <recordLookups>
         <name>Get_fulfilment_update_permission_set</name>
         <label>Get fulfilment update permission set</label>
-        <locationX>358</locationX>
-        <locationY>3662</locationY>
+        <locationX>314</locationX>
+        <locationY>1898</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_permission_set_assignments</targetReference>
@@ -1164,8 +881,8 @@
     <recordLookups>
         <name>Get_permission_set_assignments</name>
         <label>Get permission set assignments</label>
-        <locationX>358</locationX>
-        <locationY>3770</locationY>
+        <locationX>314</locationX>
+        <locationY>2006</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_user_ids_from_permission_set_assignments</targetReference>
@@ -1187,8 +904,8 @@
     <recordLookups>
         <name>Get_protection_advice_type</name>
         <label>Get protection advice type</label>
-        <locationX>358</locationX>
-        <locationY>1706</locationY>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_advice_newly_ready</targetReference>
@@ -1217,8 +934,8 @@
     <recordLookups>
         <name>Get_specialists</name>
         <label>Get specialists</label>
-        <locationX>358</locationX>
-        <locationY>4178</locationY>
+        <locationX>314</locationX>
+        <locationY>2414</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>User_selection</targetReference>
@@ -1246,11 +963,20 @@
         <sortOrder>Asc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordRollbacks>
+        <name>Rollback</name>
+        <label>Rollback</label>
+        <locationX>578</locationX>
+        <locationY>6134</locationY>
+        <connector>
+            <targetReference>Display_errors</targetReference>
+        </connector>
+    </recordRollbacks>
     <recordUpdates>
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>50</locationX>
-        <locationY>7790</locationY>
+        <locationY>6134</locationY>
         <connector>
             <targetReference>SuccessScreen</targetReference>
         </connector>
@@ -1261,135 +987,17 @@
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Being_sent_review</name>
-        <label>Being sent review</label>
-        <locationX>358</locationX>
-        <locationY>1082</locationY>
+        <name>Display_errors</name>
+        <label>Display errors</label>
+        <locationX>578</locationX>
+        <locationY>6242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Assign_ongoing_count</targetReference>
-        </connector>
+        <allowPause>false</allowPause>
         <fields>
-            <name>ongoingExplain</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;Choose any advice that should &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;not&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt; receive an update. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(215, 3, 31);&quot;&gt;Selected advice will &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(215, 3, 31);&quot;&gt;not&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(215, 3, 31);&quot;&gt; receive a task on its household.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>errorTextDisplay</name>
+            <fieldText>&lt;p&gt;There&#39;s been errors here:&lt;/p&gt;&lt;p&gt;{!errorText}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>goingAdviceReview</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Advice__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Advice receiving updates</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>MULTI_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>Advice_where_updates_are_going</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;AdviceLink__c&quot;,&quot;guid&quot;:&quot;column-745a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Advice&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Advice link&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>shouldDisplayLabel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Blocked_advice_review</name>
-        <label>Blocked advice review</label>
-        <locationX>358</locationX>
-        <locationY>566</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Assign_unblocked_count</targetReference>
-        </connector>
-        <fields>
-            <name>blockedExplain</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Choose any advice that &lt;/span&gt;&lt;strong style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;should&lt;/strong&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt; now receive an update.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Selected advice &lt;strong&gt;will&lt;/strong&gt; receive a task on the household.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>blockedSelect</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Advice__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Advice not receiving updates</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>MULTI_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>Advice_where_updates_are_blocked</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;AdviceLink__c&quot;,&quot;guid&quot;:&quot;column-6b53&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Advice&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Advice link&quot;,&quot;type&quot;:&quot;customRichText&quot;},{&quot;apiName&quot;:&quot;ExcludedUpdateReason__c&quot;,&quot;guid&quot;:&quot;column-e353&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Reason for current exclusion&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Excluded update reason&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;ExcludedUpdateNotes__c&quot;,&quot;guid&quot;:&quot;column-0d31&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Notes&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Excluded update notes&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>shouldDisplayLabel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -1397,85 +1005,18 @@
     <screens>
         <name>Intro</name>
         <label>Intro</label>
-        <locationX>358</locationX>
+        <locationX>314</locationX>
         <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_advice</targetReference>
+            <targetReference>Get_advice_which_is_receiving_updates</targetReference>
         </connector>
         <fields>
             <name>introText</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;To assign out fulfilment updates, click Next. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;You’ll be able to &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;- take advice off the not receiving updates list&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;- add new advice in fulfilment to the receiving updates list&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;- choose advice on the receiving updates lists to assign out&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(55, 53, 47); font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;- choose the team members who will send the updates this week &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Don&#39;t do this if you don&#39;t want them to get tasks yet!&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;To assign out fulfilment updates, click Next. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;Any household with one or pieces of advice with a fulfilment update status of &#39;Receiving updates&#39; will receive a task.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;You’ll be able to choose the team members who will send the updates this week. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Don&#39;t do this if you don&#39;t want them to get tasks yet!&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>New_advice_review</name>
-        <label>New advice review</label>
-        <locationX>358</locationX>
-        <locationY>3038</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Assign_new_count</targetReference>
-        </connector>
-        <fields>
-            <name>newExplain</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;Choose any advice that should &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt;not&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(55, 53, 47);&quot;&gt; start receiving updates. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(215, 3, 31);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Selected advice will &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(215, 3, 31);&quot;&gt;not&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; font-family: ui-sans-serif, -apple-system, &amp;quot;system-ui&amp;quot;, &amp;quot;Segoe UI&amp;quot;, Helvetica, &amp;quot;Apple Color Emoji&amp;quot;, Arial, sans-serif, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;; color: rgb(215, 3, 31);&quot;&gt; receive a task on its household.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>newAdviceSelect</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Advice__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>New advice in fulfilment</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>MULTI_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>relevantNewAdvice</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;AdviceLink__c&quot;,&quot;guid&quot;:&quot;column-aa6a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Advice&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Advice link&quot;,&quot;type&quot;:&quot;customRichText&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>shouldDisplayLabel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -1484,7 +1025,7 @@
         <name>SuccessScreen</name>
         <label>Success</label>
         <locationX>50</locationX>
-        <locationY>7898</locationY>
+        <locationY>6242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1520,8 +1061,8 @@
     <screens>
         <name>Summary</name>
         <label>Summary</label>
-        <locationX>358</locationX>
-        <locationY>7466</locationY>
+        <locationX>314</locationX>
+        <locationY>5810</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1536,7 +1077,7 @@
         </fields>
         <fields>
             <name>casesExplain</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Each specialist will receive a maximum of {!householdsPerSpecs} cases each.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Each specialist will receive a maximum of {!householdsPerSpecs} cases each.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;There will be {!numHouseholds} tasks in total.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;There are {!newAdviceCount} new advice cases receiving an update.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;There are {!existingAdviceCount} advice cases which have received an update previously.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Assign updates</nextOrFinishButtonLabel>
@@ -1546,8 +1087,8 @@
     <screens>
         <name>User_selection</name>
         <label>User selection</label>
-        <locationX>358</locationX>
-        <locationY>4286</locationY>
+        <locationX>314</locationX>
+        <locationY>2522</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1611,7 +1152,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>232</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Intro</targetReference>
@@ -1621,8 +1162,8 @@
     <subflows>
         <name>Error_sub_flow</name>
         <label>Error sub flow</label>
-        <locationX>666</locationX>
-        <locationY>8264</locationY>
+        <locationX>314</locationX>
+        <locationY>6350</locationY>
         <flowName>ErrorHandleScreen</flowName>
         <inputAssignments>
             <name>closeFlowAfterToast</name>
@@ -1678,14 +1219,6 @@
         <objectType>Advice__c</objectType>
     </variables>
     <variables>
-        <name>adviceToLoop</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Advice__c</objectType>
-    </variables>
-    <variables>
         <name>adviceToUpdate</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -1700,22 +1233,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
-    </variables>
-    <variables>
-        <name>currentItem_Advice_where_updates_are_blocked</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Advice__c</objectType>
-    </variables>
-    <variables>
-        <name>currentItem_Advice_where_updates_are_going</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Advice__c</objectType>
     </variables>
     <variables>
         <name>currentItem_Get_relevant_fulfilment_for_this_advice</name>
@@ -1740,6 +1257,14 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
+        <name>existingAdviceCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
         <name>fulfilmentCount</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
@@ -1755,14 +1280,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>newAdviceIds</name>
-        <dataType>String</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>newCount</name>
+        <name>newAdviceCount</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -1770,12 +1288,19 @@
         <scale>0</scale>
     </variables>
     <variables>
+        <name>newAdviceIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>numHouseholds</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <scale>2</scale>
+        <scale>0</scale>
     </variables>
     <variables>
         <name>numSpecs</name>
@@ -1784,14 +1309,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
-    </variables>
-    <variables>
-        <name>ongoingCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
     </variables>
     <variables>
         <name>protectionAdviceTypeId</name>
@@ -1807,22 +1324,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Advice__c</objectType>
-    </variables>
-    <variables>
-        <name>removeFromNewCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-    </variables>
-    <variables>
-        <name>removeFromOngoingCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
     </variables>
     <variables>
         <name>singleAdviceToUpdate</name>
@@ -1864,14 +1365,6 @@
     </variables>
     <variables>
         <name>testCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-    </variables>
-    <variables>
-        <name>unblockedCount</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
