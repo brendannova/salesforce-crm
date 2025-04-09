@@ -238,6 +238,11 @@
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
+        <application>OperationsManager</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
         <application>OwAdmin</application>
         <default>false</default>
         <visible>false</visible>
@@ -9963,8 +9968,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
+        <readable>false</readable>
         <field>Public_Provider_Names__c.DeveloperName__c</field>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Public_Provider_Names__c.ReferenceName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11211,7 +11221,7 @@
         <recordType>Advice__c.Advice_RT_General_Advice</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Advice__c-Protection Advice</layout>
+        <layout>Advice__c-OW advice page layout</layout>
         <recordType>Advice__c.Protection</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -11227,7 +11237,7 @@
         <recordType>Advice__c.TopUp</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Advice__c-Trust page layout</layout>
+        <layout>Advice__c-OW advice page layout</layout>
         <recordType>Advice__c.TrustOnboarding</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -11364,6 +11374,10 @@
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.AdminSupport</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Email layout</layout>
+        <recordType>Case.Email</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
@@ -11764,6 +11778,12 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Fact__c-Master Fact Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FeatureFlagRule__c-Feature Flag Rule Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FeatureFlag__c-Feature Flag Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>FeeModel__c-Fee model Layout</layout>
@@ -12998,6 +13018,9 @@
         <layout>UserAppMenuItem-Application Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>UserLicence__c-User Licence Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>UserProvAccount-User Provisioning Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -13986,6 +14009,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>AdviceChecklist__c.AnnualReview</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>AdviceChecklist__c.Protection</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -14780,6 +14808,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Opportunity.TrustAdvice</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>PersonAccount.Colleague</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -14969,6 +15002,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>AdviceManager</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>AdviceRecipient__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -15089,6 +15126,14 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>FeatureFlagRule__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>FeatureFlag__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>FinancialProductType__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -15150,7 +15195,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Licence__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Licencing__c</tab>
@@ -15218,7 +15263,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>UserLicence__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Account</tab>
@@ -15927,6 +15972,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>LightningExperienceUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageCssUsers</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
