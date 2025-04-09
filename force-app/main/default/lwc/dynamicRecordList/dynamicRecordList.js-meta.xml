@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Dynamic Custom Related List</masterLabel>
+    <description>Displays the output of a given apex funciton for a specified ID. Can be used on most pages.</description>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage, lightning__RecordPage, lightning__AppPage">
+            <property name="contextId" type="String" label="Override Page Record Id" description="will default to the page record Id if avaliable, but can be manually overwritten or specified here"/>
+            <property name="logicReference" type="String" label="API name of logic to call" required="true" description="Reference apex will use to delected with funciton to get data from"/>
+            <property name="title" type="String" label="List title" required="true" description="What text will display before the record count at the top of the component"/>
+            <property name="iconName" type="String" label="Icon Name" required="true" description="Icon reference from SLDS framework e.g. standard:account"/>
+            <property name="pageSpecifiedColumnNames" type="String" label="Override Columns (comma seperated list)" description="Filed names provided in display order. Columns must be presepcified in apex logic"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
