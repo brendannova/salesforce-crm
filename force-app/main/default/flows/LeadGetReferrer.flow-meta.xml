@@ -64,9 +64,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_empty_search_error</name>
+        <label>Assign empty search error</label>
+        <locationX>1106</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>displayMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>You must enter a search term</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Assign_format_error</name>
         <label>Assign format error</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>displayMessage</assignToReference>
@@ -179,35 +192,6 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Decision to check 
-- is user searching on mobile?
-- does mobile start with area code?
--does mobil have correct number of characters?</description>
-        <name>Is_mobile_in_valid_format</name>
-        <label>Is mobile in valid format?</label>
-        <locationX>776</locationX>
-        <locationY>134</locationY>
-        <defaultConnector>
-            <targetReference>Assign_format_error</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Mobile format invalid</defaultConnectorLabel>
-        <rules>
-            <name>Mobile_format_valid</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>mobileValidFormatCheck</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Type_of_referral</targetReference>
-            </connector>
-            <label>Mobile format valid</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Type_of_referral</name>
         <label>Type of referral?</label>
         <locationX>446</locationX>
@@ -269,18 +253,59 @@
             <label>Business</label>
         </rules>
     </decisions>
+    <decisions>
+        <description>Decision to check 
+- is user searching on mobile?
+- does mobile start with area code?
+-does mobil have correct number of characters?</description>
+        <name>Validate_search_string</name>
+        <label>Validate search string</label>
+        <locationX>908</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Assign_format_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Mobile format invalid</defaultConnectorLabel>
+        <rules>
+            <name>Mobile_format_valid</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mobileValidFormatCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Type_of_referral</targetReference>
+            </connector>
+            <label>Mobile format valid</label>
+        </rules>
+        <rules>
+            <name>Search_string_is_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>searchString</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_empty_search_error</targetReference>
+            </connector>
+            <label>Search string is blank</label>
+        </rules>
+    </decisions>
     <description>Flow to search for a person who passed on the referral. Flow accepts a string value to search on, and this flow returns a list of people who match on either email, phone or name of the person returned.</description>
     <environments>Default</environments>
     <formulas>
-        <description>IF(ISNUMBER({!searchString})
-&amp;&amp;
-IF(BEGINS({!searchString}, &quot;+44&quot;), 
-REGEX({!searchString}, &quot;^\\+447\\d{9}$&quot;), 
-REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
-)</description>
+        <description>Evaluates to true if mobile format is valid and search string is not empty</description>
         <name>mobileValidFormatCheck</name>
         <dataType>Boolean</dataType>
-        <expression>IF(NOT(ISNUMBER({!searchString}))
+        <expression>IF((NOT(ISNUMBER({!searchString}))
+&amp;&amp;
+NOT(ISBLANK({!searchString})))
 ||
 IF(BEGINS({!searchString}, &quot;+44&quot;), 
 REGEX({!searchString}, &quot;^\\+447\\d{9}$&quot;), 
@@ -375,10 +400,10 @@ REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>
-        <locationX>650</locationX>
+        <locationX>782</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_mobile_in_valid_format</targetReference>
+            <targetReference>Validate_search_string</targetReference>
         </connector>
     </start>
     <status>Active</status>
