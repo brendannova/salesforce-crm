@@ -186,19 +186,19 @@ private class TaskEngineTest {
         }
 
         //teskInvokable method too
-        TaskEngineInvokableList.FlowInputs taskRequestFlowInput = new TaskEngineInvokableList.FlowInputs();
+        FlowUtilityTaskCreateList.FlowInputs taskRequestFlowInput = new FlowUtilityTaskCreateList.FlowInputs();
         taskRequestFlowInput.taskRequests = taskRequests;
 
-        List<TaskEngineInvokableList.FlowInputs> taskRequestFlowInputList = new List<TaskEngineInvokableList.FlowInputs>();
+        List<FlowUtilityTaskCreateList.FlowInputs> taskRequestFlowInputList = new List<FlowUtilityTaskCreateList.FlowInputs>();
         taskRequestFlowInputList.add(taskRequestFlowInput);
 
         //test method directly and via invokable method together as setup for test taks a long time
         Test.startTest();
         TaskEngine.generateTasks(taskRequests);
-        List<TaskEngineInvokableList.FlowOutputs> flowOutputs = TaskEngineInvokableList.invocableGenerateTasks(taskRequestFlowInputList);
+        List<FlowUtilityTaskCreateList.FlowOutputs> flowOutputs = FlowUtilityTaskCreateList.invocableGenerateTasks(taskRequestFlowInputList);
         Test.stopTest();
 
-        for(TaskEngineInvokableList.FlowOutputs flowOutput : flowOutputs){
+        for(FlowUtilityTaskCreateList.FlowOutputs flowOutput : flowOutputs){
             Assert.isTrue(flowOutput.isSuccess, 'Invokable apex task creation failure');
         }
 
