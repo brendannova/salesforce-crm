@@ -26,7 +26,7 @@
             <assignToReference>Lead.LeadSource</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>leadSourceFormula</elementReference>
+                <elementReference>Lead_source</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -83,6 +83,10 @@
         <name>other</name>
         <choiceText>Other</choiceText>
         <dataType>String</dataType>
+        <userInput>
+            <isRequired>true</isRequired>
+            <promptText>Other source</promptText>
+        </userInput>
         <value>
             <stringValue>Other</stringValue>
         </value>
@@ -125,11 +129,6 @@
 {!Lead_source} = &quot;Acquisition&quot; 
 || 
 {!Lead_source} = &quot;Financial wellbeing rollout&quot;, true, false)</expression>
-    </formulas>
-    <formulas>
-        <name>leadSourceFormula</name>
-        <dataType>String</dataType>
-        <expression>IF({!Lead_source} = {!other},{!Other_source},{!Lead_source})</expression>
     </formulas>
     <formulas>
         <name>searchString</name>
@@ -189,7 +188,7 @@
             <targetReference>Success</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Handle_Screen_Flow_1</targetReference>
+            <targetReference>Handle_errors</targetReference>
         </faultConnector>
         <inputReference>Lead</inputReference>
     </recordUpdates>
@@ -231,12 +230,12 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Lead_source</name>
+                    <choiceReferences>financialWellbeingRollout</choiceReferences>
+                    <choiceReferences>partnerGenerated</choiceReferences>
                     <choiceReferences>clientReferral</choiceReferences>
                     <choiceReferences>employeeReferral</choiceReferences>
-                    <choiceReferences>partnerGenerated</choiceReferences>
                     <choiceReferences>introducer</choiceReferences>
                     <choiceReferences>youTube</choiceReferences>
-                    <choiceReferences>financialWellbeingRollout</choiceReferences>
                     <choiceReferences>other</choiceReferences>
                     <dataType>String</dataType>
                     <defaultValue>
@@ -248,31 +247,13 @@
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
-                    <name>Other_source</name>
-                    <dataType>String</dataType>
-                    <fieldText>Other source</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Lead_source</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <elementReference>other</elementReference>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <fields>
                     <name>Lead_source_notes</name>
                     <defaultValue>
                         <stringValue>{!Lead.LeadSourceNotes__c}</stringValue>
                     </defaultValue>
                     <fieldText>Lead source notes</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Add relevant referral notes to come back to if you cannot complete the referral information now.&lt;/span&gt;&lt;/p&gt;</helpText>
+                    <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Any notes relevant in supporting lead source.&lt;/span&gt;&lt;/p&gt;</helpText>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <validationRule>
@@ -328,7 +309,7 @@
                     <dataType>String</dataType>
                     <fieldText>Mobile or Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Mobile numbers must start with +44. Can be skipped but must be added before conversion.&lt;/p&gt;</helpText>
+                    <helpText>&lt;p&gt;Mobile numbers must be in international format (e.g. start with +44). Can be skipped but must be added before conversion.&lt;/p&gt;</helpText>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
@@ -356,7 +337,7 @@
                     <inputParameters>
                         <name>label</name>
                         <value>
-                            <stringValue>Search for referrer</stringValue>
+                            <stringValue>Search</stringValue>
                         </value>
                     </inputParameters>
                     <inputParameters>
@@ -468,7 +449,7 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <nextOrFinishButtonLabel>Update source</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Update lead source</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
         <triggers>
@@ -531,8 +512,8 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Error_Handle_Screen_Flow_1</name>
-        <label>Error | Handle | Screen Flow 1</label>
+        <name>Handle_errors</name>
+        <label>Handle errors</label>
         <locationX>440</locationX>
         <locationY>674</locationY>
         <flowName>ErrorHandleScreen</flowName>
@@ -540,6 +521,12 @@
             <name>closeFlowAfterToast</name>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <stringValue>Lead not updated. Please raise a ticket</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -555,15 +542,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>toastMode</name>
-            <value>
-                <stringValue>success</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <name>toastTitle</name>
             <value>
-                <stringValue>Success</stringValue>
+                <stringValue>Something went wrong</stringValue>
             </value>
         </inputAssignments>
     </subflows>
