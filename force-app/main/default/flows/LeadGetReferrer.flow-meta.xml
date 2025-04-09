@@ -26,7 +26,7 @@
         <nameSegment>FlowUtilityGetRecordTypeId</nameSegment>
         <offset>0</offset>
         <outputParameters>
-            <assignToReference>personAccountRecordTypeId</assignToReference>
+            <assignToReference>accountRecordTypeId</assignToReference>
             <name>recordTypeId</name>
         </outputParameters>
     </actionCalls>
@@ -124,7 +124,7 @@
             <assignToReference>displayMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>We couldn&#39;t find a person with these details. Please try again, or try using a different search method</stringValue>
+                <stringValue>Nobody found with those details.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -322,7 +322,7 @@ REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>personAccountRecordTypeId</elementReference>
+                <elementReference>accountRecordTypeId</elementReference>
             </value>
         </filters>
         <filters>
@@ -351,7 +351,7 @@ REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
             <field>RecordTypeId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>personAccountRecordTypeId</elementReference>
+                <elementReference>accountRecordTypeId</elementReference>
             </value>
         </filters>
         <filters>
@@ -383,18 +383,18 @@ REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
     </start>
     <status>Active</status>
     <variables>
+        <name>accountRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>displayMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>personAccountRecordTypeId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>RecordTypeDeveloperName</name>
