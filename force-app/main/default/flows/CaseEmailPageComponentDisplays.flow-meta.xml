@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_record_type_ID_Action_1</name>
         <label>Get record type ID Action 1</label>
-        <locationX>1370</locationX>
-        <locationY>566</locationY>
+        <locationX>1282</locationX>
+        <locationY>458</locationY>
         <actionName>RecordTypeGetId</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -33,8 +33,8 @@
     <actionCalls>
         <name>Go_to_email</name>
         <label>Go to email</label>
-        <locationX>1370</locationX>
-        <locationY>1298</locationY>
+        <locationX>1282</locationX>
+        <locationY>1190</locationY>
         <actionName>c:navigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -52,8 +52,8 @@
     <assignments>
         <name>Add_case_to_collection</name>
         <label>Add case to collection</label>
-        <locationX>1458</locationX>
-        <locationY>998</locationY>
+        <locationX>1370</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>casesToDisplay</assignToReference>
             <operator>Add</operator>
@@ -68,8 +68,8 @@
     <assignments>
         <name>Assign_owner_name</name>
         <label>Assign owner name</label>
-        <locationX>1458</locationX>
-        <locationY>890</locationY>
+        <locationX>1370</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Loop_cases.OwnerId</assignToReference>
             <operator>Assign</operator>
@@ -84,8 +84,8 @@
     <assignments>
         <name>Assign_person_name</name>
         <label>Assign person name</label>
-        <locationX>666</locationX>
-        <locationY>890</locationY>
+        <locationX>490</locationX>
+        <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>Loop_facts_found.Person__c</assignToReference>
             <operator>Assign</operator>
@@ -100,8 +100,8 @@
     <assignments>
         <name>Assign_to_collection</name>
         <label>Assign to collection</label>
-        <locationX>666</locationX>
-        <locationY>998</locationY>
+        <locationX>490</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>displayFactsCollection</assignToReference>
             <operator>Add</operator>
@@ -113,11 +113,34 @@
             <targetReference>Loop_facts_found</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assignment_5</name>
+        <label>Assignment 5</label>
+        <locationX>930</locationX>
+        <locationY>674</locationY>
+        <assignmentItems>
+            <assignToReference>clientsInHousehold</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_clients_in_household.personAccounts</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>clientsInHousehold</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_children_in_household.personAccounts</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>DisplayClientInformation</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Facts_found</name>
         <label>Facts found?</label>
-        <locationX>710</locationX>
-        <locationY>674</locationY>
+        <locationX>534</locationX>
+        <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Empty_screen</targetReference>
         </defaultConnector>
@@ -141,7 +164,7 @@
     <decisions>
         <name>Is_SLA_icon</name>
         <label>Is SLA icon key</label>
-        <locationX>396</locationX>
+        <locationX>545</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Get_household_ID_from_case</targetReference>
@@ -164,35 +187,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>No_household_found</name>
-        <label>No household found</label>
-        <locationX>743</locationX>
-        <locationY>350</locationY>
-        <defaultConnector>
-            <targetReference>Which_input_chosen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>No_linked_household</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>householdId</leftValueReference>
-                <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Empty_screen</targetReference>
-            </connector>
-            <label>No linked household</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Which_input_chosen</name>
         <label>Which input chosen?</label>
-        <locationX>1172</locationX>
-        <locationY>458</locationY>
+        <locationX>1040</locationX>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Display_facts_input</name>
@@ -258,8 +256,8 @@
     <loops>
         <name>Loop_cases</name>
         <label>Loop cases</label>
-        <locationX>1370</locationX>
-        <locationY>782</locationY>
+        <locationX>1282</locationX>
+        <locationY>674</locationY>
         <collectionReference>Get_related_cases_from_household</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -272,8 +270,8 @@
     <loops>
         <name>Loop_facts_found</name>
         <label>Loop facts found</label>
-        <locationX>578</locationX>
-        <locationY>782</locationY>
+        <locationX>402</locationX>
+        <locationY>674</locationY>
         <collectionReference>Get_Facts</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -306,8 +304,8 @@
         <description>Get household facts relevant to ops when sending emails. This query gets all vulnerability facts where the assessment is vulnerable and contact preferences related to emails and preferred method of contact.</description>
         <name>Get_Facts</name>
         <label>Get Facts</label>
-        <locationX>710</locationX>
-        <locationY>566</locationY>
+        <locationX>534</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Facts_found</targetReference>
@@ -362,11 +360,11 @@
     <recordLookups>
         <name>Get_household_ID_from_case</name>
         <label>Get household ID from case</label>
-        <locationX>743</locationX>
+        <locationX>1040</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>No_household_found</targetReference>
+            <targetReference>Which_input_chosen</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -385,8 +383,8 @@
     <recordLookups>
         <name>Get_related_cases_from_household</name>
         <label>Get related cases from household</label>
-        <locationX>1370</locationX>
-        <locationY>674</locationY>
+        <locationX>1282</locationX>
+        <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_cases</targetReference>
@@ -422,8 +420,8 @@
     <screens>
         <name>Display_facts</name>
         <label>Display facts</label>
-        <locationX>578</locationX>
-        <locationY>1190</locationY>
+        <locationX>402</locationX>
+        <locationY>1082</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -487,8 +485,8 @@
     <screens>
         <name>Display_related_cases</name>
         <label>Display related cases</label>
-        <locationX>1370</locationX>
-        <locationY>1190</locationY>
+        <locationX>1282</locationX>
+        <locationY>1082</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -568,8 +566,8 @@
     <screens>
         <name>DisplayClientInformation</name>
         <label>DisplayClientInformation</label>
-        <locationX>1018</locationX>
-        <locationY>674</locationY>
+        <locationX>930</locationX>
+        <locationY>782</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1030,8 +1028,8 @@
     <screens>
         <name>Empty_screen</name>
         <label>Empty screen</label>
-        <locationX>743</locationX>
-        <locationY>1682</locationY>
+        <locationX>666</locationX>
+        <locationY>674</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1039,7 +1037,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>270</locationX>
+        <locationX>419</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_SLA_icon</targetReference>
@@ -1047,12 +1045,35 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Get_clients_in_household</name>
-        <label>Get clients in household</label>
-        <locationX>1018</locationX>
+        <name>Get_children_in_household</name>
+        <label>Get children in household</label>
+        <locationX>930</locationX>
         <locationY>566</locationY>
         <connector>
-            <targetReference>DisplayClientInformation</targetReference>
+            <targetReference>Assignment_5</targetReference>
+        </connector>
+        <flowName>AccountGetPeopleInHousehold</flowName>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>role</name>
+            <value>
+                <stringValue>Child</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Get_clients_in_household</name>
+        <label>Get clients in household</label>
+        <locationX>930</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Get_children_in_household</targetReference>
         </connector>
         <flowName>AccountGetPeopleInHousehold</flowName>
         <inputAssignments>
@@ -1067,10 +1088,7 @@
                 <stringValue>Client</stringValue>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>clientsInHousehold</assignToReference>
-            <name>personAccounts</name>
-        </outputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <name>casesToDisplay</name>
