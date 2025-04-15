@@ -1,8 +1,7 @@
 import { LightningElement, api } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
 import getTaskInfo from '@salesforce/apex/LwcHelperTaskOrchestrator.getTaskInfoByTaskName';
 
-export default class TaskOrchestrator extends NavigationMixin(LightningElement) {
+export default class TaskOrchestrator extends LightningElement {
 
 
   @api recordId;
