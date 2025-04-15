@@ -1,7 +1,23 @@
 <template>
         <lightning-card title={cardTitle} icon-name={cardIcon}>
+            <div slot="actions">
+                <template if:true={showHelpButton}>
+                        <lightning-button-icon
+                            icon-name="utility:topic"
+                            alternative-text="Task Help"
+                            tooltip="Guide me: Click to get help on how to complete this task"
+                            value='help'
+                            onclick={handleHelpClick}
+                        ></lightning-button-icon>
+                </template>
+            </div>
             <div class="slds-var-m-around_medium">
-                <lightning-flow onstatuschange={handleStatusChange} flow-api-name={flowApiName} flow-input-variables={inputVariables}></lightning-flow>
+                <template if:true={showTaskSelectionFlow}>
+                    <lightning-flow flow-api-name="Orchestrator_Select_Task" onstatuschange={handleTaskSelectionStatusChange} flow-input-variables={taskSelectionInputVariables}></lightning-flow>
+                </template>
+                <template if:true={showOrchestatorFlow}>
+                    <lightning-flow onstatuschange={handleOrchestrationStatusChange} flow-api-name={flowApiName} flow-input-variables={orchestrationInputVariables}></lightning-flow>
+                </template>
             </div>
         </lightning-card>
 </template>
