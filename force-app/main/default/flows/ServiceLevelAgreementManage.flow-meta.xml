@@ -93,7 +93,7 @@
             <assignToReference>Loop_SLAs_to_end.StatusAfter__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>statusAfterType</elementReference>
+                <elementReference>statusNewType</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -120,6 +120,13 @@
             </value>
         </assignmentItems>
     </assignments>
+    <constants>
+        <name>STATUS_TYPE_PREFIX</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Any_SLAs_to_end</name>
         <label>Any SLAs to end?</label>
@@ -170,16 +177,10 @@
     <description>Creates new SLA records for a given piece of transactional data and closes off the last one, if applicable.</description>
     <environments>Default</environments>
     <formulas>
-        <description>For an SLA type that applies to a status, this will return the statusAfter value, otherwise it&apos;ll be blank.</description>
-        <name>statusAfterType</name>
-        <dataType>String</dataType>
-        <expression>IF(BEGINS({!Loop_SLAs_to_end.Type__c}, &quot;STATUS_&quot;), {!statusExit}, &quot;&quot;)</expression>
-    </formulas>
-    <formulas>
         <description>For an SLA type that applies to a status, this will return the statusNew value, otherwise it&apos;ll be blank.</description>
         <name>statusNewType</name>
         <dataType>String</dataType>
-        <expression>IF(BEGINS({!Loop_SLAs_to_start}, &quot;STATUS_&quot;), {!statusNew}, &quot;&quot;)</expression>
+        <expression>IF(BEGINS({!Loop_SLAs_to_start}, {!STATUS_TYPE_PREFIX}) || BEGINS({!Loop_SLAs_to_end.Type__c}, {!STATUS_TYPE_PREFIX}), {!statusNew}, &quot;&quot;)</expression>
     </formulas>
     <interviewLabel>SLA | Manage {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SLA | Manage</label>
@@ -237,6 +238,10 @@
         <locationY>1358</locationY>
         <doesUpsert>true</doesUpsert>
         <doesUpsertAllOrNone>true</doesUpsertAllOrNone>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error</targetReference>
+        </faultConnector>
         <inputReference>slas</inputReference>
     </recordCreates>
     <recordLookups>
@@ -283,7 +288,7 @@
         <object>ServiceLevelAgreement__c</object>
         <outputReference>slasEnd</outputReference>
         <queriedFields>Id</queriedFields>
-        <queriedFields>End__c</queriedFields>
+        <queriedFields>Type__c</queriedFields>
     </recordLookups>
     <start>
         <locationX>50</locationX>
@@ -331,7 +336,7 @@
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
         <objectType>ServiceLevelAgreement__c</objectType>
     </variables>
     <variables>
@@ -363,14 +368,6 @@
         <name>slaTypesStart</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <description>The status that the record has left.</description>
-        <name>statusExit</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
