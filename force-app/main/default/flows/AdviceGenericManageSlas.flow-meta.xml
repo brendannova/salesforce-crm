@@ -127,10 +127,12 @@
             <label>Success</label>
         </rules>
     </decisions>
-    <description>Create and update SLA records when advice status is changed on ad hoc advice</description>
+    <description>Replaced by generic path in AdviceOrchestrationAutomation.
+
+Create and update SLA records when advice status is changed on ad hoc advice</description>
     <environments>Default</environments>
     <interviewLabel>Advice | Generic | Manage SLAs {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Advice | Generic | Manage SLAs</label>
+    <label>zUnused | Advice | Generic | Manage SLAs</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -165,7 +167,7 @@ ISCHANGED({!$Record.Advice_Status__c}))</filterFormula>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Manage_SLAs</name>
         <label>Manage SLAs</label>
