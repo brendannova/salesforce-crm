@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <chart>
+        <backgroundColor1>#FFFFFF</backgroundColor1>
+        <backgroundColor2>#FFFFFF</backgroundColor2>
+        <backgroundFadeDir>Diagonal</backgroundFadeDir>
+        <chartSummaries>
+            <axisBinding>y</axisBinding>
+            <column>RowCount</column>
+        </chartSummaries>
+        <chartType>VerticalColumn</chartType>
+        <enableHoverLabels>false</enableHoverLabels>
+        <expandOthers>true</expandOthers>
+        <groupingColumn>ServiceLevelAgreement__c$End__c</groupingColumn>
+        <location>CHART_BOTTOM</location>
+        <showAxisLabels>true</showAxisLabels>
+        <showPercentage>false</showPercentage>
+        <showTotal>false</showTotal>
+        <showValues>false</showValues>
+        <size>Medium</size>
+        <summaryAxisRange>Auto</summaryAxisRange>
+        <textColor>#000000</textColor>
+        <textSize>12</textSize>
+        <titleColor>#000000</titleColor>
+        <titleSize>18</titleSize>
+    </chart>
+    <columns>
+        <field>ServiceLevelAgreement__c$Name</field>
+    </columns>
+    <columns>
+        <field>ServiceLevelAgreement__c$Advice__c</field>
+    </columns>
+    <columns>
+        <field>ServiceLevelAgreement__c$Status__c</field>
+    </columns>
+    <description>This shows the current user&#39;s monthly history of completed data analysis cases.</description>
+    <filter>
+        <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Data analysis</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Risk call</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$End__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>greaterOrEqual</operator>
+            <value>3/1/2025 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$End__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>false</isUnlocked>
+            <operator>lessThan</operator>
+            <value>4/1/2025 12:00 AM</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$Advice__c.DataAnalysisSpecialist__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Lucy Harrison</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Month</dateGranularity>
+        <field>ServiceLevelAgreement__c$End__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ServiceLevelAgreement__c$Advice__c.DataAnalysisSpecialist__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>My DA cases | Monthly</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ServiceLevelAgreements__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ServiceLevelAgreement__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
