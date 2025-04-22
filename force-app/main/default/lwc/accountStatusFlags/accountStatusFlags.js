@@ -34,7 +34,7 @@ const COI_LABEL = 'Conflict of Interest';
 const CUSTOMER_FLAG_LABEL = 'Customer Flag';
 const CUSTOMER_TYPE_LABEL = 'Customer Type';
 const PEP_LABEL = 'Politically Exposed';
-const FACT_FIND_VALIDATIONS_LABEL = 'Client Profile Validations Outstanding';
+const FACT_FIND_VALIDATIONS_LABEL = 'Validations Outstanding';
 const TEMP_BANK_DETAILS_ISSUE_LABEL = 'Bank Details Issue';
 
 //css sytling references
