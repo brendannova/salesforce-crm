@@ -1841,7 +1841,27 @@ Objects: Account, Advice, Task, Opportunity, Fulfilment.</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AdviceType__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AdviceType__c.AdviceChecklistRecordTypeDeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AdviceType__c.ClientType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AdviceType__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AdviceType__c.DeveloperName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1862,6 +1882,26 @@ Objects: Account, Advice, Task, Opportunity, Fulfilment.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>AdviceType__c.ProfileUpdate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AdviceType__c.RecordTypeDeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AdviceType__c.RiskToleranceQuestionnaireSent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AdviceType__c.SortOrder__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AdviceType__c.Warnings__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9024,6 +9064,15 @@ Objects: Account, Advice, Task, Opportunity, Fulfilment.</description>
         <modifyAllRecords>false</modifyAllRecords>
         <object>AdviceTypeRecommendation__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AdviceType__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
