@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { getRecord, getFieldValue } from "lightning/uiRecordApi";
 import { getSObjectValue } from "@salesforce/apex";
 
@@ -156,13 +156,16 @@ export default class accountStatusFlags extends LightningElement {
 
 
     @api recordId;
+    @api objectApiName;
     @api badgeItems = [];
     @api isIconTest;
+    @track accountId;
+    errorMessage;
     account;
     personAccounts;
     cardTitle;
 
-    @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
+    @wire(getRecord, { recordId: '$accountId', fields: FIELDS })
     wiredAccount({error, data}){
         if(error){
             console.log('error: ' + error);
@@ -174,7 +177,7 @@ export default class accountStatusFlags extends LightningElement {
         }
     }
 
-    @wire(getAccountsByHouseholdId, { householdId: '$recordId' })
+    @wire(getAccountsByHouseholdId, { householdId: '$accountId' })
     wiredAccounts({ error, data }) {
         if (data) {
             this.personAccounts = data;
@@ -325,5 +328,22 @@ export default class accountStatusFlags extends LightningElement {
             this.addBadge(badgeRef.badge.Id, badgeRef.badge.text, badgeRef.badge.icon, badgeRef.badge.badgeClass, badgeRef.badge.order);
         }
 
+    }
+
+    connectedCallback(){
+        console.log('connectedCallback');
+        console.log('this.objectApiName: ' + this.objectApiName);
+        switch(this.objectApiName){
+            case 'Account':
+                this.accountId = this.recordId;
+                break;
+            case 'PersonAccount':
+                this.accountId = this.recordId;
+                break;
+            default:
+                console.log('setting error message for unspported object');
+                this.errorMessage = 'Logic to get the householdId for this Object has not yet been defined'
+                break;
+        }
     }
 }
