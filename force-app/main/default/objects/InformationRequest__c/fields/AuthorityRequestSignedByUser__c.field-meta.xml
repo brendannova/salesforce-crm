@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AuthorityRequestSignedByUser__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The internal user/colleague who signed the authority document for this information request</description>
+    <inlineHelpText>The internal user/colleague who signed the authority document for this information request</inlineHelpText>
+    <label>Authority request signed by</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>InformationRequestsSigned</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

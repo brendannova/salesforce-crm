@@ -5,7 +5,7 @@
         <name>Check_Is_Closed</name>
         <label>Check Is Closed</label>
         <locationX>1194</locationX>
-        <locationY>1787</locationY>
+        <locationY>2303</locationY>
         <assignmentItems>
             <assignToReference>$Record.IsClosed__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Set_4_eye_review_complete_date</name>
         <label>Set 4 eye review complete date</label>
         <locationX>1590</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.X4_eye_review_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -31,10 +31,26 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Set_advice_ID</name>
+        <label>Set advice ID</label>
+        <locationX>1326</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>adviceId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Data_gathering_status_set_to</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_create_deck_complete_date</name>
         <label>Set create deck complete date</label>
         <locationX>1062</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.Create_deck_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -44,10 +60,27 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <description>Mark who the dedicated specialist was for the data analysis part of the advice process</description>
+        <name>Set_data_analysis_specialist</name>
+        <label>Set data analysis specialist</label>
+        <locationX>1326</locationX>
+        <locationY>1895</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.DataAnalysisSpecialist__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Advice_Household__r.OW_dedicated_specialist__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Advice_closed_or_open</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_data_analysis_status_to_in_progress</name>
         <label>Set data analysis status to in progress</label>
         <locationX>1458</locationX>
-        <locationY>395</locationY>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.DataAnalysisStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -63,7 +96,7 @@
         <name>Set_data_analysis_status_to_not_required</name>
         <label>Set data analysis status to not required</label>
         <locationX>930</locationX>
-        <locationY>395</locationY>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.DataAnalysisStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -79,7 +112,7 @@
         <name>Set_data_analysis_status_to_not_started</name>
         <label>Set data analysis status to not started</label>
         <locationX>1194</locationX>
-        <locationY>395</locationY>
+        <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.DataAnalysisStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -95,7 +128,7 @@
         <name>Set_data_gathering_complete_date</name>
         <label>Set data gathering complete date</label>
         <locationX>798</locationX>
-        <locationY>2087</locationY>
+        <locationY>2603</locationY>
         <assignmentItems>
             <assignToReference>$Record.Data_Gathering_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -108,10 +141,27 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Mark who the dedicated specialist was for the data gathering part of the advice process</description>
+        <name>Set_data_gathering_specialist</name>
+        <label>Set data gathering specialist</label>
+        <locationX>1062</locationX>
+        <locationY>2003</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.DataGatheringSpecialist__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>dataGatheringDedicatedSpecialistId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Advice_closed_or_open</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_deck_complete_complete_date</name>
         <label>Set deck complete complete date</label>
         <locationX>1590</locationX>
-        <locationY>2087</locationY>
+        <locationY>2603</locationY>
         <assignmentItems>
             <assignToReference>$Record.Deck_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -127,7 +177,7 @@
         <name>Set_fulfilment_start_date</name>
         <label>Set fulfilment start date</label>
         <locationX>1194</locationX>
-        <locationY>1187</locationY>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_fulfilment_start_date__c</assignToReference>
             <operator>Assign</operator>
@@ -143,7 +193,7 @@
         <name>Set_meeting_held_date</name>
         <label>Set meeting held date</label>
         <locationX>1854</locationX>
-        <locationY>2087</locationY>
+        <locationY>2603</locationY>
         <assignmentItems>
             <assignToReference>$Record.Meeting_Held_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -159,7 +209,7 @@
         <name>Set_narrative_approval_complete_date</name>
         <label>Set narrative approval complete date</label>
         <locationX>534</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.Narrative_approval_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -172,7 +222,7 @@
         <name>Set_planner_suitability_narrative_complete_date</name>
         <label>Set planner suitability narrative complete date</label>
         <locationX>270</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.Planner_Suitability_Narrative_complete_d__c</assignToReference>
             <operator>Assign</operator>
@@ -185,7 +235,7 @@
         <name>Set_prepare_fulfilment_complete_date</name>
         <label>Set prepare fulfilment complete date</label>
         <locationX>2118</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.Prepare_fulfilment_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -198,7 +248,7 @@
         <name>Set_product_research_complete_date</name>
         <label>Set product research complete date</label>
         <locationX>798</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_research_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -211,7 +261,7 @@
         <name>Set_ready_for_4_eye_complete_date</name>
         <label>Set ready for 4 eye complete date</label>
         <locationX>1326</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.Ready_for_4_eye_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -224,7 +274,7 @@
         <name>Set_ready_for_suitability_complete_date</name>
         <label>Set ready for suitability complete date</label>
         <locationX>1062</locationX>
-        <locationY>2087</locationY>
+        <locationY>2603</locationY>
         <assignmentItems>
             <assignToReference>$Record.Ready_for_Suitability_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -240,7 +290,7 @@
         <name>Set_setup_complete_date</name>
         <label>Set setup complete date</label>
         <locationX>534</locationX>
-        <locationY>2087</locationY>
+        <locationY>2603</locationY>
         <assignmentItems>
             <assignToReference>$Record.Setup_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -256,7 +306,7 @@
         <name>Set_status_change_date</name>
         <label>Set status change date</label>
         <locationX>1194</locationX>
-        <locationY>1487</locationY>
+        <locationY>1595</locationY>
         <assignmentItems>
             <assignToReference>$Record.Advice_Status_change_date__c</assignToReference>
             <operator>Assign</operator>
@@ -265,14 +315,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Advice_closed_or_open</targetReference>
+            <targetReference>Stamp_dedicated_specialist</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_status_to_data_analysis</name>
         <label>Set status to data analysis</label>
         <locationX>50</locationX>
-        <locationY>803</locationY>
+        <locationY>911</locationY>
         <assignmentItems>
             <assignToReference>$Record.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -288,7 +338,7 @@
         <name>Set_status_to_prepare_advice</name>
         <label>Set status to prepare advice</label>
         <locationX>314</locationX>
-        <locationY>803</locationY>
+        <locationY>911</locationY>
         <assignmentItems>
             <assignToReference>$Record.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -304,7 +354,7 @@
         <name>Set_status_to_risk_call</name>
         <label>Set status to risk call</label>
         <locationX>1194</locationX>
-        <locationY>803</locationY>
+        <locationY>911</locationY>
         <assignmentItems>
             <assignToReference>$Record.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -320,7 +370,7 @@
         <name>Set_status_to_suitability_in_progress</name>
         <label>Set status to suitability in progress</label>
         <locationX>1898</locationX>
-        <locationY>803</locationY>
+        <locationY>911</locationY>
         <assignmentItems>
             <assignToReference>$Record.Advice_Status__c</assignToReference>
             <operator>Assign</operator>
@@ -336,7 +386,7 @@
         <name>Set_suitability_approval_complete_date</name>
         <label>Set suitability approval complete date</label>
         <locationX>1854</locationX>
-        <locationY>2387</locationY>
+        <locationY>2903</locationY>
         <assignmentItems>
             <assignToReference>$Record.Suitability_approval_complete_date__c</assignToReference>
             <operator>Assign</operator>
@@ -349,7 +399,7 @@
         <name>Set_suitability_in_progress_complete_date</name>
         <label>Set suitability in progress complete date</label>
         <locationX>1326</locationX>
-        <locationY>2087</locationY>
+        <locationY>2603</locationY>
         <assignmentItems>
             <assignToReference>$Record.Suitability_In_Progress_Complete_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -365,7 +415,7 @@
         <name>Uncheck_Is_Closed</name>
         <label>Uncheck Is Closed</label>
         <locationX>1458</locationX>
-        <locationY>1787</locationY>
+        <locationY>2303</locationY>
         <assignmentItems>
             <assignToReference>$Record.IsClosed__c</assignToReference>
             <operator>Assign</operator>
@@ -381,7 +431,7 @@
         <name>Advice_closed_or_open</name>
         <label>Advice closed or open</label>
         <locationX>1326</locationX>
-        <locationY>1679</locationY>
+        <locationY>2195</locationY>
         <defaultConnector>
             <targetReference>Uncheck_Is_Closed</targetReference>
         </defaultConnector>
@@ -420,7 +470,7 @@
         <name>Advice_type</name>
         <label>Advice type</label>
         <locationX>1326</locationX>
-        <locationY>587</locationY>
+        <locationY>695</locationY>
         <defaultConnector>
             <targetReference>Moved_to_in_fulfilment</targetReference>
         </defaultConnector>
@@ -532,7 +582,7 @@
         <name>Data_gathering</name>
         <label>Data gathering</label>
         <locationX>886</locationX>
-        <locationY>695</locationY>
+        <locationY>803</locationY>
         <defaultConnector>
             <targetReference>Moved_to_in_fulfilment</targetReference>
         </defaultConnector>
@@ -587,7 +637,7 @@
         <name>Data_gathering_status_set_to</name>
         <label>Data gathering status set to</label>
         <locationX>1326</locationX>
-        <locationY>287</locationY>
+        <locationY>395</locationY>
         <defaultConnector>
             <targetReference>Advice_type</targetReference>
         </defaultConnector>
@@ -645,7 +695,7 @@
         <name>Moved_to_in_fulfilment</name>
         <label>Moved to in fulfilment</label>
         <locationX>1326</locationX>
-        <locationY>1079</locationY>
+        <locationY>1187</locationY>
         <defaultConnector>
             <targetReference>Status_changed</targetReference>
         </defaultConnector>
@@ -678,7 +728,7 @@
         <name>Push_status</name>
         <label>Push status</label>
         <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationY>803</locationY>
         <defaultConnector>
             <targetReference>Moved_to_in_fulfilment</targetReference>
         </defaultConnector>
@@ -804,7 +854,7 @@
         <name>Push_status_trust_onboarding</name>
         <label>Push status</label>
         <locationX>1458</locationX>
-        <locationY>695</locationY>
+        <locationY>803</locationY>
         <defaultConnector>
             <targetReference>Moved_to_in_fulfilment</targetReference>
         </defaultConnector>
@@ -879,10 +929,65 @@
         </rules>
     </decisions>
     <decisions>
+        <description>If data gathering or data analysis has been completed, we need to stamp the current dedicated specialist into the data gathering specialist or data analysis specialist fields, respectively.</description>
+        <name>Stamp_dedicated_specialist</name>
+        <label>Stamp a dedicated specialist?</label>
+        <locationX>1326</locationX>
+        <locationY>1787</locationY>
+        <defaultConnector>
+            <targetReference>Advice_closed_or_open</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Data_gathering_specialist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risk Call</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Data_gathering_tasks</targetReference>
+            </connector>
+            <label>Data gathering specialist</label>
+        </rules>
+        <rules>
+            <name>Data_analysis_specialist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risk Call</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Suitability in progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_data_analysis_specialist</targetReference>
+            </connector>
+            <label>Data analysis specialist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Status</name>
         <label>Status</label>
         <locationX>2030</locationX>
-        <locationY>695</locationY>
+        <locationY>803</locationY>
         <defaultConnector>
             <targetReference>Moved_to_in_fulfilment</targetReference>
         </defaultConnector>
@@ -999,9 +1104,9 @@
         <name>Status_changed</name>
         <label>Status changed</label>
         <locationX>1326</locationX>
-        <locationY>1379</locationY>
+        <locationY>1487</locationY>
         <defaultConnector>
-            <targetReference>Advice_closed_or_open</targetReference>
+            <targetReference>Stamp_dedicated_specialist</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not changed</defaultConnectorLabel>
         <rules>
@@ -1025,7 +1130,7 @@
         <name>Status_completed</name>
         <label>Status completed?</label>
         <locationX>1326</locationX>
-        <locationY>1979</locationY>
+        <locationY>2495</locationY>
         <defaultConnector>
             <targetReference>Suitability_stage_change</targetReference>
         </defaultConnector>
@@ -1210,7 +1315,7 @@
         <name>Suitability_stage_change</name>
         <label>Suitability stage change</label>
         <locationX>1326</locationX>
-        <locationY>2279</locationY>
+        <locationY>2795</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Planner_suitability_narrative</name>
@@ -1504,15 +1609,59 @@ null )</expression>
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Data_gathering_tasks</name>
+        <label>Data gathering tasks</label>
+        <locationX>1062</locationX>
+        <locationY>1895</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_data_gathering_specialist</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>OW_task_information_name__c</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>ADVICE_DATA_GATHERING_CASE_SUMMARY</stringValue>
+            </value>
+        </filters>
+        <object>Task</object>
+        <outputAssignments>
+            <assignToReference>dataGatheringDedicatedSpecialistId</assignToReference>
+            <field>OwnerId</field>
+        </outputAssignments>
+    </recordLookups>
     <start>
         <locationX>1200</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Data_gathering_status_set_to</targetReference>
+            <targetReference>Set_advice_ID</targetReference>
         </connector>
         <object>Advice__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Active</status>
+    <variables>
+        <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>dataGatheringDedicatedSpecialistId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>
