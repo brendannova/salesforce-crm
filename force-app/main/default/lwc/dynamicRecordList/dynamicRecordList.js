@@ -48,7 +48,6 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
     }
 
     async init(){
-        console.log('start init');
         this.state.title = this.title;
         this.state.iconName = this.iconName;
         this.state.showRelatedList = true;
@@ -59,7 +58,7 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
 
         console.log(this.contextId);
         console.log(this.logicReference);
-        if(this.contextId != null && this.contextId != '' && this.logicReference != null && this.logicReference != ''){
+        if(this.contextId != null && !this.contextId.isEmpty() && this.logicReference != null && !this.logicReference.isEmpty()){
 
             this.dataReturn = await this.fetchData(this.logicReference, this.contextId);
             this.state.error = this.dataReturn.errorMessage;
