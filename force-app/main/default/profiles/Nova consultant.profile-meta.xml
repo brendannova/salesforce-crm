@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <custom>true</custom>
+    <description>This is the base Nova profile that should be assigned to consultants and any other external person who has access to Nova Salesforce.</description>
+    <userLicense>Salesforce Platform</userLicense>
+    <applicationVisibilities>
+        <application>Nova</application>
+        <default>true</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ActivitiesAccess</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ChatterInternalUser</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewHelpLink</name>
+    </userPermissions>
+</Profile>
