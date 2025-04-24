@@ -3,7 +3,7 @@
  */
 public class FlowUtilityGenerateUuid {
     
-    @InvocableMethod (label='Generate UUID' description='Generate random UUID')
+    @InvocableMethod (label='Generate UUID' description='Generate random UUID' category = 'Flow utilities' iconName='slds:standard:custom_component_task')
     public static List<FlowOutputs> GenerateUuid() {
         UUID randomUuid = UUID.randomUUID();
         List<FlowOutputs> results = new List<FlowOutputs>();
@@ -14,7 +14,7 @@ public class FlowUtilityGenerateUuid {
     }
     
      public class FlowOutputs {
-        @InvocableVariable (description='String to store UUID')
+        @InvocableVariable (label='UUID' description='String to store UUID' required=true)
         public String uuid;
     }  
 }
