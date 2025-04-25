@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_records_object_API_name</name>
+        <label>Get record&apos;s object API name</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <actionName>FlowUtilityGetObjectApiNameFromId</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Object_launched_from</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityGetObjectApiNameFromId</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>objectApiName</assignToReference>
+            <name>objectApiName</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>Assign_record_ID</name>
-        <label>Assign record ID</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
+        <name>Assign_account_ID</name>
+        <label>Assign account ID</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <assignmentItems>
+            <assignToReference>accountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_lead_from_account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_lead_ID</name>
+        <label>Assign lead ID</label>
+        <locationX>314</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>leadId</assignToReference>
             <operator>Assign</operator>
@@ -14,14 +54,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Lead</targetReference>
+            <targetReference>Get_lead_from_lead_ID</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Update_lead_values</name>
         <label>Update lead values</label>
-        <locationX>176</locationX>
-        <locationY>458</locationY>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Lead.LeadSource</assignToReference>
             <operator>Assign</operator>
@@ -44,23 +84,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Lead</targetReference>
+            <targetReference>Update_lead</targetReference>
         </connector>
     </assignments>
     <choices>
         <name>clientReferral</name>
-        <choiceText>Client Referral</choiceText>
+        <choiceText>Referral | Client</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Client Referral</stringValue>
+            <elementReference>LEAD_SOURCE_REFERRAL_CLIENT</elementReference>
         </value>
     </choices>
     <choices>
         <name>employeeReferral</name>
-        <choiceText>Employee Referral</choiceText>
+        <choiceText>Referral | Employee</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Employee Referral</stringValue>
+            <elementReference>LEAD_SOURCE_REFERRAL_EMPLOYEE</elementReference>
         </value>
     </choices>
     <choices>
@@ -68,27 +108,23 @@
         <choiceText>Financial Wellbeing Rollout</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Financial Wellbeing Rollout</stringValue>
+            <elementReference>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</elementReference>
         </value>
     </choices>
     <choices>
         <name>introducer</name>
-        <choiceText>Introducer</choiceText>
+        <choiceText>Referral | Introducer</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Introducer</stringValue>
+            <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
         </value>
     </choices>
     <choices>
         <name>other</name>
         <choiceText>Other</choiceText>
         <dataType>String</dataType>
-        <userInput>
-            <isRequired>true</isRequired>
-            <promptText>Other source</promptText>
-        </userInput>
         <value>
-            <stringValue>Other</stringValue>
+            <stringValue>OTHER</stringValue>
         </value>
     </choices>
     <choices>
@@ -96,7 +132,7 @@
         <choiceText>Partner Generated</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Partner Generated</stringValue>
+            <stringValue>PARTNER_GENERATED</stringValue>
         </value>
     </choices>
     <choices>
@@ -104,9 +140,77 @@
         <choiceText>YouTube</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>YouTube</stringValue>
+            <stringValue>YOUTUBE</stringValue>
         </value>
     </choices>
+    <constants>
+        <name>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>FINANCIAL_WELLBEING_ROLLOUT</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>LEAD_SOURCE_REFERRAL_CLIENT</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>REFERRAL_CLIENT</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>LEAD_SOURCE_REFERRAL_EMPLOYEE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>REFERRAL_EMPLOYEE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>LEAD_SOURCE_REFERRAL_INTRODUCER</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>REFERRAL_INTRODUCER</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Object_launched_from</name>
+        <label>Object launched from?</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Select_Action</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Unexpected object</defaultConnectorLabel>
+        <rules>
+            <name>Account</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>objectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Account</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_account_ID</targetReference>
+            </connector>
+            <label>Account</label>
+        </rules>
+        <rules>
+            <name>LeadObject</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>objectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_lead_ID</targetReference>
+            </connector>
+            <label>Lead</label>
+        </rules>
+    </decisions>
     <description>Update and manage lead source and referral information</description>
     <dynamicChoiceSets>
         <name>peopleResults</name>
@@ -117,19 +221,6 @@
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
-    <formulas>
-        <name>displayReferrerInfo</name>
-        <dataType>Boolean</dataType>
-        <expression>IF({!Lead_source} = &quot;Client Referral&quot;
- || 
-{!Lead_source} = &quot;Employee Referral&quot; 
-|| 
-{!Lead_source} = &quot;Introducer&quot; 
-|| 
-{!Lead_source} = &quot;Acquisition&quot; 
-|| 
-{!Lead_source} = &quot;Financial wellbeing rollout&quot;, true, false)</expression>
-    </formulas>
     <formulas>
         <name>searchString</name>
         <dataType>String</dataType>
@@ -157,10 +248,33 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Lead</name>
-        <label>Get Lead</label>
-        <locationX>176</locationX>
-        <locationY>242</locationY>
+        <name>Get_lead_from_account</name>
+        <label>Get lead from account</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Select_Action</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ConvertedAccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>accountId</elementReference>
+            </value>
+        </filters>
+        <object>Lead</object>
+        <outputReference>Lead</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>LeadSource</queriedFields>
+        <queriedFields>LeadSourceNotes__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_lead_from_lead_ID</name>
+        <label>Get lead from lead ID</label>
+        <locationX>314</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Select_Action</targetReference>
@@ -180,10 +294,10 @@
         <queriedFields>LeadSourceNotes__c</queriedFields>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Lead</name>
-        <label>Update Lead</label>
-        <locationX>176</locationX>
-        <locationY>566</locationY>
+        <name>Update_lead</name>
+        <label>Update lead</label>
+        <locationX>314</locationX>
+        <locationY>866</locationY>
         <connector>
             <targetReference>Success</targetReference>
         </connector>
@@ -196,8 +310,8 @@
     <screens>
         <name>Select_Action</name>
         <label>Update lead source</label>
-        <locationX>176</locationX>
-        <locationY>350</locationY>
+        <locationX>314</locationX>
+        <locationY>650</locationY>
         <actions>
             <name>Search_Referrers</name>
             <actionName>LeadGetReferrer</actionName>
@@ -372,6 +486,9 @@
                 <fields>
                     <name>Choose_referrer</name>
                     <choiceReferences>peopleResults</choiceReferences>
+                    <defaultValue>
+                        <elementReference>Lead.Referrer__c</elementReference>
+                    </defaultValue>
                     <extensionName>flowruntime:choiceLookup</extensionName>
                     <fieldText>Choose referrer</fieldText>
                     <fieldType>ComponentChoice</fieldType>
@@ -417,35 +534,28 @@
                     <leftValueReference>Lead_source</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Client Referral</stringValue>
+                        <elementReference>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</elementReference>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>Lead_source</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Employee Referral</stringValue>
+                        <elementReference>LEAD_SOURCE_REFERRAL_CLIENT</elementReference>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>Lead_source</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Acquisition</stringValue>
+                        <elementReference>LEAD_SOURCE_REFERRAL_EMPLOYEE</elementReference>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>Lead_source</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Introducer</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Lead_source</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Financial Wellbeing Rollout</stringValue>
+                        <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -464,8 +574,8 @@
     <screens>
         <name>Success</name>
         <label>Success</label>
-        <locationX>176</locationX>
-        <locationY>674</locationY>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -505,18 +615,18 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assign_record_ID</targetReference>
+            <targetReference>Get_records_object_API_name</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Handle_errors</name>
         <label>Handle errors</label>
-        <locationX>440</locationX>
-        <locationY>674</locationY>
+        <locationX>754</locationX>
+        <locationY>974</locationY>
         <flowName>ErrorHandleScreen</flowName>
         <inputAssignments>
             <name>closeFlowAfterToast</name>
@@ -550,6 +660,13 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>accountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>Lead</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -559,6 +676,13 @@
     </variables>
     <variables>
         <name>leadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>objectApiName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
