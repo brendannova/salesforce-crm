@@ -124,7 +124,7 @@
             <assignToReference>displayMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>A referrer isn&#39;t required on the lead source selected. Please raise a Salesforce ticket </stringValue>
+                <stringValue>A referrer isn&apos;t required on the lead source selected. Please raise a Salesforce ticket </stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -352,7 +352,7 @@ REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
         </filters>
         <filters>
             <field>Name</field>
-            <operator>EqualTo</operator>
+            <operator>Contains</operator>
             <value>
                 <elementReference>searchString</elementReference>
             </value>
