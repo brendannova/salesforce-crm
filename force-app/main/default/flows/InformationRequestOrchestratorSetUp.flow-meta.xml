@@ -4,8 +4,8 @@
     <assignments>
         <name>Assign_advice_to_IR</name>
         <label>Assign advice to IR</label>
-        <locationX>842</locationX>
-        <locationY>1106</locationY>
+        <locationX>886</locationX>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Advice__c</assignToReference>
             <operator>Assign</operator>
@@ -27,7 +27,7 @@
     <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
-        <locationX>1106</locationX>
+        <locationX>1238</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -44,7 +44,7 @@
         <name>Assign_error_messageNoStatus</name>
         <label>Assign error message</label>
         <locationX>1106</locationX>
-        <locationY>1646</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -61,7 +61,7 @@
         <name>Assign_follow_on_task</name>
         <label>Assign follow on task</label>
         <locationX>314</locationX>
-        <locationY>1646</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -77,7 +77,7 @@
         <name>Assign_follow_on_taskClientSend</name>
         <label>Assign follow on task</label>
         <locationX>578</locationX>
-        <locationY>1646</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -93,7 +93,7 @@
         <name>Assign_statusAwait</name>
         <label>Assign status</label>
         <locationX>842</locationX>
-        <locationY>1646</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -109,7 +109,7 @@
         <name>Assign_statusChase</name>
         <label>Assign status</label>
         <locationX>50</locationX>
-        <locationY>1646</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -125,7 +125,7 @@
         <name>Assign_statusSendClient</name>
         <label>Assign status</label>
         <locationX>578</locationX>
-        <locationY>1754</locationY>
+        <locationY>1922</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -141,7 +141,7 @@
         <name>Assign_statusSendThird</name>
         <label>Assign status</label>
         <locationX>314</locationX>
-        <locationY>1754</locationY>
+        <locationY>1922</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -157,7 +157,7 @@
         <name>Update_information_request_values</name>
         <label>Update information request values</label>
         <locationX>578</locationX>
-        <locationY>1430</locationY>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -260,10 +260,56 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Status_of_selected_advice</name>
+        <label>Status of selected advice</label>
+        <locationX>886</locationX>
+        <locationY>1106</locationY>
+        <defaultConnector>
+            <targetReference>Confirm_advice_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>After data gathering</defaultConnectorLabel>
+        <rules>
+            <name>Before_data_gathering_analysis</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>adviceSelect.firstSelectedRow.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Setup</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>adviceSelect.firstSelectedRow.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data gathering</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>adviceSelect.firstSelectedRow.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risk Call</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>adviceSelect.firstSelectedRow.Advice_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data analysis</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_advice_to_IR</targetReference>
+            </connector>
+            <label>Before data gathering/analysis</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Which_task_is_required_now</name>
         <label>Which task is required now</label>
         <locationX>578</locationX>
-        <locationY>1538</locationY>
+        <locationY>1706</locationY>
         <defaultConnector>
             <targetReference>Assign_error_messageNoStatus</targetReference>
         </defaultConnector>
@@ -450,7 +496,7 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>842</locationX>
+        <locationX>886</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -459,40 +505,19 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
         <faultConnector>
             <targetReference>Assign_error_message</targetReference>
         </faultConnector>
-        <filterLogic>(1 OR 5) AND (2 OR 3 OR 4)</filterLogic>
-        <filters>
-            <field>Advice_Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>informationRequest.FinancialProductFinServ__r.FinServ__Household__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Setup</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Data gathering</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Risk Call</stringValue>
-            </value>
-        </filters>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Advice_Household__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>informationRequest.FinancialProductFinServ__r.Household__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
@@ -581,7 +606,7 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
     <recordLookups>
         <name>GetAdvicePreSelected</name>
         <label>Get advice</label>
-        <locationX>314</locationX>
+        <locationX>270</locationX>
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -609,7 +634,7 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>578</locationX>
-        <locationY>2054</locationY>
+        <locationY>2222</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assign_error_message</targetReference>
@@ -640,7 +665,7 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
         <name>Update_information_request</name>
         <label>Update information request</label>
         <locationX>578</locationX>
-        <locationY>1946</locationY>
+        <locationY>2114</locationY>
         <connector>
             <targetReference>Update_financial_product</targetReference>
         </connector>
@@ -651,6 +676,64 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
         <inputReference>informationRequest</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>Confirm_advice_screen</name>
+        <label>Confirm advice screen</label>
+        <locationX>974</locationX>
+        <locationY>1214</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_advice_to_IR</targetReference>
+        </connector>
+        <fields>
+            <name>adviceConfirmToast</name>
+            <extensionName>c:confirmModalFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>navigateBackOnCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>navigateForwardOnConfirm</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>This advice has already moved past initial data gathering and updating this information request will have no further impact on the advice. Please confirm you understand this and still wish to select this advice.</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Confirm advice choice</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Contact_select_screen</name>
         <label>Contact select screen</label>
@@ -788,13 +871,13 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
     <screens>
         <name>Link_advice_screen</name>
         <label>Link advice screen</label>
-        <locationX>842</locationX>
+        <locationX>886</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assign_advice_to_IR</targetReference>
+            <targetReference>Status_of_selected_advice</targetReference>
         </connector>
         <fields>
             <name>adviceSelectExplain</name>
@@ -993,7 +1076,7 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
     <subflows>
         <name>Error_handling_screen</name>
         <label>Error handling screen</label>
-        <locationX>1106</locationX>
+        <locationX>1238</locationX>
         <locationY>1106</locationY>
         <flowName>ErrorHandleScreen</flowName>
         <inputAssignments>
