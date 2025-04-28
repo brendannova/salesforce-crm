@@ -21,110 +21,36 @@ public with sharing class TaskEngine {
 
     final public static String QUEUE_NAME_PLANNERS =                            'OW_planners';
     
+    //public static List<taskEngineRequest> taskEngineRequestBuffer = new List<taskEngineRequest>();
     public static List<taskError> taskErrors = new List<taskError>();
     public static List<Task> tasksToUpsert = new List<Task>();
 
     public class taskError{
         public String message;
         public taskEngineRequest taskRequest = new taskEngineRequest();
+        public String errorOutputString;
         
         public taskError(taskEngineRequest taskRequest, String message){
             this.taskRequest = taskRequest;
             this.message = message;
+
+            String errorString = message;
+            if(taskRequest.whatId != null){
+                errorString += ' | WhatId: ' + taskRequest.whatId;
+            }
+            if(taskRequest.taskType != null){
+                errorString += ' | TaskType: ' + taskRequest.taskType;
+            }
+
+            this.errorOutputString = errorString;
         }
     }
     
-    public void newError(taskEngineRequest taskRequest, String message){
+    public static void newError(taskEngineRequest taskRequest, String message){
         taskErrors.add(new taskError(taskRequest, message));
     }
     
-    public class taskEngineRequest{
-       
-        @InvocableVariable (label = 'Chosen User' 
-                            description = 'Specify a user to assing the task to' 
-                            required = false) public Id chosenUser;
-
-        @InvocableVariable (label = 'Due Date' 
-                            description = 'Overwrite default offset and specify a due date' 
-                            required = false) public date dueDateInput;
-
-        @InvocableVariable (label = 'Household ID' 
-                            description = 'ID of related Household record' 
-                            required = true) public Id householdId;
-
-        @InvocableVariable (label = 'Original Task ID'
-                            description = 'Id of Original Task record'
-                            required = false) public Id originalTask;
-
-        @InvocableVariable (label = 'Related Advice Record ID'
-                            description = 'Id of related Advice record'
-                            required = false) public Id relatedAdviceId;
-
-        @InvocableVariable (label = 'Related AML/KYC ID'
-                            description = 'Id of related Anti Money Laundering / Know Your Client record'
-                            required = false) public Id relatedAmlKycId;
-
-        @InvocableVariable (label = 'Related Annual Review ID'
-                            description = 'ID of related Annual Review record'
-                            required = false) public Id relatedAnnualReview;
-                            
-        @InvocableVariable (label = 'Related Fulfilment ID'
-                            description = 'ID of related Fulfilment record'
-                            required = false) public Id relatedFulfilment;
-
-        @InvocableVariable (label = 'Related Information Request ID'
-                            description = 'ID of related Information Request record'
-                            required = false) public Id relatedInformationRequest;
-
-        @InvocableVariable (label = 'Related LoA ID'
-                            description = 'ID of related Letter of Authority record'
-                            required = false) public Id relatedLoa;
-
-        @InvocableVariable (label = 'Related Mortgage Application ID'
-                            description = 'ID of related Mortgage Application record'
-                            required = false) public Id relatedMortgageApplication;
-
-        @InvocableVariable (label = 'Related Opportunity ID'
-                            description = 'ID of related Opportunity record'
-                            required = false) public Id relatedOpportunity;
-
-        @InvocableVariable (label = 'Related Provider ID'
-                            description = 'ID of related Provider record'
-                            required = false) public Id relatedProvider;
-
-        @InvocableVariable (label = 'Task Subject'
-                            description = 'Overwrite default task subject'
-                            required = false) public String subject;
-
-        @InvocableVariable (label = 'Target Start Date'
-                            description = 'Overwrite default target start date'
-                            required = false) public Date targetStartDateInput;
-
-        @InvocableVariable (label = 'Task ID'
-                            description = 'ID of the Task record'
-                            required = false) public Id taskId;
-
-        @InvocableVariable (label = 'Task Type'
-                            description = 'Type of the task (sets default values from Task Information records)'
-                            required = true) public String taskType;
-
-        @InvocableVariable (label = 'What ID'
-                            description = 'ID of the related object'
-                            required = true) public Id whatId;
-
-        @InvocableVariable (label = 'Who ID'
-                            description = 'ID of the related contact'
-                            required = false) public Id whoId;
-    }
-
-    @InvocableMethod(label='Generate Task' description='Generate a task based on provided task request.' category='Flow utilities' iconName='slds:standard:task')
-    public static void invocableGenerateTasks(List<taskEngineRequest> taskRequests){
-        TaskEngine engine = new TaskEngine();
-        engine.generateTasks(taskRequests);
-    }
-    
-    
-    public void generateTasks(List<taskEngineRequest> taskEngineRequests){
+    public static void generateTasks(List<TaskEngineRequest> taskEngineRequests){
         //Validate universal inputs
         taskEngineRequests = validateTaskEngineRequests(taskEngineRequests);
 
@@ -139,7 +65,9 @@ public with sharing class TaskEngine {
         //Get task information record and store in a map against Task_Type__c
         Map<String, OW_task_information__c> taskInfoMap = new Map<String, OW_task_information__c>();
 
-        for(OW_task_information__c taskInfo : [SELECT Id, OW_subject__c, OW_priority__c, OW_task_credit__c, OW_process_variant__c, OW_stage__c, OW_task_type__c, OW_due_date_offset__c, OW_specific_user__c, OW_queue__c, OW_assigned_to__c, Role__c, OrchestrationControlled__c FROM OW_task_information__c WHERE OW_task_type__c IN :taskTypes AND OW_status__c = :TASK_TYPE_STATUS_ACTIVE]){
+        for(OW_task_information__c taskInfo : [SELECT Id, OW_subject__c, OW_priority__c, OW_task_credit__c, OW_process_variant__c, OW_stage__c, OW_task_type__c, OW_due_date_offset__c, OW_specific_user__c, OW_queue__c, OW_assigned_to__c, Role__c, OrchestrationControlled__c, OW_turnaround_time__c 
+                                                FROM OW_task_information__c 
+                                                WHERE OW_task_type__c IN :taskTypes AND OW_status__c = :TASK_TYPE_STATUS_ACTIVE]){
             taskInfoMap.put(taskInfo.OW_task_type__c, taskInfo);
         }
 
@@ -167,7 +95,7 @@ public with sharing class TaskEngine {
         Map<Id, Opportunity> opportunityMap = new Map<Id, Opportunity>();
         
         //also need to capture if not these but the dedicated specalist is populated
-        for(taskEngineRequest taskEngineRequest : taskEngineRequests){
+        for(TaskEngineRequest taskEngineRequest : taskEngineRequests){
             
             OW_task_information__c taskInfo = taskInfoMap.get(taskEngineRequest.taskType);
             
@@ -182,14 +110,8 @@ public with sharing class TaskEngine {
                 queueDeveloperNames.add(queue);
             }
 
-            //queue specified on household
-            queue = householdMap.get(taskEngineRequest.householdId).OW_queue__c;
-            if(queue != null && !queueDeveloperNames.contains(queue)){
-                queueDeveloperNames.add(queue);
-            }
-
             if(taskInfo.OW_assigned_to__c == ASSIGNED_TO_SUITABILITY_PLANNER){
-                adviceIds.add(taskEngineRequest.whatId);
+                adviceIds.add(taskEngineRequest.whatId); //would we also want to pull in related advice ids here?
 
             } else if(taskInfo.OW_assigned_to__c == ASSIGNED_TO_CASE_OWNER){
                 caseIds.add(taskEngineRequest.whatId);
@@ -201,6 +123,14 @@ public with sharing class TaskEngine {
 
         if(!householdIds.isEmpty()){
             householdMap = new Map<Id, Account>([SELECT Id, OwnerId, OW_dedicated_specialist__c, OW_queue__c FROM Account WHERE Id IN :householdIds]);
+        }
+
+        for(TaskEngineRequest taskEngineRequest : taskEngineRequests){
+            //queue specified on household
+            String queue = householdMap.get(taskEngineRequest.householdId).OW_queue__c;
+            if(queue != null && !queueDeveloperNames.contains(queue)){
+                queueDeveloperNames.add(queue);
+            }
         }
 
         if(!queueDeveloperNames.isEmpty()){
@@ -223,24 +153,24 @@ public with sharing class TaskEngine {
         }
 
         //Assign task variables from task information
-        for(taskEngineRequest taskEngineRequest : taskEngineRequests){
+        for(TaskEngineRequest TaskEngineRequest : taskEngineRequests){
             Task tempTask = new Task();
-            OW_task_information__c taskInfo = taskInfoMap.get(taskEngineRequest.taskType);
+            OW_task_information__c taskInfo = taskInfoMap.get(TaskEngineRequest.taskType);
 
-            if(taskEngineRequest.subject != null){
-                tempTask.Subject = taskEngineRequest.subject;
+            if(TaskEngineRequest.subject != null){
+                tempTask.Subject = TaskEngineRequest.subject;
             } else {
                 tempTask.Subject = taskInfo.OW_subject__c;
             }
 
-            if(taskEngineRequest.dueDateInput != null){
-                tempTask.ActivityDate = taskEngineRequest.dueDateInput;
+            if(TaskEngineRequest.dueDateInput != null){
+                tempTask.ActivityDate = TaskEngineRequest.dueDateInput;
             } else {
                 tempTask.ActivityDate = Utility.getOffsetBusinessDate(System.today(), (integer) taskInfo.OW_due_date_offset__c);
             }
 
-            if(taskEngineRequest.targetStartDateInput != null){
-                tempTask.OW_target_start_date__c = taskEngineRequest.targetStartDateInput;
+            if(TaskEngineRequest.targetStartDateInput != null){
+                tempTask.OW_target_start_date__c = TaskEngineRequest.targetStartDateInput;
             } else {
                 tempTask.OW_target_start_date__c = Utility.getOffsetBusinessDate(tempTask.ActivityDate, (integer) -taskInfo.OW_turnaround_time__c);
             }
@@ -249,11 +179,11 @@ public with sharing class TaskEngine {
             tempTask.RecordTypeId = TASK_RECORD_TYPE_ID_CLIENT_TASK_AUTOMATED;
             tempTask.Status = TASK_STATUS_NOT_STARTED;
             tempTask.Priority = taskInfo.OW_priority__c;
-            tempTask.whatId = taskEngineRequest.whatId;
-            tempTask.whoId = taskEngineRequest.whoId;
-            tempTask.FinServ__Household__c = taskEngineRequest.householdId;
+            tempTask.whatId = TaskEngineRequest.whatId;
+            tempTask.whoId = TaskEngineRequest.whoId;
+            tempTask.FinServ__Household__c = TaskEngineRequest.householdId;
             tempTask.Role__c = taskInfo.Role__c;
-            tempTask.OW_mortgage_application__c = taskEngineRequest.relatedMortgageApplication;
+            tempTask.OW_mortgage_application__c = TaskEngineRequest.relatedMortgageApplication;
             tempTask.OW_task_information_identifier__c = taskInfo.Id;
             tempTask.OW_credit__c = taskInfo.OW_task_credit__c;  
             tempTask.OW_process__c = taskInfo.OW_process_variant__c;
@@ -261,14 +191,15 @@ public with sharing class TaskEngine {
             tempTask.OW_task_information_name__c = taskInfo.OW_task_type__c;
             tempTask.OrchestrationTaskStatus__c = taskInfo.OrchestrationControlled__c == TASKINFO_ORCHESTRATION_CONTROLLED_YES ? TASK_ORCHESTRATION_TASK_STATUS_INCOMPLETE : TASK_ORCHESTRATION_TASK_STATUS_BLANK;
             
-            tempTask.Related_Advice__c = taskEngineRequest.relatedAdviceId;
-            tempTask.Related_AML_KYC_Check__c = taskEngineRequest.relatedAmlKycId;
-            tempTask.Related_Annual_Review__c = taskEngineRequest.relatedAnnualReview;
-            tempTask.Related_LOA__c = taskEngineRequest.relatedLoa;
-            tempTask.Related_Opportunity__c = taskEngineRequest.relatedOpportunity;
-            tempTask.Related_Provider__c = taskEngineRequest.relatedProvider;
-            tempTask.RelatedFulfilment__c = taskEngineRequest.relatedFulfilment;
-            tempTask.RelatedInformationRequest__c = taskEngineRequest.relatedInformationRequest;
+            tempTask.Related_Advice__c = TaskEngineRequest.relatedAdviceId;
+            tempTask.Related_AML_KYC_Check__c = TaskEngineRequest.relatedAmlKycId;
+            tempTask.Related_Annual_Review__c = TaskEngineRequest.relatedAnnualReview;
+            tempTask.Related_LOA__c = TaskEngineRequest.relatedLoa;
+            tempTask.Related_Opportunity__c = TaskEngineRequest.relatedOpportunity;
+            tempTask.Related_Provider__c = TaskEngineRequest.relatedProvider;
+            tempTask.RelatedFee__c = TaskEngineRequest.relatedFee;
+            tempTask.RelatedFulfilment__c = TaskEngineRequest.relatedFulfilment;
+            tempTask.RelatedInformationRequest__c = TaskEngineRequest.relatedInformationRequest;
 
             //perform different assignment logic based on taskType OW_assigned_to__c value
             //Would use a switch statment but it does not support global variables 
@@ -278,46 +209,52 @@ public with sharing class TaskEngine {
                 tempTask.OwnerId = queueNameMap.get(taskInfo.OW_queue__c);
 
             } else if(assignedToType == ASSIGNED_TO_PARTNER){
-                tempTask.OwnerId = householdMap.get(taskEngineRequest.householdId).OwnerId;
+                tempTask.OwnerId = householdMap.get(TaskEngineRequest.householdId).OwnerId;
 
             } else if (assignedToType == ASSIGNED_TO_SPECIFIC_USER){
                 tempTask.OwnerId = taskInfo.OW_specific_user__c;
 
             } else if(assignedToType == ASSIGNED_TO_CHOSEN_USER){
-                if(taskEngineRequest.chosenUser!= null){
-                    tempTask.OwnerId = taskEngineRequest.chosenUser;
+                if(TaskEngineRequest.chosenUser!= null){
+                    tempTask.OwnerId = TaskEngineRequest.chosenUser;
                 }else{
-                    newError(taskEngineRequest, 'Chosen User Ownership selected, but no user specified');
+                    newError(TaskEngineRequest, 'Chosen User Ownership selected but no user specified');
                     break;
                 }
 
             } else if(assignedToType == ASSIGNED_TO_SUITABILITY_PLANNER){
-                Id planner = adviceMap.get(taskEngineRequest.relatedAdviceId).Assigned_planner__c;
-                if(planner != null){
-                    tempTask.OwnerId = planner;
-                }else{
-                    tempTask.OwnerId = queueNameMap.get(QUEUE_NAME_PLANNERS);
+                if(adviceMap.get(TaskEngineRequest.whatId) != null){ //if advice was not passed in as the whatId then this will be null
+                    Id planner = adviceMap.get(TaskEngineRequest.whatId).Assigned_planner__c; //A straight copy of the logic have been using what ID but ehre we sued related advice id
+                    if(planner != null){
+                        tempTask.OwnerId = planner;
+                    }else{
+                        tempTask.OwnerId = queueNameMap.get(QUEUE_NAME_PLANNERS);
+                    }
                 }
 
             } else if(assignedToType == ASSIGNED_TO_CASE_OWNER){
-                tempTask.OwnerId = caseMap.get(taskEngineRequest.whatId).OwnerId;
+                if(caseMap.get(TaskEngineRequest.whatId) != null){ //if case was not passed in as the whatId then this will be null
+                    tempTask.OwnerId = caseMap.get(TaskEngineRequest.whatId).OwnerId;
+                }
 
             } else if(assignedToType == ASSIGNED_TO_OPPORTUNITY_OWNER){
-                tempTask.OwnerId = opportunityMap.get(taskEngineRequest.whatId).OwnerId;
+                if(opportunityMap.get(TaskEngineRequest.whatId) != null){ //if opportunity was not passed in as the whatId then this will be null
+                    tempTask.OwnerId = opportunityMap.get(TaskEngineRequest.whatId).OwnerId;
+                }
 
             } else if(assignedToType == ASSIGNED_TO_HOUSEHOLD_TEAM){
-                tempTask.OwnerId = queueNameMap.get(householdMap.get(taskEngineRequest.householdId).OW_queue__c);
+                tempTask.OwnerId = queueNameMap.get(householdMap.get(TaskEngineRequest.householdId).OW_queue__c);
 
             } else if(assignedToType == ASSIGNED_TO_DEDICATED_TEAM){
-                Id specialist = householdMap.get(taskEngineRequest.householdId).OW_dedicated_specialist__c;
+                Id specialist = householdMap.get(TaskEngineRequest.householdId).OW_dedicated_specialist__c;
                 if(specialist != null){
                     tempTask.OwnerId = specialist;
                 }else{
-                    tempTask.OwnerId = queueNameMap.get(householdMap.get(taskEngineRequest.householdId).OW_queue__c);
+                    tempTask.OwnerId = queueNameMap.get(householdMap.get(TaskEngineRequest.householdId).OW_queue__c);
                 }
             
             } else {
-                Id specialist = householdMap.get(taskEngineRequest.householdId).OW_dedicated_specialist__c;
+                Id specialist = householdMap.get(TaskEngineRequest.householdId).OW_dedicated_specialist__c;
                 if(specialist != null){
                     tempTask.OwnerId = specialist;
                 }
@@ -330,7 +267,7 @@ public with sharing class TaskEngine {
         handleErrors();
     }
 
-    public void databaseUpsert(List<SObject> recordsToUpsert, Boolean allOrNone){
+    private static void databaseUpsert(List<SObject> recordsToUpsert, Boolean allOrNone){
         Database.UpsertResult[] upsertResults = Database.upsert(recordsToUpsert, allOrNone);
         for(Database.UpsertResult upsertResult : upsertResults){
             if(!upsertResult.isSuccess()){
@@ -341,17 +278,27 @@ public with sharing class TaskEngine {
         }
     }
     
-    public List<taskEngineRequest> validateTaskEngineRequests(List<taskEngineRequest> taskEngineRequests){
+    private static List<TaskEngineRequest> validateTaskEngineRequests(List<TaskEngineRequest> taskEngineRequests){
         
         Boolean valid;
-        List<taskEngineRequest> validTaskEngineRequests = new List<taskEngineRequest>();
+        List<TaskEngineRequest> validTaskEngineRequests = new List<TaskEngineRequest>();
         
         
-        for(taskEngineRequest taskEngineRequest : taskEngineRequests){
-            valid = True;
+        for(TaskEngineRequest taskEngineRequest : taskEngineRequests){
+            valid = true;
             if(taskEngineRequest.taskType == null){
-                valid = False;
+                valid = false;
                 newError(taskEngineRequest, 'Task Type Missing');
+            }
+            //check whatId has been set
+            if(taskEngineRequest.whatId == null){
+                valid = false;
+                newError(taskEngineRequest, 'What ID missing');
+            }
+            //check householdId has been set
+            if(taskEngineRequest.householdId == null){
+                valid = false;
+                newError(taskEngineRequest, 'Household ID missing');
             }
 
             if(valid){
@@ -363,9 +310,9 @@ public with sharing class TaskEngine {
         return validTaskEngineRequests;
     }
 
-    public List<taskEngineRequest> validateTaskEngineType(List<taskEngineRequest> taskEngineRequests,  Map<String, OW_task_information__c> taskInfoMap){
-        List<taskEngineRequest> validTaskEngineRequests = new List<taskEngineRequest>();
-        for(taskEngineRequest taskEngineRequest : taskEngineRequests){
+    private static List<TaskEngineRequest> validateTaskEngineType(List<TaskEngineRequest> taskEngineRequests,  Map<String, OW_task_information__c> taskInfoMap){
+        List<TaskEngineRequest> validTaskEngineRequests = new List<TaskEngineRequest>();
+        for(TaskEngineRequest taskEngineRequest : taskEngineRequests){
             if(!taskInfoMap.containsKey(taskEngineRequest.taskType)){
                 newError(taskEngineRequest, 'Task Type Not Found');
             }else{
@@ -376,7 +323,7 @@ public with sharing class TaskEngine {
         return validTaskEngineRequests;
     }
 
-    public void handleErrors(){
+    private static void handleErrors(){
         //Future Todo - Pass errors to logging system
     }
 
