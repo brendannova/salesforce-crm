@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Referrer__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
-    <description>Person, colleague or introducer who made the referral for this lead. Could link to a business account too if they found us though a company wellbeing rollout.</description>
-    <inlineHelpText>Please indicate who the lead was referred by (person or business).</inlineHelpText>
+    <description>The client, colleague, introducer, or business that made the referral.</description>
+    <inlineHelpText>The client, colleague, introducer, or business that made the referral.</inlineHelpText>
     <label>Referrer</label>
     <lookupFilter>
         <active>true</active>
@@ -16,7 +16,7 @@
         <isOptional>false</isOptional>
     </lookupFilter>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Leads and Referrals (Referrer)</relationshipLabel>
+    <relationshipLabel>Referrals</relationshipLabel>
     <relationshipName>ReferredLeads</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
