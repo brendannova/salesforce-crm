@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_tas</name>
+        <label>Create tas</label>
+        <locationX>182</locationX>
+        <locationY>2927</locationY>
+        <actionName>FlowUtilityTaskCreate</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>taskRequest</name>
+            <value>
+                <elementReference>taskRequestEngine</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityTaskCreate</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
         <name>Add_primary_ACR_to_records_to_create</name>
@@ -15,6 +33,43 @@
         </assignmentItems>
         <connector>
             <targetReference>Insert_ACR_s</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_task_information</name>
+        <label>Assign task information</label>
+        <locationX>182</locationX>
+        <locationY>2819</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequestEngine.taskType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>LEAD_ADD_REFERRER</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequestEngine.chosenUser</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequestEngine.whatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>household.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequestEngine.householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>household.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_tas</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -242,7 +297,7 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Sets the values on the household we&apos;re creating as part of this flow</description>
+        <description>Sets the values on the household we&#39;re creating as part of this flow</description>
         <name>Set_household_values</name>
         <label>Set household values</label>
         <locationX>578</locationX>
@@ -301,7 +356,7 @@
         </connector>
     </assignments>
     <assignments>
-        <description>Sets the values on the household we&apos;re creating as part of this flow</description>
+        <description>Sets the values on the household we&#39;re creating as part of this flow</description>
         <name>Set_household_values_0</name>
         <label>Set household values</label>
         <locationX>50</locationX>
@@ -492,7 +547,50 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Some lead information can&apos;t be mapped to account, contact, or opportunity on conversion. This node and subsequent actions will perform this mapping where it occurs.</description>
+        <name>Referrer_to_be_added_later</name>
+        <label>Referrer to be added later</label>
+        <locationX>314</locationX>
+        <locationY>2711</locationY>
+        <defaultConnectorLabel>Does not require referrer to be added later</defaultConnectorLabel>
+        <rules>
+            <name>Referrer_needed_on_lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>REFERRAL_CLIENT</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>REFERRAL_EMPLOYEE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>REFERRAL_INTRODUCER</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LeadSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FINANCIAL_WELLBEING_ROLLOUT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_task_information</targetReference>
+            </connector>
+            <label>Referrer needed on lead</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Some lead information can&#39;t be mapped to account, contact, or opportunity on conversion. This node and subsequent actions will perform this mapping where it occurs.</description>
         <name>Un_mappable_lead_information_provided</name>
         <label>Un-mappable lead information provided</label>
         <locationX>314</locationX>
@@ -833,6 +931,9 @@ NOT(ISNULL({!$Record.OW_mortgage_rate_expiration__c}))
         <label>Update wealth opportunity</label>
         <locationX>578</locationX>
         <locationY>1871</locationY>
+        <connector>
+            <targetReference>Referrer_to_be_added_later</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -880,6 +981,9 @@ NOT(ISNULL({!$Record.OW_mortgage_rate_expiration__c}))
         <label>Create Start mortgage process task</label>
         <locationX>50</locationX>
         <locationY>2519</locationY>
+        <connector>
+            <targetReference>Referrer_to_be_added_later</targetReference>
+        </connector>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
@@ -926,7 +1030,7 @@ NOT(ISNULL({!$Record.OW_mortgage_rate_expiration__c}))
         <objectType>AccountContactRelation</objectType>
     </variables>
     <variables>
-        <description>The household we&apos;re creating for this newly converted lead.</description>
+        <description>The household we&#39;re creating for this newly converted lead.</description>
         <name>household</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -942,7 +1046,7 @@ NOT(ISNULL({!$Record.OW_mortgage_rate_expiration__c}))
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>The starter mortgage application record that&apos;ll be used with this opportunity.</description>
+        <description>The starter mortgage application record that&#39;ll be used with this opportunity.</description>
         <name>mortgage_application</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -986,6 +1090,14 @@ NOT(ISNULL({!$Record.OW_mortgage_rate_expiration__c}))
         <name>related_lead_ids</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>taskRequestEngine</name>
+        <apexClass>TaskEngineRequest</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
