@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DataAnalysisSpecialist__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is the dedicated specialist who completed the data analysis part of the advice process.</description>
+    <label>Data analysis specialist</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>AdviceDataAnalysis</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

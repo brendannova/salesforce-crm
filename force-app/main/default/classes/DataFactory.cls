@@ -16,6 +16,22 @@ public with sharing class DataFactory {
     String RecordTypeDevNamePerson = 'PersonAccount';
     Id RecordTypeIdPerson = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(RecordTypeDevNamePerson).getRecordTypeId();
 
+    // Define constants used throughout
+    String advice_record_type_dev_name = 'Advice_RT_General_Advice';
+    String financial_product_record_type_dev_name = 'FP_Stocks_Shares_ISA';
+    String financial_product_record_type_dev_name_joint = 'FP_General_Investment_Account_GIA';
+    String public_provider_name = 'Big bank of biznizz';
+
+    public profile PROFILE_SYSTEM_ADMINISTRATOR {
+        get{
+            if(PROFILE_SYSTEM_ADMINISTRATOR == null){
+                PROFILE_SYSTEM_ADMINISTRATOR = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
+            }
+            return PROFILE_SYSTEM_ADMINISTRATOR;
+        }
+        set;
+    }
+
     /* This can be used in the future to load configuration data. 
      * public void createConfigurationData(){
         List<sObject> ls = Test.loadData(Public_Provider_Names__c.sObjectType, 'ProvidersRef');
@@ -27,7 +43,7 @@ public with sharing class DataFactory {
     
     // Takes a number of clients, children, and status as inputs and generates the data   
     public Id createHousehold (String idenfitifer, Integer numClients, Integer numChildren, String status, String profileType) {
-        
+
         List<Account> accounts = new List<Account>(); // The list of accounts that will ultimately be inserted
         // Create the family name
         String familyName = generateName(false, true, false).lastName;
@@ -107,12 +123,6 @@ public with sharing class DataFactory {
     
     // Takes a given household and creates a defined number of products per person with associated LOAs
     public Advice__c createAdvice (Integer num_products_pp, Id householdId){
-        
-        // Define constants used throughout
-        String advice_record_type_dev_name = 'Advice_RT_General_Advice';
-        String financial_product_record_type_dev_name = 'FP_Stocks_Shares_ISA';
-        String financial_product_record_type_dev_name_joint = 'FP_General_Investment_Account_GIA';
-        String public_provider_name = 'Big bank of biznizz';
         
         // Define and insert the advice record
         Advice__c advice = new Advice__c(
@@ -292,6 +302,79 @@ public with sharing class DataFactory {
             insert fulfils;
         }
         return advice;
+    }
+
+    public Advice__c createTopUpAdvice(Id householdId){
+        Advice__c advice = new Advice__c(
+            Advice_Household__c = householdId,
+            RecordTypeId = Schema.SObjectType.Advice__c.getRecordTypeInfosByDeveloperName().get(advice_record_type_dev_name).getRecordTypeId(),
+            New_or_existing_client__c = 'Existing',
+            Partner__c = [ SELECT Id FROM User WHERE Id = :UserInfo.getUserId() ].Id,
+            Fact_find_requirements__c = 'Not required',
+            G_Drive_Advice_Folder__c = 'google.com',
+            Update_valuations__c = 'No',
+            New_LOAs_required__c = 'No', 
+            Advice_Status__c = 'Data Gathering',
+            Subject__c = 'Test advice',
+            Name = 'Test advice',
+            FulfilmentUpdateStatus__c = 'Receiving updates'
+        );
+        insert advice;
+        return advice;
+    }
+
+    public Case createCase(String subject, Id accountId){
+        Case c = new Case();
+        c.AccountId = accountId;
+        c.Subject = subject;
+        insert c;
+        return c;
+    }
+
+    
+    public Group createQueue(String queueName){
+        //avoid mixed DML error
+        User adminUser = [SELECT Id FROM USER WHERE IsActive = true AND ProfileId = :PROFILE_SYSTEM_ADMINISTRATOR.Id LIMIT 1];
+        System.runAs(adminUser){
+            Group qGroup= new Group(Name= queueName, Type='QUEUE');
+            insert qGroup;
+            QueueSObject q = new QueueSObject(SobjectType='Task', QueueId=qGroup.Id);
+            insert q;
+        }
+
+        return [SELECT Id, DeveloperName FROM Group WHERE Type = 'QUEUE' AND DeveloperName = :queueName LIMIT 1];
+
+    }
+
+    //todo udpate to accept a list
+    public user createUser(String username){
+
+        User u = new User();
+        u.Alias = 'testy';
+        u.Email = username;
+        u.Username = username;
+        u.ProfileId = PROFILE_SYSTEM_ADMINISTRATOR.Id;
+        u.EmailEncodingKey='UTF-8';
+        u.LastName='Testing';
+        u.LanguageLocaleKey='en_US';
+        u.LocaleSidKey='en_US';
+        u.TimeZoneSidKey = 'Europe/London';
+        insert u;
+
+        return u;
+    }
+
+    public Opportunity craeteOpportunity(Id accountId, String platformId){
+
+        Opportunity o = new Opportunity();
+        o.Name = 'Test Opportunity ' + platformId;
+        o.PlatformId__c = platformId;
+        o.AccountId = accountId;
+        o.StageName = 'Book discovery';
+        o.CloseDate = System.Today();
+        insert o;
+
+        return o;
     }
 
     // Generates random names for use in this data factory script

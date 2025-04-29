@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FulfilmentAmount__c</fullName>
+    <description>Added to this object to allow us to report on and display in list views related fulfilment information. This particular field shows the amount that has been recommended to transfer.</description>
+    <externalId>false</externalId>
+    <formula>RelatedFulfilment__r.Recommendation__r.Amount__c</formula>
+    <label>Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
