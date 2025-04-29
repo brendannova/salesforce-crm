@@ -6,7 +6,7 @@ public class LwcHelperTaskOrchestratorTest {
     @IsTest
     public static void testGetTaskInfoByTaskName() {
         DataFactoryTaskInformation dataFactory = new DataFactoryTaskInformation();
-        OW_task_information__c ti = dataFactory.generateTaskInformation(TASK_TYPE);
+        OW_task_information__c taskInfo = dataFactory.generateTaskInformation(TASK_TYPE);
 
         test.startTest();
         OW_task_information__c fetchedTaskInfo = LwcHelperTaskOrchestrator.getTaskInfoByTaskName(TASK_TYPE);
