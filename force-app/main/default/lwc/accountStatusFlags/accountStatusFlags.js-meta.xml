@@ -2,21 +2,19 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
     <isExposed>true</isExposed>
-    <masterLabel>Account Status Flags</masterLabel>
+    <masterLabel>Customer Status Flags</masterLabel>
     <description>Gives a visual overview of any key info on the household and/or person record</description>
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <objects>
-                <object>Account</object>
-            </objects>
             <property
             name="recordId"
             type="String"
             label="Record ID"
             description="Automatically bind the page's record ID to the component variable" />
+            <property name="isIconTest" type="Boolean" label="Show All Icons For Testing" description="Ignores the actual field values and shows all possible badges for testing UI" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

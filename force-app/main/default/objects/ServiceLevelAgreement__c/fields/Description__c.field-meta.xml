@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Description__c</fullName>
+    <description>Human friendly and dynamic description of the SLA that covers both status and activity SLAs.</description>
+    <externalId>false</externalId>
+    <formula>IF(NOT(ISBLANK( Status__c )), Status__c +IF(NOT(ISBLANK( StatusAfter__c )), &quot; ➡️ &quot; +  StatusAfter__c, &quot;&quot;),
+CASE( Type__c,
+&quot;ADVICE_DATA_ANALYSIS_COMPLETE&quot;, &quot;Information requests | Ready for advice&quot;,
+&quot;ADVICE_ALL_INFO_RECEIVED&quot;, &quot;Information requests | Information received&quot;,
+&quot;ADVICE_RISK_CALL_BOOK&quot;, &quot;Risk call | Booked&quot;, 
+&quot;ADVICE_RISK_CALL_HOLD&quot;, &quot;Risk call | Held&quot;,
+&quot;Error: undefined, please raise a ticket&quot;))</formula>
+    <label>Description</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
