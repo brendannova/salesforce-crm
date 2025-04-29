@@ -4,7 +4,7 @@ public with sharing class LwcHelperTaskOrchestrator {
         List<OW_task_information__c> info = [
             SELECT Id, OW_task_type__c, OW_task_description_google_doc_link__c
             FROM OW_task_information__c
-            WHERE OW_task_type__c = :taskTypeName
+            WHERE OW_task_type__c = :taskTypeName AND OW_status__c = 'Active'
             LIMIT 1
         ];
 
