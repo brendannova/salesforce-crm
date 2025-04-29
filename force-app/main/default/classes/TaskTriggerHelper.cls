@@ -1,7 +1,7 @@
 /**
     * @description This class is a helper for a task trigge
 */
-public with sharing class TaskHelper {
+public with sharing class TaskTriggerHelper {
 
     /**
     * @description Takes a task map from a trigger and validates whether they can be deleted or not
