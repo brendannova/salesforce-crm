@@ -5,12 +5,8 @@ public class LwcHelperTaskOrchestratorTest {
 
     @IsTest
     public static void testGetTaskInfoByTaskName() {
-        OW_task_information__c taskInfo = new OW_task_information__c();
-        taskInfo.OW_task_type__c = TASK_TYPE;
-        taskInfo.OW_record_type_developer_name__c = TASK_TYPE;
-        taskInfo.OW_task_description_google_doc_link__c = 'https://google.com';
-        taskInfo.OW_status__c = 'Active';
-        insert taskInfo;
+        DataFactoryTaskInformation dataFactory = new DataFactoryTaskInformation();
+        OW_task_information__c ti = dataFactory.generateTaskInformation(TASK_TYPE);
 
         test.startTest();
         OW_task_information__c fetchedTaskInfo = LwcHelperTaskOrchestrator.getTaskInfoByTaskName(TASK_TYPE);
