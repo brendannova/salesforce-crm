@@ -7,13 +7,8 @@ public class TaskInformationControllerTest {
         String task_id = 'random_id'; 
         
         // Create and insert a task information record for the same record type specified in the line below        
-        OW_task_information__c ti = new OW_task_information__c(
-            OW_record_type_developer_name__c = 'record_type_name',
-            OW_task_type__c = task_id,
-            Name = 'Test task information ',
-            OW_task_description__c = 'Test description'
-        );
-        insert ti;
+        DataFactoryTaskInformation dataFactory = new DataFactoryTaskInformation();
+        OW_task_information__c ti = dataFactory.generateTaskInformation(task_id);
         
         // Create and insert a task with the record type specified in the line below
         Task t = new Task(
