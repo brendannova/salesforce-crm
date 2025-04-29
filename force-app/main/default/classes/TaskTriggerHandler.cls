@@ -4,7 +4,7 @@ public class TaskTriggerHandler extends TriggerHandler {
     private Map<Id, Task> oldTaskMap = (Map<Id, Task>) Trigger.oldMap;
 
     public override void beforeDelete() {
-        TaskHelper th = new TaskHelper();
+        TaskTriggerHelper th = new TaskTriggerHelper();
         th.checkDelete(this.oldTaskMap);
     }
 }
