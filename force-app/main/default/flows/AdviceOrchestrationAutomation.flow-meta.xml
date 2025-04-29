@@ -2,26 +2,104 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>Create_new_SLA</name>
-        <label>Create new SLA</label>
-        <locationX>578</locationX>
-        <locationY>2177</locationY>
+        <name>Define_new_SLA</name>
+        <label>Define new SLA</label>
+        <locationX>754</locationX>
+        <locationY>3101</locationY>
         <assignmentItems>
-            <assignToReference>createNewSla</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>slaTypesStart</assignToReference>
+            <operator>Add</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>slaTypeStatusStart</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Manage_SLAs</targetReference>
+            <targetReference>Define_SLA_to_close</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_SLA_to_close</name>
+        <label>Define SLA to close</label>
+        <locationX>886</locationX>
+        <locationY>3293</locationY>
+        <assignmentItems>
+            <assignToReference>statusNew</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Advice_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>statusExit</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record__Prior.Advice_Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>slaTypesEnd</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>slaTypeStatusEnd</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SLA_processing_needed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>End_data_analysis_activity_SLA</name>
+        <label>End data analysis activity SLA</label>
+        <locationX>1854</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>slaTypesEnd</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_DATA_ANALYSIS_COMPLETE</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Risk_call_status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>End_data_gathering_activity_SLA</name>
+        <label>End data gathering activity SLA</label>
+        <locationX>1854</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>slaTypesEnd</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_ALL_INFO_RECEIVED</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Data_analysis_status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>End_risk_call_held_activity</name>
+        <label>End risk call held activity</label>
+        <locationX>1986</locationX>
+        <locationY>1139</locationY>
+        <assignmentItems>
+            <assignToReference>slaTypesEnd</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_RISK_CALL_HOLD</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Orchestrated_or_generic</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_annual_review_data_gathering_task</name>
         <label>Set annual review  data gathering task</label>
         <locationX>50</locationX>
-        <locationY>647</locationY>
+        <locationY>1655</locationY>
         <assignmentItems>
             <assignToReference>taskToClose</assignToReference>
             <operator>Assign</operator>
@@ -34,27 +112,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_error</name>
-        <label>Set error</label>
-        <locationX>842</locationX>
-        <locationY>2585</locationY>
-        <assignmentItems>
-            <assignToReference>errorMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Manage_SLAs.errorMessage</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>FlowFaultError</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_error_to_fault_message</name>
         <label>Set error to fault message</label>
-        <locationX>1810</locationX>
-        <locationY>1553</locationY>
+        <locationX>2074</locationX>
+        <locationY>2585</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -69,8 +130,8 @@
     <assignments>
         <name>Set_no_advice_type_status_error</name>
         <label>Set no advice type status error</label>
-        <locationX>1106</locationX>
-        <locationY>1661</locationY>
+        <locationX>1194</locationX>
+        <locationY>2693</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -87,7 +148,7 @@
         <name>Set_protection_data_gathering_task</name>
         <label>Set protection data gathering task</label>
         <locationX>754</locationX>
-        <locationY>647</locationY>
+        <locationY>1655</locationY>
         <assignmentItems>
             <assignToReference>taskToClose</assignToReference>
             <operator>Assign</operator>
@@ -101,33 +162,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_SLA_status_variables</name>
-        <label>Set SLA status variables</label>
-        <locationX>710</locationX>
-        <locationY>1961</locationY>
-        <assignmentItems>
-            <assignToReference>statusNew</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record.Advice_Status__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>statusExit</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Record__Prior.Advice_Status__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>SLA_applies</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_trust_onbording_data_gathering_task</name>
         <label>Set trust onbording data gathering task</label>
         <locationX>1194</locationX>
-        <locationY>647</locationY>
+        <locationY>1655</locationY>
         <assignmentItems>
             <assignToReference>taskToClose</assignToReference>
             <operator>Assign</operator>
@@ -142,7 +180,7 @@
     <assignments>
         <name>Set_variables</name>
         <label>Set variables</label>
-        <locationX>908</locationX>
+        <locationX>1854</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -159,14 +197,211 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Advice_type</targetReference>
+            <targetReference>Data_gathering_status</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Start_book_risk_call_activity_SLA</name>
+        <label>Start book risk call activity SLA</label>
+        <locationX>1458</locationX>
+        <locationY>1139</locationY>
+        <assignmentItems>
+            <assignToReference>slaTypesStart</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_RISK_CALL_BOOK</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Orchestrated_or_generic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Start_book_risk_call_end_hold_risk_call</name>
+        <label>Start book risk call/end hold risk call</label>
+        <locationX>1722</locationX>
+        <locationY>1139</locationY>
+        <assignmentItems>
+            <assignToReference>slaTypesEnd</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_RISK_CALL_BOOK</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>slaTypesStart</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_RISK_CALL_HOLD</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Orchestrated_or_generic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Start_data_analysis_activity_SLA</name>
+        <label>Start data analysis activity SLA</label>
+        <locationX>1590</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>slaTypesStart</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_DATA_ANALYSIS_COMPLETE</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Risk_call_status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Start_data_gathering_activity_SLA</name>
+        <label>Start data gathering activity SLA</label>
+        <locationX>1590</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>slaTypesStart</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>ADVICE_ALL_INFO_RECEIVED</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Data_analysis_status</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>ADVICE_ALL_INFO_RECEIVED</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_ALL_INFO_RECEIVED</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_DATA_ANALYSIS_COMPLETE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_DATA_ANALYSIS_COMPLETE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_RISK_CALL_BOOK</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_RISK_CALL_BOOK</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_RISK_CALL_HOLD</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_RISK_CALL_HOLD</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_TYPE_ANNUAL_REVIEW_ACCUMULATION</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ANNUAL_REVIEW_ACCUMULATION</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_TYPE_ANNUAL_REVIEW_RETIREMENT</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ANNUAL_REVIEW_RETIREMENT</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_TYPE_PROTECTION</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PROTECTION</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_TYPE_REGULAR_AMENDMENT</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>REGULAR_AMENDMENT</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_TYPE_TOP_UP</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TOP_UP</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_TYPE_TRUST_ONBOARDING</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TRUST_ONBOARDING</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>ADVICE_TYPE_WITHDRAWAL</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WITHDRAWAL</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>STATUS_ADVICE_AWAIT_DECISION</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_ADVICE_AWAIT_DECISION</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>STATUS_ADVICE_DATA_ANALYSIS</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_ADVICE_DATA_ANALYSIS</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>STATUS_ADVICE_DATA_GATHERING</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_ADVICE_DATA_GATHERING</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>STATUS_ADVICE_IN_FULFILMENT</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_ADVICE_IN_FULFILMENT</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>STATUS_ADVICE_PREPARE_ADVICE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_ADVICE_PREPARE_ADVICE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>STATUS_ADVICE_PRESENT_ADVICE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_ADVICE_PRESENT_ADVICE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>STATUS_ADVICE_SETUP</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>STATUS_ADVICE_SETUP</stringValue>
+        </value>
+    </constants>
     <customErrors>
         <name>FlowFaultError</name>
         <label>Flow Fault Error</label>
-        <locationX>1810</locationX>
-        <locationY>1661</locationY>
+        <locationX>2074</locationX>
+        <locationY>2693</locationY>
         <customErrorMessages>
             <errorMessage>{!errorMessage}</errorMessage>
             <isFieldError>false</isFieldError>
@@ -175,8 +410,8 @@
     <decisions>
         <name>Advice_type</name>
         <label>Advice type</label>
-        <locationX>908</locationX>
-        <locationY>431</locationY>
+        <locationX>1040</locationX>
+        <locationY>1439</locationY>
         <defaultConnector>
             <targetReference>StatusDecision</targetReference>
         </defaultConnector>
@@ -235,10 +470,52 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Data_analysis_status</name>
+        <label>Data analysis status</label>
+        <locationX>1854</locationX>
+        <locationY>731</locationY>
+        <defaultConnector>
+            <targetReference>Risk_call_status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Data_analysis_started</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Start_data_analysis_activity_SLA</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Data analysis started</label>
+        </rules>
+        <rules>
+            <name>All_information_analysed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DataAnalysisStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End_data_analysis_activity_SLA</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>All information analysed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Data_gathering</name>
         <label>Data gathering</label>
         <locationX>886</locationX>
-        <locationY>539</locationY>
+        <locationY>1547</locationY>
         <defaultConnector>
             <targetReference>StatusDecision</targetReference>
         </defaultConnector>
@@ -261,10 +538,52 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Data_gathering_status</name>
+        <label>Data gathering status</label>
+        <locationX>1854</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Data_analysis_status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Data_gathering_started</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Start_data_gathering_activity_SLA</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Data gathering started</label>
+        </rules>
+        <rules>
+            <name>All_information_received</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End_data_gathering_activity_SLA</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>All information received</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Found_advice_type_status</name>
         <label>Found advice type status</label>
-        <locationX>908</locationX>
-        <locationY>1553</locationY>
+        <locationX>1040</locationX>
+        <locationY>2585</locationY>
         <defaultConnector>
             <targetReference>Set_no_advice_type_status_error</targetReference>
         </defaultConnector>
@@ -288,10 +607,10 @@
     <decisions>
         <name>Initial_task</name>
         <label>Initial task</label>
-        <locationX>710</locationX>
-        <locationY>1661</locationY>
+        <locationX>886</locationX>
+        <locationY>2693</locationY>
         <defaultConnector>
-            <targetReference>Set_SLA_status_variables</targetReference>
+            <targetReference>SLA_applies</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -311,12 +630,158 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Orchestrated_or_generic</name>
+        <label>Orchestrated or generic?</label>
+        <locationX>1854</locationX>
+        <locationY>1331</locationY>
+        <defaultConnector>
+            <targetReference>Status_SLA_needed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Generic</defaultConnectorLabel>
+        <rules>
+            <name>Orchestrated</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ADVICE_TYPE_ANNUAL_REVIEW_ACCUMULATION</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ADVICE_TYPE_ANNUAL_REVIEW_RETIREMENT</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ADVICE_TYPE_TOP_UP</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ADVICE_TYPE_WITHDRAWAL</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ADVICE_TYPE_REGULAR_AMENDMENT</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ADVICE_TYPE_PROTECTION</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ADVICE_TYPE_TRUST_ONBOARDING</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Advice_type</targetReference>
+            </connector>
+            <label>Orchestrated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Risk_call_status</name>
+        <label>Risk call status (onboarding only)</label>
+        <locationX>1854</locationX>
+        <locationY>1031</locationY>
+        <defaultConnector>
+            <targetReference>Orchestrated_or_generic</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Risk_call_ready</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ready</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.IsOnboarding__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Start_book_risk_call_activity_SLA</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Risk call ready</label>
+        </rules>
+        <rules>
+            <name>Risk_call_booked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Booked</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.IsOnboarding__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Start_book_risk_call_end_hold_risk_call</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Risk call booked</label>
+        </rules>
+        <rules>
+            <name>Risk_call_held</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RiskCallStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AdviceType__r.IsOnboarding__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End_risk_call_held_activity</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Risk call held</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>SLA_applies</name>
         <label>SLA applies?</label>
-        <locationX>710</locationX>
-        <locationY>2069</locationY>
+        <locationX>886</locationX>
+        <locationY>2993</locationY>
         <defaultConnector>
-            <targetReference>Manage_SLAs</targetReference>
+            <targetReference>Define_SLA_to_close</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No SLA</defaultConnectorLabel>
         <rules>
@@ -330,7 +795,34 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_new_SLA</targetReference>
+                <targetReference>Define_new_SLA</targetReference>
+            </connector>
+            <label>Applies</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SLA_applies_to_new_status</name>
+        <label>SLA applies to new status?</label>
+        <locationX>2470</locationX>
+        <locationY>1547</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Define_SLA_to_close</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Does not apply</defaultConnectorLabel>
+        <rules>
+            <name>Applies_generic</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IsClosed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Define_new_SLA</targetReference>
             </connector>
             <label>Applies</label>
         </rules>
@@ -338,30 +830,60 @@
     <decisions>
         <name>SLA_outcome</name>
         <label>SLA outcome</label>
-        <locationX>710</locationX>
-        <locationY>2477</locationY>
+        <locationX>2052</locationX>
+        <locationY>3785</locationY>
         <defaultConnector>
-            <targetReference>Set_error</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>FlowFaultError</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Error</defaultConnectorLabel>
         <rules>
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Manage_SLAs.error</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>errorMessage</leftValueReference>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <label>Success</label>
         </rules>
     </decisions>
     <decisions>
+        <name>SLA_processing_needed</name>
+        <label>SLA processing needed?</label>
+        <locationX>1854</locationX>
+        <locationY>3569</locationY>
+        <defaultConnector>
+            <targetReference>Manage_SLAs</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Needed</defaultConnectorLabel>
+        <rules>
+            <name>Not_needed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>slaTypesEnd</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>slaTypesStart</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Not needed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Stage</name>
         <label>Stage</label>
         <locationX>182</locationX>
-        <locationY>539</locationY>
+        <locationY>1547</locationY>
         <defaultConnector>
             <targetReference>StatusDecision</targetReference>
         </defaultConnector>
@@ -431,8 +953,8 @@
     <decisions>
         <name>Stage_trust_onboarding</name>
         <label>Stage</label>
-        <locationX>1326</locationX>
-        <locationY>539</locationY>
+        <locationX>1458</locationX>
+        <locationY>1547</locationY>
         <defaultConnector>
             <targetReference>StatusDecision</targetReference>
         </defaultConnector>
@@ -455,13 +977,52 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Status_SLA_needed</name>
+        <label>Status SLA needed</label>
+        <locationX>2668</locationX>
+        <locationY>1439</locationY>
+        <defaultConnector>
+            <targetReference>SLA_processing_needed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not needed</defaultConnectorLabel>
+        <rules>
+            <name>Needed</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Advice_RT_General_Advice</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Advice_Status__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SLA_applies_to_new_status</targetReference>
+            </connector>
+            <label>Needed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>If the advice status is changed, we need to run the task and SLA checks. 
 
 If advice type is changed, we also need to close any orchestration tasks for the prior advice type. This should only be done where the deck status is not started since we reconfirm the advice type when deck is marked as completed by the planner.</description>
         <name>StatusDecision</name>
         <label>Status</label>
-        <locationX>908</locationX>
-        <locationY>1097</locationY>
+        <locationX>1040</locationX>
+        <locationY>2129</locationY>
         <defaultConnectorLabel>No change</defaultConnectorLabel>
         <rules>
             <name>Advice_type_changed</name>
@@ -523,6 +1084,40 @@ If advice type is changed, we also need to close any orchestration tasks for the
         <dataType>Boolean</dataType>
         <expression>ISNEW()</expression>
     </formulas>
+    <formulas>
+        <description>The SLA type based on the former status of the advice.</description>
+        <name>slaTypeStatusEnd</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record__Prior.Advice_Status__c},
+&quot;Setup&quot;, {!STATUS_ADVICE_SETUP},
+&quot;Data gathering&quot;, {!STATUS_ADVICE_DATA_GATHERING},
+&quot;Risk Call&quot;, {!STATUS_ADVICE_DATA_ANALYSIS},
+&quot;Data analysis&quot;, {!STATUS_ADVICE_DATA_ANALYSIS},
+&quot;Suitability in progress&quot;, {!STATUS_ADVICE_PREPARE_ADVICE},
+&quot;Prepare advice&quot;, {!STATUS_ADVICE_PREPARE_ADVICE},
+&quot;Deck complete&quot;, {!STATUS_ADVICE_PRESENT_ADVICE},
+&quot;Present advice&quot;,  {!STATUS_ADVICE_PRESENT_ADVICE},
+&quot;Await decision&quot;, {!STATUS_ADVICE_AWAIT_DECISION},
+&quot;In fulfilment&quot;, {!STATUS_ADVICE_IN_FULFILMENT},
+&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>The SLA type based on the new status of the advice.</description>
+        <name>slaTypeStatusStart</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record.Advice_Status__c},
+&quot;Setup&quot;, {!STATUS_ADVICE_SETUP},
+&quot;Data gathering&quot;, {!STATUS_ADVICE_DATA_GATHERING},
+&quot;Risk Call&quot;, {!STATUS_ADVICE_DATA_ANALYSIS},
+&quot;Data analysis&quot;, {!STATUS_ADVICE_DATA_ANALYSIS},
+&quot;Suitability in progress&quot;, {!STATUS_ADVICE_PREPARE_ADVICE},
+&quot;Prepare advice&quot;, {!STATUS_ADVICE_PREPARE_ADVICE},
+&quot;Deck complete&quot;, {!STATUS_ADVICE_PRESENT_ADVICE},
+&quot;Present advice&quot;,  {!STATUS_ADVICE_PRESENT_ADVICE},
+&quot;Await decision&quot;, {!STATUS_ADVICE_AWAIT_DECISION},
+&quot;In fulfilment&quot;, {!STATUS_ADVICE_IN_FULFILMENT},
+&quot;&quot;)</expression>
+    </formulas>
     <interviewLabel>Advice | Orchestration | Automation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Orchestration | Automation</label>
     <processMetadataValues>
@@ -547,8 +1142,8 @@ If advice type is changed, we also need to close any orchestration tasks for the
     <recordLookups>
         <name>Get_advice_type_status</name>
         <label>Get advice type status</label>
-        <locationX>908</locationX>
-        <locationY>1445</locationY>
+        <locationX>1040</locationX>
+        <locationY>2477</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_advice_type_status</targetReference>
@@ -582,7 +1177,7 @@ If advice type is changed, we also need to close any orchestration tasks for the
         <name>Close_data_gathering_task_annual_review</name>
         <label>Close data gathering task</label>
         <locationX>50</locationX>
-        <locationY>755</locationY>
+        <locationY>1763</locationY>
         <connector>
             <targetReference>StatusDecision</targetReference>
         </connector>
@@ -637,11 +1232,15 @@ If advice type is changed, we also need to close any orchestration tasks for the
         <name>Close_fact_find_task</name>
         <label>Close fact find task</label>
         <locationX>1194</locationX>
-        <locationY>755</locationY>
+        <locationY>1763</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Close_data_gathering_task_annual_review</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault_message</targetReference>
+        </faultConnector>
         <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -689,8 +1288,8 @@ If advice type is changed, we also need to close any orchestration tasks for the
     <recordUpdates>
         <name>Close_orchestrated_task_on_advice</name>
         <label>Close orchestrated task on advice</label>
-        <locationX>556</locationX>
-        <locationY>1205</locationY>
+        <locationX>688</locationX>
+        <locationY>2237</locationY>
         <connector>
             <targetReference>Get_advice_type_status</targetReference>
         </connector>
@@ -736,18 +1335,11 @@ If advice type is changed, we also need to close any orchestration tasks for the
         <object>Task</object>
     </recordUpdates>
     <start>
-        <locationX>782</locationX>
+        <locationX>1728</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_variables</targetReference>
         </connector>
-        <filterFormula>{!$Record.AdviceType__r.DeveloperName__c} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; ||
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;ANNUAL_REVIEW_RETIREMENT&quot; || 
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;TOP_UP&quot; || 
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;WITHDRAWAL&quot; || 
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;REGULAR_AMENDMENT&quot; || 
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;PROTECTION&quot; ||
-{!$Record.AdviceType__r.DeveloperName__c} = &quot;TRUST_ONBOARDING&quot;</filterFormula>
         <object>Advice__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
@@ -756,10 +1348,10 @@ If advice type is changed, we also need to close any orchestration tasks for the
     <subflows>
         <name>Create_initial_status_task</name>
         <label>Create initial status task</label>
-        <locationX>578</locationX>
-        <locationY>1769</locationY>
+        <locationX>754</locationX>
+        <locationY>2801</locationY>
         <connector>
-            <targetReference>Set_SLA_status_variables</targetReference>
+            <targetReference>SLA_applies</targetReference>
         </connector>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
@@ -791,8 +1383,8 @@ If advice type is changed, we also need to close any orchestration tasks for the
     <subflows>
         <name>Manage_SLAs</name>
         <label>Manage SLAs</label>
-        <locationX>710</locationX>
-        <locationY>2369</locationY>
+        <locationX>2052</locationX>
+        <locationY>3677</locationY>
         <connector>
             <targetReference>SLA_outcome</targetReference>
         </connector>
@@ -804,21 +1396,15 @@ If advice type is changed, we also need to close any orchestration tasks for the
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>createNewSla</name>
+            <name>slaTypesEnd</name>
             <value>
-                <elementReference>createNewSla</elementReference>
+                <elementReference>slaTypesEnd</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <name>slaDays</name>
+            <name>slaTypesStart</name>
             <value>
-                <elementReference>adviceTypeStatus.ServiceLevelAgreement__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>statusExit</name>
-            <value>
-                <elementReference>statusExit</elementReference>
+                <elementReference>slaTypesStart</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -827,7 +1413,10 @@ If advice type is changed, we also need to close any orchestration tasks for the
                 <elementReference>statusNew</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>adviceId</name>
@@ -845,25 +1434,6 @@ If advice type is changed, we also need to close any orchestration tasks for the
         <objectType>AdviceTypeStatus__c</objectType>
     </variables>
     <variables>
-        <description>If true, a new SLA should be created for this record.</description>
-        <name>createNewSla</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>currentSla</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>ServiceLevelAgreement__c</objectType>
-    </variables>
-    <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -874,6 +1444,22 @@ If advice type is changed, we also need to close any orchestration tasks for the
         <name>householdId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>A list of the SLAs that we need to end (by updating the record with an end date/time).</description>
+        <name>slaTypesEnd</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>A list of the SLAs we need to start (by inserting SLA records against this advice).</description>
+        <name>slaTypesStart</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>

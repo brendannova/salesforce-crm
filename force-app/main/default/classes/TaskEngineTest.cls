@@ -186,19 +186,29 @@ private class TaskEngineTest {
         }
 
         //teskInvokable method too
-        TaskEngineInvokableList.FlowInputs taskRequestFlowInput = new TaskEngineInvokableList.FlowInputs();
-        taskRequestFlowInput.taskRequests = taskRequests;
+        FlowUtilityTaskCreateList.FlowInputs taskRequestListFlowInput = new FlowUtilityTaskCreateList.FlowInputs();
+        taskRequestListFlowInput.taskRequests = taskRequests;
 
-        List<TaskEngineInvokableList.FlowInputs> taskRequestFlowInputList = new List<TaskEngineInvokableList.FlowInputs>();
+        List<FlowUtilityTaskCreateList.FlowInputs> taskRequestListFlowInputList = new List<FlowUtilityTaskCreateList.FlowInputs>();
+        taskRequestListFlowInputList.add(taskRequestListFlowInput);
+
+        FlowUtilityTaskCreate.FlowInputs taskRequestFlowInput = new FlowUtilityTaskCreate.FlowInputs();
+        taskRequestFlowInput.taskRequest = taskRequests[0];
+
+        List<FlowUtilityTaskCreate.FlowInputs> taskRequestFlowInputList = new List<FlowUtilityTaskCreate.FlowInputs>();
         taskRequestFlowInputList.add(taskRequestFlowInput);
 
         //test method directly and via invokable method together as setup for test taks a long time
         Test.startTest();
         TaskEngine.generateTasks(taskRequests);
-        List<TaskEngineInvokableList.FlowOutputs> flowOutputs = TaskEngineInvokableList.invocableGenerateTasks(taskRequestFlowInputList);
+        List<FlowUtilityTaskCreateList.FlowOutputs> flowTaskListOutputs = FlowUtilityTaskCreateList.invocableGenerateTasks(taskRequestListFlowInputList);
+        List<FlowUtilityTaskCreate.FlowOutputs> flowTaskSingleOutputs = FlowUtilityTaskCreate.invocableGenerateTasks(taskRequestFlowInputList);
         Test.stopTest();
 
-        for(TaskEngineInvokableList.FlowOutputs flowOutput : flowOutputs){
+        for(FlowUtilityTaskCreateList.FlowOutputs flowOutput : flowTaskListOutputs){
+            Assert.isTrue(flowOutput.isSuccess, 'Invokable apex task creation failure');
+        }
+        for(FlowUtilityTaskCreate.FlowOutputs flowOutput : flowTaskSingleOutputs){
             Assert.isTrue(flowOutput.isSuccess, 'Invokable apex task creation failure');
         }
 
@@ -211,7 +221,7 @@ private class TaskEngineTest {
         }
 
         Assert.isTrue(generatedTaskList.size() > 0, 'No tasks were generated');
-        Assert.areEqual(taskRequests.size() * 2, generatedTaskList.size(), 'An incorrect number of tasks have been generated');
+        Assert.areEqual((taskRequests.size() * 2) + 1, generatedTaskList.size(), 'An incorrect number of tasks have been generated');
 
         for(Task task : generatedTaskList){
             OW_task_information__c taskInfo = taskAssignmentToInfoMap.get(task.Subject);

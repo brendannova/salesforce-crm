@@ -4,8 +4,8 @@
     <assignments>
         <name>Add_to_collection</name>
         <label>Add to collection</label>
-        <locationX>176</locationX>
-        <locationY>323</locationY>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
         <assignmentItems>
             <assignToReference>fps</assignToReference>
             <operator>Add</operator>
@@ -17,6 +17,28 @@
             <targetReference>Create_info_request</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Outcome</name>
+        <label>Outcome</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>No request</defaultConnectorLabel>
+        <rules>
+            <name>Gets_an_information_request</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getsAnInformationRequest</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_collection</targetReference>
+            </connector>
+            <label>Gets an information request</label>
+        </rules>
+    </decisions>
     <description>Creates a IR whenever a financial product is created with terms signed</description>
     <environments>Default</environments>
     <interviewLabel>Financial product | IR | Create {!$Flow.CurrentDateTime}</interviewLabel>
@@ -41,10 +63,10 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Add_to_collection</targetReference>
+            <targetReference>Assess_requirement</targetReference>
         </connector>
         <filterFormula>(
     (
@@ -85,10 +107,30 @@ NOT(ISPICKVAL({!$Record.Work_Benefit_2__c},&quot;Yes&quot;))</filterFormula>
     </start>
     <status>Active</status>
     <subflows>
+        <name>Assess_requirement</name>
+        <label>Assess requirement</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <connector>
+            <targetReference>Outcome</targetReference>
+        </connector>
+        <flowName>FinancialProductAssessInformationRequestRequirement</flowName>
+        <inputAssignments>
+            <name>financialProduct</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>getsAnInformationRequest</assignToReference>
+            <name>getsAnInformationRequest</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Create_info_request</name>
         <label>Create info request</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
         <flowName>InformationRequestCreate</flowName>
         <inputAssignments>
             <name>financialAccounts</name>
@@ -110,5 +152,12 @@ NOT(ISPICKVAL({!$Record.Work_Benefit_2__c},&quot;Yes&quot;))</filterFormula>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>getsAnInformationRequest</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
