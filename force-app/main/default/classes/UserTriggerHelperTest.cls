@@ -1,5 +1,5 @@
 @isTest
-private class UserTriggerTest {
+private class UserTriggerHelperTest {
     
     @isTest
     static void userUpdated_success(){
