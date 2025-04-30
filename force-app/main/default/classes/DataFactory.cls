@@ -22,6 +22,16 @@ public with sharing class DataFactory {
     String financial_product_record_type_dev_name_joint = 'FP_General_Investment_Account_GIA';
     String public_provider_name = 'Big bank of biznizz';
 
+    public profile PROFILE_SYSTEM_ADMINISTRATOR {
+        get{
+            if(PROFILE_SYSTEM_ADMINISTRATOR == null){
+                PROFILE_SYSTEM_ADMINISTRATOR = [SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1];
+            }
+            return PROFILE_SYSTEM_ADMINISTRATOR;
+        }
+        set;
+    }
+
     /* This can be used in the future to load configuration data. 
      * public void createConfigurationData(){
         List<sObject> ls = Test.loadData(Public_Provider_Names__c.sObjectType, 'ProvidersRef');
@@ -321,22 +331,29 @@ public with sharing class DataFactory {
         return c;
     }
 
-    public QueueSObject createQueue(String queueName){
-        Group qGroup= new Group(Name= queueName, Type='QUEUE');
-        QueueSObject q = new QueueSObject(SobjectType='Task', QueueId=qGroup.Id);
+    
+    public Group createQueue(String queueName){
+        //avoid mixed DML error
+        User adminUser = [SELECT Id FROM USER WHERE IsActive = true AND ProfileId = :PROFILE_SYSTEM_ADMINISTRATOR.Id LIMIT 1];
+        System.runAs(adminUser){
+            Group qGroup= new Group(Name= queueName, Type='QUEUE');
+            insert qGroup;
+            QueueSObject q = new QueueSObject(SobjectType='Task', QueueId=qGroup.Id);
+            insert q;
+        }
 
-        return q;
+        return [SELECT Id, DeveloperName FROM Group WHERE Type = 'QUEUE' AND DeveloperName = :queueName LIMIT 1];
+
     }
 
     //todo udpate to accept a list
     public user createUser(String username){
-        Profile p = [SELECT Id FROM Profile WHERE Name='System Administrator' LIMIT 1];
 
         User u = new User();
         u.Alias = 'testy';
         u.Email = username;
         u.Username = username;
-        u.ProfileId = p.Id;
+        u.ProfileId = PROFILE_SYSTEM_ADMINISTRATOR.Id;
         u.EmailEncodingKey='UTF-8';
         u.LastName='Testing';
         u.LanguageLocaleKey='en_US';

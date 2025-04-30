@@ -5,7 +5,7 @@
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>270</locationX>
-        <locationY>1358</locationY>
+        <locationY>1466</locationY>
         <assignmentItems>
             <assignToReference>fps</assignToReference>
             <operator>Add</operator>
@@ -117,53 +117,25 @@
         <name>Information_request_outcome</name>
         <label>Information request outcome</label>
         <locationX>402</locationX>
-        <locationY>1250</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Loop</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No action</defaultConnectorLabel>
         <rules>
-            <name>Create_IR</name>
-            <conditionLogic>(1 AND (2 OR 3)) OR (4 OR 5)</conditionLogic>
+            <name>Create_information_request</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Loop.FinServ__PrimaryOwner__r.OW_terms_of_Business_Status__c</leftValueReference>
+                <leftValueReference>getsAnInformationRequest</leftValueReference>
                 <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Accepted</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop.FinServ__JointOwner__r.OW_terms_of_Business_Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Accepted</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop.FinServ__JointOwner__c</leftValueReference>
-                <operator>IsBlank</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop.RecordType.DeveloperName</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Junior</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Loop.FinServ__PrimaryOwner__r.FinServ__Age__pc</leftValueReference>
-                <operator>LessThan</operator>
-                <rightValue>
-                    <numberValue>18.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Add_to_collection</targetReference>
             </connector>
-            <label>Create IR</label>
+            <label>Create information request</label>
         </rules>
     </decisions>
     <description>Sub flow to be called as part of prospect -&gt; verifying actions which decides which financial products are now ready to receive information requests</description>
@@ -178,7 +150,7 @@
         <collectionReference>gotFps</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Information_request_outcome</targetReference>
+            <targetReference>Assess_requirement</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Create_information_requests</targetReference>
@@ -263,6 +235,9 @@
         <queriedFields>Household__c</queriedFields>
         <queriedFields>FinServ__RecordTypeName__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
+        <queriedFields>BusinessType__c</queriedFields>
+        <queriedFields>Work_Benefit_2__c</queriedFields>
+        <queriedFields>Public_Provider_Name__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_financial_products_including_juniors</name>
@@ -318,6 +293,9 @@
         <queriedFields>RegisteredContact__c</queriedFields>
         <queriedFields>FinServ__RecordTypeName__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
+        <queriedFields>BusinessType__c</queriedFields>
+        <queriedFields>Work_Benefit_2__c</queriedFields>
+        <queriedFields>Public_Provider_Name__c</queriedFields>
     </recordLookups>
     <start>
         <locationX>56</locationX>
@@ -328,10 +306,30 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Assess_requirement</name>
+        <label>Assess requirement</label>
+        <locationX>402</locationX>
+        <locationY>1250</locationY>
+        <connector>
+            <targetReference>Information_request_outcome</targetReference>
+        </connector>
+        <flowName>FinancialProductAssessInformationRequestRequirement</flowName>
+        <inputAssignments>
+            <name>financialProduct</name>
+            <value>
+                <elementReference>Loop</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>getsAnInformationRequest</assignToReference>
+            <name>getsAnInformationRequest</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Create_information_requests</name>
         <label>Create information requests</label>
         <locationX>182</locationX>
-        <locationY>1634</locationY>
+        <locationY>1742</locationY>
         <flowName>InformationRequestCreate</flowName>
         <inputAssignments>
             <name>financialAccounts</name>
@@ -394,6 +392,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>getsAnInformationRequest</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>gotFps</name>
