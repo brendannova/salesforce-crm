@@ -1,51 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Get_task</name>
-        <label>Get task</label>
-        <locationX>578</locationX>
-        <locationY>782</locationY>
-        <actionName>FlowUtilityGetFirstListItem</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Set_task</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>T__inputCollection</typeName>
-            <typeValue>Task</typeValue>
-        </dataTypeMappings>
-        <dataTypeMappings>
-            <typeName>U__outputItem</typeName>
-            <typeValue>Task</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>inputCollection</name>
-            <value>
-                <elementReference>tasks</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>FlowUtilityGetFirstListItem</nameSegment>
-        <offset>0</offset>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>60.0</apiVersion>
-    <assignments>
-        <name>Assign_task</name>
-        <label>Assign task</label>
-        <locationX>842</locationX>
-        <locationY>890</locationY>
-        <assignmentItems>
-            <assignToReference>task</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>ChooseTaskTable.firstSelectedRow</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Advice_type</targetReference>
-        </connector>
-    </assignments>
     <assignments>
         <name>Close_task</name>
         <label>Close task</label>
@@ -134,22 +89,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_task</name>
-        <label>Set task</label>
-        <locationX>578</locationX>
-        <locationY>890</locationY>
-        <assignmentItems>
-            <assignToReference>task</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_task.outputItem</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Advice_type</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_variables</name>
         <label>Set variables</label>
         <locationX>842</locationX>
@@ -190,7 +129,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Tasks_in_users_name</targetReference>
+            <targetReference>Advice_type</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -448,46 +387,6 @@
             <label>Close</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Tasks_in_users_name</name>
-        <label>Tasks in users name</label>
-        <locationX>842</locationX>
-        <locationY>674</locationY>
-        <defaultConnector>
-            <targetReference>No_Task_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No tasks</defaultConnectorLabel>
-        <rules>
-            <name>OneTask</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>taskCount</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_task</targetReference>
-            </connector>
-            <label>1</label>
-        </rules>
-        <rules>
-            <name>GreaterThanOneTasks</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>taskCount</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>1.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Choose_Task</targetReference>
-            </connector>
-            <label>&gt;1</label>
-        </rules>
-    </decisions>
     <description>This generic flow will run for all advice that needs to be orchestrated, performing actions that are generic across all these variants and calling sub-flows where necessary.</description>
     <environments>Default</environments>
     <interviewLabel>Advice | Orchestration {!$Flow.CurrentDateTime}</interviewLabel>
@@ -518,7 +417,7 @@
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_tasks</targetReference>
+            <targetReference>Get_advice_checklist</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -612,62 +511,6 @@
         <queriedFields>Deck4EyeCompletedBy__c</queriedFields>
         <queriedFields>DeckReadyFor4Eyes__c</queriedFields>
     </recordLookups>
-    <recordLookups>
-        <name>Get_tasks</name>
-        <label>Get tasks</label>
-        <locationX>842</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_advice_checklist</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Roll_back_changes</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OrchestrationTaskStatus__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Incomplete</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </filters>
-        <object>Task</object>
-        <outputReference>tasks</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Status</queriedFields>
-        <queriedFields>OW_task_information_name__c</queriedFields>
-        <queriedFields>IsClosed</queriedFields>
-        <queriedFields>OrchestrationTaskStatus__c</queriedFields>
-        <queriedFields>Subject</queriedFields>
-        <queriedFields>OwnerId</queriedFields>
-        <queriedFields>ActivityDate</queriedFields>
-        <queriedFields>OW_target_start_date__c</queriedFields>
-        <queriedFields>Type</queriedFields>
-        <queriedFields>WhatId</queriedFields>
-    </recordLookups>
     <recordRollbacks>
         <name>Roll_back_changes</name>
         <label>Roll back changes</label>
@@ -733,73 +576,6 @@
         <inputReference>task</inputReference>
     </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
-    <screens>
-        <name>Choose_Task</name>
-        <label>Choose Task</label>
-        <locationX>842</locationX>
-        <locationY>782</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Assign_task</targetReference>
-        </connector>
-        <fields>
-            <name>ChooseTaskPrompt</name>
-            <fieldText>&lt;p&gt;There are multiple tasks assigned to you. Please choose the one you wish to complete. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ChooseTaskTable</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Task</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>SINGLE_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>tasks</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>maxRowSelection</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Type&quot;,&quot;guid&quot;:&quot;column-c1bc&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Subject&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;ActivityDate&quot;,&quot;guid&quot;:&quot;column-745d&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:true,&quot;customHeaderLabel&quot;:&quot;Due date&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Due Date Only&quot;,&quot;type&quot;:&quot;date-local&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Tasks</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <screens>
         <name>CompleteScreen</name>
         <label>Complete screen</label>
@@ -890,22 +666,6 @@
         </fields>
         <nextOrFinishButtonLabel>Reset</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>No_Task_Screen</name>
-        <label>No Task Screen</label>
-        <locationX>1106</locationX>
-        <locationY>782</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NoTaskForYouMessage</name>
-            <fieldText>&lt;p&gt;No orchestration tasks assigned to you.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
