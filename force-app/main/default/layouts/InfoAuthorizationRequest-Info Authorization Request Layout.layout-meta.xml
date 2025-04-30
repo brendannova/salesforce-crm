@@ -8,53 +8,49 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>FlowLabel</field>
+                <field>Name</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>PertainsToId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Description</field>
+                <field>RequesterId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AssociatedRecordId</field>
+                <field>CommunicationType</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CreatedById</field>
+                <field>SourceRecordId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>LastModifiedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>FlowCategory</field>
+                <field>ExpirationDateTime</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ApiName</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>FlowType</field>
+                <field>DataUsePurposeId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SegmentId</field>
+                <field>ConsenterId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>CreatedDate</field>
+                <field>Locale</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>LastModifiedDate</field>
+                <field>MultipartyInfoAuthRequestId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FlowSubcategory</field>
+                <field>ResponseStatus</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -63,36 +59,9 @@
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
-        <layoutColumns />
+        <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <relatedLists>
-        <fields>VersionNumber</fields>
-        <fields>ProgressStatus</fields>
-        <fields>LastModifiedDate</fields>
-        <fields>Entries</fields>
-        <fields>Exits</fields>
-        <fields>Errors</fields>
-        <fields>Name</fields>
-        <fields>CreatedDate</fields>
-        <fields>RunInMode</fields>
-        <fields>ApiVersion</fields>
-        <fields>CapacityCategory</fields>
-        <fields>AreMetricsLoggedToDataCloud</fields>
-        <relatedList>FlowRecordVersions</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>FlowRecordVersion</fields>
-        <fields>ScheduledDate</fields>
-        <fields>Enqueued</fields>
-        <fields>Entries</fields>
-        <fields>Exits</fields>
-        <fields>Errors</fields>
-        <fields>ProgressStatus</fields>
-        <fields>ErrorDetail</fields>
-        <relatedList>FlowRecordVersionOccurrences</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
