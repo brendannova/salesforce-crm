@@ -13,8 +13,9 @@ public with sharing class UserTriggerHelper {
     // The purpose of this method is to update the federation user ID so that it equals the production username. This allows the sandbox to be used for SSO with production Salesforce as the IdP
     public UserTriggerHelper(List<User> users){
         for(User user : users){
-            if(user.IsActive && !USER_TYPES_EXCLUDED_FEDERATION.contains(user.UserType) && user.Username.endsWithIgnoreCase(NOVA_EMAIL_DOMAIN + SANDBOX_EXTENSION)){
-                user.FederationIdentifier = user.Username.toLowerCase().removeEnd(SANDBOX_EXTENSION);
+            String federationIdentifier = user.Username.toLowerCase().removeEnd(SANDBOX_EXTENSION);
+            if(user.IsActive && !USER_TYPES_EXCLUDED_FEDERATION.contains(user.UserType) && user.Username.endsWithIgnoreCase(NOVA_EMAIL_DOMAIN + SANDBOX_EXTENSION)&& user.FederationIdentifier != federationIdentifier){
+                user.FederationIdentifier = federationIdentifier;
             }
         }
     }

@@ -774,6 +774,21 @@
                 <name>Select_Action_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
+                    <name>displayReferrerValidationError</name>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(244, 17, 17); background-color: rgb(255, 255, 255);&quot;&gt;Referrer required&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>referrerValidationError</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
                     <name>LeadSourceChoice</name>
                     <choiceReferences>financialWellbeingRollout</choiceReferences>
                     <choiceReferences>partnerGenerated</choiceReferences>
@@ -896,21 +911,6 @@
             <fields>
                 <name>ReferrerSearch_Column1</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>displayReferrerValidationError</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(244, 17, 17); background-color: rgb(255, 255, 255);&quot;&gt;Referrer required&lt;/strong&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>referrerValidationError</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <booleanValue>true</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
                 <fields>
                     <name>Name</name>
                     <dataType>String</dataType>

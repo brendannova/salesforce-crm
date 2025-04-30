@@ -554,7 +554,7 @@
         <defaultConnectorLabel>Does not require referrer to be added later</defaultConnectorLabel>
         <rules>
             <name>Referrer_needed_on_lead</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.LeadSource</leftValueReference>
                 <operator>EqualTo</operator>
@@ -581,6 +581,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>FINANCIAL_WELLBEING_ROLLOUT</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Referrer__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
