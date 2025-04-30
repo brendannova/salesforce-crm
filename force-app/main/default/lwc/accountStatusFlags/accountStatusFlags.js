@@ -3,6 +3,7 @@ import { getRecord, getFieldValue } from "lightning/uiRecordApi";
 import { getSObjectValue } from "@salesforce/apex";
 
 import getAccountsByHouseholdId from '@salesforce/apex/LwcHelperAccountStatusFlags.getAccountsByHouseholdId';
+import getWrapperFromRecord from '@salesforce/apex/LwcHelperAccountStatusFlags.getWrapperFromRecord';
 
 //fields
 import STATUS_FIELD from "@salesforce/schema/Account.FinServ__Status__c";
@@ -278,7 +279,7 @@ export default class accountStatusFlags extends LightningElement {
                 this.badgeRefs[REF_FACT_FIND_VALIDATIONS].show = true;
             }
 
-            accounts = this.personAccounts;
+            accounts = accounts.concat(this.personAccounts);
         }
 
         //set at person level - could have different persons in the houseold in different states for each field
@@ -327,7 +328,8 @@ export default class accountStatusFlags extends LightningElement {
                 if(this.getValue(account, VULNERABLE_FIELD) === VULNERABLE_VALUE){
                     this.badgeRefs[REF_VULNERABLE].show = true;
                 }
-
+                console.log('temp bank details issue');
+                console.log(this.getValue(account, TEMP_BANK_DETAILS_ISSUE_FIELD))
                 if(this.getValue(account, TEMP_BANK_DETAILS_ISSUE_FIELD)){
                     this.badgeRefs[REF_TEMP_BANK_DETAILS_ISSUE].show = true;
                 }
@@ -337,7 +339,7 @@ export default class accountStatusFlags extends LightningElement {
 
     getValue(data, field){ //data in different formats and different methods needed to retrive it if wired or apex
         let value = getSObjectValue(data, field)
-        if(!value){
+        if(!value && value !== false){
             value = getFieldValue(data, field);
         }
         return (value ? value : '');
@@ -370,10 +372,20 @@ export default class accountStatusFlags extends LightningElement {
             case 'PersonAccount':
                 this.accountId = this.recordId;
                 break;
+            case 'Advice__c':
+                this.getDataFromOtherObject();
+                break;
             default:
                 console.log('setting error message for unspported object');
                 this.errorMessage = 'Logic to get the householdId for this Object has not yet been defined'
                 break;
         }
     }
+
+    async getDataFromOtherObject(){
+        console.log('getDataFromOtherObject');
+        let wrapperData = await getWrapperFromRecord({recordId: this.recordId, objectName: this.objectApiName});
+        this.accountId = wrapperData.householdId;
+    }
+    
 }
