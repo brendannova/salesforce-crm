@@ -8,6 +8,30 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>pi__ObjectEmail__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>pi__ObjectFid__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>pi__ObjectState__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>pi__ObjectType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>pi__ObjectMasterRecordId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>pi__ObjectMasterRecordEmail__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
         </layoutColumns>
@@ -42,11 +66,19 @@
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
-        <layoutColumns />
-        <layoutColumns />
-        <layoutColumns />
+        <layoutColumns/>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>pi__ObjectEmail__c</fields>
+        <fields>pi__ObjectFid__c</fields>
+        <fields>pi__ObjectState__c</fields>
+        <fields>pi__ObjectType__c</fields>
+        <fields>pi__ObjectMasterRecordId__c</fields>
+        <fields>pi__ObjectMasterRecordEmail__c</fields>
+    </miniLayout>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
