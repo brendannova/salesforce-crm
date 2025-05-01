@@ -31,6 +31,7 @@
         </outputParameters>
     </actionCalls>
     <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_business_account</name>
         <label>Assign business account</label>
@@ -361,6 +362,8 @@ REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
         <outputReference>referrerOptions</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
+        <sortField>Name</sortField>
+        <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
         <name>Get_person_accounts</name>
@@ -397,6 +400,8 @@ REGEX({!searchString}, &quot;^\\+[1-9]\\d{6,13}$&quot;)), true, false
         <outputReference>referrerOptions</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
+        <sortField>FirstName</sortField>
+        <sortOrder>Asc</sortOrder>
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <start>

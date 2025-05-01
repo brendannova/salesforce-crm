@@ -25,6 +25,7 @@
         </outputParameters>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Assign_account_ID</name>
         <label>Assign account ID</label>
@@ -83,7 +84,7 @@
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Referrer_validation</targetReference>
+            <targetReference>Update_lead_values</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -251,14 +252,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Referrer_validation</targetReference>
+            <targetReference>Update_lead_values</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_referrer_validation_error_flag</name>
         <label>Set referrer validation error flag</label>
         <locationX>50</locationX>
-        <locationY>1574</locationY>
+        <locationY>1682</locationY>
         <assignmentItems>
             <assignToReference>referrerValidationError</assignToReference>
             <operator>Assign</operator>
@@ -287,8 +288,8 @@
     <assignments>
         <name>Update_lead_values</name>
         <label>Update lead values</label>
-        <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationX>380</locationX>
+        <locationY>1466</locationY>
         <assignmentItems>
             <assignToReference>leadSourceValue</assignToReference>
             <operator>Assign</operator>
@@ -297,7 +298,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Object</targetReference>
+            <targetReference>Referrer_validation</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -516,7 +517,7 @@
         <locationX>380</locationX>
         <locationY>1166</locationY>
         <defaultConnector>
-            <targetReference>Referrer_validation</targetReference>
+            <targetReference>Update_lead_values</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No update</defaultConnectorLabel>
         <rules>
@@ -561,9 +562,9 @@
         <name>Referrer_validation</name>
         <label>Referrer validation</label>
         <locationX>380</locationX>
-        <locationY>1466</locationY>
+        <locationY>1574</locationY>
         <defaultConnector>
-            <targetReference>Update_lead_values</targetReference>
+            <targetReference>Object</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Pass</defaultConnectorLabel>
         <rules>
