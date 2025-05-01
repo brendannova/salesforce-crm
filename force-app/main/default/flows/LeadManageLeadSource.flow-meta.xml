@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Get_picklist_entries</name>
+        <label>Get picklist entries</label>
+        <locationX>380</locationX>
+        <locationY>1166</locationY>
+        <actionName>FlowUtilityGetPicklistEntries</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Referrer_already_specified</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>field</name>
+            <value>
+                <stringValue>LeadSource</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>picklistValues</name>
+            <value>
+                <elementReference>leadSourcePicklistValues</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sObjectType</name>
+            <value>
+                <stringValue>Lead</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityGetPicklistEntries</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>leadSourcePicklistEntries</assignToReference>
+            <name>picklistEntries</name>
+        </outputParameters>
+    </actionCalls>
     <actionCalls>
         <name>Get_records_object_API_name</name>
         <label>Get record&#39;s object API name</label>
@@ -25,6 +61,22 @@
         </outputParameters>
     </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Add_current_lead_source</name>
+        <label>Add current lead source</label>
+        <locationX>468</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>leadSourceValue</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_picklist_entries</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assign_account_ID</name>
         <label>Assign account ID</label>
@@ -61,7 +113,7 @@
         <name>Assign_lead_not_updated_error</name>
         <label>Assign lead not updated error</label>
         <locationX>842</locationX>
-        <locationY>2006</locationY>
+        <locationY>2822</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -76,21 +128,79 @@
     <assignments>
         <name>Clear_referrer_assignment</name>
         <label>Clear referrer</label>
-        <locationX>380</locationX>
-        <locationY>1274</locationY>
+        <locationX>116</locationX>
+        <locationY>2090</locationY>
         <assignmentItems>
             <assignToReference>referrerValue</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Referrer_validation</targetReference>
+            <targetReference>Update_lead_values</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Construct_lead_source_picklist_options</name>
+        <label>Construct lead source picklist options</label>
+        <locationX>380</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LEAD_SOURCE_OTHER</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LEAD_SOURCE_REFERRAL_CLIENT</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LEAD_SOURCE_REFERRAL_EMPLOYEE</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LEAD_SOURCE_YOUTUBE</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadSourcePicklistValues</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LEAD_SOURCE_PARTNER_GENERATED</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Lead_source_already_specified</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_household_values</name>
         <label>Set household values</label>
         <locationX>314</locationX>
-        <locationY>1790</locationY>
+        <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>household.AccountSource</assignToReference>
             <operator>Assign</operator>
@@ -143,7 +253,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Action</targetReference>
+            <targetReference>Construct_lead_source_picklist_options</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -173,14 +283,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Select_Action</targetReference>
+            <targetReference>Construct_lead_source_picklist_options</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_lead_source_notes_optional</name>
         <label>Set lead source notes</label>
         <locationX>512</locationX>
-        <locationY>974</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>leadSourceNotesValue</assignToReference>
             <operator>Assign</operator>
@@ -196,7 +306,7 @@
         <name>Set_lead_source_notes_required</name>
         <label>Set lead source notes</label>
         <locationX>248</locationX>
-        <locationY>974</locationY>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>leadSourceNotesValue</assignToReference>
             <operator>Assign</operator>
@@ -212,7 +322,7 @@
         <name>Set_lead_values</name>
         <label>Set lead values</label>
         <locationX>578</locationX>
-        <locationY>1790</locationY>
+        <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>lead.LeadSource</assignToReference>
             <operator>Assign</operator>
@@ -241,8 +351,8 @@
     <assignments>
         <name>Set_referrer</name>
         <label>Set referrer</label>
-        <locationX>116</locationX>
-        <locationY>1274</locationY>
+        <locationX>380</locationX>
+        <locationY>2090</locationY>
         <assignmentItems>
             <assignToReference>referrerValue</assignToReference>
             <operator>Assign</operator>
@@ -251,14 +361,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Referrer_validation</targetReference>
+            <targetReference>Update_lead_values</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_referrer_validation_error_flag</name>
         <label>Set referrer validation error flag</label>
         <locationX>50</locationX>
-        <locationY>1574</locationY>
+        <locationY>2498</locationY>
         <assignmentItems>
             <assignToReference>referrerValidationError</assignToReference>
             <operator>Assign</operator>
@@ -287,8 +397,8 @@
     <assignments>
         <name>Update_lead_values</name>
         <label>Update lead values</label>
-        <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationX>380</locationX>
+        <locationY>2282</locationY>
         <assignmentItems>
             <assignToReference>leadSourceValue</assignToReference>
             <operator>Assign</operator>
@@ -297,65 +407,9 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Object</targetReference>
+            <targetReference>Referrer_validation</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>clientReferral</name>
-        <choiceText>Referral | Client</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>LEAD_SOURCE_REFERRAL_CLIENT</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>employeeReferral</name>
-        <choiceText>Referral | Employee</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>LEAD_SOURCE_REFERRAL_EMPLOYEE</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>financialWellbeingRollout</name>
-        <choiceText>Financial Wellbeing Rollout</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>introducer</name>
-        <choiceText>Referral | Introducer</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>other</name>
-        <choiceText>Other</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>OTHER</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>partnerGenerated</name>
-        <choiceText>Partner Generated</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>PARTNER_GENERATED</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>youTube</name>
-        <choiceText>YouTube</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>YOUTUBE</stringValue>
-        </value>
-    </choices>
     <constants>
         <name>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</name>
         <dataType>String</dataType>
@@ -368,6 +422,13 @@
         <dataType>String</dataType>
         <value>
             <stringValue>OTHER</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>LEAD_SOURCE_PARTNER_GENERATED</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PARTNER_GENERATED</stringValue>
         </value>
     </constants>
     <constants>
@@ -392,6 +453,13 @@
         </value>
     </constants>
     <constants>
+        <name>LEAD_SOURCE_YOUTUBE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>YOUTUBE</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>OBJECT_API_NAME_ACCOUNT</name>
         <dataType>String</dataType>
         <value>
@@ -406,10 +474,35 @@
         </value>
     </constants>
     <decisions>
+        <name>Lead_source_already_specified</name>
+        <label>Lead source already specified</label>
+        <locationX>380</locationX>
+        <locationY>866</locationY>
+        <defaultConnector>
+            <targetReference>Add_current_lead_source</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not yet specified</defaultConnectorLabel>
+        <rules>
+            <name>Already_specified</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>leadSourcePicklistValues</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <elementReference>leadSourceValue</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_picklist_entries</targetReference>
+            </connector>
+            <label>Already specified</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Lead_source_notes</name>
         <label>Lead source notes</label>
         <locationX>380</locationX>
-        <locationY>866</locationY>
+        <locationY>1682</locationY>
         <defaultConnector>
             <targetReference>Set_lead_source_notes_optional</targetReference>
         </defaultConnector>
@@ -434,7 +527,7 @@
         <name>Object</name>
         <label>Object</label>
         <locationX>710</locationX>
-        <locationY>1682</locationY>
+        <locationY>2498</locationY>
         <defaultConnector>
             <targetReference>Success</targetReference>
         </defaultConnector>
@@ -511,14 +604,89 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Referrer_already_specified</name>
+        <label>Referrer already specified?</label>
+        <locationX>380</locationX>
+        <locationY>1274</locationY>
+        <defaultConnector>
+            <targetReference>Select_Action</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes_referrer_already_specified</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>referrerValue</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_initial_referrer_details</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Referrer_update_required</name>
         <label>Referrer update required</label>
         <locationX>380</locationX>
-        <locationY>1166</locationY>
+        <locationY>1982</locationY>
         <defaultConnector>
-            <targetReference>Referrer_validation</targetReference>
+            <targetReference>Update_lead_values</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No update</defaultConnectorLabel>
+        <rules>
+            <name>Clear_referrer</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4 AND 5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>LeadSourceChoice</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>leadSourceValue</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ReferrerChoice.selectedChoiceValues</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LeadSourceChoice</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LeadSourceChoice</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>LEAD_SOURCE_REFERRAL_CLIENT</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LeadSourceChoice</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>LEAD_SOURCE_REFERRAL_EMPLOYEE</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LeadSourceChoice</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clear_referrer_assignment</targetReference>
+            </connector>
+            <label>Clear referrer</label>
+        </rules>
         <rules>
             <name>Update_referrer</name>
             <conditionLogic>and</conditionLogic>
@@ -534,36 +702,14 @@
             </connector>
             <label>Update referrer</label>
         </rules>
-        <rules>
-            <name>Clear_referrer</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>LeadSourceChoice</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>leadSourceValue</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ReferrerChoice.selectedChoiceValues</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Clear_referrer_assignment</targetReference>
-            </connector>
-            <label>Clear referrer</label>
-        </rules>
     </decisions>
     <decisions>
         <name>Referrer_validation</name>
         <label>Referrer validation</label>
         <locationX>380</locationX>
-        <locationY>1466</locationY>
+        <locationY>2390</locationY>
         <defaultConnector>
-            <targetReference>Update_lead_values</targetReference>
+            <targetReference>Object</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Pass</defaultConnectorLabel>
         <rules>
@@ -626,6 +772,14 @@
     </decisions>
     <description>Update and manage lead source and referral information</description>
     <dynamicChoiceSets>
+        <name>leadSourcePicklistEntriesChoices</name>
+        <collectionReference>leadSourcePicklistEntries</collectionReference>
+        <dataType>String</dataType>
+        <displayField>label</displayField>
+        <object xsi:nil="true" />
+        <valueField>value</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>peopleResults</name>
         <collectionReference>SearchReferrers.Results.referrerOptions</collectionReference>
         <dataType>String</dataType>
@@ -642,9 +796,9 @@
 !{!$Permission.LeadOverrideLeadSource}</expression>
     </formulas>
     <formulas>
-        <name>referrerName</name>
+        <name>referrerPrompt</name>
         <dataType>String</dataType>
-        <expression>IF({!objectApiName} = {!OBJECT_API_NAME_ACCOUNT}, IF({!household.Referrer__r.IsPersonAccount}, {!household.Referrer__r.FirstName} + &quot; &quot; + {!household.Referrer__r.LastName}, {!household.Referrer__r.Name}), IF({!lead.Referrer__r.IsPersonAccount}, {!lead.Referrer__r.FirstName} + &quot; &quot; + {!lead.Referrer__r.LastName}, {!lead.Referrer__r.Name}))</expression>
+        <expression>IF(!ISBLANK({!referrerValue}), &quot;You can update the referrer below.&quot;, &quot;Please record the referrer below.&quot;)</expression>
     </formulas>
     <formulas>
         <name>searchString</name>
@@ -672,6 +826,30 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_initial_referrer_details</name>
+        <label>Get initial referrer details</label>
+        <locationX>248</locationX>
+        <locationY>1382</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Select_Action</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>referrerValue</elementReference>
+            </value>
+        </filters>
+        <object>Account</object>
+        <outputReference>referrerInitial</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>FirstName</queriedFields>
+        <queriedFields>LastName</queriedFields>
+        <queriedFields>Name</queriedFields>
+    </recordLookups>
     <recordLookups>
         <name>Get_lead_from_account</name>
         <label>Get lead from account</label>
@@ -724,7 +902,7 @@
         <name>Update_household</name>
         <label>Update household</label>
         <locationX>314</locationX>
-        <locationY>1898</locationY>
+        <locationY>2714</locationY>
         <connector>
             <targetReference>Success</targetReference>
         </connector>
@@ -734,7 +912,7 @@
         <name>Update_lead</name>
         <label>Update lead</label>
         <locationX>578</locationX>
-        <locationY>1898</locationY>
+        <locationY>2714</locationY>
         <connector>
             <targetReference>Success</targetReference>
         </connector>
@@ -748,7 +926,7 @@
         <name>Select_Action</name>
         <label>Update lead source</label>
         <locationX>380</locationX>
-        <locationY>758</locationY>
+        <locationY>1574</locationY>
         <actions>
             <name>SearchReferrers</name>
             <actionName>LeadGetReferrer</actionName>
@@ -781,29 +959,8 @@
                 <name>Select_Action_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>displayReferrerValidationError</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(244, 17, 17); background-color: rgb(255, 255, 255);&quot;&gt;Referrer required&lt;/strong&gt;&lt;/p&gt;</fieldText>
-                    <fieldType>DisplayText</fieldType>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>referrerValidationError</leftValueReference>
-                            <operator>EqualTo</operator>
-                            <rightValue>
-                                <booleanValue>true</booleanValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <fields>
                     <name>LeadSourceChoice</name>
-                    <choiceReferences>financialWellbeingRollout</choiceReferences>
-                    <choiceReferences>partnerGenerated</choiceReferences>
-                    <choiceReferences>clientReferral</choiceReferences>
-                    <choiceReferences>employeeReferral</choiceReferences>
-                    <choiceReferences>introducer</choiceReferences>
-                    <choiceReferences>youTube</choiceReferences>
-                    <choiceReferences>other</choiceReferences>
+                    <choiceReferences>leadSourcePicklistEntriesChoices</choiceReferences>
                     <dataType>String</dataType>
                     <defaultValue>
                         <elementReference>leadSourceValue</elementReference>
@@ -820,7 +977,7 @@
                     <name>Referrer</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>referrerName</elementReference>
+                        <elementReference>referrerInitial.Name</elementReference>
                     </defaultValue>
                     <fieldText>Referrer</fieldText>
                     <fieldType>InputField</fieldType>
@@ -912,17 +1069,38 @@
             <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
-            <name>ReferrerSearch</name>
-            <fieldText>Find referrer</fieldText>
+            <name>ReferrerUpdate</name>
+            <fieldText>Update referrer</fieldText>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>ReferrerSearch_Column1</name>
+                <name>ReferrerUpdate_Column1</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>displayReferrerValidationError</name>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;Referrer required.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>referrerValidationError</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>referrerPromptDisplay</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!referrerPrompt}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
                 <fields>
                     <name>Name</name>
                     <dataType>String</dataType>
                     <fieldText>Name</fieldText>
                     <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;Enter a name to search on&lt;/p&gt;</helpText>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
@@ -931,14 +1109,14 @@
                             <leftValueReference>LeadSourceChoice</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <elementReference>employeeReferral</elementReference>
+                                <elementReference>LEAD_SOURCE_REFERRAL_EMPLOYEE</elementReference>
                             </rightValue>
                         </conditions>
                         <conditions>
                             <leftValueReference>LeadSourceChoice</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <elementReference>financialWellbeingRollout</elementReference>
+                                <elementReference>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</elementReference>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -948,7 +1126,7 @@
                     <dataType>String</dataType>
                     <fieldText>Mobile or Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <helpText>&lt;p&gt;Mobile numbers must be in international format (e.g. start with +44). Can be skipped but must be added before conversion.&lt;/p&gt;</helpText>
+                    <helpText>&lt;p&gt;Enter an email or mobile to search on. Mobile numbers must be in international format (e.g. start with +44). &lt;/p&gt;</helpText>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
@@ -957,14 +1135,14 @@
                             <leftValueReference>LeadSourceChoice</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <elementReference>clientReferral</elementReference>
+                                <elementReference>LEAD_SOURCE_REFERRAL_CLIENT</elementReference>
                             </rightValue>
                         </conditions>
                         <conditions>
                             <leftValueReference>LeadSourceChoice</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
-                                <elementReference>introducer</elementReference>
+                                <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -1011,7 +1189,7 @@
                     <name>ReferrerChoice</name>
                     <choiceReferences>peopleResults</choiceReferences>
                     <extensionName>flowruntime:choiceLookup</extensionName>
-                    <fieldText>Choose referrer</fieldText>
+                    <fieldText>Referrer</fieldText>
                     <fieldType>ComponentChoice</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
@@ -1036,7 +1214,7 @@
                 </fields>
                 <fields>
                     <name>displayErrorSearchResults</name>
-                    <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(244, 17, 17);&quot;&gt;{!SearchReferrers.Results.displayMessage}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(244, 17, 17); background-color: rgb(255, 255, 255);&quot;&gt;{!SearchReferrers.Results.displayMessage}&lt;/strong&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -1096,7 +1274,7 @@
         <name>Success</name>
         <label>Success</label>
         <locationX>710</locationX>
-        <locationY>2438</locationY>
+        <locationY>3254</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1147,7 +1325,7 @@
         <name>Handle_errors</name>
         <label>Handle errors</label>
         <locationX>842</locationX>
-        <locationY>2114</locationY>
+        <locationY>2930</locationY>
         <flowName>ErrorHandleScreen</flowName>
         <inputAssignments>
             <name>closeFlowAfterToast</name>
@@ -1230,6 +1408,21 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>leadSourcePicklistEntries</name>
+        <apexClass>FlowUtilityPicklistEntry</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>leadSourcePicklistValues</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>leadSourceValue</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1249,6 +1442,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>referrerInitial</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
     </variables>
     <variables>
         <name>referrerValidationError</name>
