@@ -3,7 +3,10 @@
     <fullName>PrimaryGroupRoles</fullName>
     <active>true</active>
     <description>Ensures that only certain roles can be chosen for a primary group. At this stage, these are client, child, and deceased client. This is because these are the only roles that could define a primary advice relationship.</description>
-    <errorConditionFormula>FinServ__PrimaryGroup__c &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+FinServ__PrimaryGroup__c 
+&amp;&amp;
 NOT(INCLUDES( Roles, &quot;Client&quot;) ||
 INCLUDES( Roles, &quot;Child&quot;) ||
 INCLUDES( Roles, &quot;Deceased Client&quot;))</errorConditionFormula>
