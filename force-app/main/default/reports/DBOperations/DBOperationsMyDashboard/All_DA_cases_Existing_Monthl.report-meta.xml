@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ServiceLevelAgreement__c$Name</field>
+    </columns>
+    <columns>
+        <field>ServiceLevelAgreement__c$Advice__c</field>
+    </columns>
+    <columns>
+        <field>ServiceLevelAgreement__c$Status__c</field>
+    </columns>
+    <columns>
+        <field>ServiceLevelAgreement__c$Advice__c.AdviceType__c.Name</field>
+    </columns>
+    <columns>
+        <field>ServiceLevelAgreement__c$StatusAfter__c</field>
+    </columns>
+    <description>This shows the all of operations collective history of completed data analysis cases for existing clients per month.</description>
+    <filter>
+        <booleanFilter>1 AND (2 OR 3) AND 4</booleanFilter>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Data analysis</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$Advice__c.AdviceType__c.Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Annual review | Accumulation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$Advice__c.AdviceType__c.Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Annual review | Retirement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ServiceLevelAgreement__c$StatusAfter__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value></value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>ServiceLevelAgreement__c$End__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>All DA cases | Existing | Monthly</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ServiceLevelAgreements__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ServiceLevelAgreement__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

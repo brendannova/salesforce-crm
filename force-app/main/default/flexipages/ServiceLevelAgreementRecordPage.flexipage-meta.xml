@@ -66,8 +66,12 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
-                <fieldItem>Record.Type__c</fieldItem>
-                <identifier>RecordType__cField</identifier>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6cbc883b-2e44-49cf-bc35-5a32de2954a7</name>
@@ -78,10 +82,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>readonly</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Status__c</fieldItem>
-                <identifier>RecordStatus_cField</identifier>
+                <fieldItem>Record.Description__c</fieldItem>
+                <identifier>RecordDescription__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -102,6 +106,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DueDate__c</fieldItem>
                 <identifier>RecordDueDate_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.StatusAfter__c</fieldItem>
+                <identifier>RecordStatusAfter_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4e963d29-7f7b-4943-9f50-a2372cb9ef2a</name>
@@ -140,6 +154,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.CreatedById</fieldItem>
                 <identifier>RecordCreatedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Type__c</fieldItem>
+                <identifier>RecordType__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-53803c54-8a49-4a73-bbfc-e57d39e525a7</name>
