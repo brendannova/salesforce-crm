@@ -966,7 +966,7 @@
                 <fieldItem>Record.Referrer__c</fieldItem>
                 <identifier>RecordReferrer_cField</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.AccountSource}</leftValue>
                         <operator>EQUAL</operator>
@@ -986,6 +986,11 @@
                         <leftValue>{!Record.AccountSource}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>FINANCIAL_WELLBEING_ROLLOUT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AccountSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ACQUISITION</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -5635,27 +5640,6 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(255, 111, 0);&quot;&gt;A client in this household has been marked as vulnerable. Please check the Facts tab for further details.﻿&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText10</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Vulnerable_Client__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Vulnerable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
                     <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(255, 0, 116);&quot;&gt;Client Profile Validations Outstanding﻿&lt;/strong&gt;&lt;/p&gt;</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:richText</componentName>
@@ -5802,6 +5786,15 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>accountStatusFlags</componentName>
+                <identifier>c_accountStatusFlags</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
