@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UserType__c</fullName>
+    <description>User type attribute is used to control business logic relating to users like whether there should be an associated colleague account.</description>
+    <label>User type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>COLLEAGUE</fullName>
+                <default>false</default>
+                <label>Colleague</label>
+            </value>
+            <value>
+                <fullName>CONSULTANT</fullName>
+                <default>false</default>
+                <label>Consultant</label>
+            </value>
+            <value>
+                <fullName>INTEGRATION</fullName>
+                <default>false</default>
+                <label>Integration</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
