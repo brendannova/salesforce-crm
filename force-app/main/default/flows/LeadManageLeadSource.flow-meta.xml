@@ -76,14 +76,14 @@
     <assignments>
         <name>Clear_referrer_assignment</name>
         <label>Clear referrer</label>
-        <locationX>710</locationX>
-        <locationY>1382</locationY>
+        <locationX>380</locationX>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>referrerValue</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
-            <targetReference>Update_lead_values</targetReference>
+            <targetReference>Referrer_validation</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -179,8 +179,8 @@
     <assignments>
         <name>Set_lead_source_notes_optional</name>
         <label>Set lead source notes</label>
-        <locationX>842</locationX>
-        <locationY>1082</locationY>
+        <locationX>512</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>leadSourceNotesValue</assignToReference>
             <operator>Assign</operator>
@@ -195,8 +195,8 @@
     <assignments>
         <name>Set_lead_source_notes_required</name>
         <label>Set lead source notes</label>
-        <locationX>578</locationX>
-        <locationY>1082</locationY>
+        <locationX>248</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>leadSourceNotesValue</assignToReference>
             <operator>Assign</operator>
@@ -241,8 +241,8 @@
     <assignments>
         <name>Set_referrer</name>
         <label>Set referrer</label>
-        <locationX>446</locationX>
-        <locationY>1382</locationY>
+        <locationX>116</locationX>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>referrerValue</assignToReference>
             <operator>Assign</operator>
@@ -251,14 +251,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_lead_values</targetReference>
+            <targetReference>Referrer_validation</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_referrer_validation_error_flag</name>
         <label>Set referrer validation error flag</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>referrerValidationError</assignToReference>
             <operator>Assign</operator>
@@ -408,8 +408,8 @@
     <decisions>
         <name>Lead_source_notes</name>
         <label>Lead source notes</label>
-        <locationX>710</locationX>
-        <locationY>974</locationY>
+        <locationX>380</locationX>
+        <locationY>866</locationY>
         <defaultConnector>
             <targetReference>Set_lead_source_notes_optional</targetReference>
         </defaultConnector>
@@ -513,10 +513,10 @@
     <decisions>
         <name>Referrer_update_required</name>
         <label>Referrer update required</label>
-        <locationX>710</locationX>
-        <locationY>1274</locationY>
+        <locationX>380</locationX>
+        <locationY>1166</locationY>
         <defaultConnector>
-            <targetReference>Update_lead_values</targetReference>
+            <targetReference>Referrer_validation</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No update</defaultConnectorLabel>
         <rules>
@@ -561,14 +561,21 @@
         <name>Referrer_validation</name>
         <label>Referrer validation</label>
         <locationX>380</locationX>
-        <locationY>866</locationY>
+        <locationY>1466</locationY>
         <defaultConnector>
-            <targetReference>Lead_source_notes</targetReference>
+            <targetReference>Update_lead_values</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Pass</defaultConnectorLabel>
         <rules>
             <name>Referrer_needed</name>
-            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5 AND 6</conditionLogic>
+            <conditionLogic>((1 AND (4 OR 5 OR 6)) OR (2 AND (3 OR 4 OR 5 OR 6))) AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>objectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>OBJECT_API_NAME_LEAD</elementReference>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>objectApiName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -580,7 +587,7 @@
                 <leftValueReference>LeadSourceChoice</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
+                    <elementReference>LEAD_SOURCE_REFERRAL_CLIENT</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -594,19 +601,19 @@
                 <leftValueReference>LeadSourceChoice</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
+                    <elementReference>LEAD_SOURCE_REFERRAL_INTRODUCER</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>LeadSourceChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
                     <elementReference>LEAD_SOURCE_FINANCIAL_WELLBEING_ROLLOUT</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>referrerValue</leftValueReference>
                 <operator>IsBlank</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ReferrerChoice.selectedChoiceValues</leftValueReference>
-                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
@@ -765,7 +772,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Referrer_validation</targetReference>
+            <targetReference>Lead_source_notes</targetReference>
         </connector>
         <fields>
             <name>Select_Action_Section1</name>
