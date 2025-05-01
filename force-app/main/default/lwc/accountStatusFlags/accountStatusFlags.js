@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { getRecord, getFieldValue } from "lightning/uiRecordApi";
 import { getSObjectValue } from "@salesforce/apex";
 
@@ -12,9 +12,11 @@ import VULNERABLE_FIELD from "@salesforce/schema/Account.Vulnerable_Client__c";
 import CONFLICT_OF_INTEREST_FIELD from "@salesforce/schema/Account.ConflictOfInterest__c";
 import CUSTOMER_FLAG_FIELD from "@salesforce/schema/Account.OW_customer_flag__c";
 import CUSTOMER_TYPE_FIELD from "@salesforce/schema/Account.Type";
+import FACT_FIND_VALIDATIONS_FIELD from "@salesforce/schema/Account.Fact_Find_Validations_Outstanding__c";
 import RECORD_TYPE_DEVELOPER_NAME_FIELD from "@salesforce/schema/Account.RecordType.DeveloperName";
+import TEMP_BANK_DETAILS_ISSUE_FIELD from "@salesforce/schema/Account.TempBankDetailIssues__c";
 
-const FIELDS = [STATUS_FIELD, RTQ_STATUS_FIELD, TOB_STATUS_FIELD, AML_STATUS_FIELD, VULNERABLE_FIELD, CONFLICT_OF_INTEREST_FIELD, CUSTOMER_FLAG_FIELD, CUSTOMER_TYPE_FIELD, RECORD_TYPE_DEVELOPER_NAME_FIELD];
+const FIELDS = [STATUS_FIELD, RTQ_STATUS_FIELD, TOB_STATUS_FIELD, AML_STATUS_FIELD, VULNERABLE_FIELD, CONFLICT_OF_INTEREST_FIELD, CUSTOMER_FLAG_FIELD, CUSTOMER_TYPE_FIELD, RECORD_TYPE_DEVELOPER_NAME_FIELD, FACT_FIND_VALIDATIONS_FIELD, TEMP_BANK_DETAILS_ISSUE_FIELD];
 
 const HOUSEHOLD_RECORD_TYPE_DEVELOPER_NAME = 'IndustriesHousehold';
 
@@ -32,6 +34,8 @@ const COI_LABEL = 'Conflict of Interest';
 const CUSTOMER_FLAG_LABEL = 'Customer Flag';
 const CUSTOMER_TYPE_LABEL = 'Customer Type';
 const PEP_LABEL = 'Politically Exposed';
+const FACT_FIND_VALIDATIONS_LABEL = 'Validations Outstanding';
+const TEMP_BANK_DETAILS_ISSUE_LABEL = 'Bank Details Issue';
 
 //css sytling references
 const BADGE_RED = 'badgeRed';
@@ -52,6 +56,15 @@ iconMap.set(PEP_LABEL, 'utility:advertising')
 //Individual field values
 const DECEASED_VALUE = 'Deceased';
 const REPORTED_DECEASED_VALUE = 'Reported Deceased';
+
+const JUNIOR_VALUE = 'Junior';
+const JUNTIOR_POLICY_HOLDER_VALUE = 'Junior Policy Holder';
+
+const WITHDRAWN_VALUE = 'Withdrawn';
+const OFFBOARDING_VALUE = 'Offboarding';
+const FORMER_VALUE = 'Former';
+const SPLIT_VALUE = 'Split';
+const FORGOTTEN_VALUE = 'Forgotten';
 
 const RTQ_EXPIRED_VALUE = 'Expired';
 const RTQ_PENDING_VALUE = 'Pending';
@@ -78,6 +91,11 @@ const CUSTOMER_TYPE_WEALTH_VALUE = 'Wealth';
 //badge references
 const REF_STATUS_DECEASED = 'REF_STATUS_DECEASED';
 const REF_STATUS_REPORTED_DECEASED = 'REF_STATUS_REPORTED_DECEASED';
+const REF_STATUS_WITHDRAWN = 'REF_STATUS_WITHDRAWN';
+const REF_STATUS_OFFBOARDING = 'REF_STATUS_OFFBOARDING';
+const REF_STATUS_FORMER = 'REF_STATUS_FORMER';
+const REF_STATUS_SPLIT = 'REF_STATUS_SPLIT';
+const REF_STATUS_FORGOTTEN = 'REF_STATUS_FORGOTTEN';
 const REF_RTQ_EXPIRED = 'REF_RTQ_EXPIRED';
 const REF_RTQ_PENDING = 'REF_RTQ_PENDING';
 const REF_RTQ_INCOMPLETE = 'REF_RTQ_INCOMPLETE';
@@ -94,6 +112,8 @@ const REF_CUSTOMER_TYPE_MORTGAGE = 'REF_CUSTOMER_TYPE_MORTGAGE';
 const REF_CUSTOMER_TYPE_TRUST = 'REF_CUSTOMER_TYPE_TRUST';
 const REF_CUSTOMER_TYPE_WEALTH = 'REF_CUSTOMER_TYPE_WEALTH';
 const REF_PEP = 'REF_PEP';
+const REF_FACT_FIND_VALIDATIONS = 'REF_FACT_FIND_VALIDATIONS';
+const REF_TEMP_BANK_DETAILS_ISSUE = 'REF_TEMP_BANK_DETAILS_ISSUE';
 
 
 export default class accountStatusFlags extends LightningElement {
@@ -101,18 +121,25 @@ export default class accountStatusFlags extends LightningElement {
     badgeRefs = {
         REF_STATUS_DECEASED:                {show: false, badge: {Id: REF_STATUS_DECEASED, text: DECEASED_VALUE, icon: iconMap.get(PROFILE_STATUS_LABEL), badgeClass: BADGE_RED, order: 1.0}},
         REF_STATUS_REPORTED_DECEASED:       {show: false, badge: {Id: REF_STATUS_REPORTED_DECEASED, text: REPORTED_DECEASED_VALUE, icon: iconMap.get(PROFILE_STATUS_LABEL), badgeClass: BADGE_RED, order: 1.0}},
+        REF_STATUS_WITHDRAWN:               {show: false, badge: {Id: REF_STATUS_WITHDRAWN, text: WITHDRAWN_VALUE, icon: 'utility:arrowdown', badgeClass: BADGE_RED, order: 1.0}},
+        REF_STATUS_OFFBOARDING:             {show: false, badge: {Id: REF_STATUS_OFFBOARDING, text: OFFBOARDING_VALUE, icon: 'utility:undo', badgeClass: BADGE_RED, order: 1.0}},
+        REF_STATUS_FORMER:                  {show: false, badge: {Id: REF_STATUS_FORMER, text: FORMER_VALUE, icon: 'utility:close', badgeClass: BADGE_RED, order: 1.0}},
+        REF_STATUS_SPLIT:                   {show: false, badge: {Id: REF_STATUS_SPLIT, text: SPLIT_VALUE, icon: 'utility:rules', badgeClass: BADGE_RED, order: 1.0}},
+        REF_STATUS_FORGOTTEN:               {show: false, badge: {Id: REF_STATUS_FORGOTTEN, text: FORGOTTEN_VALUE, icon: 'utility:offline', badgeClass: BADGE_RED, order: 1.0}},
         REF_RTQ_EXPIRED:                    {show: false, badge: {Id: REF_RTQ_EXPIRED, text: RTQ_STATUS_LABEL + ' ' + RTQ_EXPIRED_VALUE, icon: iconMap.get(RTQ_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.1}},
         REF_RTQ_PENDING:                    {show: false, badge: {Id: REF_RTQ_PENDING, text: RTQ_STATUS_LABEL + ' ' + RTQ_PENDING_VALUE, icon: iconMap.get(RTQ_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.1}},
-        REF_RTQ_INCOMPLETE:                 {show: false, badge: {Id: REF_RTQ_INCOMPLETE, text: RTQ_STATUS_LABEL + ' ' + RTQ_INCOMPLETE_VALUE, icon: iconMap.get(RTQ_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.1}},
-        REF_TOB_NOT_ACCPETED:               {show: false, badge: {Id: REF_TOB_NOT_ACCPETED, text: TOB_STATUS_LABEL + ' ' + TOB_NOT_ACCEPTED_VALUE, icon: iconMap.get(TOB_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.2}},
-        REF_TOB_AWAITING_ACCEPTANCE:        {show: false, badge: {Id: REF_TOB_AWAITING_ACCEPTANCE, text: TOB_STATUS_LABEL + ' ' + TOB_AWAITING_ACCEPTANCE_VALUE, icon: iconMap.get(TOB_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.2}},
+        REF_RTQ_INCOMPLETE:                 {show: false, badge: {Id: REF_RTQ_INCOMPLETE, text: RTQ_STATUS_LABEL + ' Incomplete', icon: iconMap.get(RTQ_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.1}},
+        REF_TOB_NOT_ACCPETED:               {show: false, badge: {Id: REF_TOB_NOT_ACCPETED, text: TOB_STATUS_LABEL + ' Not Accepted', icon: iconMap.get(TOB_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.2}},
+        REF_TOB_AWAITING_ACCEPTANCE:        {show: false, badge: {Id: REF_TOB_AWAITING_ACCEPTANCE, text: TOB_STATUS_LABEL + ' Awaiting Acceptance', icon: iconMap.get(TOB_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.2}},
         REF_AML_INCOMPLETE:                 {show: false, badge: {Id: REF_AML_INCOMPLETE, text: AML_STATUS_LABEL + ' ' + AML_INCOMPLETE_VALUE, icon: iconMap.get(AML_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.3}},
         REF_VULNERABLE:                     {show: false, badge: {Id: REF_VULNERABLE, text: VULNERABLE_VALUE, icon: iconMap.get(VULNERABLE_LABEL), badgeClass: BADGE_AMBER, order: 2.4}},
         REF_COI:                            {show: false, badge: {Id: REF_COI, text: COI_LABEL, icon: iconMap.get(COI_LABEL), badgeClass: BADGE_AMBER, order: 2.5}},
-        REF_CUSTOMER_FLAG_EMPLOYEE:         {show: false, badge: {Id: REF_CUSTOMER_FLAG_EMPLOYEE, text: CUSTOMER_FLAG_EMPLOYEE, icon: 'utility:emoji', badgeClass: BADGE_AMBER, order: 2.6}},
-        REF_CUSTOMER_FLAG_FAMILY:           {show: false, badge: {Id: REF_CUSTOMER_FLAG_FAMILY, text: CUSTOMER_FLAG_FAMILY, icon: 'utility:groups', badgeClass: BADGE_AMBER, order: 2.6}},
-        REF_CUSTOMER_FLAG_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_FLAG_TRUST, text: CUSTOMER_FLAG_TRUST, icon: 'custom:custom90', badgeClass: BADGE_AMBER, order: 2.6}},
-        REF_CUSTOMER_FLAG_VIP:              {show: false, badge: {Id: REF_CUSTOMER_FLAG_VIP, text: CUSTOMER_FLAG_VIP, icon: 'custom:custom43', badgeClass: BADGE_AMBER, order: 2.6}},
+        REF_FACT_FIND_VALIDATIONS:          {show: false, badge: {Id: REF_FACT_FIND_VALIDATIONS, text: FACT_FIND_VALIDATIONS_LABEL, icon: 'utility:identity', badgeClass: BADGE_AMBER, order: 2.6}},
+        REF_TEMP_BANK_DETAILS_ISSUE:        {show: false, badge: {Id: REF_TEMP_BANK_DETAILS_ISSUE, text: TEMP_BANK_DETAILS_ISSUE_LABEL, icon: 'utility:identity', badgeClass: BADGE_AMBER, order: 2.7}},
+        REF_CUSTOMER_FLAG_EMPLOYEE:         {show: false, badge: {Id: REF_CUSTOMER_FLAG_EMPLOYEE, text: CUSTOMER_FLAG_EMPLOYEE, icon: 'utility:emoji', badgeClass: BADGE_AMBER, order: 2.8}},
+        REF_CUSTOMER_FLAG_FAMILY:           {show: false, badge: {Id: REF_CUSTOMER_FLAG_FAMILY, text: CUSTOMER_FLAG_FAMILY, icon: 'utility:groups', badgeClass: BADGE_AMBER, order: 2.8}},
+        REF_CUSTOMER_FLAG_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_FLAG_TRUST, text: CUSTOMER_FLAG_TRUST, icon: 'custom:custom90', badgeClass: BADGE_AMBER, order: 2.8}},
+        REF_CUSTOMER_FLAG_VIP:              {show: false, badge: {Id: REF_CUSTOMER_FLAG_VIP, text: CUSTOMER_FLAG_VIP, icon: 'custom:custom43', badgeClass: BADGE_AMBER, order: 2.8}},
         REF_CUSTOMER_TYPE_MORTGAGE:         {show: false, badge: {Id: REF_CUSTOMER_TYPE_MORTGAGE, text: CUSTOMER_TYPE_MORTGAGE_VALUE, icon: 'custom:custom107', badgeClass: BADGE_PINK, order: 3.7}},
         REF_CUSTOMER_TYPE_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_TYPE_TRUST, text: CUSTOMER_TYPE_TRUST_VALUE, icon: 'custom:custom90', badgeClass: BADGE_PINK, order: 3.7}},
         REF_CUSTOMER_TYPE_WEALTH:           {show: false, badge: {Id: REF_CUSTOMER_TYPE_WEALTH, text: CUSTOMER_TYPE_WEALTH_VALUE, icon: 'utility:trending', badgeClass: BADGE_PINK, order: 3.7}}
@@ -129,12 +156,16 @@ export default class accountStatusFlags extends LightningElement {
 
 
     @api recordId;
+    @api objectApiName;
     @api badgeItems = [];
+    @api isIconTest;
+    @track accountId;
+    errorMessage;
     account;
     personAccounts;
     cardTitle;
 
-    @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
+    @wire(getRecord, { recordId: '$accountId', fields: FIELDS })
     wiredAccount({error, data}){
         if(error){
             console.log('error: ' + error);
@@ -143,15 +174,11 @@ export default class accountStatusFlags extends LightningElement {
             this.isHousehold = getFieldValue(this.account, RECORD_TYPE_DEVELOPER_NAME_FIELD) === HOUSEHOLD_RECORD_TYPE_DEVELOPER_NAME;
 
             this.generateItems();
-            //this.testIcons(); //todo remove after selected all icon types
         }
     }
 
-    @wire(getAccountsByHouseholdId, { householdId: '$recordId' })
+    @wire(getAccountsByHouseholdId, { householdId: '$accountId' })
     wiredAccounts({ error, data }) {
-        console.log('wiredAccounts');
-        console.log(data);
-        console.log(error);
         if (data) {
             this.personAccounts = data;
             this.generateItems();
@@ -165,10 +192,15 @@ export default class accountStatusFlags extends LightningElement {
     }
 
     generateItems() {
-        //clear out what is already there to avoid any duplicates
+        //clear what is already there to avoid any duplicates
         this.badgeItems = [];
-        this.setFlags();
 
+        if(this.isIconTest){
+            this.testIcons();
+        } else {
+            this.setFlags();
+        }
+        
         for(var key of Object.keys(this.badgeRefs)){
             let badgeRef = this.badgeRefs[key];
 
@@ -212,7 +244,11 @@ export default class accountStatusFlags extends LightningElement {
                 this.badgeRefs[REF_CUSTOMER_TYPE_WEALTH].show = true;
             }
 
-            accounts = this.personAccounts;
+            if(this.getValue(this.account, FACT_FIND_VALIDATIONS_FIELD)){
+                this.badgeRefs[REF_FACT_FIND_VALIDATIONS].show = true;
+            }
+
+            accounts = accounts.concat(this.personAccounts);
         }
 
         //set at person level - could have different persons in the houseold in different states for each field
@@ -221,36 +257,49 @@ export default class accountStatusFlags extends LightningElement {
                 let status = this.getValue(account, STATUS_FIELD)
                 if (status === DECEASED_VALUE) {
                     this.badgeRefs[REF_STATUS_DECEASED].show = true;
-                } 
-                if (status === REPORTED_DECEASED_VALUE) {
+                } else if (status === REPORTED_DECEASED_VALUE) {
                     this.badgeRefs[REF_STATUS_REPORTED_DECEASED].show = true;
+                } else if (status === WITHDRAWN_VALUE) {
+                    this.badgeRefs[REF_STATUS_WITHDRAWN].show = true;
+                } else if (status === OFFBOARDING_VALUE) {
+                    this.badgeRefs[REF_STATUS_OFFBOARDING].show = true;
+                } else if (status === FORGOTTEN_VALUE) {
+                    this.badgeRefs[REF_STATUS_FORGOTTEN].show = true;
+                } else if (status === SPLIT_VALUE) {
+                    this.badgeRefs[REF_STATUS_SPLIT].show = true;
+                } else if (status === FORMER_VALUE) {
+                    this.badgeRefs[REF_STATUS_FORMER].show = true;
                 }
 
-                let termsOfBusiness = this.getValue(account, TOB_STATUS_FIELD);
-                if (termsOfBusiness === TOB_NOT_ACCEPTED_VALUE) {
-                    this.badgeRefs[REF_TOB_NOT_ACCPETED].show = true;
-                }
-                if (termsOfBusiness === TOB_AWAITING_ACCEPTANCE_VALUE) {
-                    this.badgeRefs[REF_TOB_AWAITING_ACCEPTANCE].show = true;
-                }
+                //only display if not a Junior or Junior Policy Holder
+                if(status !== JUNIOR_VALUE && status !== JUNTIOR_POLICY_HOLDER_VALUE){
+                    let termsOfBusiness = this.getValue(account, TOB_STATUS_FIELD);
+                    if (termsOfBusiness === TOB_NOT_ACCEPTED_VALUE) {
+                        this.badgeRefs[REF_TOB_NOT_ACCPETED].show = true;
+                    }else if (termsOfBusiness === TOB_AWAITING_ACCEPTANCE_VALUE) {
+                        this.badgeRefs[REF_TOB_AWAITING_ACCEPTANCE].show = true;
+                    }
 
-                if (this.getValue(account, AML_STATUS_FIELD) === AML_INCOMPLETE_VALUE) {
-                    this.badgeRefs[REF_AML_INCOMPLETE].show = true;
+                    if (this.getValue(account, AML_STATUS_FIELD) === AML_INCOMPLETE_VALUE) {
+                        this.badgeRefs[REF_AML_INCOMPLETE].show = true;
+                    }
+
+                    let riskToleranceQuestionaire = this.getValue(account, RTQ_STATUS_FIELD);
+                    if(riskToleranceQuestionaire === RTQ_EXPIRED_VALUE){
+                        this.badgeRefs[REF_RTQ_EXPIRED].show = true;
+                    } else if(riskToleranceQuestionaire === RTQ_INCOMPLETE_VALUE){
+                        this.badgeRefs[REF_RTQ_INCOMPLETE].show = true;
+                    } else if(riskToleranceQuestionaire === RTQ_PENDING_VALUE){
+                        this.badgeRefs[REF_RTQ_PENDING].show = true;
+                    }
                 }
 
                 if(this.getValue(account, VULNERABLE_FIELD) === VULNERABLE_VALUE){
                     this.badgeRefs[REF_VULNERABLE].show = true;
                 }
 
-                let riskTolleranceQuestionaire = this.getValue(account, RTQ_STATUS_FIELD);
-                if(riskTolleranceQuestionaire === RTQ_EXPIRED_VALUE){
-                    this.badgeRefs[REF_RTQ_EXPIRED].show = true;
-                }
-                if(riskTolleranceQuestionaire === RTQ_INCOMPLETE_VALUE){
-                    this.badgeRefs[REF_RTQ_INCOMPLETE].show = true;
-                }
-                if(riskTolleranceQuestionaire === RTQ_PENDING_VALUE){
-                    this.badgeRefs[REF_RTQ_PENDING].show = true;
+                if(this.getValue(account, TEMP_BANK_DETAILS_ISSUE_FIELD)){
+                    this.badgeRefs[REF_TEMP_BANK_DETAILS_ISSUE].show = true;
                 }
             });
         }
@@ -279,5 +328,22 @@ export default class accountStatusFlags extends LightningElement {
             this.addBadge(badgeRef.badge.Id, badgeRef.badge.text, badgeRef.badge.icon, badgeRef.badge.badgeClass, badgeRef.badge.order);
         }
 
+    }
+
+    connectedCallback(){
+        console.log('connectedCallback');
+        console.log('this.objectApiName: ' + this.objectApiName);
+        switch(this.objectApiName){
+            case 'Account':
+                this.accountId = this.recordId;
+                break;
+            case 'PersonAccount':
+                this.accountId = this.recordId;
+                break;
+            default:
+                console.log('setting error message for unspported object');
+                this.errorMessage = 'Logic to get the householdId for this Object has not yet been defined'
+                break;
+        }
     }
 }
