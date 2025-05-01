@@ -1,5 +1,5 @@
 @isTest
-public class TaskHelperTest {
+public class TaskTriggerHelperTest {
 
     @istest
     static void deleteTask_notOrchestrated_allowed(){
