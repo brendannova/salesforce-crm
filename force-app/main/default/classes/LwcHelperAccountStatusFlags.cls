@@ -37,8 +37,8 @@ public with sharing class LwcHelperAccountStatusFlags {
                 flags.householdId = fulfilment.Household__c;
             }
             when 'Opportunity'{
-                Opportunity opp = [SELECT Id, Household_Account__c FROM Opportunity WHERE Id = :recordId];
-                flags.householdId = opp.Household_Account__c;
+                Opportunity opp = [SELECT Id, AccountId FROM Opportunity WHERE Id = :recordId];
+                flags.householdId = opp.AccountId;
             }
             when 'Case'{
                 Case opp = [SELECT Id, OW_household__c FROM Case WHERE Id = :recordId];
@@ -59,10 +59,8 @@ public with sharing class LwcHelperAccountStatusFlags {
             when 'FinServ__FinancialAccount__c'{
                 FinServ__FinancialAccount__c finAccount = [SELECT Id, Household__c FROM FinServ__FinancialAccount__c WHERE Id = :recordId];
                 flags.householdId = finAccount.Household__c;
-
             }
         }
-
 
         return flags;
     }
