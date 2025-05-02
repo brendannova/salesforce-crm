@@ -280,7 +280,7 @@
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_task</targetReference>
+            <targetReference>Found_task</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -311,54 +311,6 @@
         <queriedFields>ComplaintStatus__c</queriedFields>
         <queriedFields>BuilderLink__c</queriedFields>
         <queriedFields>FolderLink__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_task</name>
-        <label>Get task</label>
-        <locationX>1502</locationX>
-        <locationY>242</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Found_task</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>IR_CHASE_ADD_INFO_POST</stringValue>
-            </value>
-        </filters>
-        <object>Task</object>
-        <outputReference>task</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>OW_task_information_name__c</queriedFields>
-        <queriedFields>Subject</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Close_task</name>
@@ -777,7 +729,7 @@
         <name>task</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Task</objectType>
     </variables>
