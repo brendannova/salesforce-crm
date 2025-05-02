@@ -74,12 +74,12 @@ const BADGE_PINK = 'badgePink';
 
 //icons
 let iconMap = new Map();
-iconMap.set(PROFILE_STATUS_LABEL, 'utility:leave_conference');
+iconMap.set(PROFILE_STATUS_LABEL, 'utility:warning');
 iconMap.set(RTQ_STATUS_LABEL, 'custom:custom90');
 iconMap.set(TOB_STATUS_LABEL, 'utility:signature');
 iconMap.set(AML_STATUS_LABEL, 'utility:identity');
 iconMap.set(VULNERABLE_LABEL, 'utility:shield');
-iconMap.set(COI_LABEL, 'utility:merge');
+iconMap.set(COI_LABEL, 'utility:contract_alt');
 iconMap.set(PEP_LABEL, 'utility:advertising')
 
 //Individual field values
@@ -165,11 +165,11 @@ export default class accountStatusFlags extends LightningElement {
     badgeRefs = {
         REF_STATUS_DECEASED:                {show: false, badge: {Id: REF_STATUS_DECEASED, text: DECEASED_VALUE, icon: iconMap.get(PROFILE_STATUS_LABEL), badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_DECEASED}},
         REF_STATUS_REPORTED_DECEASED:       {show: false, badge: {Id: REF_STATUS_REPORTED_DECEASED, text: REPORTED_DECEASED_VALUE, icon: iconMap.get(PROFILE_STATUS_LABEL), badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_REPORTED_DECEASED}},
-        REF_STATUS_WITHDRAWN:               {show: false, badge: {Id: REF_STATUS_WITHDRAWN, text: WITHDRAWN_VALUE, icon: 'utility:arrowdown', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_WITHDRAWN}},
-        REF_STATUS_OFFBOARDING:             {show: false, badge: {Id: REF_STATUS_OFFBOARDING, text: OFFBOARDING_VALUE, icon: 'utility:undo', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_OFFBOARDING}},
-        REF_STATUS_FORMER:                  {show: false, badge: {Id: REF_STATUS_FORMER, text: FORMER_VALUE, icon: 'utility:close', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_FORMER}},
+        REF_STATUS_WITHDRAWN:               {show: false, badge: {Id: REF_STATUS_WITHDRAWN, text: WITHDRAWN_VALUE, icon: 'utility:undo', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_WITHDRAWN}},
+        REF_STATUS_OFFBOARDING:             {show: false, badge: {Id: REF_STATUS_OFFBOARDING, text: OFFBOARDING_VALUE, icon: 'utility:leave_conference', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_OFFBOARDING}},
+        REF_STATUS_FORMER:                  {show: false, badge: {Id: REF_STATUS_FORMER, text: FORMER_VALUE, icon: 'utility:leave_conference', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_FORMER}},
         REF_STATUS_SPLIT:                   {show: false, badge: {Id: REF_STATUS_SPLIT, text: SPLIT_VALUE, icon: 'utility:rules', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_SPLIT}},
-        REF_STATUS_FORGOTTEN:               {show: false, badge: {Id: REF_STATUS_FORGOTTEN, text: FORGOTTEN_VALUE, icon: 'utility:offline', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_FORGOTTEN}},
+        REF_STATUS_FORGOTTEN:               {show: false, badge: {Id: REF_STATUS_FORGOTTEN, text: FORGOTTEN_VALUE, icon: 'utility:delete', badgeClass: BADGE_RED, order: 1.0, tooltip: TOOLTIP_STATUS_FORGOTTEN}},
         REF_RTQ_EXPIRED:                    {show: false, badge: {Id: REF_RTQ_EXPIRED, text: RTQ_STATUS_LABEL + ' ' + RTQ_EXPIRED_VALUE, icon: iconMap.get(RTQ_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.1, tooltip: TOOLTIP_RTQ_EXPIRED}},
         REF_RTQ_PENDING:                    {show: false, badge: {Id: REF_RTQ_PENDING, text: RTQ_STATUS_LABEL + ' ' + RTQ_PENDING_VALUE, icon: iconMap.get(RTQ_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.1, tooltip: TOOLTIP_RTQ_PENDING}},
         REF_RTQ_INCOMPLETE:                 {show: false, badge: {Id: REF_RTQ_INCOMPLETE, text: RTQ_STATUS_LABEL + ' Incomplete', icon: iconMap.get(RTQ_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.1, tooltip: TOOLTIP_RTQ_INCOMPLETE}},
