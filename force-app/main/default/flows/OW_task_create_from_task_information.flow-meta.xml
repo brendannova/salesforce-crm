@@ -187,13 +187,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>task.OrchestrationInstanceID__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>orchestrationInstanceId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>task.RelatedFulfilment__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -1349,13 +1342,6 @@
 - credit/shift - create a new task with some reference to the original
 - shift - reassign the task to the appropriate owner and update the due date</description>
         <name>mode</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>orchestrationInstanceId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
