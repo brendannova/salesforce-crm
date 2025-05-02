@@ -19,31 +19,31 @@ import RECORD_TYPE_DEVELOPER_NAME_FIELD from "@salesforce/schema/Account.RecordT
 import TEMP_BANK_DETAILS_ISSUE_FIELD from "@salesforce/schema/Account.TempBankDetailIssues__c";
 
 //custom labels for tooltips
-import TOOLTIP_STATUS_DECEASED from "@salesforce/label/c.FlagStatusDeceasedTooltip";
-import TOOLTIP_STATUS_REPORTED_DECEASED from "@salesforce/label/c.FlagStatusReportedDeceasedTooltip";
-import TOOLTIP_STATUS_WITHDRAWN from "@salesforce/label/c.FlagStatusWithdrawnTooltip";
-import TOOLTIP_STATUS_OFFBOARDING from "@salesforce/label/c.FlagStatusOffboardingTooltip";
-import TOOLTIP_STATUS_FORMER from "@salesforce/label/c.FlagStatusFormerTooltip";
-import TOOLTIP_STATUS_SPLIT from "@salesforce/label/c.FlagStatusSplitTooltip";
-import TOOLTIP_STATUS_FORGOTTEN from "@salesforce/label/c.FlagStatusForgottenTooltip";
-import TOOLTIP_RTQ_EXPIRED from "@salesforce/label/c.FlagRtqExpiredTooltip";
-import TOOLTIP_RTQ_PENDING from "@salesforce/label/c.FlagRtqPendingTooltip";
-import TOOLTIP_RTQ_INCOMPLETE from "@salesforce/label/c.FlagRtqIncompleteTooltip";
-import TOOLTIP_TOB_NOT_ACCEPTED from "@salesforce/label/c.FlagTobNotAcceptedTooltip";
-import TOOLTIP_TOB_AWAITING_ACCEPTACE from "@salesforce/label/c.FlagTobAwaitingAcceptanceTooltip";
-import TOOLTIP_AML_INCOMPLETE from "@salesforce/label/c.FlagAmlIncompleteTooltip";
-import TOOLTIP_VULNERABLE from "@salesforce/label/c.FlagVulnerableTooltip";
-import TOOLTIP_COI from "@salesforce/label/c.FlagCoiTooltip";
-import TOOLTIP_PEP from "@salesforce/label/c.FlagPepTooltip";
-import TOOLTIP_FACT_FIND_VALIDATIONS from "@salesforce/label/c.FlagFactFindValidationTooltip";
-import TOOLTIP_BANK_DETAILS_ISSUE from "@salesforce/label/c.FlagBankIssuesTooltip"
-import TOOLTIP_CUSTOMER_EMPLOYEE from "@salesforce/label/c.FlagCustomerEmployeeTooltip";
-import TOOLTIP_CUSTOMER_FAMILY from "@salesforce/label/c.FlagCustomerFamilyTooltip";
-import TOOLTIP_CUSTOMER_VIP from "@salesforce/label/c.FlagCustomerVipTooltip";
-import TOOLTIP_CUSTOMER_TRUST from "@salesforce/label/c.FlagCustomerTrustTooltip";
-import TOOLTIP_TYPE_MORTGAGE from "@salesforce/label/c.FlagTypeMortgageTooltip";
-import TOOLTIP_TYPE_WEALTH from "@salesforce/label/c.FlagTypeWealthTooltip";
-import TOOLTIP_TYPE_TRUST from "@salesforce/label/c.FlagTypeTrustTooltip";
+import TOOLTIP_STATUS_DECEASED from "@salesforce/label/c.CustomerFlagStatusDeceasedTooltip";
+import TOOLTIP_STATUS_REPORTED_DECEASED from "@salesforce/label/c.CustomerFlagStatusReportedDeceasedTooltip";
+import TOOLTIP_STATUS_WITHDRAWN from "@salesforce/label/c.CustomerFlagStatusWithdrawnTooltip";
+import TOOLTIP_STATUS_OFFBOARDING from "@salesforce/label/c.CustomerFlagStatusOffboardingTooltip";
+import TOOLTIP_STATUS_FORMER from "@salesforce/label/c.CustomerFlagStatusFormerTooltip";
+import TOOLTIP_STATUS_SPLIT from "@salesforce/label/c.CustomerFlagStatusSplitTooltip";
+import TOOLTIP_STATUS_FORGOTTEN from "@salesforce/label/c.CustomerFlagStatusForgottenTooltip";
+import TOOLTIP_RTQ_EXPIRED from "@salesforce/label/c.CustomerFlagRtqExpiredTooltip";
+import TOOLTIP_RTQ_PENDING from "@salesforce/label/c.CustomerFlagRtqPendingTooltip";
+import TOOLTIP_RTQ_INCOMPLETE from "@salesforce/label/c.CustomerFlagRtqIncompleteTooltip";
+import TOOLTIP_TOB_NOT_ACCEPTED from "@salesforce/label/c.CustomerFlagTobNotAcceptedTooltip";
+import TOOLTIP_TOB_AWAITING_ACCEPTACE from "@salesforce/label/c.CustomerFlagTobAwaitingAcceptanceTooltip";
+import TOOLTIP_AML_INCOMPLETE from "@salesforce/label/c.CustomerFlagAmlIncompleteTooltip";
+import TOOLTIP_VULNERABLE from "@salesforce/label/c.CustomerFlagVulnerableTooltip";
+import TOOLTIP_COI from "@salesforce/label/c.CustomerFlagCoiTooltip";
+import TOOLTIP_PEP from "@salesforce/label/c.CustomerFlagPepTooltip";
+import TOOLTIP_FACT_FIND_VALIDATIONS from "@salesforce/label/c.CustomerFlagFactFindValidationTooltip";
+import TOOLTIP_BANK_DETAILS_ISSUE from "@salesforce/label/c.CustomerFlagBankIssuesTooltip"
+import TOOLTIP_CUSTOMER_EMPLOYEE from "@salesforce/label/c.CustomerFlagCustomerEmployeeTooltip";
+import TOOLTIP_CUSTOMER_FAMILY from "@salesforce/label/c.CustomerFlagCustomerFamilyTooltip";
+import TOOLTIP_CUSTOMER_VIP from "@salesforce/label/c.CustomerFlagCustomerVipTooltip";
+import TOOLTIP_CUSTOMER_TRUST from "@salesforce/label/c.CustomerFlagCustomerTrustTooltip";
+import TOOLTIP_TYPE_MORTGAGE from "@salesforce/label/c.CustomerFlagTypeMortgageTooltip";
+import TOOLTIP_TYPE_WEALTH from "@salesforce/label/c.CustomerFlagTypeWealthTooltip";
+import TOOLTIP_TYPE_TRUST from "@salesforce/label/c.CustomerFlagTypeTrustTooltip";
 
 const FIELDS = [STATUS_FIELD, RTQ_STATUS_FIELD, TOB_STATUS_FIELD, AML_STATUS_FIELD, VULNERABLE_FIELD, CONFLICT_OF_INTEREST_FIELD, CUSTOMER_FLAG_FIELD, CUSTOMER_TYPE_FIELD, RECORD_TYPE_DEVELOPER_NAME_FIELD, FACT_FIND_VALIDATIONS_FIELD, TEMP_BANK_DETAILS_ISSUE_FIELD];
 
