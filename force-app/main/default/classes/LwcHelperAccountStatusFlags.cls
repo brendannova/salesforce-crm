@@ -27,10 +27,43 @@ public with sharing class LwcHelperAccountStatusFlags {
     @AuraEnabled(cacheable=true)
     public static flagWrapper getWrapperFromRecord(Id recordId, String objectName) {
         flagWrapper flags = new flagWrapper();
-        if(objectName == 'Advice__c'){
-            Advice__c advice = [SELECT Id, Advice_Household__c FROM Advice__c WHERE Id = :recordId];
-            flags.householdId = advice.Advice_Household__c;
+        switch on objectName {
+            when 'Advice__c' {
+                Advice__c advice = [SELECT Id, Advice_Household__c FROM Advice__c WHERE Id = :recordId];
+                flags.householdId = advice.Advice_Household__c;
+            }
+            when 'Fulfilment__c'{
+                Fulfilment__c fulfilment = [SELECT Id, Household__c FROM Fulfilment__c WHERE Id = :recordId];
+                flags.householdId = fulfilment.Household__c;
+            }
+            when 'Opportunity'{
+                Opportunity opp = [SELECT Id, Household_Account__c FROM Opportunity WHERE Id = :recordId];
+                flags.householdId = opp.Household_Account__c;
+            }
+            when 'Case'{
+                Case opp = [SELECT Id, OW_household__c FROM Case WHERE Id = :recordId];
+                flags.householdId = opp.OW_household__c;
+            }
+            when 'OW_review__c'{
+                OW_review__c review = [SELECT Id, OW_household__c FROM OW_review__c WHERE Id = :recordId];
+                flags.householdId = review.OW_household__c;
+            }
+            when 'CustomerFact__c'{
+                CustomerFact__c customerFact = [SELECT Id, Household__c FROM CustomerFact__c WHERE Id = :recordId];
+                flags.householdId = customerFact.Household__c;
+            }
+            when 'FinServ__Employment__c'{
+                FinServ__Employment__c employment = [SELECT Id, Household__c FROM FinServ__Employment__c WHERE Id = :recordId];
+                flags.householdId = employment.Household__c;
+            }
+            when 'FinServ__FinancialAccount__c'{
+                FinServ__FinancialAccount__c finAccount = [SELECT Id, Household__c FROM FinServ__FinancialAccount__c WHERE Id = :recordId];
+                flags.householdId = finAccount.Household__c;
+
+            }
         }
+
+
         return flags;
     }
 
