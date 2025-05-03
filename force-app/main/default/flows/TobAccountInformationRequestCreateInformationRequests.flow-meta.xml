@@ -2,22 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>Add_to_collection</name>
-        <label>Add to collection</label>
-        <locationX>270</locationX>
-        <locationY>1466</locationY>
-        <assignmentItems>
-            <assignToReference>fps</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Loop</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_IDs</name>
         <label>Assign IDs</label>
         <locationX>182</locationX>
@@ -113,49 +97,10 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Information_request_outcome</name>
-        <label>Information request outcome</label>
-        <locationX>402</locationX>
-        <locationY>1358</locationY>
-        <defaultConnector>
-            <targetReference>Loop</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No action</defaultConnectorLabel>
-        <rules>
-            <name>Create_information_request</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getsAnInformationRequest</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Add_to_collection</targetReference>
-            </connector>
-            <label>Create information request</label>
-        </rules>
-    </decisions>
     <description>Sub flow to be called as part of prospect -&gt; verifying actions which decides which financial products are now ready to receive information requests</description>
     <environments>Default</environments>
     <interviewLabel>TOB | Account | Information Request | Create Information Requests {!$Flow.CurrentDateTime}</interviewLabel>
     <label>TOB | Account | Information Request | Create Information Requests</label>
-    <loops>
-        <name>Loop</name>
-        <label>Loop</label>
-        <locationX>182</locationX>
-        <locationY>1142</locationY>
-        <collectionReference>gotFps</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assess_requirement</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Create_information_requests</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <loops>
         <name>Loop_clients_in_household</name>
         <label>Loop clients in household</label>
@@ -196,7 +141,7 @@
         <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop</targetReference>
+            <targetReference>Assess_requirement</targetReference>
         </connector>
         <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
         <filters>
@@ -228,7 +173,7 @@
             </value>
         </filters>
         <object>FinServ__FinancialAccount__c</object>
-        <outputReference>gotFps</outputReference>
+        <outputReference>financialProducts</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
@@ -246,7 +191,7 @@
         <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop</targetReference>
+            <targetReference>Assess_requirement</targetReference>
         </connector>
         <filterLogic>1 AND 2 AND (3 OR 4 OR 5)</filterLogic>
         <filters>
@@ -285,7 +230,7 @@
             </value>
         </filters>
         <object>FinServ__FinancialAccount__c</object>
-        <outputReference>gotFps</outputReference>
+        <outputReference>financialProducts</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
@@ -307,34 +252,14 @@
     <status>Active</status>
     <subflows>
         <name>Assess_requirement</name>
-        <label>Assess requirement</label>
-        <locationX>402</locationX>
-        <locationY>1250</locationY>
-        <connector>
-            <targetReference>Information_request_outcome</targetReference>
-        </connector>
+        <label>Assess requirement for information requests</label>
+        <locationX>182</locationX>
+        <locationY>1142</locationY>
         <flowName>FinancialProductAssessInformationRequestRequirement</flowName>
         <inputAssignments>
-            <name>financialProduct</name>
+            <name>financialProducts</name>
             <value>
-                <elementReference>Loop</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>getsAnInformationRequest</assignToReference>
-            <name>getsAnInformationRequest</name>
-        </outputAssignments>
-    </subflows>
-    <subflows>
-        <name>Create_information_requests</name>
-        <label>Create information requests</label>
-        <locationX>182</locationX>
-        <locationY>1742</locationY>
-        <flowName>InformationRequestCreate</flowName>
-        <inputAssignments>
-            <name>financialAccounts</name>
-            <value>
-                <elementReference>fps</elementReference>
+                <elementReference>financialProducts</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -376,6 +301,14 @@
         <objectType>Account</objectType>
     </variables>
     <variables>
+        <name>financialProducts</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
         <name>firstTobFlag</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -384,29 +317,6 @@
         <value>
             <booleanValue>true</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <name>fps</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>FinServ__FinancialAccount__c</objectType>
-    </variables>
-    <variables>
-        <name>getsAnInformationRequest</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>gotFps</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>FinServ__FinancialAccount__c</objectType>
     </variables>
     <variables>
         <name>householdId</name>
