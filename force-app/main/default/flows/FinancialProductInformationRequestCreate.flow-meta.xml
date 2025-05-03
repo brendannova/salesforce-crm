@@ -2,19 +2,26 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Add_to_collection</name>
-        <label>Add to collection</label>
+        <name>Assign_values</name>
+        <label>Assign values</label>
         <locationX>176</locationX>
         <locationY>323</locationY>
         <assignmentItems>
-            <assignToReference>fps</assignToReference>
+            <assignToReference>financialProducts</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>$Record</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Create_info_request</targetReference>
+            <targetReference>Assess_requirement</targetReference>
         </connector>
     </assignments>
     <description>Creates a IR whenever a financial product is created with terms signed</description>
@@ -44,71 +51,45 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Add_to_collection</targetReference>
+            <targetReference>Assign_values</targetReference>
         </connector>
-        <filterFormula>(
-    (
-        NOT(ISBLANK({!$Record.FinServ__PrimaryOwner__r.Date_terms_of_business_last_accepted__c}))
-        &amp;&amp;
-        (
-            NOT(ISBLANK({!$Record.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c})) 
-            ||
-            ISBLANK({!$Record.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c})
-        )
-    )
-
-    ||
-
-    (
-        (
-            CONTAINS({!$Record.RecordType.Name}, &quot;Junior&quot;) 
-            &amp;&amp; 
-            (
-                ISPICKVAL({!$Record.FinServ__Household__r.FinServ__Status__c},&quot;Onboarding&quot;) 
-                || 
-                ISPICKVAL({!$Record.Household__r.FinServ__Status__c},&quot;Onboarding&quot;) 
-                || 
-                ISPICKVAL({!$Record.Household__r.FinServ__Status__c},&quot;Active&quot;) 
-                || 
-                ISPICKVAL({!$Record.FinServ__Household__r.FinServ__Status__c},&quot;Active&quot;)
-            )
-        )
-    )
-)
-&amp;&amp;
-NOT(ISPICKVAL({!$Record.BusinessType__c},&quot;New business&quot;))
-&amp;&amp;
-NOT(ISPICKVAL({!$Record.Work_Benefit_2__c},&quot;Yes&quot;))</filterFormula>
         <object>FinServ__FinancialAccount__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <subflows>
-        <name>Create_info_request</name>
-        <label>Create info request</label>
+        <name>Assess_requirement</name>
+        <label>Assess requirement</label>
         <locationX>176</locationX>
         <locationY>431</locationY>
-        <flowName>InformationRequestCreate</flowName>
+        <flowName>FinancialProductAssessInformationRequestRequirement</flowName>
         <inputAssignments>
-            <name>financialAccounts</name>
+            <name>financialProducts</name>
             <value>
-                <elementReference>fps</elementReference>
+                <elementReference>financialProducts</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>householdId</name>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
     <variables>
-        <name>fps</name>
+        <name>financialProducts</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
