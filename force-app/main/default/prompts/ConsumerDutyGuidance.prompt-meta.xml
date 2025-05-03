@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prompt xmlns="http://soap.sforce.com/2006/04/metadata">
+    <masterLabel>Consumer Duty Guidance</masterLabel>
+    <promptVersions>
+        <body>&lt;p&gt;Please ensure you&#39;ve followed the steps here for all households in your name by close of play 31 July. &lt;/p&gt;</body>
+        <customApplication>OW_partner_portal</customApplication>
+        <delayDays>1</delayDays>
+        <description>Used to help ensure that partners have completed what they need to for consumer duty by 31 July.</description>
+        <dismissButtonLabel>Dismiss</dismissButtonLabel>
+        <displayType>Targeted</displayType>
+        <endDate>2023-07-31</endDate>
+        <isPublished>true</isPublished>
+        <masterLabel>Consumer Duty Guidance</masterLabel>
+        <publishedDate>2023-07-27</publishedDate>
+        <referenceElementContext>{&quot;scope&quot;:{&quot;attributes&quot;:{&quot;id&quot;:&quot;flowruntime_interview&quot;}},&quot;version&quot;:2}</referenceElementContext>
+        <shouldDisplayActionButton>false</shouldDisplayActionButton>
+        <shouldIgnoreGlobalDelay>false</shouldIgnoreGlobalDelay>
+        <startDate>2023-07-27</startDate>
+        <targetPageKey1>home</targetPageKey1>
+        <targetPageType>standard__namedPage</targetPageType>
+        <timesToDisplay>5</timesToDisplay>
+        <title>Consumer Duty action here!</title>
+        <uiFormulaRule>
+            <booleanFilter>1 OR 2</booleanFilter>
+            <criteria>
+                <leftValue>{!$User.Profile.Key}</leftValue>
+                <operator>EQUAL</operator>
+                <rightValue>custom_head of partners</rightValue>
+            </criteria>
+            <criteria>
+                <leftValue>{!$User.Profile.Key}</leftValue>
+                <operator>EQUAL</operator>
+                <rightValue>custom_advisor</rightValue>
+            </criteria>
+        </uiFormulaRule>
+        <userAccess>Everyone</userAccess>
+        <userProfileAccess>SpecificProfiles</userProfileAccess>
+        <versionNumber>1</versionNumber>
+    </promptVersions>
+</Prompt>
