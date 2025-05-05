@@ -21,19 +21,14 @@
         <value>NEXT_N_DAYS:7</value>
     </filters>
     <filters>
-        <field>FulfilmentAmount__c</field>
-        <operation>greaterThan</operation>
-        <value>5000</value>
-    </filters>
-    <filters>
-        <field>FulfilmentDaysSinceSubmission__c</field>
-        <operation>greaterOrEqual</operation>
-        <value>9</value>
-    </filters>
-    <filters>
         <field>OW_task_information_name__c</field>
         <operation>equals</operation>
         <value>chase_transfer</value>
+    </filters>
+    <filters>
+        <field>FulfilmentChaserView__c</field>
+        <operation>equals</operation>
+        <value>1</value>
     </filters>
     <label>Chase transfer tasks</label>
     <sharedTo>
