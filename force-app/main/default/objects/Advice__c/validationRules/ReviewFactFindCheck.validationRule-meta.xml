@@ -3,7 +3,9 @@
     <fullName>ReviewFactFindCheck</fullName>
     <active>true</active>
     <description>Ensures that the advice has a complete or skipped fact find prior to progressing advice.</description>
-    <errorConditionFormula>NOT(ISBLANK( OW_review__c ))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISBLANK( OW_review__c ))
 &amp;&amp;
 (ISPICKVAL(Advice_Status__c, &quot;Ready for suitability&quot;)
 || 

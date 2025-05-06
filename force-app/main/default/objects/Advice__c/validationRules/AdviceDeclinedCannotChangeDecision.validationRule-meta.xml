@@ -3,7 +3,9 @@
     <fullName>AdviceDeclinedCannotChangeDecision</fullName>
     <active>true</active>
     <description>Once advice has been declined, it cannot be moved to another status.</description>
-    <errorConditionFormula>ISPICKVAL(PRIORVALUE(Advice_Status__c), &quot;Suitability declined&quot;)
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp; 
+ISPICKVAL(PRIORVALUE(Advice_Status__c), &quot;Suitability declined&quot;)
 &amp;&amp;
 NOT(ISPICKVAL( Advice_Status__c, &quot;Suitability declined&quot; ))
 &amp;&amp;
