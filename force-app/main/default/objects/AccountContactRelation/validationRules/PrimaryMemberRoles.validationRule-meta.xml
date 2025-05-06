@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>PrimaryMemberRoles</fullName>
+    <fullName>primaryMemberRoles</fullName>
     <active>true</active>
     <description>Ensures that only certain roles can be specified as primary member. At the time of writing, primary members can only be advice clients or mortgage borrowers.</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
