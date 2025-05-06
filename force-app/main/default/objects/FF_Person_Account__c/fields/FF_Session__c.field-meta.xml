@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FF_Session__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
+    <deleteConstraint>Restrict</deleteConstraint>
     <label>FF Session</label>
     <referenceTo>FF_Session__c</referenceTo>
+    <relationshipLabel>FF Person Accounts</relationshipLabel>
     <relationshipName>FF_Person_Accounts</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>

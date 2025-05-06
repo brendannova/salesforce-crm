@@ -2,8 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Public_Provider_List__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
-    <label>Public Provider Name</label>
+    <description>A lookup to the provider for this liability.</description>
+    <label>Public provider name</label>
     <referenceTo>Public_Provider_Names__c</referenceTo>
+    <relationshipLabel>FF Liabilities</relationshipLabel>
     <relationshipName>FF_Liabilities</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
