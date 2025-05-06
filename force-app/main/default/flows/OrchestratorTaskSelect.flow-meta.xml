@@ -22,7 +22,7 @@
         <inputParameters>
             <name>inputCollection</name>
             <value>
-                <elementReference>Get_Tasks_For_User</elementReference>
+                <elementReference>tasks</elementReference>
             </value>
         </inputParameters>
         <nameSegment>FlowUtilityGetFirstListItem</nameSegment>
@@ -65,7 +65,7 @@
             <assignToReference>taskCount</assignToReference>
             <operator>AssignCount</operator>
             <value>
-                <elementReference>Get_Tasks_For_User</elementReference>
+                <elementReference>tasks</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -112,14 +112,6 @@
             <label>&gt; 1</label>
         </rules>
     </decisions>
-    <dynamicChoiceSets>
-        <name>taskCollection</name>
-        <collectionReference>Get_Tasks_For_User</collectionReference>
-        <dataType>String</dataType>
-        <displayField>Subject</displayField>
-        <object>Task</object>
-        <valueField>Id</valueField>
-    </dynamicChoiceSets>
     <environments>Default</environments>
     <interviewLabel>Orchestrator | Select Task {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Orchestrator | Select Task</label>
@@ -180,16 +172,19 @@
                 <stringValue>Incomplete</stringValue>
             </value>
         </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>IR_CHASE_ADD_INFO_POST</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Task</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>tasks</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status</queriedFields>
+        <queriedFields>OW_task_information_name__c</queriedFields>
+        <queriedFields>IsClosed</queriedFields>
+        <queriedFields>OrchestrationTaskStatus__c</queriedFields>
+        <queriedFields>Subject</queriedFields>
+        <queriedFields>OwnerId</queriedFields>
+        <queriedFields>ActivityDate</queriedFields>
+        <queriedFields>OW_target_start_date__c</queriedFields>
+        <queriedFields>Type</queriedFields>
+        <queriedFields>WhatId</queriedFields>
     </recordLookups>
     <screens>
         <name>No_Tasks_Assigned</name>
@@ -204,8 +199,8 @@
             <fieldText>&lt;p&gt;No tasks are assigned to you :(&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Select_Task</name>
@@ -247,7 +242,7 @@
             <inputParameters>
                 <name>tableData</name>
                 <value>
-                    <elementReference>Get_Tasks_For_User</elementReference>
+                    <elementReference>tasks</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -268,7 +263,7 @@
         </fields>
         <nextOrFinishButtonLabel>Select</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>188</locationX>
@@ -300,5 +295,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
+    </variables>
+    <variables>
+        <name>tasks</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
     </variables>
 </Flow>

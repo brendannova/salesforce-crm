@@ -2,18 +2,46 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>63.0</apiVersion>
     <assignments>
-        <name>Assign_output</name>
-        <label>Assign output</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
+        <name>Add_to_collection</name>
+        <label>Add to collection</label>
+        <locationX>264</locationX>
+        <locationY>350</locationY>
         <assignmentItems>
-            <assignToReference>getsAnInformationRequest</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>financialProductsToGetAnInformationRequest</assignToReference>
+            <operator>Add</operator>
             <value>
-                <elementReference>decisionFormula</elementReference>
+                <elementReference>Financial_products</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Financial_products</targetReference>
+        </connector>
     </assignments>
+    <decisions>
+        <name>Requires_an_update</name>
+        <label>Requires an update?</label>
+        <locationX>396</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Financial_products</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>decisionFormula</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Add_to_collection</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Sub flow to decide if a given financial product should receive an information request</description>
     <environments>Default</environments>
     <formulas>
@@ -21,12 +49,12 @@
         <dataType>Boolean</dataType>
         <expression>(
     (
-        NOT(ISBLANK({!financialProduct.FinServ__PrimaryOwner__r.Date_terms_of_business_last_accepted__c}))
+        NOT(ISBLANK({!Financial_products.FinServ__PrimaryOwner__r.Date_terms_of_business_last_accepted__c}))
         &amp;&amp;
         (
-            NOT(ISBLANK({!financialProduct.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c})) 
+            NOT(ISBLANK({!Financial_products.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c})) 
             ||
-            ISBLANK({!financialProduct.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c})
+            ISBLANK({!Financial_products.FinServ__JointOwner__r.Date_terms_of_business_last_accepted__c})
         )
     )
 
@@ -34,29 +62,43 @@
 
     (
         (
-            (CONTAINS({!financialProduct.RecordType.Name}, &quot;Junior&quot;) || {!financialProduct.FinServ__PrimaryOwner__r.FinServ__Age__pc} &lt; 18)
+            (CONTAINS({!Financial_products.RecordType.Name}, &quot;Junior&quot;) || {!Financial_products.FinServ__PrimaryOwner__r.FinServ__Age__pc} &lt; 18)
             &amp;&amp; 
             (
-                ISPICKVAL({!financialProduct.FinServ__Household__r.FinServ__Status__c},&quot;Onboarding&quot;) 
+                ISPICKVAL({!Financial_products.FinServ__Household__r.FinServ__Status__c},&quot;Onboarding&quot;) 
                 || 
-                ISPICKVAL({!financialProduct.Household__r.FinServ__Status__c},&quot;Onboarding&quot;) 
+                ISPICKVAL({!Financial_products.Household__r.FinServ__Status__c},&quot;Onboarding&quot;) 
                 || 
-                ISPICKVAL({!financialProduct.Household__r.FinServ__Status__c},&quot;Active&quot;) 
+                ISPICKVAL({!Financial_products.Household__r.FinServ__Status__c},&quot;Active&quot;) 
                 || 
-                ISPICKVAL({!financialProduct.FinServ__Household__r.FinServ__Status__c},&quot;Active&quot;)
+                ISPICKVAL({!Financial_products.FinServ__Household__r.FinServ__Status__c},&quot;Active&quot;)
             )
         )
     )
 )
 &amp;&amp;
-NOT(ISPICKVAL({!financialProduct.BusinessType__c},&quot;New business&quot;))
+NOT(ISPICKVAL({!Financial_products.BusinessType__c},&quot;New business&quot;))
 &amp;&amp;
-NOT(ISPICKVAL({!financialProduct.Work_Benefit_2__c},&quot;Yes&quot;))
+NOT(ISPICKVAL({!Financial_products.Work_Benefit_2__c},&quot;Yes&quot;))
 &amp;&amp;
-NOT({!financialProduct.Public_Provider_Name__r.DeveloperName__c} == &quot;WORK_BENEFIT&quot;)</expression>
+NOT({!Financial_products.Public_Provider_Name__r.DeveloperName__c} == &quot;WORK_BENEFIT&quot;)</expression>
     </formulas>
     <interviewLabel>Financial product | Assess information request requirement {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Financial product | Assess information request requirement</label>
+    <loops>
+        <name>Financial_products</name>
+        <label>Financial products</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <collectionReference>financialProducts</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Requires_an_update</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Create_information_requests</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -80,23 +122,50 @@ NOT({!financialProduct.Public_Provider_Name__r.DeveloperName__c} == &quot;WORK_B
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Assign_output</targetReference>
+            <targetReference>Financial_products</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Create_information_requests</name>
+        <label>Create information requests</label>
+        <locationX>176</locationX>
+        <locationY>626</locationY>
+        <flowName>InformationRequestCreate</flowName>
+        <inputAssignments>
+            <name>financialAccounts</name>
+            <value>
+                <elementReference>financialProductsToGetAnInformationRequest</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
-        <name>financialProduct</name>
+        <name>financialProducts</name>
         <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
+        <isCollection>true</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
     </variables>
     <variables>
-        <name>getsAnInformationRequest</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
+        <name>financialProductsToGetAnInformationRequest</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
+        <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

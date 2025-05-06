@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Assign_household_ID</name>
+        <label>Assign household ID</label>
+        <locationX>776</locationX>
+        <locationY>252</locationY>
+        <assignmentItems>
+            <assignToReference>householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Household__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_the_fulfilment_deadline_passed</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Has_the_fulfilment_deadline_passed</name>
         <label>Has the fulfilment deadline just passed?</label>
         <locationX>776</locationX>
-        <locationY>252</locationY>
+        <locationY>360</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -27,16 +43,16 @@
         <name>What_is_the_fulfilment_state</name>
         <label>What is the fulfilment state?</label>
         <locationX>446</locationX>
-        <locationY>468</locationY>
+        <locationY>576</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>On_hold</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                <leftValueReference>fulfilmentStatus</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>On hold</stringValue>
+                    <elementReference>On_hold</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -48,28 +64,28 @@
             <name>Submit_or_await_payment</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                <leftValueReference>fulfilmentStatus</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Submit forms</stringValue>
+                    <stringValue>Submit fulfilment</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                <leftValueReference>fulfilmentStatus</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Awaiting client payment</stringValue>
+                    <stringValue>Chase client payment</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                <leftValueReference>fulfilmentStatus</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Awaiting ad hoc action</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                <leftValueReference>fulfilmentStatus</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Awaiting pre-requisites</stringValue>
@@ -84,14 +100,14 @@
             <name>Payment_made_already</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                <leftValueReference>fulfilmentStatus</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Investment Checks</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                <leftValueReference>fulfilmentStatus</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Complete</stringValue>
@@ -132,7 +148,7 @@
         <name>Get_fulfilment</name>
         <label>Get fulfilment</label>
         <locationX>446</locationX>
-        <locationY>360</locationY>
+        <locationY>468</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>What_is_the_fulfilment_state</targetReference>
@@ -145,15 +161,21 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Fulfilment__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>fulfilmentId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>fulfilmentStatus</assignToReference>
+            <field>Status__c</field>
+        </outputAssignments>
     </recordLookups>
     <start>
         <locationX>650</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Has_the_fulfilment_deadline_passed</targetReference>
+            <targetReference>Assign_household_ID</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -176,12 +198,12 @@
         <name>Create_task_for_ops_to_clean_up</name>
         <label>Create task for ops to clean up</label>
         <locationX>50</locationX>
-        <locationY>576</locationY>
+        <locationY>684</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -193,7 +215,7 @@
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>$Record.FulfilmentLegacy__c</elementReference>
+                <elementReference>fulfilmentId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -202,12 +224,12 @@
         <name>Create_task_for_ops_to_clean_upPaymentRequested</name>
         <label>Create task for ops to clean up</label>
         <locationX>314</locationX>
-        <locationY>576</locationY>
+        <locationY>684</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
             <value>
-                <elementReference>$Record.Household__c</elementReference>
+                <elementReference>householdId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -219,9 +241,30 @@
         <inputAssignments>
             <name>what_id</name>
             <value>
-                <elementReference>$Record.FulfilmentLegacy__c</elementReference>
+                <elementReference>fulfilmentId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>fulfilmentId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>fulfilmentStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>householdId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

@@ -108,10 +108,10 @@
             <label>Before data gathering or analysis</label>
         </rules>
     </decisions>
-    <description>Sub flow for selecting new advice</description>
+    <description>Walks the user through the task of controlling how an IR is linked to advice, allowing it to be unlinked from the current advice or linked to a new one.</description>
     <environments>Default</environments>
     <interviewLabel>Information request | Sub flow | Change advice {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Information request | Change advice</label>
+    <label>IR | Change advice</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -149,6 +149,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>informationRequest.FinancialProductFinServ__r.Household__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>AdvicePresented__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
