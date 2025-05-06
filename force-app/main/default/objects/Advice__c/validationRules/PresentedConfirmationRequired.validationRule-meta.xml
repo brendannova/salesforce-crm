@@ -3,7 +3,9 @@
     <fullName>PresentedConfirmationRequired</fullName>
     <active>true</active>
     <description>Requires that a human has confirmed the advice has been shared with the client prior to progressing advice to the meeting held stage or beyond.</description>
-    <errorConditionFormula>NOT(AdvicePresented__c)
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(AdvicePresented__c)
 &amp;&amp;
 (ISPICKVAL(Advice_Status__c, &quot;Await decision&quot;) ||
 ISPICKVAL(Advice_Status__c, &quot;Awaiting acceptance&quot;) ||

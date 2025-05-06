@@ -3,7 +3,9 @@
     <fullName>RoleRequired</fullName>
     <active>true</active>
     <description>Ensures that a role is recorded.</description>
-    <errorConditionFormula>ISBLANK(Roles)</errorConditionFormula>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+ISBLANK(Roles)</errorConditionFormula>
     <errorDisplayField>Roles</errorDisplayField>
     <errorMessage>A role is required</errorMessage>
 </ValidationRule>

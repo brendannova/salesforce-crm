@@ -3,8 +3,12 @@
     <fullName>MobileE164Format</fullName>
     <active>true</active>
     <description>Mobile field must be in valid phone number format.</description>
-    <errorConditionFormula>NOT(ISBLANK(PersonMobilePhone )) &amp;&amp;
-NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;)) &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISBLANK(PersonMobilePhone )) 
+&amp;&amp;
+NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;)) 
+&amp;&amp;
 NOT(REGEX( PersonMobilePhone , &quot;^\\+[1-9]\\d{6,13}$&quot;))</errorConditionFormula>
     <errorDisplayField>PersonMobilePhone</errorDisplayField>
     <errorMessage>Mobile numbers must must be in valid phone number format (with no spaces, letters, or special characters, beginning with a country code).</errorMessage>

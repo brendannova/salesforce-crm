@@ -3,7 +3,9 @@
     <fullName>DeckCompleteCannotGoBack</fullName>
     <active>true</active>
     <description>Ensures that advice cannot go back from deck complete to suitability in progress.</description>
-    <errorConditionFormula>NOT(ISBLANK( AdviceDeckCompleteDate__c ))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; (
+NOT(ISBLANK( AdviceDeckCompleteDate__c ))
 &amp;&amp;
 NOT(ISPICKVAL(Advice_Status__c, &quot;Suitability in progress&quot;) ||
 ISPICKVAL(Advice_Status__c, &quot;Prepare advice&quot;) ||
@@ -16,6 +18,7 @@ ISPICKVAL(Advice_Status__c, &quot;Complete&quot;) ||
 ISPICKVAL(Advice_Status__c, &quot;Cancelled&quot;))
 ||
 (ISPICKVAL(Advice_Status__c, &quot;Suitability in progress&quot;) &amp;&amp;
-ISPICKVAL(PRIORVALUE(Advice_Status__c), &quot;Deck Complete&quot;))</errorConditionFormula>
+ISPICKVAL(PRIORVALUE(Advice_Status__c), &quot;Deck Complete&quot;))
+)</errorConditionFormula>
     <errorMessage>Once the deck has been completed, you cannot go back.</errorMessage>
 </ValidationRule>
