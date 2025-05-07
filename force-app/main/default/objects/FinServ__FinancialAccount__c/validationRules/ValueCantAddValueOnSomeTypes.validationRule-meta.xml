@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValueCantAddValueOnSomeTypes</fullName>
+    <active>true</active>
+    <description>Prevent a value from being added on annuities, defined benefit and scheme pensions. These types of products should never have values and if entered, will inflate portal dashboard</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+!ISBLANK(FP_Value__c)
+&amp;&amp;
+(RecordType.DeveloperName = &#39;FP_Defined_Benefit_Pension&#39; 
+||
+RecordType.DeveloperName = &#39;FP_Annuity&#39; 
+||
+RecordType.DeveloperName = &#39;FP_Scheme_Pension&#39;
+||
+RecordType.DeveloperName = &#39;FP_Pre_LOA_Defined_Benefit_Pension&#39;)</errorConditionFormula>
+    <errorDisplayField>FP_Value__c</errorDisplayField>
+    <errorMessage>Cannot add a value for this type of financial product</errorMessage>
+</ValidationRule>

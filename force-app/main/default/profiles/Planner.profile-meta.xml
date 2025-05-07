@@ -209,6 +209,21 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>Nova</application>
+        <default>true</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaAdmin</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaBeta</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaConsole</application>
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
@@ -216,6 +231,16 @@
         <application>NovaConsoleBeta</application>
         <default>false</default>
         <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaManagement</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaMarketing</application>
+        <default>false</default>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>OW_compliance_external</application>
@@ -234,7 +259,7 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>OW_planner_portal</application>
-        <default>true</default>
+        <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
@@ -15482,10 +15507,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>OW_salesforce_guide</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>OW_task_information__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -15823,7 +15844,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Event</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-ExpressionSet</tab>

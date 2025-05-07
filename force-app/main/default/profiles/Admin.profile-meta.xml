@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>false</custom>
     <userLicense>Salesforce</userLicense>
@@ -1063,10 +1063,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UserTriggerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>UtilityCsv</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1747,11 +1743,36 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>Nova</application>
+        <default>true</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaAdmin</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaBeta</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaConsole</application>
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>NovaConsoleBeta</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaManagement</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>NovaMarketing</application>
         <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
@@ -1787,7 +1808,7 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>OwAdmin</application>
-        <default>true</default>
+        <default>false</default>
         <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
@@ -18446,7 +18467,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>User.ColleagueAccountID__c</field>
+        <field>User.ColleagueAccountId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24732,10 +24753,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>OW_review__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>OW_salesforce_guide</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
