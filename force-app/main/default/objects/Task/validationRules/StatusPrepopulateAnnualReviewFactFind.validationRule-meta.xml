@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Pre_populate_Annual_Review_Fact_Find</fullName>
+    <fullName>StatusPrepopulateAnnualReviewFactFind</fullName>
     <active>false</active>
     <description>Candidate for deletion when review functionality is stable - Q4 2021 earliest</description>
-    <errorConditionFormula>AND(
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
      RecordType.DeveloperName     = &quot;Pre_populate_review_fact_find&quot;,
  ISPICKVAL(Status, &quot;Completed&quot;), 
 NOT(ISBLANK( Related_Annual_Review__c)),

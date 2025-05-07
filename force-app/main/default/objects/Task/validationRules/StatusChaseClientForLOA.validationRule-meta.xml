@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Chase_Client_for_LOA</fullName>
+    <fullName>StatusChaseClientForLOA</fullName>
     <active>true</active>
     <description>Shows an error if a user attempts to mark this task as completed but the relevant fields on the LOA have not been completed</description>
-    <errorConditionFormula>AND(
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
 RecordType.DeveloperName = &quot;Chase_client_for_LOA&quot;, 
 ISPICKVAL( Status, &quot;Completed&quot;), 
 OR(

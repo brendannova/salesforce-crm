@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Send_Scope_of_Advice</fullName>
+    <fullName>StatusSendScopeOfAdvice</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(
+    <description>Cannot be set to complete if related opportunity missing scope of advice URL</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
 RecordType.DeveloperName = &quot;Send_scope_of_advice&quot;, 
 ISPICKVAL(Status, &quot;Completed&quot;), 
 ISBLANK(Related_Opportunity__r.Scope_of_Advice_URL__c)
