@@ -48,6 +48,12 @@
                         <valueListItems>
                             <value>BankAccount__c.ManageBankAccountEmployer</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Business</rightValue>
+                                </criteria>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.BankAccountsManage}</leftValue>
                                     <operator>EQUAL</operator>
@@ -58,6 +64,12 @@
                         <valueListItems>
                             <value>BankAccount__c.ManageBankAccountPersonal</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Personal</rightValue>
+                                </criteria>
                                 <criteria>
                                     <leftValue>{!$Permission.CustomPermission.BankAccountsManage}</leftValue>
                                     <operator>EQUAL</operator>
