@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OnlyIntegrationUserCanEditOrCreate</fullName>
-    <active>false</active>
-    <description>Only users with the Integration custom permission is able to create or edit assets</description>
-    <errorConditionFormula>NOT($Permission.IntegrationUser)</errorConditionFormula>
-    <errorMessage>Any amendments to this record will need to be made through the appropriate flows</errorMessage>
-</ValidationRule>
