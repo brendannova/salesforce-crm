@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RelatedLOAStatusCompleted</fullName>
+    <active>true</active>
+    <description>LOA should be completed for specific task types</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
+ OW_task_information_identifier__c = &quot;loa_analysis_and_suitability_preparation&quot;,
+ISPICKVAL(Status, &quot;Completed&quot;),
+ISBLANK( Related_LOA__r.Suitability_Builder_Tab_URL__c)
+)</errorConditionFormula>
+    <errorMessage>You need to add in the URL to the suitability builder before completing this task</errorMessage>
+</ValidationRule>

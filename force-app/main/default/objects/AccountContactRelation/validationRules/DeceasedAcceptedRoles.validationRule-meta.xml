@@ -3,7 +3,10 @@
     <fullName>DeceasedAcceptedRoles</fullName>
     <active>true</active>
     <description>Role cannot change to deceased if related contact status is not deceased</description>
-    <errorConditionFormula>INCLUDES(Roles, &quot;Deceased Client&quot;) &amp;&amp; 
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+INCLUDES(Roles, &quot;Deceased Client&quot;) 
+&amp;&amp; 
 NOT(ISPICKVAL(Contact.Account.FinServ__Status__c, &quot;Deceased&quot;))</errorConditionFormula>
     <errorDisplayField>Roles</errorDisplayField>
     <errorMessage>You can only choose a deceased client role when the client has the status of deceased, which happens as part of the deceased case workflow.</errorMessage>

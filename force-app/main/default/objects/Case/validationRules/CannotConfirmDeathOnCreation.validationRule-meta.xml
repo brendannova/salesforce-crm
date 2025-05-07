@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CannotConfirmDeathOnCreation</fullName>
+    <active>true</active>
+    <description>Ensures that it is not possible to confirm the death on creation of the case.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+ISNEW()
+&amp;&amp;
+RecordType.DeveloperName = &apos;Deceased&apos;
+&amp;&amp;
+( NOT(ISBLANK( DateDeathConfirmed__c ))
+||
+NOT(ISPICKVAL( DeathCertificateReceived__c, &quot;&quot;)) )</errorConditionFormula>
+    <errorDisplayField>DateOfDeath__c</errorDisplayField>
+    <errorMessage>On creation of a deceased case, you cannot confirm the date of death or how the death certificate was received. Please save and this can be added after.</errorMessage>
+</ValidationRule>

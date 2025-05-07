@@ -3,7 +3,9 @@
     <fullName>HubwisePersonIdFormat</fullName>
     <active>true</active>
     <description>Ensures that the Hubwise Person ID is entered in a format of CPI000#####.</description>
-    <errorConditionFormula>NOT(ISBLANK(HubwisePersonId__c))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISBLANK(HubwisePersonId__c))
 &amp;&amp;
 NOT(REGEX(HubwisePersonId__c, &quot;^CPI000[0-9]{5}$&quot;))</errorConditionFormula>
     <errorDisplayField>HubwisePersonId__c</errorDisplayField>

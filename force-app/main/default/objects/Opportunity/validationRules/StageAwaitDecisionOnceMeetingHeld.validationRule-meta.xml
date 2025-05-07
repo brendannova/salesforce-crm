@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StageAwaitDecisionOnceMeetingHeld</fullName>
+    <active>true</active>
+    <description>Ensures that the stage can only be moved to await decision after the disco has taken place.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+Discovery_Meeting_Date_Time__c &gt; NOW()
+&amp;&amp;
+ISPICKVAL(StageName,&quot;Await decision&quot;)</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>The discovery meeting must be recorded and have taken place to move to the await decision stage.</errorMessage>
+</ValidationRule>

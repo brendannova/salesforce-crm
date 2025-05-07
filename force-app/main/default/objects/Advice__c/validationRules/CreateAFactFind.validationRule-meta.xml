@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CreateAFactFind</fullName>
+    <active>false</active>
+    <description>Deletion candidate as relates to legacy PFP fact find process</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; 
+AND(
+ ISPICKVAL(Fact_find_requirements__c, &quot;Update required&quot;),
+ISPICKVAL( Advice_Status__c , &quot; Data Gathering&quot;),
+ISBLANK( Full_Fact_Find__c )
+)</errorConditionFormula>
+    <errorDisplayField>Full_Fact_Find__c</errorDisplayField>
+    <errorMessage>You need to create a fact find</errorMessage>
+</ValidationRule>
