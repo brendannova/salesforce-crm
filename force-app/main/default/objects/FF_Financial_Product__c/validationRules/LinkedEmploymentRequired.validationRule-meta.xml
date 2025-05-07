@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>linkedEmploymentRequired</fullName>
+    <fullName>LinkedEmploymentRequired</fullName>
     <active>true</active>
     <description>If a client has linked this FP to an employment record, there might only be a match ID to establish this link, perhaps because the employment is not yet created. This rule ensures the employment is created and linked properly prior to validation.</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
