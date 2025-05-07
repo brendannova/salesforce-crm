@@ -3,10 +3,16 @@
     <fullName>PhoneEnsureNotUKMobile</fullName>
     <active>true</active>
     <description>If phone begins with +44, it cannot begin with +447 because that is a mobile number.</description>
-    <errorConditionFormula>NOT($Permission.IntegrationUser) &amp;&amp;
-ISBLANK(MobilePhone) &amp;&amp;
-BEGINS( Phone , &quot;+44&quot;) &amp;&amp;
-BEGINS( Phone , &quot;+447&quot;) &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+NOT($Permission.IntegrationUser) 
+&amp;&amp;
+ISBLANK(MobilePhone) 
+&amp;&amp;
+BEGINS( Phone , &quot;+44&quot;) 
+&amp;&amp;
+BEGINS( Phone , &quot;+447&quot;) 
+&amp;&amp;
 NOT(ISCHANGED(OwnerId))</errorConditionFormula>
     <errorDisplayField>Phone</errorDisplayField>
     <errorMessage>Mobile numbers can&apos;t be stored in the phone field</errorMessage>

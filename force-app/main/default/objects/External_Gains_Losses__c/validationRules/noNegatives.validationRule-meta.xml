@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>noNegatives</fullName>
+    <active>true</active>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+(OR( 
+ Carried_Forward_Losses__c &lt; 0, 
+ Losses_Realised__c &lt; 0,
+ Losses_Realised_int__c &lt; 0
+))</errorConditionFormula>
+    <errorMessage>Use positive figures in there fields.</errorMessage>
+</ValidationRule>

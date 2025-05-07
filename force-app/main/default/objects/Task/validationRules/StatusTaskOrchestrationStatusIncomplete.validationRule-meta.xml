@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StatusTaskOrchestrationStatusIncomplete</fullName>
+    <active>true</active>
+    <description>Prevents orchestration tasks (where Orchestration Task Status = Incomplete) from being closed manually.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+ISPICKVAL(OrchestrationTaskStatus__c, &quot;Incomplete&quot;) &amp;&amp;
+ISPICKVAL( Status , &quot;Completed&quot;)</errorConditionFormula>
+    <errorMessage>This task must be closed via the orchestration (work items). You cannot close this task manually.</errorMessage>
+</ValidationRule>

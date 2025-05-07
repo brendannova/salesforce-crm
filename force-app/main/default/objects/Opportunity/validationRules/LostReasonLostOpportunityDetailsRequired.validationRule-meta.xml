@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LostReasonLostOpportunityDetailsRequired</fullName>
+    <active>true</active>
+    <description>To mark an opportunity as closed lost, some additional information is required.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+( RecordType.DeveloperName = &quot;Advice_Opportunity&quot; ||
+RecordType.DeveloperName = &quot;AdviceFastTrack&quot; )
+&amp;&amp;
+ISPICKVAL(StageName , &quot;Closed Lost&quot;)
+&amp;&amp;
+(ISBLANK(Lost_Reason__c)||
+ISBLANK(Lost_Notes__c) ||
+ISBLANK(Lost_Date__c))</errorConditionFormula>
+    <errorDisplayField>Lost_Reason__c</errorDisplayField>
+    <errorMessage>To lose an opportunity, you must specify lost date, lost reason, and lost notes.</errorMessage>
+</ValidationRule>
