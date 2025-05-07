@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OW_cannot_remove_related_loa</fullName>
+    <fullName>RelatedLoaCannotRemove</fullName>
     <active>true</active>
     <description>Ensures that if an LOA is related to the task it cannot be removed. Prevents use of the remove option in the related record component on the task lightning page.</description>
-    <errorConditionFormula>ISBLANK( Related_LOA__c )
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+ISBLANK( Related_LOA__c )
 &amp;&amp; 
 NOT(ISBLANK(PRIORVALUE( Related_LOA__c )))</errorConditionFormula>
     <errorMessage>You cannot remove an LOA from this task.</errorMessage>

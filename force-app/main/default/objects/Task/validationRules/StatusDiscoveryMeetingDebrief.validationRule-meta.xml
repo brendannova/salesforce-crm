@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Discovery_Meeting_Debrief</fullName>
+    <fullName>StatusDiscoveryMeetingDebrief</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(
+    <description>Cannot be marked as complete unless related opportunity has been updated with discovery meeting debrief details</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
 RecordType.DeveloperName = &quot;Discovery_Meeting_Debrief&quot;, 
 ISPICKVAL(Status, &quot;Completed&quot;), 
 OR(

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Chase_Full_Fact_Find</fullName>
+    <fullName>StatusChaseFactFind</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(
-  RecordType.DeveloperName  = &apos;Chase_Full_Fact_Find&apos;,
+    <description>Cannot set task to complete if related fact find is not complete</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
+  RecordType.DeveloperName  = &apos;Chase_fact_find&apos;,
  ISPICKVAL(Status, &quot;Completed&quot;), 
  NOT(ISPICKVAL(Related_Fact_Find__r.FF_Status__c , &quot;Complete&quot;))
 )</errorConditionFormula>

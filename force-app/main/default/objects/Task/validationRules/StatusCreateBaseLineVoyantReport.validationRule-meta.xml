@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Create_baseline_voyant_report_Adviser_no</fullName>
+    <fullName>StatusCreateBaseLineVoyantReport</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(AND(ISPICKVAL( Type , &quot;Create base line Voyant report &amp; adviser notes&quot;),ISPICKVAL(Status, &quot;Completed&quot;)),
+    <description>Validation for &apos;Create base line Voyant report &amp; adviser notes&apos; type task</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(AND(ISPICKVAL( Type , &quot;Create base line Voyant report &amp; adviser notes&quot;),ISPICKVAL(Status, &quot;Completed&quot;)),
 
 OR(ISBLANK( Related_Opportunity__r.Opp_Base_Plan_Assumptions__c ),  ISBLANK( Related_Opportunity__r.Opp_Assets_in_report__c ) , ISBLANK( Related_Opportunity__r.Opp_Default_System_Assumptions__c )))</errorConditionFormula>
     <errorMessage>You need to complete the following fields on the related opportunity:

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>LoaCompleteChecks</fullName>
+    <fullName>StatusLoaCompleteChecks</fullName>
     <active>true</active>
     <description>Ensures that for the LOA analysis and suitability task to be completed, certain changes have been made to the task already.</description>
-    <errorConditionFormula>OW_task_information_name__c = &quot;loa_analysis_and_suitability_preparation&quot; &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+OW_task_information_name__c = &quot;loa_analysis_and_suitability_preparation&quot; &amp;&amp;
 ISPICKVAL(Status, &quot;Completed&quot;) &amp;&amp;
 CONTAINS(Related_LOA__r.LOA_Financial_Account__r.RecordType.Name, &quot;LOA&quot;) &amp;&amp;
 Related_LOA__r.LOA_Complete_Planner_Approved__c &amp;&amp;

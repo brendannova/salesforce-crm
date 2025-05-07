@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Validate_Client_Profile_Updates</fullName>
+    <fullName>StatusValidateClientFactFindUpdates</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(
+    <description>Cannot complete task if household fact find validations are outstanding</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
  RecordType.DeveloperName  = &quot;Validate_Client_Profile_Updates&quot;,
  ISPICKVAL(Status, &quot;Completed&quot;),
 FinServ__Household__r.Fact_Find_Validations_Outstanding__c = true

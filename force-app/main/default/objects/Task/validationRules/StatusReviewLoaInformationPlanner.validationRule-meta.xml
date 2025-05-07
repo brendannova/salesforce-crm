@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Review_LOA_Information_Planner</fullName>
+    <fullName>StatusReviewLoaInformationPlanner</fullName>
     <active>true</active>
-    <errorConditionFormula>OR(
+    <description>Cannot be marked as complete if related LOA review fields not in correct state</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+OR(
 AND(
 ISPICKVAL(Status, &quot;Completed&quot;),
 RecordType.DeveloperName = &quot;Review_LOA_Information_Planner&quot;,
