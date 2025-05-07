@@ -12,7 +12,7 @@ ISPICKVAL(OW_aml_check_account__c, &quot;Passed&quot;)
 (ISCHANGED(FirstName) || ISCHANGED(MiddleName) || ISCHANGED(LastName))
 &amp;&amp;
 NOT($Permission.AccountEditNameAfterAml)</errorConditionFormula>
-    <errorDisplayField>pi__campaign__pc</errorDisplayField>
+    <errorDisplayField>Name</errorDisplayField>
     <errorMessage>You are unable to change First, Middle or Last names after AML checks have passed. 
 Please submit a Name Change case to the Data Exception queue to submit the changes for review.</errorMessage>
 </ValidationRule>
