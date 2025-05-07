@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>providerValidation</fullName>
+    <active>true</active>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+AND(
+NOT(ISBLANK(Custom_Provider_Name__c)) , 
+ISBLANK(Public_Provider_Name__c), 
+ISPICKVAL(Validated__c, &quot;Validated&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Public_Provider_Name__c</errorDisplayField>
+    <errorMessage>You need to add a Public Provider Name, before you can Validate this record.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LeadOppRequiredConverted</fullName>
+    <active>true</active>
+    <description>Ensures an opportunity is created on conversion of a lead, except where it is a related lead from a mortgage.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+IsConverted 
+&amp;&amp;
+LegacyLead__c = false 
+&amp;&amp;
+ISBLANK( OW_parent_lead__c ) 
+&amp;&amp;
+ConvertedDate &gt; DATE(2021,09,15) 
+&amp;&amp;
+ConvertedOpportunityId == null</errorConditionFormula>
+    <errorMessage>You must create an opportunity when converting a lead.</errorMessage>
+</ValidationRule>

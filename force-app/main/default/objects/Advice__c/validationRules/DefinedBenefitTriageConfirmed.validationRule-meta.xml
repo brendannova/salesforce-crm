@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DefinedBenefitTriageConfirmed</fullName>
+    <active>true</active>
+    <description>Ensures that we have recorded clients understanding of the DB triage document if we are preparing DB advice.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; 
+AND(RecordType.Id = &apos;0124J000000qj42&apos;,
+ ISPICKVAL(Advice_Status__c, &apos;Data gathering&apos;),
+ISBLANK( Date_Client_Confirmed_Understanding__c)
+)</errorConditionFormula>
+    <errorMessage>You need to enter the date on which the client confirmed understanding of the triage process</errorMessage>
+</ValidationRule>

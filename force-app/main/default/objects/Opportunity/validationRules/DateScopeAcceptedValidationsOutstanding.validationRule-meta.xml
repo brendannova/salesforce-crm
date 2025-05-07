@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DateScopeAcceptedValidationsOutstanding</fullName>
+    <active>true</active>
+    <description>Prevents scope signing before validations are complete</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+FinServ__Household__r.Fact_Find_Validations_Outstanding__c = TRUE
+&amp;&amp;
+ NOT(ISNULL(Date_scope_of_advice_accepted__c ))</errorConditionFormula>
+    <errorDisplayField>Date_scope_of_advice_accepted__c</errorDisplayField>
+    <errorMessage>Please complete outstanding validations before marking scope as signed</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DateScopeAcceptedCantAcceptWhenLost</fullName>
+    <active>true</active>
+    <description>Prevents signing scope after client has already been lost</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+Date_scope_of_advice_accepted__c &gt;  DATEVALUE(Lost_Date__c )
+&amp;&amp;
+NOT(ISNULL(Date_scope_of_advice_accepted__c))
+&amp;&amp;
+NOT(ISNULL(Lost_Date__c ))</errorConditionFormula>
+    <errorDisplayField>Date_scope_of_advice_accepted__c</errorDisplayField>
+    <errorMessage>You cannot sign scope for a lost opportunity.</errorMessage>
+</ValidationRule>
