@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ConvertedRelatedLeadNoOpp</fullName>
-    <active>true</active>
-    <description>Ensures we don&apos;t create an opportunity on conversion of a related lead.</description>
-    <errorConditionFormula>NOT(ISBLANK(OW_parent_lead__c))&amp;&amp;
-NOT(ISBLANK(ConvertedOpportunityId ))</errorConditionFormula>
-    <errorMessage>You cannot create an opportunity for a related lead. Please choose not to create an opportunity on conversion.</errorMessage>
-</ValidationRule>

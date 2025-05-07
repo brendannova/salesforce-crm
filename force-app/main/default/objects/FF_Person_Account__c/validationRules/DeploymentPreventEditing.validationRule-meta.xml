@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DeploymentPreventEditing</fullName>
+    <fullName>deploymentPreventEditing</fullName>
     <active>false</active>
     <description>Prevents editing while there is deployment activity ongoing, except for those with a custom permission that bypasses this rule.</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 

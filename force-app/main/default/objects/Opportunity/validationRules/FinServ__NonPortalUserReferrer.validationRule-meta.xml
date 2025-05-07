@@ -4,7 +4,7 @@
     <active>true</active>
     <errorConditionFormula>AND(
                 NOT(ISBLANK(FinServ__ReferredByUser__c)),
-                NOT(ISPICKVAL(FinServ__ReferredByUser__r.UserType, &#39;Standard&#39;))
+                NOT(ISPICKVAL(FinServ__ReferredByUser__r.UserType, &apos;Standard&apos;))
             )</errorConditionFormula>
     <errorDisplayField>FinServ__ReferredByUser__c</errorDisplayField>
     <errorMessage>Internal referrers must be internal Salesforce users.</errorMessage>
