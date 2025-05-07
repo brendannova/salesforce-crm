@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>specificUserRequired</fullName>
+    <active>true</active>
+    <description>Ensures that a specific user is specified where specific user assignment type is used.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+(ISPICKVAL( OW_assigned_to__c, &quot;Specific user&quot; ))
+
+&amp;&amp; 
+
+ISBLANK(  OW_specific_user__c )</errorConditionFormula>
+    <errorDisplayField>OW_specific_user__c</errorDisplayField>
+    <errorMessage>Please choose a specific user.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StatusValidateClientProfileUpdatesHouseh</fullName>
+    <active>true</active>
+    <description>Cannot  validate client profile task if household status is still &apos;validations outstanding&apos;</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
+ RecordType.DeveloperName  = &quot;Validate_Client_Profile_Updates&quot;,
+ ISPICKVAL(Status, &quot;Completed&quot;),
+OR(
+ ISPICKVAL(FinServ__Household__r.Profile_Status__c,&quot;Updated by Client (Validations Outstanding)&quot;),
+ ISPICKVAL(FinServ__Household__r.Profile_Status__c,&quot;Completed by Client (Validations Outstanding)&quot;) 
+)
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>You need to update the Profile Status to either Up-to-date or Update Required</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TypeOffboardingActiveClientsOnly</fullName>
+    <active>false</active>
+    <description>Validation rule deprecated with the new offboarding process release Oct 2023. Can be deleted once this is settled. Ensures offboarding cases are only created for active clients</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+ISNEW()
+&amp;&amp;
+ISPICKVAL( Type, &quot;Offboarding&quot; )
+&amp;&amp;
+NOT(ISPICKVAL( Account.FinServ__Status__c, &quot;Active&quot; ))</errorConditionFormula>
+    <errorMessage>An offboarding case cannot be created if the clients are not active</errorMessage>
+</ValidationRule>

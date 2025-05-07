@@ -4,7 +4,9 @@
     <active>true</active>
     <description>Business use: Prevents advice being cancelled if there is no reason populated
 Tech use: Closed Reason will be read-only on the page so the only way to cancel the advice is from the button flow</description>
-    <errorConditionFormula>ISPICKVAL(Advice_Status__c, &#39;Cancelled&#39;)
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; 
+ISPICKVAL(Advice_Status__c, &apos;Cancelled&apos;)
 &amp;&amp;
 ISPICKVAL(ClosedReason__c, &quot;&quot;)</errorConditionFormula>
     <errorMessage>Cannot cancel this advice if the closed reason is not populated. Make sure you are cancelling the advice from the Cancel Advice button at the top right of the page.</errorMessage>

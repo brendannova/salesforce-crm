@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DeathCertFormatRequiredToConfirm</fullName>
+    <active>true</active>
+    <description>The format of death certificate received must be filled out in order to fill out the date of death confirmed and date of death fields</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+RecordType.DeveloperName = &quot;Deceased&quot;
+&amp;&amp;
+ISPICKVAL(DeathCertificateReceived__c,&quot;&quot;)
+&amp;&amp;
+(
+ NOT(ISNULL(DateOfDeath__c) )
+||
+ NOT(ISNULL(DateDeathConfirmed__c))
+)</errorConditionFormula>
+    <errorMessage>Please provide the format the death certificate was received</errorMessage>
+</ValidationRule>
