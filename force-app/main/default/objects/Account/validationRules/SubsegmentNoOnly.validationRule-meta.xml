@@ -3,7 +3,9 @@
     <fullName>SubsegmentNoOnly</fullName>
     <active>true</active>
     <description>Ensures that if the no subsegment option is selected, no other options are too.</description>
-    <errorConditionFormula>INCLUDES(Subsegment__c, &quot;No sub-segment&quot;)
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+INCLUDES(Subsegment__c, &quot;No sub-segment&quot;)
 &amp;&amp;
 (INCLUDES(Subsegment__c, &quot;Products in Trust (+ requirements to work with Trustees etc.)&quot;)
 ||

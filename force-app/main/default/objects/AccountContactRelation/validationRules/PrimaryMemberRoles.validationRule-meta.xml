@@ -3,7 +3,10 @@
     <fullName>PrimaryMemberRoles</fullName>
     <active>true</active>
     <description>Ensures that only certain roles can be specified as primary member. At the time of writing, primary members can only be advice clients or mortgage borrowers.</description>
-    <errorConditionFormula>FinServ__Primary__c &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+FinServ__Primary__c 
+&amp;&amp;
 NOT(INCLUDES( Roles, &quot;Client&quot;) ||
 INCLUDES( Roles, &quot;Mortgage borrower&quot;))</errorConditionFormula>
     <errorDisplayField>Roles</errorDisplayField>

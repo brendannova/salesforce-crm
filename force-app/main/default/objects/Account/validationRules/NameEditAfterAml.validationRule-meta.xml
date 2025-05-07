@@ -3,14 +3,16 @@
     <fullName>NameEditAfterAml</fullName>
     <active>true</active>
     <description>Prevents users editing client names after AML has been passed, ensuring that proper process has been followed.</description>
-    <errorConditionFormula>IsPersonAccount = TRUE
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+IsPersonAccount = TRUE
 &amp;&amp;
 ISPICKVAL(OW_aml_check_account__c, &quot;Passed&quot;)
 &amp;&amp;
 (ISCHANGED(FirstName) || ISCHANGED(MiddleName) || ISCHANGED(LastName))
 &amp;&amp;
 NOT($Permission.AccountEditNameAfterAml)</errorConditionFormula>
-    <errorDisplayField>Name</errorDisplayField>
+    <errorDisplayField>pi__campaign__pc</errorDisplayField>
     <errorMessage>You are unable to change First, Middle or Last names after AML checks have passed. 
 Please submit a Name Change case to the Data Exception queue to submit the changes for review.</errorMessage>
 </ValidationRule>

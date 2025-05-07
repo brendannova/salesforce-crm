@@ -3,7 +3,9 @@
     <fullName>AdvicePresentedMeetingDateTimeNeeded</fullName>
     <active>true</active>
     <description>Ensures that a suitability meeting date/time is recorded for all advice that is marked as being presented.</description>
-    <errorConditionFormula>AdvicePresented__c
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; 
+AdvicePresented__c
 &amp;&amp;
 ISBLANK( Suitability_meeting_date_time__c )
 &amp;&amp;
