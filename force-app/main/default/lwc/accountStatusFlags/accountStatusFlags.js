@@ -19,31 +19,31 @@ import RECORD_TYPE_DEVELOPER_NAME_FIELD from "@salesforce/schema/Account.RecordT
 import TEMP_BANK_DETAILS_ISSUE_FIELD from "@salesforce/schema/Account.TempBankDetailIssues__c";
 
 //custom labels for tooltips
-import TOOLTIP_STATUS_DECEASED from "@salesforce/label/c.Flag_Status_Deceased_Tooltip";
-import TOOLTIP_STATUS_REPORTED_DECEASED from "@salesforce/label/c.Flag_Status_Reported_Deceased_Tooltip";
-import TOOLTIP_STATUS_WITHDRAWN from "@salesforce/label/c.Flag_Status_Withdrawn_Tooltip";
-import TOOLTIP_STATUS_OFFBOARDING from "@salesforce/label/c.Flag_Status_Offboarding_Tooltip";
-import TOOLTIP_STATUS_FORMER from "@salesforce/label/c.Flag_Status_Former_Tooltip";
-import TOOLTIP_STATUS_SPLIT from "@salesforce/label/c.Flag_Status_Split_Tooltip";
-import TOOLTIP_STATUS_FORGOTTEN from "@salesforce/label/c.Flag_Status_Forgotten_Tooltip";
-import TOOLTIP_RTQ_EXPIRED from "@salesforce/label/c.Flag_RTQ_Expired_Tooltip";
-import TOOLTIP_RTQ_PENDING from "@salesforce/label/c.Flag_RTQ_Pending_Tooltip";
-import TOOLTIP_RTQ_INCOMPLETE from "@salesforce/label/c.Flag_RTQ_Incomplete_Tooltip";
-import TOOLTIP_TOB_NOT_ACCEPTED from "@salesforce/label/c.Flag_TOB_Not_Accepted_Tooltip";
-import TOOLTIP_TOB_AWAITING_ACCEPTACE from "@salesforce/label/c.Flag_TOB_Awaiting_Acceptance_Tooltip";
-import TOOLTIP_AML_INCOMPLETE from "@salesforce/label/c.Flag_AML_Incomplete_Tooltip";
-import TOOLTIP_VULNERABLE from "@salesforce/label/c.Flag_Vulnerable_Tooltip";
-import TOOLTIP_COI from "@salesforce/label/c.Flag_COI_Tooltip";
-import TOOLTIP_PEP from "@salesforce/label/c.Flag_PEP_Tooltip";
-import TOOLTIP_FACT_FIND_VALIDATIONS from "@salesforce/label/c.Flag_Fact_Find_Validation_Tooltip";
-import TOOLTIP_BANK_DETAILS_ISSUE from "@salesforce/label/c.Flag_Bank_Issues_Tooltip"
-import TOOLTIP_CUSTOMER_EMPLOYEE from "@salesforce/label/c.Flag_Customer_Employee_Tooltip";
-import TOOLTIP_CUSTOMER_FAMILY from "@salesforce/label/c.Flag_Customer_Family_Tooltip";
-import TOOLTIP_CUSTOMER_VIP from "@salesforce/label/c.Flag_Customer_VIP_Tooltip";
-import TOOLTIP_CUSTOMER_TRUST from "@salesforce/label/c.Flag_Customer_Trust_Tooltip";
-import TOOLTIP_TYPE_MORTGAGE from "@salesforce/label/c.Flag_Type_Mortgage_Tooltip";
-import TOOLTIP_TYPE_WEALTH from "@salesforce/label/c.Flag_Type_Wealth_Tooltip";
-import TOOLTIP_TYPE_TRUST from "@salesforce/label/c.Flag_Type_Trust_Tooltip";
+import TOOLTIP_STATUS_DECEASED from "@salesforce/label/c.CustomerFlagStatusDeceasedTooltip";
+import TOOLTIP_STATUS_REPORTED_DECEASED from "@salesforce/label/c.CustomerFlagStatusReportedDeceasedTooltip";
+import TOOLTIP_STATUS_WITHDRAWN from "@salesforce/label/c.CustomerFlagStatusWithdrawnTooltip";
+import TOOLTIP_STATUS_OFFBOARDING from "@salesforce/label/c.CustomerFlagStatusOffboardingTooltip";
+import TOOLTIP_STATUS_FORMER from "@salesforce/label/c.CustomerFlagStatusFormerTooltip";
+import TOOLTIP_STATUS_SPLIT from "@salesforce/label/c.CustomerFlagStatusSplitTooltip";
+import TOOLTIP_STATUS_FORGOTTEN from "@salesforce/label/c.CustomerFlagStatusForgottenTooltip";
+import TOOLTIP_RTQ_EXPIRED from "@salesforce/label/c.CustomerFlagRtqExpiredTooltip";
+import TOOLTIP_RTQ_PENDING from "@salesforce/label/c.CustomerFlagRtqPendingTooltip";
+import TOOLTIP_RTQ_INCOMPLETE from "@salesforce/label/c.CustomerFlagRtqIncompleteTooltip";
+import TOOLTIP_TOB_NOT_ACCEPTED from "@salesforce/label/c.CustomerFlagTobNotAcceptedTooltip";
+import TOOLTIP_TOB_AWAITING_ACCEPTACE from "@salesforce/label/c.CustomerFlagTobAwaitingAcceptanceTooltip";
+import TOOLTIP_AML_INCOMPLETE from "@salesforce/label/c.CustomerFlagAmlIncompleteTooltip";
+import TOOLTIP_VULNERABLE from "@salesforce/label/c.CustomerFlagVulnerableTooltip";
+import TOOLTIP_COI from "@salesforce/label/c.CustomerFlagCoiTooltip";
+import TOOLTIP_PEP from "@salesforce/label/c.CustomerFlagPepTooltip";
+import TOOLTIP_FACT_FIND_VALIDATIONS from "@salesforce/label/c.CustomerFlagFactFindValidationTooltip";
+import TOOLTIP_BANK_DETAILS_ISSUE from "@salesforce/label/c.CustomerFlagBankIssuesTooltip"
+import TOOLTIP_CUSTOMER_EMPLOYEE from "@salesforce/label/c.CustomerFlagCustomerEmployeeTooltip";
+import TOOLTIP_CUSTOMER_FAMILY from "@salesforce/label/c.CustomerFlagCustomerFamilyTooltip";
+import TOOLTIP_CUSTOMER_VIP from "@salesforce/label/c.CustomerFlagCustomerVipTooltip";
+import TOOLTIP_CUSTOMER_TRUST from "@salesforce/label/c.CustomerFlagCustomerTrustTooltip";
+import TOOLTIP_TYPE_MORTGAGE from "@salesforce/label/c.CustomerFlagTypeMortgageTooltip";
+import TOOLTIP_TYPE_WEALTH from "@salesforce/label/c.CustomerFlagTypeWealthTooltip";
+import TOOLTIP_TYPE_TRUST from "@salesforce/label/c.CustomerFlagTypeTrustTooltip";
 
 const FIELDS = [STATUS_FIELD, RTQ_STATUS_FIELD, TOB_STATUS_FIELD, AML_STATUS_FIELD, VULNERABLE_FIELD, CONFLICT_OF_INTEREST_FIELD, CUSTOMER_FLAG_FIELD, CUSTOMER_TYPE_FIELD, RECORD_TYPE_DEVELOPER_NAME_FIELD, FACT_FIND_VALIDATIONS_FIELD, TEMP_BANK_DETAILS_ISSUE_FIELD];
 
@@ -75,9 +75,9 @@ const BADGE_PINK = 'badgePink';
 //icons
 let iconMap = new Map();
 iconMap.set(PROFILE_STATUS_LABEL, 'utility:leave_conference');
-iconMap.set(RTQ_STATUS_LABEL, 'custom:custom66');
-iconMap.set(TOB_STATUS_LABEL, 'custom:custom14');
-iconMap.set(AML_STATUS_LABEL, 'utility:moneybag');
+iconMap.set(RTQ_STATUS_LABEL, 'custom:custom90');
+iconMap.set(TOB_STATUS_LABEL, 'utility:signature');
+iconMap.set(AML_STATUS_LABEL, 'utility:identity');
 iconMap.set(VULNERABLE_LABEL, 'utility:shield');
 iconMap.set(COI_LABEL, 'utility:merge');
 iconMap.set(PEP_LABEL, 'utility:advertising')
@@ -116,6 +116,7 @@ const CUSTOMER_FLAG_VIP = 'VIP';
 const CUSTOMER_TYPE_MORTGAGE_VALUE = 'Mortgage only';
 const CUSTOMER_TYPE_TRUST_VALUE = 'Trust';
 const CUSTOMER_TYPE_WEALTH_VALUE = 'Wealth';
+const CUSTOMER_TYPE_CORPORATE_VALUE = 'Corporate';
 
 //badge references
 const REF_STATUS_DECEASED = 'REF_STATUS_DECEASED';
@@ -140,11 +141,30 @@ const REF_CUSTOMER_FLAG_VIP = 'REF_CUSTOMER_FLAG_VIP';
 const REF_CUSTOMER_TYPE_MORTGAGE = 'REF_CUSTOMER_TYPE_MORTGAGE';
 const REF_CUSTOMER_TYPE_TRUST = 'REF_CUSTOMER_TYPE_TRUST';
 const REF_CUSTOMER_TYPE_WEALTH = 'REF_CUSTOMER_TYPE_WEALTH';
+const REF_CUSTOMER_TYPE_CORPORATE = 'REF_CUSTOMER_TYPE_CORPORATE';
 const REF_PEP = 'REF_PEP';
 const REF_FACT_FIND_VALIDATIONS = 'REF_FACT_FIND_VALIDATIONS';
 const REF_TEMP_BANK_DETAILS_ISSUE = 'REF_TEMP_BANK_DETAILS_ISSUE';
 
-//tooltips
+const SUPPORTED_OBJECTS = [
+    'Account',
+    'Advice__c',
+    'Asset__c',
+    'BankAccount__c',
+    'Case',
+    'CustomerFact__c',
+    'Fee__c',
+    'FinServ__FinancialAccount__c',
+    'FinServ__Employment__c',
+    'Fulfilment__c',
+    'InformationRequest__c',
+    'Liability__c',
+    'Opportunity',
+    'OW_review__c',
+    'OW_rtq__c',
+    'PersonAccount',
+    'Recommendation__c'
+];
 
 
 export default class accountStatusFlags extends LightningElement {
@@ -165,15 +185,16 @@ export default class accountStatusFlags extends LightningElement {
         REF_AML_INCOMPLETE:                 {show: false, badge: {Id: REF_AML_INCOMPLETE, text: AML_STATUS_LABEL + ' ' + AML_INCOMPLETE_VALUE, icon: iconMap.get(AML_STATUS_LABEL), badgeClass: BADGE_AMBER, order: 2.3, tooltip: TOOLTIP_AML_INCOMPLETE}},
         REF_VULNERABLE:                     {show: false, badge: {Id: REF_VULNERABLE, text: VULNERABLE_VALUE, icon: iconMap.get(VULNERABLE_LABEL), badgeClass: BADGE_AMBER, order: 2.4, tooltip: TOOLTIP_VULNERABLE}},
         REF_COI:                            {show: false, badge: {Id: REF_COI, text: COI_LABEL, icon: iconMap.get(COI_LABEL), badgeClass: BADGE_AMBER, order: 2.5, tooltip: TOOLTIP_COI}},
-        REF_FACT_FIND_VALIDATIONS:          {show: false, badge: {Id: REF_FACT_FIND_VALIDATIONS, text: FACT_FIND_VALIDATIONS_LABEL, icon: 'utility:identity', badgeClass: BADGE_AMBER, order: 2.6, tooltip: TOOLTIP_FACT_FIND_VALIDATIONS}},
-        REF_TEMP_BANK_DETAILS_ISSUE:        {show: false, badge: {Id: REF_TEMP_BANK_DETAILS_ISSUE, text: TEMP_BANK_DETAILS_ISSUE_LABEL, icon: 'utility:identity', badgeClass: BADGE_AMBER, order: 2.7, tooltip: TOOLTIP_BANK_DETAILS_ISSUE}},
-        REF_CUSTOMER_FLAG_EMPLOYEE:         {show: false, badge: {Id: REF_CUSTOMER_FLAG_EMPLOYEE, text: CUSTOMER_FLAG_EMPLOYEE, icon: 'utility:emoji', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_EMPLOYEE}},
-        REF_CUSTOMER_FLAG_FAMILY:           {show: false, badge: {Id: REF_CUSTOMER_FLAG_FAMILY, text: CUSTOMER_FLAG_FAMILY, icon: 'utility:groups', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_FAMILY}},
-        REF_CUSTOMER_FLAG_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_FLAG_TRUST, text: CUSTOMER_FLAG_TRUST, icon: 'custom:custom90', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_TRUST}},
-        REF_CUSTOMER_FLAG_VIP:              {show: false, badge: {Id: REF_CUSTOMER_FLAG_VIP, text: CUSTOMER_FLAG_VIP, icon: 'custom:custom43', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_VIP}},
-        REF_CUSTOMER_TYPE_MORTGAGE:         {show: false, badge: {Id: REF_CUSTOMER_TYPE_MORTGAGE, text: CUSTOMER_TYPE_MORTGAGE_VALUE, icon: 'custom:custom107', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_MORTGAGE}},
-        REF_CUSTOMER_TYPE_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_TYPE_TRUST, text: CUSTOMER_TYPE_TRUST_VALUE, icon: 'custom:custom90', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_TRUST}},
-        REF_CUSTOMER_TYPE_WEALTH:           {show: false, badge: {Id: REF_CUSTOMER_TYPE_WEALTH, text: CUSTOMER_TYPE_WEALTH_VALUE, icon: 'utility:trending', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_WEALTH}}
+        REF_FACT_FIND_VALIDATIONS:          {show: false, badge: {Id: REF_FACT_FIND_VALIDATIONS, text: FACT_FIND_VALIDATIONS_LABEL, icon: 'utility:task', badgeClass: BADGE_AMBER, order: 2.6, tooltip: TOOLTIP_FACT_FIND_VALIDATIONS}},
+        REF_TEMP_BANK_DETAILS_ISSUE:        {show: false, badge: {Id: REF_TEMP_BANK_DETAILS_ISSUE, text: TEMP_BANK_DETAILS_ISSUE_LABEL, icon: 'custom:custom16', badgeClass: BADGE_AMBER, order: 2.7, tooltip: TOOLTIP_BANK_DETAILS_ISSUE}},
+        REF_CUSTOMER_FLAG_EMPLOYEE:         {show: false, badge: {Id: REF_CUSTOMER_FLAG_EMPLOYEE, text: CUSTOMER_FLAG_EMPLOYEE, icon: 'utility:privately_shared', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_EMPLOYEE}},
+        REF_CUSTOMER_FLAG_FAMILY:           {show: false, badge: {Id: REF_CUSTOMER_FLAG_FAMILY, text: CUSTOMER_FLAG_FAMILY, icon: 'utility:privately_shared', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_FAMILY}},
+        REF_CUSTOMER_FLAG_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_FLAG_TRUST, text: CUSTOMER_FLAG_TRUST, icon: 'utility:privately_shared', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_TRUST}},
+        REF_CUSTOMER_FLAG_VIP:              {show: false, badge: {Id: REF_CUSTOMER_FLAG_VIP, text: CUSTOMER_FLAG_VIP, icon: 'utility:privately_shared', badgeClass: BADGE_AMBER, order: 2.8, tooltip: TOOLTIP_CUSTOMER_VIP}},
+        REF_CUSTOMER_TYPE_MORTGAGE:         {show: false, badge: {Id: REF_CUSTOMER_TYPE_MORTGAGE, text: CUSTOMER_TYPE_MORTGAGE_VALUE, icon: 'utility:home', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_MORTGAGE}},
+        REF_CUSTOMER_TYPE_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_TYPE_TRUST, text: CUSTOMER_TYPE_TRUST_VALUE, icon: 'utility:contract_payment', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_TRUST}},
+        REF_CUSTOMER_TYPE_WEALTH:           {show: false, badge: {Id: REF_CUSTOMER_TYPE_WEALTH, text: CUSTOMER_TYPE_WEALTH_VALUE, icon: 'utility:trending', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_WEALTH}},
+        REF_CUSTOMER_TYPE_CORPORATE:        {show: false, badge: {Id: REF_CUSTOMER_TYPE_CORPORATE, text: CUSTOMER_TYPE_CORPORATE_VALUE, icon: 'utility:company', badgeClass: BADGE_PINK, order: 3.7, tooltip: ''}}
     };
 
     _isHousehold
@@ -330,7 +351,7 @@ export default class accountStatusFlags extends LightningElement {
                 }
                 console.log('temp bank details issue');
                 console.log(this.getValue(account, TEMP_BANK_DETAILS_ISSUE_FIELD))
-                if(this.getValue(account, TEMP_BANK_DETAILS_ISSUE_FIELD)){
+                if(this.getValue(account, TEMP_BANK_DETAILS_ISSUE_FIELD) === true){
                     this.badgeRefs[REF_TEMP_BANK_DETAILS_ISSUE].show = true;
                 }
             });
@@ -365,20 +386,12 @@ export default class accountStatusFlags extends LightningElement {
     connectedCallback(){
         console.log('connectedCallback');
         console.log('this.objectApiName: ' + this.objectApiName);
-        switch(this.objectApiName){
-            case 'Account':
-                this.accountId = this.recordId;
-                break;
-            case 'PersonAccount':
-                this.accountId = this.recordId;
-                break;
-            case 'Advice__c':
-                this.getDataFromOtherObject();
-                break;
-            default:
-                console.log('setting error message for unspported object');
-                this.errorMessage = 'Logic to get the householdId for this Object has not yet been defined'
-                break;
+        if(this.objectApiName == 'Account'){
+            this.accountId = this.recordId;
+        }else if(SUPPORTED_OBJECTS.includes(this.objectApiName)){
+            this.getDataFromOtherObject();
+        }else{
+            this.errorMessage = 'Logic to get the householdId for this Object has not yet been defined'
         }
     }
 
