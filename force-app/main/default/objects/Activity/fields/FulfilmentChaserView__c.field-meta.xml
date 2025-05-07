@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FulfilmentChaserView__c</fullName>
+    <description>A formula to evaluate on various criteria whether this fulfilment should appear on a list of ones needing chasing.</description>
+    <formula>OW_task_information_name__c = &#39;chase_transfer&#39; &amp;&amp;
+(FulfilmentStatus__c = &#39;Awaiting ad hoc action&#39; ||
+FulfilmentStatus__c = &#39;Chase client action&#39; ||
+FulfilmentStatus__c = &#39;Chase client payment&#39; ||
+FulfilmentStatus__c = &#39;Chase provider&#39; ||
+FulfilmentStatus__c = &#39;Chase transfer&#39;) &amp;&amp;
+FulfilmentAmount__c &gt; 5000 &amp;&amp;
+FulfilmentDaysSinceSubmission__c &gt; 9 &amp;&amp;
+NOT(FulfilmentTransferType__c = &#39;Full&#39; &amp;&amp;
+FulfilmentDaysSinceSubmission__c &lt; 18 &amp;&amp;
+(FulfilmentProvider__c = &#39;Aviva&#39; || FulfilmentProvider__c = &#39;Standard Life&#39; || FulfilmentProvider__c = &#39;Scottish Widows&#39;)) &amp;&amp; 
+
+NOT(FulfilmentTransferType__c = &#39;Full&#39; &amp;&amp;
+FulfilmentAmount__c &lt; 20000 &amp;&amp;
+FulfilmentDaysSinceSubmission__c &lt; 30 &amp;&amp;
+(ISPICKVAL(RelatedFulfilment__r.Recommendation__r.SourceLegacy__r.TransferProcess__c, &#39;Origo&#39;) ||
+ISPICKVAL(RelatedFulfilment__r.Recommendation__r.SourceLegacy__r.TransferProcess__c, &#39;&#39;)))</formula>
+    <label>Fulfilment chaser view</label>
+    <type>Checkbox</type>
+</CustomField>

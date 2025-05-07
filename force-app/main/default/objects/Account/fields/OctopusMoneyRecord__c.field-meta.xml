@@ -7,7 +7,7 @@
 
 IF(RecordType.DeveloperName = &quot;PersonAccount&quot; &amp;&amp; ISPICKVAL( Household_Lookup__r.GroupCompany__c , &quot;OM&quot;) &amp;&amp; Household_Lookup__c &lt;&gt; &quot;0018e000003CNci&quot; &amp;&amp;(ISPICKVAL(Household_Lookup__r.FinServ__Status__c,&quot;Active&quot;) || ISPICKVAL(Household_Lookup__r.FinServ__Status__c,&quot;Onboarding&quot;) || ISPICKVAL(Household_Lookup__r.FinServ__Status__c,&quot;Prospect&quot;)), CASESAFEID(Household_Lookup__c), &quot;&quot;))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>OM Record</label>
+    <label>OM record</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

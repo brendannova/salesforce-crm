@@ -29,21 +29,8 @@ public with sharing class GroupsTest {
         insert userRoleSub;
         
         // Insert a new user in the test role
-        User testUser = new User(
-            ProfileId = [SELECT Id FROM Profile WHERE Name = 'Planner'].Id,
-            LastName = 'last',
-            Email = 'testuser.fake@novawm.com.testuser',
-            Username = 'testuser.fake@novawm.com.testuser' + System.currentTimeMillis(),
-            CompanyName = 'TEST',
-            Title = 'title',
-            Alias = 'alias',
-            TimeZoneSidKey = 'America/Los_Angeles',
-            EmailEncodingKey = 'UTF-8',
-            LanguageLocaleKey = 'en_US',
-            LocaleSidKey = 'en_US',
-            UserRoleId = userRole.Id
-        );
-        insert testUser;
+        DataFactoryUser dfu = new DataFactoryUser();
+        User testUser = dfu.createColleague('testuser.fake@novawm.com.testuser');
         
         // Create group membership for the user, sub-group, role, and role and subordinate
         List<GroupMember> groupMembers = new List<GroupMember>();

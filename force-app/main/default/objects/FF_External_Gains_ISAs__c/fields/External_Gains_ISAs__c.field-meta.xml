@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>External_Gains_ISAs__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
-    <label>External Gains &amp; ISAs</label>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>A lookup relationship to the &apos;Gains &amp; ISA Contributions&apos; object to easily connect the two.</description>
+    <label>External gains &amp; ISAs</label>
     <referenceTo>External_Gains_Losses__c</referenceTo>
+    <relationshipLabel>FF Gains &amp; ISAs</relationshipLabel>
     <relationshipName>FF_External_Gains_ISAs</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

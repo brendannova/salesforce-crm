@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CanProvideIncome__c</fullName>
-    <description>Business use: n/a
-Tech use: used to display/ask if the related asset should provide an income
-Admin use only</description>
-    <label>Can Provide Income?</label>
+    <description>Used to indicate if assets of this type are able to record an income
+Admin use only. Used to drive validation in Salesforce and Nova Service</description>
+    <label>Can provide income?</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
