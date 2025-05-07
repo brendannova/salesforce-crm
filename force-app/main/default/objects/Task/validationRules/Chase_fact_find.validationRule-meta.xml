@@ -3,7 +3,7 @@
     <fullName>Chase_fact_find</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-  RecordType.DeveloperName  = &#39;Chase_fact_find&#39;,
+  RecordType.DeveloperName  = &apos;Chase_fact_find&apos;,
  ISPICKVAL(Status, &quot;Completed&quot;), 
  NOT(ISPICKVAL(Related_Fact_Find__r.FF_Status__c , &quot;Complete&quot;))
 )</errorConditionFormula>
