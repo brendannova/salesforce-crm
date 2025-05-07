@@ -148,15 +148,22 @@ const REF_TEMP_BANK_DETAILS_ISSUE = 'REF_TEMP_BANK_DETAILS_ISSUE';
 
 const SUPPORTED_OBJECTS = [
     'Account',
-    'PersonAccount',
     'Advice__c',
-    'Fulfilment__c',
-    'Opportunity',
+    'Asset__c',
+    'BankAccount__c',
     'Case',
-    'OW_review__c',
     'CustomerFact__c',
+    'Fee__c',
+    'FinServ__FinancialAccount__c',
     'FinServ__Employment__c',
-    'FinServ__FinancialAccount__c'
+    'Fulfilment__c',
+    'InformationRequest__c',
+    'Liability__c',
+    'Opportunity',
+    'OW_review__c',
+    'OW_rtq__c',
+    'PersonAccount',
+    'Recommendation__c'
 ];
 
 
