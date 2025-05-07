@@ -4,7 +4,9 @@
     <active>true</active>
     <description>Business use: Once advice has been moved to cancelled, cannot amend the status after that
 Tech use: n/a</description>
-    <errorConditionFormula>ISPICKVAL(PRIORVALUE(Advice_Status__c), &quot;Cancelled&quot; )
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; 
+ISPICKVAL(PRIORVALUE(Advice_Status__c), &quot;Cancelled&quot; )
 &amp;&amp;
 NOT(ISPICKVAL(Advice_Status__c, &quot;Cancelled&quot; ))
 &amp;&amp;
