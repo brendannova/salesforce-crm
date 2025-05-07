@@ -5,7 +5,7 @@
     <description>Ensures that it is not possible to confirm the death on creation of the case.</description>
     <errorConditionFormula>ISNEW()
 &amp;&amp;
-RecordType.DeveloperName = &#39;Deceased&#39;
+RecordType.DeveloperName = &apos;Deceased&apos;
 &amp;&amp;
 ( NOT(ISBLANK( DateDeathConfirmed__c ))
 ||

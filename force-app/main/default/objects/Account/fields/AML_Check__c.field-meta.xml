@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AML_Check__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
-    <label>Recent AML Check</label>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Lookup to most recent AML check record</description>
+    <label>Recent AML check</label>
     <referenceTo>AML__c</referenceTo>
     <relationshipLabel>Accounts</relationshipLabel>
     <relationshipName>Accounts</relationshipName>
