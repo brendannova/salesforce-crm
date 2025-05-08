@@ -54,7 +54,7 @@ export default class polaris extends LightningElement {
 
   async getTaskInfo(){
     console.log('getting task info');
-    if(this.selectedTask.OW_task_information_identifier__c){
+    if(this.selectedTask && this.selectedTask.OW_task_information_identifier__c){
 
       this.taskInformation = await getTaskInfo({taskTypeName: this.selectedTask.OW_task_information_name__c});
 
@@ -69,8 +69,12 @@ export default class polaris extends LightningElement {
   }
 
   handleTaskSelectionStatusChange(event){
-    
+
     if(event.detail.status === 'FINISHED_SCREEN' || event.detail.status === 'FINISHED') {
+
+      this.showTaskSelectionFlow = false;
+      this.showOrchestatorFlow = true;
+
       const outputVariables = event.detail.outputVariables;
 
       for (let i = 0; i < outputVariables.length; i++) {
@@ -78,11 +82,6 @@ export default class polaris extends LightningElement {
 
         if (outputVar.name === "selectedTask") {
           this.selectedTask = outputVar.value;
-
-          if(this.selectedTask !== null){
-            this.showTaskSelectionFlow = false;
-            this.showOrchestatorFlow = true;
-          }
         }
       }
     }

@@ -77,9 +77,6 @@
         <label>How Many Tasks?</label>
         <locationX>314</locationX>
         <locationY>350</locationY>
-        <defaultConnector>
-            <targetReference>No_Tasks_Assigned</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>No Tasks</defaultConnectorLabel>
         <rules>
             <name>X1</name>
@@ -186,22 +183,6 @@
         <queriedFields>Type</queriedFields>
         <queriedFields>WhatId</queriedFields>
     </recordLookups>
-    <screens>
-        <name>No_Tasks_Assigned</name>
-        <label>No Tasks Assigned</label>
-        <locationX>578</locationX>
-        <locationY>458</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NoAssignedTaskText</name>
-            <fieldText>&lt;p&gt;No tasks are assigned to you :(&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <screens>
         <name>Select_Task</name>
         <label>Select Task</label>
