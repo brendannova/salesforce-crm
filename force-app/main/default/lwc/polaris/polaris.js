@@ -57,7 +57,6 @@ export default class polaris extends LightningElement {
 
       this.taskInformation = await getTaskInfo({taskTypeName: this.selectedTask.OW_task_information_name__c});
 
-      console.log(JSON.stringify(this.taskInformation));
       if(this.taskInformation && this.taskInformation.OW_task_description_google_doc_link__c){
         this.showHelpButton = true;
       }
