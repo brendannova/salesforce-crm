@@ -576,7 +576,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_specialist_profile</targetReference>
+                <targetReference>Get_specialist_role</targetReference>
             </connector>
             <label>Manage specialist</label>
         </rules>
@@ -902,8 +902,8 @@
         <queriedFields>OW_queue__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_specialist_profile</name>
-        <label>Get specialist profile</label>
+        <name>Get_specialist_role</name>
+        <label>Get specialist role</label>
         <locationX>1403</locationX>
         <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -916,13 +916,13 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Name</field>
+            <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Specialist</stringValue>
+                <stringValue>OW_specialist</stringValue>
             </value>
         </filters>
-        <object>Profile</object>
+        <object>UserRole</object>
         <outputAssignments>
             <assignToReference>specialistProfileId</assignToReference>
             <field>Id</field>
@@ -943,7 +943,7 @@
         </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>ProfileId</field>
+            <field>UserRoleId</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>specialistProfileId</elementReference>
