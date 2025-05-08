@@ -69,8 +69,8 @@ export default class polaris extends LightningElement {
   }
 
   handleTaskSelectionStatusChange(event){
-
-    if(event.detail.status === 'FINISHED_SCREEN') {
+    
+    if(event.detail.status === 'FINISHED_SCREEN' || event.detail.status === 'FINISHED') {
       const outputVariables = event.detail.outputVariables;
 
       for (let i = 0; i < outputVariables.length; i++) {
