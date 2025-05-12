@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Person_Accounts_Not_Created</fullName>
-    <active>true</active>
-    <errorConditionFormula>ISBLANK(Primary_Owner__c)</errorConditionFormula>
-    <errorDisplayField>Primary_Owner__c</errorDisplayField>
-    <errorMessage>The Primary Owner is missing. You need to validate all Person Account records which will then populate the primary Owner field.</errorMessage>
-</ValidationRule>

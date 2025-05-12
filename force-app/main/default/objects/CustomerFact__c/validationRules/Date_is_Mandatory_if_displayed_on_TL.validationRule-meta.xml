@@ -3,7 +3,7 @@
     <fullName>Date_is_Mandatory_if_displayed_on_TL</fullName>
     <active>false</active>
     <errorConditionFormula>AND(
-TEXT( DisplayOnLifeline__c) = &#39;Yes&#39;,
+TEXT( DisplayOnLifeline__c) = &apos;Yes&apos;,
 ISBLANK( Date__c ))</errorConditionFormula>
     <errorMessage>Must provide a date if Display on Timeline is Yes</errorMessage>
 </ValidationRule>

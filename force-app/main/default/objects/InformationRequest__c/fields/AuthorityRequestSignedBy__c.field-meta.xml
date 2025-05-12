@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AuthorityRequestSignedBy__c</fullName>
+    <description>Indicates how the authority document for this request was signed</description>
+    <inlineHelpText>Indicates who signed the authority document for this request</inlineHelpText>
+    <label>Authority request signed by</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CLIENT_TOB</fullName>
+                <default>false</default>
+                <label>Client - TOB</label>
+            </value>
+            <value>
+                <fullName>CLIENT_BY_HAND</fullName>
+                <default>false</default>
+                <label>Client - by hand</label>
+            </value>
+            <value>
+                <fullName>INTERNAL_USER</fullName>
+                <default>false</default>
+                <label>Internal user</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

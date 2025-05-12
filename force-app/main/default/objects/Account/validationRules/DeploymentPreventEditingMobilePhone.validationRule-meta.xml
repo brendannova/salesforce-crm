@@ -3,7 +3,9 @@
     <fullName>DeploymentPreventEditingMobilePhone</fullName>
     <active>false</active>
     <description>Prevents editing the mobile or phone while we make updates to that data.</description>
-    <errorConditionFormula>NOT($Permission.AdminWorkInDeploymentMode)
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT($Permission.AdminWorkInDeploymentMode)
 &amp;&amp;
 $Setup.OW_business_configuration__c.DeploymentMode__c
 &amp;&amp;
