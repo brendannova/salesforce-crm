@@ -89,6 +89,10 @@ public with sharing class LwcHelperAccountStatusFlags {
                  Recommendation__c recommendation = [SELECT Id, Household__c FROM Recommendation__c WHERE Id = :recordId];
                  flags.householdId = recommendation.Household__c;
             }
+            when 'AdviceChecklist__c'{
+                 AdviceChecklist__c checklist = [SELECT Id, Household__c FROM AdviceChecklist__c WHERE Id = :recordId];
+                 flags.householdId = checklist.Household__c;
+            }
             
         }
 

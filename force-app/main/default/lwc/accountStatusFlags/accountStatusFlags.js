@@ -149,6 +149,7 @@ const REF_TEMP_BANK_DETAILS_ISSUE = 'REF_TEMP_BANK_DETAILS_ISSUE';
 const SUPPORTED_OBJECTS = [
     'Account',
     'Advice__c',
+    'AdviceChecklist__c',
     'Asset__c',
     'BankAccount__c',
     'Case',
