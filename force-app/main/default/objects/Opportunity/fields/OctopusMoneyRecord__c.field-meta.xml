@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>OctopusMoneyRecord__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL( Account.GroupCompany__c , &quot;OM&quot;) &amp;&amp; ( RecordType.DeveloperName = &#39;Advice_Opportunity&#39; || RecordType.DeveloperName = &#39;OW_acquisition&#39; ), CASESAFEID(AccountId), &quot;&quot;)</formula>
+    <formula>IF(ISPICKVAL( Account.GroupCompany__c , &quot;OM&quot;) &amp;&amp; ( RecordType.DeveloperName = &apos;Advice_Opportunity&apos; || RecordType.DeveloperName = &apos;OW_acquisition&apos; ), CASESAFEID(AccountId), &quot;&quot;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>OM Record</label>
     <required>false</required>

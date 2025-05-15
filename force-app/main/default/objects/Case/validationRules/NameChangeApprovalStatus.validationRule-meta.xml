@@ -3,7 +3,9 @@
     <fullName>NameChangeApprovalStatus</fullName>
     <active>true</active>
     <description>Ensures that approval status is only controlled by the approval process.</description>
-    <errorConditionFormula>RecordType.DeveloperName = &quot;PersonalInformationChange&quot;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+RecordType.DeveloperName = &quot;PersonalInformationChange&quot;
 &amp;&amp;
 ISPICKVAL(Type, &quot;Name change&quot;)
 &amp;&amp;

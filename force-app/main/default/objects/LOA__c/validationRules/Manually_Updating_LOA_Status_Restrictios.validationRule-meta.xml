@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Manually_Updating_LOA_Status_Restrictios</fullName>
     <active>false</active>
-    <description>Prevents users manually changing the LOA&#39;s status to anything beyond &quot;Signed&quot;</description>
+    <description>Prevents users manually changing the LOA&apos;s status to anything beyond &quot;Signed&quot;</description>
     <errorConditionFormula>AND(
 $Profile.Name &lt;&gt; &quot;System Administrator&quot;, 
 ISCHANGED( MainLOAStatus__c ),

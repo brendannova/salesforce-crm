@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OW_account_must_be_household</fullName>
-    <active>true</active>
-    <description>Ensures that the opportunity account is always a household.</description>
-    <errorConditionFormula>CASESAFEID(Account.RecordTypeId) =  $CustomMetadata.OW_record_type_reference__mdt.OW_opportunity_advice.OW_record_type_id__c</errorConditionFormula>
-    <errorDisplayField>AccountId</errorDisplayField>
-    <errorMessage>The account must be a household.</errorMessage>
-</ValidationRule>

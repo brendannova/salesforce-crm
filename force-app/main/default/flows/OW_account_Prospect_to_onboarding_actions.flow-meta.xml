@@ -83,7 +83,7 @@
         <name>Create_onboarding_advice</name>
         <label>Create onboarding advice</label>
         <locationX>182</locationX>
-        <locationY>542</locationY>
+        <locationY>434</locationY>
         <flowName>AdviceCreateAutomatic</flowName>
         <inputAssignments>
             <name>adviceTypeDeveloperName</name>
@@ -104,34 +104,6 @@
         <locationX>314</locationX>
         <locationY>242</locationY>
         <connector>
-            <targetReference>OW_listen_to_discovery_task</targetReference>
-        </connector>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>household.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <stringValue>send_what_next_email_process</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>household.Id</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>OW_listen_to_discovery_task</name>
-        <label>Create Listen to Discovery task</label>
-        <locationX>314</locationX>
-        <locationY>350</locationY>
-        <connector>
             <targetReference>Create_onboarding_advice</targetReference>
         </connector>
         <flowName>OW_task_create_from_task_information</flowName>
@@ -144,7 +116,7 @@
         <inputAssignments>
             <name>task_type</name>
             <value>
-                <stringValue>listen_to_discovery_meeting</stringValue>
+                <stringValue>send_what_next_email_process</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

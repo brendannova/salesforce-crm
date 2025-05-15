@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoDuplicateDeceasedCases</fullName>
+    <active>true</active>
+    <description>Prevents creation of a new deceased case for a person who is already in a status of deceased or reported deceased</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+RecordType.DeveloperName = &quot;Deceased&quot; 
+&amp;&amp;
+(
+ ISPICKVAL( Person__r.FinServ__Status__c, &quot;Deceased&quot;)
+||
+ ISPICKVAL( Person__r.FinServ__Status__c, &quot;Reported Deceased&quot;)
+)
+&amp;&amp;
+ISNEW()</errorConditionFormula>
+    <errorMessage>A deceased case for this person is already open</errorMessage>
+</ValidationRule>

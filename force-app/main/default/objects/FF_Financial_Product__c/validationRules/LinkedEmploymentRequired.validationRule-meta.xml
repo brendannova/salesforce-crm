@@ -3,10 +3,12 @@
     <fullName>LinkedEmploymentRequired</fullName>
     <active>true</active>
     <description>If a client has linked this FP to an employment record, there might only be a match ID to establish this link, perhaps because the employment is not yet created. This rule ensures the employment is created and linked properly prior to validation.</description>
-    <errorConditionFormula>AND(
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+AND(
 ISPICKVAL(Validated__c, &quot;Validated&quot;),
 NOT(ISBLANK( OW_employment_match_id__c )),
 ISBLANK( OW_pension_employment__c )
 )</errorConditionFormula>
-    <errorMessage>This pension is linked to the customer&#39;s employment. Please validate the employment first.</errorMessage>
+    <errorMessage>This pension is linked to the customer&apos;s employment. Please validate the employment first.</errorMessage>
 </ValidationRule>
