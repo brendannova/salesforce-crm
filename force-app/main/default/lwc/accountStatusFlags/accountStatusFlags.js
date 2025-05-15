@@ -74,7 +74,6 @@ const BADGE_PINK = 'badgePink';
 
 //icons
 let iconMap = new Map();
-
 iconMap.set(PROFILE_STATUS_LABEL, 'utility:warning');
 iconMap.set(RTQ_STATUS_LABEL, 'custom:custom90');
 iconMap.set(TOB_STATUS_LABEL, 'utility:signature');
