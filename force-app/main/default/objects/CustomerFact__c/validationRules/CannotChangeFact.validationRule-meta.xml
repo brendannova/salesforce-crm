@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CannotChangeFact</fullName>
+    <active>true</active>
+    <description>Rule to ensure you cannot change the fact once customer fact has been created.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+NOT(ISNEW())
+&amp;&amp;
+ISCHANGED(Fact__c)</errorConditionFormula>
+    <errorDisplayField>Fact__c</errorDisplayField>
+    <errorMessage>Cannot change fact once it has been set. Please create a new fact and inactivate this one if not needed.</errorMessage>
+</ValidationRule>
