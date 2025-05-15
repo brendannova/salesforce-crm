@@ -53,8 +53,7 @@ export default class polaris extends LightningElement {
   @api taskInformation;
 
   async getTaskInfo(){
-    console.log('getting task info');
-    if(this.selectedTask && this.selectedTask.OW_task_information_identifier__c){
+    if(this.selectedTask && this.selectedTask.OW_task_information_name__c){
 
       this.taskInformation = await getTaskInfo({taskTypeName: this.selectedTask.OW_task_information_name__c});
 
