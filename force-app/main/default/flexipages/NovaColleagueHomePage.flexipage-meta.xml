@@ -15,16 +15,10 @@
                 <componentName>desktopDashboards:embeddedDashboard</componentName>
                 <identifier>desktopDashboards_embeddedDashboard4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 OR 2</booleanFilter>
                     <criteria>
-                        <leftValue>{!$User.UserRole.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>operation</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!$User.UserRole.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>specialist</rightValue>
+                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>OW_specialist</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -43,9 +37,9 @@
                 <identifier>desktopDashboards_embeddedDashboard2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>Plann</rightValue>
+                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Planner</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -64,9 +58,9 @@
                 <identifier>desktopDashboards_embeddedDashboard</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!$User.UserRole.Name}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>plann</rightValue>
+                        <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Planner</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
