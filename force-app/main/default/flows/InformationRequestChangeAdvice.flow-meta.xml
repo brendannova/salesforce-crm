@@ -4,7 +4,7 @@
     <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
-        <locationX>754</locationX>
+        <locationX>1018</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -17,7 +17,7 @@
     <assignments>
         <name>Assign_new_advice_value</name>
         <label>Assign new advice value</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Advice__c</assignToReference>
@@ -51,7 +51,7 @@
     <decisions>
         <name>Is_the_information_request_linked_to_advice</name>
         <label>Is the information request linked to advice</label>
-        <locationX>226</locationX>
+        <locationX>292</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Get_advice</targetReference>
@@ -76,12 +76,27 @@
     <decisions>
         <name>Status_of_selected_advice</name>
         <label>Status of selected advice</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Confirm_advice_selection</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>After data gathering</defaultConnectorLabel>
+        <rules>
+            <name>No_advice_selected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>adviceSelect.firstSelectedRow</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Confirm_blank_selection</targetReference>
+            </connector>
+            <label>No advice selected</label>
+        </rules>
         <rules>
             <name>Before_data_gathering_or_analysis</name>
             <conditionLogic>or</conditionLogic>
@@ -145,7 +160,7 @@
     <recordLookups>
         <name>Get_advice</name>
         <label>Get potential advice</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -184,7 +199,7 @@
     <screens>
         <name>Collect_details</name>
         <label>Collect details</label>
-        <locationX>402</locationX>
+        <locationX>534</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -220,7 +235,7 @@
             <inputParameters>
                 <name>minRowSelection</name>
                 <value>
-                    <numberValue>1.0</numberValue>
+                    <numberValue>0.0</numberValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -251,7 +266,7 @@
     <screens>
         <name>Confirm_advice_selection</name>
         <label>Confirm advice selection</label>
-        <locationX>490</locationX>
+        <locationX>754</locationX>
         <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -307,6 +322,64 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Confirm_blank_selection</name>
+        <label>Confirm blank selection</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assign_new_advice_value</targetReference>
+        </connector>
+        <fields>
+            <name>noAdviceConfirmToast</name>
+            <extensionName>c:confirmModalFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>navigateBackOnCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>navigateForwardOnConfirm</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Confirm no advice</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>Are you sure no advice should be linked?</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Remove_from_advice</name>
         <label>Remove from advice</label>
         <locationX>50</locationX>
@@ -327,7 +400,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>100</locationX>
+        <locationX>166</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_the_information_request_linked_to_advice</targetReference>
