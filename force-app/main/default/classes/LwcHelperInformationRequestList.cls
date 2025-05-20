@@ -9,7 +9,7 @@ public with sharing class LwcHelperInformationRequestList {
     @AuraEnabled(cacheable=true)
     public static List<Map<String, String>> getData(String recordId) {
     	List<Map<String, String>> informationRequestListData = new List<Map<String, String>>();
-        List<InformationRequest__c> informationRequests = [SELECT Id, Name, Status__c, AuthorityStatus__c,InformationRequestType__r.Name, FinancialProductFinServ__c, InformationRequestType__c, FinancialProductFinServ__r.Name FROM InformationRequest__c WHERE FinancialProductFinServ__r.Household__c =: recordId AND Status__c NOT IN ('Complete','Cancelled') ORDER BY Status__c ASC];
+        List<InformationRequest__c> informationRequests = [SELECT Id, Name, Status__c, AuthorityStatus__c,InformationRequestType__r.Name, FinancialProductFinServ__c, InformationRequestType__c, FinancialProductFinServ__r.Name FROM InformationRequest__c WHERE FinancialProductFinServ__r.Household__c =: recordId AND ( Status__c != 'Complete' AND Status__c != 'Cancelled') ORDER BY Status__c ASC];
         String urlPrefix = URL.getOrgDomainURL().toExternalForm() + '/';
         Map<String,String> statusApiToLabelMap = getPicklistApiLabelMap();
         for( InformationRequest__c informationRequest : informationRequests ) {
