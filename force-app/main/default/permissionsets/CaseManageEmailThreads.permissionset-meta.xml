@@ -118,6 +118,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>EmailConfiguration__c.CloseAfterSend__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>EmailConfiguration__c.GoogleDriveTemplateUrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -133,7 +138,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EmailConfiguration__c.ReviewFiscalYearDates__c</field>
+        <field>EmailConfiguration__c.ReviewCalendarYearDates__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -320,4 +325,16 @@
         <enabled>true</enabled>
         <name>EmailOperations</name>
     </customPermissions>
+    <classAccesses>
+        <apexClass>LwcHelperDynamicRecordList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperEmailTemplateList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperEmailTemplateListTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
 </PermissionSet>
