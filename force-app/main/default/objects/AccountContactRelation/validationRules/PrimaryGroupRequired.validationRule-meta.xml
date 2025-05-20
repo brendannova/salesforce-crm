@@ -3,9 +3,14 @@
     <fullName>PrimaryGroupRequired</fullName>
     <active>true</active>
     <description>Ensures primary group is true for a client unless the household is inactive.</description>
-    <errorConditionFormula>!FinServ__PrimaryGroup__c &amp;&amp;
-INCLUDES(Roles, &quot;Client&quot;) &amp;&amp; 
-NOT(ISPICKVAL( Account.FinServ__Status__c, &quot;Inactive&quot;)) &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+!FinServ__PrimaryGroup__c 
+&amp;&amp;
+INCLUDES(Roles, &quot;Client&quot;) 
+&amp;&amp; 
+NOT(ISPICKVAL( Account.FinServ__Status__c, &quot;Inactive&quot;)) 
+&amp;&amp;
 NOT(ISPICKVAL( Account.FinServ__Status__c, &quot;Split&quot;))</errorConditionFormula>
     <errorDisplayField>Roles</errorDisplayField>
     <errorMessage>To have a role of client in a household, primary group must be true. Please choose another role or mark primary group as false.</errorMessage>

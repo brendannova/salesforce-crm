@@ -1,4 +1,4 @@
-public with sharing class TaskEngine {
+public without sharing class TaskEngine {
     
     final public static String ASSIGNED_TO_CASE_OWNER =                         'Case owner';
     final public static String ASSIGNED_TO_CHOSEN_USER =                        'Chosen user';
@@ -127,10 +127,15 @@ public with sharing class TaskEngine {
 
         for(TaskEngineRequest taskEngineRequest : taskEngineRequests){
             //queue specified on household
-            String queue = householdMap.get(taskEngineRequest.householdId).OW_queue__c;
-            if(queue != null && !queueDeveloperNames.contains(queue)){
-                queueDeveloperNames.add(queue);
+            String queue = null;
+            if(householdMap.containsKey(taskEngineRequest.householdId)){
+                queue = householdMap.get(taskEngineRequest.householdId).OW_queue__c;
+
+                if(queue != null && !queueDeveloperNames.contains(queue)){
+                    queueDeveloperNames.add(queue);
+                }
             }
+
         }
 
         if(!queueDeveloperNames.isEmpty()){

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ApprovalStatusProfitAndLoss</fullName>
+    <active>true</active>
+    <description>If Nova is the platform calculating the P&amp;L, it must be approved before completed.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+RecordType.DeveloperName = &quot;ProfitAndLoss&quot;
+&amp;&amp;
+ISPICKVAL( Status, &quot;Complete&quot;)
+&amp;&amp;
+NOT(ISPICKVAL(ChangeApprovalStatus__c, &quot;Approved&quot;))
+&amp;&amp;
+ISPICKVAL(Platform__c, &quot;Nova&quot;)</errorConditionFormula>
+    <errorMessage>Approval required before you can complete. Click submit for approval at the top right of the page. If this is not visible, ensure the record is in progress, there is a Google Drive folder and the analysis section is populated.</errorMessage>
+</ValidationRule>

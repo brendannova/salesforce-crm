@@ -1,4 +1,4 @@
-public with sharing class FlowUtilityTaskCreate {
+public without sharing class FlowUtilityTaskCreate {
     public class FlowInputs{
         @InvocableVariable(label='Task request' description='TaskEngineRequest variable' required=true) 
         public TaskEngineRequest taskRequest;

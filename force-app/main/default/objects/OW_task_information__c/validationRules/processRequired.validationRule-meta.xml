@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>processRequired</fullName>
+    <active>true</active>
+    <description>Ensures that a process is specified where this is an active record.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISBLANK( OW_task_type__c ))
+
+&amp;&amp;
+
+ISPICKVAL( OW_status__c, &quot;Active&quot; ) 
+
+&amp;&amp; 
+
+ISPICKVAL(  OW_process_variant__c, &quot;&quot; )</errorConditionFormula>
+    <errorDisplayField>OW_process_variant__c</errorDisplayField>
+    <errorMessage>Please specify a process</errorMessage>
+</ValidationRule>

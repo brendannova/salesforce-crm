@@ -3,7 +3,9 @@
     <fullName>HouseholdProfileRestrictValidationsPendi</fullName>
     <active>false</active>
     <description>Prevents editing of profile fields on the household when there are client profile validations outstanding. Allows updates to all other fields.</description>
-    <errorConditionFormula>RecordType.DeveloperName = &quot;IndustriesHousehold&quot;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+RecordType.DeveloperName = &quot;IndustriesHousehold&quot;
 &amp;&amp;
 Fact_Find_Validations_Outstanding__c = true
 &amp;&amp;
@@ -29,5 +31,5 @@ ISCHANGED(Pensions__c) ||
 ISCHANGED(Pensions_Frequency__c))
 &amp;&amp;
 NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;))</errorConditionFormula>
-    <errorMessage>Client profile validations outstanding. Please complete these before editing fields visible in the customer&#39;s profile.</errorMessage>
+    <errorMessage>Client profile validations outstanding. Please complete these before editing fields visible in the customer&apos;s profile.</errorMessage>
 </ValidationRule>

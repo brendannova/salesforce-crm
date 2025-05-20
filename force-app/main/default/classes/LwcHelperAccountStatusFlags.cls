@@ -37,8 +37,8 @@ public with sharing class LwcHelperAccountStatusFlags {
                 flags.householdId = fulfilment.Household__c;
             }
             when 'Opportunity'{
-                Opportunity opp = [SELECT Id, AccountId FROM Opportunity WHERE Id = :recordId];
-                flags.householdId = opp.AccountId;
+                Opportunity opp = [SELECT Id, Household_Account__c FROM Opportunity WHERE Id = :recordId];
+                flags.householdId = opp.Household_Account__c;
             }
             when 'Case'{
                 Case opp = [SELECT Id, OW_household__c FROM Case WHERE Id = :recordId];
@@ -59,8 +59,43 @@ public with sharing class LwcHelperAccountStatusFlags {
             when 'FinServ__FinancialAccount__c'{
                 FinServ__FinancialAccount__c finAccount = [SELECT Id, Household__c FROM FinServ__FinancialAccount__c WHERE Id = :recordId];
                 flags.householdId = finAccount.Household__c;
+
             }
+            when 'Asset__c'{
+                Asset__c asset = [SELECT Id, Household__c FROM Asset__c WHERE Id = :recordId];
+                flags.householdId = asset.Household__c;
+            }
+            when 'BankAccount__c'{
+                BankAccount__c bankAccount = [SELECT Id, Household__c FROM BankAccount__c WHERE Id = :recordId];
+                flags.householdId = bankAccount.Household__c;
+            }
+            when 'Fee__c'{
+                 Fee__c fee = [SELECT Id, Advice__r.Advice_Household__c FROM Fee__c WHERE Id = :recordId];
+                 flags.householdId = fee.Advice__r.Advice_Household__c;
+            }
+            when 'InformationRequest__c'{
+                 InformationRequest__c informationRequest = [SELECT Id, FinancialProductFinServ__r.Household__c FROM InformationRequest__c WHERE Id = :recordId];
+                 flags.householdId = informationRequest.FinancialProductFinServ__r.Household__c;
+            }
+            when 'Liability__c'{
+                 Liability__c liability = [SELECT Id, Household__c FROM Liability__c WHERE Id = :recordId];
+                 flags.householdId = liability.Household__c;
+            }
+            when 'OW_rtq__c'{
+                 OW_rtq__c rtq = [SELECT Id, OW_household__c FROM OW_rtq__c WHERE Id = :recordId];
+                 flags.householdId = rtq.OW_household__c;
+            }
+            when 'Recommendation__c'{
+                 Recommendation__c recommendation = [SELECT Id, Household__c FROM Recommendation__c WHERE Id = :recordId];
+                 flags.householdId = recommendation.Household__c;
+            }
+            when 'AdviceChecklist__c'{
+                 AdviceChecklist__c checklist = [SELECT Id, Household__c FROM AdviceChecklist__c WHERE Id = :recordId];
+                 flags.householdId = checklist.Household__c;
+            }
+            
         }
+
 
         return flags;
     }
