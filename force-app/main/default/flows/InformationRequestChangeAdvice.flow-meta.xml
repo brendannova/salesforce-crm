@@ -26,6 +26,13 @@
                 <elementReference>adviceSelect.firstSelectedRow.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceSelect.firstSelectedRow</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Assign_no_advice_value</name>
@@ -34,6 +41,10 @@
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Advice__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
     </assignments>
@@ -323,6 +334,14 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>advice</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
     <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>
