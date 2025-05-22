@@ -151,7 +151,7 @@
     <description>This flow will run whenever criteria defined within it are met to capture a record of the changes made by an internal user.</description>
     <environments>Default</environments>
     <formulas>
-        <description>Set FF sesion change type based on if modifed by integration user or not</description>
+        <description>Set FF session change type based on if modifed by integration user or not</description>
         <name>changeType</name>
         <dataType>String</dataType>
         <expression>IF({!$Record.PlatformLastModifiedBy__c} == {!Get_Integration_User.Id}, {!clientUpdateValue}, {!internalUserUpdateValue})</expression>
@@ -384,14 +384,11 @@ NULL)</expression>
         <connector>
             <targetReference>Get_Integration_User</targetReference>
         </connector>
-        <filterFormula>(ISNEW() &amp;&amp; {!$Record.OW_stop_internal_change_processing__c} = 1)
-||
-(NOT(ISNEW()) &amp;&amp; NOT(ISCHANGED({!$Record.OW_stop_internal_change_processing__c})))</filterFormula>
         <object>FinServ__Employment__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Create_session</name>
         <label>Create session</label>
