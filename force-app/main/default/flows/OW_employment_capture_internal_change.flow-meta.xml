@@ -65,6 +65,27 @@
             <targetReference>Create_FF_employment_record</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>clientUpdateValue</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Client_Update</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>IntegrationUserAlias</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>iuser</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>internalUserUpdateValue</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Internal_User_Update</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Display_in_profile</name>
         <label>Display in profile?</label>
@@ -130,6 +151,12 @@
     <description>This flow will run whenever criteria defined within it are met to capture a record of the changes made by an internal user.</description>
     <environments>Default</environments>
     <formulas>
+        <description>Set FF sesion change type based on if modifed by integration user or not</description>
+        <name>changeType</name>
+        <dataType>String</dataType>
+        <expression>IF({!$Record.PlatformLastModifiedBy__c} == {!Get_Integration_User.Id}, {!clientUpdateValue}, {!internalUserUpdateValue})</expression>
+    </formulas>
+    <formulas>
         <name>ffSessionObject</name>
         <dataType>String</dataType>
         <expression>&quot;Employment | &quot; &amp; {!$Record.Person_Account__r.FirstName} &amp; &quot; | &quot; &amp; {!$Record.Name}</expression>
@@ -152,7 +179,7 @@
 NULL)</expression>
     </formulas>
     <interviewLabel>Employment | capture internal change {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Employment | capture internal change</label>
+    <label>Employment | Capture change to FF</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -330,11 +357,32 @@ NULL)</expression>
         <object>FF_Employment__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Integration_User</name>
+        <label>Get Integration User</label>
+        <locationX>446</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_session</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Alias</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IntegrationUserAlias</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Create_session</targetReference>
+            <targetReference>Get_Integration_User</targetReference>
         </connector>
         <filterFormula>(ISNEW() &amp;&amp; {!$Record.OW_stop_internal_change_processing__c} = 1)
 ||
@@ -362,7 +410,7 @@ NULL)</expression>
         <inputAssignments>
             <name>ffSessionType</name>
             <value>
-                <stringValue>Internal_User_Update</stringValue>
+                <elementReference>changeType</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
