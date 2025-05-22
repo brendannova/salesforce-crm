@@ -4,16 +4,6 @@
     <description>This is the base Nova profile that should be assigned to consultants and any other external person who has access to Nova Salesforce.</description>
     <userLicense>Salesforce Platform</userLicense>
     <applicationVisibilities>
-        <application>CodeBuilder__CodeBuilder</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>EasyDescribe__EasyDescribe</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>FinServ__BankingConsoleFinancialServicesCloud</application>
         <default>false</default>
         <visible>false</visible>
@@ -80,16 +70,6 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>Sales</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>pi__ProspectInsight</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>rcsfl__RingCentral</application>
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
@@ -185,11 +165,6 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningBolt</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>standard__LightningInstrumentation</application>
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
@@ -296,14 +271,6 @@
         <enabled>true</enabled>
         <name>ViewHelpLink</name>
     </userPermissions>
-    <layoutAssignments>
-        <layout>PersonAccount-Colleague</layout>
-        <recordType>PersonAccount.Colleague</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>PersonAccount-Person Account Layout</layout>
-        <recordType>PersonAccount.Important_Family_Member</recordType>
-    </layoutAssignments>
     <layoutAssignments>
         <layout>AML__c-AML Check Layout</layout>
     </layoutAssignments>
@@ -1863,6 +1830,14 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>PaymentLineInvoice-Payment Line Invoice Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonAccount-Colleague</layout>
+        <recordType>PersonAccount.Colleague</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PersonAccount-Person Account Layout</layout>
+        <recordType>PersonAccount.Important_Family_Member</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PersonAccount-Person Account Layout</layout>
@@ -3827,18 +3802,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>CodeBuilder__Code_Builder_Dashboard</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>CodeBuilder__Workspace_Manager</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>CodeBuilder__Workspace__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>ComplianceRequestAccess</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -3852,10 +3815,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Country__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>EasyDescribe__EasyDescribe</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
@@ -3924,10 +3883,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>FeatureFlag__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>FinServWaveExt__WMAdvisorWave</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
@@ -4128,34 +4083,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>UserLicence__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>pi__EngageSalesTools</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>pi__Lead_Deck</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>pi__Pardot_LeadDeck</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>pi__ProspectInsight</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>pi__Sales_Cloud_Engage_License_Assignment</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>pi__Sales_Edge</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>pi__Sales_Edge_Reports</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
