@@ -29,6 +29,7 @@ public with sharing class LwcHelperEmailTemplateListTest {
             EmailConfiguration__c emailConfig = new EmailConfiguration__c();
             emailConfig.Name = 'unique_Test12345';
             emailConfig.DeveloperName__c = 'unique_Test12345';
+            emailConfig.AwaitReply__c = 'No reply expected';
             emailConfig.ClientsAddressed__c = 'All';
             emailConfig.CustomPermission__c = 'TestPermission';
             emailConfig.Description__c = 'Test';
