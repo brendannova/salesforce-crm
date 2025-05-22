@@ -625,6 +625,19 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Recommendation__r.DestinationLegacy__r.OW_Investment_Mandate__c</fieldItem>
+                <identifier>RecordRecommendation_rDestinationLegacy_rOW_Investment_Mandate_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Recommendation__r.RecommendationType__r.DeveloperName__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>PORTFOLIO_SWITCH</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-f1cf34b7-9f52-4edc-a24a-a197e93d7c5a</name>
         <type>Facet</type>
     </flexiPageRegions>
