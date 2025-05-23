@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Permission set to be provided to admins that will give read and edit access to all fields. Equivalent to granting access to the admin profile previously.</description>
     <hasActivationRequired>false</hasActivationRequired>
@@ -68,7 +68,23 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcHelperAdviceManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperDynamicRecordList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LwcHelperEmailTemplateList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperInformationRequestList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperTaskOrchestrator</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -6294,7 +6310,7 @@
     <tabSettings>
         <tab>EmailTemplatesManage</tab>
         <visibility>Visible</visibility>
-    </tabSettings>    
+    </tabSettings>
     <tabSettings>
         <tab>FeatureFlagRule__c</tab>
         <visibility>Visible</visibility>
