@@ -33,7 +33,6 @@ public with sharing class LwcHelperEmailTemplateListTest {
             emailConfig.ClientsAddressed__c = 'All';
             emailConfig.CustomPermission__c = 'TestPermission';
             emailConfig.Description__c = 'Test';
-            emailConfig.ReviewAtTaxYearEnd__c = 'Yes';
             emailConfig.GoogleDriveTemplateUrl__c = 'https://drive.google.com';
             emailConfig.Necessity__c = 'Optional';
             emailConfig.Type__c = 'Service';
