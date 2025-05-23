@@ -116,6 +116,16 @@
                 <identifier>RecordImportantNotesForSpecialists_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SourceOfFunds__c</fieldItem>
+                <identifier>RecordSourceOfFunds__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-f36dd7e8-97b9-4a62-94b9-9b45cd3923aa</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -820,29 +830,12 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.RetainDetails__c</fieldItem>
-                <identifier>RecordRetainDetails_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.RecommendationTypeName__c}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>Retain</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.RetainDetails__c</fieldItem>
                 <identifier>RecordReasonForRetaining_cField</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.RecommendationType__r.Name__c}</leftValue>
+                        <leftValue>{!Record.RecommendationType__r.DeveloperName__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>Retain</rightValue>
+                        <rightValue>RETAIN</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1012,6 +1005,23 @@
                         <leftValue>{!Record.RecommendationType__r.ReferenceName__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>LUMP_SUM_WITHDRAWAL</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SourceOfFunds__c</fieldItem>
+                <identifier>RecordSourceOfFunds_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.PaidBy__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
