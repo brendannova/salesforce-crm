@@ -226,20 +226,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.FinServ__EmploymentStatus__c</fieldItem>
-                <identifier>RecordFinServ_EmploymentStatus_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.FinServ__Position__c</fieldItem>
-                <identifier>RecordFinServ_Position_cField</identifier>
+                <fieldItem>Record.OW_status__c</fieldItem>
+                <identifier>RecordOW_status_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-9b1bb184-db86-4cdb-8000-5d3215164787</name>
@@ -264,16 +254,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Household__c</fieldItem>
                 <identifier>RecordHousehold_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.OW_status__c</fieldItem>
-                <identifier>RecordOW_status_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2a548327-4f84-4148-a008-f224762c4447</name>
@@ -308,6 +288,58 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FinServ__EmploymentStatus__c</fieldItem>
+                <identifier>RecordFinServ_EmploymentStatus_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-f0c26ac1-04b2-438f-8c1b-adbef07f859b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FinServ__Position__c</fieldItem>
+                <identifier>RecordFinServ_Position_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-cf28dbf9-b3e9-4281-b51f-6ce24223998e</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-f0c26ac1-04b2-438f-8c1b-adbef07f859b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column10</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-cf28dbf9-b3e9-4281-b51f-6ce24223998e</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column11</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-1dec1a7a-497c-4310-af69-fd213679438c</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.AmlStatus__c</fieldItem>
@@ -321,10 +353,10 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CompanyRegistrationNumber__c</fieldItem>
-                <identifier>RecordCompanyRegistrationNumber__cField</identifier>
+                <identifier>RecordCompanyRegistrationNumber_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-efeb2e89-9808-4924-9b73-89fe8ceec135</name>
+        <name>Facet-a36f12fc-0c9f-4499-a947-9cc72b44fd28</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -355,7 +387,7 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-5a1c3874-7bad-47ae-9cea-a956fcd4c829</name>
+        <name>Facet-fc8298f3-0229-481c-96fa-4563baebee27</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -363,23 +395,23 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-efeb2e89-9808-4924-9b73-89fe8ceec135</value>
+                    <value>Facet-a36f12fc-0c9f-4499-a947-9cc72b44fd28</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column8</identifier>
+                <identifier>flexipage_column12</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
                     <name>body</name>
-                    <value>Facet-5a1c3874-7bad-47ae-9cea-a956fcd4c829</value>
+                    <value>Facet-fc8298f3-0229-481c-96fa-4563baebee27</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column9</identifier>
+                <identifier>flexipage_column13</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-90764304-4579-4ad1-bcd4-7f5ab942206d</name>
+        <name>Facet-4d946619-5a79-465d-b276-97cb10ed73c6</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -399,8 +431,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Business_Dividends__c</fieldItem>
-                <identifier>RecordBusiness_Dividends_cField</identifier>
+                <fieldItem>Record.Average_bonus__c</fieldItem>
+                <identifier>RecordAverage_bonus_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-2a543cc9-9c9d-44c4-9638-276fce0ad1d1</name>
@@ -413,8 +445,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Average_bonus__c</fieldItem>
-                <identifier>RecordAverage_bonus_cField</identifier>
+                <fieldItem>Record.Business_Dividends__c</fieldItem>
+                <identifier>RecordBusiness_Dividends_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-674bc931-6c18-47c2-8678-dcff7a828014</name>
@@ -442,6 +474,138 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-aba65134-dd39-4899-a190-0e087dfbb0a5</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OW_income_from_state_pension__c</fieldItem>
+                <identifier>RecordOW_income_from_state_pension_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Income_from_Pensions_Annuities__c</fieldItem>
+                <identifier>RecordIncome_from_Pensions_Annuities_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Income_from_Savings_Investments__c</fieldItem>
+                <identifier>RecordIncome_from_Savings_Investments_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Other_Income__c</fieldItem>
+                <identifier>RecordOther_Income_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Income__c</fieldItem>
+                <identifier>RecordTotal_Income_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-1caa0a3c-290b-44a1-bb79-cd9dd58f0a2d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.OW_income_from_state_pension_frequency__c</fieldItem>
+                <identifier>RecordOW_income_from_state_pension_frequency_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Pensions_Annuity_Frequency__c</fieldItem>
+                <identifier>RecordPensions_Annuity_Frequency_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Saving_Investments_Frequency__c</fieldItem>
+                <identifier>RecordSaving_Investments_Frequency_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Other_Income_Frequency__c</fieldItem>
+                <identifier>RecordOther_Income_Frequency_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Total_Income_Frequency__c</fieldItem>
+                <identifier>RecordTotal_Income_Frequency_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-d9b9571a-aead-41cb-acc7-299cf13b42e5</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-1caa0a3c-290b-44a1-bb79-cd9dd58f0a2d</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column8</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-d9b9571a-aead-41cb-acc7-299cf13b42e5</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column9</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-727030a3-e4cc-45c7-81a2-20b16d161369</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -567,7 +731,32 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
-                    <value>Facet-90764304-4579-4ad1-bcd4-7f5ab942206d</value>
+                    <value>Facet-1dec1a7a-497c-4310-af69-fd213679438c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Employment</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection6</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Employment</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-4d946619-5a79-465d-b276-97cb10ed73c6</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>horizontalAlignment</name>
@@ -578,7 +767,7 @@
                     <value>Fulfilment details</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection5</identifier>
+                <identifier>flexipage_fieldSection7</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -597,6 +786,38 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Employment</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-727030a3-e4cc-45c7-81a2-20b16d161369</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Income</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection5</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Retirement_Income</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
