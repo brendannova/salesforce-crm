@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CreateOrUpdateStopInternalUsers</fullName>
+    <active>false</active>
+    <description>Users cannot create or update any financial product records. All updates to this data will be triggered by Nova service via integration user.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+NOT($Permission.IntegrationUser)</errorConditionFormula>
+    <errorMessage>Any amendments to this record will need to be made through the appropriate flows</errorMessage>
+</ValidationRule>

@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Create_tasks</name>
         <label>Create tasks</label>
-        <locationX>314</locationX>
-        <locationY>6026</locationY>
+        <locationX>534</locationX>
+        <locationY>6302</locationY>
         <actionName>FlowUtilityTaskCreateList</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -24,8 +24,8 @@
     <actionCalls>
         <name>De_duplicate_household_list</name>
         <label>De-duplicate household list</label>
-        <locationX>314</locationX>
-        <locationY>4112</locationY>
+        <locationX>534</locationX>
+        <locationY>4388</locationY>
         <actionName>StringListDeduplicate</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -46,8 +46,8 @@
     <assignments>
         <name>Add_advice_id_to_list</name>
         <label>Add advice id to list</label>
-        <locationX>402</locationX>
-        <locationY>782</locationY>
+        <locationX>358</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>newAdviceIds</assignToReference>
             <operator>Add</operator>
@@ -62,8 +62,8 @@
     <assignments>
         <name>Add_advice_to_collection</name>
         <label>Add advice to collection</label>
-        <locationX>402</locationX>
-        <locationY>3620</locationY>
+        <locationX>514</locationX>
+        <locationY>3812</locationY>
         <assignmentItems>
             <assignToReference>adviceToUpdate</assignToReference>
             <operator>Add</operator>
@@ -76,26 +76,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Add_advice_to_relevant_new_advice_collection</name>
-        <label>Add advice to relevant new advice collection</label>
-        <locationX>402</locationX>
-        <locationY>1514</locationY>
-        <assignmentItems>
-            <assignToReference>relevantNewAdvice</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Work_out_which_new_advice_is_relevant</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Add_current_specialist_to_used_list</name>
         <label>Add current specialist to used list</label>
-        <locationX>666</locationX>
-        <locationY>4544</locationY>
+        <locationX>886</locationX>
+        <locationY>4820</locationY>
         <assignmentItems>
             <assignToReference>usedSpecialistIds</assignToReference>
             <operator>Add</operator>
@@ -110,8 +94,8 @@
     <assignments>
         <name>Add_id_to_collection</name>
         <label>Add ID to collection</label>
-        <locationX>402</locationX>
-        <locationY>3920</locationY>
+        <locationX>622</locationX>
+        <locationY>4196</locationY>
         <assignmentItems>
             <assignToReference>householdsGettingAnUpdateIds</assignToReference>
             <operator>Add</operator>
@@ -126,31 +110,31 @@
     <assignments>
         <name>Add_new_to_loop</name>
         <label>Add new to loop</label>
-        <locationX>314</locationX>
-        <locationY>1790</locationY>
+        <locationX>358</locationX>
+        <locationY>1622</locationY>
         <assignmentItems>
             <assignToReference>adviceRequiringDmlUpdate</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>relevantNewAdvice</elementReference>
+                <elementReference>Work_out_which_new_advice_is_relevant</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>adviceRequiringUpdateEmail</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>relevantNewAdvice</elementReference>
+                <elementReference>Work_out_which_new_advice_is_relevant</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_licence</targetReference>
+            <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Add_specialist_ID_to_collection</name>
         <label>Add ID to collection</label>
-        <locationX>402</locationX>
-        <locationY>2846</locationY>
+        <locationX>622</locationX>
+        <locationY>2930</locationY>
         <assignmentItems>
             <assignToReference>specialistIds</assignToReference>
             <operator>Add</operator>
@@ -165,7 +149,7 @@
     <assignments>
         <name>Add_standard_to_loop</name>
         <label>Add ongoing to advice collection</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>adviceRequiringUpdateEmail</assignToReference>
@@ -181,8 +165,8 @@
     <assignments>
         <name>Add_task_to_collection</name>
         <label>Add task to collection</label>
-        <locationX>798</locationX>
-        <locationY>5510</locationY>
+        <locationX>1018</locationX>
+        <locationY>5786</locationY>
         <assignmentItems>
             <assignToReference>taskRequestsToCreate</assignToReference>
             <operator>Add</operator>
@@ -197,17 +181,10 @@
     <assignments>
         <name>Add_to_count</name>
         <label>Add to count</label>
-        <locationX>798</locationX>
-        <locationY>5618</locationY>
+        <locationX>1018</locationX>
+        <locationY>5894</locationY>
         <assignmentItems>
             <assignToReference>count</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>testCount</assignToReference>
             <operator>Add</operator>
             <value>
                 <numberValue>1.0</numberValue>
@@ -220,8 +197,8 @@
     <assignments>
         <name>Add_user_to_collection</name>
         <label>Add user to collection</label>
-        <locationX>402</locationX>
-        <locationY>2330</locationY>
+        <locationX>622</locationX>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>users</assignToReference>
             <operator>Add</operator>
@@ -236,8 +213,8 @@
     <assignments>
         <name>Assign_advice_values</name>
         <label>Assign advice values</label>
-        <locationX>402</locationX>
-        <locationY>3512</locationY>
+        <locationX>514</locationX>
+        <locationY>3704</locationY>
         <assignmentItems>
             <assignToReference>singleAdviceToUpdate.Id</assignToReference>
             <operator>Assign</operator>
@@ -259,8 +236,8 @@
     <assignments>
         <name>Assign_counts</name>
         <label>Assign counts</label>
-        <locationX>314</locationX>
-        <locationY>5810</locationY>
+        <locationX>534</locationX>
+        <locationY>6086</locationY>
         <assignmentItems>
             <assignToReference>existingAdviceCount</assignToReference>
             <operator>AssignCount</operator>
@@ -283,7 +260,7 @@
         <name>Assign_error_message</name>
         <label>Assign error message</label>
         <locationX>314</locationX>
-        <locationY>6350</locationY>
+        <locationY>6734</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -298,8 +275,8 @@
     <assignments>
         <name>Assign_first_current_specialist</name>
         <label>Assign first current specialist</label>
-        <locationX>402</locationX>
-        <locationY>3146</locationY>
+        <locationX>622</locationX>
+        <locationY>3230</locationY>
         <assignmentItems>
             <assignToReference>currentSpecialistId</assignToReference>
             <operator>Assign</operator>
@@ -309,14 +286,14 @@
         </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Loop_through_advice_that_requires_updating</targetReference>
+            <targetReference>Is_there_any_advice_requiring_an_update</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_fulfilment_count</name>
         <label>Assign fulfilment count</label>
-        <locationX>534</locationX>
-        <locationY>1298</locationY>
+        <locationX>490</locationX>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>fulfilmentCount</assignToReference>
             <operator>AssignCount</operator>
@@ -331,8 +308,8 @@
     <assignments>
         <name>Assign_new_specialist</name>
         <label>Assign new specialist</label>
-        <locationX>930</locationX>
-        <locationY>4868</locationY>
+        <locationX>1150</locationX>
+        <locationY>5144</locationY>
         <assignmentItems>
             <assignToReference>currentSpecialistId</assignToReference>
             <operator>Assign</operator>
@@ -348,8 +325,8 @@
     <assignments>
         <name>Assign_task_request_values</name>
         <label>Assign task request values</label>
-        <locationX>798</locationX>
-        <locationY>5402</locationY>
+        <locationX>1018</locationX>
+        <locationY>5678</locationY>
         <assignmentItems>
             <assignToReference>taskRequestToCreate.householdId</assignToReference>
             <operator>Assign</operator>
@@ -385,8 +362,8 @@
     <assignments>
         <name>Assign_values</name>
         <label>Assign values</label>
-        <locationX>314</locationX>
-        <locationY>4220</locationY>
+        <locationX>534</locationX>
+        <locationY>4496</locationY>
         <assignmentItems>
             <assignToReference>numSpecs</assignToReference>
             <operator>AssignCount</operator>
@@ -408,13 +385,6 @@
                 <numberValue>0.0</numberValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>testCount</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <numberValue>0.0</numberValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Households</targetReference>
         </connector>
@@ -422,8 +392,8 @@
     <assignments>
         <name>Define_user</name>
         <label>Define user</label>
-        <locationX>402</locationX>
-        <locationY>2222</locationY>
+        <locationX>622</locationX>
+        <locationY>2306</locationY>
         <assignmentItems>
             <assignToReference>userLoop.Id</assignToReference>
             <operator>Assign</operator>
@@ -459,8 +429,8 @@
     <assignments>
         <name>Set_count_to_0</name>
         <label>Set count to 0</label>
-        <locationX>666</locationX>
-        <locationY>5210</locationY>
+        <locationX>886</locationX>
+        <locationY>5486</locationY>
         <assignmentItems>
             <assignToReference>count</assignToReference>
             <operator>Assign</operator>
@@ -476,8 +446,8 @@
         <name>Get_relevant_fulfilment_for_this_advice</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get relevant fulfilment for this advice</label>
-        <locationX>534</locationX>
-        <locationY>1190</locationY>
+        <locationX>490</locationX>
+        <locationY>1298</locationY>
         <assignNextValueToReference>currentItem_Get_relevant_fulfilment_for_this_advice</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_fulfilment_for_new_advice</collectionReference>
@@ -493,8 +463,8 @@
         <name>Sort_users_alphabetically</name>
         <elementSubtype>SortCollectionProcessor</elementSubtype>
         <label>Sort users alphabetically</label>
-        <locationX>314</locationX>
-        <locationY>2522</locationY>
+        <locationX>534</locationX>
+        <locationY>2606</locationY>
         <collectionProcessorType>SortCollectionProcessor</collectionProcessorType>
         <collectionReference>users</collectionReference>
         <connector>
@@ -516,8 +486,8 @@
     <decisions>
         <name>Are_there_any_relevant_pieces_of_fulfilment</name>
         <label>Are there any relevant pieces of fulfilment?</label>
-        <locationX>534</locationX>
-        <locationY>1406</locationY>
+        <locationX>490</locationX>
+        <locationY>1514</locationY>
         <defaultConnector>
             <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
         </defaultConnector>
@@ -533,7 +503,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Add_advice_to_relevant_new_advice_collection</targetReference>
+                <targetReference>Add_new_to_loop</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -542,8 +512,8 @@
         <description>This check is in place to ensure that Salesforce doesn&#39;t add in a bug while processing lists.</description>
         <name>Has_this_specialist_been_used_yet</name>
         <label>Has this specialist been used yet?</label>
-        <locationX>842</locationX>
-        <locationY>4760</locationY>
+        <locationX>1062</locationX>
+        <locationY>5036</locationY>
         <defaultConnector>
             <targetReference>Assign_new_specialist</targetReference>
         </defaultConnector>
@@ -568,8 +538,8 @@
         <description>If yes, we then remove the current specialist from the specialist list, and set the new current specialist to be the first person left in the list</description>
         <name>Have_we_reached_the_households_per_specialist_limit</name>
         <label>Have we reached the households per specialist limit?</label>
-        <locationX>798</locationX>
-        <locationY>4436</locationY>
+        <locationX>1018</locationX>
+        <locationY>4712</locationY>
         <defaultConnector>
             <targetReference>Assign_task_request_values</targetReference>
         </defaultConnector>
@@ -591,10 +561,85 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_there_any_advice_requiring_an_update</name>
+        <label>Is there any advice requiring an update?</label>
+        <locationX>534</locationX>
+        <locationY>3488</locationY>
+        <defaultConnector>
+            <targetReference>Get_household_ids</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesAdviceRequiresUpdate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>adviceRequiringDmlUpdate</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_through_advice_that_requires_updating</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_there_any_advice_to_update</name>
+        <label>Is there any advice to update?</label>
+        <locationX>314</locationX>
+        <locationY>6518</locationY>
+        <defaultConnector>
+            <targetReference>SuccessScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>adviceToUpdate</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_advice</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_there_any_newly_ready_advice</name>
+        <label>Is there any newly ready advice?</label>
+        <locationX>534</locationX>
+        <locationY>674</locationY>
+        <defaultConnector>
+            <targetReference>Get_licence</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesNewlyReadyAdvice</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_advice_newly_ready</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Collect_new_advice_ids</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Was_task_creation_a_success</name>
         <label>Was task creation a success?</label>
-        <locationX>314</locationX>
-        <locationY>6134</locationY>
+        <locationX>534</locationX>
+        <locationY>6410</locationY>
         <defaultConnector>
             <targetReference>Rollback</targetReference>
         </defaultConnector>
@@ -610,7 +655,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_advice</targetReference>
+                <targetReference>Is_there_any_advice_to_update</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -639,8 +684,8 @@
     <loops>
         <name>Collect_new_advice_ids</name>
         <label>Collect new advice ids</label>
-        <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationX>270</locationX>
+        <locationY>782</locationY>
         <collectionReference>Get_advice_newly_ready</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -653,8 +698,8 @@
     <loops>
         <name>Get_household_ids</name>
         <label>Get household IDs</label>
-        <locationX>314</locationX>
-        <locationY>3812</locationY>
+        <locationX>534</locationX>
+        <locationY>4088</locationY>
         <collectionReference>adviceRequiringUpdateEmail</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -667,8 +712,8 @@
     <loops>
         <name>Get_specialist_IDs</name>
         <label>Get specialist IDs</label>
-        <locationX>314</locationX>
-        <locationY>2738</locationY>
+        <locationX>534</locationX>
+        <locationY>2822</locationY>
         <collectionReference>userSelect.selectedRows</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -681,8 +726,8 @@
     <loops>
         <name>Households</name>
         <label>Households</label>
-        <locationX>314</locationX>
-        <locationY>4328</locationY>
+        <locationX>534</locationX>
+        <locationY>4604</locationY>
         <collectionReference>De_duplicate_household_list.outputString</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -696,8 +741,8 @@
         <description>Assigning a new fulfilment update status for advice which will now be receiving an update (where it wasn&#39;t previously)</description>
         <name>Loop_through_advice_that_requires_updating</name>
         <label>Loop through advice that requires updating</label>
-        <locationX>314</locationX>
-        <locationY>3404</locationY>
+        <locationX>426</locationX>
+        <locationY>3596</locationY>
         <collectionReference>adviceRequiringDmlUpdate</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -710,8 +755,8 @@
     <loops>
         <name>Loop_user_licences</name>
         <label>Loop user licences</label>
-        <locationX>314</locationX>
-        <locationY>2114</locationY>
+        <locationX>534</locationX>
+        <locationY>2198</locationY>
         <collectionReference>userLicences</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -724,8 +769,8 @@
     <loops>
         <name>Remaining_specialists</name>
         <label>Remaining specialists</label>
-        <locationX>666</locationX>
-        <locationY>4652</locationY>
+        <locationX>886</locationX>
+        <locationY>4928</locationY>
         <collectionReference>specialistIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -738,29 +783,29 @@
     <loops>
         <name>Specialist_IDs</name>
         <label>Specialist IDs</label>
-        <locationX>314</locationX>
-        <locationY>3038</locationY>
+        <locationX>534</locationX>
+        <locationY>3122</locationY>
         <collectionReference>specialistIds</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_first_current_specialist</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Loop_through_advice_that_requires_updating</targetReference>
+            <targetReference>Is_there_any_advice_requiring_an_update</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Work_out_which_new_advice_is_relevant</name>
         <label>Work out which new advice is relevant</label>
-        <locationX>314</locationX>
-        <locationY>1082</locationY>
+        <locationX>270</locationX>
+        <locationY>1190</locationY>
         <collectionReference>Get_advice_newly_ready</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Get_relevant_fulfilment_for_this_advice</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Add_new_to_loop</targetReference>
+            <targetReference>Get_licence</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -786,12 +831,16 @@
         <description>Gets advice which is in fulfilment but hasn&#39;t got an update status yet</description>
         <name>Get_advice_newly_ready</name>
         <label>Get advice newly ready</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Collect_new_advice_ids</targetReference>
+            <targetReference>Is_there_any_newly_ready_advice</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_advice</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Advice_Status__c</field>
@@ -830,12 +879,16 @@
         <description>Gets advice with a fulfilment update status of receiving updates or not receiving updates</description>
         <name>Get_advice_which_is_receiving_updates</name>
         <label>Get advice which is receiving updates</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Add_standard_to_loop</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>or</filterLogic>
         <filters>
             <field>FulfilmentUpdateStatus__c</field>
@@ -859,12 +912,16 @@
     <recordLookups>
         <name>Get_fulfilment_for_new_advice</name>
         <label>Get fulfilment for new advice</label>
-        <locationX>314</locationX>
-        <locationY>974</locationY>
+        <locationX>270</locationX>
+        <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Work_out_which_new_advice_is_relevant</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_advice</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Advice__c</field>
@@ -920,12 +977,16 @@
     <recordLookups>
         <name>Get_licence</name>
         <label>Get licence</label>
-        <locationX>314</locationX>
-        <locationY>1898</locationY>
+        <locationX>534</locationX>
+        <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_user_licences</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_advice</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName__c</field>
@@ -943,12 +1004,16 @@
     <recordLookups>
         <name>Get_protection_advice_type</name>
         <label>Get protection advice type</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_advice_newly_ready</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_advice</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName__c</field>
@@ -973,12 +1038,16 @@
     <recordLookups>
         <name>Get_user_licences</name>
         <label>Get user licences</label>
-        <locationX>314</locationX>
-        <locationY>2006</locationY>
+        <locationX>534</locationX>
+        <locationY>2090</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_user_licences</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Update_advice</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Licence__c</field>
@@ -1002,8 +1071,8 @@
     <recordRollbacks>
         <name>Rollback</name>
         <label>Rollback</label>
-        <locationX>578</locationX>
-        <locationY>6242</locationY>
+        <locationX>754</locationX>
+        <locationY>6518</locationY>
         <connector>
             <targetReference>Display_errors</targetReference>
         </connector>
@@ -1012,7 +1081,7 @@
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>50</locationX>
-        <locationY>6242</locationY>
+        <locationY>6626</locationY>
         <connector>
             <targetReference>SuccessScreen</targetReference>
         </connector>
@@ -1025,8 +1094,8 @@
     <screens>
         <name>Display_errors</name>
         <label>Display errors</label>
-        <locationX>578</locationX>
-        <locationY>6350</locationY>
+        <locationX>754</locationX>
+        <locationY>6626</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1041,7 +1110,7 @@
     <screens>
         <name>Intro</name>
         <label>Intro</label>
-        <locationX>314</locationX>
+        <locationX>534</locationX>
         <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1060,8 +1129,8 @@
     <screens>
         <name>SuccessScreen</name>
         <label>Success</label>
-        <locationX>50</locationX>
-        <locationY>6350</locationY>
+        <locationX>314</locationX>
+        <locationY>7166</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1097,8 +1166,8 @@
     <screens>
         <name>Summary</name>
         <label>Summary</label>
-        <locationX>314</locationX>
-        <locationY>5918</locationY>
+        <locationX>534</locationX>
+        <locationY>6194</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1123,8 +1192,8 @@
     <screens>
         <name>User_selection</name>
         <label>User selection</label>
-        <locationX>314</locationX>
-        <locationY>2630</locationY>
+        <locationX>534</locationX>
+        <locationY>2714</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1194,7 +1263,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>408</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Intro</targetReference>
@@ -1205,7 +1274,7 @@
         <name>Error_sub_flow</name>
         <label>Error sub flow</label>
         <locationX>314</locationX>
-        <locationY>6458</locationY>
+        <locationY>6842</locationY>
         <flowName>ErrorHandleScreen</flowName>
         <inputAssignments>
             <name>closeFlowAfterToast</name>
@@ -1367,14 +1436,6 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>relevantNewAdvice</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Advice__c</objectType>
-    </variables>
-    <variables>
         <name>singleAdviceToUpdate</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -1411,14 +1472,6 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>testCount</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
     </variables>
     <variables>
         <name>usedSpecialistIds</name>

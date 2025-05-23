@@ -3,10 +3,16 @@
     <fullName>SubCriteriaNotesRequired</fullName>
     <active>true</active>
     <description>Ensures that sub-criteria notes are entered where the estimated liquid assets of the client are below our criteria.</description>
-    <errorConditionFormula>$UserRole.DeveloperName = &quot;Partner&quot; &amp;&amp;
-RecordType.DeveloperName = &quot;Advice_Opportunity&quot; &amp;&amp;
-ISBLANK(SubCriteriaNotes__c) &amp;&amp;
-Est_Liquid_Assets__c &lt; 200000 &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+$UserRole.DeveloperName = &quot;Partner&quot; 
+&amp;&amp;
+RecordType.DeveloperName = &quot;Advice_Opportunity&quot; 
+&amp;&amp;
+ISBLANK(SubCriteriaNotes__c) 
+&amp;&amp;
+Est_Liquid_Assets__c &lt; 200000 
+&amp;&amp;
 NOT(ISPICKVAL( StageName , &quot;Closed Lost&quot;))</errorConditionFormula>
     <errorDisplayField>SubCriteriaNotes__c</errorDisplayField>
     <errorMessage>You must enter Sub Criteria Notes for any Advice Opportunity where Est Liquid Assets is less than £200k.</errorMessage>

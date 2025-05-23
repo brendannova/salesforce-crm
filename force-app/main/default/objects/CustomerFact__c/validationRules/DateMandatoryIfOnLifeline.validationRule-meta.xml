@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DateMandatoryIfOnLifeline</fullName>
+    <active>false</active>
+    <description>A date must be populated if fact should be displayed on lifeline</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+TEXT( DisplayOnLifeline__c) = &#39;Yes&#39;
+&amp;&amp;
+ISBLANK( Date__c )</errorConditionFormula>
+    <errorMessage>Must provide a date if Display on Timeline is Yes</errorMessage>
+</ValidationRule>

@@ -3,7 +3,9 @@
     <fullName>HouseholdProfileRestrictValidationsPendi</fullName>
     <active>false</active>
     <description>Prevents editing of profile fields on the household when there are client profile validations outstanding. Allows updates to all other fields.</description>
-    <errorConditionFormula>RecordType.DeveloperName = &quot;IndustriesHousehold&quot;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+RecordType.DeveloperName = &quot;IndustriesHousehold&quot;
 &amp;&amp;
 Fact_Find_Validations_Outstanding__c = true
 &amp;&amp;

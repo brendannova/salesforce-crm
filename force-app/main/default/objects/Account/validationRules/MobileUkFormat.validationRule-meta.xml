@@ -3,8 +3,12 @@
     <fullName>MobileUkFormat</fullName>
     <active>true</active>
     <description>If mobile begins with +44, it must be in UK mobile number format.</description>
-    <errorConditionFormula>NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;)) &amp;&amp;
-BEGINS(PersonMobilePhone, &quot;+44&quot;) &amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;)) 
+&amp;&amp;
+BEGINS(PersonMobilePhone, &quot;+44&quot;) 
+&amp;&amp;
 NOT(REGEX(PersonMobilePhone, &quot;^\\+447\\d{9}$&quot;))</errorConditionFormula>
     <errorDisplayField>PersonMobilePhone</errorDisplayField>
     <errorMessage>UK mobile phone numbers must be in the following format &quot;+447#########&quot; (with no spaces, letters, or special characters).</errorMessage>
