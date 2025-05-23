@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>To view and select email templates for editing</description>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>decorate</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>richTextValue</name>
+                    <value>&lt;p&gt;Here you can find a list of all active email templates and a link to the Google Doc where changes can be suggested as part of the &lt;a href=&quot;https://www.notion.so/novawealth/Email-Template-Updates-1c9950256fc480599444cf0023fa7039?pvs=4&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;email template update process.&lt;/a&gt;&lt;/p&gt;</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:richText</componentName>
+                <identifier>flexipage_richText</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>contextId</name>
+                    <value>001UE00000OIzSJYA1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>iconName</name>
+                    <value>action:add_file</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>logicReference</name>
+                    <value>EMAIL_TEMPLATES</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>pageSpecifiedColumnNames</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Email templates</value>
+                </componentInstanceProperties>
+                <componentName>dynamicRecordList</componentName>
+                <identifier>c_dynamicRecordList</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Email Templates | Manage</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>
