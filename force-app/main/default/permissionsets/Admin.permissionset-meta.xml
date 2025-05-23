@@ -68,6 +68,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LwcHelperEmailTemplateList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TaskEngine</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2085,7 +2089,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EmailConfiguration__c.GoogleDriveTemplateURL__c</field>
+        <field>EmailConfiguration__c.GoogleDriveTemplateUrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6327,6 +6331,10 @@
         <tab>EmailConfiguration__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>EmailTemplatesManage</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>    
     <tabSettings>
         <tab>FeatureFlagRule__c</tab>
         <visibility>Visible</visibility>
