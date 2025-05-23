@@ -58,10 +58,12 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
 
         console.log(this.contextId);
         console.log(this.logicReference);
-        if(this.contextId != null && !this.contextId.isEmpty() && this.logicReference != null && !this.logicReference.isEmpty()){
+        if(this.contextId != null && !this.contextId !== '' && this.logicReference != null && !this.logicReference !== ''){
 
             this.dataReturn = await this.fetchData(this.logicReference, this.contextId);
-            this.state.error = this.dataReturn.errorMessage;
+            if(this.dataRetrun !== null && this.dataReturn.errorMessage !== null ){
+                this.state.error = this.dataReturn.errorMessage;
+            }
             this.setColumns();
             this.setKeyField();
             this.setRows();
