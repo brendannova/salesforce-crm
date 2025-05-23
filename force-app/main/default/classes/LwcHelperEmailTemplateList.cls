@@ -22,9 +22,7 @@ public with sharing class LwcHelperEmailTemplateList {
         dataWrapper.columns.add(nameLinkColumn);
         dataWrapper.columns.add(new LwcHelperDynamicRecordList.ColumnWrapper('Description', 'Description', 'text'));
         dataWrapper.columns.add(googleTemplateLinkColumn);
-        dataWrapper.columns.add(new LwcHelperDynamicRecordList.ColumnWrapper('Review at tax year end', 'ReviewAtTaxYearEnd__c', 'text'));
         dataWrapper.columns.add(new LwcHelperDynamicRecordList.ColumnWrapper('Close after send', 'AwaitReply__c', 'text'));
-        dataWrapper.columns.add(new LwcHelperDynamicRecordList.ColumnWrapper('Has attachment', 'HasAttachment__c', 'text'));
         dataWrapper.columns.add(new LwcHelperDynamicRecordList.ColumnWrapper('Last modified date', 'LastModifiedDate', 'date'));
 
         // Define rows
@@ -34,13 +32,11 @@ public with sharing class LwcHelperEmailTemplateList {
             emailTemplateMap.put(emailTempForMap.DeveloperName, emailTempForMap);
         }
         Map<String,EmailConfiguration__c> emailConfigMap = new Map<String,EmailConfiguration__c>();
-        for(EmailConfiguration__c econfig : [SELECT Id, Name, DeveloperName__c, GoogleDriveTemplateUrl__c, AwaitReply__c, ReviewAtTaxYearEnd__c, HasAttachment__c FROM EmailConfiguration__c]) {
+        for(EmailConfiguration__c econfig : [SELECT Id, Name, DeveloperName__c, GoogleDriveTemplateUrl__c, AwaitReply__c FROM EmailConfiguration__c]) {
             emailConfigMap.put(econfig.DeveloperName__c, econfig);
         }
         String urlPrefix = URL.getOrgDomainURL().toExternalForm() + '/';
         Map<String,String> picklistApiToLabelMapCloseAfterSend = getPicklistApiLabelMapCloseAfterSend();
-        Map<String,String> picklistApiToLabelMapTye = getPicklistApiLabelMapTyeDates();
-        Map<String,String> picklistApiToLabelMapAttachments = getPicklistApiLabelMapAttachments();
 
         for(String emailTempDevNames : emailTemplateMap.keySet()) {
             if(emailConfigMap.containsKey(emailTempDevNames)){
@@ -51,9 +47,7 @@ public with sharing class LwcHelperEmailTemplateList {
                 rowWrapper.fields.add(new LwcHelperDynamicRecordList.FieldWrapper('Name', emailTemplateMap.get(emailTempDevNames).Name));
                 rowWrapper.fields.add(new LwcHelperDynamicRecordList.FieldWrapper('Description', emailTemplateMap.get(emailTempDevNames).Description));
                 rowWrapper.fields.add(new LwcHelperDynamicRecordList.FieldWrapper('GoogleDriveTemplateUrl__c', emailConfigMap.get(emailTempDevNames).GoogleDriveTemplateUrl__c));
-                rowWrapper.fields.add(new LwcHelperDynamicRecordList.FieldWrapper('ReviewAtTaxYearEnd__c', picklistApiToLabelMapTye.get(emailConfigMap.get(emailTempDevNames).ReviewAtTaxYearEnd__c)));
                 rowWrapper.fields.add(new LwcHelperDynamicRecordList.FieldWrapper('AwaitReply__c', picklistApiToLabelMapCloseAfterSend.get(emailConfigMap.get(emailTempDevNames).AwaitReply__c)));
-                rowWrapper.fields.add(new LwcHelperDynamicRecordList.FieldWrapper('HasAttachment__c', picklistApiToLabelMapAttachments.get(emailConfigMap.get(emailTempDevNames).HasAttachment__c)));
                 rowWrapper.fields.add(new LwcHelperDynamicRecordList.FieldWrapper('LastModifiedDate', emailTemplateMap.get(emailTempDevNames).LastModifiedDate.toString()));
 
                     dataWrapper.rows.add(rowWrapper);
@@ -74,22 +68,6 @@ public with sharing class LwcHelperEmailTemplateList {
                 label = 'Yes';
             }
             picklistApiLabelMap.put(picklistItem.getValue(), label);
-        }
-        return picklistApiLabelMap; 
-    }
-    private static Map<String,String> getPicklistApiLabelMapTyeDates(){
-        List<Schema.PicklistEntry> picklistItems = EmailConfiguration__c.ReviewAtTaxYearEnd__c.getDescribe().getPicklistValues();
-        Map<String,String> picklistApiLabelMap = new Map<String,String>();
-        For(Schema.PicklistEntry picklistItem : picklistItems){
-            picklistApiLabelMap.put(picklistItem.getValue(), picklistItem.getLabel());
-        }
-        return picklistApiLabelMap; 
-    }
-    private static Map<String,String> getPicklistApiLabelMapAttachments(){
-        List<Schema.PicklistEntry> picklistItems = EmailConfiguration__c.HasAttachment__c.getDescribe().getPicklistValues();
-        Map<String,String> picklistApiLabelMap = new Map<String,String>();
-        For(Schema.PicklistEntry picklistItem : picklistItems){
-            picklistApiLabelMap.put(picklistItem.getValue(), picklistItem.getLabel());
         }
         return picklistApiLabelMap; 
     }
