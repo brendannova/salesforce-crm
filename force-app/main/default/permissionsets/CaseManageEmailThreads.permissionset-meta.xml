@@ -123,21 +123,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EmailConfiguration__c.HasAttachment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailConfiguration__c.ReviewAtTaxYearEnd__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailConfiguration__c.ReviewCalendarYearDates__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>EmailConfiguration__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -301,6 +286,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
+        <tab>EmailTemplatesManage</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>  
+    <tabSettings>
         <tab>standard-Case</tab>
         <visibility>Available</visibility>
     </tabSettings>
@@ -321,15 +310,7 @@
         <name>EmailOperations</name>
     </customPermissions>
     <classAccesses>
-        <apexClass>LwcHelperDynamicRecordList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>LwcHelperEmailTemplateList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LwcHelperEmailTemplateListTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
 </PermissionSet>
