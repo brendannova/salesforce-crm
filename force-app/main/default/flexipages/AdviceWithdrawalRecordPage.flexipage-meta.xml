@@ -147,6 +147,12 @@
                         <valueListItems>
                             <value>Advice__c.CreateDeck</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.AdviceDeckCreate}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Advice_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
