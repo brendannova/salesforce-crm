@@ -32,3 +32,59 @@ for(Advice__c record : records){
         i++;
     }    
 }
+
+// Migrate Chatter for IRs from LOAs
+List<LOA__c> loas = [SELECT Id, 
+                        (SELECT Id, ParentId, Type, CreatedById, CreatedDate, LastModifiedDate, Title, Body, LinkUrl, IsRichText, RelatedRecordId, InsertedById, NetworkScope, Visibility, BestCommentId, 
+                         (SELECT Id, FeedItemId, ParentId, CreatedById, CreatedDate, SystemModstamp, Revision, LastEditById, LastEditDate, CommentBody, InsertedById, CommentType, RelatedRecordId, IsRichText, IsVerified, HasEntityLinks, Status, ThreadParentId, ThreadLevel, ThreadChildrenCount, ThreadLastUpdatedDate 
+                          FROM FeedComments) 
+                         FROM Feeds), 
+                        (SELECT Id FROM InformationRequests__r ORDER BY CreatedDate ASC)
+                        FROM LOA__c 
+                        WHERE MainLoaStatus__c = 'Replaced' AND ChatterPostsMigrated__c = false LIMIT 100];
+Map<Id, FeedItem> oldNewFeedItemMap = new Map<Id, FeedItem>();
+Map<Id, List<FeedComment>> oldfeedItemCommentMap = new Map<Id, List<FeedComment>>();
+for(LOA__c loa : loas){
+    loa.ChatterPostsMigrated__c = true;
+    for(LOA__Feed loaPost : loa.Feeds){
+        oldfeedItemCommentMap.put(loaPost.Id, loaPost.FeedComments);
+        FeedItem newPost = new FeedItem(
+            Body = loaPost.Body,
+            CreatedById = loaPost.CreatedById,
+            CreatedDate = loaPost.CreatedDate,
+            IsRichText = loaPost.IsRichText,
+            LinkUrl = loaPost.LinkUrl,
+            ParentId = loa.InformationRequests__r[0].Id,
+            Title = loaPost.Title,
+            Type = loaPost.Type,
+            Visibility = loaPost.Visibility
+        );
+        oldNewFeedItemMap.put(loaPost.Id, newPost);
+        
+    }
+}
+insert oldNewFeedItemMap.values();
+List<FeedComment> newFeedComments = new List<FeedComment>();
+for(Id loaPostId : oldNewFeedItemMap.keySet()){
+    List<FeedComment> comments = oldfeedItemCommentMap.get(loaPostId);
+    for(FeedComment comment : comments){
+        FeedComment newComment = new FeedComment(
+            CommentBody = comment.CommentBody,
+            CommentType = comment.CommentType,
+            CreatedById = comment.CreatedById,
+            CreatedDate = comment.CreatedDate,
+            FeedItemId = oldNewFeedItemMap.get(loaPostId).Id,
+            IsRichText = comment.IsRichText,
+            LastEditById = comment.LastEditById,
+            LastEditDate = comment.LastEditDate,
+            Revision = comment.Revision,
+            Status = comment.Status
+        );
+        newFeedComments.add(newComment);
+    }
+}
+insert newFeedComments;
+update loas;
+System.debug(oldNewFeedItemMap.size());
+System.debug(newFeedComments.size());
+System.debug(loas.size());
