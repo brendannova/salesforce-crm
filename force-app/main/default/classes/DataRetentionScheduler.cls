@@ -20,3 +20,12 @@ public without sharing class DataRetentionScheduler implements Schedulable {
         }
     }
 }
+
+// Move this to querying the MDT records
+// Queue a job with holding status per record
+// Limit is 100 but that's ok
+// Model on this: https://github.com/novawealth/salesforce-crm/blob/af0d00a92f03246e4620330f9f6bb1afefd1e8b0/force-app/main/default/classes/LogBatchPurger.cls
+// Work through records and use 
+// https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_iterable.htm
+// How to handle test class
+// How to handle sandbox
