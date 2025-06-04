@@ -203,6 +203,13 @@
                     <stringValue>AWAIT_IDG</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.InformationRequestType__r.InformationSource__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Client</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Create_request_info_task</targetReference>
             </connector>
