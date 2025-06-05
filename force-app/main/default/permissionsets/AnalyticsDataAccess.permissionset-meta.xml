@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Provides read only and view all access to all data that we use as a business for full analytics capabilities. Also provides access to reporting system permissions.</description>
     <hasActivationRequired>false</hasActivationRequired>
@@ -2461,6 +2461,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>CustomerFact__c.VulnerabilityTriggerDetails__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EmailConfiguration__c.GoogleDriveTemplateUrl__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EmailConfiguration__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

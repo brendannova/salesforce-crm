@@ -10,11 +10,15 @@ public with sharing class LwcHelperDynamicRecordList {
             /*when 'LOGIC_NAME_HERE'{
                 dataWrapper = ClassName.functionName(contextId);
             }*/
+            when 'EMAIL_TEMPLATES' {
+                dataWrapper = lwcHelperEmailTemplateList.getTemplateData(contextId);
+            }
             when else{
                 dataWrapper.errorMessage = 'No logic reference matched';
                 //could also throw an error here once logic above is added to prevent (unreachable logic error bellow)
             }
         }
+
 
         List<String> errors = validateDataWrapper(dataWrapper);
         if(errors.size() > 0) {
@@ -28,7 +32,7 @@ public with sharing class LwcHelperDynamicRecordList {
         @AuraEnabled public List<ColumnWrapper> columns = new List<ColumnWrapper>();
         @AuraEnabled public List<RowWrapper> rows = new List<RowWrapper>();
         @AuraEnabled public ConfigWrapper config = new ConfigWrapper();
-        @AuraEnabled public String errorMessage;
+        @AuraEnabled public String errorMessage = '';
     }
 
     public class ConfigWrapper{
