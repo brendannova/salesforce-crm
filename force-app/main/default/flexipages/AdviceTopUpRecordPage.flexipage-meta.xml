@@ -150,14 +150,14 @@
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.DeckStatus__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Not started</rightValue>
+                                    <leftValue>{!$Permission.CustomPermission.AdviceDeckCreate}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.DeckStatus__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Complete</rightValue>
+                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Prepare advice</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
