@@ -590,6 +590,32 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldItem>Record.Recommendation__r.DestinationLegacy__r.OW_Investment_Mandate__c</fieldItem>
+                <identifier>RecordRecommendation_rDestinationLegacy_rOW_Investment_Mandate_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Recommendation__r.RecommendationType__r.DeveloperName__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>PORTFOLIO_SWITCH</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.Recommendation__r.SourceOfFunds__c</fieldItem>
+                <identifier>RecordRecommendation_rSourceOfFunds_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Recommendation__r.PaidBy__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Client</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
                 <fieldItem>Record.Recommendation__r.CashBuildUpDetails__c</fieldItem>
                 <identifier>RecordRecommendation_rCashBuildUpDetails_cField</identifier>
                 <visibilityRule>
@@ -603,19 +629,6 @@
                         <leftValue>{!Record.Recommendation__r.RecommendationType__r.ReferenceName__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>REGULAR_WITHDRAWAL</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.Recommendation__r.DestinationLegacy__r.OW_Investment_Mandate__c</fieldItem>
-                <identifier>RecordRecommendation_rDestinationLegacy_rOW_Investment_Mandate_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Recommendation__r.RecommendationType__r.DeveloperName__c}</leftValue>
-                        <operator>NE</operator>
-                        <rightValue>PORTFOLIO_SWITCH</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
