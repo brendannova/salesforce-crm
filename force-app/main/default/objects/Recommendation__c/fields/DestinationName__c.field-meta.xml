@@ -3,7 +3,7 @@
     <fullName>DestinationName__c</fullName>
     <description>A formula used for displaying the text value of the name of the destination on look up tables. Should be deprecated when the functionality of data tables is improved by Salesforce.</description>
     <externalId>false</externalId>
-    <formula>PrimaryClientName__c + IF(ISBLANK( JointOwner__c),&quot;&quot;,&quot; &amp; &quot; + JointOwnerName__c) + &quot;&apos;s &quot; + 
+    <formula>PrimaryClientName__c + IF(ISBLANK( JointOwner__c),&quot;&quot;,&quot; &amp; &quot; + JointOwnerName__c) + &quot;&#39;s &quot; + 
 IF(
 NOT(ISBLANK( DestinationLegacy__c )),
 
