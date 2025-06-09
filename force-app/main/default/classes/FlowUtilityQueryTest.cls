@@ -18,6 +18,3 @@ private class FlowUtilityQueryTest {
         }
     }
 }
-
-
-SELECT Id, Name, Advice_Status__c FROM Advice WHERE Advice_Status__c IN ('Setup','Data gathering','Risk Call') AND AdviceType__r.DeveloperName__c IN ('AD_HOC','DRAWDOWN') AND Advice_Household__c = '
