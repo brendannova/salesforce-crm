@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Provides read only and view all access to all data that we use as a business for full analytics capabilities. Also provides access to reporting system permissions.</description>
     <hasActivationRequired>false</hasActivationRequired>
@@ -5256,6 +5256,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>LoanApplicationProperty.PropertyUseType</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OW_review__c.ProcessVersion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OW_review__c.ReviewDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OW_review__c.ReviewDeckUrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
