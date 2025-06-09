@@ -32,6 +32,7 @@ for(Advice__c record : records){
         i++;
     }    
 }
+System.debug(i);
 
 // Migrate Chatter for IRs from LOAs
 List<LOA__c> loas = [SELECT Id, 
