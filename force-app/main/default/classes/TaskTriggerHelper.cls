@@ -9,7 +9,7 @@ public with sharing class TaskTriggerHelper {
     */
     public void checkDelete(Map<Id,Task> taskMap) {
         for(Task t : taskMap.values()){
-            if(!String.isBlank(t.OrchestrationTaskStatus__c) && t.Account.FinServ__Status__c != 'Forgotten'){
+            if(!String.isBlank(t.OrchestrationTaskStatus__c)){
                 t.addError('Error: cannot delete an orchestrated task');
             }
         }
