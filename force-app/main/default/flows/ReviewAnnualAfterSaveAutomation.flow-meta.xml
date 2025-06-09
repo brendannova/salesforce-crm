@@ -3,14 +3,10 @@
     <actionCalls>
         <name>Generate_tasks</name>
         <label>Generate tasks</label>
-        <locationX>380</locationX>
-        <locationY>1895</locationY>
+        <locationX>248</locationX>
+        <locationY>2003</locationY>
         <actionName>FlowUtilityTaskCreateList</actionName>
         <actionType>apex</actionType>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Throw_error</targetReference>
-        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>taskRequests</name>
@@ -52,7 +48,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Generate_tasks</targetReference>
+            <targetReference>Tasks_needed</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -68,7 +64,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Generate_tasks</targetReference>
+            <targetReference>Tasks_needed</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -288,7 +284,7 @@
         <locationX>710</locationX>
         <locationY>1163</locationY>
         <defaultConnector>
-            <targetReference>Generate_tasks</targetReference>
+            <targetReference>Tasks_needed</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -388,6 +384,28 @@
                 <targetReference>Define_set_up_annual_review_task</targetReference>
             </connector>
             <label>New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Tasks_needed</name>
+        <label>Tasks needed?</label>
+        <locationX>380</locationX>
+        <locationY>1895</locationY>
+        <defaultConnectorLabel>None needed</defaultConnectorLabel>
+        <rules>
+            <name>Task_to_create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRequests</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Generate_tasks</targetReference>
+            </connector>
+            <label>Task to create</label>
         </rules>
     </decisions>
     <description>Automates task creation and closure and updates to advice and household off of changes to the annual review.</description>
@@ -521,7 +539,7 @@
         <locationX>578</locationX>
         <locationY>1379</locationY>
         <connector>
-            <targetReference>Generate_tasks</targetReference>
+            <targetReference>Tasks_needed</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Throw_error</targetReference>
