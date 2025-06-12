@@ -400,7 +400,7 @@
         <name>Write_narrative_updates</name>
         <label>Write narrative updates</label>
         <locationX>578</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -415,10 +415,6 @@
                 <stringValue>ADVICE_TOP_UP_NARRATIVE_APPROVAL_PLANNER</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Confirm_task_complete_generic</targetReference>
-        </connector>
     </assignments>
     <choices>
         <name>Yes</name>
@@ -648,7 +644,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Write_narrative_updates</targetReference>
+                <targetReference>Narrative_completeSubFlow</targetReference>
             </connector>
             <label>Narrative | Write</label>
         </rules>
@@ -1004,6 +1000,72 @@
                 <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Narrative_completeSubFlow</name>
+        <label>Narrative complete</label>
+        <locationX>578</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>Write_narrative_updates</targetReference>
+        </connector>
+        <flowName>AdviceOrchestrationNarrativeComplete</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceChecklistUpdated</name>
+            <value>
+                <elementReference>adviceChecklistUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceType</name>
+            <value>
+                <elementReference>adviceType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceUpdated</name>
+            <value>
+                <elementReference>adviceUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceChecklistUpdated</assignToReference>
+            <name>adviceChecklistUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceUpdated</assignToReference>
+            <name>adviceUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>closeTask</assignToReference>
+            <name>closeTask</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>followUpTask</assignToReference>
+            <name>followUpTask</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Partner_narrative_review</name>
