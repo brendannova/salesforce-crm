@@ -1,6 +1,6 @@
 import { LightningElement, wire } from 'lwc';
-import customerFactsCreateModal from 'c/customerFactsCreateModal';
 import { CurrentPageReference } from "lightning/navigation";
+import modalFlow from 'c/modalFlow';
 
 export default class LwcWrapperDisplayFacts extends LightningElement {
     recordId;
@@ -13,14 +13,18 @@ export default class LwcWrapperDisplayFacts extends LightningElement {
     }
     
     newFactClick() {
-         customerFactsCreateModal.open({
-            label: 'Create new fact',
+         modalFlow.open({
+            modalHeader: 'Create new fact',
+            refreshScreen: true,
+            flowApiName: 'Facts_Create_Household',
             size: 'large',
-            description: 'Create new facts',
-            recordId: this.recordId
+            flowInputs: [{
+                name: 'recordId',
+                type: 'String',
+                value: this.recordId
+            }],
         }).then((result) => {
             console.log(result);
         });
-
     }
 }
