@@ -1,0 +1,8 @@
+<template>
+    <lightning-modal-header label="Create new fact"></lightning-modal-header>
+    <lightning-modal-body> 
+        <lightning-flow 
+        flow-api-name='Facts_Create_Household' onstatuschange={handleFlowStatusChange} flow-input-variables={inputVariables}>
+        </lightning-flow>
+    </lightning-modal-body>
+  </template>
