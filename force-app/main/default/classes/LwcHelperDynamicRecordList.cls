@@ -11,7 +11,7 @@ public with sharing class LwcHelperDynamicRecordList {
                 dataWrapper = ClassName.functionName(contextId);
             }*/
             when 'EMAIL_TEMPLATES' {
-                //dataWrapper = lwcHelperEmailTemplateList.getTemplateData(contextId);
+                dataWrapper = lwcHelperEmailTemplateList.getTemplateData(contextId);
             } 
             when 'CUSTOMER_FACTS'{
                 dataWrapper = LwcHelperCustomerFactsList.getCustomerFactData(contextId);
