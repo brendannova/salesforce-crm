@@ -118,7 +118,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>EmailConfiguration__c.GoogleDriveTemplateURL__c</field>
+        <field>EmailConfiguration__c.GoogleDriveTemplateUrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -286,8 +286,16 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
+        <tab>EmailTemplatesManage</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>standard-Case</tab>
         <visibility>Available</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-EmailTemplate</tab>
+        <visibility>Visible</visibility>
     </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
@@ -305,4 +313,12 @@
         <enabled>true</enabled>
         <name>EmailOperations</name>
     </customPermissions>
+    <classAccesses>
+        <apexClass>LwcHelperDynamicRecordList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LwcHelperEmailTemplateList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
 </PermissionSet>

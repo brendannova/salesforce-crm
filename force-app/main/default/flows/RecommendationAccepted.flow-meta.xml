@@ -1005,8 +1005,8 @@
 TEXT({!$Record.NonStandardActionCategory__c}) + &quot; | &quot; + {!$Record.PrimaryOwner__r.LastName} + &quot;, &quot; + LEFT({!$Record.PrimaryOwner__r.FirstName},1),
 
 
-IF({!$Record.RecommendationType__r.ReferenceName__c}= &quot;EXTERNAL_TRANSFER_IN&quot;,{!$Record.SourceLegacy__r.FinServ__FinancialAccountNumber__c} +&quot; &quot; +{!$Record.SourceLegacy__r.Public_Provider_Name__r.Name} + &quot; | &quot;, &quot;&quot;) + {!fType.Name} +
-IF(ISPICKVAL({!$Record.TransferType__c}, &quot;Partial&quot;),&quot; (Partial)&quot;,&quot;&quot;)
+IF({!$Record.RecommendationType__r.ReferenceName__c}= &quot;EXTERNAL_TRANSFER_IN&quot;,{!$Record.SourceLegacy__r.FinServ__FinancialAccountNumber__c} +&quot; &quot; +{!$Record.SourceLegacy__r.Public_Provider_Name__r.Name} + &quot; | &quot; + 
+IF(ISPICKVAL({!$Record.TransferType__c}, &quot;Partial&quot;),&quot;(Partial) &quot;,&quot;&quot;), &quot;&quot;) + {!fType.Name}
 + &quot; | &quot; +   {!$Record.DestinationLegacy__r.FinServ__PrimaryOwner__r.LastName} + &quot;, &quot; + LEFT({!$Record.DestinationLegacy__r.FinServ__PrimaryOwner__r.FirstName},1) + IF(ISBLANK({!$Record.DestinationLegacy__r.FinServ__JointOwner__c}), &quot;&quot;, &quot; &amp; &quot; + LEFT({!$Record.DestinationLegacy__r.FinServ__JointOwner__r.FirstName},1)) + IF( ISBLANK({!$Record.Designation__c}), &quot;&quot;, &quot; | Designated to &quot; + {!Recommendations.Designation__r.FirstName})
 )</expression>
     </formulas>

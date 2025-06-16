@@ -491,8 +491,8 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Information_stage</name>
-        <label>Information stage</label>
+        <name>Task_type</name>
+        <label>Task type</label>
         <locationX>1029</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
@@ -500,17 +500,10 @@
             <name>Initial_information</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>informationRequest.InformationRequestStatus__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Received</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>informationRequest.InformationRequestStatus__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Not required</stringValue>
+                    <stringValue>IR_THIRDPARTY_CHASE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -522,17 +515,10 @@
             <name>Additional_information</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>informationRequest.AdditionalInformationRequestStatus__c</leftValueReference>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Information requested</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>informationRequest.AdditionalInformationRequestStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Provider processing</stringValue>
+                    <stringValue>IR_CHASE_ADDITIONAL</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -544,10 +530,10 @@
             <name>Chase_client</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>informationRequest.InformationRequestStatus__c</leftValueReference>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Sent to client</stringValue>
+                    <stringValue>IR_CLIENT_CHASE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1010,7 +996,7 @@ IF(ISPICKVAL({!informationRequest.InformationRequestType__r.BuilderLevel__c},&qu
         <locationX>903</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Information_stage</targetReference>
+            <targetReference>Task_type</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -1035,5 +1021,13 @@ IF(ISPICKVAL({!informationRequest.InformationRequestType__r.BuilderLevel__c},&qu
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>InformationRequest__c</objectType>
+    </variables>
+    <variables>
+        <name>task</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Task</objectType>
     </variables>
 </Flow>

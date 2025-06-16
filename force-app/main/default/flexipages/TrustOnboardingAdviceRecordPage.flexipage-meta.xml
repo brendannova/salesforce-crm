@@ -208,42 +208,6 @@
                             <value>Advice__c.ManageConflictOfInterest</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Advice__c.CreateDeck</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.AnnualReviewDeckAutomationView}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Advice__c.AddAdvicePriorities</value>
-                            <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Risk Call</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Ready for suitability</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Suitability in progress</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.AnnualReviewDeckAutomationView}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Advice__c.CreateNewEmail</value>
                         </valueListItems>
                     </valueList>

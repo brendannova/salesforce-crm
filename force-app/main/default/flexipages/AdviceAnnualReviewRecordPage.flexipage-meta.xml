@@ -210,36 +210,32 @@
                         <valueListItems>
                             <value>Advice__c.CreateDeck</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.AnnualReviewDeckAutomationView}</leftValue>
+                                    <leftValue>{!$Permission.CustomPermission.AdviceDeckCreate}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Prepare advice</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Advice__c.AddAdvicePriorities</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Advice_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Risk Call</rightValue>
+                                    <rightValue>Data analysis</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Advice_Status__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Ready for suitability</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Suitability in progress</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.AnnualReviewDeckAutomationView}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
+                                    <rightValue>Prepare advice</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

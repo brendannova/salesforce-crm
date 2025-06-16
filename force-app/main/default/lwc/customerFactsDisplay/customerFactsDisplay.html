@@ -1,0 +1,13 @@
+<template>
+    <lightning-card  title="">
+        <lightning-button label="New" slot="actions" onclick={newFactClick}></lightning-button>
+        <p class="slds-p-horizontal_small">
+            <c-dynamic-record-list 
+                context-id={recordId}
+                logic-reference="CUSTOMER_FACTS"
+                title="Household facts"
+                icon-name="custom:custom83">
+            </c-dynamic-record-list>
+            </p>
+    </lightning-card>
+</template>
