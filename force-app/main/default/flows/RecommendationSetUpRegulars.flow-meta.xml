@@ -317,6 +317,14 @@
         <picklistField>PaidBy__c</picklistField>
         <picklistObject>Recommendation__c</picklistObject>
     </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>sourceOfFundsChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>SourceOfFunds__c</picklistField>
+        <picklistObject>Recommendation__c</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
         <name>cancelDate</name>
@@ -560,6 +568,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>SourceOfFunds__c</field>
+            <value>
+                <elementReference>Source_of_funds</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status__c</field>
             <value>
                 <stringValue>Draft</stringValue>
@@ -670,6 +684,12 @@
             <field>RegularEndMonth__c</field>
             <value>
                 <elementReference>lastMonth</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SourceOfFunds__c</field>
+            <value>
+                <elementReference>Source_of_funds</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1018,6 +1038,25 @@
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Source_of_funds</name>
+            <choiceReferences>sourceOfFundsChoice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Source of funds</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Paid_by</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Client</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>employerSelect</name>

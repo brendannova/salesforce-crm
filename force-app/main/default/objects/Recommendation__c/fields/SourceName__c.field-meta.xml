@@ -6,9 +6,9 @@
     <formula>IF(
 NOT(ISBLANK( SourceLegacy__c )),
 
-PrimaryClientName__c + IF(ISBLANK( JointOwner__c),&quot;&quot;,&quot; &amp; &quot; + JointOwnerName__c) + &quot;&apos;s &quot; + 
+PrimaryClientName__c + IF(ISBLANK( JointOwner__c),&quot;&quot;,&quot; &amp; &quot; + JointOwnerName__c) + &quot;&#39;s &quot; + 
 SourceLegacy__r.Public_Provider_Name__r.Name + &quot; &quot; + SourceLegacy__r.RecordType.Name + &quot; (&quot; +  SourceLegacy__r.FinServ__FinancialAccountNumber__c + &quot;)&quot;, 
-PreRequisiteRecommendationSource__r.PrimaryClientName__c + IF(ISBLANK( PreRequisiteRecommendationSource__r.JointOwner__c),&quot;&quot;,&quot; &amp; &quot; + PreRequisiteRecommendationSource__r.JointOwnerName__c) + &quot;&apos;s &quot; + ProductName__c
+PreRequisiteRecommendationSource__r.PrimaryClientName__c + IF(ISBLANK( PreRequisiteRecommendationSource__r.JointOwner__c),&quot;&quot;,&quot; &amp; &quot; + PreRequisiteRecommendationSource__r.JointOwnerName__c) + &quot;&#39;s &quot; + ProductName__c
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Source name</label>

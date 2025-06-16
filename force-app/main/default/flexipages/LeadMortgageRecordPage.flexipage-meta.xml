@@ -172,6 +172,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>pi:EngagementHistory</componentName>
+                <identifier>pi_EngagementHistory</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-0146bceb-9aea-49d3-97f6-e5a75605c0ca</value>
@@ -288,6 +294,16 @@
                 <identifier>RecordAnnualRevenueField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AnnualIncome__c</fieldItem>
+                <identifier>RecordAnnualIncome_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-cb082f4c-ece1-4808-9de5-618c27cae7ea</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -313,6 +329,78 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-d6486e4d-a2a9-4842-a325-e9376fc74d13</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Borrower2FirstName__c</fieldItem>
+                <identifier>RecordBorrower2FirstName_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Borrower2Birthdate__c</fieldItem>
+                <identifier>RecordBorrower2Birthdate_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-2ffad63d-7056-47a2-a851-881195056b86</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Borrower2LastName__c</fieldItem>
+                <identifier>RecordBorrower2LastName_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Borrower2AnnualIncome__c</fieldItem>
+                <identifier>RecordBorrower2AnnualIncome_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-34c8789f-cd90-474b-9af8-1c4b0506193b</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2ffad63d-7056-47a2-a851-881195056b86</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column16</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-34c8789f-cd90-474b-9af8-1c4b0506193b</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column17</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-78d5aea9-4db0-4271-9d56-e65c684b750b</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -674,6 +762,16 @@
                 <identifier>RecordDescriptionField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.LeadNotes__c</fieldItem>
+                <identifier>RecordLeadNotes_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-5057aae4-28d4-4f56-b364-7e998c9c5acb</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -780,6 +878,24 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-78d5aea9-4db0-4271-9d56-e65c684b750b</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Other borrowers</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection9</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
