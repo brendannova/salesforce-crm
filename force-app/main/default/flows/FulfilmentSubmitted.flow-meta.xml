@@ -9,9 +9,9 @@
         <defaultConnector>
             <targetReference>Create_task_to_check_fees</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
+            <name>No</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Loop_fees.AppliesToLegacy__c</leftValueReference>
@@ -27,10 +27,17 @@
                     <elementReference>Loop_fees.TakenFromRecommendation__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Loop_fees.TakenFromRecommendation__r.DestinationLegacy__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Recommendation__r.DestinationLegacy__c</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Loop_fees</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>No</label>
         </rules>
     </decisions>
     <decisions>
@@ -47,6 +54,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Partial</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Recommendation__r.RecommendationType__r.DeveloperName__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>INTERNAL_TRANSFER</stringValue>
                 </rightValue>
             </conditions>
             <connector>
