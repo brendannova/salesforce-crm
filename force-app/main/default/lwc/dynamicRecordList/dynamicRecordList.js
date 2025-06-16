@@ -1,5 +1,6 @@
-import { LightningElement, track, api } from "lwc";
+import { LightningElement, track, api, wire } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
+//import { CurrentPageReference } from "lightning/navigation"; \\Currently unused. This gives an option to access key value pairs defined in a page's URL
 import getDynamicData from "@salesforce/apex/LwcHelperDynamicRecordList.getDynamicData";
 
 export default class dynamicRecordList extends NavigationMixin(LightningElement) {
@@ -34,6 +35,15 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         this.init();
     }
 
+   /* get an ID from the URL and sets the contextId
+    urlRecordId;
+    @wire(CurrentPageReference)
+    setCurrentPageReference(currentPageReference){
+        if(currentPageReference && currentPageReference.state.c__recordId){
+            this.urlRecordId = currentPageReference.state.c__recordId;
+            this.init();
+        }
+    } */
 
     get hasRows() {
         return this.state.rows != null && this.state.rows.length && this.state.keyField != null;
@@ -54,14 +64,18 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
 
         if(this.recordId && !this.contextId){ //set context id as record id if not overwritten
             this.contextId = this.recordId;
-        }
+        } /*else if(this.urlRecordId && !this.contextId) { //set contextId as ID from URL if not overwritten & not a record page
+            this.contextId = this.urlRecordId;
+        } */
 
         console.log(this.contextId);
         console.log(this.logicReference);
-        if(this.contextId != null && !this.contextId.isEmpty() && this.logicReference != null && !this.logicReference.isEmpty()){
+        if(this.contextId != null && !this.contextId !== '' && this.logicReference != null && !this.logicReference !== ''){
 
             this.dataReturn = await this.fetchData(this.logicReference, this.contextId);
-            this.state.error = this.dataReturn.errorMessage;
+            if(this.dataRetrun !== null && this.dataReturn.errorMessage !== null ){
+                this.state.error = this.dataReturn.errorMessage;
+            }
             this.setColumns();
             this.setKeyField();
             this.setRows();
