@@ -68,30 +68,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>LwcHelperAdviceManager</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LwcHelperCustomerFactsList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LwcHelperDynamicRecordList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LwcHelperEmailTemplateList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LwcHelperInformationRequestList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>LwcHelperTaskOrchestrator</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>TaskEngine</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2119,6 +2095,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>EmailConfiguration__c.SendingProcess__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EmailConfiguration__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -3515,6 +3496,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Fulfilment__c.Recommendation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Fulfilment__c.ResidualCash__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6384,10 +6370,6 @@
     </tabSettings>
     <tabSettings>
         <tab>EmailConfiguration__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>EmailTemplatesManage</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

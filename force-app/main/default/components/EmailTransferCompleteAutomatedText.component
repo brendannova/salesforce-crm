@@ -1,0 +1,12 @@
+<apex:component controller="EmailPensionTransferCompleteAutomated" access="global">
+    <apex:attribute name="objectIdValue" type="String" description="This is the ID of the record" assignTo="{!objectId}" access="global" />
+    <div style="font-size: 18px" >{!introString}</div>
+    <div style="font-size: 18px" >{!secondLine}</div>
+    <div style="font-size: 18px" >{!partialLine}</div>
+    <div style="font-size: 18px" >{!cancellationSummary}</div>
+	<h3 style="color: #FF1E7E;">Your right to change your mind</h3>
+    <div style="font-size: 18px" >{!cancellationParagraph1}</div>
+    <div style="font-weight: 600" >{!cancellationParagraph2}</div>
+    <div style="font-size: 18px" >{!cancellationParagraph3}</div>
+    
+</apex:component>
