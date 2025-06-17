@@ -891,33 +891,19 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
-                <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                    <leftValueReference>dateVisible</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Optional</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                    <leftValueReference>ageVisible</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Optional</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -942,9 +928,23 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
                         <formulaExpression>{!AgeRequired} &lt; 150</formulaExpression>
                     </validationRule>
                     <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
+                        <conditionLogic>1 OR (2 AND 3)</conditionLogic>
                         <conditions>
                             <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Optional</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>Yes</stringValue>
@@ -972,6 +972,13 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>Optional</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -1040,12 +1047,26 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
+                        <conditionLogic>1 OR (2 AND 3)</conditionLogic>
                         <conditions>
                             <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Optional</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -1065,6 +1086,13 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <stringValue>Optional</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
