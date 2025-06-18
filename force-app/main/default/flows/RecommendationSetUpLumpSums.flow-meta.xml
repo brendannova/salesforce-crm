@@ -1221,6 +1221,7 @@ IF( {!Who_will_this_be_paid_byRec}=&quot;Client&quot;, {!AmountRec} / 4, 0), 0)<
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
         <queriedFields>RegisteredContact__c</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <screens>
         <name>DoneDoneScreen</name>
@@ -1553,12 +1554,6 @@ NOT(CONTAINS({!Loop_2_Recommendations_for_lump_sum.DestinationLegacy__r.FinServ_
                 <name>messageToggleInactive</name>
                 <value>
                     <stringValue>No</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2031,12 +2026,6 @@ NOT(CONTAINS({!Loop_2_Recommendations_for_lump_sum.DestinationLegacy__r.FinServ_
                 <name>messageToggleInactive</name>
                 <value>
                     <stringValue>No</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
