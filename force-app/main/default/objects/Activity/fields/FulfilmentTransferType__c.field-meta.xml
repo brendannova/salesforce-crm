@@ -3,7 +3,7 @@
     <fullName>FulfilmentTransferType__c</fullName>
     <description>Added to this object to allow us to report on and display in list views related fulfilment information. This particular field shows the transfer type, either full or partial.</description>
     <externalId>false</externalId>
-    <formula>Text(RelatedFulfilment__r.Recommendation__r.TransferType__c)</formula>
+    <formula>IF(RelatedFulfilment__r.Recommendation__r.RecommendationType__r.DeveloperName__c = &quot;EXTERNAL_TRANSFER_IN&quot;,  RelatedFulfilment__r.Recommendation__r.RecommendationType__r.DeveloperName__c  + &quot;_&quot; + Text(RelatedFulfilment__r.Recommendation__r.TransferType__c), &quot;&quot;)</formula>
     <label>Transfer type</label>
     <required>false</required>
     <type>Text</type>
