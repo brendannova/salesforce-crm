@@ -3,7 +3,8 @@
     <fullName>OW_junior_product_required</fullName>
     <active>true</active>
     <description>Ensures that it is not possible to create ISAs or SIPPs for people under 18.</description>
-    <errorConditionFormula>(RecordType.DeveloperName = &#39;FP_Stocks_Shares_ISA&#39;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+(RecordType.DeveloperName = &#39;FP_Stocks_Shares_ISA&#39;
 ||
 RecordType.DeveloperName = &#39;FP_SIPP&#39;)
 &amp;&amp;

@@ -3,7 +3,8 @@
     <fullName>NewBusinessProtectionPartner</fullName>
     <active>true</active>
     <description>If a product is a protection policy, it must either be pre-existing or the provider must be a protection partner</description>
-    <errorConditionFormula>ISPICKVAL(BusinessType__c  , &quot;New business&quot; ) 
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+ISPICKVAL(BusinessType__c  , &quot;New business&quot; ) 
 &amp;&amp;
 (
 CONTAINS(TEXT(Subtype__c) , &quot;Cover&quot;) ||
