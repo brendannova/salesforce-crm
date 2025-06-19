@@ -41,8 +41,8 @@ public with sharing class LwcHelperAccountStatusFlags {
                 flags.householdId = opp.Household_Account__c;
             }
             when 'Case'{
-                Case opp = [SELECT Id, OW_household__c FROM Case WHERE Id = :recordId];
-                flags.householdId = opp.OW_household__c;
+                Case opp = [SELECT Id, accountId FROM Case WHERE Id = :recordId];
+                flags.householdId = opp.accountId;
             }
             when 'OW_review__c'{
                 OW_review__c review = [SELECT Id, OW_household__c FROM OW_review__c WHERE Id = :recordId];
