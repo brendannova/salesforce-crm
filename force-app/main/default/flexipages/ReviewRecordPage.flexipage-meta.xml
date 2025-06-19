@@ -194,7 +194,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Name</fieldItem>
                 <identifier>RecordNameField</identifier>
@@ -227,6 +227,16 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ReviewType__c</fieldItem>
+                <identifier>RecordReviewType_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-c8bcc3fc-0be7-4ae6-97e9-0f5306997434</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -255,7 +265,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ReviewDeckUrl__c</fieldItem>
                 <identifier>RecordReviewDeckUrl_cField</identifier>
@@ -539,7 +549,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Catch Up Call</value>
+                    <value>Catch up call</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
