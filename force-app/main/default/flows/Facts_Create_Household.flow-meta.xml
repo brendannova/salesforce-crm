@@ -253,8 +253,8 @@
     <dynamicChoiceSets>
         <name>DisplayOnLifeline1</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>DisplayOnLifeline__c</picklistField>
         <picklistObject>CustomerFact__c</picklistObject>
     </dynamicChoiceSets>
@@ -289,8 +289,8 @@
     <dynamicChoiceSets>
         <name>ModelFinancialImpactValue</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>ModelFinancialImpact__c</picklistField>
         <picklistObject>CustomerFact__c</picklistObject>
     </dynamicChoiceSets>
@@ -566,7 +566,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>ErrorText</name>
-            <fieldText>&lt;p&gt;You&#39;re unable to create a fact at this time: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;You&apos;re unable to create a fact at this time: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -579,7 +579,7 @@
         <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
             <targetReference>GetFacts</targetReference>
         </connector>
@@ -635,7 +635,7 @@
             </outputParameters>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Post_Adding_Instructions</name>
@@ -669,7 +669,7 @@
         </connector>
         <fields>
             <name>PleaseAddMoreDetail</name>
-            <fieldText>&lt;p&gt;Please add more detail about the Client&#39;s &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!FactChoiceRecord.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Please add more detail about the Client&apos;s &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!FactChoiceRecord.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -770,7 +770,7 @@
             <dataType>String</dataType>
             <fieldText>Model Financial Impact?</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;Indicate if we want to model this fact into the Client&#39;s overall wealth.&lt;/p&gt;</helpText>
+            <helpText>&lt;p&gt;Indicate if we want to model this fact into the Client&apos;s overall wealth.&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -982,7 +982,7 @@
             </outputParameters>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Success_screen</name>
