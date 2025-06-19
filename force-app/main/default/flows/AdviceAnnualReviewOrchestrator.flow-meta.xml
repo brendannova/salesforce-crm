@@ -4,7 +4,7 @@
     <assignments>
         <name>Advice_ready_updates</name>
         <label>Advice ready updates</label>
-        <locationX>10258</locationX>
+        <locationX>11754</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DeckStatus__c</assignToReference>
@@ -34,7 +34,7 @@
     <assignments>
         <name>Advice_updates</name>
         <label>Advice updates</label>
-        <locationX>2690</locationX>
+        <locationX>4714</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -55,9 +55,59 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Advice_updates_assess_review_type</name>
+        <label>Update needed Advice updates</label>
+        <locationX>1898</locationX>
+        <locationY>866</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.RiskCallStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ready</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>closeTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Advice_updates_automatic_review</name>
+        <label>Advice updates</label>
+        <locationX>1634</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>followUpTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ADVICE_ANNUAL_REVIEW_MEETING_BOOK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.OW_status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Provide advice</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.ReviewType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ANNUAL_REVIEW_AUTOMATIC</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Advice_updates_assess_review_type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Advice_updates_catch_up_call</name>
         <label>Advice updates</label>
-        <locationX>1898</locationX>
+        <locationX>3416</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.RiskCallStatus__c</assignToReference>
@@ -66,11 +116,14 @@
                 <stringValue>Complete</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Review_type_meeting</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Advice_updates_data_analysis</name>
         <label>Advice updates - data analysis</label>
-        <locationX>3218</locationX>
+        <locationX>5242</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.DataAnalysisStatus__c</assignToReference>
@@ -81,53 +134,10 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Advice_updates_prepare_annual_review</name>
+        <name>Advice_updates_manual_review</name>
         <label>Advice updates</label>
-        <locationX>3746</locationX>
-        <locationY>458</locationY>
-        <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_UPLOAD</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Confirm_task</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Advice_updates_skipped_catch_up</name>
-        <label>Advice updates</label>
-        <locationX>2162</locationX>
-        <locationY>974</locationY>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.RiskCallStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Skipped</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_CATCH_UP_SKIPPED</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Advice_updatesSkipped</name>
-        <label>Advice updates</label>
-        <locationX>1106</locationX>
+        <locationX>1898</locationX>
         <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.RiskCallStatus__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Ready</stringValue>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -143,6 +153,45 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>reviewUpdated.ReviewType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ANNUAL_REVIEW_MANUAL</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Advice_updates_assess_review_type</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Advice_updates_skipped_catch_up</name>
+        <label>Advice updates</label>
+        <locationX>3680</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.RiskCallStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Skipped</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Review_type_meeting</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Advice_updatesSkipped</name>
+        <label>Advice updates</label>
+        <locationX>1106</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>followUpTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ADVICE_ANNUAL_REVIEW_AUTOMATIC_ASSESS</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>closeTask</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -153,7 +202,7 @@
     <assignments>
         <name>Advice_updatesSuitabilityPlanner</name>
         <label>Advice updates</label>
-        <locationX>3482</locationX>
+        <locationX>5506</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.Assigned_planner__c</assignToReference>
@@ -166,7 +215,7 @@
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_PREPARE</stringValue>
+                <stringValue>ADVICE_ANNUAL_REVIEW_NARRATIVE_WRITE</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -187,7 +236,7 @@
     <assignments>
         <name>Adviser_debrief_updates</name>
         <label>Adviser debrief updates</label>
-        <locationX>11842</locationX>
+        <locationX>13514</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.AdvisorDebriefComplete__c</assignToReference>
@@ -203,7 +252,7 @@
     <assignments>
         <name>Assign_book_meeting_task</name>
         <label>Assign book meeting task</label>
-        <locationX>10258</locationX>
+        <locationX>11754</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -216,7 +265,7 @@
     <assignments>
         <name>Assign_portal_docs_task</name>
         <label>Assign portal docs task</label>
-        <locationX>9994</locationX>
+        <locationX>11490</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -229,7 +278,7 @@
     <assignments>
         <name>Assign_updates</name>
         <label>Assign updates</label>
-        <locationX>8102</locationX>
+        <locationX>9598</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -270,8 +319,8 @@
     <assignments>
         <name>Book_annual_review_catch_up_call_updates</name>
         <label>Book annual review catch up call updates</label>
-        <locationX>1634</locationX>
-        <locationY>458</locationY>
+        <locationX>2690</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -281,9 +330,22 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Book_annual_review_meeting_updates</name>
+        <label>Book annual review meeting updates</label>
+        <locationX>2426</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>followUpTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ADVICE_ANNUAL_REVIEW_MEETING</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Catch_up_call_outcome_unknown_error</name>
         <label>Catch up call outcome unknown error</label>
-        <locationX>2426</locationX>
+        <locationX>3944</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -312,7 +374,7 @@
     <assignments>
         <name>Create_deck_updates</name>
         <label>Create deck updates</label>
-        <locationX>8674</locationX>
+        <locationX>10170</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -354,9 +416,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Create_upload_docs_task</name>
+        <label>Create upload docs task</label>
+        <locationX>3350</locationX>
+        <locationY>1382</locationY>
+        <assignmentItems>
+            <assignToReference>followUpTask</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>ADVICE_ANNUAL_REVIEW_UPLOAD</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Annual_review_meeting_outcome</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Deck_review_changes_needed</name>
         <label>Deck review changes needed</label>
-        <locationX>8938</locationX>
+        <locationX>10434</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -376,7 +454,7 @@
     <assignments>
         <name>Deck_review_no_changes</name>
         <label>Deck review no changes</label>
-        <locationX>9202</locationX>
+        <locationX>10698</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -403,7 +481,7 @@
     <assignments>
         <name>Deck_review_updates</name>
         <label>Deck review updates</label>
-        <locationX>9070</locationX>
+        <locationX>10566</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.Deck4EyeCompletedBy__c</assignToReference>
@@ -426,7 +504,7 @@
     <assignments>
         <name>Illustrations_updates</name>
         <label>Illustrations updates</label>
-        <locationX>8410</locationX>
+        <locationX>9906</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -463,7 +541,7 @@
     <assignments>
         <name>No_outcome_to_partner_review_error</name>
         <label>No outcome to partner review error</label>
-        <locationX>6122</locationX>
+        <locationX>7618</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -476,7 +554,7 @@
     <assignments>
         <name>No_outcome_to_planner_review_error</name>
         <label>No outcome to planner review error</label>
-        <locationX>5066</locationX>
+        <locationX>6562</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -489,7 +567,7 @@
     <assignments>
         <name>Partner_deck_review_changes_needed</name>
         <label>Partner deck review changes needed</label>
-        <locationX>9730</locationX>
+        <locationX>11226</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -523,7 +601,7 @@
     <assignments>
         <name>Partner_deck_review_no_changes_needed</name>
         <label>Partner deck review no changes needed</label>
-        <locationX>10258</locationX>
+        <locationX>11754</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.DeckReviewed__c</assignToReference>
@@ -546,7 +624,7 @@
     <assignments>
         <name>Push_to_narrative_complete</name>
         <label>Push to narrative complete</label>
-        <locationX>5858</locationX>
+        <locationX>7354</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -580,7 +658,7 @@
     <assignments>
         <name>Push_to_next_status</name>
         <label>Push to next status</label>
-        <locationX>7178</locationX>
+        <locationX>8674</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.Status__c</assignToReference>
@@ -596,7 +674,7 @@
     <assignments>
         <name>Push_to_partner_review</name>
         <label>Push to partner review</label>
-        <locationX>4802</locationX>
+        <locationX>6298</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -616,7 +694,7 @@
     <assignments>
         <name>Resolve_deck_comments_updates</name>
         <label>Resolve deck comments updates</label>
-        <locationX>9466</locationX>
+        <locationX>10962</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -653,7 +731,7 @@
     <assignments>
         <name>Resolve_partner_comments_updates</name>
         <label>Resolve partner comments updates</label>
-        <locationX>6386</locationX>
+        <locationX>7882</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -687,7 +765,7 @@
     <assignments>
         <name>Resolve_partner_comments_updatesDeck</name>
         <label>Resolve partner comments updates</label>
-        <locationX>10786</locationX>
+        <locationX>12282</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.PartnerCommentsResolved__c</assignToReference>
@@ -704,7 +782,7 @@
     <assignments>
         <name>Resolve_planner_comments_updates</name>
         <label>Resolve planner comments updates</label>
-        <locationX>5330</locationX>
+        <locationX>6826</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -731,7 +809,7 @@
     <assignments>
         <name>Return_to_planner</name>
         <label>Return to planner</label>
-        <locationX>4538</locationX>
+        <locationX>6034</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -751,7 +829,7 @@
     <assignments>
         <name>Return_to_planner_partner_rework</name>
         <label>Return to planner</label>
-        <locationX>5594</locationX>
+        <locationX>7090</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -787,7 +865,7 @@
     <assignments>
         <name>Set_emailed_date_time</name>
         <label>Set emailed date/time</label>
-        <locationX>12106</locationX>
+        <locationX>13778</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>clientEmailedDateTime</assignToReference>
@@ -831,7 +909,7 @@
     <assignments>
         <name>Set_unidentified_task_error</name>
         <label>Set unidentified task error</label>
-        <locationX>12634</locationX>
+        <locationX>14306</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -844,7 +922,7 @@
     <assignments>
         <name>Set_variables</name>
         <label>Set variables</label>
-        <locationX>6342</locationX>
+        <locationX>7178</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklist.Id</assignToReference>
@@ -874,7 +952,7 @@
     <assignments>
         <name>Task_assignmentI</name>
         <label>Task assignment</label>
-        <locationX>7442</locationX>
+        <locationX>8938</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -887,7 +965,7 @@
     <assignments>
         <name>Task_assignmentIL</name>
         <label>Task assignment</label>
-        <locationX>6650</locationX>
+        <locationX>8146</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -900,7 +978,7 @@
     <assignments>
         <name>Task_assignmentILT</name>
         <label>Task assignment</label>
-        <locationX>7178</locationX>
+        <locationX>8674</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -913,7 +991,7 @@
     <assignments>
         <name>Task_assignmentIT</name>
         <label>Task assignment</label>
-        <locationX>6914</locationX>
+        <locationX>8410</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
@@ -926,7 +1004,7 @@
     <assignments>
         <name>Undefined_advice_method_error</name>
         <label>Undefined advice method error</label>
-        <locationX>10522</locationX>
+        <locationX>12018</locationX>
         <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -939,7 +1017,7 @@
     <assignments>
         <name>Unknown_illustrations_outcome</name>
         <label>Unknown illustrations outcome</label>
-        <locationX>7706</locationX>
+        <locationX>9202</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -950,10 +1028,50 @@
         </assignmentItems>
     </assignments>
     <assignments>
+        <name>Unknown_review_type_error</name>
+        <label>Unknown review type error</label>
+        <locationX>2162</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Unknown review type. Please raise a ticket. </stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Update_review_status</name>
+        <label>Update review status</label>
+        <locationX>3218</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.OW_status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.OW_review_date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RiskCallDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.ReviewDateTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RiskCallDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
         <name>Update_review_status_complete</name>
         <label>Update review status</label>
-        <locationX>4010</locationX>
-        <locationY>458</locationY>
+        <locationX>4450</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>reviewUpdated.OW_status__c</assignToReference>
             <operator>Assign</operator>
@@ -975,14 +1093,38 @@
                 <elementReference>reviewSharedDateTime</elementReference>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Confirm_task</targetReference>
-        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_review_status_post_advice_meeting</name>
+        <label>Update review status</label>
+        <locationX>12986</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.OW_status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.OW_review_date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>reviewUpdated.ReviewDateTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceUpdated.Suitability_meeting_date_time__c</elementReference>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Write_narrative_updates</name>
         <label>Write narrative updates</label>
-        <locationX>4274</locationX>
+        <locationX>5770</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.NarrativeStatus__c</assignToReference>
@@ -1023,6 +1165,22 @@
             <targetReference>Assess_retirement_call_need</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>ChoiceAnnualReviewAutomatic</name>
+        <choiceText>Automatic / 2 x deck</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>AUTOMATIC</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChoiceAnnualReviewManual</name>
+        <choiceText>Manual / 1 x deck</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MANUAL</stringValue>
+        </value>
+    </choices>
     <choices>
         <name>No</name>
         <choiceText>No</choiceText>
@@ -1090,7 +1248,7 @@
     <decisions>
         <name>Advice_method</name>
         <label>Advice method</label>
-        <locationX>10258</locationX>
+        <locationX>11754</locationX>
         <locationY>782</locationY>
         <defaultConnector>
             <targetReference>Undefined_advice_method_error</targetReference>
@@ -1130,7 +1288,7 @@
     <decisions>
         <name>Advice_method_doc_upload</name>
         <label>Advice method</label>
-        <locationX>12238</locationX>
+        <locationX>13910</locationX>
         <locationY>458</locationY>
         <defaultConnectorLabel>Not defined</defaultConnectorLabel>
         <rules>
@@ -1157,16 +1315,67 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Catch_up_call_outcome</name>
-        <label>Catch up call outcome</label>
-        <locationX>2162</locationX>
+        <name>Annual_review_meeting_outcome</name>
+        <label>Annual review meeting outcome</label>
+        <locationX>3350</locationX>
+        <locationY>1490</locationY>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>Completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CatchUpCallTookPlace</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Yes</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.OW_review__r.OW_status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_review_status</targetReference>
+            </connector>
+            <label>Complete</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annual_review_status</name>
+        <label>Annual review status</label>
+        <locationX>4362</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Update_review_status_complete</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>Complete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>advice.OW_review__r.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Complete</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Call_meeting_outcome</name>
+        <label>Call/meeting outcome</label>
+        <locationX>3680</locationX>
         <locationY>866</locationY>
         <defaultConnector>
             <targetReference>Catch_up_call_outcome_unknown_error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No outcome known</defaultConnectorLabel>
         <rules>
-            <name>Catch_up_call_took_place</name>
+            <name>Call_meeting_took_place</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>CatchUpCallTookPlace</leftValueReference>
@@ -1178,10 +1387,10 @@
             <connector>
                 <targetReference>Advice_updates_catch_up_call</targetReference>
             </connector>
-            <label>Catch up call took place</label>
+            <label>Call/meeting took place</label>
         </rules>
         <rules>
-            <name>Catch_up_call_didn_t_happen</name>
+            <name>Call_meeting_didn_t_happen</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>CatchUpCallTookPlace</leftValueReference>
@@ -1193,13 +1402,13 @@
             <connector>
                 <targetReference>Advice_updates_skipped_catch_up</targetReference>
             </connector>
-            <label>Catch up call didn&apos;t happen</label>
+            <label>Call/meeting didn&apos;t happen</label>
         </rules>
     </decisions>
     <decisions>
         <name>Changes_deck_planner</name>
         <label>Changes?</label>
-        <locationX>9070</locationX>
+        <locationX>10566</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Deck_review_no_changes</targetReference>
@@ -1224,7 +1433,7 @@
     <decisions>
         <name>Changes_narrative_review_partner</name>
         <label>Changes?</label>
-        <locationX>5858</locationX>
+        <locationX>7354</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>No_outcome_to_partner_review_error</targetReference>
@@ -1264,7 +1473,7 @@
     <decisions>
         <name>Changes_narrative_review_planner</name>
         <label>Changes?</label>
-        <locationX>4802</locationX>
+        <locationX>6298</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>No_outcome_to_planner_review_error</targetReference>
@@ -1304,7 +1513,7 @@
     <decisions>
         <name>ChangesPartnerDeckRevview</name>
         <label>Changes?</label>
-        <locationX>9994</locationX>
+        <locationX>11490</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Partner_deck_review_no_changes_needed</targetReference>
@@ -1329,7 +1538,7 @@
     <decisions>
         <name>Is_a_4eye_task_required</name>
         <label>Is a 4eye task required?</label>
-        <locationX>8102</locationX>
+        <locationX>9598</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Assign_updates</targetReference>
@@ -1374,9 +1583,150 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Review_status</name>
+        <label>Review status</label>
+        <locationX>12898</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Update_review_status_post_advice_meeting</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not complete</defaultConnectorLabel>
+        <rules>
+            <name>Complete_post_meeting</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>advice.OW_review__r.OW_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Complete</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Review_type</name>
+        <label>Review type</label>
+        <locationX>1898</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Unknown_review_type_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Undefined</defaultConnectorLabel>
+        <rules>
+            <name>Automatic</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnnualReviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ChoiceAnnualReviewAutomatic</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Advice_updates_automatic_review</targetReference>
+            </connector>
+            <label>Automatic</label>
+        </rules>
+        <rules>
+            <name>Manual</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnnualReviewType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ChoiceAnnualReviewManual</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Advice_updates_manual_review</targetReference>
+            </connector>
+            <label>Manual</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Review_type_book</name>
+        <label>Review type</label>
+        <locationX>2690</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Unknown_review_type_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Undefined</defaultConnectorLabel>
+        <rules>
+            <name>Automatic_book</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_AUTOMATIC</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Book_annual_review_meeting_updates</targetReference>
+            </connector>
+            <label>Automatic</label>
+        </rules>
+        <rules>
+            <name>Manual_book</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_MANUAL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Book_annual_review_catch_up_call_updates</targetReference>
+            </connector>
+            <label>Manual</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Review_type_meeting</name>
+        <label>Review type</label>
+        <locationX>3680</locationX>
+        <locationY>1274</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Unknown_review_type_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Undefined</defaultConnectorLabel>
+        <rules>
+            <name>Automatic_meeting</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_AUTOMATIC</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_upload_docs_task</targetReference>
+            </connector>
+            <label>Automatic</label>
+        </rules>
+        <rules>
+            <name>Manual_meeting</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ANNUAL_REVIEW_MANUAL</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Manual</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Status</name>
         <label>Task type</label>
-        <locationX>6342</locationX>
+        <locationX>7178</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_unidentified_task_error</targetReference>
@@ -1458,13 +1808,35 @@
             <label>Annual review fact find | complete notes</label>
         </rules>
         <rules>
-            <name>Book_catch_up_call</name>
+            <name>Planning_assess_for_automatic_annual_review</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
+                    <stringValue>ADVICE_ANNUAL_REVIEW_AUTOMATIC_ASSESS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Automatic_annual_review_decision_capture</targetReference>
+            </connector>
+            <label>Assess for automatic annual review</label>
+        </rules>
+        <rules>
+            <name>Book_catch_up_call</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
                     <stringValue>ADVICE_ANNUAL_REVIEW_CATCH_UP_BOOK</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ADVICE_ANNUAL_REVIEW_MEETING_BOOK</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1474,7 +1846,7 @@
         </rules>
         <rules>
             <name>Risk_call</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>task.OW_task_information_name__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1482,10 +1854,32 @@
                     <stringValue>ADVICE_ANNUAL_REVIEW_CATCH_UP</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ADVICE_ANNUAL_REVIEW_MEETING</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>MeetingTookPlace</targetReference>
             </connector>
             <label>Catch up call</label>
+        </rules>
+        <rules>
+            <name>Upload_annual_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ADVICE_ANNUAL_REVIEW_UPLOAD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Upload_annual_review_orchestrate</targetReference>
+            </connector>
+            <label>Upload annual review</label>
         </rules>
         <rules>
             <name>DataGatheringWriteCaseSummary</name>
@@ -1531,36 +1925,6 @@
                 <targetReference>Assign_planner</targetReference>
             </connector>
             <label>Assign suitability planner</label>
-        </rules>
-        <rules>
-            <name>Prepare_annual_review</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ADVICE_ANNUAL_REVIEW_PREPARE</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Review_prepared</targetReference>
-            </connector>
-            <label>Prepare annual review</label>
-        </rules>
-        <rules>
-            <name>Upload_annual_review</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>task.OW_task_information_name__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ADVICE_ANNUAL_REVIEW_UPLOAD</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Upload_annual_review_orchestrate</targetReference>
-            </connector>
-            <label>Upload annual review</label>
         </rules>
         <rules>
             <name>Narrative_Write</name>
@@ -1864,10 +2228,10 @@
     <decisions>
         <name>Vulnerability_and_COI_update_needed</name>
         <label>Vulnerability and COI update needed?</label>
-        <locationX>2162</locationX>
+        <locationX>3680</locationX>
         <locationY>458</locationY>
         <defaultConnector>
-            <targetReference>Catch_up_call_outcome</targetReference>
+            <targetReference>Call_meeting_outcome</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>None needed</defaultConnectorLabel>
         <rules>
@@ -1889,7 +2253,7 @@
     <decisions>
         <name>Which_button</name>
         <label>Which button?</label>
-        <locationX>3086</locationX>
+        <locationX>5110</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Advice_updates_data_analysis</targetReference>
@@ -1920,7 +2284,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
 &quot;ILLUSTRATIONS_ONLY&quot;))))</description>
         <name>Which_task</name>
         <label>Which task?</label>
-        <locationX>7178</locationX>
+        <locationX>8674</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Unknown_illustrations_outcome</targetReference>
@@ -1989,6 +2353,11 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     </decisions>
     <description>Orchestrates the process of annual review advice.</description>
     <environments>Default</environments>
+    <formulas>
+        <name>AnnualReviewDeckUrlPopulated</name>
+        <dataType>Boolean</dataType>
+        <expression>!ISBLANK({!advice.OW_review__r.ReviewDeckUrl__c})</expression>
+    </formulas>
     <formulas>
         <name>commentsAddedToDeck</name>
         <dataType>String</dataType>
@@ -2077,20 +2446,91 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <processType>Flow</processType>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
-        <name>Catch_up_call_booking_email_sent</name>
-        <label>Catch up call booking email sent</label>
-        <locationX>1634</locationX>
+        <name>Automatic_annual_review_decision_capture</name>
+        <label>Automatic annual review decision capture</label>
+        <locationX>1898</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Book_annual_review_catch_up_call_updates</targetReference>
+            <targetReference>Review_type</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmAutomaticAnnualReviewDecision</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Assess whether we should do the automated annual review 2 x deck process  or a single deck, as is expected for more complex situations like retirement. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>AnnualReviewType</name>
+            <choiceReferences>ChoiceAnnualReviewAutomatic</choiceReferences>
+            <choiceReferences>ChoiceAnnualReviewManual</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Annual review type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <booleanValue>false</booleanValue>
+            </isDisabled>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Automatic_annual_review_prepared</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>No</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Automatic annual review prepared</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <elementReference>AnnualReviewDeckUrlPopulated</elementReference>
+            </isDisabled>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Booking email sent</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Catch_up_call_booking_email_sent</name>
+        <label>Catch up call booking email sent</label>
+        <locationX>2690</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Review_type_book</targetReference>
         </connector>
         <fields>
             <name>ConfirmAnnualReviewCatchUpCallBooking</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Proceed when you have sent the annual review catch up call booking email.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>ANNUAL_REVIEW_MANUAL</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ConfirmAnnualReviewMeetingBooking</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Proceed when you have emailed the client to book the annual review meeting. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Note: this task is for an annual review meeting and not a catch up.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>ANNUAL_REVIEW_AUTOMATIC</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>BookingEmailSentConfirm</name>
@@ -2111,7 +2551,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Confirm_recommendations_created</name>
         <label>Confirm recommendations created</label>
-        <locationX>7178</locationX>
+        <locationX>8674</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2139,7 +2579,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Confirm_recommendationsPreScreen</name>
         <label>Confirm recommendations</label>
-        <locationX>11578</locationX>
+        <locationX>13250</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2159,7 +2599,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Deck_complete</name>
         <label>Deck complete?</label>
-        <locationX>8674</locationX>
+        <locationX>10170</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2204,7 +2644,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Household_repeater</name>
         <label>Household repeater</label>
-        <locationX>3086</locationX>
+        <locationX>5110</locationX>
         <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2228,7 +2668,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Meeting</name>
         <label>Meeting</label>
-        <locationX>11050</locationX>
+        <locationX>12546</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2261,7 +2701,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>MeetingTookPlace</name>
         <label>MeetingTookPlace</label>
-        <locationX>2162</locationX>
+        <locationX>3680</locationX>
         <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2270,16 +2710,41 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <targetReference>Vulnerability_and_COI_update_needed</targetReference>
         </connector>
         <fields>
-            <name>AnnualReview</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click next to confirm that the risk call is complete. You&apos;ll then be prompted to update vulnerability &amp;amp; conflict of interest for all people in this household.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>AnnualReviewCatchUpPrompt</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Click next to confirm that the annual review catch up is complete. &lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>ANNUAL_REVIEW_MANUAL</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AnnualReviewMeetingPrompt</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;﻿Click next to confirm that the annual review meeting is complete. &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.OW_review__r.ReviewType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>ANNUAL_REVIEW_AUTOMATIC</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>CatchUpCallTookPlace</name>
             <choiceReferences>Yes</choiceReferences>
             <choiceReferences>No</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Did the catch up call take place?</fieldText>
+            <fieldText>Did the meeting take place?</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
@@ -2300,7 +2765,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <defaultValue>
                 <elementReference>advice.RiskCallDate__c</elementReference>
             </defaultValue>
-            <fieldText>Risk/catch up call date</fieldText>
+            <fieldText>Meeting date</fieldText>
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isDisabled>
@@ -2373,7 +2838,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Modelling_complete</name>
         <label>Modelling complete?</label>
-        <locationX>8102</locationX>
+        <locationX>9598</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2402,7 +2867,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Narrative_complete</name>
         <label>Narrative complete?</label>
-        <locationX>4274</locationX>
+        <locationX>5770</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2465,7 +2930,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Partner_deck_review_task</name>
         <label>Partner deck review task</label>
-        <locationX>9994</locationX>
+        <locationX>11490</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2540,7 +3005,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Planner_deck_review_task</name>
         <label>Planner deck review task</label>
-        <locationX>9070</locationX>
+        <locationX>10566</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2570,7 +3035,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Resolve_partner_deck_comments</name>
         <label>Resolve partner deck comments</label>
-        <locationX>10786</locationX>
+        <locationX>12282</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2587,46 +3052,8 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Review_prepared</name>
-        <label>Review prepared?</label>
-        <locationX>3746</locationX>
-        <locationY>350</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Advice_updates_prepare_annual_review</targetReference>
-        </connector>
-        <fields>
-            <name>PrepareReviewPrompt</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Confirm that the review work has been done and the deck is ready to share. Ops will then get a task to share the review deck. &lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>ReviewNarrativeReady</name>
-            <choiceReferences>Yes</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Is the narrative ready?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>ReviewDeckReady</name>
-            <choiceReferences>Yes</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Is the deck ready for ops to share?</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <nextOrFinishButtonLabel>Review ready</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>6216</locationX>
+        <locationX>7052</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_variables</targetReference>
@@ -2636,7 +3063,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Assess_retirement_call</name>
         <label>Assess retirement call</label>
-        <locationX>3482</locationX>
+        <locationX>5506</locationX>
         <locationY>458</locationY>
         <connector>
             <targetReference>Advice_updatesSuitabilityPlanner</targetReference>
@@ -2672,7 +3099,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Assess_retirement_call_need</name>
         <label>Assess retirement call need</label>
-        <locationX>4274</locationX>
+        <locationX>5770</locationX>
         <locationY>566</locationY>
         <flowName>AdviceOrchestratorRetirementCallAssess</flowName>
         <inputAssignments>
@@ -2723,7 +3150,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Assign_planner</name>
         <label>Assign planner</label>
-        <locationX>3482</locationX>
+        <locationX>5506</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Assess_retirement_call</targetReference>
@@ -2740,7 +3167,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Call_advice_document_upload_flow</name>
         <label>Call advice document upload flow</label>
-        <locationX>12238</locationX>
+        <locationX>13910</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Advice_method_doc_upload</targetReference>
@@ -2817,8 +3244,11 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Confirm_advice</name>
         <label>Confirm advice</label>
-        <locationX>11314</locationX>
+        <locationX>12898</locationX>
         <locationY>350</locationY>
+        <connector>
+            <targetReference>Review_status</targetReference>
+        </connector>
         <flowName>AdviceOrchestrationConfirmAdviceGiven</flowName>
         <inputAssignments>
             <name>advice</name>
@@ -2872,7 +3302,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Confirm_deck_complete</name>
         <label>Confirm deck complete</label>
-        <locationX>8674</locationX>
+        <locationX>10170</locationX>
         <locationY>566</locationY>
         <flowName>AdviceOrchestrationConfirmDeckComplete</flowName>
         <inputAssignments>
@@ -2933,8 +3363,8 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Confirm_task</name>
         <label>Confirm task</label>
-        <locationX>6342</locationX>
-        <locationY>1466</locationY>
+        <locationX>7178</locationX>
+        <locationY>2066</locationY>
         <flowName>OrchestratorTaskComplete</flowName>
         <inputAssignments>
             <name>task</name>
@@ -2962,7 +3392,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Create_confirm_meeting_task</name>
         <label>Create confirm meeting task</label>
-        <locationX>11050</locationX>
+        <locationX>12546</locationX>
         <locationY>458</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
@@ -3000,7 +3430,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Create_modelling_review_task</name>
         <label>Create modelling review task</label>
-        <locationX>7970</locationX>
+        <locationX>9466</locationX>
         <locationY>566</locationY>
         <connector>
             <targetReference>Assign_updates</targetReference>
@@ -3091,7 +3521,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Mark_decisions_sub_flow</name>
         <label>Mark decisions sub flow</label>
-        <locationX>11578</locationX>
+        <locationX>13250</locationX>
         <locationY>458</locationY>
         <flowName>AdviceMarkDecisions</flowName>
         <inputAssignments>
@@ -3104,7 +3534,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Partner_narrative_review</name>
         <label>Partner narrative review</label>
-        <locationX>5858</locationX>
+        <locationX>7354</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Changes_narrative_review_partner</targetReference>
@@ -3133,7 +3563,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Planner_narrative_review</name>
         <label>Planner narrative review</label>
-        <locationX>4802</locationX>
+        <locationX>6298</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Changes_narrative_review_planner</targetReference>
@@ -3162,7 +3592,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Reassign_dedicated_specialist</name>
         <label>Reassign dedicated specialist</label>
-        <locationX>3086</locationX>
+        <locationX>5110</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Household_repeater</targetReference>
@@ -3178,7 +3608,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Resolve_partner_narrative_comments</name>
         <label>Resolve partner narrative comments</label>
-        <locationX>6386</locationX>
+        <locationX>7882</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Resolve_partner_comments_updates</targetReference>
@@ -3207,7 +3637,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Resolve_planner_narrative_comments</name>
         <label>Resolve planner narrative comments</label>
-        <locationX>5330</locationX>
+        <locationX>6826</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Resolve_planner_comments_updates</targetReference>
@@ -3282,10 +3712,10 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Update_household_conflict_of_interest</name>
         <label>Update household conflict of interest</label>
-        <locationX>2030</locationX>
+        <locationX>3548</locationX>
         <locationY>674</locationY>
         <connector>
-            <targetReference>Catch_up_call_outcome</targetReference>
+            <targetReference>Call_meeting_outcome</targetReference>
         </connector>
         <flowName>FactsManageConflictOfInterest</flowName>
         <inputAssignments>
@@ -3298,7 +3728,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Update_household_vulnerability</name>
         <label>Update household vulnerability</label>
-        <locationX>2030</locationX>
+        <locationX>3548</locationX>
         <locationY>566</locationY>
         <connector>
             <targetReference>Update_household_conflict_of_interest</targetReference>
@@ -3314,10 +3744,10 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Upload_annual_review_orchestrate</name>
         <label>Upload annual review</label>
-        <locationX>4010</locationX>
+        <locationX>4362</locationX>
         <locationY>350</locationY>
         <connector>
-            <targetReference>Update_review_status_complete</targetReference>
+            <targetReference>Annual_review_status</targetReference>
         </connector>
         <flowName>AdviceCustomerDocumentUpload</flowName>
         <inputAssignments>
