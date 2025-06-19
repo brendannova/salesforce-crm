@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IntegrationReference__c</fullName>
+    <description>If user is an integration user, this field specified which integration they perform so that the user record can be accurately referenced across code, flow, formulas and be consistent between sandboxes</description>
+    <label>Integration Reference</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>OW_user_type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>PORTAL</fullName>
+                <default>false</default>
+                <label>Portal</label>
+            </value>
+            <value>
+                <fullName>CALENDLY</fullName>
+                <default>false</default>
+                <label>Calendly</label>
+            </value>
+            <value>
+                <fullName>PARDOT</fullName>
+                <default>false</default>
+                <label>Pardot</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Integration</controllingFieldValue>
+            <valueName>PORTAL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Integration</controllingFieldValue>
+            <valueName>CALENDLY</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Integration</controllingFieldValue>
+            <valueName>PARDOT</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
