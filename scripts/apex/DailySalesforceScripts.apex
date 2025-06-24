@@ -12,7 +12,7 @@ for(Advice__c record : records){
         System.debug(record.Id);
     }    
 }
-System.debug(i);
+System.debug(i + ' missing tasks');
 
 // Run to resolve, if i > 0 
 List<Advice__c> records = [SELECT Id, advice_household__c, (SELECT Id from Tasks WHERE OW_task_information_name__c = 'chase_recommendation_acceptance' AND IsClosed = false), (SELECT Id, Status__c from Recommendation__r WHERE Status__c = 'Awaiting decision') FROM Advice__c WHERE AdvicePresented__c = true ORDER BY Advice_status__c ASC, LastModifiedDate DESC];
@@ -32,6 +32,7 @@ for(Advice__c record : records){
         i++;
     }    
 }
+System.debug(i + 'tasks created');
 
 // Migrate Chatter for IRs from LOAs
 List<LOA__c> loas = [SELECT Id, 
