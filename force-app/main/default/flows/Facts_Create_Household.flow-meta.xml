@@ -682,17 +682,12 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
             <targetReference>CreateFact</targetReference>
         </connector>
         <fields>
-            <name>PleaseAddMoreDetail</name>
-            <fieldText>&lt;p&gt;Please add more detail about the Client&#39;s &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!factChoiceRecord.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
             <name>Applies_to</name>
             <choiceReferences>householdChoice</choiceReferences>
             <choiceReferences>personChoice</choiceReferences>
             <dataType>String</dataType>
             <defaultSelectedChoiceReference>personChoice</defaultSelectedChoiceReference>
-            <fieldText>Does this apply to the household?</fieldText>
+            <fieldText>Fact applies to:</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
@@ -718,7 +713,7 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Select a client in the household</stringValue>
+                    <stringValue>Choose client</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -845,7 +840,7 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
             <dataType>String</dataType>
             <fieldText>Model Financial Impact?</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;Indicate if we want to model this fact into the Client&#39;s overall wealth.&lt;/p&gt;</helpText>
+            <helpText>&lt;p&gt;Indicate if we want to model this fact into the Client&apos;s overall wealth.&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
@@ -1212,7 +1207,7 @@ IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Choose Fact</stringValue>
+                    <stringValue>Choose fact</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
