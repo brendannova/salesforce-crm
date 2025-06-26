@@ -4,7 +4,7 @@ public class EmailCancellationNotice {
     private Fulfilment__c fulfilment = new Fulfilment__c();
     Boolean constructorRun = false;
     
-    public void EmailCancellationNoticeGroupedConstructor() {
+    public void EmailCancellationNotice() {
         if(!constructorRun){
             constructorRun = true;
             System.debug('in constructor');
@@ -17,15 +17,16 @@ public class EmailCancellationNotice {
                               Id, 
                               Recommendation__r.ProductName__c, 
                               Recommendation__r.Product__r.Name,
+                              Recommendation__r.PrimaryOwner__r.AddressedName__pc,
                               Recommendation__r.RegisteredContact__c,
                               Recommendation__r.RegisteredContact__r.AddressedName__pc
                               FROM Fulfilment__c WHERE Id = :objectId];
             }
         }
     }
-
-    
+        
     public String getIntroString() {
+        EmailCancellationNotice();
         System.debug('introstring ' + fulfilment);
         String result = System.Label.EmailCancellationNoticeIntroPart1 +  clientName() + ' new NOVA '
             			+ fulfilment.Recommendation__r.ProductName__c + ' '
@@ -36,7 +37,8 @@ public class EmailCancellationNotice {
     }
     
     public String clientName(){
-        String result = '';
+        String result = ' ';
+        System.debug('reg contact' + fulfilment.Recommendation__r.RegisteredContact__c);
         if( fulfilment.Recommendation__r.RegisteredContact__c == null) {
             result = result + 'your ';
         } else {
