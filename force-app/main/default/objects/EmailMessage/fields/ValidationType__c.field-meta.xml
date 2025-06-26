@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidationType__c</fullName>
+    <description>Determines the type of validation that should run on email messages.</description>
+    <label>Validation type</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>NONE</fullName>
+                <default>false</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>OUTGOING_AUTOMATIC</fullName>
+                <default>false</default>
+                <label>Outgoing automatic</label>
+            </value>
+            <value>
+                <fullName>OUTGOING_MANUAL</fullName>
+                <default>true</default>
+                <label>Outgoing manual</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

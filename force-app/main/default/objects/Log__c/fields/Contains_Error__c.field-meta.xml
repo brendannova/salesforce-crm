@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contains_Error__c</fullName>
+    <description>Checks roll up to see if number of child errors of logging type ERROR is &gt; 0</description>
+    <formula>TotalERRORLogEntries__c &gt; 0</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Checks roll up to see if number of child errors of logging type ERROR is &gt; 0</inlineHelpText>
+    <label>Contains Error</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
