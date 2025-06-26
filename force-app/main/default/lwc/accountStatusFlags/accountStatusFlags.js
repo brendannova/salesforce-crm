@@ -44,6 +44,11 @@ import TOOLTIP_CUSTOMER_TRUST from "@salesforce/label/c.CustomerFlagCustomerTrus
 import TOOLTIP_TYPE_MORTGAGE from "@salesforce/label/c.CustomerFlagTypeMortgageTooltip";
 import TOOLTIP_TYPE_WEALTH from "@salesforce/label/c.CustomerFlagTypeWealthTooltip";
 import TOOLTIP_TYPE_TRUST from "@salesforce/label/c.CustomerFlagTypeTrustTooltip";
+import TOOLTIP_FULFILMENT_PHASING from "@salesforce/label/c.CustomerFlagFulfilmentPhasing";
+import TOOLTIP_FULFILMENT_RINGFENCE from "@salesforce/label/c.CustomerFlagFulfilmentRingfence";
+import TOOLTIP_FULFILMENT_TRADING_RESTRICTIONS_EMPLOYER from "@salesforce/label/c.CustomerFlagFulfilmentTradingRestrictionsEmployer";
+import TOOLTIP_FULFILMENT_TRADING_SUSPENDED from "@salesforce/label/c.CustomerFlagFulfilmentTradingSuspended";
+import TOOLTIP_FULFILMENT_ADDITIONAL_AML from "@salesforce/label/c.CustomerFlagFulfilmentAdditionalAml";
 
 const FIELDS = [STATUS_FIELD, RTQ_STATUS_FIELD, TOB_STATUS_FIELD, AML_STATUS_FIELD, VULNERABLE_FIELD, CONFLICT_OF_INTEREST_FIELD, CUSTOMER_FLAG_FIELD, CUSTOMER_TYPE_FIELD, RECORD_TYPE_DEVELOPER_NAME_FIELD, FACT_FIND_VALIDATIONS_FIELD, TEMP_BANK_DETAILS_ISSUE_FIELD];
 
@@ -145,6 +150,11 @@ const REF_CUSTOMER_TYPE_CORPORATE = 'REF_CUSTOMER_TYPE_CORPORATE';
 const REF_PEP = 'REF_PEP';
 const REF_FACT_FIND_VALIDATIONS = 'REF_FACT_FIND_VALIDATIONS';
 const REF_TEMP_BANK_DETAILS_ISSUE = 'REF_TEMP_BANK_DETAILS_ISSUE';
+const REF_FULFILMENT_PHASING = 'REF_FULFILMENT_PHASING';
+const REF_FULFILMENT_RINGFENCE = 'REF_FULFILMENT_RINGFENCE'
+const REF_TRADING_RESTRICTIONS_EMPLOYER = 'REF_TRADING_RESTRICTIONS_EMPLOYER';
+const REF_TRADING_SUSPENDED = 'REF_TRADING_SUSPENDED';
+const REF_ADDITIONAL_AML = 'REF_ADDITIONAL_AML';
 
 const SUPPORTED_OBJECTS = [
     'Account',
@@ -195,7 +205,12 @@ export default class accountStatusFlags extends LightningElement {
         REF_CUSTOMER_TYPE_MORTGAGE:         {show: false, badge: {Id: REF_CUSTOMER_TYPE_MORTGAGE, text: CUSTOMER_TYPE_MORTGAGE_VALUE, icon: 'utility:home', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_MORTGAGE}},
         REF_CUSTOMER_TYPE_TRUST:            {show: false, badge: {Id: REF_CUSTOMER_TYPE_TRUST, text: CUSTOMER_TYPE_TRUST_VALUE, icon: 'utility:contract_payment', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_TRUST}},
         REF_CUSTOMER_TYPE_WEALTH:           {show: false, badge: {Id: REF_CUSTOMER_TYPE_WEALTH, text: CUSTOMER_TYPE_WEALTH_VALUE, icon: 'utility:trending', badgeClass: BADGE_PINK, order: 3.7, tooltip: TOOLTIP_TYPE_WEALTH}},
-        REF_CUSTOMER_TYPE_CORPORATE:        {show: false, badge: {Id: REF_CUSTOMER_TYPE_CORPORATE, text: CUSTOMER_TYPE_CORPORATE_VALUE, icon: 'utility:company', badgeClass: BADGE_PINK, order: 3.7, tooltip: ''}}
+        REF_CUSTOMER_TYPE_CORPORATE:        {show: false, badge: {Id: REF_CUSTOMER_TYPE_CORPORATE, text: CUSTOMER_TYPE_CORPORATE_VALUE, icon: 'utility:company', badgeClass: BADGE_PINK, order: 3.7, tooltip: ''}},
+        REF_FULFILMENT_PHASING:             {show: false, badge: {Id: REF_FULFILMENT_PHASING, text: 'Phasing', icon: 'utility:page_structure', badgeClass: BADGE_RED, order: 1.1, tooltip: TOOLTIP_FULFILMENT_PHASING}},
+        REF_FULFILMENT_RINGFENCE:           {show: false, badge: {Id: REF_FULFILMENT_RINGFENCE, text: 'Ringfence', icon: 'utility:steps', badgeClass: BADGE_AMBER, order: 2.9, tooltip: TOOLTIP_FULFILMENT_RINGFENCE}},
+        REF_TRADING_RESTRICTIONS_EMPLOYER:  {show: false, badge: {Id: REF_TRADING_RESTRICTIONS_EMPLOYER, text: 'Employer trading restictions', icon: 'utility:incident', badgeClass: BADGE_RED, order: 1.1, tooltip: TOOLTIP_FULFILMENT_TRADING_RESTRICTIONS_EMPLOYER}},
+        REF_TRADING_SUSPENDED:              {show: false, badge: {Id: REF_TRADING_SUSPENDED, text: 'Trading suspended', icon: 'utility:clear', badgeClass: BADGE_RED, order: 1.1, tooltip: TOOLTIP_FULFILMENT_TRADING_SUSPENDED}},
+        REF_ADDITIONAL_AML:                 {show: false, badge: {Id: REF_ADDITIONAL_AML, text: 'Additional AML', icon: 'utility:clear', badgeClass: BADGE_RED, order: 1.1, tooltip: TOOLTIP_FULFILMENT_ADDITIONAL_AML}}
     };
 
     _isHousehold
