@@ -5,7 +5,7 @@ public class EmailMesssageTriggerHandler extends TriggerHandler {
 
     public override void beforeInsert() {
         EmailMessageHelper emh = new EmailMessageHelper();
-        emh.setValidationType();
+        emh.setValidationType(this.newEmailMessageMap);
     }
 
     public override void afterInsert() {
