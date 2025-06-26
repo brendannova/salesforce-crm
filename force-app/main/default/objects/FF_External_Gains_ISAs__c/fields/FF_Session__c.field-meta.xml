@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>FF_Session__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
-    <label>FF Session</label>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>A lookup to the specific fact find session this data was taken from.</description>
+    <label>FF session</label>
     <referenceTo>FF_Session__c</referenceTo>
+    <relationshipLabel>FF Gains &amp; ISAs</relationshipLabel>
     <relationshipName>FF_External_Gains_ISAs</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>

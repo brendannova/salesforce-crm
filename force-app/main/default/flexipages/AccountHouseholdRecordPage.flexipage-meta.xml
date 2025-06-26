@@ -165,6 +165,9 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Account.ManageLeadSource</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -197,123 +200,81 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Account.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AccountTeamMembers</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>GRID</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Employee</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>VIP</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Family</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Split</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Trust</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Owner.Username}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>andrew@novawm.com</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Owner.Username}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>joseph@novawm.com</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Owner.Username}</leftValue>
-                        <operator>CONTAINS</operator>
-                        <rightValue>paul.abiodun@novawm.com</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.Owner.Username}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>james@novawm.com</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Account.Id</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>ProcessSteps</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>ADVGRID</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
-                    <value>10</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer3</identifier>
-                <visibilityRule>
-                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-                    <criteria>
-                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Pending</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Approved</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Rejected</rightValue>
-                    </criteria>
-                    <criteria>
-                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Recalled</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
                 <identifier>forceChatter_recordFeedContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-bdd4ee08-71f1-4be3-b388-717a776c48a7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentName>runtime_sales_activities:activityPanel</componentName>
+                <identifier>runtime_sales_activities_activityPanel</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-5d510093-f2ae-4484-9fef-cce230f18016</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>active</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-bdd4ee08-71f1-4be3-b388-717a776c48a7</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.collaborate</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab8</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-5d510093-f2ae-4484-9fef-cce230f18016</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Tasks &amp; Meetings</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab9</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-7a335bea-69f2-4e01-8122-31ad248a5f10</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                </componentInstanceProperties>
+                <componentName>accountStatusFlags</componentName>
+                <identifier>c_accountStatusFlags</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabs</name>
+                    <value>Facet-7a335bea-69f2-4e01-8122-31ad248a5f10</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -322,7 +283,7 @@
                 <identifier>c_auditor</identifier>
             </componentInstance>
         </itemInstances>
-        <name>leftsidebar</name>
+        <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -428,16 +389,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_customer_flag__c</fieldItem>
                 <identifier>RecordOW_customer_flag_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.AccountSource</fieldItem>
-                <identifier>RecordAccountSourceField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -960,8 +911,118 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.AccountSource</fieldItem>
+                <identifier>RecordAccountSourceField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Referrer__c</fieldItem>
+                <identifier>RecordReferrer_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.AccountSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>REFERRAL_CLIENT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AccountSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>REFERRAL_EMPLOYEE</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AccountSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>REFERRAL_INTRODUCER</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AccountSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>FINANCIAL_WELLBEING_ROLLOUT</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.AccountSource}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>ACQUISITION</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-3a290979-5310-475c-8a71-013723214381</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.LeadSourceNotes__c</fieldItem>
+                <identifier>RecordLeadSourceNotes_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-85ff47f4-9bd0-4761-aa6b-fe41681d9f8d</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-3a290979-5310-475c-8a71-013723214381</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column20</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-85ff47f4-9bd0-4761-aa6b-fe41681d9f8d</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column21</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-5cd8d51d-f394-4358-97ea-e232053c9620</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.CreatedById</fieldItem>
                 <identifier>RecordCreatedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PlatformCreatedBy__c</fieldItem>
+                <identifier>RecordPlatformCreatedBy_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PlatformCreatedDateTime__c</fieldItem>
+                <identifier>RecordPlatformCreatedDateTime_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -996,6 +1057,26 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.LastModifiedById</fieldItem>
                 <identifier>RecordLastModifiedByIdField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PlatformLastModifiedBy__c</fieldItem>
+                <identifier>RecordPlatformLastModifiedBy_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PlatformLastModifiedDateTime__c</fieldItem>
+                <identifier>RecordPlatformLastModifiedDateTime_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -1194,6 +1275,24 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>columns</name>
+                    <value>Facet-5cd8d51d-f394-4358-97ea-e232053c9620</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Source</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection12</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
                     <value>Facet-4c34ea45-7050-407f-a2e9-edaf890362df</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -1202,7 +1301,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Admin Fields</value>
+                    <value>System Information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection10</identifier>
@@ -5364,6 +5463,164 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AccountTeamMembers</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>GRID</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Employee</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>VIP</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Family</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Split</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_customer_flag__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Trust</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AccountTeamMembers</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>GRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4 OR 5 OR 6</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Owner.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>andrew@novawm.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Owner.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>joseph@novawm.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Owner.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>james@novawm.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Owner.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>christian.pereraslater@novawm.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Owner.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>lauren.oloughlin@novawm.com</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Owner.Username}</leftValue>
+                        <operator>CONTAINS</operator>
+                        <rightValue>valentina.osborne@novawm.com</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Account.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>ProcessSteps</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer3</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Pending</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Approved</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Rejected</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.ApprovalStatus__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Recalled</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-a2fff432-2363-44cc-b049-17bdddc864b1</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>body</name>
                     <value>Facet-36469e16-a02f-467e-a282-e99e7a0e6aff</value>
                 </componentInstanceProperties>
@@ -5527,157 +5784,24 @@
                 <identifier>flexipage_tab6</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a2fff432-2363-44cc-b049-17bdddc864b1</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Related</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>Facet-d4691082-5477-4986-ba5a-e6b91e5fd4c5</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(255, 111, 0);&quot;&gt;A client in this household has been marked as vulnerable. Please check the Facts tab for further details.﻿&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText10</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Vulnerable_Client__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Vulnerable</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px; color: rgb(255, 0, 116);&quot;&gt;Client Profile Validations Outstanding﻿&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText4</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Fact_Find_Validations_Outstanding__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>true</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(176, 1, 1); font-size: 20px;&quot;&gt;This is a withdrawn household&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText6</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Withdrawn</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(176, 1, 1); font-size: 20px;&quot;&gt;This client is being offboarded - proceed with caution&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText5</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Offboarding</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(176, 1, 1); font-size: 20px;&quot;&gt;This is a former household&lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText7</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Former</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(176, 1, 1); font-size: 20px;&quot;&gt;This household has been split. Please only work on the new households. &lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText8</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Split</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>decorate</name>
-                    <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>richTextValue</name>
-                    <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(176, 1, 1); font-size: 20px;&quot;&gt;This household was forgotten as part of a GDPR request. Do not do anything on this household. &lt;/strong&gt;&lt;/p&gt;</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:richText</componentName>
-                <identifier>flexipage_richText9</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.FinServ__Status__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Forgotten</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </componentInstance>
-        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -5705,24 +5829,10 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>showLegacyActivityComposer</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentName>runtime_sales_activities:activityPanel</componentName>
-                <identifier>runtime_sales_activities_activityPanel</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>rightsidebar</name>
-        <type>Region</type>
-    </flexiPageRegions>
     <masterLabel>Household record page</masterLabel>
     <sobjectType>Account</sobjectType>
     <template>
-        <name>flexipage:recordHomePinnedHeaderTemplateDesktop</name>
+        <name>flexipage:recordHomeLeftSidebarTemplateDesktop</name>
         <properties>
             <name>saveOptions</name>
             <value>[{&quot;name&quot;:&quot;UseDefaultAssignmentRule&quot;,&quot;value&quot;:&quot;NONE&quot;}]</value>

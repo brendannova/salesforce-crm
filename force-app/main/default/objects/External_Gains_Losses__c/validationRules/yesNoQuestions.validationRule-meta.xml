@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>yesNoQuestions</fullName>
+    <active>true</active>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+(AND(
+NOT(ISPICKVAL(Carried_Forward_Losses_Y_N__c, &quot;Yes&quot;)), 
+NOT(ISNULL(Carried_Forward_Losses__c))
+) 
+
+||
+
+AND(
+NOT(ISPICKVAL( Gains_Losses_Realised_this_Year_Y_N__c , &quot;Yes&quot;)), 
+OR(
+NOT(ISNULL( Gains_Realised__c )), 
+NOT(ISNULL( Losses_Realised__c  ))
+)) 
+
+||
+
+AND(
+NOT(ISPICKVAL(External_ISA_Contributions_Y_N__c , &quot;Yes&quot;)), 
+NOT(ISNULL(ISA_Contributions__c ))
+))</errorConditionFormula>
+    <errorMessage>You need to mark the corresponding Y/N question.</errorMessage>
+</ValidationRule>

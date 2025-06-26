@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>StatusCreateAnnualReviewDeck</fullName>
+    <active>true</active>
+    <description>Candidate for deletion when review functionality is stable - Q4 2021 earliest</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND(
+ISPICKVAL(Status, &quot;Completed&quot;),
+ RecordType.Name = &quot;Create Annual Review Deck&quot;,
+OR(
+ ISBLANK(Related_Annual_Review__r.Suitability_builder_link_annual_review__c),
+ ISBLANK(Related_Annual_Review__r.Annual_review_deck_link__c)
+)
+)</errorConditionFormula>
+    <errorMessage>You need to complete the Deck section of the Annual Review</errorMessage>
+</ValidationRule>

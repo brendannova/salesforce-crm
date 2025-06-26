@@ -188,10 +188,10 @@
             </value>
         </filters>
         <filters>
-            <field>ProfileId</field>
+            <field>UserRoleId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>plannerProfileId</elementReference>
+                <elementReference>plannerRoleId</elementReference>
             </value>
         </filters>
         <filters>
@@ -209,8 +209,8 @@
         <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
-        <name>Get_planner_profile_ID</name>
-        <label>Get planner profile ID</label>
+        <name>Get_planner_role_ID</name>
+        <label>Get planner role ID</label>
         <locationX>446</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -219,15 +219,15 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Name</field>
+            <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Planner</stringValue>
             </value>
         </filters>
-        <object>Profile</object>
+        <object>UserRole</object>
         <outputAssignments>
-            <assignToReference>plannerProfileId</assignToReference>
+            <assignToReference>plannerRoleId</assignToReference>
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
@@ -255,6 +255,13 @@
                 <stringValue>william.shillingford@novawm.com</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Username</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>joe.hunter@novawm.com</stringValue>
+            </value>
+        </filters>
         <object>User</object>
         <outputReference>planners</outputReference>
         <queriedFields>Id</queriedFields>
@@ -280,10 +287,10 @@
             </value>
         </filters>
         <filters>
-            <field>ProfileId</field>
+            <field>UserRoleId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>plannerProfileId</elementReference>
+                <elementReference>plannerRoleId</elementReference>
             </value>
         </filters>
         <filters>
@@ -384,7 +391,7 @@
         <locationX>320</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_planner_profile_ID</targetReference>
+            <targetReference>Get_planner_role_ID</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -403,7 +410,7 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>plannerProfileId</name>
+        <name>plannerRoleId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

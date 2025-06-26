@@ -5,7 +5,7 @@
         <name>Set_email_duplicate_check_to_email</name>
         <label>Set email duplicate check to email</label>
         <locationX>50</locationX>
-        <locationY>767</locationY>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_email_duplicate_check__c</assignToReference>
             <operator>Assign</operator>
@@ -18,7 +18,7 @@
         <name>Set_timestamp</name>
         <label>Set timestamp</label>
         <locationX>50</locationX>
-        <locationY>431</locationY>
+        <locationY>395</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_last_change_to_portal_account_field__c</assignToReference>
             <operator>Assign</operator>
@@ -35,7 +35,7 @@
         <name>Email_set_or_changed</name>
         <label>Email set or changed</label>
         <locationX>182</locationX>
-        <locationY>647</locationY>
+        <locationY>587</locationY>
         <defaultConnectorLabel>No change</defaultConnectorLabel>
         <rules>
             <name>Email_changed</name>
@@ -65,7 +65,7 @@
         <name>Portal_account_field_changed</name>
         <label>Portal account field changed?</label>
         <locationX>182</locationX>
-        <locationY>311</locationY>
+        <locationY>287</locationY>
         <defaultConnector>
             <targetReference>Email_set_or_changed</targetReference>
         </defaultConnector>
@@ -122,6 +122,7 @@
         </rules>
     </decisions>
     <description>Will run for all accounts but terminate immediately for non-person accounts. Before save flow for quick updates.</description>
+    <environments>Default</environments>
     <formulas>
         <description>Returns true if the record is new.</description>
         <name>is_new</name>
@@ -157,10 +158,10 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>RecordTypeId</field>
+            <field>IsPersonAccount</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>0121t000000vGIzAAM</stringValue>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Account</object>

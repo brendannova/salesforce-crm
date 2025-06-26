@@ -4,7 +4,7 @@
         <name>Generate_random_number</name>
         <label>Generate random number</label>
         <locationX>2162</locationX>
-        <locationY>458</locationY>
+        <locationY>350</locationY>
         <actionName>NumberGenerateRandomNumber</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -26,7 +26,7 @@
         <name>Assign_error_message</name>
         <label>Assign error message</label>
         <locationX>1898</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -43,7 +43,7 @@
         <name>Did_any_sub_flow_have_an_error</name>
         <label>Did any sub flow or update have an error?</label>
         <locationX>842</locationX>
-        <locationY>1274</locationY>
+        <locationY>1166</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesSubFlowError</name>
@@ -65,7 +65,7 @@
         <name>Found_task</name>
         <label>Found task?</label>
         <locationX>1502</locationX>
-        <locationY>350</locationY>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Generate_random_number</targetReference>
         </defaultConnector>
@@ -90,7 +90,7 @@
         <name>Is_there_a_task_to_create</name>
         <label>Is there a task to create?</label>
         <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <defaultConnector>
             <targetReference>Did_any_sub_flow_have_an_error</targetReference>
         </defaultConnector>
@@ -115,7 +115,7 @@
         <name>Task_type</name>
         <label>Task type</label>
         <locationX>842</locationX>
-        <locationY>566</locationY>
+        <locationY>458</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Set_up</name>
@@ -280,7 +280,7 @@
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_task</targetReference>
+            <targetReference>Found_task</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -312,59 +312,11 @@
         <queriedFields>BuilderLink__c</queriedFields>
         <queriedFields>FolderLink__c</queriedFields>
     </recordLookups>
-    <recordLookups>
-        <name>Get_task</name>
-        <label>Get task</label>
-        <locationX>1502</locationX>
-        <locationY>242</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Found_task</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>OwnerId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>$User.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>IR_CHASE_ADD_INFO_POST</stringValue>
-            </value>
-        </filters>
-        <object>Task</object>
-        <outputReference>task</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>OW_task_information_name__c</queriedFields>
-        <queriedFields>Subject</queriedFields>
-    </recordLookups>
     <recordUpdates>
         <name>Close_task</name>
         <label>Close task</label>
         <locationX>842</locationX>
-        <locationY>866</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Is_there_a_task_to_create</targetReference>
         </connector>
@@ -398,7 +350,7 @@
         <name>Intro_screen</name>
         <label>Intro screen</label>
         <locationX>842</locationX>
-        <locationY>458</locationY>
+        <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -463,7 +415,7 @@
         <name>No_task_screen</name>
         <label>No task screen</label>
         <locationX>2162</locationX>
-        <locationY>566</locationY>
+        <locationY>458</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -517,7 +469,7 @@
         <name>Ad_hoc_actionSubflow</name>
         <label>Ad hoc action</label>
         <locationX>1370</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Close_task</targetReference>
         </connector>
@@ -541,7 +493,7 @@
         <name>Chase_and_receive_info</name>
         <label>Chase and receive info</label>
         <locationX>578</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Close_task</targetReference>
         </connector>
@@ -550,6 +502,12 @@
             <name>informationRequest</name>
             <value>
                 <elementReference>informationRequest</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
@@ -565,7 +523,7 @@
         <name>Create_follow_up_task</name>
         <label>Create follow up task</label>
         <locationX>710</locationX>
-        <locationY>1082</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Did_any_sub_flow_have_an_error</targetReference>
         </connector>
@@ -603,7 +561,7 @@
         <name>Error_handling_screen</name>
         <label>Error handling screen</label>
         <locationX>710</locationX>
-        <locationY>1382</locationY>
+        <locationY>1274</locationY>
         <flowName>ErrorHandleScreen</flowName>
         <inputAssignments>
             <name>closeFlowAfterToast</name>
@@ -646,7 +604,7 @@
         <name>Fund_reviewSubflow</name>
         <label>Fund review</label>
         <locationX>1106</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Close_task</targetReference>
         </connector>
@@ -676,7 +634,7 @@
         <name>Review</name>
         <label>Review</label>
         <locationX>842</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Close_task</targetReference>
         </connector>
@@ -700,7 +658,7 @@
         <name>Send_request</name>
         <label>Send request</label>
         <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Close_task</targetReference>
         </connector>
@@ -724,7 +682,7 @@
         <name>Set_upSubflow</name>
         <label>Set up</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>Close_task</targetReference>
         </connector>
@@ -777,7 +735,7 @@
         <name>task</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Task</objectType>
     </variables>

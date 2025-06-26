@@ -3,7 +3,9 @@
     <fullName>NameChangeApproved</fullName>
     <active>true</active>
     <description>Ensures that approved name changes must be open or move to complete.</description>
-    <errorConditionFormula>RecordType.DeveloperName = &quot;PersonalInformationChange&quot;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+RecordType.DeveloperName = &quot;PersonalInformationChange&quot;
 &amp;&amp;
 ISPICKVAL(Type, &quot;Name change&quot;)
 &amp;&amp;

@@ -5,6 +5,7 @@
     <label>Person</label>
     <lookupFilter>
         <active>true</active>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <filterItems>
             <field>Account.RecordType.DeveloperName</field>
             <operation>equals</operation>
@@ -14,6 +15,11 @@
             <field>Account.Household_Lookup__r.Id</field>
             <operation>equals</operation>
             <valueField>$Source.OW_household__c</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Account.Household_Lookup__r.Id</field>
+            <operation>equals</operation>
+            <value></value>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>
