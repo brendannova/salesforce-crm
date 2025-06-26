@@ -18,6 +18,19 @@ public with sharing class EmailMessageHelper {
     private Map<Id, List<String>> householdEmailsMap = new Map<Id, List<String>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
     private Map<Id, List<RecipientInformation>> householdRecipientMap = new Map<Id, List<RecipientInformation>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
 
+    private final static List<String> EXCLUDED_SUBJECTS = new List<String>{LoggerEmailSender.LOG_ERROR_EMAIL_SUBECT};
+    private final static String VALIDATION_TYPE_NONE = 'NONE';
+
+    public setValidationType(Map<Id, EmailMessage> messagesMap){
+        for(EmailMessage email : messagesMap.values()){
+            if(email.Incoming == false){
+                if(EXCLUDED_SUBJECTS.contains(email.Subject)){
+                    email.ValidationType__c = VALIDATION_TYPE_NONE;
+                }
+            }
+        }
+    }
+
     // This constructor runs to collate the information needed to validate an email message
     public EmailMessageHelper(Map<Id,EmailMessage> messagesMap){
         collateEmailInformation(messagesMap.values());      // Collate the key information needed
@@ -30,7 +43,7 @@ public with sharing class EmailMessageHelper {
     // Constructs a list of EmailDetail objects for each outbound EmailMessage
     private void collateEmailInformation(List<EmailMessage> allEmails){
         for(EmailMessage email : allEmails){
-            if(email.Incoming == false){
+            if(email.Incoming == false && email.ValidationType__c != VALIDATION_TYPE_NONE){
                 EmailDetail emailDetail = new EmailDetail();
                 emailDetail.emailMessage = email;
                 emailDetail.relatedToId = email.RelatedToId;

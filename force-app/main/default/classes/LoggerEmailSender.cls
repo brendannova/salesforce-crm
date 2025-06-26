@@ -13,6 +13,7 @@ public without sharing class LoggerEmailSender {
   private static final List<Schema.ApexEmailNotification> MOCK_NOTIFICATIONS = new List<Schema.ApexEmailNotification>();
   @TestVisible
   private static final List<Messaging.SingleEmailMessage> SENT_EMAILS = new List<Messaging.SingleEmailMessage>();
+  public static final String LOG_ERROR_EMAIL_SUBECT = 'Nebula Logger - Error Notification - Nova';
 
   @TestVisible
   private static final List<Schema.ApexEmailNotification> CACHED_APEX_ERROR_RECIPIENTS {
@@ -167,13 +168,17 @@ public without sharing class LoggerEmailSender {
     }
   }
 
+  // Method amended to always return a static string so that outbound email validation can ignore these emails. 
   private static String buildSubject(List<String> errorMessages) {
-    String emailSubjectTemplate = 'Nebula Logger - Error Notification - {0} ({1})';
+    return LOG_ERROR_EMAIL_SUBECT;
+    /* 
+    String emailSubjectTemplate = 'Nebula Logger - Error Notification - Nova- {0} ({1})';
     List<Object> emailSubjectInputs = new List<Object>{
       LoggerEngineDataSelector.getInstance().getCachedOrganization().Name,
       LoggerEngineDataSelector.getInstance().getCachedOrganization().Id
     };
     return String.format(emailSubjectTemplate, emailSubjectInputs);
+    */
   }
 
   private static String buildHtmlBody(Schema.SObjectType sobjectType, List<String> errorMessages) {
