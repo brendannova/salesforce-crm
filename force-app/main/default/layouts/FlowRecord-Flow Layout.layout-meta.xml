@@ -42,6 +42,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>SegmentId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>CreatedDate</field>
             </layoutItems>
             <layoutItems>
@@ -59,7 +63,7 @@
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
-        <layoutColumns/>
+        <layoutColumns />
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
@@ -74,15 +78,19 @@
         <fields>RunInMode</fields>
         <fields>ApiVersion</fields>
         <fields>CapacityCategory</fields>
+        <fields>AreMetricsLoggedToDataCloud</fields>
         <relatedList>FlowRecordVersions</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Name</fields>
         <fields>FlowRecordVersion</fields>
         <fields>ScheduledDate</fields>
+        <fields>Enqueued</fields>
         <fields>Entries</fields>
         <fields>Exits</fields>
         <fields>Errors</fields>
+        <fields>ProgressStatus</fields>
+        <fields>ErrorDetail</fields>
         <relatedList>FlowRecordVersionOccurrences</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

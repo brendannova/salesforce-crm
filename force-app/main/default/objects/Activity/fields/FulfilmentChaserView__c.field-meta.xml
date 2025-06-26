@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FulfilmentChaserView__c</fullName>
+    <description>A formula to evaluate on various criteria whether this fulfilment should appear on a list of ones needing chasing.</description>
+    <formula>BEGINS(FulfilmentTransferType__c, &quot;EXTERNAL_TRANSFER_IN&quot;) &amp;&amp;
+(FulfilmentStatus__c = &#39;Awaiting ad hoc action&#39; ||
+FulfilmentStatus__c = &#39;Chase transfer&#39;) &amp;&amp;
+FulfilmentAmount__c &gt; 5000 &amp;&amp;
+FulfilmentDaysSinceSubmission__c &gt; 9</formula>
+    <label>Fulfilment chaser view</label>
+    <type>Checkbox</type>
+</CustomField>

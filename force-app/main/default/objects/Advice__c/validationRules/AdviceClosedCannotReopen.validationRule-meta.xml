@@ -3,7 +3,9 @@
     <fullName>AdviceClosedCannotReopen</fullName>
     <active>true</active>
     <description>Once advice has been closed, it cannot be re-opened. This ensures that a business process of creating new advice is followed.</description>
-    <errorConditionFormula>PRIORVALUE( IsClosed__c ) = true
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; 
+PRIORVALUE( IsClosed__c ) = true
 &amp;&amp;
 IsClosed__c = false
 &amp;&amp;

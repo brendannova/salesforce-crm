@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AdviceTrustOnboarding</fullName>
+    <columns>NAME</columns>
+    <columns>OW_task_type__c</columns>
+    <columns>OW_assigned_to__c</columns>
+    <columns>OW_queue__c</columns>
+    <columns>OW_status__c</columns>
+    <columns>OW_sequence__c</columns>
+    <columns>OW_priority__c</columns>
+    <columns>OW_due_date_offset__c</columns>
+    <columns>OW_turnaround_time__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OW_task_type__c</field>
+        <operation>startsWith</operation>
+        <value>ADVICE_TRUST_ONBOARDING_</value>
+    </filters>
+    <label>Advice | Trust | Onboarding</label>
+</ListView>

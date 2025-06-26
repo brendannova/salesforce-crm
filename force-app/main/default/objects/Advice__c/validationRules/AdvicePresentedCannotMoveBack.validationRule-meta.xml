@@ -3,7 +3,8 @@
     <fullName>AdvicePresentedCannotMoveBack</fullName>
     <active>true</active>
     <description>Once advice has been presented, it cannot be moved back to a status that corresponds to advice being non-presented. There are key controls tied to the fact advice has been presented as this is when more regulatory commitment becomes involved so</description>
-    <errorConditionFormula>AdvicePresented__c
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp; 
+AdvicePresented__c
 &amp;&amp;
 NOT(ISPICKVAL(Advice_Status__c, &quot;Await decision&quot;) ||
 ISPICKVAL(Advice_Status__c, &quot;Awaiting acceptance&quot;) ||

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>dueDateOffsetRequired</fullName>
+    <active>true</active>
+    <description>Ensures that a due date offset for the task template is specified where this is an active record.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISBLANK( OW_task_type__c ))
+
+&amp;&amp;
+
+ISPICKVAL( OW_status__c, &quot;Active&quot; ) 
+
+&amp;&amp; 
+
+ISBLANK( OW_due_date_offset__c )</errorConditionFormula>
+    <errorDisplayField>OW_due_date_offset__c</errorDisplayField>
+    <errorMessage>Please specify a due date offset</errorMessage>
+</ValidationRule>

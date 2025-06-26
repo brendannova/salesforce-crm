@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Create_Client_Portal_Documents</name>
         <label>Create Client Portal Documents</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2546</locationY>
         <actionName>Google2.createClientPortalDocuments</actionName>
         <actionType>externalService</actionType>
@@ -23,9 +23,25 @@
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <assignments>
+        <name>Copy_1_of_Set_emailed_date_time</name>
+        <label>Copy 1 of Set emailed date time</label>
+        <locationX>5682</locationX>
+        <locationY>3320</locationY>
+        <assignmentItems>
+            <assignToReference>clientEmailedDateTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DateTimeReviewUpload</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Display_toast</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Define_body</name>
         <label>Define body</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2438</locationY>
         <assignmentItems>
             <assignToReference>portalDocsFolderBody.householdId</assignToReference>
@@ -41,7 +57,7 @@
     <assignments>
         <name>Define_error</name>
         <label>Define error</label>
-        <locationX>2910</locationX>
+        <locationX>3042</locationX>
         <locationY>2762</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -81,7 +97,7 @@
     <assignments>
         <name>Define_error_incorrect_link</name>
         <label>Define error</label>
-        <locationX>6738</locationX>
+        <locationX>7002</locationX>
         <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -105,7 +121,7 @@
     <assignments>
         <name>Define_error_no_doc_status</name>
         <label>Define error</label>
-        <locationX>5682</locationX>
+        <locationX>5946</locationX>
         <locationY>3212</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -129,7 +145,7 @@
     <assignments>
         <name>Define_error_no_household_folder_review</name>
         <label>Define error</label>
-        <locationX>7002</locationX>
+        <locationX>7266</locationX>
         <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -170,7 +186,7 @@
     <assignments>
         <name>Define_error_not_owner</name>
         <label>Define error</label>
-        <locationX>3922</locationX>
+        <locationX>4054</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -187,7 +203,7 @@
     <assignments>
         <name>Define_error_unknown_migration</name>
         <label>Define error</label>
-        <locationX>3130</locationX>
+        <locationX>3262</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -204,7 +220,7 @@
     <assignments>
         <name>Define_error_unknown_start_point</name>
         <label>Define error</label>
-        <locationX>4186</locationX>
+        <locationX>4318</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -237,7 +253,7 @@
     <assignments>
         <name>Set_advice_ID_and_what_ID</name>
         <label>Set advice ID and what ID</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -276,7 +292,7 @@
     <assignments>
         <name>Set_emailed_date_time_Dropbox</name>
         <label>Set emailed date time</label>
-        <locationX>5946</locationX>
+        <locationX>6210</locationX>
         <locationY>2330</locationY>
         <assignmentItems>
             <assignToReference>clientEmailedDateTime</assignToReference>
@@ -292,7 +308,7 @@
     <assignments>
         <name>Set_folder_review_status</name>
         <label>Set folder review status</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>household.GoogleDriveFolderIdReviewed__c</assignToReference>
@@ -308,7 +324,7 @@
     <assignments>
         <name>Set_household_ID</name>
         <label>Set household ID</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -324,7 +340,7 @@
     <assignments>
         <name>Set_household_ID_and_ad_hoc_task</name>
         <label>Set household ID and ad-hoc</label>
-        <locationX>3658</locationX>
+        <locationX>3790</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -354,7 +370,7 @@
     <assignments>
         <name>Set_IDs</name>
         <label>Set IDs</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -394,7 +410,7 @@
     <assignments>
         <name>Set_task_what_ID</name>
         <label>Set task what ID</label>
-        <locationX>3658</locationX>
+        <locationX>3790</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>taskWhatId</assignToReference>
@@ -451,6 +467,13 @@
         <dataType>String</dataType>
         <value>
             <stringValue>CLIENT PORTAL DOCUMENTS</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>PORTAL_DOCS_ANNUAL_REVIEW_UPLOAD_TASK_INFO_NAME</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_ANNUAL_REVIEW_UPLOAD</stringValue>
         </value>
     </constants>
     <constants>
@@ -512,7 +535,7 @@
     <decisions>
         <name>Account_type</name>
         <label>Account type?</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Do_Dropbox_task</targetReference>
@@ -551,7 +574,7 @@
     <decisions>
         <name>Action</name>
         <label>Action</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>3104</locationY>
         <defaultConnector>
             <targetReference>Define_error_no_doc_status</targetReference>
@@ -702,6 +725,35 @@
             </connector>
             <label>Ad-hoc pre-advice</label>
         </rules>
+        <rules>
+            <name>Annual_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>PORTAL_DOCS_ANNUAL_REVIEW_UPLOAD_TASK_INFO_NAME</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>household.PortalDocumentStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>household.GoogleDriveFolderIdPortalDocuments__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Advice_upload_instructions_post_migration</targetReference>
+            </connector>
+            <label>Annual review</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Ad_hoc_or_with_advice</name>
@@ -731,7 +783,7 @@
     <decisions>
         <name>Call_outcome</name>
         <label>Call outcome</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2654</locationY>
         <defaultConnector>
             <targetReference>Define_error</targetReference>
@@ -886,7 +938,7 @@
     <decisions>
         <name>Display_toast</name>
         <label>Display toast?</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>4760</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -908,7 +960,7 @@
     <decisions>
         <name>Google_Drive_folder_status</name>
         <label>Google Drive folder status</label>
-        <locationX>3262</locationX>
+        <locationX>3394</locationX>
         <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>Define_error_no_household_folder_review</targetReference>
@@ -965,7 +1017,7 @@
     <decisions>
         <name>Household_link</name>
         <label>Household link</label>
-        <locationX>5605</locationX>
+        <locationX>5836</locationX>
         <locationY>1682</locationY>
         <defaultConnector>
             <targetReference>Define_error_incorrect_link</targetReference>
@@ -990,7 +1042,7 @@
     <decisions>
         <name>Launched_from</name>
         <label>Launched from</label>
-        <locationX>3262</locationX>
+        <locationX>3394</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Define_error_unknown_start_point</targetReference>
@@ -1045,7 +1097,7 @@
     <decisions>
         <name>Migration_status</name>
         <label>Migration status?</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Ad_hoc_migration_in_progress</targetReference>
@@ -1070,7 +1122,7 @@
     <decisions>
         <name>Portal_docs_folder_defined</name>
         <label>Portal docs folder defined?</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Action</targetReference>
@@ -1167,7 +1219,7 @@
     <decisions>
         <name>Portal_documents_status</name>
         <label>Portal documents status</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Define_error_unknown_migration</targetReference>
@@ -1199,7 +1251,7 @@
     <decisions>
         <name>User_is_task_owner</name>
         <label>User is task owner?</label>
-        <locationX>3790</locationX>
+        <locationX>3922</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Define_error_not_owner</targetReference>
@@ -1273,7 +1325,7 @@
     <recordLookups>
         <name>Check_for_migration_task</name>
         <label>Check for migration task</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1323,7 +1375,7 @@
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1348,7 +1400,7 @@
     <recordLookups>
         <name>Get_household</name>
         <label>Get household</label>
-        <locationX>3262</locationX>
+        <locationX>3394</locationX>
         <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1380,7 +1432,7 @@
     <recordLookups>
         <name>Get_household_ad_hoc</name>
         <label>Get household</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1469,7 +1521,7 @@
     <recordLookups>
         <name>Get_task</name>
         <label>Get task</label>
-        <locationX>3790</locationX>
+        <locationX>3922</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1556,7 +1608,7 @@
     <recordLookups>
         <name>Refresh_household_portal_docs_folder_request</name>
         <label>Refresh household</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>2006</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1815,7 +1867,7 @@
     <recordUpdates>
         <name>Close_portal_docs_task_trust</name>
         <label>Close portal docs task</label>
-        <locationX>5946</locationX>
+        <locationX>6210</locationX>
         <locationY>2438</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1990,7 +2042,7 @@
     <recordUpdates>
         <name>Update_household_folder_review</name>
         <label>Update household</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>1898</locationY>
         <connector>
             <targetReference>Refresh_household_portal_docs_folder_request</targetReference>
@@ -2005,7 +2057,7 @@
     <screens>
         <name>Ad_hoc_migration_in_progress</name>
         <label>Ad-hoc migration in progress</label>
-        <locationX>3394</locationX>
+        <locationX>3526</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2026,7 +2078,7 @@
     <screens>
         <name>Ad_hoc_task_creation</name>
         <label>Ad-hoc task creation</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>782</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2236,7 +2288,7 @@
     <screens>
         <name>ConfirmationScreen</name>
         <label>Confirmation Screen</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>4868</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2278,6 +2330,59 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Copy_1_of_Advice_upload_instructions_post_migration</name>
+        <label>Copy 1 of Advice upload instructions post migration</label>
+        <locationX>5682</locationX>
+        <locationY>3212</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Copy_1_of_Set_emailed_date_time</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_AdviceUploadPromptPostMigration</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;Annual Review Folder Upload | {!household.Name}﻿&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please create a folder for the annual review and upload the docs for the client. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_advice.Advice_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Risk Call</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_advice.Advice_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Suitability in progress</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Copy_1_of_DropboxContentsUploadedToGoogleDriveFolderMigration</name>
+            <choiceReferences>Yes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>New advice folder set up</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>DateTimeReviewUpload</name>
+            <dataType>DateTime</dataType>
+            <fieldText>When did you email the client?</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Desktop_deletion_screen</name>
         <label>Desktop deletion screen</label>
         <locationX>50</locationX>
@@ -2313,7 +2418,7 @@
     <screens>
         <name>Do_Dropbox_task</name>
         <label>Do Dropbox task</label>
-        <locationX>5946</locationX>
+        <locationX>6210</locationX>
         <locationY>2222</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2374,7 +2479,7 @@
     <screens>
         <name>Folder_Creation</name>
         <label>Folder Creation</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2330</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2389,7 +2494,7 @@
         </fields>
         <fields>
             <name>NewClientPortalFolder</name>
-            <fieldText>&lt;p&gt;Proceed to create the client&#39;s new {!GOOGLE_FOLDER_NAME} folder.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Proceed to create the client&apos;s new {!GOOGLE_FOLDER_NAME} folder.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Create folder</nextOrFinishButtonLabel>
@@ -2415,7 +2520,7 @@
         </fields>
         <fields>
             <name>NewClientPortalFolderError</name>
-            <fieldText>&lt;p&gt;The {!GOOGLE_FOLDER_NAME} folder cannot be found.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please check if it is in &lt;a href=&quot;{!googleFolderLinkHousehold}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the household Google Drive folder&lt;/a&gt;. If you can see it, click refresh. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If not, please wait 2 minutes to see if it appears and refresh when it does. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If it doesn&#39;t appear after 2 minutes, please raise a ticket with the product team.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;The {!GOOGLE_FOLDER_NAME} folder cannot be found.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please check if it is in &lt;a href=&quot;{!googleFolderLinkHousehold}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the household Google Drive folder&lt;/a&gt;. If you can see it, click refresh. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If not, please wait 2 minutes to see if it appears and refresh when it does. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If it doesn&apos;t appear after 2 minutes, please raise a ticket with the product team.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Refresh</nextOrFinishButtonLabel>
@@ -2425,7 +2530,7 @@
     <screens>
         <name>Folder_Test</name>
         <label>Folder Test</label>
-        <locationX>5605</locationX>
+        <locationX>5836</locationX>
         <locationY>1574</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2475,7 +2580,7 @@
         </fields>
         <fields>
             <name>GoogleUploadPrompt</name>
-            <fieldText>&lt;p&gt;Double click the &lt;strong&gt;.zip&lt;/strong&gt; file to unpack it. You&#39;ll see a folder with the same name appear that you can open up and where you&#39;ll find the contents of the Dropbox folder.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Open &lt;/span&gt;&lt;a href=&quot;https://drive.google.com/drive/folders/{!household.GoogleDriveFolderIdPortalDocuments__c}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;the Google Drive folder&lt;/a&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; and confirm that it&#39;s:&lt;/span&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;named &lt;/span&gt;&lt;strong&gt;CLIENT PORTAL DOCUMENTS&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;empty of any contents&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ensure your screen is set up in a split mode as shown. Drag the contents of the folder into the Google Drive folder.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Double click the &lt;strong&gt;.zip&lt;/strong&gt; file to unpack it. You&apos;ll see a folder with the same name appear that you can open up and where you&apos;ll find the contents of the Dropbox folder.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Open &lt;/span&gt;&lt;a href=&quot;https://drive.google.com/drive/folders/{!household.GoogleDriveFolderIdPortalDocuments__c}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;the Google Drive folder&lt;/a&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; and confirm that it&apos;s:&lt;/span&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;named &lt;/span&gt;&lt;strong&gt;CLIENT PORTAL DOCUMENTS&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;empty of any contents&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;Ensure your screen is set up in a split mode as shown. Drag the contents of the folder into the Google Drive folder.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2494,7 +2599,7 @@
         </fields>
         <fields>
             <name>GoogleUploadPrompt2</name>
-            <fieldText>&lt;p&gt;You&#39;ll see an upload tracker appear. Do not close the tab or window until the upload is complete. This could take a while depending on how long the client has been with us and how much data there is.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;You&apos;ll see an upload tracker appear. Do not close the tab or window until the upload is complete. This could take a while depending on how long the client has been with us and how much data there is.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2513,7 +2618,7 @@
         </fields>
         <fields>
             <name>GoogleArchivePrompt</name>
-            <fieldText>&lt;p&gt;In the meantime, let&#39;s archive the original &lt;strong&gt;Portal Documents&lt;/strong&gt; folder.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;First, rename it to have the OW number at the start, e.g. &lt;strong&gt;&lt;em&gt;OW6723 - Portal Documents&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;In the meantime, let&apos;s archive the original &lt;strong&gt;Portal Documents&lt;/strong&gt; folder.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;First, rename it to have the OW number at the start, e.g. &lt;strong&gt;&lt;em&gt;OW6723 - Portal Documents&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2633,7 +2738,7 @@
         </fields>
         <fields>
             <name>DropboxDownloadPrompt2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;While you&#39;re waiting for the download to complete, continue with the next 2 steps to remove link sharing.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click the &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Share&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; button.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;While you&apos;re waiting for the download to complete, continue with the next 2 steps to remove link sharing.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click the &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Share&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; button.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2811,7 +2916,7 @@
         </fields>
         <fields>
             <name>DropboxWaitPrompt</name>
-            <fieldText>&lt;p&gt;Wait for the Dropbox download to complete. When complete, you&#39;ll see a &lt;strong&gt;.zip &lt;/strong&gt;file like this.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Wait for the Dropbox download to complete. When complete, you&apos;ll see a &lt;strong&gt;.zip &lt;/strong&gt;file like this.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2935,7 +3040,7 @@
         </fields>
         <fields>
             <name>AdviceUploadSendEmailPromptActiveAlready</name>
-            <fieldText>&lt;p&gt;Now that the client&#39;s folder has the latest advice documents in it, please email them using the {!TEMPLATE_NAME_PORTAL_DOCUMENTS_ACTIVE} template.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Now that the client&apos;s folder has the latest advice documents in it, please email them using the {!TEMPLATE_NAME_PORTAL_DOCUMENTS_ACTIVE} template.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2957,7 +3062,7 @@
         </fields>
         <fields>
             <name>AdviceUploadSendEmailPromptHidden</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Now that the client&#39;s folder has been set up and their 1st advice documents are in it, please email them using the {!TEMPLATE_NAME_PORTAL_DOCUMENTS_HIDDEN} template.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Now that the client&apos;s folder has been set up and their 1st advice documents are in it, please email them using the {!TEMPLATE_NAME_PORTAL_DOCUMENTS_HIDDEN} template.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2979,7 +3084,7 @@
         </fields>
         <fields>
             <name>AdviceUploadSendEmailPromptHiddenPreAdvice</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Now that the client&#39;s folder has been set up, please email them to let them know. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;As this is an ad-hoc migration ahead of advice, there is no template defined here. This is likely to be for pre-retirement advice so consider using the template appropriate here. &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Now that the client&apos;s folder has been set up, please email them to let them know. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;As this is an ad-hoc migration ahead of advice, there is no template defined here. This is likely to be for pre-retirement advice so consider using the template appropriate here. &lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3024,7 +3129,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>3136</locationX>
+        <locationX>3268</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Launched_from</targetReference>
@@ -3069,7 +3174,7 @@
     <subflows>
         <name>Create_ad_hoc_migration_task</name>
         <label>Create ad-hoc migration task</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>890</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
@@ -3137,13 +3242,13 @@
         <description>Instructions on how to set up a new advice folder.</description>
         <name>AdviceFolderInstructions</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;ol&gt;&lt;li&gt;Create a folder for this advice in &lt;a href=&quot;{!googleFolderLinkHousehold}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the household folder&lt;/a&gt; - we&#39;ll move it into the folder where the client can see it later*&lt;ol&gt;&lt;li&gt;Name the folder &lt;strong&gt;&lt;em&gt;{YYYY}.{MM}.{DD} - Your meeting&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Slides&lt;ol&gt;&lt;li&gt;Make any updates that are needed to the advice slides like updating dates on the cover slide&lt;/li&gt;&lt;li&gt;Save the slides as a PDF&lt;/li&gt;&lt;li&gt;Place these in the new advice folder you created&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Add any other files to the advice folder like KIIDs, advice meeting recordings etc**&lt;/li&gt;&lt;li&gt;When the folder is ready, move this into the &lt;a href=&quot;{!googleFolderLinkPortalDocs}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;{!GOOGLE_FOLDER_NAME} folder&lt;/a&gt;.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;*The reason we do this is so that the folder and its contents are only visible when it&#39;s ready and not while you&#39;re working on it&lt;/p&gt;&lt;p&gt;** Note that only PDFs and MP4s are supported. If you have a requirement for something else, please raise this with the product team.&lt;/p&gt;</text>
+        <text>&lt;ol&gt;&lt;li&gt;Create a folder for this advice in &lt;a href=&quot;{!googleFolderLinkHousehold}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the household folder&lt;/a&gt; - we&apos;ll move it into the folder where the client can see it later*&lt;ol&gt;&lt;li&gt;Name the folder &lt;strong&gt;&lt;em&gt;{YYYY}.{MM}.{DD} - Your meeting&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Slides&lt;ol&gt;&lt;li&gt;Make any updates that are needed to the advice slides like updating dates on the cover slide&lt;/li&gt;&lt;li&gt;Save the slides as a PDF&lt;/li&gt;&lt;li&gt;Place these in the new advice folder you created&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Add any other files to the advice folder like KIIDs, advice meeting recordings etc**&lt;/li&gt;&lt;li&gt;When the folder is ready, move this into the &lt;a href=&quot;{!googleFolderLinkPortalDocs}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;{!GOOGLE_FOLDER_NAME} folder&lt;/a&gt;.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;*The reason we do this is so that the folder and its contents are only visible when it&apos;s ready and not while you&apos;re working on it&lt;/p&gt;&lt;p&gt;** Note that only PDFs and MP4s are supported. If you have a requirement for something else, please raise this with the product team.&lt;/p&gt;</text>
     </textTemplates>
     <textTemplates>
         <description>Instructions on how to set up the retirement call folder.</description>
         <name>AdviceFolderInstructionsRetirementCall</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
-        <text>&lt;ol&gt;&lt;li&gt;Create a folder for this advice in &lt;a href=&quot;{!googleFolderLinkHousehold}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the household folder&lt;/a&gt; - we&#39;ll move it into the folder where the client can see it later*&lt;ol&gt;&lt;li&gt;Name the folder &lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;&lt;em&gt;{!retirementCallDateFolderFormat}&lt;/em&gt;&lt;/strong&gt;&lt;strong&gt;&lt;em&gt; - Your meeting&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Slides&lt;ol&gt;&lt;li&gt;Make any updates that are needed to the advice slides like updating dates on the cover slide&lt;/li&gt;&lt;li&gt;Save the slides as a PDF&lt;/li&gt;&lt;li&gt;Place these in the new folder you created&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Recording&lt;ol&gt;&lt;li&gt;Name the recording file appropriately&lt;/li&gt;&lt;li&gt;Place in the new folder you created&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;When the folder is ready, move this into the &lt;a href=&quot;{!googleFolderLinkPortalDocs}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;{!GOOGLE_FOLDER_NAME} folder&lt;/a&gt;.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;*The reason we do this is so that the folder and its contents are only visible when it&#39;s ready and not while you&#39;re working on it&lt;/p&gt;&lt;p&gt;** Note that only PDFs and MP4s are supported. If you have a requirement for something else, please raise this with the product team.&lt;/p&gt;</text>
+        <text>&lt;ol&gt;&lt;li&gt;Create a folder for this advice in &lt;a href=&quot;{!googleFolderLinkHousehold}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the household folder&lt;/a&gt; - we&apos;ll move it into the folder where the client can see it later*&lt;ol&gt;&lt;li&gt;Name the folder &lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;&lt;em&gt;{!retirementCallDateFolderFormat}&lt;/em&gt;&lt;/strong&gt;&lt;strong&gt;&lt;em&gt; - Your meeting&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Slides&lt;ol&gt;&lt;li&gt;Make any updates that are needed to the advice slides like updating dates on the cover slide&lt;/li&gt;&lt;li&gt;Save the slides as a PDF&lt;/li&gt;&lt;li&gt;Place these in the new folder you created&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;Recording&lt;ol&gt;&lt;li&gt;Name the recording file appropriately&lt;/li&gt;&lt;li&gt;Place in the new folder you created&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;li&gt;When the folder is ready, move this into the &lt;a href=&quot;{!googleFolderLinkPortalDocs}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;{!GOOGLE_FOLDER_NAME} folder&lt;/a&gt;.&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;*The reason we do this is so that the folder and its contents are only visible when it&apos;s ready and not while you&apos;re working on it&lt;/p&gt;&lt;p&gt;** Note that only PDFs and MP4s are supported. If you have a requirement for something else, please raise this with the product team.&lt;/p&gt;</text>
     </textTemplates>
     <variables>
         <description>If true, this household is being migrated outside of the sharing of documents as part of our normal process.</description>

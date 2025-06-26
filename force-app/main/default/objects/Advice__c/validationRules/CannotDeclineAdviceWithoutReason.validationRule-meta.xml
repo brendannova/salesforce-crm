@@ -3,7 +3,9 @@
     <fullName>CannotDeclineAdviceWithoutReason</fullName>
     <active>true</active>
     <description>Ensure you cannot decline the advice without going through the screen flow and filling in the declined reason and notes.</description>
-    <errorConditionFormula>ISPICKVAL(Advice_Status__c, &quot;Suitability Declined&quot;)
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp; 
+ISPICKVAL(Advice_Status__c, &quot;Suitability Declined&quot;)
 &amp;&amp;
 ISPICKVAL(DeclinedReason__c, &quot;&quot;)</errorConditionFormula>
     <errorMessage>Cannot decline this advice if the declined reason is not populated. Make sure you are using the Decline Advice button at the top right of the page.</errorMessage>

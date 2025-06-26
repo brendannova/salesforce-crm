@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NotQualifiedNotes</fullName>
+    <active>true</active>
+    <description>Requires not qualified notes to be made if not qualified is selected in lost reasons</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+(ISPICKVAL(Qualification__c, &quot;Qualified&quot;)
+&amp;&amp; 
+ISPICKVAL(Qualified_Level__c,&quot;&quot;)
+||
+INCLUDES(Lost_Reasons__c, &quot;Not Qualified&quot;)
+&amp;&amp;
+ISPICKVAL(  Not_Qualified_Level__c , &quot;&quot; )
+)</errorConditionFormula>
+    <errorDisplayField>Qualified_Level__c</errorDisplayField>
+    <errorMessage>You need to complete the &#39;Not Qualified&#39; section</errorMessage>
+</ValidationRule>
