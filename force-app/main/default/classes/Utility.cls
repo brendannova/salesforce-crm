@@ -127,12 +127,16 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
     }
     
     
-    public String tagSubstituter(String message, sObject obj, String emailType) {
+    public String tagSubstituter(String message, Id objectId, String objectName, String emailType) {
+        System.debug('message ' + message);
+        System.debug('objectId ' + objectId);
+        System.debug('objectName ' + objectName);
+        System.debug('emailType ' + emailType);
         String substitute_tag;
         String substitute_value;    
         
         // Get the query setting stored in custom metadata
-        List<OW_query_field__mdt > query_settings = [SELECT OW_tag__c, OW_field__c FROM OW_query_field__mdt WHERE EmailType__c =:  emailType];
+        List<OW_query_field__mdt > query_settings = [SELECT OW_tag__c, OW_field__c FROM OW_query_field__mdt WHERE EmailType__c =: emailType ];
         
         // Create a map from a tag to a specific field value
         Map<String, String> substitution_map = new Map<String, String>();
@@ -143,6 +147,11 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
                     substitution_map.put(query_setting.OW_tag__c, query_setting.OW_field__c);
                 }
             }
+        List<String> query_fields_list = new List<String>(query_fields_set); // Convert from set to list to allow String.join method to be used
+        String query_fields_string = String.join(query_fields_list, ',');
+        
+        sObject obj  = Database.query('SELECT ' + query_fields_string + ' FROM ' + objectName + ' WHERE Id =: objectId');
+            
         
         // For this object instance, create a map from the field path names to their values
         Map<String, Object> fieldValues = new Map<String, Object>();
@@ -150,10 +159,10 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
         
         // Create a Matcher to run through the input message
         Matcher tagIndicator = Pattern.compile('\\{(.*?)\\}').matcher(message);
-        substitute_tag = tagIndicator.group();
         
         // While there are still tags in the message, use them to map the tag to a field name, then map from field name to the value
         while(tagIndicator.find()){
+            substitute_tag = tagIndicator.group();
             if( !substitution_map.containsKey(substitute_tag) ) {
                 throw new UtilityException('There is no custom setting for the tag ' + substitute_tag); 
             }

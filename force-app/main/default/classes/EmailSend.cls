@@ -1,6 +1,7 @@
 public without sharing class EmailSend{
 
     final private static String SENDING_PROCESS_AUTOMATIC = 'AUTOMATIC';
+    final private static String ONE_REQUEST_ERROR = 'Only one request allowed. This method does not support bulk emails yet.';
     
     private void sendEmails(List<Messaging.SingleEmailMessage> emails){
         List<Messaging.SendEmailResult> emailSendResults = Messaging.sendEmail(emails, true);
@@ -12,12 +13,11 @@ public without sharing class EmailSend{
         public Id householdId;                                  // The household the email relates to
         public Id whatId;                                       // The specific record the email relates to
         public Boolean saveAsActivity;                          // Set as activity    
-        public String subject;
     }
     
     public void sendAutomaticTemplatedEmailCustomSubject(List<EmailSendRequestAutomatic> requests) {
         if( requests.size() > 1 ) {
-            throw new EmailSendException('Only one request allowed at once'); 
+            throw new EmailSendException(ONE_REQUEST_ERROR); 
         }
 
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();              // The list of emails to be sent at the end
@@ -25,38 +25,40 @@ public without sharing class EmailSend{
         EmailConfiguration__c emailConfig = new EmailConfiguration__c();
         
         for(EmailSendRequestAutomatic request : requests){
-            validateInputs(true, request);
+            validateInputs(request);
             emailConfig = getEmailConfig(request.emailTemplateDeveloperName);
+            subject = getSubject(emailConfig, request.whatId);
             Messaging.SingleEmailMessage email = setUpEmail(request, emailConfig);
-            subject = getSubject(emailConfig, request.targetObjectId);
+            email.setSubject(subject);
+            
             emails.add(email);  
+            System.debug('SUbject: ' + email.subject);
         }
         sendEmails(emails);
     }
     
     public void sendAutomaticTemplatedEmail(List<EmailSendRequestAutomatic> requests){ 
         if( requests.size() > 1 ) {
-            throw new EmailSendException('Only one request allowed at once'); 
+            throw new EmailSendException(ONE_REQUEST_ERROR); 
         }
         
         List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();              // The list of emails to be sent at the end
-        String subject;
         EmailConfiguration__c emailConfig = new EmailConfiguration__c();
         
         for(EmailSendRequestAutomatic request : requests){
-            validateInputs(false, request);
+            validateInputs(request);
             emailConfig = getEmailConfig(request.emailTemplateDeveloperName);
             Messaging.SingleEmailMessage email = setUpEmail(request, emailConfig);
-            emails.add(email);  
+            emails.add(email); 
+            System.debug('SUbject ' + email.Subject);
         }
         sendEmails(emails);
     }
     
     private String getSubject(EmailConfiguration__c emailConfig, Id targetObjectId) {
         String message = emailConfig.Subject__c;
-        sObject obj = Database.query('SELECT FIELDS(ALL) FROM ' + emailConfig.ObjectName__c + ' WHERE Id = :targetObjectId');
         Utility ut = new Utility();
-        message = ut.tagSubstituter(message, obj, emailConfig.ObjectName__c);
+        message = ut.tagSubstituter(message, targetObjectId, emailConfig.ObjectName__c, emailConfig.DeveloperName__c);
         
         return message;
     }
@@ -114,7 +116,19 @@ public without sharing class EmailSend{
     
     private EmailConfiguration__c getEmailConfig(String emailTemplateDeveloperName) {
         EmailConfiguration__c emailConfig = new EmailConfiguration__c();
-        List<EmailConfiguration__c> emailConfigs = [SELECT Id, Subject__c, ClientsAddressed__c, CopyOtherClients__c, PartnerCopied__c, From__c, ReplyTo__c FROM EmailConfiguration__c WHERE DeveloperName__c = :emailTemplateDeveloperName AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
+        List<EmailConfiguration__c> emailConfigs = [SELECT 
+                                                    Id, 
+                                                    DeveloperName__c, 
+                                                    ObjectName__c, 
+                                                    Subject__c, 
+                                                    ClientsAddressed__c, 
+                                                    CopyOtherClients__c, 
+                                                    PartnerCopied__c, 
+                                                    From__c, 
+                                                    ReplyTo__c 
+                                                    FROM EmailConfiguration__c 
+                                                    WHERE DeveloperName__c = :emailTemplateDeveloperName 
+                                                     AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
         System.debug(emailConfigs);
         if(emailConfigs.isEmpty()){
             throw new EmailSendException('No email configuration record found for the developer name :' + emailTemplateDeveloperName); 
@@ -152,9 +166,7 @@ public without sharing class EmailSend{
         if(String.isNotBlank(emailConfig.ReplyTo__c)){
             result.setReplyTo(emailConfig.ReplyTo__c);
         }
-        if(String.isNotBlank(result.Subject)){
-            result.setSubject(result.Subject);
-        }
+
         result.setWhatId(request.whatId);
         result.setSaveAsActivity(request.saveAsActivity);
         result.setUseSignature(false);
@@ -163,7 +175,7 @@ public without sharing class EmailSend{
         return result;
     }
     
-    private void validateInputs(Boolean validateSubject, emailSendRequestAutomatic request) {
+    private void validateInputs(emailSendRequestAutomatic request) {
         // Make sure we have other required fields prior to proceeding
             if(request.targetObjectId == null){
                 throw new EmailSendException('targetObjectId required'); 
@@ -173,9 +185,6 @@ public without sharing class EmailSend{
             }
             if(request.whatId == null){
                 throw new EmailSendException('whatId required'); 
-            }
-        	if(request.subject == null && validateSubject){
-                throw new EmailSendException('subject required'); 
             }
         	if(String.isBlank(request.emailTemplateDeveloperName)){
                 throw new EmailSendException('Email template must be provided'); 

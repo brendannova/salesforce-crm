@@ -17,7 +17,7 @@ public class FulfilmentTriggerHelper {
         System.debug(emails);
         // Send the emails
         EmailSend emailSender = new EmailSend();
-        emailSender.sendAutomaticTemplatedEmail(emails);
+        emailSender.sendAutomaticTemplatedEmailCustomSubject(emails);
     }
     
     public void sendTransferCompleteEmails(List<Fulfilment__c> fulfilments) {
@@ -44,7 +44,12 @@ public class FulfilmentTriggerHelper {
     // Create a cancellation notice email request for this specific piece of fulfilment
     public static EmailSend.EmailSendRequestAutomatic createCancellationNoticeRequest(Fulfilment__c fulfilment) {
         EmailSend.EmailSendRequestAutomatic emailRequest = new EmailSend.EmailSendRequestAutomatic();
-        emailRequest.emailTemplateDeveloperName = 'CancellationNotice';         
+        System.debug('Decide on template ' + fulfilment.Recommendation__r.Product__r.ReferenceName__c);
+        if( fulfilment.Recommendation__r.Product__r.ReferenceName__c == 'JSIPP_HUBWISE' ) {
+            emailRequest.emailTemplateDeveloperName = 'CancellationNoticeJunior';         
+        } else {
+        	emailRequest.emailTemplateDeveloperName = 'CancellationNotice'; 
+        }
         emailRequest.targetObjectId = getContactId(fulfilment);
         emailRequest.householdId = fulfilment.Recommendation__r.Household__c;
         emailRequest.whatId = fulfilment.Id;
@@ -92,7 +97,8 @@ public class FulfilmentTriggerHelper {
                                        Recommendation__r.PrimaryOwner__r.PersonContactId, 
                                        Recommendation__r.Product__r.Name,
                                        Recommendation__r.RegisteredContact__r.PersonContactId,
-                                       Recommendation__r.PrimaryOwner__r.AddressedName__pc
+                                       Recommendation__r.PrimaryOwner__r.AddressedName__pc,
+                                       Recommendation__r.Product__r.ReferenceName__c
                                        FROM Fulfilment__c
                                        WHERE 
                                        Recommendation__r.RecommendationType__r.ReferenceName__c = 'OPEN_PRODUCT'
