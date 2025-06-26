@@ -79,9 +79,7 @@
 &amp;&amp;
 NOT(ISPICKVAL({!Financial_products.BusinessType__c},&quot;New business&quot;))
 &amp;&amp;
-NOT(ISPICKVAL({!Financial_products.Work_Benefit_2__c},&quot;Yes&quot;))
-&amp;&amp;
-NOT({!Financial_products.Public_Provider_Name__r.DeveloperName__c} == &quot;WORK_BENEFIT&quot;)</expression>
+{!Financial_products.FinancialProductType__r.TriggersInformationRequest__c}</expression>
     </formulas>
     <interviewLabel>Financial product | Assess information request requirement {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Financial product | Assess information request requirement</label>
