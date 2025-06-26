@@ -20,21 +20,7 @@ public with sharing class EmailMessageHelper {
 
     private final static List<String> EXCLUDED_SUBJECTS = new List<String>{LoggerEmailSender.LOG_ERROR_EMAIL_SUBECT};
     private final static String VALIDATION_TYPE_NONE = 'NONE';
-
-    public void setValidationType(Map<Id, EmailMessage> messagesMap){
-        for(EmailMessage email : messagesMap.values()){
-            if(email.Incoming == false){
-                if(EXCLUDED_SUBJECTS.contains(email.Subject)){
-                    email.ValidationType__c = VALIDATION_TYPE_NONE;
-                }
-            }
-        }
-    }
-
-    // Empty constructor for simple creation of the class
-    public EmailMessageHelper(){
-    }
- 
+    private final static String VALIDATION_TYPE_OUTGOING_MANUAL = 'OUTGOING_MANUAL';
 
     // This constructor runs to collate the information needed to validate an email message
     public EmailMessageHelper(Map<Id,EmailMessage> messagesMap){
@@ -46,9 +32,9 @@ public with sharing class EmailMessageHelper {
     }
  
     // Constructs a list of EmailDetail objects for each outbound EmailMessage
-    private void collateEmailInformation(List<EmailMessage> allEmails){
+    private void collateEmailInformation(List<EmailMessage> allEmails){        
         for(EmailMessage email : allEmails){
-            if(email.Incoming == false && email.ValidationType__c != VALIDATION_TYPE_NONE){
+            if(email.Incoming == false && !EXCLUDED_SUBJECTS.contains(email.Subject)){
                 EmailDetail emailDetail = new EmailDetail();
                 emailDetail.emailMessage = email;
                 emailDetail.relatedToId = email.RelatedToId;
