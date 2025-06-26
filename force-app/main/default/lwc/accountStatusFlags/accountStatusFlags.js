@@ -48,7 +48,7 @@ import TOOLTIP_FULFILMENT_PHASING from "@salesforce/label/c.CustomerFlagFulfilme
 import TOOLTIP_FULFILMENT_RINGFENCE from "@salesforce/label/c.CustomerFlagFulfilmentRingfence";
 import TOOLTIP_FULFILMENT_TRADING_RESTRICTIONS_EMPLOYER from "@salesforce/label/c.CustomerFlagFulfilmentTradingRestrictionsEmployer";
 import TOOLTIP_FULFILMENT_TRADING_SUSPENDED from "@salesforce/label/c.CustomerFlagFulfilmentTradingSuspended";
-import TOOLTIP_FULFILMENT_ADDITIONAL_AML from "@salesforce/label/c.CustomerFlagFulfilmentAdditionalAML";
+import TOOLTIP_FULFILMENT_ADDITIONAL_AML from "@salesforce/label/c.CustomerFlagFulfilmentAdditionalAml";
 
 const FIELDS = [STATUS_FIELD, RTQ_STATUS_FIELD, TOB_STATUS_FIELD, AML_STATUS_FIELD, VULNERABLE_FIELD, CONFLICT_OF_INTEREST_FIELD, CUSTOMER_FLAG_FIELD, CUSTOMER_TYPE_FIELD, RECORD_TYPE_DEVELOPER_NAME_FIELD, FACT_FIND_VALIDATIONS_FIELD, TEMP_BANK_DETAILS_ISSUE_FIELD];
 
