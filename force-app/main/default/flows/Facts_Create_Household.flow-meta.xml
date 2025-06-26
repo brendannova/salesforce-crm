@@ -24,10 +24,10 @@
             <name>ObjectApiName</name>
         </outputParameters>
     </actionCalls>
-    <apiVersion>55.0</apiVersion>
+    <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Set_household_ID</name>
-        <label>Set household ID</label>
+        <label>Set Household ID</label>
         <locationX>50</locationX>
         <locationY>350</locationY>
         <assignmentItems>
@@ -38,7 +38,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_fact_categories</targetReference>
+            <targetReference>Get_Fact_Categories</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -50,15 +50,31 @@
             <assignToReference>householdId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_advice.Advice_Household__c</elementReference>
+                <elementReference>Get_Advice.Advice_Household__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Get_advice_fact_categories</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>householdChoice</name>
+        <choiceText>Household</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Household</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>personChoice</name>
+        <choiceText>Person</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Person</stringValue>
+        </value>
+    </choices>
     <constants>
-        <name>FactCatEnum</name>
+        <name>factCatEnum</name>
         <dataType>String</dataType>
     </constants>
     <decisions>
@@ -74,7 +90,7 @@
             <name>Display_Post_adding_instructions</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>FactChoiceRecord.PostCreateInstructions__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.PostCreateInstructions__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -96,49 +112,49 @@
             <name>Further_details_required</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>FactChoiceRecord.AppliesToPerson__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.AppliesToPerson__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Yes</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.AgeApplies__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Yes</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.HasAmount__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.HasAmount__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Optional</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.NotesRequired__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.NotesRequired__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Optional</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.AgeApplies__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.HasAmount__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.HasAmount__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.NotesRequired__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.NotesRequired__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
@@ -153,35 +169,35 @@
             <name>No_further_details_required</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>FactChoiceRecord.AppliesToPerson__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.AppliesToPerson__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.NotesRequired__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.NotesRequired__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.AgeApplies__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.HasAmount__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.HasAmount__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>FactChoiceRecord.HasDate__c</leftValueReference>
+                <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
@@ -225,55 +241,19 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_advice</targetReference>
+                <targetReference>Get_Advice</targetReference>
             </connector>
             <label>Quick action - advice</label>
         </rules>
     </decisions>
     <description>Create new facts from household or advice.</description>
     <dynamicChoiceSets>
-        <name>ClientsOnSelectedHousehold</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Household_Lookup__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </filters>
-        <object>Account</object>
-        <outputAssignments>
-            <assignToReference>PersonId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-        <valueField>Id</valueField>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>DisplayOnLifeline1</name>
+        <name>displayOnLifeline</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>DisplayOnLifeline__c</picklistField>
         <picklistObject>CustomerFact__c</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>FactCategory</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Active</stringValue>
-            </value>
-        </filters>
-        <object>FactCategory__c</object>
-        <sortField>Name</sortField>
-        <sortOrder>Asc</sortOrder>
-        <valueField>Id</valueField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <description>Used to store all Fact Categories to use in Flow</description>
@@ -287,37 +267,71 @@
         <valueField>Name</valueField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
-        <name>ModelFinancialImpactValue</name>
+        <name>modelFinancialImpactValue</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
         <picklistField>ModelFinancialImpact__c</picklistField>
         <picklistObject>CustomerFact__c</picklistObject>
     </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
-        <name>AgeActual</name>
+        <description>Used to store the age value to update on the fact</description>
+        <name>ageActual</name>
         <dataType>Number</dataType>
-        <expression>if(ISBLANK({!AgeOptional}),{!AgeRequired},{!AgeOptional})</expression>
+        <expression>IF(NOT(ISBLANK({!AgeOptional})),{!AgeOptional},
+IF(NOT(ISBLANK({!AgeRequired})), {!AgeRequired}, 
+{!ageIfDate}))</expression>
         <scale>0</scale>
     </formulas>
     <formulas>
-        <name>DateActual</name>
-        <dataType>Date</dataType>
-        <expression>IF(ISBLANK({!DateOptional}),{!DateRequired},{!DateOptional})</expression>
+        <description>Formula to calculate a given date when an age is input</description>
+        <name>ageCalc</name>
+        <dataType>Number</dataType>
+        <expression>({!dateActual} - {!ClientsTableRequired.firstSelectedRow.PersonBirthdate})/365.2425</expression>
+        <scale>0</scale>
     </formulas>
     <formulas>
-        <name>NotesActual</name>
+        <description>Formula to simplify conditional logic to display age fields</description>
+        <name>ageVisible</name>
+        <dataType>String</dataType>
+        <expression>CASE({!factChoiceRecord.AgeApplies__c},
+&quot;Yes&quot;, &quot;Yes&quot;,
+&quot;Optional&quot;, &quot;Yes&quot;,
+&quot;No&quot;, &quot;No&quot;,
+&quot;No&quot;)</expression>
+    </formulas>
+    <formulas>
+        <description>Formula to add the date that&#39;s populated on the fact.</description>
+        <name>dateActual</name>
+        <dataType>Date</dataType>
+        <expression>IF(NOT(ISBLANK({!DateOptional})),{!DateOptional},
+IF(NOT(ISBLANK({!DateRequired})), {!DateRequired},
+{!DateIfAge}))</expression>
+    </formulas>
+    <formulas>
+        <description>Calculate the date the selected client will be given an age input</description>
+        <name>dateCalc</name>
+        <dataType>Date</dataType>
+        <expression> ADDMONTHS(TODAY(),(({!ageActual} - {!ClientsTableRequired.firstSelectedRow.FinServ__Age__pc}) * 12))</expression>
+    </formulas>
+    <formulas>
+        <description>Formula to simplify the conditional logic when displaying date fields</description>
+        <name>dateVisible</name>
+        <dataType>String</dataType>
+        <expression>CASE({!factChoiceRecord.HasDate__c},
+&quot;Yes&quot;, &quot;Yes&quot;,
+&quot;Optional&quot;, &quot;Yes&quot;,
+&quot;No&quot;, &quot;No&quot;,
+&quot;No&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>notesActual</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!Required_Notes}),{!Optional_Notes},{!Required_Notes})</expression>
     </formulas>
     <formulas>
-        <name>personActual</name>
-        <dataType>String</dataType>
-        <expression>IF(ISBLANK({!Person}),{!PersonOptional},{!Person})</expression>
-    </formulas>
-    <formulas>
-        <name>ValueActual</name>
+        <name>valueActual</name>
         <dataType>Currency</dataType>
         <expression>IF(ISBLANK({!AmountOptional}),{!AmountRequired},{!AmountOptional})</expression>
         <scale>2</scale>
@@ -358,25 +372,25 @@
         <inputAssignments>
             <field>Advice__c</field>
             <value>
-                <elementReference>Get_advice.Id</elementReference>
+                <elementReference>Get_Advice.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Age__c</field>
             <value>
-                <elementReference>AgeActual</elementReference>
+                <elementReference>ageActual</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Amount__c</field>
             <value>
-                <elementReference>ValueActual</elementReference>
+                <elementReference>valueActual</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Date__c</field>
             <value>
-                <elementReference>DateActual</elementReference>
+                <elementReference>dateActual</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -388,7 +402,7 @@
         <inputAssignments>
             <field>Fact__c</field>
             <value>
-                <elementReference>FactChoiceRecord.Id</elementReference>
+                <elementReference>factChoiceRecord.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -406,21 +420,21 @@
         <inputAssignments>
             <field>Notes__c</field>
             <value>
-                <elementReference>NotesActual</elementReference>
+                <elementReference>notesActual</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Person__c</field>
             <value>
-                <elementReference>PersonId</elementReference>
+                <elementReference>ClientsTableRequired.firstSelectedRow.Id</elementReference>
             </value>
         </inputAssignments>
         <object>CustomerFact__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <name>Get_advice</name>
-        <label>Get advice</label>
+        <name>Get_Advice</name>
+        <label>Get Advice</label>
         <locationX>314</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -470,8 +484,8 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_fact_categories</name>
-        <label>Get fact categories</label>
+        <name>Get_Fact_Categories</name>
+        <label>Get Fact Categories</label>
         <locationX>50</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -542,7 +556,7 @@
             </value>
         </filters>
         <object>Fact__c</object>
-        <outputReference>FactsList</outputReference>
+        <outputReference>factsList</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>AgeApplies__c</queriedFields>
@@ -566,7 +580,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>ErrorText</name>
-            <fieldText>&lt;p&gt;You&apos;re unable to create a fact at this time: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;You&#39;re unable to create a fact at this time: {!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -579,7 +593,7 @@
         <locationY>566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
+        <allowPause>true</allowPause>
         <connector>
             <targetReference>GetFacts</targetReference>
         </connector>
@@ -618,7 +632,7 @@
             <inputParameters>
                 <name>tableData</name>
                 <value>
-                    <elementReference>Get_fact_categories</elementReference>
+                    <elementReference>Get_Fact_Categories</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -650,7 +664,7 @@
         </connector>
         <fields>
             <name>PostAddingInstructions</name>
-            <fieldText>&lt;p&gt;{!FactChoiceRecord.PostCreateInstructions__c}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!factChoiceRecord.PostCreateInstructions__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -669,60 +683,104 @@
         </connector>
         <fields>
             <name>PleaseAddMoreDetail</name>
-            <fieldText>&lt;p&gt;Please add more detail about the Client&apos;s &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!FactChoiceRecord.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Please add more detail about the Client&#39;s &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!factChoiceRecord.Name}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Person</name>
-            <choiceReferences>ClientsOnSelectedHousehold</choiceReferences>
+            <name>Applies_to</name>
+            <choiceReferences>householdChoice</choiceReferences>
+            <choiceReferences>personChoice</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Person</fieldText>
+            <defaultSelectedChoiceReference>personChoice</defaultSelectedChoiceReference>
+            <fieldText>Does this apply to the household?</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.AppliesToPerson__c</leftValueReference>
+                    <leftValueReference>factChoiceRecord.AppliesToPerson__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Optional</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ClientsTableRequired</name>
+            <dataTypeMappings>
+                <typeName>T</typeName>
+                <typeValue>Account</typeValue>
+            </dataTypeMappings>
+            <extensionName>flowruntime:datatable</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Select a client in the household</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectionMode</name>
+                <value>
+                    <stringValue>SINGLE_SELECT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>minRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>tableData</name>
+                <value>
+                    <elementReference>Clients</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>columns</name>
+                <value>
+                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-5c21&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Account Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;FinServ__Age__pc&quot;,&quot;guid&quot;:&quot;column-75f5&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:false,&quot;order&quot;:1,&quot;label&quot;:&quot;Age&quot;,&quot;type&quot;:&quot;number&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>maxRowSelection</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>shouldDisplayLabel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>factChoiceRecord.AppliesToPerson__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
                     </rightValue>
                 </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>PersonOptional</name>
-            <choiceReferences>ClientsOnSelectedHousehold</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Person</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.AppliesToPerson__c</leftValueReference>
+                    <leftValueReference>factChoiceRecord.AppliesToPerson__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Optional</stringValue>
                     </rightValue>
                 </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Optional_Notes</name>
-            <fieldText>Notes</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.NotesRequired__c</leftValueReference>
+                    <leftValueReference>Applies_to</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Optional</stringValue>
+                        <elementReference>personChoice</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -736,7 +794,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.NotesRequired__c</leftValueReference>
+                    <leftValueReference>factChoiceRecord.NotesRequired__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
@@ -745,8 +803,25 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>Optional_Notes</name>
+            <fieldText>Notes</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>factChoiceRecord.NotesRequired__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Optional</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Display_on_Lifeline</name>
-            <choiceReferences>DisplayOnLifeline1</choiceReferences>
+            <choiceReferences>displayOnLifeline</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Display on Lifeline?</fieldText>
             <fieldType>DropdownBox</fieldType>
@@ -756,7 +831,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.AskToDisplayOnLifeline__c</leftValueReference>
+                    <leftValueReference>factChoiceRecord.AskToDisplayOnLifeline__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
@@ -766,17 +841,17 @@
         </fields>
         <fields>
             <name>Model_Financial_Impact</name>
-            <choiceReferences>ModelFinancialImpactValue</choiceReferences>
+            <choiceReferences>modelFinancialImpactValue</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Model Financial Impact?</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;Indicate if we want to model this fact into the Client&apos;s overall wealth.&lt;/p&gt;</helpText>
+            <helpText>&lt;p&gt;Indicate if we want to model this fact into the Client&#39;s overall wealth.&lt;/p&gt;</helpText>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.ConsiderFinancialImpact__c</leftValueReference>
+                    <leftValueReference>factChoiceRecord.ConsiderFinancialImpact__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
@@ -785,22 +860,47 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>AgeRequired</name>
-            <dataType>Number</dataType>
-            <fieldText>Age</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;The estimated age of the client when the fact is completed.&lt;/p&gt;</helpText>
+            <name>AgeOrDate</name>
+            <extensionName>flowruntime:toggle</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Enter an age or a date?</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>messageToggleActive</name>
+                <value>
+                    <stringValue>Age</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>messageToggleInactive</name>
+                <value>
+                    <stringValue>Date</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <scale>0</scale>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Age must be less than 150&lt;/p&gt;</errorMessage>
-                <formulaExpression>{!AgeRequired} &lt; 150</formulaExpression>
-            </validationRule>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.AgeApplies__c</leftValueReference>
+                    <leftValueReference>dateVisible</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Yes</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ageVisible</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
@@ -809,63 +909,240 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>AgeOptional</name>
-            <dataType>Number</dataType>
-            <fieldText>Age</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The estimated age of the client when the fact is completed.&lt;/span&gt;&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <name>Record_Fact_Details_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Record_Fact_Details_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>AgeRequired</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Age</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;The estimated age of the client when the fact is completed.&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <scale>0</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Age must be less than 150&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!AgeRequired} &lt; 150</formulaExpression>
+                    </validationRule>
+                    <visibilityRule>
+                        <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Optional</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>AgeOptional</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Age</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The estimated age of the client when the fact is completed.&lt;/span&gt;&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Age must be less than 150&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!AgeOptional} &lt; 150</formulaExpression>
+                    </validationRule>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Optional</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>DateIfAge</name>
+                    <dataType>Date</dataType>
+                    <defaultValue>
+                        <elementReference>dateCalc</elementReference>
+                    </defaultValue>
+                    <fieldText>Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isReadOnly>
+                        <booleanValue>true</booleanValue>
+                    </isReadOnly>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
-            <scale>0</scale>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Age must be less than 150&lt;/p&gt;</errorMessage>
-                <formulaExpression>{!AgeOptional} &lt; 150</formulaExpression>
-            </validationRule>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>(1 AND 2) OR 3</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.AgeApplies__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Optional</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>DateOptional</name>
-            <dataType>Date</dataType>
-            <fieldText>Date</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;The estimated date this fact will be completed or has been completed if fact occurred in the past.&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>FactChoiceRecord.HasDate__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Optional</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>DateRequired</name>
-            <dataType>Date</dataType>
-            <fieldText>Date</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The estimated date this fact will be completed or has been completed if the fact occurred in the past. &lt;/span&gt;&lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>FactChoiceRecord.HasDate__c</leftValueReference>
+                    <leftValueReference>ageVisible</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>dateVisible</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>AgeOrDate.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Record_Fact_Details_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Record_Fact_Details_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>DateRequired</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The estimated date this fact will be completed or has been completed if the fact occurred in the past. &lt;/span&gt;&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Optional</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>DateOptional</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Date</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <helpText>&lt;p&gt;The estimated date this fact will be completed or has been completed if fact occurred in the past.&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.HasDate__c</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Optional</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>factChoiceRecord.AgeApplies__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Yes</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>ageIfDate</name>
+                    <dataType>Number</dataType>
+                    <defaultValue>
+                        <elementReference>ageCalc</elementReference>
+                    </defaultValue>
+                    <fieldText>Age</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isReadOnly>
+                        <booleanValue>true</booleanValue>
+                    </isReadOnly>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <visibilityRule>
+                <conditionLogic>(1 AND 2) OR 3</conditionLogic>
+                <conditions>
+                    <leftValueReference>dateVisible</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Yes</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ageVisible</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>AgeOrDate.value</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -882,7 +1159,7 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.HasAmount__c</leftValueReference>
+                    <leftValueReference>factChoiceRecord.HasAmount__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Optional</stringValue>
@@ -902,7 +1179,7 @@
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>FactChoiceRecord.HasAmount__c</leftValueReference>
+                    <leftValueReference>factChoiceRecord.HasAmount__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Yes</stringValue>
@@ -959,7 +1236,7 @@
             <inputParameters>
                 <name>tableData</name>
                 <value>
-                    <elementReference>FactsList</elementReference>
+                    <elementReference>factsList</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -977,7 +1254,7 @@
             <inputsOnNextNavToAssocScrn>ResetValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>FactChoiceRecord</assignToReference>
+                <assignToReference>factChoiceRecord</assignToReference>
                 <name>firstSelectedRow</name>
             </outputParameters>
         </fields>
@@ -1017,7 +1294,7 @@
             <inputParameters>
                 <name>urlLabel</name>
                 <value>
-                    <elementReference>FactChoiceRecord.Name</elementReference>
+                    <elementReference>factChoiceRecord.Name</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1068,14 +1345,6 @@
         </outputAssignments>
     </subflows>
     <variables>
-        <name>Client1</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Account</objectType>
-    </variables>
-    <variables>
         <name>Clients</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -1084,7 +1353,7 @@
         <objectType>Account</objectType>
     </variables>
     <variables>
-        <name>FactChoiceRecord</name>
+        <name>factChoiceRecord</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -1092,7 +1361,7 @@
         <objectType>Fact__c</objectType>
     </variables>
     <variables>
-        <name>FactsList</name>
+        <name>factsList</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
         <isInput>false</isInput>
@@ -1116,13 +1385,6 @@
     </variables>
     <variables>
         <name>objectApiName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>PersonId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
