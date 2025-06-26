@@ -3,7 +3,9 @@
     <fullName>PersonProfileRestrictValidationsPending</fullName>
     <active>false</active>
     <description>Prevents editing of profile fields on the person account when there are client profile validations outstanding. Allows updates to all other fields.</description>
-    <errorConditionFormula>RecordType.DeveloperName = &quot;PersonAccount&quot;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+RecordType.DeveloperName = &quot;PersonAccount&quot;
 &amp;&amp;
 Household_Lookup__r.Fact_Find_Validations_Outstanding__c = true
 &amp;&amp;

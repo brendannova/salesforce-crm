@@ -3,7 +3,9 @@
     <fullName>FrequencyRequired</fullName>
     <active>true</active>
     <description>Ensures that if spending figures are</description>
-    <errorConditionFormula>NOT(ISCHANGED( Stop_Internal_User_Update__c ))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISCHANGED( Stop_Internal_User_Update__c ))
 &amp;&amp;
 NOT(ISPICKVAL($User.OW_user_type__c,&quot;Integration&quot;))
 &amp;&amp;

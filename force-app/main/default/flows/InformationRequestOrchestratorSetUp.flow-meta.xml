@@ -2,33 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>62.0</apiVersion>
     <assignments>
-        <name>Assign_advice_to_IR</name>
-        <label>Assign advice to IR</label>
-        <locationX>842</locationX>
-        <locationY>1106</locationY>
-        <assignmentItems>
-            <assignToReference>informationRequest.Advice__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>adviceSelect.firstSelectedRow.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>advice</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>adviceSelect.firstSelectedRow</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_information_request_values</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
-        <locationX>1106</locationX>
-        <locationY>998</locationY>
+        <locationX>2426</locationX>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +21,7 @@
         <name>Assign_error_messageNoStatus</name>
         <label>Assign error message</label>
         <locationX>1106</locationX>
-        <locationY>1646</locationY>
+        <locationY>1346</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -52,16 +29,12 @@
                 <stringValue>Unable to determine next stage. Please raise a ticket with product.</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Error_handling_screen</targetReference>
-        </connector>
     </assignments>
     <assignments>
         <name>Assign_follow_on_task</name>
         <label>Assign follow on task</label>
         <locationX>314</locationX>
-        <locationY>1646</locationY>
+        <locationY>1346</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -77,7 +50,7 @@
         <name>Assign_follow_on_taskClientSend</name>
         <label>Assign follow on task</label>
         <locationX>578</locationX>
-        <locationY>1646</locationY>
+        <locationY>1346</locationY>
         <assignmentItems>
             <assignToReference>followUpTask</assignToReference>
             <operator>Assign</operator>
@@ -93,7 +66,7 @@
         <name>Assign_statusAwait</name>
         <label>Assign status</label>
         <locationX>842</locationX>
-        <locationY>1646</locationY>
+        <locationY>1346</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -109,7 +82,7 @@
         <name>Assign_statusChase</name>
         <label>Assign status</label>
         <locationX>50</locationX>
-        <locationY>1646</locationY>
+        <locationY>1346</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -125,7 +98,7 @@
         <name>Assign_statusSendClient</name>
         <label>Assign status</label>
         <locationX>578</locationX>
-        <locationY>1754</locationY>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -141,7 +114,7 @@
         <name>Assign_statusSendThird</name>
         <label>Assign status</label>
         <locationX>314</locationX>
-        <locationY>1754</locationY>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.Status__c</assignToReference>
             <operator>Assign</operator>
@@ -157,7 +130,7 @@
         <name>Update_information_request_values</name>
         <label>Update information request values</label>
         <locationX>578</locationX>
-        <locationY>1430</locationY>
+        <locationY>1130</locationY>
         <assignmentItems>
             <assignToReference>informationRequest.AuthorityLevel__c</assignToReference>
             <operator>Assign</operator>
@@ -233,7 +206,7 @@
         <locationX>578</locationX>
         <locationY>782</locationY>
         <defaultConnector>
-            <targetReference>Get_advice</targetReference>
+            <targetReference>Change_advice_sub_flow</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -263,7 +236,7 @@
         <name>Which_task_is_required_now</name>
         <label>Which task is required now</label>
         <locationX>578</locationX>
-        <locationY>1538</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Assign_error_messageNoStatus</targetReference>
         </defaultConnector>
@@ -448,58 +421,6 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_advice</name>
-        <label>Get advice</label>
-        <locationX>842</locationX>
-        <locationY>890</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Link_advice_screen</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
-        <filterLogic>(1 OR 5) AND (2 OR 3 OR 4)</filterLogic>
-        <filters>
-            <field>Advice_Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>informationRequest.FinancialProductFinServ__r.FinServ__Household__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Setup</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Data gathering</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Risk Call</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>informationRequest.FinancialProductFinServ__r.Household__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>Advice__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_financial_product_types</name>
         <label>Get financial product types</label>
         <locationX>578</locationX>
@@ -509,7 +430,6 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
             <targetReference>Financial_product_type_select_screen</targetReference>
         </connector>
         <faultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Assign_error_message</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -609,7 +529,7 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>578</locationX>
-        <locationY>2054</locationY>
+        <locationY>1754</locationY>
         <faultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assign_error_message</targetReference>
@@ -640,7 +560,7 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
         <name>Update_information_request</name>
         <label>Update information request</label>
         <locationX>578</locationX>
-        <locationY>1946</locationY>
+        <locationY>1646</locationY>
         <connector>
             <targetReference>Update_financial_product</targetReference>
         </connector>
@@ -776,73 +696,6 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
                 <name>columns</name>
                 <value>
                     <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-aa1a&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Product Type Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;DescriptionInternal__c&quot;,&quot;guid&quot;:&quot;column-1536&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Description (internal)&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Link_advice_screen</name>
-        <label>Link advice screen</label>
-        <locationX>842</locationX>
-        <locationY>998</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Assign_advice_to_IR</targetReference>
-        </connector>
-        <fields>
-            <name>adviceSelectExplain</name>
-            <fieldText>&lt;p&gt;Select the advice which the information for this product is needed for.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>adviceSelect</name>
-            <dataTypeMappings>
-                <typeName>T</typeName>
-                <typeValue>Advice__c</typeValue>
-            </dataTypeMappings>
-            <extensionName>flowruntime:datatable</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Data Table</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectionMode</name>
-                <value>
-                    <stringValue>SINGLE_SELECT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>minRowSelection</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>tableData</name>
-                <value>
-                    <elementReference>Get_advice</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>columns</name>
-                <value>
-                    <stringValue>[{&quot;apiName&quot;:&quot;Name&quot;,&quot;guid&quot;:&quot;column-de26&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:0,&quot;label&quot;:&quot;Search Name&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;Advice_Status__c&quot;,&quot;guid&quot;:&quot;column-b8dd&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:1,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;text&quot;},{&quot;apiName&quot;:&quot;DataGatheringStatus__c&quot;,&quot;guid&quot;:&quot;column-e5e9&quot;,&quot;editable&quot;:false,&quot;hasCustomHeaderLabel&quot;:false,&quot;customHeaderLabel&quot;:&quot;&quot;,&quot;wrapText&quot;:true,&quot;order&quot;:2,&quot;label&quot;:&quot;Data gathering status&quot;,&quot;type&quot;:&quot;text&quot;}]</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>maxRowSelection</name>
-                <value>
-                    <numberValue>1.0</numberValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -991,10 +844,38 @@ ISBLANK({!informationRequest.FinancialProductFinServ__r.RegisteredContact__c})
     </start>
     <status>Active</status>
     <subflows>
+        <name>Change_advice_sub_flow</name>
+        <label>Change advice sub flow</label>
+        <locationX>842</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>Update_information_request_values</targetReference>
+        </connector>
+        <flowName>InformationRequestChangeAdvice</flowName>
+        <inputAssignments>
+            <name>informationRequest</name>
+            <value>
+                <elementReference>informationRequest</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>advice</assignToReference>
+            <name>advice</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>informationRequest</assignToReference>
+            <name>informationRequest</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Error_handling_screen</name>
         <label>Error handling screen</label>
-        <locationX>1106</locationX>
-        <locationY>1106</locationY>
+        <locationX>2426</locationX>
+        <locationY>350</locationY>
         <flowName>ErrorHandleScreen</flowName>
         <inputAssignments>
             <name>errorMessage</name>

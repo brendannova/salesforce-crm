@@ -3,17 +3,30 @@
     <fullName>ConvertedRequiredFields</fullName>
     <active>true</active>
     <description>Ensures that key information required at conversion is specified.</description>
-    <errorConditionFormula>IsConverted &amp;&amp;
-NOT(LegacyLead__c) &amp;&amp;
-NOT( ISPICKVAL( LeadSource, &quot;Purchased List&quot; )) &amp;&amp;
-FirstName != &quot;Forgotten&quot; &amp;&amp; 
-LastName != &quot;Customer&quot; &amp;&amp;
-RecordType.DeveloperName = &quot;General&quot; &amp;&amp;
-(ISBLANK(Email) ||
-What_are_they_looking_for__c = &quot;&quot;  ||
-Family__c = &quot;&quot;  ||
-Income_Wealth__c = &quot;&quot;  ||
-ISPICKVAL(Current_adviser_in_place__c, &quot;&quot;)  ||
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+IsConverted 
+&amp;&amp;
+NOT(LegacyLead__c) 
+&amp;&amp;
+NOT( ISPICKVAL( LeadSource, &quot;Purchased List&quot; )) 
+&amp;&amp;
+FirstName != &quot;Forgotten&quot; 
+&amp;&amp; 
+LastName != &quot;Customer&quot; 
+&amp;&amp;
+RecordType.DeveloperName = &quot;General&quot; 
+&amp;&amp;
+(ISBLANK(Email) 
+||
+What_are_they_looking_for__c = &quot;&quot;  
+||
+Family__c = &quot;&quot;  
+||
+Income_Wealth__c = &quot;&quot;  
+||
+ISPICKVAL(Current_adviser_in_place__c, &quot;&quot;)  
+||
 ISPICKVAL(Vulnerable_Client__c, &quot;&quot;))</errorConditionFormula>
     <errorMessage>You must complete the &quot;Discovery Call Notes&quot; section and vulnerability fields before you can convert this lead.</errorMessage>
 </ValidationRule>

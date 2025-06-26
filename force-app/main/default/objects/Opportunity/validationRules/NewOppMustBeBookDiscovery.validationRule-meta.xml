@@ -2,7 +2,10 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NewOppMustBeBookDiscovery</fullName>
     <active>true</active>
-    <errorConditionFormula>RecordType.DeveloperName = &quot;Advice_Opportunity&quot;
+    <description>New opportunities must be in a status of &apos;Book discovery&apos; when created</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+RecordType.DeveloperName = &quot;Advice_Opportunity&quot;
 &amp;&amp;
 ISNEW()
 &amp;&amp;

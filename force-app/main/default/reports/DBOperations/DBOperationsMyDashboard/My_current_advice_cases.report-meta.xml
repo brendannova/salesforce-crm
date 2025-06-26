@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Advice__c$Name</field>
+    </columns>
+    <columns>
+        <field>Advice__c$Advice_Status__c</field>
+    </columns>
+    <description>This shows the current user’s onboarding client advice cases where they are the dedicated specialist.</description>
+    <filter>
+        <booleanFilter>(1 OR 5) AND 2 AND (3 OR 4)</booleanFilter>
+        <criteriaItems>
+            <column>Advice__c$DataGatheringSpecialist__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Lucy Harrison</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Advice__c$Advice_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Setup,Data gathering,Data analysis,Risk Call,In fulfilment</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Advice__c$AdviceType__c.Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Onboarding | Accumulation</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Advice__c$AdviceType__c.Name</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Onboarding | Retirement</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Advice__c$OW_dedicated_specialist__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Lucy Harrison</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Advice__c$AdviceType__c.Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>My advice cases | Onboarding</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Advice__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Advice__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

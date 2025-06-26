@@ -3,7 +3,9 @@
     <fullName>NationalInsuranceNumberFormat</fullName>
     <active>true</active>
     <description>Ensures that any National Insurance Number entered has the correct format of 2 letters, followed by 6 numbers, followed by a single letter that which is always A,B,C or D).</description>
-    <errorConditionFormula>NOT(ISBLANK(National_Insurance_Number__pc ))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISBLANK(National_Insurance_Number__pc ))
 &amp;&amp;
 NOT(REGEX( National_Insurance_Number__pc ,&quot;[A-Z]{2}[0-9]{6}[A-D]{1}&quot;))
 &amp;&amp;

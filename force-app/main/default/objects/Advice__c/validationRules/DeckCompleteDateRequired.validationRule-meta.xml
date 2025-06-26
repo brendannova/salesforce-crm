@@ -3,7 +3,8 @@
     <fullName>DeckCompleteDateRequired</fullName>
     <active>true</active>
     <description>Ensures that advice cannot go back from deck complete to suitability in progress.</description>
-    <errorConditionFormula>RecordType.DeveloperName = &quot;Advice_RT_General_Advice&quot;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp; (
+RecordType.DeveloperName = &quot;Advice_RT_General_Advice&quot;
 &amp;&amp;
 ISBLANK( AdviceDeckCompleteDate__c )
 &amp;&amp;
@@ -13,6 +14,7 @@ ISPICKVAL(Advice_Status__c, &quot;In fulfilment&quot;) ||
 ISPICKVAL(Advice_Status__c, &quot;Suitability Declined&quot;) ||
 ISPICKVAL(Advice_Status__c, &quot;Complete&quot;))
 &amp;&amp;
-NOT(AdviceType__r.DeveloperName__c = &quot;REGULAR_AMENDMENT&quot;)</errorConditionFormula>
+NOT(AdviceType__r.DeveloperName__c = &quot;REGULAR_AMENDMENT&quot;)
+)</errorConditionFormula>
     <errorMessage>A deck complete date is required to move to this status.</errorMessage>
 </ValidationRule>

@@ -3,13 +3,14 @@
     <fullName>AnnualReviewRetirementCall</fullName>
     <active>true</active>
     <description>Restricts the value of the retirement call status for annual reviews.</description>
-    <errorConditionFormula>(AdviceType__r.DeveloperName__c = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; ||
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp; 
+((AdviceType__r.DeveloperName__c = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; ||
 AdviceType__r.DeveloperName__c = &quot;ANNUAL_REVIEW_RETIREMENT&quot;) &amp;&amp;
 
 (ISPICKVAL(RetirementCallStatus__c, &quot;PRESENT&quot;) ||
 ISPICKVAL(RetirementCallStatus__c, &quot;COMPLETE&quot;)) &amp;&amp;
 
-ISPICKVAL(DeckStatus__c, &quot;Not started&quot;)</errorConditionFormula>
+ISPICKVAL(DeckStatus__c, &quot;Not started&quot;))</errorConditionFormula>
     <errorDisplayField>RetirementCallStatus__c</errorDisplayField>
     <errorMessage>In an annual review, the retirement call cannot be ready to present or complete until after the deck is written.</errorMessage>
 </ValidationRule>

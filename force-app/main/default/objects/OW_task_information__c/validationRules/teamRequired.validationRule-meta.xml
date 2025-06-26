@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>teamRequired</fullName>
+    <active>true</active>
+    <description>Ensures that a team is specified where this is an active record.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISBLANK( OW_task_type__c ))
+
+&amp;&amp;
+
+ISPICKVAL( OW_status__c, &quot;Active&quot; ) 
+
+&amp;&amp; 
+
+ISPICKVAL( OW_team__c, &quot;&quot; )</errorConditionFormula>
+    <errorDisplayField>OW_team__c</errorDisplayField>
+    <errorMessage>Please specify a team</errorMessage>
+</ValidationRule>

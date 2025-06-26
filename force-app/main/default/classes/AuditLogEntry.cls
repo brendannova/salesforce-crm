@@ -17,9 +17,15 @@ public without sharing class AuditLogEntry {
                 String eventType = 'Page view';
                 Id defaultOwnerId = '0054J000005ZwOKQA0';
                 String recordName;
-                List<sObject> records = Database.query('SELECT Id, Name FROM ' + objectApiName + ' WHERE Id = :recordId');
+                String nameField = 'Name';
+
+                if(objectApiName == 'Case'){
+                    nameField = 'CaseNumber';
+                }
+
+                List<sObject> records = Database.query('SELECT Id, ' + nameField + ' FROM ' + objectApiName + ' WHERE Id = :recordId');
                 if(records.size() == 1){
-                    recordName = (String) records[0].get('Name');
+                    recordName = (String) records[0].get(nameField);
                 } else if(records.size() == 0){
                     recordName = 'Err: no record';
                 } else {

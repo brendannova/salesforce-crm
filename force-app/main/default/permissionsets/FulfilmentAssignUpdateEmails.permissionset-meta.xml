@@ -3,6 +3,10 @@
     <description>Used to provide access to the assign emails flow</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Fulfilment | Assign update emails</label>
+    <applicationVisibilities>
+        <application>NovaManagement</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <customPermissions>
         <enabled>true</enabled>
         <name>CanAssignUpdateEmails</name>
@@ -31,8 +35,4 @@
         <tab>FulfilmentUpdates</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <applicationVisibilities>
-        <application>OperationsManager</application>
-        <visible>true</visible>
-    </applicationVisibilities>
 </PermissionSet>

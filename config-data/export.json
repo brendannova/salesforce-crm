@@ -1,0 +1,96 @@
+{
+    "allOrNone": true,
+    "objects": [
+        {
+            "query": "SELECT Id, readonly_false FROM EmailConfiguration__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM OW_task_information__c",
+            "operation": "Upsert",
+            "externalId": "OW_task_type__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM RecommendationType__c",
+            "operation": "Upsert",
+            "externalId": "ReferenceName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM FulfilmentType__c",
+            "operation": "Upsert",
+            "externalId": "ReferenceName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM FulfilmentTypeStatus__c",
+            "operation": "Upsert",
+            "externalId": "ReferenceName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM ProductType__c",
+            "operation": "Upsert",
+            "externalId": "ReferenceName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM Public_Provider_Names__c",
+            "operation": "Upsert",
+            "externalId": "Name"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM Product__c",
+            "operation": "Upsert",
+            "externalId": "ReferenceName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM FactCategory__c",
+            "operation": "Upsert",
+            "externalId": "Enum__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM Fact__c",
+            "operation": "Upsert",
+            "externalId": "Name"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM AssetType__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM LiabilityType__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM FinancialProductType__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM FeeModel__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM AdviceType__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM AdviceTypeStatus__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM AdviceTypeRecommendation__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM InformationRequestType__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        }
+    ]
+}

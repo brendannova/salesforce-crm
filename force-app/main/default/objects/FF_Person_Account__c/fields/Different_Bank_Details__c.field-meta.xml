@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Different_Bank_Details__c</fullName>
-    <description>This will be true if the new bank details differ from the ones held on the Person Account. But only if we actually hold bank details. If we don&#39;t have any details this will always show as false, but have just received them, this will show as false.</description>
+    <description>This will be true if the new bank details differ from the ones held on the Person Account. But only if we actually hold bank details. If we don&apos;t have any details this will always show as false, but have just received them, this will show as false.</description>
     <formula>AND(
 
 NOT(
@@ -21,7 +21,7 @@ NOT( Bank_Sort_Code__c =  Person_Account__r.Bank_sort_code__c)
 )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Different Bank Details</label>
+    <label>Different bank details</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
