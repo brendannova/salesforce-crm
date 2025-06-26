@@ -509,6 +509,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>IO_Plan_ID__c</field>
+            <value>
+                <elementReference>IO_ID</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>OW_stop_internal_change_processing__c</field>
             <value>
                 <elementReference>stopInternalChangeProcessingDestination</elementReference>
@@ -688,6 +694,27 @@
                             <operator>NotEqualTo</operator>
                             <rightValue>
                                 <stringValue>Not Applicable</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>IO_ID</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_recommendation.DestinationLegacy__r.IO_Plan_ID__c</elementReference>
+                    </defaultValue>
+                    <fieldText>IO ID</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Get_recommendation.DestinationLegacy__r.IO_Plan_ID__c</leftValueReference>
+                            <operator>IsNull</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>

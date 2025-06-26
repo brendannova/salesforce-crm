@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreventSuitabilityWithIncompleteRtqs</fullName>
+    <active>false</active>
+    <description>Prevents advice from moving to suitability stages while RTQs are incomplete</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp; 
+AND (
+     ISCHANGED( Advice_Status__c ),
+     OR (
+          TEXT(Advice_Status__c) = &apos;Ready for suitability&apos;,
+          TEXT(Advice_Status__c) = &apos;Suitability in progress&apos;,
+          TEXT(Advice_Status__c) = &apos;Deck complete&apos;,
+          TEXT(Advice_Status__c) = &apos;Await decision&apos;,
+          TEXT(Advice_Status__c) = &apos;In fulfilment&apos;,
+          TEXT(Advice_Status__c) = &apos;Complete&apos;
+     ),
+     OR ( TEXT(PRIORVALUE(Advice_Status__c)) = &apos;Setup&apos;,
+          TEXT(PRIORVALUE(Advice_Status__c)) = &apos;Data Gathering&apos;,
+          TEXT(PRIORVALUE(Advice_Status__c)) = &apos;Risk call&apos;
+     ),
+     OR ( 
+          ISPICKVAL(Advice_Household__r.OW_rtq_status__c,
+          &quot;Incomplete&quot;),
+          ISPICKVAL(Advice_Household__r.OW_rtq_status__c,
+          &quot;Pending&quot;)
+     )
+)</errorConditionFormula>
+    <errorMessage>RTQs for this household need to be completed before you can progress to Ready for suitability</errorMessage>
+</ValidationRule>

@@ -3,8 +3,12 @@
     <fullName>HouseholdMortgageAcceptedRoles</fullName>
     <active>true</active>
     <description>Ensures that only certain roles can be recorded in a household where the type is mortgage only.</description>
-    <errorConditionFormula>Account.RecordType.DeveloperName = &quot;IndustriesHousehold&quot; &amp;&amp;
-ISPICKVAL(Account.Type, &quot;Mortgage only&quot;)&amp;&amp;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+Account.RecordType.DeveloperName = &quot;IndustriesHousehold&quot; 
+&amp;&amp;
+ISPICKVAL(Account.Type, &quot;Mortgage only&quot;)
+&amp;&amp;
 NOT(INCLUDES(Roles, &quot;Mortgage borrower&quot;))</errorConditionFormula>
     <errorDisplayField>Roles</errorDisplayField>
     <errorMessage>In a mortgage household, role must be mortgage borrower.</errorMessage>

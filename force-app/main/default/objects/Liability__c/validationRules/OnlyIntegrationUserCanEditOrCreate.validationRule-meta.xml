@@ -3,6 +3,8 @@
     <fullName>OnlyIntegrationUserCanEditOrCreate</fullName>
     <active>true</active>
     <description>Only users with the Integration custom permission is able to create or edit assets</description>
-    <errorConditionFormula>NOT($Permission.IntegrationUser)</errorConditionFormula>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT($Permission.IntegrationUser)</errorConditionFormula>
     <errorMessage>Any amendments to this record will need to be made through the appropriate flows</errorMessage>
 </ValidationRule>

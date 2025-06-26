@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FactOnlyPlannersAndPartnersCanEdit</fullName>
+    <active>true</active>
+    <description>This is to ensure only users with the edit planner facts permission have the ability to edit planner facts.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+Fact__r.Name = &quot;Expected savings/cash&quot;
+&amp;&amp;
+!$Permission.FactsUpdateFinancialPlanningFacts</errorConditionFormula>
+    <errorMessage>Only planners or partners can create and edit this fact</errorMessage>
+</ValidationRule>

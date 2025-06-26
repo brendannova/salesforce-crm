@@ -87,5 +87,21 @@ global with sharing class Utility {
         return offsetDate;
     }
 
+    // Checks if the org in question is a sandbox. This can be used to ensure that logic is only executed in production/sandbox as appopriate.    
+    public static Boolean isSandbox {
+        get {
+            isSandbox = isSandbox == null ? [SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox : isSandbox;
+            return isSandbox;
+        }
+        set;
+    }
+
+    // Returns the sandbox name. The return value will be null if run in production. 
+    public static String sandboxName{
+        get {
+            return System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+        }
+        set;
+    }
 
 }

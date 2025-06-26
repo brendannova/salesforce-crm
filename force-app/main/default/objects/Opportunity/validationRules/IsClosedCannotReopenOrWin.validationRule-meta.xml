@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsClosedCannotReopenOrWin</fullName>
+    <active>true</active>
+    <description>Ensures that an opportunity marked as lost cannot be re-opened and that instead a new opportunity must be created to get someone into an onboarding journey again.</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+PRIORVALUE(IsClosed) = TRUE
+&amp;&amp;
+PRIORVALUE(IsWon) = FALSE
+&amp;&amp;
+(IsWon = TRUE || IsClosed = FALSE)
+&amp;&amp;
+$User.Username &lt;&gt; &quot;cian@novawm.com&quot;</errorConditionFormula>
+    <errorDisplayField>StageName</errorDisplayField>
+    <errorMessage>You cannot re-open or win an opportunity that was previously lost. Please contact the Salesforce team about what you are trying to do.</errorMessage>
+</ValidationRule>

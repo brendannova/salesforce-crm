@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoDeceasedCompletionWithoutFields</fullName>
+    <active>true</active>
+    <description>Prevents completion of deceased cases without the fields needed - date of death, date confirmed etc</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+RecordType.DeveloperName = &quot;Deceased&quot;
+&amp;&amp;
+ISPICKVAL(Status, &quot;Complete&quot;)
+&amp;&amp;
+(
+ISNULL( DateOfDeath__c )
+||
+ISNULL( DateDeathConfirmed__c )
+||
+ISPICKVAL( DeathCertificateReceived__c, &quot;&quot; )
+)</errorConditionFormula>
+    <errorMessage>Please fill out the date of death, date death confirmed and death certificate sections.</errorMessage>
+</ValidationRule>

@@ -3,7 +3,9 @@
     <fullName>DateOfBirthPreventChangeAfterAml</fullName>
     <active>true</active>
     <description>Checks whether a user is trying to change date of birth after AML checks have been passed. If so, it ensures that they have the required custom permission required to make this change.</description>
-    <errorConditionFormula>IsPersonAccount = TRUE
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+IsPersonAccount = TRUE
 &amp;&amp;
 ISCHANGED(PersonBirthdate)
 &amp;&amp;

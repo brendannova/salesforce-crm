@@ -3,7 +3,8 @@
     <fullName>AnnualReviewRequired</fullName>
     <active>true</active>
     <description>Ensures that if the advice is of annual review type, there is a review linked.</description>
-    <errorConditionFormula>(AdviceType__r.DeveloperName__c = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; ||
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp; 
+(AdviceType__r.DeveloperName__c = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; ||
 AdviceType__r.DeveloperName__c = &quot;ANNUAL_REVIEW_RETIREMENT&quot;) &amp;&amp;
 NOT(ISPICKVAL(Advice_Status__c, &quot;Cancelled&quot;)) &amp;&amp;
 ISBLANK(OW_review__c)</errorConditionFormula>

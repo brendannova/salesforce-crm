@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Related_Advice__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
-    <label>Related Advice</label>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>Lookup field to the advice related to this fact find session.</description>
+    <label>Related advice</label>
     <referenceTo>Advice__c</referenceTo>
     <relationshipLabel>Profile Snapshots</relationshipLabel>
     <relationshipName>FF_Sessions</relationshipName>

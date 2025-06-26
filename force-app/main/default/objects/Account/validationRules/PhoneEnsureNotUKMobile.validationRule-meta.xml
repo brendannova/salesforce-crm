@@ -3,10 +3,16 @@
     <fullName>PhoneEnsureNotUKMobile</fullName>
     <active>true</active>
     <description>If phone begins with +44, it cannot begin with +447 because that is a mobile number. This only applies where we do not already have a mobile number. If there is already a mobile number, we can accept a second one in the phone field.</description>
-    <errorConditionFormula>NOT(ISPICKVAL( $User.OW_user_type__c , &quot;Integration&quot;)) &amp;&amp;
-ISBLANK(PersonMobilePhone) &amp;&amp;
-BEGINS(Phone, &quot;+44&quot;) &amp;&amp;
-BEGINS(Phone, &quot;+447&quot;) &amp;&amp; 
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c 
+&amp;&amp;
+NOT(ISPICKVAL( $User.OW_user_type__c , &quot;Integration&quot;)) 
+&amp;&amp;
+ISBLANK(PersonMobilePhone) 
+&amp;&amp;
+BEGINS(Phone, &quot;+44&quot;) 
+&amp;&amp;
+BEGINS(Phone, &quot;+447&quot;) 
+&amp;&amp; 
 IsPersonAccount</errorConditionFormula>
     <errorDisplayField>Phone</errorDisplayField>
     <errorMessage>Mobile numbers can&#39;t be stored in the phone field</errorMessage>

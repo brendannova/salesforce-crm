@@ -3,6 +3,10 @@
     <description>Provides access to view accounts and a history of the changes to them.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Account | View</label>
+    <classAccesses>
+        <apexClass>LwcHelperAccountStatusFlags</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.CashSavingsMonthly__c</field>
@@ -50,6 +54,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.LeadSourceNotes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.NonEssentialSpendingMonthly__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -61,6 +70,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.PensionsSavingsMonthly__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Referrer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -86,6 +100,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.MarketingPhone__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.MoneyPurchaseAnnualAllowanceStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.MoneyPurchaseAnnualAllowanceTriggerNotes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

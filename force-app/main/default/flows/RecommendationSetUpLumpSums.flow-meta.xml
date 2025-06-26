@@ -246,6 +246,13 @@
                 <elementReference>Loop_through_products_to_lumpsum.RegisteredContact__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recommendationToCreate.SourceOfFunds__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Source_of_funds</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Is_a_fee_needed</targetReference>
         </connector>
@@ -408,6 +415,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Loop_2_Recommendations_for_lump_sum.JointOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>recommendationToCreate.SourceOfFunds__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Source_of_fundsRec</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -839,6 +853,14 @@
         <picklistField>PhasingFrequency__c</picklistField>
         <picklistObject>Recommendation__c</picklistObject>
     </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>sourceOfFundsChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>SourceOfFunds__c</picklistField>
+        <picklistObject>Recommendation__c</picklistObject>
+    </dynamicChoiceSets>
     <environments>Default</environments>
     <formulas>
         <name>defaultTaxReliefProduct</name>
@@ -1199,6 +1221,7 @@ IF( {!Who_will_this_be_paid_byRec}=&quot;Client&quot;, {!AmountRec} / 4, 0), 0)<
         <queriedFields>FinServ__PrimaryOwner__c</queriedFields>
         <queriedFields>FinServ__JointOwner__c</queriedFields>
         <queriedFields>RegisteredContact__c</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <screens>
         <name>DoneDoneScreen</name>
@@ -1417,6 +1440,25 @@ NOT(CONTAINS({!Loop_2_Recommendations_for_lump_sum.DestinationLegacy__r.FinServ_
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Source_of_fundsRec</name>
+            <choiceReferences>sourceOfFundsChoice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Source of funds</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Who_will_this_be_paid_byRec</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Client</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>employerselectRec</name>
             <dataTypeMappings>
                 <typeName>T</typeName>
@@ -1512,12 +1554,6 @@ NOT(CONTAINS({!Loop_2_Recommendations_for_lump_sum.DestinationLegacy__r.FinServ_
                 <name>messageToggleInactive</name>
                 <value>
                     <stringValue>No</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1876,6 +1912,25 @@ NOT(CONTAINS({!Loop_2_Recommendations_for_lump_sum.DestinationLegacy__r.FinServ_
             <isRequired>true</isRequired>
         </fields>
         <fields>
+            <name>Source_of_funds</name>
+            <choiceReferences>sourceOfFundsChoice</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Source of funds</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Who_will_this_be_paid_by</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Client</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>EmployerSelect</name>
             <dataTypeMappings>
                 <typeName>T</typeName>
@@ -1971,12 +2026,6 @@ NOT(CONTAINS({!Loop_2_Recommendations_for_lump_sum.DestinationLegacy__r.FinServ_
                 <name>messageToggleInactive</name>
                 <value>
                     <stringValue>No</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

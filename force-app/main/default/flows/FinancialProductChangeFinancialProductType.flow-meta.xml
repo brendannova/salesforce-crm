@@ -13,6 +13,9 @@
                 <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Error_handling_screen</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_new_financial_product_type_ID</name>
@@ -231,6 +234,49 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Error_handling_screen</name>
+        <label>Error handling screen</label>
+        <locationX>440</locationX>
+        <locationY>890</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>closeFlowAfterToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMode</name>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastTitle</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>errorMessage</name>
         <dataType>String</dataType>

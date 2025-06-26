@@ -3,7 +3,9 @@
     <fullName>DocumentProofStatusAndUrl</fullName>
     <active>true</active>
     <description>Ensures the document proof URL is only specified if we also have the correct status indicated.</description>
-    <errorConditionFormula>(NOT(ISBLANK(DocumentUrl__c))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp;
+(NOT(ISBLANK(DocumentUrl__c))
 &amp;&amp;
 NOT(ISPICKVAL(DocumentProof__c, &quot;RECEIVED_SAVED&quot;)))
 ||
