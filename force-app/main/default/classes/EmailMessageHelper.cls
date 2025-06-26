@@ -21,7 +21,7 @@ public with sharing class EmailMessageHelper {
     private final static List<String> EXCLUDED_SUBJECTS = new List<String>{LoggerEmailSender.LOG_ERROR_EMAIL_SUBECT};
     private final static String VALIDATION_TYPE_NONE = 'NONE';
 
-    public setValidationType(Map<Id, EmailMessage> messagesMap){
+    public void setValidationType(Map<Id, EmailMessage> messagesMap){
         for(EmailMessage email : messagesMap.values()){
             if(email.Incoming == false){
                 if(EXCLUDED_SUBJECTS.contains(email.Subject)){
@@ -30,6 +30,11 @@ public with sharing class EmailMessageHelper {
             }
         }
     }
+
+    // Empty constructor for simple creation of the class
+    public EmailMessageHelper(){
+    }
+ 
 
     // This constructor runs to collate the information needed to validate an email message
     public EmailMessageHelper(Map<Id,EmailMessage> messagesMap){
