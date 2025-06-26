@@ -18,6 +18,10 @@ public with sharing class EmailMessageHelper {
     private Map<Id, List<String>> householdEmailsMap = new Map<Id, List<String>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
     private Map<Id, List<RecipientInformation>> householdRecipientMap = new Map<Id, List<RecipientInformation>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
 
+    private final static List<String> EXCLUDED_SUBJECTS = new List<String>{LoggerEmailSender.LOG_ERROR_EMAIL_SUBECT};
+    private final static String VALIDATION_TYPE_NONE = 'NONE';
+    private final static String VALIDATION_TYPE_OUTGOING_MANUAL = 'OUTGOING_MANUAL';
+
     // This constructor runs to collate the information needed to validate an email message
     public EmailMessageHelper(Map<Id,EmailMessage> messagesMap){
         collateEmailInformation(messagesMap.values());      // Collate the key information needed
@@ -28,9 +32,9 @@ public with sharing class EmailMessageHelper {
     }
  
     // Constructs a list of EmailDetail objects for each outbound EmailMessage
-    private void collateEmailInformation(List<EmailMessage> allEmails){
+    private void collateEmailInformation(List<EmailMessage> allEmails){        
         for(EmailMessage email : allEmails){
-            if(email.Incoming == false){
+            if(email.Incoming == false && !EXCLUDED_SUBJECTS.contains(email.Subject)){
                 EmailDetail emailDetail = new EmailDetail();
                 emailDetail.emailMessage = email;
                 emailDetail.relatedToId = email.RelatedToId;
