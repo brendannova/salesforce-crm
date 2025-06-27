@@ -3,7 +3,6 @@
     <fullName>LimitsMobilePushApexCalls__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>None</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
         (LimitsMobilePushApexCallsUsed__c / LimitsMobilePushApexCallsMax__c * 100) &gt;= 90,
@@ -14,8 +13,8 @@
             &quot;✅&quot;
         )
     )
-    + &apos; &apos; + TEXT(ROUND(LimitsMobilePushApexCallsUsed__c / LimitsMobilePushApexCallsMax__c * 100, 2)) + &apos;% (&apos;
-    + TEXT(LimitsMobilePushApexCallsUsed__c) + &apos; / &apos; + TEXT(LimitsMobilePushApexCallsMax__c) + &apos;)&apos;</formula>
+    + &#39; &#39; + TEXT(ROUND(LimitsMobilePushApexCallsUsed__c / LimitsMobilePushApexCallsMax__c * 100, 2)) + &#39;% (&#39;
+    + TEXT(LimitsMobilePushApexCallsUsed__c) + &#39; / &#39; + TEXT(LimitsMobilePushApexCallsMax__c) + &#39;)&#39;</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>✅ when 80% or less of the limit is used, ⚠️ when 80.1-89.9% is used, or ⛔ when 90% or more is used</inlineHelpText>
     <label>Mobile Push Apex Calls</label>

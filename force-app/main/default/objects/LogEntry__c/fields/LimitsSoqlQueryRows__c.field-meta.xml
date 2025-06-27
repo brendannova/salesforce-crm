@@ -3,7 +3,6 @@
     <fullName>LimitsSoqlQueryRows__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>None</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
         (LimitsSoqlQueryRowsUsed__c / LimitsSoqlQueryRowsMax__c * 100) &gt;= 90,
@@ -14,8 +13,8 @@
             &quot;✅&quot;
         )
     )
-    + &apos; &apos; + TEXT(ROUND(LimitsSoqlQueryRowsUsed__c / LimitsSoqlQueryRowsMax__c * 100, 2)) + &apos;% (&apos;
-    + TEXT(LimitsSoqlQueryRowsUsed__c) + &apos; / &apos; + TEXT(LimitsSoqlQueryRowsMax__c) + &apos;)&apos;</formula>
+    + &#39; &#39; + TEXT(ROUND(LimitsSoqlQueryRowsUsed__c / LimitsSoqlQueryRowsMax__c * 100, 2)) + &#39;% (&#39;
+    + TEXT(LimitsSoqlQueryRowsUsed__c) + &#39; / &#39; + TEXT(LimitsSoqlQueryRowsMax__c) + &#39;)&#39;</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>✅ when 80% or less of the limit is used, ⚠️ when 80.1-89.9% is used, or ⛔ when 90% or more is used</inlineHelpText>
     <label>SOQL Query Rows</label>

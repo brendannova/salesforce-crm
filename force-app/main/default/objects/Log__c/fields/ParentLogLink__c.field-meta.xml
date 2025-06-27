@@ -3,11 +3,10 @@
     <fullName>ParentLogLink__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>PII;GDPR;CCPA</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
     NOT(ISBLANK(ParentLog__c)),
-    HYPERLINK(ParentLog__c, ParentLog__r.Name + &apos; - &apos; + ParentLogTransactionId__c, &apos;_top&apos;),
+    HYPERLINK(ParentLog__c, ParentLog__r.Name + &#39; - &#39; + ParentLogTransactionId__c, &#39;_top&#39;),
     ParentLogTransactionId__c
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

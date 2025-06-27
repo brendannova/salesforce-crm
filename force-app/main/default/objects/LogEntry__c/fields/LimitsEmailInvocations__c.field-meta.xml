@@ -3,7 +3,6 @@
     <fullName>LimitsEmailInvocations__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>None</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
         (LimitsEmailInvocationsUsed__c / LimitsEmailInvocationsMax__c * 100) &gt;= 90,
@@ -14,8 +13,8 @@
             &quot;✅&quot;
         )
     )
-    + &apos; &apos; + TEXT(ROUND(LimitsEmailInvocationsUsed__c / LimitsEmailInvocationsMax__c * 100, 2)) + &apos;% (&apos;
-    + TEXT(LimitsEmailInvocationsUsed__c) + &apos; / &apos; + TEXT(LimitsEmailInvocationsMax__c) + &apos;)&apos;</formula>
+    + &#39; &#39; + TEXT(ROUND(LimitsEmailInvocationsUsed__c / LimitsEmailInvocationsMax__c * 100, 2)) + &#39;% (&#39;
+    + TEXT(LimitsEmailInvocationsUsed__c) + &#39; / &#39; + TEXT(LimitsEmailInvocationsMax__c) + &#39;)&#39;</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <inlineHelpText>✅ when 80% or less of the limit is used, ⚠️ when 80.1-89.9% is used, or ⛔ when 90% or more is used</inlineHelpText>
     <label>Email Invocations</label>

@@ -3,11 +3,10 @@
     <fullName>Trigger__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>None</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
     TriggerIsExecuting__c,
-    TEXT(TriggerSObjectType__c) + &apos;.&apos; + TEXT(TriggerOperationType__c),
+    TEXT(TriggerSObjectType__c) + &#39;.&#39; + TEXT(TriggerOperationType__c),
     null
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
