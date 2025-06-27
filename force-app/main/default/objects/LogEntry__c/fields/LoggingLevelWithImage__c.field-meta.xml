@@ -3,20 +3,19 @@
     <fullName>LoggingLevelWithImage__c</fullName>
     <businessStatus>DeprecateCandidate</businessStatus>
     <complianceGroup>PII;GDPR;CCPA</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>CASE(
     TEXT(LoggingLevel__c),
-    &apos;ERROR&apos;, &apos;⛔&apos;,
-    &apos;WARN&apos;, &apos;⚠️&apos;,
-    &apos;INFO&apos;, &apos;ℹ️&apos;,
-    &apos;DEBUG&apos;, &apos;🐞&apos;,
-    &apos;FINE&apos;, &apos;👍&apos;,
-    &apos;FINER&apos;, &apos;👌&apos;,
-    &apos;FINEST&apos;, &apos;🌟&apos;,
-    &apos;⚙️&apos;
+    &#39;ERROR&#39;, &#39;⛔&#39;,
+    &#39;WARN&#39;, &#39;⚠️&#39;,
+    &#39;INFO&#39;, &#39;ℹ️&#39;,
+    &#39;DEBUG&#39;, &#39;🐞&#39;,
+    &#39;FINE&#39;, &#39;👍&#39;,
+    &#39;FINER&#39;, &#39;👌&#39;,
+    &#39;FINEST&#39;, &#39;🌟&#39;,
+    &#39;⚙️&#39;
 )
-+ &apos; &apos; + TEXT(LoggingLevel__c)</formula>
++ &#39; &#39; + TEXT(LoggingLevel__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>DEPRECATED: Level</label>
     <required>false</required>

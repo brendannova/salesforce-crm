@@ -3,18 +3,17 @@
     <fullName>LogEntriesSummary__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>None</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
-    <formula>TEXT(TotalLogEntries__c) + &apos; total entries&apos;
+    <formula>TEXT(TotalLogEntries__c) + &#39; total entries&#39;
 + IF(
     TotalERRORLogEntries__c = 0,
-    &apos;&apos;,
-    &apos;, &apos; + TEXT(TotalERRORLogEntries__c) + &apos; error(s)&apos;
+    &#39;&#39;,
+    &#39;, &#39; + TEXT(TotalERRORLogEntries__c) + &#39; error(s)&#39;
 )
 + IF(
     TotalWARNLogEntries__c = 0,
-    &apos;&apos;,
-    &apos;, &apos; + TEXT(TotalWARNLogEntries__c) + &apos; warning(s)&apos;
+    &#39;&#39;,
+    &#39;, &#39; + TEXT(TotalWARNLogEntries__c) + &#39; warning(s)&#39;
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Summary</label>

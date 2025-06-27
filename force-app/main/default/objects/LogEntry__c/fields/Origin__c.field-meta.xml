@@ -3,10 +3,9 @@
     <fullName>Origin__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>None</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
-  ISPICKVAL(OriginSourceMetadataType__c, &apos;&apos;),
+  ISPICKVAL(OriginSourceMetadataType__c, &#39;&#39;),
   TEXT(OriginType__c),
   TEXT(OriginSourceMetadataType__c)
 )
@@ -14,10 +13,10 @@
 IF(
   OR (
     OriginLocation__c == null,
-    OriginLocation__c == &apos;AnonymousBlock&apos;
+    OriginLocation__c == &#39;AnonymousBlock&#39;
   ),
-  &apos;&apos;,
-  &apos;.&apos; + OriginLocation__c
+  &#39;&#39;,
+  &#39;.&#39; + OriginLocation__c
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Origin</label>

@@ -3,7 +3,6 @@
     <fullName>ImpersonatedByUsernameLink__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>PII;GDPR;CCPA</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
     ISBLANK(ImpersonatedBy__c),
@@ -11,7 +10,7 @@
     HYPERLINK(
         ImpersonatedBy__c,
         ImpersonatedBy__r.Username,
-        &apos;_top&apos;
+        &#39;_top&#39;
     )
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
