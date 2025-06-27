@@ -3,7 +3,8 @@
     <fullName>OW_joint_owner_must_be_in_household</fullName>
     <active>true</active>
     <description>Ensures the joint owner of a product is in the household to which the product is linked.</description>
-    <errorConditionFormula>(NOT( ISBLANK( FinServ__JointOwner__r.Household_Lookup__c ))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+(NOT( ISBLANK( FinServ__JointOwner__r.Household_Lookup__c ))
 &amp;&amp;
 NOT( Household__c =  FinServ__JointOwner__r.Household_Lookup__c )
 &amp;&amp;
