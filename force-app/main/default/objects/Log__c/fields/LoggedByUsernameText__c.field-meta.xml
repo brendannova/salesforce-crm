@@ -3,12 +3,11 @@
     <fullName>LoggedByUsernameText__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>PII;HIPAA;CCPA</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(ISBLANK(LoggedBy__c),
-  &apos;Anonymous&apos;,
-  IF(ISPICKVAL(UserType__c, &apos;AutomatedProcess&apos;),
-    TRIM(LoggedBy__r.FirstName + &apos; &apos; + LoggedBy__r.LastName),
+  &#39;Anonymous&#39;,
+  IF(ISPICKVAL(UserType__c, &#39;AutomatedProcess&#39;),
+    TRIM(LoggedBy__r.FirstName + &#39; &#39; + LoggedBy__r.LastName),
     LoggedByUsername__c)
 )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

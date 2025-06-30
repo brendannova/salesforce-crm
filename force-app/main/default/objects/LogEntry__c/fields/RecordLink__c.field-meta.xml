@@ -3,29 +3,28 @@
     <fullName>RecordLink__c</fullName>
     <businessStatus>Active</businessStatus>
     <complianceGroup>None</complianceGroup>
-    <deprecated>false</deprecated>
     <externalId>false</externalId>
     <formula>IF(
     NOT(ISBLANK(RecordId__c)),
     CASE(
         TEXT(RecordSObjectClassification__c),
-        &apos;Custom Object&apos;, HYPERLINK(
-            &apos;/&apos; + RecordId__c,
+        &#39;Custom Object&#39;, HYPERLINK(
+            &#39;/&#39; + RecordId__c,
             IF(
                 ISBLANK(RecordName__c),
                 RecordId__c,
                 RecordName__c
             ),
-            &apos;_top&apos;
+            &#39;_top&#39;
         ),
-        &apos;Standard Object&apos;, HYPERLINK(
-            &apos;/&apos; + RecordId__c,
+        &#39;Standard Object&#39;, HYPERLINK(
+            &#39;/&#39; + RecordId__c,
             IF(
                 ISBLANK(RecordName__c),
                 RecordId__c,
                 RecordName__c
             ),
-            &apos;_top&apos;
+            &#39;_top&#39;
         ),
         IF(
             ISBLANK(RecordName__c),
@@ -35,11 +34,11 @@
     ),
     IF(
         ISBLANK(TEXT(RecordCollectionType__c)),
-        &apos;&apos;,
+        &#39;&#39;,
         IF(
-            TEXT(RecordCollectionType__c) = &apos;Map&apos;,
-            TEXT(RecordCollectionType__c) + &apos;&lt;Id, &apos; + TEXT(RecordSObjectType__c) + &apos;&gt;&apos;,
-            TEXT(RecordCollectionType__c) + &apos;&lt;&apos; + TEXT(RecordSObjectType__c) + &apos;&gt;&apos;
+            TEXT(RecordCollectionType__c) = &#39;Map&#39;,
+            TEXT(RecordCollectionType__c) + &#39;&lt;Id, &#39; + TEXT(RecordSObjectType__c) + &#39;&gt;&#39;,
+            TEXT(RecordCollectionType__c) + &#39;&lt;&#39; + TEXT(RecordSObjectType__c) + &#39;&gt;&#39;
         )
     )
 )</formula>
