@@ -3,7 +3,8 @@
     <fullName>CannotUpdateCashAccountTypes</fullName>
     <active>true</active>
     <description>Prevent updating of cash account financial products since these have moved to CheerIO.</description>
-    <errorConditionFormula>((RecordType.DeveloperName = &#39;SavingsAccount&#39;
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+((RecordType.DeveloperName = &apos;SavingsAccount&apos;
 ||
 RecordType.DeveloperName = &#39;FP_Current_Account&#39;
 ||
