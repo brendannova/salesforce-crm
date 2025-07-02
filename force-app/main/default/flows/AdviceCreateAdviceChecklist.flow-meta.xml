@@ -154,7 +154,7 @@
             <targetReference>Checklist_record_type</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>(1 OR 2) AND 3</filterLogic>
+        <filterLogic>(1 OR 2 OR 3) AND 4</filterLogic>
         <filters>
             <field>Advice_Status__c</field>
             <operator>EqualTo</operator>
@@ -167,6 +167,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Prepare advice</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Advice_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Suitability in progress</stringValue>
             </value>
         </filters>
         <filters>
