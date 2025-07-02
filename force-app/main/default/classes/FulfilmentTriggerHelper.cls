@@ -3,73 +3,74 @@ public class FulfilmentTriggerHelper {
     public void sendCancellationNotices(List<Fulfilment__c> fulfilments) {
         // Get recommendation details for the fulfilments sent in the trigger
         List<Fulfilment__c> fulfilmentsForNotice = getCancellationFulfilments(fulfilments);
-        for(Fulfilment__c flfl : fulfilmentsForNotice) {
-        	System.debug(flfl);
-    	}
+        System.debug('There are ' + fulfilmentsForNotice.size() + ' fulfilments for notice');
         
-        // Create a list of email requests for these fulfilments
-        List<EmailSend.EmailSendRequestAutomatic> emails = new List<EmailSend.EmailSendRequestAutomatic>();
-        
-        for (Fulfilment__c fulfilment : fulfilmentsForNotice) {
-            emails.add(createCancellationNoticeRequest(fulfilment));
-        }  
-        
-        System.debug(emails);
-        // Send the emails
-        EmailSend emailSender = new EmailSend();
-        emailSender.sendAutomaticTemplatedEmailCustomSubject(emails);
+        if( fulfilmentsForNotice.size() > 0 ) {
+            // Create a list of email requests for these fulfilments
+            List<EmailSend.EmailSendRequestAutomatic> emails = new List<EmailSend.EmailSendRequestAutomatic>();
+            
+            for (Fulfilment__c fulfilment : fulfilmentsForNotice) {
+                emails.add(createCancellationNoticeRequest(fulfilment));
+            }  
+            
+            // Send the emails
+            EmailSend emailSender = new EmailSend();
+            emailSender.sendAutomaticTemplatedEmailCustomSubject(emails);
+        }
     }
     
     public void sendTransferCompleteEmails(List<Fulfilment__c> fulfilments) {
         // Get recommendation details for the fulfilments sent in the trigger
         List<Fulfilment__c> fulfilmentsForNotice = getTransferFulfilments(fulfilments);
-        for(Fulfilment__c flfl : fulfilmentsForNotice) {
-        	System.debug(flfl);
-    	}
+        System.debug('There are ' + fulfilmentsForNotice.size() + ' fulfilments for notice');
         
-        // Create a list of email requests for these fulfilments
-        List<EmailSend.EmailSendRequestAutomatic> emails = new List<EmailSend.EmailSendRequestAutomatic>();
-        
-        for (Fulfilment__c fulfilment : fulfilmentsForNotice) {
-            emails.add(createTransferCompleteRequest(fulfilment));
-        }  
-        
-        System.debug(emails);
-        // Send the emails
-        EmailSend emailSender = new EmailSend();
-        emailSender.sendAutomaticTemplatedEmail(emails);
+        if( fulfilmentsForNotice.size() > 0 ) {
+            // Create a list of email requests for these fulfilments
+            List<EmailSend.EmailSendRequestAutomatic> emails = new List<EmailSend.EmailSendRequestAutomatic>();
+            
+            for (Fulfilment__c fulfilment : fulfilmentsForNotice) {
+                emails.add(createTransferCompleteRequest(fulfilment));
+            }  
+            
+            // Send the emails
+            EmailSend emailSender = new EmailSend();
+            emailSender.sendAutomaticTemplatedEmail(emails);
+        }
         
     }
     
     // Create a cancellation notice email request for this specific piece of fulfilment
     public static EmailSend.EmailSendRequestAutomatic createCancellationNoticeRequest(Fulfilment__c fulfilment) {
+        
         EmailSend.EmailSendRequestAutomatic emailRequest = new EmailSend.EmailSendRequestAutomatic();
-        System.debug('Decide on template ' + fulfilment.Recommendation__r.Product__r.ReferenceName__c);
+        
         if( fulfilment.Recommendation__r.Product__r.ReferenceName__c == 'JSIPP_HUBWISE' ) {
             emailRequest.emailTemplateDeveloperName = 'CancellationNoticeJunior';         
         } else {
         	emailRequest.emailTemplateDeveloperName = 'CancellationNotice'; 
         }
+        
         emailRequest.targetObjectId = getContactId(fulfilment);
         emailRequest.householdId = fulfilment.Recommendation__r.Household__c;
         emailRequest.whatId = fulfilment.Id;
         emailRequest.saveAsActivity = true;
         
-        System.debug(emailRequest);
         return emailRequest;
     }
     
 
     // Create a transfer complete email request for this specific piece of fulfilment
     public static EmailSend.EmailSendRequestAutomatic createTransferCompleteRequest(Fulfilment__c fulfilment) {
+        
         EmailSend.EmailSendRequestAutomatic emailRequest = new EmailSend.EmailSendRequestAutomatic();
-        emailRequest.emailTemplateDeveloperName = 'PensionTransferCompleteAutomated';         
+        
+        emailRequest.emailTemplateDeveloperName = 'PensionTransferCompleteAutomated';
+        
         emailRequest.targetObjectId = getContactId(fulfilment);
         emailRequest.householdId = fulfilment.Recommendation__r.Household__c;
         emailRequest.whatId = fulfilment.Id;
         emailRequest.saveAsActivity = true;
         
-        System.debug(emailRequest);
         return emailRequest;
     }
     
@@ -96,9 +97,11 @@ public class FulfilmentTriggerHelper {
                                        Recommendation__r.Household__c,
                                        Recommendation__r.PrimaryOwner__r.PersonContactId, 
                                        Recommendation__r.Product__r.Name,
+                                       Recommendation__r.RegisteredContact__c,
                                        Recommendation__r.RegisteredContact__r.PersonContactId,
                                        Recommendation__r.PrimaryOwner__r.AddressedName__pc,
-                                       Recommendation__r.Product__r.ReferenceName__c
+                                       Recommendation__r.Product__r.ReferenceName__c,
+                                       ResidualCash__c
                                        FROM Fulfilment__c
                                        WHERE 
                                        Recommendation__r.RecommendationType__r.ReferenceName__c = 'OPEN_PRODUCT'
@@ -124,7 +127,12 @@ public class FulfilmentTriggerHelper {
                                        Household__c,
                                        Recommendation__r.Household__c,
                                        Recommendation__r.PrimaryOwner__r.PersonContactId, 
-                                       Recommendation__r.Product__r.Name 
+                                       Recommendation__r.Product__r.Name,
+                                       Recommendation__r.RegisteredContact__c,
+                                       Recommendation__r.RegisteredContact__r.PersonContactId,
+                                       Recommendation__r.PrimaryOwner__r.AddressedName__pc,
+                                       Recommendation__r.Product__r.ReferenceName__c,
+                                       ResidualCash__c
                                        FROM Fulfilment__c
                                        WHERE 
                                        Recommendation__r.RecommendationType__r.ReferenceName__c = 'EXTERNAL_TRANSFER_IN'

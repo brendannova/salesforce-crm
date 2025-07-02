@@ -173,9 +173,19 @@
         <expression>SUBSTITUTE({!Text_output}, &quot; &quot;, &quot;&quot;)</expression>
     </formulas>
     <formulas>
+        <name>newAuditLog</name>
+        <dataType>String</dataType>
+        <expression>{!fulfilment.TasksAuditLog__c} &amp;BR() + {!$User.FirstName} + &quot; &quot; + {!$User.LastName} + &quot;: &quot; + {!Get_fulfilment_type_status.Tasks__c}</expression>
+    </formulas>
+    <formulas>
         <name>productStatus</name>
         <dataType>String</dataType>
         <expression>IF(AND(OR({!Get_recommendation.RecommendationTypeName__c}=&quot;External transfer in&quot;, {!Get_recommendation.RecommendationTypeName__c}=&quot;Internal transfer&quot;  ),ISPICKVAL({!Get_recommendation.TransferType__c}, &quot;Full&quot;)), &quot;Closed&quot;, &quot;Open&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>residualCash</name>
+        <dataType>String</dataType>
+        <expression>IF({!Today_s_value_of_source} != 0, &#39;Some&#39;, &#39;None&#39;)</expression>
     </formulas>
     <formulas>
         <name>stopInternalChangeProcessingDestination</name>
@@ -442,9 +452,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ResidualCash__c</field>
+            <value>
+                <elementReference>residualCash</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status__c</field>
             <value>
                 <stringValue>Investment checks</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TasksAuditLog__c</field>
+            <value>
+                <elementReference>newAuditLog</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -506,12 +528,6 @@
             <field>FP_Value__c</field>
             <value>
                 <elementReference>Current_value</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IO_Plan_ID__c</field>
-            <value>
-                <elementReference>IO_ID</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -694,27 +710,6 @@
                             <operator>NotEqualTo</operator>
                             <rightValue>
                                 <stringValue>Not Applicable</stringValue>
-                            </rightValue>
-                        </conditions>
-                    </visibilityRule>
-                </fields>
-                <fields>
-                    <name>IO_ID</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>Get_recommendation.DestinationLegacy__r.IO_Plan_ID__c</elementReference>
-                    </defaultValue>
-                    <fieldText>IO ID</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
-                        <conditions>
-                            <leftValueReference>Get_recommendation.DestinationLegacy__r.IO_Plan_ID__c</leftValueReference>
-                            <operator>IsNull</operator>
-                            <rightValue>
-                                <booleanValue>true</booleanValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>

@@ -4,6 +4,7 @@ public without sharing class EmailSend{
     final private static String ONE_REQUEST_ERROR = 'Only one request allowed. This method does not support bulk emails yet.';
     
     private void sendEmails(List<Messaging.SingleEmailMessage> emails){
+        System.debug('I am invoking sendEmail with an email list of size ' + emails.size());
         List<Messaging.SendEmailResult> emailSendResults = Messaging.sendEmail(emails, true);
     }
     
@@ -26,13 +27,23 @@ public without sharing class EmailSend{
         
         for(EmailSendRequestAutomatic request : requests){
             validateInputs(request);
-            emailConfig = getEmailConfig(request.emailTemplateDeveloperName);
+            
+            emailConfig = getEmailConfig(request.emailTemplateDeveloperName); 
+            
+            String whatId = request.whatId;
+            String whoId = request.targetObjectId;
+            
+            String emailTemplateId = getEmailTemplateId(request.emailTemplateDeveloperName);
+            
+            Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, whoId, whatId);
+            
             subject = getSubject(emailConfig, request.whatId);
-            Messaging.SingleEmailMessage email = setUpEmail(request, emailConfig);
             email.setSubject(subject);
+
+			email = setUpEmail(email, request.householdId, whoId, whatId, emailConfig);
+
             
             emails.add(email);  
-            System.debug('SUbject: ' + email.subject);
         }
         sendEmails(emails);
     }
@@ -47,18 +58,25 @@ public without sharing class EmailSend{
         
         for(EmailSendRequestAutomatic request : requests){
             validateInputs(request);
+            
             emailConfig = getEmailConfig(request.emailTemplateDeveloperName);
-            Messaging.SingleEmailMessage email = setUpEmail(request, emailConfig);
+            
+            String emailTemplateId = getEmailTemplateId(request.emailTemplateDeveloperName);
+            
+            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+            
+            email.setTemplateId(emailTemplateId);
+            
+            email = setUpEmail(email, request.householdId, request.targetObjectId, request.whatId, emailConfig);
+            
             emails.add(email); 
-            System.debug('SUbject ' + email.Subject);
         }
         sendEmails(emails);
     }
     
     private String getSubject(EmailConfiguration__c emailConfig, Id targetObjectId) {
         String message = emailConfig.Subject__c;
-        Utility ut = new Utility();
-        message = ut.tagSubstituter(message, targetObjectId, emailConfig.ObjectName__c, emailConfig.DeveloperName__c);
+        message = Utility.tagSubstituter(message, targetObjectId, emailConfig.ObjectName__c, emailConfig.DeveloperName__c);
         
         return message;
     }
@@ -129,7 +147,6 @@ public without sharing class EmailSend{
                                                     FROM EmailConfiguration__c 
                                                     WHERE DeveloperName__c = :emailTemplateDeveloperName 
                                                      AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
-        System.debug(emailConfigs);
         if(emailConfigs.isEmpty()){
             throw new EmailSendException('No email configuration record found for the developer name :' + emailTemplateDeveloperName); 
         } else {
@@ -138,41 +155,35 @@ public without sharing class EmailSend{
         return emailConfig;
     }
         
-    private Messaging.SingleEmailMessage setUpEmail(emailSendRequestAutomatic request, EmailConfiguration__c emailConfig) {
+    private Messaging.SingleEmailMessage setUpEmail(Messaging.SingleEmailMessage email, Id householdId, Id targetObjId, Id whatId, EmailConfiguration__c emailConfig) {
 		List<String> ccAddresses = new List<String>();                                                  // People to CC
         List<String> toAddresses = new List<String>();                                                  // People to address directly
         Id emailTemplateId;
         List<OrgWideEmailAddress> orgWideEmailAddresses = new List<OrgWideEmailAddress>();
-        
-        
-        emailTemplateId = getEmailTemplateId(request.emailTemplateDeveloperName);
-                
+                        
         orgWideEmailAddresses = getOrgWideEmailAddress(emailConfig.From__c);
         
-        ccAddresses = getCcAddresses(emailConfig, request.householdId, request.targetObjectId);
+        ccAddresses = getCcAddresses(emailConfig, householdId, targetObjId);
         
-        toAddresses = getToAddresses(emailConfig, request.householdId, request.targetObjectId);
+        toAddresses = getToAddresses(emailConfig, householdId, targetObjId);
         
-        Messaging.SingleEmailMessage result = new Messaging.SingleEmailMessage();
-        result.setTemplateId(emailTemplateId);
-        result.setTargetObjectId(request.targetObjectId);
+        email.setTargetObjectId(targetObjId);
         if(!toAddresses.isEmpty()){
-            result.setToAddresses(toAddresses);
+            email.setToAddresses(toAddresses);
         }
         if(!ccAddresses.isEmpty()){
-            result.setCcAddresses(ccAddresses);
+            email.setCcAddresses(ccAddresses);
         }
-        result.setorgWideEmailAddressId(orgWideEmailAddresses[0].Id);
+        email.setorgWideEmailAddressId(orgWideEmailAddresses[0].Id);
         if(String.isNotBlank(emailConfig.ReplyTo__c)){
-            result.setReplyTo(emailConfig.ReplyTo__c);
+            email.setReplyTo(emailConfig.ReplyTo__c);
         }
 
-        result.setWhatId(request.whatId);
-        result.setSaveAsActivity(request.saveAsActivity);
-        result.setUseSignature(false);
-        result.setTreatTargetObjectAsRecipient(true);
+        email.setWhatId(whatId);
+        email.setUseSignature(false);
+        email.setTreatTargetObjectAsRecipient(true);
         
-        return result;
+        return email;
     }
     
     private void validateInputs(emailSendRequestAutomatic request) {

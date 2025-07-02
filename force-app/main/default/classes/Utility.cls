@@ -126,12 +126,13 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
         return picklistApiLabelMap; 
     }
     
-    
-    public String tagSubstituter(String message, Id objectId, String objectName, String emailType) {
-        System.debug('message ' + message);
-        System.debug('objectId ' + objectId);
-        System.debug('objectName ' + objectName);
-        System.debug('emailType ' + emailType);
+    /*
+*	@methodName = tagSubstituter
+*	@return = A string with all tags removed
+*	@params = A string containing tags, an ID for an object which is refetrenced by the tags, a string containing the name of the object, a string containing the email type of the custom metadata
+*	@description = Method which takes a message containing tags and replaces them with merge fields. The object name must be the same as the object referred to by the ID, and the emailType must be one of the values from the emailType picklist on the query fields custom metadata.
+*/
+    public static String tagSubstituter(String message, Id objectId, String objectName, String emailType) {
         String substitute_tag;
         String substitute_value;    
         
@@ -148,8 +149,11 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
                 }
             }
         List<String> query_fields_list = new List<String>(query_fields_set); // Convert from set to list to allow String.join method to be used
+        if( query_fields_list.isEmpty() ) {
+            return message;
+        }
         String query_fields_string = String.join(query_fields_list, ',');
-        
+       
         sObject obj  = Database.query('SELECT ' + query_fields_string + ' FROM ' + objectName + ' WHERE Id =: objectId');
             
         
@@ -182,7 +186,7 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
     }
     
     // Given a map from field values of an object to their values, creates a new map where the keys contain the field names' full path -
-    public Map<String, Object> genFieldValueMap(Map<String, Object> fieldValues, String prefix) {
+    public static Map<String, Object> genFieldValueMap(Map<String, Object> fieldValues, String prefix) {
         Map<String, Object> field_values_temp = new Map<String, Object>();
         for (String fieldName : fieldValues.keySet()) {
             if (fieldValues.get(fieldName) instanceof sObject) { // If an sObject, this class is called again (nested) to get field values from parent relationships
