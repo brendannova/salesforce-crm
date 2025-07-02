@@ -335,7 +335,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.FinancialProductType__r.FinancialProductRecordTypeName__c</leftValueReference>
+                <leftValueReference>$Record.FinancialProductType__r.FinancialProductRecordTypeDeveloperName__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -853,8 +853,8 @@
         </defaultConnector>
         <defaultConnectorLabel>No Change</defaultConnectorLabel>
         <rules>
-            <name>Set_Hubw</name>
-            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <name>Set_Hubwise_IntegrationFields</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.BusinessType__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -867,20 +867,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Household__r.FinServ__Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Offboarding</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Household__r.FinServ__Status__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Active</stringValue>
                 </rightValue>
             </conditions>
             <connector>
