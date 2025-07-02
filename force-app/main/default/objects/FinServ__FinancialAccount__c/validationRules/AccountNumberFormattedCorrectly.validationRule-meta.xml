@@ -6,7 +6,8 @@
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
 !ISBLANK(FinServ__FinancialAccountNumber__c) &amp;&amp;
 !REGEX(FinServ__FinancialAccountNumber__c, &quot;^CP[A-Za-z0-9]{9}$&quot;) 
-&amp;&amp; OW_own_product__c</errorConditionFormula>
+&amp;&amp; OW_own_product__c
+&amp;&amp;  ISPICKVAL(IntegrationSource__c, &quot;HUBWISE&quot;)</errorConditionFormula>
     <errorDisplayField>FinServ__FinancialAccountNumber__c</errorDisplayField>
     <errorMessage>Please enter the account / policy number in the format &#39;CP#########&#39;</errorMessage>
 </ValidationRule>
