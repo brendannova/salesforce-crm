@@ -20,4 +20,8 @@ public with sharing class UtilityString {
         returnString = returnString.capitalize();
         return returnString;
     }
+    
+    public String formatDateForNovaEmail(Datetime dateToFormat){
+   		return dateToFormat.format('d MMMMMMMMMM yyyy');
+	}
 }
