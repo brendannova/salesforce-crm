@@ -3,6 +3,7 @@ public class EmailCancellationNotice {
     public String objectId{get;set;}
     private Fulfilment__c fulfilment = new Fulfilment__c();
     Boolean constructorRun = false;
+    private String dateString;
     
     public void EmailCancellationNotice() {
         if(!constructorRun){
@@ -20,6 +21,7 @@ public class EmailCancellationNotice {
                               Recommendation__r.RegisteredContact__r.AddressedName__pc
                               FROM Fulfilment__c WHERE Id = :objectId];
             }
+            dateString = Datetime.now().format('MMMMMMMMMMM d, yyyy');
         }
     }
     
@@ -30,11 +32,6 @@ public class EmailCancellationNotice {
         } else {
             result = result + fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s ';
         }
-        return result;
-    }
-    
-    public String getDateString() {
-        String result = Datetime.newInstance(Date.today().year(),Date.today().month(),Date.today().day()).format('MMMMMMMMMMM dd, yyyy');            
         return result;
     }
     
@@ -58,7 +55,7 @@ public class EmailCancellationNotice {
     
     public String getCancellationStringParagraph3() {
         String result = 'You have a period of 30 days from '
-            + getDateString()
+            + dateString
             + ' to do this.';
         return result;
     }

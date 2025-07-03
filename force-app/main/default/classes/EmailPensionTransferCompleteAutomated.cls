@@ -2,6 +2,7 @@ public class EmailPensionTransferCompleteAutomated {
     public String objectId{get;set;}
     private Fulfilment__c fulfilment = new Fulfilment__c();
     Boolean constructorRun = false;
+    Private STring dateString;
     
     public void EmailPensionTransferCompleteAutomated() {
         if(!constructorRun){
@@ -26,6 +27,7 @@ public class EmailPensionTransferCompleteAutomated {
                               WHERE Id = :objectId
                              ];
             }
+            dateString = Datetime.now().format('MMMMMMMMMMM d, yyyy');
         }
     }
     
@@ -75,7 +77,7 @@ public class EmailPensionTransferCompleteAutomated {
 
     public String getCancellationLine3() {
         String result = 'You have a period of 30 days from '
-            + getDateString()
+            + dateString
             + ' to do this. ';
         return result;
     }
@@ -88,10 +90,6 @@ public class EmailPensionTransferCompleteAutomated {
 	public String getCancellationLine5() {
         String result = 'If you change your mind about transferring pension benefits to us, we will try and send the funds back to the ceding scheme. However, if they are unwilling to accept the return of the funds, then you will need to find an alternative provider to accept the transfer. There is no charge for cancelling your transfer. However, transaction costs in relation to the purchase and sale of investments during the cancellation period may be charged, including those incurred through third parties. Details of these charges are available on request. If investments have been purchased during the cancellation period, any refund is subject to investment fluctuations. If any of the above applies, the value of your refund may be lower than the amount originally invested.';
         return result;
-    }
-  
-    public String getDateString() {
-        return Datetime.newInstance(Date.today().year(),Date.today().month(),Date.today().day()).format('MMMMMMMMMMM dd, yyyy') + ' ';
     }
     
     public String finProdNameDestination(){
