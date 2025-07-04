@@ -3,8 +3,7 @@ private class FlowUtilityQueryTest {
     
     @istest
     static void executeQuery_success(){
-        DataFactoryAccountHousehold dataFactory = new DataFactoryAccountHousehold();
-        Account household = dataFactory.createHousehold('test', 2, 2, 'Active', 'Full');
+        Account household = DataFactoryAccountHousehold.createHousehold('test', 2, 2, 'Active', 'Full');
         List<FlowUtilityQuery.FlowInputs> requests = new List<FlowUtilityQuery.FlowInputs>();
         FlowUtilityQuery.FlowInputs request = new FlowUtilityQuery.FlowInputs();
         request.queryString = 'SELECT Id, Name, FinServ__Status__c FROM Account';
