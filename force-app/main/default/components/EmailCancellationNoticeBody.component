@@ -1,13 +1,30 @@
 <apex:component controller="EmailCancellationNotice" access="global">
     <apex:attribute name="objectIdValue" type="String" description="This is the ID of the record" assignTo="{!objectId}" access="global" />
-    <div style="font-size: 18px" >{!CancellationStringParagraph1}</div> 
-    <h3 style="color: #FF1E7E;">Your right to change your mind</h3>
+    <div style="font-size: 18px" >
+        I’m very pleased to confirm that {!clientName} new NOVA {!productName} has now been set up.
+    </div> 
+    <h3>Your right to change your mind</h3>
     <p>
-        <div style="font-size: 18px" >{!CancellationStringParagraph2}</div> 
-    	<div style="font-weight: 600" >{!CancellationStringParagraph3}</div>
+        <div style="font-size: 18px" >
+            You have entered into a contract to establish a Self Invested Personal Pension (SIPP) with Hubwise Securities Ltd. 
+            Under the rules of The Financial Conduct Authority (FCA) you have the right to a period of reflection to consider the commitment you have made and to change your mind if you so wish.
+        </div> 
+    	<div> You have a period of <span style="font-weight: 600">30 days from {!dateString}</span> to do this.</div>
 	</p> 
 	<p>
-    	<div style="font-size: 18px" >{!CancellationStringParagraph4}</div> 
-		<div style="font-weight: 600" >{!CancellationStringParagraph5}</div>  
+    	<div style="font-size: 18px" >
+            If you withdraw from the arrangement you are entitled to have returned to you any money which you have paid into your SIPP after deduction of any fees or charges which Hubwise Securities Ltd has already incurred in acting on your instructions to set up your SIPP. 
+		</div>
+		<div>
+			If you have instructed the administrators of your SIPP to invest money in a single premium investment which in turn has to be cancelled, you will only receive the value of the investment on the day your instruction to cancel was received by that firm. 
+		</div>
+		<div>
+			Please note that if you intend to use the proceeds of a pension transfer as the whole or part of your SIPP investment, we will conclude the SIPP contract and carry out your investment instructions without waiting for the expiry of the 30 day period.
+        </div> 
+	</p>
+	<p>
+		<div style="font-weight: 600" >
+            If you wish to cancel your SIPP, please email your adviser to notify them as such.
+		</div>  
 	</p>
 </apex:component>

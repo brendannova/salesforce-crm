@@ -129,7 +129,7 @@
                 </header>
               
                 <main style="font-size: 18px;">
-                    <p><c:EmailHiString objectIdValue="{!relatedTo.Household__c}" emailTemplateDevNameValue="CancellationNotice"></c:EmailHiString></p>
+                    <p><c:EmailHiLine objectIdValue="{!relatedTo.Id}" emailTemplateDevNameValue="CancellationNotice"></c:EmailHiLine></p>
                     <p><c:EmailCancellationNoticeBody objectIdValue="{!relatedTo.Id}"></c:EmailCancellationNoticeBody></p>
 
                                 
