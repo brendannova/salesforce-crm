@@ -1,12 +1,15 @@
 @isTest
-private with sharing class DataFactoryConfigurationDataTest {
+public without sharing class DataFactoryConfigurationDataTest {
+
+    @testSetup static void setup() {
+		DataFactoryConfigurationData.load();        
+    }
 
     @isTest
-    private static void testConfigurationDataLoad(){
-        DataFactoryConfigurationData.load();
-        List<AdviceType__c> adviceTypes = [SELECT Id FROM AdviceType__c];
-        List<OW_task_information__c> taskInformationRecords = [SELECT Id FROM OW_task_information__c];
-        System.assert(!adviceTypes.isEmpty(), 'Advice types are empty');
-        System.assert(!taskInformationRecords.isEmpty(), 'Advice types are empty');
+    static void testAnnualReviewScheduler() {
+        for(String objectApiName : DataFactoryConfigurationData.VALID_CONFIG_DATA_TEST_OBJECTS){
+        	List<sObject> configurationDataRecords = Database.query('SELECT Id FROM ' + objectApiName);
+            System.assert(!configurationDataRecords.isEmpty(), 'No configuration data records found for ' + objectApiName);
+        }
     }
 }
