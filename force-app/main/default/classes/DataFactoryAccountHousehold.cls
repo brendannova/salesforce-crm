@@ -1,5 +1,5 @@
 public with sharing class DataFactoryAccountHousehold {
-    public Account createHousehold(String idenfitifer, Integer numClients, Integer numChildren, String status, String profileType){
+    public static Account createHousehold(String idenfitifer, Integer numClients, Integer numChildren, String status, String profileType){
         
         String RecordTypeDevNameHousehold = 'IndustriesHousehold';
         Id RecordTypeIdHousehold = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(RecordTypeDevNameHousehold).getRecordTypeId();

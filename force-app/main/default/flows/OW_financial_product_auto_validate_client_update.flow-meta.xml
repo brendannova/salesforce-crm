@@ -45,7 +45,7 @@
     <description>This flow will run when a client update is added for a household on the discovery profile in an attempt to automatically validate the change.</description>
     <environments>Default</environments>
     <interviewLabel>Financial product | auto-validate client update {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Financial product | auto-validate client update</label>
+    <label>zUnused | Financial product | auto-validate client update</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -82,7 +82,7 @@ ISPICKVAL( {!$Record.Validated__c} , &quot;&quot; )</filterFormula>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Attempt_validation</name>
         <label>Attempt validation</label>
