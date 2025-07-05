@@ -1,33 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Get_open_advice</name>
-        <label>Get open advice</label>
-        <locationX>1062</locationX>
-        <locationY>674</locationY>
-        <actionName>FlowUtilityQuery</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>New_or_existing_advice</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>U__outputRecords</typeName>
-            <typeValue>Advice__c</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>queryString</name>
-            <value>
-                <elementReference>queryString</elementReference>
-            </value>
-        </inputParameters>
-        <nameSegment>FlowUtilityQuery</nameSegment>
-        <offset>0</offset>
-        <outputParameters>
-            <assignToReference>openAdvice</assignToReference>
-            <name>outputRecords</name>
-        </outputParameters>
-    </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Link_review_to_advice</name>
@@ -165,13 +137,6 @@
             <stringValue>New</stringValue>
         </value>
     </choices>
-    <constants>
-        <name>queryStringStart</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>SELECT Id, Name, Advice_Status__c FROM Advice__c WHERE Advice_Status__c IN (&apos;Setup&apos;,&apos;Data gathering&apos;,&apos;Risk Call&apos;) AND AdviceType__r.DeveloperName__c IN (&apos;AD_HOC&apos;,&apos;DRAWDOWN&apos;) AND Advice_Household__c = &apos;</stringValue>
-        </value>
-    </constants>
     <decisions>
         <name>Action_type</name>
         <label>Action type</label>
@@ -287,11 +252,6 @@
     </decisions>
     <description>Screen flow launched from a review, allowing advice to be linked to it.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>queryString</name>
-        <dataType>String</dataType>
-        <expression>{!queryStringStart} + {!householdId} + &quot;&apos;&quot;</expression>
-    </formulas>
     <interviewLabel>Review | Link advice {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Review | Link advice</label>
     <processMetadataValues>
@@ -366,6 +326,61 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>OW_review__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_open_advice</name>
+        <label>Get open advice</label>
+        <locationX>1062</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>New_or_existing_advice</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_error_to_fault</targetReference>
+        </faultConnector>
+        <filterLogic>1 AND (2 OR 3 OR 4) AND 5</filterLogic>
+        <filters>
+            <field>Advice_Household__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Advice_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Setup</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Advice_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Data gathering</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Advice_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Risk Call</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AdviceType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>adHocAdviceType.Id</elementReference>
+            </value>
+        </filters>
+        <object>Advice__c</object>
+        <outputReference>openAdvice</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Advice_Status__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_review_details</name>
