@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IncomeBand__c</fullName>
+    <description>The income banding for this lead.</description>
+    <label>Income band</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Under £50,000</fullName>
+                <default>false</default>
+                <label>Under £50,000</label>
+            </value>
+            <value>
+                <fullName>£50,000 - £200,000</fullName>
+                <default>false</default>
+                <label>£50,000 - £200,000</label>
+            </value>
+            <value>
+                <fullName>£200,000+</fullName>
+                <default>false</default>
+                <label>£200,000+</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
