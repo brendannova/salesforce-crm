@@ -10,8 +10,7 @@ public with sharing class DataFactoryAccountHouseholdTest {
         String RecordTypeDevNamePerson = 'PersonAccount';
         String CLIENT_STATUS = 'Active';
         String FACT_FIND_TYPE = 'Full';
-        DataFactoryAccountHousehold dfah = new DataFactoryAccountHousehold();
-        Account household = dfah.createHousehold(reference, NUM_CLIENTS, NUM_CHILDREN, CLIENT_STATUS, FACT_FIND_TYPE);
+        Account household = DataFactoryAccountHousehold.createHousehold(reference, NUM_CLIENTS, NUM_CHILDREN, CLIENT_STATUS, FACT_FIND_TYPE);
         List<Account> accounts = [SELECT Id, FinServ__Status__c, Fact_Find_Type__c, OW_admin_notes__c, RecordType.DeveloperName FROM Account ORDER BY OW_admin_notes__c];
         System.debug(accounts.size());
         System.debug(accounts);

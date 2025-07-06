@@ -50,8 +50,7 @@ public class EmailHiStringTest {
             Necessity__c = 'Required'
         );
         String identifier = 'EmailMessageHelperTestHousehold';
-        DataFactoryAccountHousehold dfah = new DataFactoryAccountHousehold();
-        Account household = dfah.createHousehold(identifier, 2, 0, 'Active', 'Full');
+        Account household = DataFactoryAccountHousehold.createHousehold(identifier, 2, 0, 'Active', 'Full');
         System.runAs ( currentUser ) {
             insert et;
             insert ec;
