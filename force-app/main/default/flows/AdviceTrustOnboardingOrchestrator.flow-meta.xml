@@ -869,20 +869,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceChecklistUpdated.SuitabilityBuilder__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SuitabilityBuilderUrl.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.Suitability_Builder_Link__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SuitabilityBuilderUrl.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>adviceChecklistUpdated.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -1328,7 +1314,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Narrative_complete</targetReference>
+                <targetReference>Narrative_completeSubFlow</targetReference>
             </connector>
             <label>Narrative | Write</label>
         </rules>
@@ -2060,69 +2046,6 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Narrative_complete</name>
-        <label>Narrative complete?</label>
-        <locationX>2162</locationX>
-        <locationY>350</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Write_narrative_updates</targetReference>
-        </connector>
-        <fields>
-            <name>confirmNarrative</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Click next to confirm that the suitability narrative is complete. The next task will be to create the recommendations.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>SuitabilityBuilderUrl</name>
-            <extensionName>flowruntime:url</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Suitability builder</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>adviceChecklist.SuitabilityBuilder__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>SnapshotTaken</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <elementReference>adviceChecklist.SnapshotTaken__c</elementReference>
-            </defaultValue>
-            <fieldText>Snapshot taken?</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Snapshot required. This can be done using the take snapshot button.&lt;/p&gt;</errorMessage>
-                <formulaExpression>{!SnapshotTaken}</formulaExpression>
-            </validationRule>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Partner_deck_review_task</name>
         <label>Partner deck review task</label>
         <locationX>7882</locationX>
@@ -2578,6 +2501,72 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
                 <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Narrative_completeSubFlow</name>
+        <label>Narrative complete</label>
+        <locationX>2162</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Write_narrative_updates</targetReference>
+        </connector>
+        <flowName>AdviceOrchestrationNarrativeComplete</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceChecklistUpdated</name>
+            <value>
+                <elementReference>adviceChecklistUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceType</name>
+            <value>
+                <elementReference>adviceType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceUpdated</name>
+            <value>
+                <elementReference>adviceUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceChecklistUpdated</assignToReference>
+            <name>adviceChecklistUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceUpdated</assignToReference>
+            <name>adviceUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>closeTask</assignToReference>
+            <name>closeTask</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>followUpTask</assignToReference>
+            <name>followUpTask</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Partner_narrative_review</name>

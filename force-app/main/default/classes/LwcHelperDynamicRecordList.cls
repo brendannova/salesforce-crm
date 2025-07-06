@@ -12,6 +12,9 @@ public with sharing class LwcHelperDynamicRecordList {
             }*/
             when 'EMAIL_TEMPLATES' {
                 dataWrapper = lwcHelperEmailTemplateList.getTemplateData(contextId);
+            } 
+            when 'CUSTOMER_FACTS'{
+                dataWrapper = LwcHelperCustomerFactsList.getCustomerFactData(contextId);
             }
             when else{
                 dataWrapper.errorMessage = 'No logic reference matched';
@@ -47,6 +50,7 @@ public with sharing class LwcHelperDynamicRecordList {
         @AuraEnabled public TypeAttributesWrapper typeAttributes = new TypeAttributesWrapper();
         @AuraEnabled public String iconName;
         @AuraEnabled public Boolean hideLabel;
+        @AuraEnabled public Boolean wrapText = true;
 
         public ColumnWrapper(String label, String fieldName, String type){
             this.label = label;
