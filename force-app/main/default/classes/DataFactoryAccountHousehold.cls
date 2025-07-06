@@ -1,5 +1,5 @@
 public with sharing class DataFactoryAccountHousehold {
-    public Account createHousehold(String idenfitifer, Integer numClients, Integer numChildren, String status, String profileType){
+    public static Account createHousehold(String idenfitifer, Integer numClients, Integer numChildren, String status, String profileType){
         
         String RecordTypeDevNameHousehold = 'IndustriesHousehold';
         Id RecordTypeIdHousehold = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(RecordTypeDevNameHousehold).getRecordTypeId();
@@ -23,7 +23,8 @@ public with sharing class DataFactoryAccountHousehold {
                 FinServ__Status__c = status,
                 PersonEmail = familyName + i + '@fakeemail.com',
                 PersonBirthdate  = System.Today().addYears(-23),
-                OW_admin_notes__c = idenfitifer + '-client-' + i
+                OW_admin_notes__c = idenfitifer + '-client-' + i,
+                TestId__c = idenfitifer + '-client-' + i
             );
             if(Math.mod(i, 2) != 0){
                 person.FinServ__PreferredName__pc = dfng.generateName(false, false, true).preferredName;
@@ -42,7 +43,8 @@ public with sharing class DataFactoryAccountHousehold {
                 RecordTypeId = RecordTypeIdPerson,
                 OW_role_in_primary_household__c = 'Child',
                 FinServ__Status__c = 'Junior',
-                OW_admin_notes__c = idenfitifer + '-child-' + i
+                OW_admin_notes__c = idenfitifer + '-child-' + i,
+                TestId__c = idenfitifer + '-child-' + i
             );
             accounts.add(person);
         }
@@ -53,7 +55,8 @@ public with sharing class DataFactoryAccountHousehold {
             RecordTypeId = RecordTypeIdHousehold,
             FinServ__Status__c = status,
             Fact_Find_Type__c = profileType,
-            OW_admin_notes__c = idenfitifer
+            OW_admin_notes__c = idenfitifer,
+            TestId__c = idenfitifer
         );
         accounts.add(0, household);
         insert accounts;
