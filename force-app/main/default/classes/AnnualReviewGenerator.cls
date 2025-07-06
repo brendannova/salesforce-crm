@@ -14,7 +14,7 @@ public without sharing class AnnualReviewGenerator{
     private final static String ADVICE_ANNUAL_REVIEW_RECORD_TYPE_DEVELOPER_NAME = 'AnnualReview';
     private final static Id ACCOUNT_HOUSEHOLD_RECORD_TYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_HOUSEHOLD_RECORD_TYPE_DEVELOPER_NAME)?.getRecordTypeId();
     private final static Id REVIEW_ANNUAL_RECORD_TYPE_ID = Schema.SObjectType.OW_review__c.getRecordTypeInfosByDeveloperName().get(REVIEW_ANNUAL_RECORD_TYPE_DEVELOPER_NAME)?.getRecordTypeId();
-    private final static Id ADVICE_ANNUAL_REVIEW_RECORD_TYPE_ID = Schema.SObjectType.Advice__c.getRecordTypeInfosByDeveloperName().get(ADVICE_ANNUAL_REVIEW_RECORD_TYPE_DEVELOPER_NAME)?.getRecordTypeId(); 
+    @TestVisible private final static Id ADVICE_ANNUAL_REVIEW_RECORD_TYPE_ID = Schema.SObjectType.Advice__c.getRecordTypeInfosByDeveloperName().get(ADVICE_ANNUAL_REVIEW_RECORD_TYPE_DEVELOPER_NAME)?.getRecordTypeId(); 
     private final static Date MAX_DATE = Date.today().addMonths(2).addDays(-1);
     private final static String STATUS_ACTIVE = 'Active';
     private final static String TYPE_EXECUTION_ONLY = 'Execution Only';
@@ -101,7 +101,7 @@ public without sharing class AnnualReviewGenerator{
             insert egis;
             update households;
         } catch(DmlException e) {
-            // To-do - handle exception
+            throw new DmlException('Error inserting annual reviews and EGIs or updating household: ' + e.getMessage());
         }
 
         // Loop the annual reviews to set the link to the review on the advice, if we have new advice for that household
@@ -110,11 +110,11 @@ public without sharing class AnnualReviewGenerator{
                 annualReviewAdviceMap.get(annualReview.OW_household__c).OW_review__c = annualReview.Id;
             }
         }
-        try {
+        try{
             insert annualReviewAdviceMap.values();
-        } catch(DmlException e) {
-            // To-do - handle exception
-        } 
+        } catch(DmlException e){
+            throw new DmlException('Error inserting annual review advice: ' + e.getMessage());
+        }
 
         // Loop the advice so we can establish the reverse relationship on the reviews
         for(Advice__c annualReviewAdvice : annualReviewAdviceMap.values()){
@@ -123,7 +123,7 @@ public without sharing class AnnualReviewGenerator{
         try {
             update annualReviewMap.values();
         } catch(DmlException e) {
-            // To-do - handle exception
+            throw new DmlException('Error update annual reviews with link to advice: ' + e.getMessage());
         } 
     }
 
@@ -135,7 +135,7 @@ public without sharing class AnnualReviewGenerator{
                 if(adviceTypes.size() == 1){
                     annualReviewAdviceTypeId = adviceTypes[0].Id;
                 } else {
-                    throw new AnnualReviewGeneratorException('Expected 1 advice type for ' + ADVICE_TYPE_ANNUAL_REVIEW + ' but found' + adviceTypes.size());
+                    throw new AnnualReviewGeneratorException('Expected 1 advice type for ' + ADVICE_TYPE_ANNUAL_REVIEW + ' but found ' + adviceTypes.size());
                 }
                 return annualReviewAdviceTypeId;
             } else {

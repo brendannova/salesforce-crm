@@ -9,6 +9,8 @@ public without sharing class DataFactoryConfigurationData {
     
     // The currently supported configuration data objects. 
     public static final List<String> VALID_CONFIG_DATA_TEST_OBJECTS = new List<String>{
+        'AdviceType__c',
+        'AdviceTypeStatus__c',
         'AssetType__c',
         'EmailConfiguration__c',
         'FactCategory__c',
@@ -20,6 +22,8 @@ public without sharing class DataFactoryConfigurationData {
 
     // The method that loads the configuration data. This is somewhat messy at this stage but is being left to allow expansion. 
     public static void load() {
+        List<sObject> configData01 = Test.loadData(AdviceType__c.sObjectType, 'AdviceType');
+        List<sObject> configData04 = Test.loadData(AdviceTypeStatus__c.sObjectType, 'AdviceTypeStatus');
         List<sObject> configData05 = Test.loadData(AssetType__c.sObjectType, 'AssetType');
         List<sObject> configData06 = Test.loadData(EmailConfiguration__c.sObjectType, 'EmailConfiguration');
         List<sObject> configData08 = Test.loadData(FactCategory__c.sObjectType, 'FactCategory');
@@ -29,10 +33,8 @@ public without sharing class DataFactoryConfigurationData {
         List<sObject> configData18 = Test.loadData(LiabilityType__c.sObjectType, 'LiabilityType');
 		
         // The following can be made to work bug the static resource files will need some work
-        //List<sObject> configData01 = Test.loadData(AdviceType__c.sObjectType, 'AdviceType');
         //List<sObject> configData02 = Test.loadData(OW_task_information__c.sObjectType, 'OW_task_information');
         //List<sObject> configData03 = Test.loadData(AdviceTypeRecommendation__c.sObjectType, 'AdviceTypeRecommendation');
-        //List<sObject> configData04 = Test.loadData(AdviceTypeStatus__c.sObjectType, 'AdviceTypeStatus');
         //List<sObject> configData07 = Test.loadData(Fact__c.sObjectType, 'Fact');
         //List<sObject> configData09 = Test.loadData(FeeModel__c.sObjectType, 'FeeModel');
         //List<sObject> configData10 = Test.loadData(FinancialProductType__c.sObjectType, 'FinancialProductType');

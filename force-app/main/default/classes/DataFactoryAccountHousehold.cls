@@ -21,7 +21,7 @@ public with sharing class DataFactoryAccountHousehold {
                 RecordTypeId = RecordTypeIdPerson,
                 OW_role_in_primary_household__c = 'Client',
                 FinServ__Status__c = status,
-                PersonEmail = familyName + i + '@fakeemail.com',
+                PersonEmail = UUID.randomUUID().toString() + '@fake.novawm.com',
                 PersonBirthdate  = System.Today().addYears(-23),
                 OW_admin_notes__c = idenfitifer + '-client-' + i,
                 TestId__c = idenfitifer + '-client-' + i
