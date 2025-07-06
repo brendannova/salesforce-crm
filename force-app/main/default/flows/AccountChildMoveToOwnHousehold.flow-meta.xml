@@ -957,6 +957,27 @@
                 <stringValue>Open</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Subtype__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Premium Bonds (NS&amp;I)</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Subtype__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Current Account</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Subtype__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Savings Account</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>FinServ__FinancialAccount__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>

@@ -4,8 +4,8 @@
     <assignments>
         <name>Clear_ownership</name>
         <label>Clear ownership</label>
-        <locationX>710</locationX>
-        <locationY>1103</locationY>
+        <locationX>722</locationX>
+        <locationY>995</locationY>
         <assignmentItems>
             <assignToReference>$Record.FinServ__Ownership__c</assignToReference>
             <operator>Assign</operator>
@@ -17,8 +17,8 @@
     <assignments>
         <name>Populate_household</name>
         <label>Populate household</label>
-        <locationX>314</locationX>
-        <locationY>767</locationY>
+        <locationX>326</locationX>
+        <locationY>695</locationY>
         <assignmentItems>
             <assignToReference>$Record.Household__c</assignToReference>
             <operator>Assign</operator>
@@ -40,8 +40,8 @@
     <assignments>
         <name>Set_direct_holding_name</name>
         <label>Set direct holding name</label>
-        <locationX>314</locationX>
-        <locationY>431</locationY>
+        <locationX>326</locationX>
+        <locationY>395</locationY>
         <assignmentItems>
             <assignToReference>$Record.Name</assignToReference>
             <operator>Assign</operator>
@@ -56,8 +56,8 @@
     <assignments>
         <name>Set_name_of_FP</name>
         <label>Set name of FP</label>
-        <locationX>578</locationX>
-        <locationY>431</locationY>
+        <locationX>590</locationX>
+        <locationY>395</locationY>
         <assignmentItems>
             <assignToReference>$Record.Name</assignToReference>
             <operator>Assign</operator>
@@ -72,8 +72,8 @@
     <assignments>
         <name>Set_ownership_to_individual</name>
         <label>Set ownership to individual</label>
-        <locationX>182</locationX>
-        <locationY>1103</locationY>
+        <locationX>194</locationX>
+        <locationY>995</locationY>
         <assignmentItems>
             <assignToReference>$Record.FinServ__Ownership__c</assignToReference>
             <operator>Assign</operator>
@@ -88,8 +88,8 @@
     <assignments>
         <name>Set_ownership_to_joint</name>
         <label>Set ownership to joint</label>
-        <locationX>446</locationX>
-        <locationY>1103</locationY>
+        <locationX>458</locationX>
+        <locationY>995</locationY>
         <assignmentItems>
             <assignToReference>$Record.FinServ__Ownership__c</assignToReference>
             <operator>Assign</operator>
@@ -105,8 +105,8 @@
         <description>Sets the product group to a value of account</description>
         <name>Set_product_group_to_account</name>
         <label>Set product group to account</label>
-        <locationX>50</locationX>
-        <locationY>1439</locationY>
+        <locationX>62</locationX>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_product_group__c</assignToReference>
             <operator>Assign</operator>
@@ -122,8 +122,8 @@
         <description>Sets the product group to a value of protection</description>
         <name>Set_product_group_to_protection</name>
         <label>Set product group to protection</label>
-        <locationX>578</locationX>
-        <locationY>1439</locationY>
+        <locationX>590</locationX>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_product_group__c</assignToReference>
             <operator>Assign</operator>
@@ -136,8 +136,8 @@
         <description>Sets the product group to a value of trust</description>
         <name>Set_product_group_to_trust</name>
         <label>Set product group to trust</label>
-        <locationX>314</locationX>
-        <locationY>1439</locationY>
+        <locationX>326</locationX>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_product_group__c</assignToReference>
             <operator>Assign</operator>
@@ -153,8 +153,8 @@
         <description>Sets the product group to a value of uncategorised</description>
         <name>Set_product_group_to_uncategorised</name>
         <label>Set product group to uncategorised</label>
-        <locationX>842</locationX>
-        <locationY>1439</locationY>
+        <locationX>854</locationX>
+        <locationY>1295</locationY>
         <assignmentItems>
             <assignToReference>$Record.OW_product_group__c</assignToReference>
             <operator>Assign</operator>
@@ -167,8 +167,8 @@
         <description>Sets the value of financial product not taken up to a blank value.</description>
         <name>Set_value_to_null</name>
         <label>Set value to null</label>
-        <locationX>446</locationX>
-        <locationY>2447</locationY>
+        <locationX>490</locationX>
+        <locationY>2195</locationY>
         <assignmentItems>
             <assignToReference>$Record.FP_Value__c</assignToReference>
             <operator>Assign</operator>
@@ -178,8 +178,8 @@
         <description>Sets the value of the now closed financial product to zero.</description>
         <name>Set_value_to_zero</name>
         <label>Set value to zero</label>
-        <locationX>182</locationX>
-        <locationY>2447</locationY>
+        <locationX>50</locationX>
+        <locationY>2303</locationY>
         <assignmentItems>
             <assignToReference>$Record.FP_Value__c</assignToReference>
             <operator>Assign</operator>
@@ -192,8 +192,8 @@
         <description>Determines if the ownership of this financial product is primary or joint and sets appropriately.</description>
         <name>Determine_ownership</name>
         <label>Determine ownership</label>
-        <locationX>446</locationX>
-        <locationY>983</locationY>
+        <locationX>458</locationX>
+        <locationY>887</locationY>
         <defaultConnector>
             <targetReference>Clear_ownership</targetReference>
         </defaultConnector>
@@ -246,8 +246,8 @@
     <decisions>
         <name>Do_we_have_their_NI_number</name>
         <label>Do we have their NI number?</label>
-        <locationX>292</locationX>
-        <locationY>1895</locationY>
+        <locationX>304</locationX>
+        <locationY>1703</locationY>
         <defaultConnector>
             <targetReference>Status</targetReference>
         </defaultConnector>
@@ -269,10 +269,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Does_financial_product_have_a_value</name>
+        <label>Does financial product have a value?</label>
+        <locationX>182</locationX>
+        <locationY>2195</locationY>
+        <defaultConnectorLabel>No value is 0 or null</defaultConnectorLabel>
+        <rules>
+            <name>Value_greater_than_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.FP_Value__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_value_to_zero</targetReference>
+            </connector>
+            <label>Value greater than 0</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Household_null</name>
         <label>Household null?</label>
-        <locationX>446</locationX>
-        <locationY>647</locationY>
+        <locationX>458</locationX>
+        <locationY>587</locationY>
         <defaultConnector>
             <targetReference>Determine_ownership</targetReference>
         </defaultConnector>
@@ -310,8 +332,8 @@
     <decisions>
         <name>Is_this_a_pre_LOA_DB</name>
         <label>Is this a pre LOA DB w/o policy number?</label>
-        <locationX>446</locationX>
-        <locationY>1775</locationY>
+        <locationX>458</locationX>
+        <locationY>1595</locationY>
         <defaultConnector>
             <targetReference>Status</targetReference>
         </defaultConnector>
@@ -342,8 +364,8 @@
     <decisions>
         <name>Naming_required</name>
         <label>Naming required?</label>
-        <locationX>446</locationX>
-        <locationY>311</locationY>
+        <locationX>458</locationX>
+        <locationY>287</locationY>
         <defaultConnector>
             <targetReference>Set_name_of_FP</targetReference>
         </defaultConnector>
@@ -375,8 +397,8 @@
         <description>Routes differently depending on the product group so that different actions can be taken for different products. At the time of building, only actions for accounts were defined.</description>
         <name>Product_group</name>
         <label>Product group?</label>
-        <locationX>446</locationX>
-        <locationY>1319</locationY>
+        <locationX>458</locationX>
+        <locationY>1187</locationY>
         <defaultConnector>
             <targetReference>Set_product_group_to_uncategorised</targetReference>
         </defaultConnector>
@@ -767,8 +789,8 @@
         <description>Checks if the financial product has a change to a particular status and makes updates in this case.</description>
         <name>Status</name>
         <label>Status changed to</label>
-        <locationX>446</locationX>
-        <locationY>2327</locationY>
+        <locationX>458</locationX>
+        <locationY>2087</locationY>
         <defaultConnectorLabel>Other outcome</defaultConnectorLabel>
         <rules>
             <name>Closed</name>
@@ -781,7 +803,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_value_to_zero</targetReference>
+                <targetReference>Does_financial_product_have_a_value</targetReference>
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Closed</label>
@@ -837,8 +859,8 @@
     <recordUpdates>
         <name>Set_policy_number_as_NI</name>
         <label>Set policy number as NI</label>
-        <locationX>160</locationX>
-        <locationY>2015</locationY>
+        <locationX>172</locationX>
+        <locationY>1811</locationY>
         <connector>
             <targetReference>Status</targetReference>
         </connector>
@@ -851,7 +873,7 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <start>
-        <locationX>320</locationX>
+        <locationX>332</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Naming_required</targetReference>

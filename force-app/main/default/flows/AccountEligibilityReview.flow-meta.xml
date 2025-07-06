@@ -24,6 +24,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -47,6 +48,7 @@
             </value>
         </inputParameters>
         <nameSegment>chatterPost</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
@@ -245,8 +247,8 @@ ISPICKVAL({!$Record.OW_aml_check_account__c}, &quot;Passed&quot;)
     <textTemplates>
         <name>ChatterDescription</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>@[{!$Record.Owner.Id}] @[0051t00000346e5] @[0051t0000034722] @[0051t000003473c]
-Please review the changes for this customer that may impact their eligibility to be a customer and determine if any next steps are required. Please close the case otherwise.</text>
+        <text>@[{!$Record.Owner.Id}] @[0051t00000346e5] @[0058e000001mphn] @[005Sl000002YkVV]
+Please review the changes for this customer that may impact their eligibility to be a customer and determine if any next steps are required. Please close the case otherwise, you can do this by changing the case status from new to complete.</text>
     </textTemplates>
     <variables>
         <name>newCaseId</name>

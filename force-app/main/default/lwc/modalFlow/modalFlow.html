@@ -1,0 +1,10 @@
+<template>
+    <lightning-modal-header label={modalHeader}></lightning-modal-header>
+    <lightning-modal-body> 
+        <lightning-flow 
+            flow-api-name={flowApiName}
+            onstatuschange={handleFlowStatusChange}
+            flow-input-variables={flowInputs}>
+        </lightning-flow>
+    </lightning-modal-body>
+</template>
