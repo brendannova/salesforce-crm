@@ -2,7 +2,8 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>IO_ID_Numbers_Only</fullName>
     <active>true</active>
-    <errorConditionFormula>AND( 
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+AND( 
 NOT(ISNUMBER(IO_Plan_ID__c)),
 NOT(ISBLANK(IO_Plan_ID__c))
 )</errorConditionFormula>
