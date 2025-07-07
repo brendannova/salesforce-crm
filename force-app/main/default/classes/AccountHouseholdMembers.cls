@@ -1,5 +1,11 @@
+/**
+ * This class will return a data set containing a household record and a list of the people in each requested role.
+ * It provides a single way to define who is in a household so that this is not being written each time. 
+ * In addition to saving developers time, it gives us a central point of control over who will be returned. 
+ * This allows us to expand this to focus on different use cases like who needs to accept recommentations, who can be emailed etc. 
+ */
 public with sharing class AccountHouseholdMembers {
-    //should have a general constants class that stores reuable things like this
+    // Constants for each role the class supports. 
     public static final String ROLE_CLIENT = 'Client';
     public static final String ROLE_CHILD = 'Child';
     public static final String ROLE_OTHER_IMPORTANT_FAMILY_MEMBER = 'Other Important Family Member';
@@ -10,30 +16,40 @@ public with sharing class AccountHouseholdMembers {
     public static final String ROLE_EMPLOYEE = 'Employee';
     public static final String ROLE_DECEASED_CLIENT = 'Deceased Client';
     
-    public HouseholdMemberResult getHouseholdMembers(HouseholdMemberRequest request) {
+    // A method that allows the information to be requested for a single household, simply converting into the bulk method
+    public static HouseholdMemberResult getHouseholdMembers(HouseholdMemberRequest request) {
         List<HouseholdMemberRequest> requests = new List<HouseholdMemberRequest>();
         requests.add(request);
-        return getHouseholdMembers(requests)[0];
+        return getHouseholdMembers(requests).get(request.householdId);
     }
 
-    public List<HouseholdMemberResult> getHouseholdMembers(List<HouseholdMemberRequest> requests) {
+    // A method that allows the information to be requested for multiple households
+    public static Map<Id, HouseholdMemberResult> getHouseholdMembers(List<HouseholdMemberRequest> requests) {
         
         Set<Id> householdIds = new Set<Id>();
-        Set<Id> accountIds = new Set<Id>();
-        Map<Id, List<String>> householdRoleMap = new Map<Id, List<String>>();
-        Map<Id, List<Boolean>> householdActiveMap = new Map<Id, List<Boolean>>();
-        List<HouseholdMemberResult> results = new List<HouseholdMemberResult>();
-
-        Map<Id, List<Id>> householdAccountMap = new Map<Id, List<Id>>();        // TBC
-        List<List<Id>> householdAccountIds = new List<List<Id>>();              // TBC
-    
+        Set<Id> memberIds = new Set<Id>();
+        Map<Id, HouseholdMemberResult> results = new Map<Id, HouseholdMemberResult>();
+        
+        // Loop the requests to get all the household IDs
         for (HouseholdMemberRequest request : requests) {
             householdIds.add(request.householdId);
         }
 
-        Map<Id, Account> householdsMap = new Map<Id, Account>([SELECT Id, (SELECT Contact.AccountId, Contact.Account.ServiceContactPreferences__pc, Contact.Account.Name, Contact.Account.AddressedName__pc, AccountId, Roles, IsActive FROM AccountContactRelations) FROM Account WHERE Id IN :householdIds]);
+        // Get all the households and cast them to a map, including the relationships for that households
+        Map<Id, Account> householdsMap = new Map<Id, Account>([SELECT Id, (SELECT Contact.AccountId, Roles, IsActive FROM AccountContactRelations) FROM Account WHERE Id IN :householdIds]);
 
+        /**
+         * Loop the relationships to get all the relationships then perform another query to get the individuals. 
+         * A 2 query approach is needed here in all instances since we only start with the household IDs. 
+         */
+        for(Account household : householdsMap.values()){
+            for(AccountContactRelation member : household.AccountContactRelations){
+                memberIds.add(member.Contact.AccountId);
+            }
+        }
+        Map<Id, Account> membersMap = new Map<Id, Account>([SELECT Id, PersonContactId, FirstName, LastName, AddressedName__pc, PersonEmail FROM Account WHERE Id IN :memberIds]);
         
+        // Loop the requests to construct the results
         for (HouseholdMemberRequest request : requests) {
 
             // Create the result the will be returned and define the key variables 
@@ -41,39 +57,35 @@ public with sharing class AccountHouseholdMembers {
             result.household = householdsMap.get(request.householdId);
             result.memberAccountsByRole = new Map<String, List<Account>>();
             
-            // Construct the details of the members we want to return
+            // Construct the map for the list of each role requested
             for(String requestedRole : request.roles){
                 result.memberAccountsByRole.put(requestedRole, new List<Account>());
             }
 
-            // Loop the account contact relationships and build the map
+            // Loop the household's relationships and build the map
             for (AccountContactRelation relation : result.household.AccountContactRelations) {
                 
-                Account memberAccount = new Account(
-                    Id = relation.Contact.AccountId,
-                    Name = relation.Contact.Account.Name,
-                    FinServ__PreferredName__pc = relation.Contact.Account.AddressedName__pc
-                );
-                    
+                // Add a record of the member to the appropriate list for each role they hold, only if the role was requested
                 List<String> memberRoles = relation.Roles.split(';');
                 for (String memberRole : memberRoles) {
                     if(result.memberAccountsByRole.containsKey(memberRole)){
-                        result.memberAccountsByRole.get(memberRole).add(memberAccount);
+                        result.memberAccountsByRole.get(memberRole).add(membersMap.get(relation.Contact.AccountId));
                     }
                 }                
             }
-            results.add(result);
+            results.put(request.householdId, result);
         }
-        
         return results;
     }
     
+    // Class defining what the results look like
     public class HouseholdMemberResult {
         public Account household;
         public Map<String, List<Account>> memberAccountsByRole;
         
     }
 
+    // Class defining what a request must contain
     public class HouseholdMemberRequest {
         public Id householdId;
         public Set<String> roles;

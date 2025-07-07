@@ -69,7 +69,6 @@ public class EmailAddressRecipients {
     }
     
     public String getHiStringHousehold(Id householdId, EmailConfiguration__c emailConfig) {
-        AccountHouseholdMembers ahm = new AccountHouseholdMembers();
         AccountHouseholdMembers.HouseholdMemberRequest hmr = new AccountHouseholdMembers.HouseholdMemberRequest();
 
         
@@ -79,7 +78,7 @@ public class EmailAddressRecipients {
 
         hmr.roles = roles;
 
-        Map<String, List<Account>> hmrResult = ahm.getHouseholdMembers(hmr).memberAccountsByRole;
+        Map<String, List<Account>> hmrResult = AccountHouseholdMembers.getHouseholdMembers(hmr).memberAccountsByRole;
 
         
         List<String> recipients = new List<String>();
