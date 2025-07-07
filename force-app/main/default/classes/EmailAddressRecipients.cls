@@ -1,9 +1,9 @@
 public class EmailAddressRecipients {
     public String objectIdString{get;set;}
-	public String emailTemplateDevName{get;set;}
+	public String emailTemplateDeveloperName{get;set;}
     private Id accountId;
     private Id householdId;
-    Public EmailConfiguration__c emailConfig;
+    public EmailConfiguration__c emailConfig;
     public String hiString;
     
     public Configs emailAddressRecipients() {
@@ -41,11 +41,11 @@ public class EmailAddressRecipients {
             
         }
         
-        if(String.isBlank(emailTemplateDevName)){
-            emailTemplateDevName = ApexPages.currentPage().getParameters().get('emailTemplateDevName');
+        if(String.isBlank(emailTemplateDeveloperName)){
+            emailTemplateDeveloperName = ApexPages.currentPage().getParameters().get('emailTemplateDeveloperName');
         }
         
-        result.emailConfig = [SELECT Id, ClientsAddressed__c, Necessity__c FROM EmailConfiguration__c WHERE DeveloperName__c =: emailTemplateDevName LIMIT 1];  
+        result.emailConfig = [SELECT Id, ClientsAddressed__c, Necessity__c FROM EmailConfiguration__c WHERE DeveloperName__c =: emailTemplateDeveloperName LIMIT 1];  
         return result;
     }
         

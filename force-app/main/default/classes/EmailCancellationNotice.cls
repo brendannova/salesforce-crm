@@ -10,6 +10,9 @@ public class EmailCancellationNotice {
             if(String.isBlank(objectId)){
                 objectId = ApexPages.currentPage().getParameters().get('objectId');
             }
+            if(String.isBlank(objectId)){
+                throw new emailCancellationNoticeException('No objectId received');
+            }
             if (String.isNotBlank(objectId)) {
                 // Get household status and set active flag
                 fulfilment = [SELECT 
@@ -42,5 +45,7 @@ public class EmailCancellationNotice {
         UtilityString us = new UtilityString();
         return us.formatDateForNovaEmail(Datetime.now());
     }
+    
+    public class emailCancellationNoticeException extends Exception {}
 
 }
