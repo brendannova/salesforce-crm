@@ -447,40 +447,6 @@ This field is not used by the portal anymore but is built into a lot of systems 
         </rules>
     </decisions>
     <decisions>
-        <description>Does the financial product portal display type match that on the selected Financial Product Type?
-This field is not used by the portal anymore but is built into a lot of systems so needs to be unpicked!</description>
-        <name>Does_FP_Portal_Display_Type_match_FPT_Portal_Type</name>
-        <label>Does FP Portal Display Type match FPT Portal Type</label>
-        <locationX>458</locationX>
-        <locationY>695</locationY>
-        <defaultConnector>
-            <targetReference>Naming_required</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Update_Portal_Type</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Subtype__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record.FinancialProductType__r.PortalName__c</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.FinancialProductType__r.PortalName__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Portal_Display_Type</targetReference>
-            </connector>
-            <label>Update Portal Type</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Household_null</name>
         <label>Household null?</label>
         <locationX>458</locationX>
