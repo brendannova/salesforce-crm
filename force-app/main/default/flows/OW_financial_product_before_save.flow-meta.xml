@@ -447,39 +447,6 @@ This field is not used by the portal anymore but is built into a lot of systems 
         </rules>
     </decisions>
     <decisions>
-        <description>Check if the record type matches for the new financial product type</description>
-        <name>Does_FP_and_FPT_Record_Type_Developer_Name_Match</name>
-        <label>Does FP and FPT Record Type Developer Name Match?</label>
-        <locationX>458</locationX>
-        <locationY>287</locationY>
-        <defaultConnector>
-            <targetReference>Does_FP_Portal_Display_Type_match_FPT_Portal_Type</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Matches</defaultConnectorLabel>
-        <rules>
-            <name>Does_Not_Match</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Record.FinancialProductType__r.FinancialProductRecordTypeDeveloperName__c</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.FinancialProductType__r.FinancialProductRecordTypeDeveloperName__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Record_Type_ID_From_Developer_Name</targetReference>
-            </connector>
-            <label>Does Not Match</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Does the financial product portal display type match that on the selected Financial Product Type?
 This field is not used by the portal anymore but is built into a lot of systems so needs to be unpicked!</description>
         <name>Does_FP_Portal_Display_Type_match_FPT_Portal_Type</name>
