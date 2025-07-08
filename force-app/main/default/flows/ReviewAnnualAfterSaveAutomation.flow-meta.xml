@@ -1,10 +1,197 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Generate_tasks</name>
+        <label>Generate tasks</label>
+        <locationX>248</locationX>
+        <locationY>1895</locationY>
+        <actionName>FlowUtilityTaskCreateList</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>taskRequests</name>
+            <value>
+                <elementReference>taskRequests</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityTaskCreateList</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
+    <assignments>
+        <name>Add_to_task_requests_send_fact_find</name>
+        <label>Add to task requests</label>
+        <locationX>314</locationX>
+        <locationY>1271</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequests</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>taskRequest</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tasks_needed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_task_requests_set_up</name>
+        <label>Add to task requests</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequests</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>taskRequest</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tasks_needed</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_advice_updates</name>
+        <label>Define advice updates</label>
+        <locationX>446</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>advice.ProfileUpdateStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>advice.Additional_Questions_to_be_asked_on_call__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>outstandingInfo</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_advice_ID</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_advice_updates_incomplete</name>
+        <label>Define advice updates</label>
+        <locationX>710</locationX>
+        <locationY>647</locationY>
+        <assignmentItems>
+            <assignToReference>advice.ProfileUpdateStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Incomplete</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Set_advice_ID</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_send_annual_review_fact_find_email_task</name>
+        <label>Define send annual review fact find email task</label>
+        <locationX>314</locationX>
+        <locationY>1163</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequest.householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.relatedAnnualReview</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>reviewId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.relatedAdviceId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.taskType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TASK_TYPE_ADVICE_ANNUAL_REVIEW_FACT_FIND_SEND</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.whatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_task_requests_send_fact_find</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_set_up_annual_review_task</name>
+        <label>Define set up annual review task</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequest.householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.relatedAnnualReview</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>reviewId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.taskType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TASK_TYPE_SET_UP_ANNUAL_REVIEW</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.whatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>reviewId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_task_requests_set_up</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_advice_ID</name>
+        <label>Set advice ID</label>
+        <locationX>446</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>advice.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_advice</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Set_IDs</name>
         <label>Set IDs</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -55,12 +242,46 @@
             <targetReference>Update_household</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>TASK_TYPE_ADVICE_ANNUAL_REVIEW_FACT_FIND_COMPLETE</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_ANNUAL_REVIEW_FACT_FIND_COMPLETE</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>TASK_TYPE_ADVICE_ANNUAL_REVIEW_FACT_FIND_SEND</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_ANNUAL_REVIEW_FACT_FIND_SEND</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>TASK_TYPE_SET_UP_ANNUAL_REVIEW</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>set_up_annual_review</stringValue>
+        </value>
+    </constants>
+    <customErrors>
+        <name>Throw_error</name>
+        <label>Throw error</label>
+        <locationX>842</locationX>
+        <locationY>1379</locationY>
+        <customErrorMessages>
+            <errorMessage>{!$Flow.FaultMessage}</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
     <decisions>
         <description>Different paths follow depending on which stage the annual review has reached.</description>
         <name>Annual_review_status</name>
         <label>Annual review status</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>1055</locationY>
+        <defaultConnector>
+            <targetReference>Tasks_needed</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Await_fact_find</name>
@@ -73,7 +294,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_send_fact_find_email_task</targetReference>
+                <targetReference>Define_send_annual_review_fact_find_email_task</targetReference>
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Await fact find</label>
@@ -98,7 +319,7 @@
     <decisions>
         <name>Fact_find_status</name>
         <label>Fact find status</label>
-        <locationX>578</locationX>
+        <locationX>710</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Annual_review_status</targetReference>
@@ -129,17 +350,32 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Update_advice</targetReference>
+                <targetReference>Define_advice_updates</targetReference>
             </connector>
             <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Completed or skipped</label>
+        </rules>
+        <rules>
+            <name>Incomplete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OW_review_fact_find_status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Incomplete</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Define_advice_updates_incomplete</targetReference>
+            </connector>
+            <label>Incomplete</label>
         </rules>
     </decisions>
     <decisions>
         <description>Is this a new record</description>
         <name>New_record</name>
         <label>New record?</label>
-        <locationX>314</locationX>
+        <locationX>380</locationX>
         <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Fact_find_status</targetReference>
@@ -156,9 +392,31 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_set_up_annual_review_task</targetReference>
+                <targetReference>Define_set_up_annual_review_task</targetReference>
             </connector>
             <label>New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Tasks_needed</name>
+        <label>Tasks needed?</label>
+        <locationX>380</locationX>
+        <locationY>1787</locationY>
+        <defaultConnectorLabel>None needed</defaultConnectorLabel>
+        <rules>
+            <name>Task_to_create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRequests</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Generate_tasks</targetReference>
+            </connector>
+            <label>Task to create</label>
         </rules>
     </decisions>
     <description>Automates task creation and closure and updates to advice and household off of changes to the annual review.</description>
@@ -191,102 +449,30 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Close_chasers</name>
-        <label>Close chasers</label>
-        <locationX>446</locationX>
-        <locationY>755</locationY>
-        <connector>
-            <targetReference>Create_post_annual_review_fact_find_task</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3) AND 4 AND 5</filterLogic>
-        <filters>
-            <field>IsClosed</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_FACT_FIND_SEND</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>OW_task_information_name__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_FACT_FIND_CHASE</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>FinServ__Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>WhatId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>OrchestrationTaskStatus__c</field>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Completed</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>446</locationX>
-        <locationY>647</locationY>
+        <locationY>863</locationY>
         <connector>
-            <targetReference>Close_chasers</targetReference>
+            <targetReference>Annual_review_status</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Additional_Questions_to_be_asked_on_call__c</field>
-            <value>
-                <elementReference>outstandingInfo</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ProfileUpdateStatus__c</field>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Advice__c</object>
+        <inputReference>advice</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_household</name>
         <label>Update household</label>
         <locationX>578</locationX>
         <locationY>1271</locationY>
+        <connector>
+            <targetReference>Tasks_needed</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Throw_error</targetReference>
+        </faultConnector>
         <inputReference>household</inputReference>
     </recordUpdates>
     <start>
-        <locationX>188</locationX>
+        <locationX>254</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_IDs</targetReference>
@@ -296,128 +482,47 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Create_post_annual_review_fact_find_task</name>
-        <label>Create post annual review fact find task</label>
-        <locationX>446</locationX>
-        <locationY>863</locationY>
-        <connector>
-            <targetReference>Annual_review_status</targetReference>
-        </connector>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_advice_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_annual_review</name>
-            <value>
-                <elementReference>reviewId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_FACT_FIND_COMPLETE</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
-        <name>Create_send_fact_find_email_task</name>
-        <label>Create send fact find email task</label>
-        <locationX>314</locationX>
-        <locationY>1163</locationY>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_advice_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_annual_review</name>
-            <value>
-                <elementReference>reviewId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_FACT_FIND_SEND</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
-        <name>Create_set_up_annual_review_task</name>
-        <label>Create set up annual review task</label>
-        <locationX>50</locationX>
-        <locationY>539</locationY>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_annual_review</name>
-            <value>
-                <elementReference>reviewId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <stringValue>set_up_annual_review</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>reviewId</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
     <textTemplates>
         <name>outstandingInfo</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
         <text>{!$Record.OW_advice__r.Additional_Questions_to_be_asked_on_call__c}
-Review &amp; update/confirm spending in the profile
-Review &amp; update/confirm cash in the profile
-Review &amp; update Facts (at annual review, this includes marking Facts as “inactive” if they are no longer relevant)
-Review &amp; update vulnerability
-If the clients have declined a transfer recommendation in the past, would they like us to repeat our analysis?
-Would the clients like to go ahead with a protection review?</text>
+Steps required by partner:
+- spend max 15 minutes before call doing the following prep work
+- open most recent lifeline on a tab (review assumptions slide)
+- read through and reacquaint yourself with facts
+- have spending in the profile open on a tab and/or a budget planner 
+- have the cash page of profile open on a tab 
+- don&apos;t commit to remodelling the lifeline - this will be decided by you/planning based on the answers below after the catch up call
+- remember to update client vulnerability assessment
+
+Ask the following questions:
+- Any major changes since we last spoke/expected by the end of the current tax year?
+- If job has changed: can you give me details of your new employer pension (need policy number) and workplace benefits for us to check before we meet?
+- How much income will you make in this tax year? (prompt client for employment/relevant earnings/dividends/investments/property income)
+- What is your current cash position? (both parties) (ideally have the cash page open on SF profile to cross reference live on the call)
+- Any big expenses coming up in next 3-5 years? (and if they need further prompting -&gt; specifically around property and kids/schools etc.)
+- Updates to spending: 1) please confirm your current spending (compare to what&apos;s in the profile) and 2) confirm modelled spending in the future (retirement) for lifeline (reference last LL modelling assumptions)
+- mortgage rate expiry date/changes to mortgage: check mortgage page on SF and ask client for verbal update
+- Changes to existing non-NOVA products: Have you made any contributions to other assets/new assets added/assets sold or closed/new liabilities and liabilities paid off?
+
+Documentation:
+&quot;You may or may not have already sent these through, but can I just check, have you sent us:&quot;
+Accumulation clients
+- Latest tax year&apos;s P60/P45
+- Tax return
+- State pension forecast &amp; NIC record 
+
+Decumulation clients
+- Updated budget planner</text>
     </textTemplates>
+    <variables>
+        <name>advice</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
     <variables>
         <name>adviceId</name>
         <dataType>String</dataType>
@@ -445,6 +550,22 @@ Would the clients like to go ahead with a protection review?</text>
         <name>reviewId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>taskRequest</name>
+        <apexClass>TaskEngineRequest</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>taskRequests</name>
+        <apexClass>TaskEngineRequest</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
