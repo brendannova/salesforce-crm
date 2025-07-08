@@ -91,6 +91,22 @@
             <targetReference>Update_product</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>YesChoice</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Do_we_have_fulfilment</name>
         <label>Do we have fulfilment?</label>
@@ -263,7 +279,7 @@
     <formulas>
         <name>residualCash</name>
         <dataType>String</dataType>
-        <expression>IF({!Today_s_value_of_source} != 0, &#39;Some&#39;, &#39;None&#39;)</expression>
+        <expression>IF({!Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer}==&#39;Yes&#39;, &#39;Some&#39;, &#39;None&#39;)</expression>
     </formulas>
     <formulas>
         <name>stopInternalChangeProcessingDestination</name>
@@ -762,6 +778,27 @@
                             <operator>NotEqualTo</operator>
                             <rightValue>
                                 <stringValue>Not Applicable</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer</name>
+                    <choiceReferences>YesChoice</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>YesChoice</defaultSelectedChoiceReference>
+                    <fieldText>Is there any residual cash that will be sent as part of this transfer?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Today_s_value_of_source</leftValueReference>
+                            <operator>GreaterThan</operator>
+                            <rightValue>
+                                <numberValue>0.0</numberValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
