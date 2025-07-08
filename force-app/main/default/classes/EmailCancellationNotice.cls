@@ -4,6 +4,7 @@ public class EmailCancellationNotice {
     private Fulfilment__c fulfilment = new Fulfilment__c();
     Boolean constructorRun = false;
     
+    // Constructor to set the fulfilment record
     public void EmailCancellationNotice() {
         if(!constructorRun){
             constructorRun = true;
@@ -14,7 +15,6 @@ public class EmailCancellationNotice {
                 throw new emailCancellationNoticeException('No objectId received');
             }
             if (String.isNotBlank(objectId)) {
-                // Get household status and set active flag
                 fulfilment = [SELECT 
                               Id, 
                               Recommendation__r.Product__r.Name,
@@ -26,6 +26,7 @@ public class EmailCancellationNotice {
         }
     }
     
+    // Method to identify the correct owner's name
     public String getClientName(){
         EmailCancellationNotice();
         String result = ' ';
@@ -37,6 +38,7 @@ public class EmailCancellationNotice {
         return result;
     }
     
+    // Method to identify the product name
     public String getProductName(){
         return fulfilment.Recommendation__r.Product__r.Name ;
     }

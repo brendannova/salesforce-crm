@@ -6,17 +6,25 @@ public class EmailAddressRecipients {
     public EmailConfiguration__c emailConfig;
     public String hiString;
     
-    public Configs emailAddressRecipients() {
+    // Given the object ID and email template developer name, sets the email configuration record, account and household IDs appropriately
+    public Configs setConfigDetails() {
         Configs result = new Configs();
+        
         if(String.isBlank(objectIdString)){
             objectIdString = ApexPages.currentPage().getParameters().get('objectIdString');
         }
+        
         Id objectId = Id.valueOf(objectIdString);
         String objectApiName = objectId.getSObjectType().getDescribe().getName();
+        
         switch on objectApiName {
             when 'Fulfilment__c' {
-                Fulfilment__c flfl = [SELECT Id, Recommendation__r.PrimaryOwner__c, Household__c FROM Fulfilment__c WHERE Id =: objectId LIMIT 1];
-                result.accountId = flfl.Recommendation__r.PrimaryOwner__c;
+                Fulfilment__c flfl = [SELECT Id, Recommendation__r.PrimaryOwner__c, Recommendation__r.RegisteredContact__c, Household__c FROM Fulfilment__c WHERE Id =: objectId LIMIT 1];
+                if( flfl.Recommendation__r.RegisteredContact__c == null ) {
+                    result.accountId = flfl.Recommendation__r.PrimaryOwner__c;
+                } else {
+                    result.accountId = flfl.Recommendation__r.RegisteredContact__c;
+                }
                 result.householdId = flfl.Household__c;
             }
             when 'Account' {
@@ -35,8 +43,7 @@ public class EmailAddressRecipients {
                 result.householdId = adv.Advice_Household__c;
             }
             when else {
-                result.accountId = '001Qz00000LlyOAIAZ';
-                result.householdId = '001Qz00000LmDDTIA3';
+                throw new emailAddressRecipientsException('Cannot use the Hi line on this object type: ' + objectApiName);
             }
             
         }
@@ -46,41 +53,45 @@ public class EmailAddressRecipients {
         }
         
         result.emailConfig = [SELECT Id, ClientsAddressed__c, Necessity__c FROM EmailConfiguration__c WHERE DeveloperName__c =: emailTemplateDeveloperName LIMIT 1];  
+        
         return result;
     }
         
-    
+    // Method to return the address recipients line ('Hi <recipients>'), given the requirements from the email configuration
     public String getAddressRecipients() {
-        Configs config = emailAddressRecipients();
+        Configs config = setConfigDetails();
+        
         accountId = config.accountId;
         householdId = config.householdId;
         emailConfig = config.emailConfig;
+        
         if( emailConfig.ClientsAddressed__c == 'All' || accountId == null ) {
             return getHiStringHousehold(householdId, emailConfig);
         } else if ( emailConfig.ClientsAddressed__c == 'One only' ) {
             return getHiStringIndividual(accountId);
         } 
+        
         return '';
     }
     
+    // Returns the string if only one client is addressed
     public String getHiStringIndividual(Id accountId) {
 		Account client = [SELECT Id, AddressedName__pc FROM Account WHERE Id =: accountId LIMIT 1];
         return 'Hi ' + client.AddressedName__pc;
     }
     
+    // Returns the string where all clients in the housheold should be addressed
     public String getHiStringHousehold(Id householdId, EmailConfiguration__c emailConfig) {
         AccountHouseholdMembers.HouseholdMemberRequest hmr = new AccountHouseholdMembers.HouseholdMemberRequest();
-
         
         hmr.householdId = householdId;
+        
         Set<String> roles = new Set<String>();
         roles.add('Client');
-
         hmr.roles = roles;
 
         Map<String, List<Account>> hmrResult = AccountHouseholdMembers.getHouseholdMembers(hmr).memberAccountsByRole;
 
-        
         List<String> recipients = new List<String>();
 
         for( Account household_member : hmrResult.get('Client') ) {
@@ -118,5 +129,7 @@ public class EmailAddressRecipients {
         public Id householdId;
         public EmailConfiguration__c emailConfig;
     }
+    
+    public class emailAddressRecipientsException extends Exception {}
 
 }

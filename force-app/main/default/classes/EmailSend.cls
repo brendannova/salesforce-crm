@@ -4,7 +4,6 @@ public without sharing class EmailSend{
     final private static String ONE_REQUEST_ERROR = 'Only one request allowed. This method does not support bulk emails yet.';
     
     private void sendEmails(List<Messaging.SingleEmailMessage> emails){
-        System.debug('I am invoking sendEmail with an email list of size ' + emails.size());
         List<Messaging.SendEmailResult> emailSendResults = Messaging.sendEmail(emails, true);
     }
     
@@ -42,7 +41,6 @@ public without sharing class EmailSend{
 
 			email = setUpEmail(email, request.householdId, whoId, whatId, emailConfig);
 
-            
             emails.add(email);  
         }
         sendEmails(emails);
@@ -75,8 +73,10 @@ public without sharing class EmailSend{
     }
     
     private String getSubject(EmailConfiguration__c emailConfig, Id targetObjectId) {
+        Id objectId = Id.valueOf(targetObjectId);
+        String objectApiName = objectId.getSObjectType().getDescribe().getName();
         String message = emailConfig.Subject__c;
-        message = Utility.tagSubstituter(message, targetObjectId, emailConfig.ObjectName__c, emailConfig.DeveloperName__c);
+        message = Utility.tagSubstituter(message, targetObjectId, objectApiName, emailConfig.DeveloperName__c);
         
         return message;
     }
@@ -137,7 +137,6 @@ public without sharing class EmailSend{
         List<EmailConfiguration__c> emailConfigs = [SELECT 
                                                     Id, 
                                                     DeveloperName__c, 
-                                                    ObjectName__c, 
                                                     Subject__c, 
                                                     ClientsAddressed__c, 
                                                     CopyOtherClients__c, 

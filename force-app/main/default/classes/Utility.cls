@@ -185,7 +185,12 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
         return message;
     }
     
-    // Given a map from field values of an object to their values, creates a new map where the keys contain the field names' full path -
+        /*
+*	@methodName = genFieldValueMap
+*	@return = A map where the keys contain the field names' full path
+*	@params = A map from field names to field values for an object
+*	@description = Given a map from field values of an object to their values, creates a new map where the keys contain the field names' full path
+*/
     public static Map<String, Object> genFieldValueMap(Map<String, Object> fieldValues, String prefix) {
         Map<String, Object> field_values_temp = new Map<String, Object>();
         for (String fieldName : fieldValues.keySet()) {

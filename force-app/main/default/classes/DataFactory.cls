@@ -404,6 +404,7 @@ public with sharing class DataFactory {
         public String preferredName {get;set;}
     }
     
+	// Method to return the account IDs of either clients or children for the household
     public List<Id> getPersonAccountIds(Id householdId, String role) {
         if( role != 'Child' && role != 'Client') {
             throw new DataFactoryException('Role must be Client or Child');

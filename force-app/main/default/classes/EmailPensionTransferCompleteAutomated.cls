@@ -3,6 +3,7 @@ public class EmailPensionTransferCompleteAutomated {
     private Fulfilment__c fulfilment = new Fulfilment__c();
     Boolean constructorRun = false;
     
+    // Constructor to set the fulfilment record
     public void EmailPensionTransferCompleteAutomated() {
         if(!constructorRun){
             constructorRun = true;
@@ -10,7 +11,6 @@ public class EmailPensionTransferCompleteAutomated {
                 objectId = ApexPages.currentPage().getParameters().get('objectId');
             }
             if (String.isNotBlank(objectId)) {
-                // Get household status and set active flag
                 fulfilment = [SELECT 
                               Id, 
                               Recommendation__c,
@@ -29,11 +29,13 @@ public class EmailPensionTransferCompleteAutomated {
         }
     }
     
+    // Method to format today's date into client friendly format
     public String getDateString() {
         UtilityString us = new UtilityString();
         return us.formatDateForNovaEmail(Datetime.now());
     }
     
+    // Method to provide string for residual cash if required
     public String getResidualCash() {
         if (fulfilment.ResidualCash__c == 'None') {
             return '';
@@ -42,6 +44,7 @@ public class EmailPensionTransferCompleteAutomated {
         }
     }
 
+    // Method to provide the friendly name of the destination
     public String getFinProdNameDestination(){
         String result = '';
         if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
@@ -56,6 +59,7 @@ public class EmailPensionTransferCompleteAutomated {
         return result;
     }
     
+    // Method to provide the friendly name of the source
     public String getFinProdNameSource(){
         String result = '';
         if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
@@ -69,6 +73,7 @@ public class EmailPensionTransferCompleteAutomated {
         return result;
     }
     
+    // Method to provide string for a partial transfer if required
     public String getPartialString() {
         EmailPensionTransferCompleteAutomated();
         if (fulfilment.recommendation__r.TransferType__c == 'Partial') {
