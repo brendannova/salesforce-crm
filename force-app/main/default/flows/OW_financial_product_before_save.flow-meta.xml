@@ -1000,8 +1000,8 @@ This field is not used by the portal anymore but is built into a lot of systems 
         <name>nameCapped</name>
         <dataType>String</dataType>
         <expression>LEFT( IF( ISBLANK( {!$Record.FinServ__JointOwner__c} ), 
-{!$Record.FinServ__PrimaryOwner__r.LastName} + &quot;, &quot; + LEFT( {!$Record.FinServ__PrimaryOwner__r.FirstName}, 1 ) + &quot; | &quot; + {!$Record.Public_Provider_Name__r.Name} + &quot; | &quot; + {!$Record.RecordType.Name},
-{!$Record.FinServ__PrimaryOwner__r.LastName} + &quot;, &quot; + LEFT( {!$Record.FinServ__PrimaryOwner__r.FirstName}, 1 ) + &quot; &amp; &quot; + {!$Record.FinServ__JointOwner__r.LastName} + &quot;, &quot; + LEFT( {!$Record.FinServ__JointOwner__r.FirstName}, 1 ) + &quot; | &quot; + {!$Record.Public_Provider_Name__r.Name} + &quot; | &quot; + {!$Record.RecordType.Name} ), 80 )</expression>
+{!$Record.FinServ__PrimaryOwner__r.LastName} + &quot;, &quot; + LEFT( {!$Record.FinServ__PrimaryOwner__r.FirstName}, 1 ) + &quot; | &quot; + {!$Record.Public_Provider_Name__r.Name} + &quot; | &quot; + TEXT({!$Record.FinancialProductType__r.PortalName__c}),
+{!$Record.FinServ__PrimaryOwner__r.LastName} + &quot;, &quot; + LEFT( {!$Record.FinServ__PrimaryOwner__r.FirstName}, 1 ) + &quot; &amp; &quot; + {!$Record.FinServ__JointOwner__r.LastName} + &quot;, &quot; + LEFT( {!$Record.FinServ__JointOwner__r.FirstName}, 1 ) + &quot; | &quot; + {!$Record.Public_Provider_Name__r.Name} + &quot; | &quot; + TEXT({!$Record.FinancialProductType__r.PortalName__c}) ), 80 )</expression>
     </formulas>
     <interviewLabel>Financial product - before save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Financial product - before save</label>
