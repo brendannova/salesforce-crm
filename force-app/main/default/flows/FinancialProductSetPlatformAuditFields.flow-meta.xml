@@ -10,6 +10,10 @@
         <connector>
             <targetReference>Assign_Platform_Id</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Is_Platform_Created_By_Id_Set</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <nameSegment>FlowUtilityGenerateUuid</nameSegment>
         <offset>0</offset>
@@ -55,7 +59,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Financial_Product_REcord</targetReference>
+            <targetReference>Update_Financial_Product_Record</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -188,8 +192,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordUpdates>
-        <name>Update_Financial_Product_REcord</name>
-        <label>Update Financial Product REcord</label>
+        <name>Update_Financial_Product_Record</name>
+        <label>Update Financial Product Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <inputReference>financialProduct</inputReference>
