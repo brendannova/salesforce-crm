@@ -54,8 +54,7 @@ public class sendTemplatedEmailTest {
             Necessity__c = 'Required'
         ));
         String identifier = 'EmailMessageHelperTestHousehold';
-        DataFactoryAccountHousehold dfah = new DataFactoryAccountHousehold();
-        Account household = dfah.createHousehold(identifier, 1, 0, 'Active', 'Full');
+        Account household = DataFactoryAccountHousehold.createHousehold(identifier, 1, 0, 'Active', 'Full');
         String ADVICE_RECORD_TYPE_DEVELOPER_NAME = 'Advice_RT_General_Advice';
         Advice__c advice = new Advice__c(
             Advice_Household__c = household.Id,
