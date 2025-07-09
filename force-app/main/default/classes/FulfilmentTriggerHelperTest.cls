@@ -1,4 +1,4 @@
-@isTest(SeeAllData=true)
+@IsTest
 public class FulfilmentTriggerHelperTest {
     
     @TestSetup
