@@ -1,5 +1,11 @@
 @isTest(SeeAllData=true)
 public class FulfilmentTriggerHelperTest {
+    
+    @TestSetup
+    static void makeData(){
+        DataFactoryConfigurationData.load();
+    }
+    
     @istest
     static void runTestCancellationNotice(){
         System.debug('runTestCancellationNotice');
