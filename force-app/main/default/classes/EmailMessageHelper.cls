@@ -12,6 +12,7 @@ public with sharing class EmailMessageHelper {
     private Set<Id> householdIds = new Set<Id>();
     private Set<Id> adviceIds = new Set<Id>();
     private Set<Id> caseIds = new Set<Id>();
+    private Set<Id> fulfilmentIds = new Set<Id>();
     private Map<Id, Id> relatedIdHouseholdIdMap = new Map<Id, Id>();
     private Map<Id, Account> householdMap;
     private List<Account> households;
@@ -44,6 +45,8 @@ public with sharing class EmailMessageHelper {
                     adviceIds.add(email.RelatedToId);
                 } else if(relatedObjectApiName == 'Case'){
                     caseIds.add(email.RelatedToId);
+                } else if(relatedObjectApiName == 'Fulfilment__c') {
+                    fulfilmentIds.add(email.RelatedToId);
                 }
                 outboundMessages.add(emailDetail);
             }
@@ -90,6 +93,17 @@ public with sharing class EmailMessageHelper {
             for(Case c : caseList){
                 if(!String.IsBlank(c.AccountId)){
                     relatedIdHouseholdIdMap.put(c.Id, c.AccountId);
+                }
+            }
+        }
+        householdIds.addAll(relatedIdHouseholdIdMap.values());
+        
+        // Get the household IDs for the fulfilment we are sending messages for
+        if(fulfilmentIds.size() > 0){
+            List<Fulfilment__c> fulfilmentList = [SELECT Id, Recommendation__r.Advice__r.Advice_Household__c FROM Fulfilment__c WHERE Id IN :fulfilmentIds];
+            for(Fulfilment__c f : fulfilmentList){
+                if(!String.IsBlank(f.Recommendation__r.Advice__r.Advice_Household__c)){
+                    relatedIdHouseholdIdMap.put(f.Id, f.Recommendation__r.Advice__r.Advice_Household__c);
                 }
             }
         }
