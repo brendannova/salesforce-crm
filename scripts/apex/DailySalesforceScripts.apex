@@ -32,7 +32,7 @@ for(Advice__c record : records){
         i++;
     }    
 }
-System.debug(i + 'tasks created');
+System.debug(i + ' tasks created');
 
 // Migrate Chatter for IRs from LOAs
 List<LOA__c> loas = [SELECT Id, 
@@ -89,3 +89,23 @@ update loas;
 System.debug(oldNewFeedItemMap.size());
 System.debug(newFeedComments.size());
 System.debug(loas.size());
+
+
+// Create RTQ task
+List<Advice__c> records = [SELECT Id, Advice_household__c, Advice_status__c, RtqStatus__c, (SELECT Id from Tasks WHERE OW_task_information_name__c = 'ADVICE_REFRESH_RTQ' AND IsClosed = false) FROM Advice__c WHERE Advicetype__r.IsOnboarding__c = false AND Advice_status__c IN ('Data gathering','Data analysis', 'Risk call', 'Suitability in progress', 'Prepare advice') AND RtqStatus__c IN ('Not started','In progress') ORDER BY Advice_status__c ASC, RtqStatus__c ASC];
+Integer i = 0;
+for(Advice__c record : records){
+    if(record.Tasks.isEmpty()){
+        Map<String, Object> params = new Map<String, Object>();
+        params.put('related_advice_id', record.Id);
+        params.put('what_id', record.Id);
+        params.put('household_id', record.Advice_household__c);
+        params.put('task_type', 'ADVICE_REFRESH_RTQ');
+        
+        // Instantiate and start the Flow
+        Flow.Interview.OW_task_create_from_task_information yourFlow = new Flow.Interview.OW_task_create_from_task_information(params);
+        yourFlow.start();
+        i++;
+    }    
+}
+System.debug(i + ' tasks created');
