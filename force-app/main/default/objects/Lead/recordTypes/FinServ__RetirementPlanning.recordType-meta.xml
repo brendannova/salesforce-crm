@@ -6,6 +6,25 @@
     <compactLayoutAssignment>General</compactLayoutAssignment>
     <label>Retirement Planning</label>
     <picklistValues>
+        <picklist>CallStatus__c</picklist>
+        <values>
+            <fullName>Booked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cancelled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Held</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not booked</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Current_adviser_in_place__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -54,6 +73,21 @@
         </values>
         <values>
             <fullName>I rarely make a plan but have sufficient income to cover my immediate expenses each month</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IncomeBand__c</picklist>
+        <values>
+            <fullName>%C2%A3200%2C000%2B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%C2%A350%2C000 - %C2%A3200%2C000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Under %C2%A350%2C000</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -185,6 +219,21 @@
         </values>
         <values>
             <fullName>Utilities</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>InterestInFinancialAdvice__c</picklist>
+        <values>
+            <fullName>Interested</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interested on second prompt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not interested</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -504,6 +553,17 @@
         </values>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Residency__c</picklist>
+        <values>
+            <fullName>Not UK resident</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UK resident</fullName>
             <default>false</default>
         </values>
     </picklistValues>

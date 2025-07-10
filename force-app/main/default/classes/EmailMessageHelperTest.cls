@@ -114,8 +114,7 @@ private class EmailMessageHelperTest {
             Type__c = 'Service',
             Necessity__c = 'Required'
         ));
-        DataFactoryAccountHousehold dfah = new DataFactoryAccountHousehold();
-        dfah.createHousehold('EmailMessageHelperTestHousehold', 1, 0, 'Active', 'Full');
+        DataFactoryAccountHousehold.createHousehold('EmailMessageHelperTestHousehold', 1, 0, 'Active', 'Full');
         // EmailRecipientValidationBypass__c = true
         // accs.add(new Account(FirstName = 'EmailMessageHelperTestPerson', LastName = 'EmailMessageHelperTest', PersonEmail = 'urmum@urmum.com', RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId()));
         System.runAs ( currentUser ) {
