@@ -73,7 +73,7 @@ public with sharing class EmailMessageHelper {
 
     // Gets email configruation record information for use in applying business rules
     private void collateEmailConfigurationInformation(){
-        List<EmailConfiguration__c> emailConfigs = [SELECT Id, DeveloperName__c, PartnerCopied__c, Necessity__c, Type__c, From__c, CustomPermission__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames];
+        List<EmailConfiguration__c> emailConfigs = [SELECT Id, SendingProcess__c, DeveloperName__c, PartnerCopied__c, Necessity__c, Type__c, From__c, CustomPermission__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames];
         for(EmailConfiguration__c config : emailConfigs){
             emailConfigMap.put(emailTemplateDevNameIdMap.get(config.DeveloperName__c), config);
         }
@@ -146,7 +146,7 @@ public with sharing class EmailMessageHelper {
     }
 
     // Runs through the collated information to determine if the email message meets the business rules that apply
-    public void validateConditions(){
+    public void validateConditions(){        
         // Loop the known outbound emails to validate the conditions are met
         for(EmailDetail outboundMessage : outboundMessages){
             if(outboundMessage.EmailMessage.Status == '3' || (outboundMessage.EmailMessage.Status == '5' && outboundMessage.EmailMessage.ApprovalStatus__c == 'In approval')){
@@ -160,7 +160,7 @@ public with sharing class EmailMessageHelper {
                     EmailConfiguration__c emailConfig = emailConfigMap.get(outboundMessage.emailMessage.EmailTemplateId);
                     if (emailConfig == null) {
                         errors.add(System.Label.EmailTriggerNoConfig);
-                    } else {
+                    } else if ( emailConfig.SendingProcess__c != 'AUTOMATIC' ) {
                         // Check that the user has the permission to send the associated email template and throw an error if not
                         if(!FeatureManagement.checkPermission(emailConfig.CustomPermission__c)){
                             errors.add(System.Label.EmailTriggerNoPermission);
