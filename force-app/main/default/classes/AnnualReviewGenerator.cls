@@ -48,9 +48,6 @@ public without sharing class AnnualReviewGenerator{
         for (Account household : households) {
             String annualReviewYear = String.valueOf(household.FinServ__NextReview__c.year());
 
-            // Push the household annual review date back 1 year
-            household.FinServ__NextReview__c = Date.newInstance(household.FinServ__NextReview__c.year() + 1, household.FinServ__NextReview__c.month() + 1, 1).addDays(-1);
-
             // If there are no convertible advice, create the annual review advice
             if(household.Advice__r.isEmpty()){
                 Advice__c advice = new Advice__c(
@@ -84,6 +81,9 @@ public without sharing class AnnualReviewGenerator{
                 OW_due_date__c = household.FinServ__NextReview__c
             );
             annualReviewMap.put(household.Id, annualReview);
+
+            // Push the household annual review date back 1 year
+            household.FinServ__NextReview__c = Date.newInstance(household.FinServ__NextReview__c.year() + 1, household.FinServ__NextReview__c.month() + 1, 1).addDays(-1);
 
             for (Account client : householdMemberResults.get(household.Id).memberAccountsByRole.get('Client')){
                 External_Gains_Losses__c egi = new External_Gains_Losses__c(
