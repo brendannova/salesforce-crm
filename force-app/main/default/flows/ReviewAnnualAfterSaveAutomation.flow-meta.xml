@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Generate_tasks</name>
         <label>Generate tasks</label>
-        <locationX>248</locationX>
+        <locationX>50</locationX>
         <locationY>1895</locationY>
         <actionName>FlowUtilityTaskCreateList</actionName>
         <actionType>apex</actionType>
@@ -22,24 +22,8 @@
     <assignments>
         <name>Add_to_task_requests_send_fact_find</name>
         <label>Add to task requests</label>
-        <locationX>314</locationX>
+        <locationX>72</locationX>
         <locationY>1271</locationY>
-        <assignmentItems>
-            <assignToReference>taskRequests</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>taskRequest</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Tasks_needed</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Add_to_task_requests_set_up</name>
-        <label>Add to task requests</label>
-        <locationX>50</locationX>
-        <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>taskRequests</assignToReference>
             <operator>Add</operator>
@@ -54,7 +38,7 @@
     <assignments>
         <name>Define_advice_updates</name>
         <label>Define advice updates</label>
-        <locationX>446</locationX>
+        <locationX>204</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>advice.ProfileUpdateStatus__c</assignToReference>
@@ -77,7 +61,7 @@
     <assignments>
         <name>Define_advice_updates_incomplete</name>
         <label>Define advice updates</label>
-        <locationX>710</locationX>
+        <locationX>468</locationX>
         <locationY>647</locationY>
         <assignmentItems>
             <assignToReference>advice.ProfileUpdateStatus__c</assignToReference>
@@ -94,7 +78,7 @@
     <assignments>
         <name>Define_send_annual_review_fact_find_email_task</name>
         <label>Define send annual review fact find email task</label>
-        <locationX>314</locationX>
+        <locationX>72</locationX>
         <locationY>1163</locationY>
         <assignmentItems>
             <assignToReference>taskRequest.householdId</assignToReference>
@@ -136,46 +120,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Define_set_up_annual_review_task</name>
-        <label>Define set up annual review task</label>
-        <locationX>50</locationX>
-        <locationY>539</locationY>
-        <assignmentItems>
-            <assignToReference>taskRequest.householdId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>taskRequest.relatedAnnualReview</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>reviewId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>taskRequest.taskType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>TASK_TYPE_SET_UP_ANNUAL_REVIEW</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>taskRequest.whatId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>reviewId</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Add_to_task_requests_set_up</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_advice_ID</name>
         <label>Set advice ID</label>
-        <locationX>446</locationX>
+        <locationX>204</locationX>
         <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>advice.Id</assignToReference>
@@ -191,7 +138,7 @@
     <assignments>
         <name>Set_IDs</name>
         <label>Set IDs</label>
-        <locationX>380</locationX>
+        <locationX>182</locationX>
         <locationY>323</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -222,7 +169,7 @@
         <description>As the review is now closed, we want to set the last review date to today and push forward the next review date.</description>
         <name>Set_new_review_dates_for_household</name>
         <label>Set new review dates for household</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>1163</locationY>
         <assignmentItems>
             <assignToReference>household.Id</assignToReference>
@@ -266,7 +213,7 @@
     <customErrors>
         <name>Throw_error</name>
         <label>Throw error</label>
-        <locationX>842</locationX>
+        <locationX>600</locationX>
         <locationY>1379</locationY>
         <customErrorMessages>
             <errorMessage>{!$Flow.FaultMessage}</errorMessage>
@@ -277,7 +224,7 @@
         <description>Different paths follow depending on which stage the annual review has reached.</description>
         <name>Annual_review_status</name>
         <label>Annual review status</label>
-        <locationX>710</locationX>
+        <locationX>468</locationX>
         <locationY>1055</locationY>
         <defaultConnector>
             <targetReference>Tasks_needed</targetReference>
@@ -319,7 +266,7 @@
     <decisions>
         <name>Fact_find_status</name>
         <label>Fact find status</label>
-        <locationX>710</locationX>
+        <locationX>468</locationX>
         <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Annual_review_status</targetReference>
@@ -375,7 +322,7 @@
         <description>Is this a new record</description>
         <name>New_record</name>
         <label>New record?</label>
-        <locationX>380</locationX>
+        <locationX>182</locationX>
         <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Fact_find_status</targetReference>
@@ -392,7 +339,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Define_set_up_annual_review_task</targetReference>
+                <targetReference>Tasks_needed</targetReference>
             </connector>
             <label>New</label>
         </rules>
@@ -400,7 +347,7 @@
     <decisions>
         <name>Tasks_needed</name>
         <label>Tasks needed?</label>
-        <locationX>380</locationX>
+        <locationX>182</locationX>
         <locationY>1787</locationY>
         <defaultConnectorLabel>None needed</defaultConnectorLabel>
         <rules>
@@ -451,7 +398,7 @@
     <recordUpdates>
         <name>Update_advice</name>
         <label>Update advice</label>
-        <locationX>446</locationX>
+        <locationX>204</locationX>
         <locationY>863</locationY>
         <connector>
             <targetReference>Annual_review_status</targetReference>
@@ -461,7 +408,7 @@
     <recordUpdates>
         <name>Update_household</name>
         <label>Update household</label>
-        <locationX>578</locationX>
+        <locationX>336</locationX>
         <locationY>1271</locationY>
         <connector>
             <targetReference>Tasks_needed</targetReference>
@@ -472,7 +419,7 @@
         <inputReference>household</inputReference>
     </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_IDs</targetReference>
