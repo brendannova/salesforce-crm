@@ -74,11 +74,12 @@ public without sharing class AnnualReviewGenerator{
             // Define the annual review 
             OW_review__c annualReview = new OW_review__c(
                 OW_household__c = household.Id,
-                OW_status__c = 'Prepare',
                 OwnerId = household.OwnerId,
                 RecordTypeId = REVIEW_ANNUAL_RECORD_TYPE_ID,
                 Name = household.Name + ' - Annual review ' + annualReviewYear,
-                OW_due_date__c = household.FinServ__NextReview__c
+                OW_due_date__c = household.FinServ__NextReview__c,
+                OW_status__c = 'Await fact find',
+                OW_review_fact_find_status__c = 'Visible to customer'
             );
             annualReviewMap.put(household.Id, annualReview);
 
