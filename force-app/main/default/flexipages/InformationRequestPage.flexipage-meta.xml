@@ -430,6 +430,16 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.FolderLink__c</fieldItem>
+                <identifier>RecordFolderLink_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.CancelledReason__c</fieldItem>
@@ -443,6 +453,10 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <name>Facet-392db5a9-d3de-45cd-8505-9568df432095</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -456,63 +470,6 @@
                         <leftValue>{!Record.Status__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>COMPLETE</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.FolderLink__c</fieldItem>
-                <identifier>RecordFolderLink_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <name>Facet-392db5a9-d3de-45cd-8505-9568df432095</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>readonly</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.LegacyLoa__c</fieldItem>
-                <identifier>RecordLegacyLoa__cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Replaced</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.LegacyLoa__r.LOA_Builder_Tab_URL__c</fieldItem>
-                <identifier>RecordLegacyLoa_rLOA_Builder_Tab_URL_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Replaced</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldItem>Record.LegacyLoa__r.Suitability_Builder_Tab_URL__c</fieldItem>
-                <identifier>RecordLegacyLoa_rSuitability_Builder_Tab_URL_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.LegacyLoa__r.MainLOAStatus__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Replaced</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -931,6 +888,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.DateInformationRequestSent__c</fieldItem>
                 <identifier>RecordDateInformationRequestSent_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AuthorityRequestSigned_by__c</fieldItem>
+                <identifier>RecordAuthorityRequestSigned_by__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
