@@ -42,7 +42,7 @@
         <name>Assign_destination_product_values</name>
         <label>Assign destination product values</label>
         <locationX>182</locationX>
-        <locationY>1382</locationY>
+        <locationY>1682</locationY>
         <assignmentItems>
             <assignToReference>financialProduct.Id</assignToReference>
             <operator>Assign</operator>
@@ -79,7 +79,7 @@
         <name>Assign_IO_ID</name>
         <label>Assign IO ID</label>
         <locationX>50</locationX>
-        <locationY>1598</locationY>
+        <locationY>1898</locationY>
         <assignmentItems>
             <assignToReference>financialProduct.IO_Plan_ID__c</assignToReference>
             <operator>Assign</operator>
@@ -136,7 +136,7 @@
         <name>Does_the_IO_ID_require_an_update</name>
         <label>Does the IO ID require an update?</label>
         <locationX>182</locationX>
-        <locationY>1490</locationY>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>Update_product</targetReference>
         </defaultConnector>
@@ -161,7 +161,7 @@
         <name>Has_the_payment_been_received</name>
         <label>Has the payment been received?</label>
         <locationX>776</locationX>
-        <locationY>1166</locationY>
+        <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>Update_fulfilmentPaymentAwaiting</targetReference>
         </defaultConnector>
@@ -186,7 +186,7 @@
         <name>Is_a_tax_relief_task_needed</name>
         <label>Is a tax relief task needed?</label>
         <locationX>182</locationX>
-        <locationY>2114</locationY>
+        <locationY>2414</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesTaxRelief</name>
@@ -235,6 +235,31 @@
             </conditions>
             <connector>
                 <targetReference>Create_tax_relief_task</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_there_residual_cash_to_be_transferred</name>
+        <label>Is there residual cash to be transferred?</label>
+        <locationX>776</locationX>
+        <locationY>1166</locationY>
+        <defaultConnector>
+            <targetReference>Has_the_payment_been_received</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesResidualCash</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>YesChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_to_chase_residual_cash</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -416,7 +441,7 @@
         <name>Roll_back</name>
         <label>Roll back</label>
         <locationX>578</locationX>
-        <locationY>2006</locationY>
+        <locationY>2306</locationY>
         <connector>
             <targetReference>Error</targetReference>
         </connector>
@@ -425,7 +450,7 @@
         <name>Complete_task</name>
         <label>Complete task</label>
         <locationX>182</locationX>
-        <locationY>2006</locationY>
+        <locationY>2306</locationY>
         <connector>
             <targetReference>Is_a_tax_relief_task_needed</targetReference>
         </connector>
@@ -511,7 +536,7 @@
         <name>Update_fulfilment</name>
         <label>Update fulfilment</label>
         <locationX>182</locationX>
-        <locationY>1274</locationY>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Assign_destination_product_values</targetReference>
         </connector>
@@ -575,7 +600,7 @@
         <name>Update_fulfilmentPaymentAwaiting</name>
         <label>Update fulfilment</label>
         <locationX>1370</locationX>
-        <locationY>1274</locationY>
+        <locationY>1574</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -596,7 +621,7 @@
         <name>Update_product</name>
         <label>Update destination product</label>
         <locationX>182</locationX>
-        <locationY>1790</locationY>
+        <locationY>2090</locationY>
         <connector>
             <targetReference>Update_source_product</targetReference>
         </connector>
@@ -610,7 +635,7 @@
         <name>Update_source_product</name>
         <label>Update source product</label>
         <locationX>182</locationX>
-        <locationY>1898</locationY>
+        <locationY>2198</locationY>
         <connector>
             <targetReference>Complete_task</targetReference>
         </connector>
@@ -655,7 +680,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Has_the_payment_been_received</targetReference>
+            <targetReference>Is_there_residual_cash_to_be_transferred</targetReference>
         </connector>
         <fields>
             <name>Payment_status</name>
@@ -889,7 +914,7 @@
         <name>Error</name>
         <label>Error</label>
         <locationX>578</locationX>
-        <locationY>2114</locationY>
+        <locationY>2414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -913,7 +938,7 @@
         <name>Create_tax_relief_task</name>
         <label>Create tax relief task</label>
         <locationX>50</locationX>
-        <locationY>2222</locationY>
+        <locationY>2522</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
@@ -925,6 +950,35 @@
             <name>task_type</name>
             <value>
                 <stringValue>ensure_tax_relief_applied_and_update_io</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>fulfilment.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Create_to_chase_residual_cash</name>
+        <label>Create to chase residual cash</label>
+        <locationX>644</locationX>
+        <locationY>1274</locationY>
+        <connector>
+            <targetReference>Has_the_payment_been_received</targetReference>
+        </connector>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>fulfilment.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>CHASE_RESIDUAL_CASH</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
