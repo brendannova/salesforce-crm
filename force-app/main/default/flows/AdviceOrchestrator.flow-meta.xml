@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_tasks</name>
+        <label>Create tasks</label>
+        <locationX>446</locationX>
+        <locationY>3722</locationY>
+        <actionName>FlowUtilityTaskCreateList</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Tasks_creation_outcome</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>taskRequests</name>
+            <value>
+                <elementReference>taskRequests</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityTaskCreateList</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>60.0</apiVersion>
+    <assignments>
+        <name>Add_task_request_to_collection</name>
+        <label>Add task request to collection</label>
+        <locationX>534</locationX>
+        <locationY>3530</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequests</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>taskRequest</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_follow_up_tasks</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_error_message</name>
+        <label>Add to error message</label>
+        <locationX>534</locationX>
+        <locationY>3938</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Error creating tasks</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CompleteScreen</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Close_task</name>
         <label>Close task</label>
@@ -22,6 +75,43 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_task_request</name>
+        <label>Define task request</label>
+        <locationX>534</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequest.householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.relatedAdviceId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.relatedAdviceId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.taskType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Loop_follow_up_tasks</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_task_request_to_collection</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -280,28 +370,28 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Follow_on_task_to_create</name>
-        <label>Follow on task to create</label>
+        <name>Follow_up_tasks</name>
+        <label>Follow up tasks</label>
         <locationX>622</locationX>
         <locationY>3206</locationY>
         <defaultConnector>
             <targetReference>CompleteScreen</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>No task</defaultConnectorLabel>
+        <defaultConnectorLabel>No tasks</defaultConnectorLabel>
         <rules>
-            <name>Task_to_create</name>
+            <name>Tasks_to_create</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>followUpTask</leftValueReference>
-                <operator>IsBlank</operator>
+                <leftValueReference>followUpTasks</leftValueReference>
+                <operator>IsEmpty</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_next_task</targetReference>
+                <targetReference>Loop_follow_up_tasks</targetReference>
             </connector>
-            <label>Task to create</label>
+            <label>Tasks to create</label>
         </rules>
     </decisions>
     <decisions>
@@ -386,7 +476,7 @@
         <locationX>622</locationX>
         <locationY>2450</locationY>
         <defaultConnector>
-            <targetReference>Follow_on_task_to_create</targetReference>
+            <targetReference>Follow_up_tasks</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Leave open</defaultConnectorLabel>
         <rules>
@@ -405,10 +495,49 @@
             <label>Close</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Tasks_creation_outcome</name>
+        <label>Tasks creation outcome</label>
+        <locationX>446</locationX>
+        <locationY>3830</locationY>
+        <defaultConnector>
+            <targetReference>Add_to_error_message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Error occurred</defaultConnectorLabel>
+        <rules>
+            <name>Successfully_created_tasks</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_tasks.isSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CompleteScreen</targetReference>
+            </connector>
+            <label>Successfully created tasks</label>
+        </rules>
+    </decisions>
     <description>This generic flow will run for all advice that needs to be orchestrated, performing actions that are generic across all these variants and calling sub-flows where necessary.</description>
     <environments>Default</environments>
     <interviewLabel>Advice | Orchestration {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Orchestrator</label>
+    <loops>
+        <name>Loop_follow_up_tasks</name>
+        <label>Loop follow up tasks</label>
+        <locationX>446</locationX>
+        <locationY>3314</locationY>
+        <collectionReference>followUpTasks</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Define_task_request</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Create_tasks</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -482,6 +611,7 @@
         <queriedFields>RetirementCallDate__c</queriedFields>
         <queriedFields>NarrativeStatus__c</queriedFields>
         <queriedFields>DeckStatus__c</queriedFields>
+        <queriedFields>AnnualReviewDeckUrl__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_advice_checklist</name>
@@ -586,7 +716,7 @@
         <locationX>358</locationX>
         <locationY>2666</locationY>
         <connector>
-            <targetReference>Follow_on_task_to_create</targetReference>
+            <targetReference>Follow_up_tasks</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Roll_back_changes</targetReference>
@@ -598,7 +728,7 @@
         <name>CompleteScreen</name>
         <label>Complete screen</label>
         <locationX>622</locationX>
-        <locationY>3506</locationY>
+        <locationY>4214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -773,48 +903,13 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
         <outputAssignments>
             <assignToReference>reviewUpdated</assignToReference>
             <name>reviewUpdated</name>
         </outputAssignments>
-    </subflows>
-    <subflows>
-        <name>Create_next_task</name>
-        <label>Create next task</label>
-        <locationX>490</locationX>
-        <locationY>3314</locationY>
-        <connector>
-            <targetReference>CompleteScreen</targetReference>
-        </connector>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_advice_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <elementReference>followUpTask</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
         <name>Protection_orchestration</name>
@@ -862,8 +957,8 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -918,8 +1013,8 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -984,8 +1079,8 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -1050,8 +1145,8 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -1116,8 +1211,8 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
     </subflows>
     <variables>
@@ -1201,9 +1296,9 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>followUpTask</name>
+        <name>followUpTasks</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
@@ -1251,6 +1346,22 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>0</scale>
+    </variables>
+    <variables>
+        <name>taskRequest</name>
+        <apexClass>TaskEngineRequest</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>taskRequests</name>
+        <apexClass>TaskEngineRequest</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>tasks</name>
