@@ -47,7 +47,7 @@
     </recordLookups>
     <screens>
         <name>display</name>
-        <label>display</label>
+        <label>Display</label>
         <locationX>176</locationX>
         <locationY>242</locationY>
         <allowBack>true</allowBack>
@@ -79,28 +79,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>paymentDetails</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1OfyZQ-mLb8RqCv4MwBtmdkNYgo6sHZ396_X0FAIn_FQ/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(2, 96, 18);&quot;&gt;Payment details email template&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Submit fulfilment</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.RecommendationType__r.Name__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Lump sum</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -171,152 +149,6 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Withdrawalinformationemailtemplate</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1ziyJTukOuTcXBP-t6e_KhMI4kha4Q7OpshQuB6R7oYE/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(3, 105, 38);&quot;&gt;Withdrawal information email template&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.FulfilmentType__r.Name</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>withdrawal</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Submit fulfilment</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>discountEmail</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1Xi8Tv_A_3uU0a8YEW9s2O64R31AVE6Onpo28IgmW30Q/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(255, 0, 111);&quot;&gt;Email to OI for discounts template&lt;/a&gt;&lt;a href=&quot;https://docs.google.com/document/d/1Xi8Tv_A_3uU0a8YEW9s2O64R31AVE6Onpo28IgmW30Q/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(255, 13, 106);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Submit fulfilment</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.Product__r.ProductType__r.Name</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>VCT</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.Product__r.ProductType__r.Name</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>EIS</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>tcomp</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1vgeFRq_TaYbq7XEJ0wp3iusCgrkB4G2nkywBuQ34eOw/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(255, 0, 132);&quot;&gt;Transfer complete email template (SIPP)&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1S7nhFZk_o4xUH58c2yNNK6y4L02hV5AcOgT47rjsmQs/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(5, 95, 2);&quot;&gt;Bed and SIPP email template complete&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Chase transfer</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__RecordTypeName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>SIPP</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>tcompleteISA</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1IzpdHjjoRk7zLacPBF2xCtpViUdDBt9SwSnvLvQPdKg/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(253, 6, 125);&quot;&gt;Transfer complete email template (ISA/GIA)&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1S7nhFZk_o4xUH58c2yNNK6y4L02hV5AcOgT47rjsmQs/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(14, 128, 4);&quot;&gt;Bed and ISA email template complete&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Chase transfer</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__RecordTypeName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>ISA</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__RecordTypeName__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>GIA</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>prec</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1kEsn4MnIycUrZYj9LLq2tolPZdKybYar8merVCkg_3M/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(254, 24, 150);&quot;&gt;Payment received email template&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1C5DviWCEE6H6Y_YRtvdtNFVR8WJ8SQYzmh-VG_cw6TE/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(0, 128, 9);&quot;&gt;Payment sent but not in huwise yet template&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Chase client payment</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confirmreceipt</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1dKhDjTSykSWa80-twtw6aKkJAQ5BcE0-TAJFkidWRw8/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(255, 0, 128);&quot;&gt;Confirmation of receipt chaser template&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.FulfilmentType__r.Name</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>withdrawal</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Chase client payment</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Await first regular</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>ptic</name>
             <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1VwZVtOqOs9PrZkNVHSVCKFOxM4Lf0HcNwApbRMrI67g/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(4, 105, 14);&quot;&gt;Phasing ticket template&lt;/a&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -339,71 +171,6 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>cnot</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1N2Y6v01qh2ZkG4Ah9W3HkBUAmpthMzzH2vBCS7cNucE/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(29, 108, 3);&quot;&gt;SIPP Cancellation notice email template&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Submit fulfilment</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.RecommendationTypeName__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Open product</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__RecordTypeName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>SIPP</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>isacanc</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1txoU58y9gDolEd3QLD3Jjaz_h5GNdd02cx_hU4GINKE/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(5, 109, 20);&quot;&gt;ISA/GIA Cancellation notice&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Submit fulfilment</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.RecommendationTypeName__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Open product</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__RecordTypeName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>ISA</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__RecordTypeName__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>GIA</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>ptransfer</name>
             <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1U8ojvl_aPxa2cLqI6CCBmZSAByltO3XouUOWgBAssvo/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(247, 4, 162);&quot;&gt;Partial transfer hubwise ticket template&lt;/a&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -421,50 +188,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Submit fulfilment</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>protsub</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1xM17Rfj8kmwstq-cNc-26t_DPIeiJzEkxHPSIZB1810/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(1, 115, 18);&quot;&gt;Protection submitted next steps email to client template&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.FulfilmentType__r.Product__r.ProductType__r.IsProtection__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Submit fulfilment</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>termsoffered</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1h8wjw3cZYU5lpXC8aBYfYCwUM8ih0tRHDflHUWkV5dI/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(0, 108, 7);&quot;&gt;Send terms to client email template&lt;/a&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.FulfilmentType__r.Product__r.ProductType__r.IsProtection__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Chase provider</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -501,7 +224,7 @@
             <targetReference>Get_fulfilment</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
