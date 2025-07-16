@@ -48,9 +48,6 @@ public without sharing class AnnualReviewGenerator{
         for (Account household : households) {
             String annualReviewYear = String.valueOf(household.FinServ__NextReview__c.year());
 
-            // Push the household annual review date back 1 year
-            household.FinServ__NextReview__c = Date.newInstance(household.FinServ__NextReview__c.year() + 1, household.FinServ__NextReview__c.month() + 1, 1).addDays(-1);
-
             // If there are no convertible advice, create the annual review advice
             if(household.Advice__r.isEmpty()){
                 Advice__c advice = new Advice__c(
@@ -77,13 +74,17 @@ public without sharing class AnnualReviewGenerator{
             // Define the annual review 
             OW_review__c annualReview = new OW_review__c(
                 OW_household__c = household.Id,
-                OW_status__c = 'Prepare',
                 OwnerId = household.OwnerId,
                 RecordTypeId = REVIEW_ANNUAL_RECORD_TYPE_ID,
                 Name = household.Name + ' - Annual review ' + annualReviewYear,
-                OW_due_date__c = household.FinServ__NextReview__c
+                OW_due_date__c = household.FinServ__NextReview__c,
+                OW_status__c = 'Await fact find',
+                OW_review_fact_find_status__c = 'Visible to customer'
             );
             annualReviewMap.put(household.Id, annualReview);
+
+            // Push the household annual review date back 1 year
+            household.FinServ__NextReview__c = Date.newInstance(household.FinServ__NextReview__c.year() + 1, household.FinServ__NextReview__c.month() + 1, 1).addDays(-1);
 
             for (Account client : householdMemberResults.get(household.Id).memberAccountsByRole.get('Client')){
                 External_Gains_Losses__c egi = new External_Gains_Losses__c(
