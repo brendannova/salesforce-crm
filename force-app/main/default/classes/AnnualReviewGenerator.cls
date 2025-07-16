@@ -47,9 +47,24 @@ public without sharing class AnnualReviewGenerator{
         // Loop the households
         for (Account household : households) {
             String annualReviewYear = String.valueOf(household.FinServ__NextReview__c.year());
+            
+            // Define the annual review 
+            OW_review__c annualReview = new OW_review__c(
+                OW_household__c = household.Id,
+                OwnerId = household.OwnerId,
+                RecordTypeId = REVIEW_ANNUAL_RECORD_TYPE_ID,
+                Name = household.Name + ' - Annual review ' + annualReviewYear,
+                OW_due_date__c = household.FinServ__NextReview__c,
+                OW_review_fact_find_status__c = 'Not visible to customer'
+            );
+            annualReviewMap.put(household.Id, annualReview);
 
-            // If there are no convertible advice, create the annual review advice
+            // If there are no convertible advice, create the annual review advice and move the review to await fact find
             if(household.Advice__r.isEmpty()){
+
+                annualReview.OW_status__c = 'Await fact find';
+                annualReview.OW_review_fact_find_status__c = 'Visible to customer';
+
                 Advice__c advice = new Advice__c(
                     Advice_Household__c = household.Id,
                     Partner__c = household.OwnerId,
@@ -58,7 +73,8 @@ public without sharing class AnnualReviewGenerator{
                     RecordTypeId = ADVICE_ANNUAL_REVIEW_RECORD_TYPE_ID,
                     Advice_Status__c = 'Data gathering',
                     AdviceType__c = annualReviewAdviceTypeId,
-                    New_or_existing_client__c = 'Existing'
+                    New_or_existing_client__c = 'Existing',
+                    DataGatheringStatus__c = 'Not required'
                 );
 
                 if(household.OW_rtq_status__c == 'Complete'){
@@ -71,17 +87,6 @@ public without sharing class AnnualReviewGenerator{
                 annualReviewAdviceMap.put(household.Id, advice);
             }
 
-            // Define the annual review 
-            OW_review__c annualReview = new OW_review__c(
-                OW_household__c = household.Id,
-                OwnerId = household.OwnerId,
-                RecordTypeId = REVIEW_ANNUAL_RECORD_TYPE_ID,
-                Name = household.Name + ' - Annual review ' + annualReviewYear,
-                OW_due_date__c = household.FinServ__NextReview__c,
-                OW_status__c = 'Await fact find',
-                OW_review_fact_find_status__c = 'Visible to customer'
-            );
-            annualReviewMap.put(household.Id, annualReview);
 
             // Push the household annual review date back 1 year
             household.FinServ__NextReview__c = Date.newInstance(household.FinServ__NextReview__c.year() + 1, household.FinServ__NextReview__c.month() + 1, 1).addDays(-1);
