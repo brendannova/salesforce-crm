@@ -336,7 +336,7 @@
     <formulas>
         <name>residualCash</name>
         <dataType>String</dataType>
-        <expression>IF({!Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer}==&#39;Yes&#39;, &#39;Some&#39;, &#39;None&#39;)</expression>
+        <expression>IF({!Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer}==&#39;Yes&#39;, &#39;AWAITING&#39;, &#39;NONE&#39;)</expression>
     </formulas>
     <formulas>
         <name>stopInternalChangeProcessingDestination</name>

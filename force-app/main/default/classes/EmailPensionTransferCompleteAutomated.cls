@@ -37,7 +37,7 @@ public class EmailPensionTransferCompleteAutomated {
     
     // Method to provide string for residual cash if required
     public String getResidualCash() {
-        if (fulfilment.ResidualCash__c == 'None') {
+        if (fulfilment.ResidualCash__c == 'NONE') {
             return '';
         } else {
             return 'There is residual cash remaining with the ceding provider, which we expect will transfer in the future. We will update your portal once this is received.';

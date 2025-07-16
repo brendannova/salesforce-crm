@@ -1,12 +1,8 @@
 public class FulfilmentTriggerHelper {
     
-    public void sendAutomaticNotices(List<Fulfilment__c> fulfilments) {
-        List<String> fulfilmentIds = new List<String>();
-        for (Fulfilment__c fulfilment : fulfilments) {
-            fulfilmentIds.add(fulfilment.Id);
-        }
+    public void sendAutomaticNotices(Map<Id, sObject> fulfilmentsNew, Map<Id, sObject> fulfilmentsOld) {
         
-        List<Fulfilment__c> fulfilmentsForNotice = [SELECT 
+        List<Fulfilment__c> potentialFulfilmentsForNotice = [SELECT 
                                                     Id, 
                                                     Household__c,
                                                     Recommendation__r.Household__c,
@@ -17,7 +13,9 @@ public class FulfilmentTriggerHelper {
                                                     Recommendation__r.PrimaryOwner__r.AddressedName__pc,
                                                     Recommendation__r.Product__r.ReferenceName__c,
                                                     Recommendation__r.RecommendationType__r.ReferenceName__c,
-                                                    ResidualCash__c
+                                                    ResidualCash__c,
+                                                    Status__c,
+                                                    CancellationNoticeSent__c
                                                     FROM Fulfilment__c
                                                     WHERE 
                                                     (
@@ -33,19 +31,34 @@ public class FulfilmentTriggerHelper {
                                                          AND PaymentStatus__c = 'Funds received'  
                                                         )
                                                     )
-                                                    AND Id IN :fulfilmentIds
+                                                    AND Id IN :fulfilmentsNew.keySet()
                                                    ];
+        
+        List<Fulfilment__c> fulfilmentsForNotice = new List<Fulfilment__c>();
+        
+        for( Fulfilment__c flfl : potentialFulfilmentsForNotice ) {
+            Fulfilment__c oldflfl = (Fulfilment__c)fulfilmentsOld.get(flfl.Id);
+            if( oldflfl.Status__c == 'Chase transfer' 
+                && flfl.Status__c == 'Investment checks'
+                && oldflfl.CancellationNoticeSent__c == false ) {
+                   fulfilmentsForNotice.add(flfl);
+               } 
+            
+        }
+        
         if( fulfilmentsForNotice.size() > 0 ) {
             // Create a list of email requests for these fulfilments
             List<EmailSend.EmailSendRequestAutomatic> emails = new List<EmailSend.EmailSendRequestAutomatic>();
             
             for (Fulfilment__c fulfilment : fulfilmentsForNotice) {
                 emails.add(setEmailRequestVariables(fulfilment));
+                fulfilment.CancellationNoticeSent__c = true;
             }  
             
             // Send the emails
             EmailSend emailSender = new EmailSend();
             emailSender.sendAutomaticTemplatedEmailCustomSubject(emails);
+            update fulfilmentsForNotice;
         }
         
     }
