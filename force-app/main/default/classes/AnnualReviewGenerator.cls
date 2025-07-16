@@ -55,7 +55,7 @@ public without sharing class AnnualReviewGenerator{
                 RecordTypeId = REVIEW_ANNUAL_RECORD_TYPE_ID,
                 Name = household.Name + ' - Annual review ' + annualReviewYear,
                 OW_due_date__c = household.FinServ__NextReview__c,
-                OW_review_fact_find_status__c = 'Visible to customer'
+                OW_review_fact_find_status__c = 'Not visible to customer'
             );
             annualReviewMap.put(household.Id, annualReview);
 
@@ -63,6 +63,7 @@ public without sharing class AnnualReviewGenerator{
             if(household.Advice__r.isEmpty()){
 
                 annualReview.OW_status__c = 'Await fact find';
+                annualReview.OW_review_fact_find_status__c = 'Visible to customer';
 
                 Advice__c advice = new Advice__c(
                     Advice_Household__c = household.Id,
