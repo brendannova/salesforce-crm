@@ -219,7 +219,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <assignments>
         <name>Adviser_debrief_updates</name>
         <label>Adviser debrief updates</label>
-        <locationX>13338</locationX>
+        <locationX>13426</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.AdvisorDebriefComplete__c</assignToReference>
@@ -344,7 +344,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <assignments>
         <name>Copy_1_of_Update_review_status</name>
         <label>Copy 1 of Update review status</label>
-        <locationX>13602</locationX>
+        <locationX>13690</locationX>
         <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>reviewUpdated.OW_status__c</assignToReference>
@@ -850,7 +850,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <assignments>
         <name>Set_emailed_date_time</name>
         <label>Set emailed date/time</label>
-        <locationX>13602</locationX>
+        <locationX>13690</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>clientEmailedDateTime</assignToReference>
@@ -869,13 +869,6 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
         <locationX>50</locationX>
         <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>followUpTasks</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_DATA_GATHERING</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>reviewUpdated.OW_status__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -893,7 +886,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <assignments>
         <name>Set_unidentified_task_error</name>
         <label>Set unidentified task error</label>
-        <locationX>14130</locationX>
+        <locationX>14218</locationX>
         <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -906,7 +899,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <assignments>
         <name>Set_variables</name>
         <label>Set variables</label>
-        <locationX>7090</locationX>
+        <locationX>7134</locationX>
         <locationY>134</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklist.Id</assignToReference>
@@ -1106,7 +1099,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <assignments>
         <name>Update_review_status_manual</name>
         <label>Update review status</label>
-        <locationX>12546</locationX>
+        <locationX>12634</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>reviewUpdated.OW_status__c</assignToReference>
@@ -1344,7 +1337,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <decisions>
         <name>Advice_method_doc_upload</name>
         <label>Advice method</label>
-        <locationX>13734</locationX>
+        <locationX>13822</locationX>
         <locationY>458</locationY>
         <defaultConnectorLabel>Not defined</defaultConnectorLabel>
         <rules>
@@ -1428,7 +1421,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <decisions>
         <name>Annual_review_type</name>
         <label>Annual review type</label>
-        <locationX>12590</locationX>
+        <locationX>12634</locationX>
         <locationY>458</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -1748,7 +1741,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
     <decisions>
         <name>Status</name>
         <label>Task type</label>
-        <locationX>7090</locationX>
+        <locationX>7134</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Set_unidentified_task_error</targetReference>
@@ -2583,7 +2576,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <screens>
         <name>Confirm_recommendationsPreScreen</name>
         <label>Confirm recommendations</label>
-        <locationX>13074</locationX>
+        <locationX>13162</locationX>
         <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2969,7 +2962,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>6964</locationX>
+        <locationX>7008</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Set_variables</targetReference>
@@ -3086,7 +3079,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Call_advice_document_upload_flow</name>
         <label>Call advice document upload flow</label>
-        <locationX>13734</locationX>
+        <locationX>13822</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Advice_method_doc_upload</targetReference>
@@ -3163,7 +3156,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Confirm_advice</name>
         <label>Confirm advice</label>
-        <locationX>12590</locationX>
+        <locationX>12634</locationX>
         <locationY>350</locationY>
         <connector>
             <targetReference>Annual_review_type</targetReference>
@@ -3282,7 +3275,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Confirm_task</name>
         <label>Confirm task</label>
-        <locationX>7090</locationX>
+        <locationX>7134</locationX>
         <locationY>1682</locationY>
         <flowName>OrchestratorTaskComplete</flowName>
         <inputAssignments>
@@ -3424,7 +3417,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <subflows>
         <name>Mark_decisions_sub_flow</name>
         <label>Mark decisions sub flow</label>
-        <locationX>13074</locationX>
+        <locationX>13162</locationX>
         <locationY>458</locationY>
         <flowName>AdviceMarkDecisions</flowName>
         <inputAssignments>
