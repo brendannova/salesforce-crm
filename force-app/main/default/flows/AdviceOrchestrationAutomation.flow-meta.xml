@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Create_tasks</name>
         <label>Create tasks</label>
-        <locationX>1986</locationX>
-        <locationY>4709</locationY>
+        <locationX>1854</locationX>
+        <locationY>4817</locationY>
         <actionName>FlowUtilityTaskCreateList</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -1035,7 +1035,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_tasks</targetReference>
+                <targetReference>Tasks_to_create</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -1067,7 +1067,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_tasks</targetReference>
+                <targetReference>Tasks_to_create</targetReference>
             </connector>
             <label>Not needed</label>
         </rules>
@@ -1271,6 +1271,28 @@ If advice type is changed, we also need to close any orchestration tasks for the
                 <targetReference>Get_advice_type_status</targetReference>
             </connector>
             <label>Updated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Tasks_to_create</name>
+        <label>Tasks to create</label>
+        <locationX>1986</locationX>
+        <locationY>4709</locationY>
+        <defaultConnectorLabel>None</defaultConnectorLabel>
+        <rules>
+            <name>Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskRequests</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_tasks</targetReference>
+            </connector>
+            <label>Create</label>
         </rules>
     </decisions>
     <description>Record triggered flow to automate actions for orchestrated advice.</description>
