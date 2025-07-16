@@ -235,6 +235,24 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.ReviewType__c</fieldItem>
                 <identifier>RecordReviewType_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Provide advice</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c8bcc3fc-0be7-4ae6-97e9-0f5306997434</name>
