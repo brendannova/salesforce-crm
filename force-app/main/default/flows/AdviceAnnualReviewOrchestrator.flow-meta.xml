@@ -2349,7 +2349,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <name>EmailToSend</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Incomplete&quot;), &quot;2C | Client did not engage in time&quot;,
-IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Skipped&quot;), &quot;3B | Client did not have catch up call&quot;,
+IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Skipped&quot;), &quot;3B | Client did not have catch up call&quot;,
 IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;PRESENTED&quot;), &quot;3 | Review + presented advice&quot;,
 IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;NON_PRESENTED&quot;), &quot;3 | Review + non-presented advice&quot;,
 &quot;Unknown email type&quot;))))</expression>
