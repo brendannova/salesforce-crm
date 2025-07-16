@@ -2346,6 +2346,15 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
 &quot;ERROR: UNKNOWN&quot;)</expression>
     </formulas>
     <formulas>
+        <name>EmailToSend</name>
+        <dataType>String</dataType>
+        <expression>IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Incomplete&quot;), &quot;2C | Client did not engage in time&quot;,
+IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Skipped&quot;), &quot;3B | Client did not have catch up call&quot;,
+IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;PRESENTED&quot;), &quot;3 | Review + presented advice&quot;,
+IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;NON_PRESENTED&quot;), &quot;3 | Review + non-presented advice&quot;,
+&quot;Unknown email type&quot;))))</expression>
+    </formulas>
+    <formulas>
         <name>illustrationsTask</name>
         <dataType>String</dataType>
         <expression>IF({!adviceChecklist.IsLifelineRequired__c} &amp;&amp; {!adviceChecklist.IsTimelineRequired__c}, &quot;ILLUSTRATIONS_LIFELINE_TIMELINE&quot;, 
@@ -3711,6 +3720,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <name>taskType</name>
             <value>
                 <elementReference>task.OW_task_information_name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>EmailToSend</name>
+            <value>
+                <elementReference>EmailToSend</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
