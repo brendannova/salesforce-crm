@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_tasks</name>
+        <label>Create tasks</label>
+        <locationX>1986</locationX>
+        <locationY>4709</locationY>
+        <actionName>FlowUtilityTaskCreateList</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>taskRequests</name>
+            <value>
+                <elementReference>taskRequests</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityTaskCreateList</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Add_to_task_requests</name>
@@ -18,10 +36,70 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Add_to_task_requests_initial_status_task</name>
+        <label>Add to task requests</label>
+        <locationX>886</locationX>
+        <locationY>3383</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequests</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>taskRequest</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SLA_applies</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Define_initial_status_task</name>
+        <label>Define initial status task</label>
+        <locationX>886</locationX>
+        <locationY>3275</locationY>
+        <assignmentItems>
+            <assignToReference>taskRequest.householdId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.relatedAnnualReview</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.OW_review__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.relatedAdviceId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.taskType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceTypeStatus.Task__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>taskRequest.whatId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_task_requests_initial_status_task</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Define_new_SLA</name>
         <label>Define new SLA</label>
         <locationX>886</locationX>
-        <locationY>3575</locationY>
+        <locationY>3683</locationY>
         <assignmentItems>
             <assignToReference>slaTypesStart</assignToReference>
             <operator>Add</operator>
@@ -81,7 +159,7 @@
         <name>Define_SLA_to_close</name>
         <label>Define SLA to close</label>
         <locationX>1018</locationX>
-        <locationY>3767</locationY>
+        <locationY>3875</locationY>
         <assignmentItems>
             <assignToReference>statusNew</assignToReference>
             <operator>Assign</operator>
@@ -733,7 +811,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_initial_status_task</targetReference>
+                <targetReference>Define_initial_status_task</targetReference>
             </connector>
             <label>Yes, create</label>
         </rules>
@@ -888,7 +966,7 @@
         <name>SLA_applies</name>
         <label>SLA applies?</label>
         <locationX>1018</locationX>
-        <locationY>3467</locationY>
+        <locationY>3575</locationY>
         <defaultConnector>
             <targetReference>Define_SLA_to_close</targetReference>
         </defaultConnector>
@@ -939,8 +1017,8 @@
     <decisions>
         <name>SLA_outcome</name>
         <label>SLA outcome</label>
-        <locationX>2184</locationX>
-        <locationY>4259</locationY>
+        <locationX>2118</locationX>
+        <locationY>4367</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>FlowFaultError</targetReference>
@@ -956,6 +1034,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Create_tasks</targetReference>
+            </connector>
             <label>Success</label>
         </rules>
     </decisions>
@@ -963,7 +1044,7 @@
         <name>SLA_processing_needed</name>
         <label>SLA processing needed?</label>
         <locationX>1986</locationX>
-        <locationY>4043</locationY>
+        <locationY>4151</locationY>
         <defaultConnector>
             <targetReference>Manage_SLAs</targetReference>
         </defaultConnector>
@@ -985,6 +1066,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Create_tasks</targetReference>
+            </connector>
             <label>Not needed</label>
         </rules>
     </decisions>
@@ -1132,6 +1216,10 @@ If advice type is changed, we also need to close any orchestration tasks for the
         <label>Status</label>
         <locationX>1172</locationX>
         <locationY>2603</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Create_tasks</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>No change</defaultConnectorLabel>
         <rules>
             <name>Advice_type_changed</name>
@@ -1513,45 +1601,10 @@ If advice type is changed, we also need to close any orchestration tasks for the
     </start>
     <status>Active</status>
     <subflows>
-        <name>Create_initial_status_task</name>
-        <label>Create initial status task</label>
-        <locationX>886</locationX>
-        <locationY>3275</locationY>
-        <connector>
-            <targetReference>SLA_applies</targetReference>
-        </connector>
-        <flowName>OW_task_create_from_task_information</flowName>
-        <inputAssignments>
-            <name>household_id</name>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>related_advice_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>task_type</name>
-            <value>
-                <elementReference>adviceTypeStatus.Task__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>what_id</name>
-            <value>
-                <elementReference>adviceId</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
         <name>Manage_SLAs</name>
         <label>Manage SLAs</label>
-        <locationX>2184</locationX>
-        <locationY>4151</locationY>
+        <locationX>2118</locationX>
+        <locationY>4259</locationY>
         <connector>
             <targetReference>SLA_outcome</targetReference>
         </connector>
