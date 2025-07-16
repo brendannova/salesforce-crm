@@ -298,6 +298,13 @@
                     <stringValue>Await fact find</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.OW_advice__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Define_send_annual_review_fact_find_email_task</targetReference>
             </connector>
