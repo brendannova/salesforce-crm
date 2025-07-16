@@ -143,7 +143,7 @@
         <name>Advice_updatesSkipped</name>
         <label>Advice updates</label>
         <locationX>1898</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>adviceUpdated.RiskCallStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -1673,7 +1673,7 @@ ADVICE_ANNUAL_REVIEW_PREPARE</description>
         <name>Ready_for_review_catch_up</name>
         <label>Ready for review catch up?</label>
         <locationX>2030</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <defaultConnectorLabel>Not ready</defaultConnectorLabel>
         <rules>
             <name>Ready</name>
@@ -2950,6 +2950,48 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Post_annual_review_fact_find_additional_questions</name>
+        <label>Post annual review fact find additional questions</label>
+        <locationX>2030</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Ready_for_review_catch_up</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmOtherPostArffTasks</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Proceed when you have completed the following.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ValuationsUpdatesRequested</name>
+            <choiceReferences>Yes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Valuations updates requested</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isDisabled>
+                <booleanValue>false</booleanValue>
+            </isDisabled>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>HubwiseAmlInformationRequested</name>
+            <choiceReferences>Yes</choiceReferences>
+            <choiceReferences>Not_required</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Hubwise AML information requested if applicable</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;Only request the information if we do not already have it to hand. &lt;/p&gt;</helpText>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Resolve_partner_deck_comments</name>
         <label>Resolve partner deck comments</label>
         <locationX>11842</locationX>
@@ -3113,7 +3155,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <locationX>2030</locationX>
         <locationY>350</locationY>
         <connector>
-            <targetReference>Ready_for_review_catch_up</targetReference>
+            <targetReference>Post_annual_review_fact_find_additional_questions</targetReference>
         </connector>
         <flowName>AdviceOrchestrationDataGathering</flowName>
         <inputAssignments>
