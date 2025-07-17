@@ -1,5 +1,10 @@
+/**
+ * This data factory class supports creating users in a repeatable manner. 
+ * It should be expanded to support other use cases in time such as other profile types. 
+ */
 public without sharing class DataFactoryUser {
 
+    // Constants to support this class, particularly the BASE_USER, which simplifies creation by prepopulating tricky required fields
     private static final String PROFILE_NAME_SYSTEM_ADMINISTRATOR = 'System Administrator';
     private static final String PROFILE_NAME_NOVA_COLLEAGUE = 'Nova colleague';
     private static final User BASE_USER = new User(
@@ -14,18 +19,21 @@ public without sharing class DataFactoryUser {
         UserType__c = 'COLLEAGUE'
     );
 
+    // Create a single admin
     public static User createAdmin(String username){
         User user = defineUser(PROFILE_NAME_SYSTEM_ADMINISTRATOR, username);
         insert user;
         return user;
     }
-    
+
+    // Create a single colleague
     public static User createColleague(String username) {
         User user = defineUser(PROFILE_NAME_NOVA_COLLEAGUE, username);
         insert user;
         return user;
     }
 
+    // Create multiple colleagues
     public static List<User> createColleagues(List<String> usernames) {
         List<User> users = new List<User>();
         for(String username : usernames){
@@ -35,6 +43,7 @@ public without sharing class DataFactoryUser {
         return users;
     }
 
+    // Define a base user
     private static User defineUser(String userProfile, String username){
         User user = BASE_USER.clone();
         user.Username = username;
@@ -47,6 +56,7 @@ public without sharing class DataFactoryUser {
         return user;
     }
 
+    // Get the system administrator profile
     public static profile PROFILE_SYSTEM_ADMINISTRATOR {
         get{
             if(PROFILE_SYSTEM_ADMINISTRATOR == null){
@@ -57,6 +67,7 @@ public without sharing class DataFactoryUser {
         set;
     }
 
+    // Get the Nova colleague profile
     public static profile PROFILE_NOVA_COLLEAGUE {
         get{
             if(PROFILE_NOVA_COLLEAGUE == null){
