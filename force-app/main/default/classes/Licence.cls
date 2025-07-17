@@ -1,11 +1,17 @@
+/**
+ * This class handles logic for returning users who are licensed. 
+ * It should be expanded in time to handle other scenarios and support licensing use cases, like finding unlicensed users, adding and removing licences etc. 
+ */
 public without sharing class Licence {
 
+    // Get all users for a single licence
     public static List<User> getLicensedUsers(String licenceDeveloperName){
         Set<String> licenceDeveloperNames = new Set<String>{licenceDeveloperName};
         Map<String, List<User>> usersByLicence = getLicensedUsers(licenceDeveloperNames);
         return usersByLicence.get(licenceDeveloperName);
     }
 
+    // Get all users for a collection of licences
     public static Map<String, List<User>> getLicensedUsers(Set<String> licenceDeveloperNames){
         Map<String, List<User>> usersByLicence = new Map<String, List<User>>();
         for(String licenceDeveloperName : licenceDeveloperNames){
