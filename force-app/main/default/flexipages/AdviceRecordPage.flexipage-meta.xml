@@ -264,27 +264,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Advice__c.SendLoaUpdate</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND (2 OR 3)</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!$Permission.CustomPermission.OW_can_send_loa_update_email}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>true</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Data gathering</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Advice_Status__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Risk Call</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Advice__c.ChangeComplianceReviewStatus</value>
                         </valueListItems>
                         <valueListItems>
@@ -299,9 +278,6 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Advice__c.ManageConflictOfInterest</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Advice__c.ConvertLoas</value>
                         </valueListItems>
                         <valueListItems>
                             <value>Advice__c.CreateNewEmail</value>
