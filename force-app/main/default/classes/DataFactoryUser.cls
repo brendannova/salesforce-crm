@@ -14,7 +14,7 @@ public with sharing class DataFactoryUser {
         UserType__c = 'COLLEAGUE'
     );
     
-    public user createColleague(String username) {
+    public static user createColleague(String username) {
         User user = BASE_USER.clone();
         user.ProfileId = PROFILE_NOVA_COLLEAGUE.Id;
         user.Username = username;
@@ -23,7 +23,7 @@ public with sharing class DataFactoryUser {
         return user;
     }
 
-    public user createAdmin(String username){
+    public static user createAdmin(String username){
         User user = BASE_USER.clone();
         user.ProfileId = PROFILE_SYSTEM_ADMINISTRATOR.Id;
         user.Username = username;
