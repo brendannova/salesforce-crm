@@ -14,9 +14,9 @@ public class FlowUtilityGetLicensedUsersTest {
         requests.add(request);
         List<FlowUtilityGetLicensedUsers.FlowOutputs> results = FlowUtilityGetLicensedUsers.processRequests(requests);
         for(FlowUtilityGetLicensedUsers.FlowOutputs result : results) {
-            System.assertEquals(LicenceTest.USERNAMES.size(), result.licensedUsers.size(), 'Unexpected number of licenced users');
+            System.assertEquals(LicenceTest.USERNAMES.size(), result.licensedUsers.size(), 'Unexpected number of licensed users');
             for(User user : result.licensedUsers) {
-                System.assert(LicenceTest.USERNAMES.contains(user.Username), 'Licenced users not as expected');
+                System.assert(LicenceTest.USERNAMES.contains(user.Username), 'Licensed users not as expected');
             }
         }
     }

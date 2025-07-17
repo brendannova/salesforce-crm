@@ -1,7 +1,7 @@
 @IsTest
 public class LicenceTest {
 
-    @TestVisible private static final List<String> USERNAMES = new List<String>{'licencedcolleague1@test.novawm.com', 'licencedcolleague2@test.novawm.com', 'licencedcolleague3@test.novawm.com'};
+    @TestVisible private static final List<String> USERNAMES = new List<String>{'licensedcolleague1@test.novawm.com', 'licensedcolleague2@test.novawm.com', 'licensedcolleague3@test.novawm.com'};
     @TestVisible private static final String LICENCE_DEVELOPER_NAME = 'ADVICE_WRITE_TOP_UP';
     
     @TestSetup
@@ -10,7 +10,7 @@ public class LicenceTest {
     }
 
     public static void setUpLicenceTestData(){
-        List<User> licencedColleagues = DataFactoryUser.createColleagues(usernames);
+        List<User> licensedColleagues = DataFactoryUser.createColleagues(usernames);
         Licence__c licence = new Licence__c(
             Name = 'Test licence',
             DeveloperName__c = LICENCE_DEVELOPER_NAME,
@@ -20,9 +20,9 @@ public class LicenceTest {
         insert licence;
 
         List<UserLicence__c> userLicences = new List<UserLicence__c>();
-        for(User licencedColleague : licencedColleagues){
+        for(User licensedColleague : licensedColleagues){
             UserLicence__c userLicence = new UserLicence__c(
-                User__c = licencedColleague.Id,
+                User__c = licensedColleague.Id,
                 Licence__c = licence.Id,
                 IsActive__c = true
             );
@@ -40,7 +40,7 @@ public class LicenceTest {
         for(User licensedUser : licensedUsers){
             System.assert(USERNAMES.contains(licensedUser.Username));
         }
-        System.assertEquals(USERNAMES.size(), licensedUsers.size(), 'Unexpected number of licenced users');
+        System.assertEquals(USERNAMES.size(), licensedUsers.size(), 'Unexpected number of licensed users');
     }
 
     @IsTest
@@ -52,7 +52,7 @@ public class LicenceTest {
         update licensedUsers;
         
         licensedUsers = Licence.getLicensedUsers(LICENCE_DEVELOPER_NAME);
-        System.assertEquals(0, licensedUsers.size(), 'Expected 0 licenced users');
+        System.assertEquals(0, licensedUsers.size(), 'Expected 0 licensed users');
     }
 
     @IsTest
@@ -64,6 +64,6 @@ public class LicenceTest {
         update userLicences;
         
         List<User> licensedUsers = Licence.getLicensedUsers(LICENCE_DEVELOPER_NAME);
-        System.assertEquals(0, licensedUsers.size(), 'Expected 0 licenced users');
+        System.assertEquals(0, licensedUsers.size(), 'Expected 0 licensed users');
     }
 }
