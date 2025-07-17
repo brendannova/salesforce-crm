@@ -51,7 +51,8 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>CompleteScreen</targetReference>
+            <isGoTo>true</isGoTo>
+            <targetReference>Roll_back_changes</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -97,7 +98,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>taskRequest.relatedAdviceId</assignToReference>
+            <assignToReference>taskRequest.whatId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>adviceId</elementReference>
@@ -728,7 +729,7 @@
         <name>CompleteScreen</name>
         <label>Complete screen</label>
         <locationX>622</locationX>
-        <locationY>4214</locationY>
+        <locationY>4280</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
