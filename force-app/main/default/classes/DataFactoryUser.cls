@@ -1,4 +1,4 @@
-public with sharing class DataFactoryUser {
+public without sharing class DataFactoryUser {
 
     private static final String PROFILE_NAME_SYSTEM_ADMINISTRATOR = 'System Administrator';
     private static final String PROFILE_NAME_NOVA_COLLEAGUE = 'Nova colleague';
@@ -13,26 +13,41 @@ public with sharing class DataFactoryUser {
         TimeZoneSidKey = 'Europe/London',
         UserType__c = 'COLLEAGUE'
     );
+
+    public static User createAdmin(String username){
+        User user = defineUser(PROFILE_NAME_SYSTEM_ADMINISTRATOR, username);
+        insert user;
+        return user;
+    }
     
-    public static user createColleague(String username) {
-        User user = BASE_USER.clone();
-        user.ProfileId = PROFILE_NOVA_COLLEAGUE.Id;
-        user.Username = username;
-        user.Email = username;
+    public static User createColleague(String username) {
+        User user = defineUser(PROFILE_NAME_NOVA_COLLEAGUE, username);
         insert user;
         return user;
     }
 
-    public static user createAdmin(String username){
+    public static List<User> createColleagues(List<String> usernames) {
+        List<User> users = new List<User>();
+        for(String username : usernames){
+            users.add(defineUser(PROFILE_NAME_NOVA_COLLEAGUE, username));
+        }
+        insert users;
+        return users;
+    }
+
+    private static User defineUser(String userProfile, String username){
         User user = BASE_USER.clone();
-        user.ProfileId = PROFILE_SYSTEM_ADMINISTRATOR.Id;
         user.Username = username;
         user.Email = username;
-        insert user;
+        if(userProfile == PROFILE_NAME_SYSTEM_ADMINISTRATOR){
+            user.ProfileId = PROFILE_SYSTEM_ADMINISTRATOR.Id;
+        } else {
+            user.ProfileId = PROFILE_NOVA_COLLEAGUE.Id;
+        }
         return user;
     }
 
-    public profile PROFILE_SYSTEM_ADMINISTRATOR {
+    public static profile PROFILE_SYSTEM_ADMINISTRATOR {
         get{
             if(PROFILE_SYSTEM_ADMINISTRATOR == null){
                 PROFILE_SYSTEM_ADMINISTRATOR = [SELECT Id FROM Profile WHERE Name = :PROFILE_NAME_SYSTEM_ADMINISTRATOR LIMIT 1];
@@ -42,7 +57,7 @@ public with sharing class DataFactoryUser {
         set;
     }
 
-    public profile PROFILE_NOVA_COLLEAGUE {
+    public static profile PROFILE_NOVA_COLLEAGUE {
         get{
             if(PROFILE_NOVA_COLLEAGUE == null){
                 PROFILE_NOVA_COLLEAGUE = [SELECT Id FROM Profile WHERE Name = :PROFILE_NAME_NOVA_COLLEAGUE LIMIT 1];
