@@ -29,8 +29,7 @@ public with sharing class GroupsTest {
         insert userRoleSub;
         
         // Insert a new user in the test role
-        DataFactoryUser dfu = new DataFactoryUser();
-        User testUser = dfu.createColleague('testuser.fake@novawm.com.testuser');
+        User testUser = DataFactoryUser.createColleague('testuser.fake@novawm.com.testuser');
         
         // Create group membership for the user, sub-group, role, and role and subordinate
         List<GroupMember> groupMembers = new List<GroupMember>();
