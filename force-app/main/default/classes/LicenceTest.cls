@@ -13,9 +13,7 @@ public class LicenceTest {
         List<User> licensedColleagues = DataFactoryUser.createColleagues(usernames);
         Licence__c licence = new Licence__c(
             Name = 'Test licence',
-            DeveloperName__c = LICENCE_DEVELOPER_NAME,
-            Type__c = 'ADVICE_WRITE',
-            Reference__c = 'TOP_UP'
+            DeveloperName__c = LICENCE_DEVELOPER_NAME
         );
         insert licence;
 
