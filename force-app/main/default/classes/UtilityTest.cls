@@ -44,9 +44,9 @@ public class UtilityTest {
     static void checkSandboxName_success(){
         String sandboxName = Utility.sandboxName;
         if(Utility.isSandbox){
-            System.assert(!String.isBlank(sandboxName), 'Expected a sandbox name but blank string returned');
+            System.assert(String.isNotBlank(sandboxName), 'Expected a sandbox name but blank string returned');
         } else {
-            System.assertEquals(null, sandboxName, 'Expected null sandbox name but a value was returned');
+            System.assert(String.isBlank(sandboxName), 'Expected no sandbox name but a value was returned');
         }
         
     }
