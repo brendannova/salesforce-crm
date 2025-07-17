@@ -1,7 +1,7 @@
 /**
  * This class exposes the licence class to flow so that a list of users with a licence can be retrieved.
  */
-public with sharing class FlowUtilityGetLicencedUsers {
+public with sharing class FlowUtilityGetLicensedUsers {
     
     // The inputs provided by the flow
     public class FlowInputs {
@@ -12,7 +12,7 @@ public with sharing class FlowUtilityGetLicencedUsers {
     // The outputs returned to the flow
     public class FlowOutputs {
         @InvocableVariable(label='Licenced users' description='The users who are assigned the licenced' required=true)
-        public List<User> licencedUsers;
+        public List<User> licensedUsers;
     }
     
     // The invocable method exposed to the flow. This simply call another method to get the results, where the processing is done. 
@@ -28,13 +28,13 @@ public with sharing class FlowUtilityGetLicencedUsers {
         for(FlowInputs request : requests){
             licenceDeveloperNames.add(request.licenceDeveloperName);
         }
-        Map<String, List<User>> usersByLicence = Licence.getLicencedUsers(licenceDeveloperNames);
+        Map<String, List<User>> usersByLicence = Licence.getLicensedUsers(licenceDeveloperNames);
            
         // Construct the results
         List<FlowOutputs> results = new List<FlowOutputs>();
         for(FlowInputs request : requests){
             FlowOutputs result = new FlowOutputs();
-            result.licencedUsers = usersByLicence.get(request.licenceDeveloperName);
+            result.licensedUsers = usersByLicence.get(request.licenceDeveloperName);
             results.add(result);
         }
         return results;

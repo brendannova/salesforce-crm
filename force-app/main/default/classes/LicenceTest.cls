@@ -35,35 +35,35 @@ public class LicenceTest {
     
 
     @IsTest
-    static void getLicencedUsers_success(){
-        List<User> licencedUsers = Licence.getLicencedUsers(LICENCE_DEVELOPER_NAME);
-        for(User licencedUser : licencedUsers){
-            System.assert(USERNAMES.contains(licencedUser.Username));
+    static void getLicensedUsers_success(){
+        List<User> licensedUsers = Licence.getLicensedUsers(LICENCE_DEVELOPER_NAME);
+        for(User licensedUser : licensedUsers){
+            System.assert(USERNAMES.contains(licensedUser.Username));
         }
-        System.assertEquals(USERNAMES.size(), licencedUsers.size(), 'Unexpected number of licenced users');
+        System.assertEquals(USERNAMES.size(), licensedUsers.size(), 'Unexpected number of licenced users');
     }
 
     @IsTest
-    static void getLicencedUsersExcludesInactiveUser_success(){
-        List<User> licencedUsers = [SELECT Id, IsActive FROM User WHERE Username IN :USERNAMES];
-        for(User licencedUser : licencedUsers){
-            licencedUser.IsActive = false;
+    static void getLicensedUsersExcludesInactiveUser_success(){
+        List<User> licensedUsers = [SELECT Id, IsActive FROM User WHERE Username IN :USERNAMES];
+        for(User licensedUser : licensedUsers){
+            licensedUser.IsActive = false;
         }
-        update licencedUsers;
+        update licensedUsers;
         
-        licencedUsers = Licence.getLicencedUsers(LICENCE_DEVELOPER_NAME);
-        System.assertEquals(0, licencedUsers.size(), 'Expected 0 licenced users');
+        licensedUsers = Licence.getLicensedUsers(LICENCE_DEVELOPER_NAME);
+        System.assertEquals(0, licensedUsers.size(), 'Expected 0 licenced users');
     }
 
     @IsTest
-    static void getLicencedUsersExcludesInactiveLicences_success(){
+    static void getLicensedUsersExcludesInactiveLicences_success(){
         List<UserLicence__c> userLicences = [SELECT Id, IsActive__c FROM UserLicence__c];
         for(UserLicence__c userLicence : userLicences){
             userLicence.IsActive__c = false;
         }
         update userLicences;
         
-        List<User> licencedUsers = Licence.getLicencedUsers(LICENCE_DEVELOPER_NAME);
-        System.assertEquals(0, licencedUsers.size(), 'Expected 0 licenced users');
+        List<User> licensedUsers = Licence.getLicensedUsers(LICENCE_DEVELOPER_NAME);
+        System.assertEquals(0, licensedUsers.size(), 'Expected 0 licenced users');
     }
 }

@@ -1,12 +1,12 @@
 public without sharing class Licence {
 
-    public static List<User> getLicencedUsers(String licenceDeveloperName){
+    public static List<User> getLicensedUsers(String licenceDeveloperName){
         Set<String> licenceDeveloperNames = new Set<String>{licenceDeveloperName};
-        Map<String, List<User>> usersByLicence = getLicencedUsers(licenceDeveloperNames);
+        Map<String, List<User>> usersByLicence = getLicensedUsers(licenceDeveloperNames);
         return usersByLicence.get(licenceDeveloperName);
     }
 
-    public static Map<String, List<User>> getLicencedUsers(Set<String> licenceDeveloperNames){
+    public static Map<String, List<User>> getLicensedUsers(Set<String> licenceDeveloperNames){
         Map<String, List<User>> usersByLicence = new Map<String, List<User>>();
         for(String licenceDeveloperName : licenceDeveloperNames){
             usersByLicence.put(licenceDeveloperName, new List<User>());
