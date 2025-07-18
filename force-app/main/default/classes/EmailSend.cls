@@ -1,12 +1,19 @@
+/**
+ * This class handles the sending of emails from Nova to customers, using a variety of methods to ensure consistency over who gets addressed, copied etc. 
+ * It works in conjuction with email templates and Apex components and their controllers to produce content. 
+ */
 public without sharing class EmailSend{
 
     final private static String SENDING_PROCESS_AUTOMATIC = 'AUTOMATIC';
     final private static String ONE_REQUEST_ERROR = 'Only one request allowed. This method does not support bulk emails yet.';
     
+    // A simple method responsible for sending emails
     private void sendEmails(List<Messaging.SingleEmailMessage> emails){
         List<Messaging.SendEmailResult> emailSendResults = Messaging.sendEmail(emails, true);
+        // To-do: work through the results to determine if everything was successful
     }
     
+    // The request wrapper that needs to be provided for the correct email to generate
     public class EmailSendRequestAutomatic {
         public String emailTemplateDeveloperName;               // The email template
         public Id targetObjectId;                               // The core recipient
@@ -15,6 +22,7 @@ public without sharing class EmailSend{
         public Boolean saveAsActivity;                          // Set as activity    
     }
     
+    // 
     public void sendAutomaticTemplatedEmailCustomSubject(List<EmailSendRequestAutomatic> requests) {
         if( requests.size() > 1 ) {
             throw new EmailSendException(ONE_REQUEST_ERROR); 
