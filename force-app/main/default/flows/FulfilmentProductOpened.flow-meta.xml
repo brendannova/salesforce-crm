@@ -134,6 +134,11 @@
         <expression>SUBSTITUTE({!Loop_through_tasks},&quot; &quot;,&quot;&quot;)</expression>
     </formulas>
     <formulas>
+        <name>newAuditLog</name>
+        <dataType>String</dataType>
+        <expression>{!fulfilment.TasksAuditLog__c} &amp;BR() + {!$User.FirstName} + &quot; &quot; + {!$User.LastName} + &quot;: &quot; + {!Get_fulfilment_type_status.Tasks__c}</expression>
+    </formulas>
+    <formulas>
         <name>stopInternalChangeProcessing</name>
         <dataType>Number</dataType>
         <expression>{!fulfilment.Recommendation__r.DestinationLegacy__r.OW_stop_internal_change_processing__c} + 1</expression>
@@ -271,6 +276,12 @@
                 <stringValue>Open</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>IO_Plan_ID__c</field>
+            <value>
+                <elementReference>Plan_IO_ID</elementReference>
+            </value>
+        </inputAssignments>
         <object>FinServ__FinancialAccount__c</object>
     </recordUpdates>
     <recordUpdates>
@@ -309,6 +320,12 @@
             <field>SubmittedBy__c</field>
             <value>
                 <elementReference>$User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TasksAuditLog__c</field>
+            <value>
+                <elementReference>newAuditLog</elementReference>
             </value>
         </inputAssignments>
         <object>Fulfilment__c</object>
@@ -357,6 +374,14 @@
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Plan_IO_ID</name>
+            <dataType>String</dataType>
+            <fieldText>Plan IO ID</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>tasksToComplete</name>

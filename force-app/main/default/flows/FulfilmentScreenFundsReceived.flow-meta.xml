@@ -91,6 +91,22 @@
             <targetReference>Update_product</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>YesChoice</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Do_we_have_fulfilment</name>
         <label>Do we have fulfilment?</label>
@@ -251,9 +267,19 @@
         <expression>SUBSTITUTE({!Text_output}, &quot; &quot;, &quot;&quot;)</expression>
     </formulas>
     <formulas>
+        <name>newAuditLog</name>
+        <dataType>String</dataType>
+        <expression>{!fulfilment.TasksAuditLog__c} &amp;BR() + {!$User.FirstName} + &quot; &quot; + {!$User.LastName} + &quot;: &quot; + {!Get_fulfilment_type_status.Tasks__c}</expression>
+    </formulas>
+    <formulas>
         <name>productStatus</name>
         <dataType>String</dataType>
         <expression>IF(AND(OR({!Get_recommendation.RecommendationTypeName__c}=&quot;External transfer in&quot;, {!Get_recommendation.RecommendationTypeName__c}=&quot;Internal transfer&quot;  ),ISPICKVAL({!Get_recommendation.TransferType__c}, &quot;Full&quot;)), &quot;Closed&quot;, &quot;Open&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>residualCash</name>
+        <dataType>String</dataType>
+        <expression>IF({!Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer}==&#39;Yes&#39;, &#39;Some&#39;, &#39;None&#39;)</expression>
     </formulas>
     <formulas>
         <name>stopInternalChangeProcessingDestination</name>
@@ -520,9 +546,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ResidualCash__c</field>
+            <value>
+                <elementReference>residualCash</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status__c</field>
             <value>
                 <stringValue>Investment checks</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TasksAuditLog__c</field>
+            <value>
+                <elementReference>newAuditLog</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -740,6 +778,27 @@
                             <operator>NotEqualTo</operator>
                             <rightValue>
                                 <stringValue>Not Applicable</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer</name>
+                    <choiceReferences>YesChoice</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>YesChoice</defaultSelectedChoiceReference>
+                    <fieldText>Is there any residual cash that will be sent as part of this transfer?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Today_s_value_of_source</leftValueReference>
+                            <operator>GreaterThan</operator>
+                            <rightValue>
+                                <numberValue>0.0</numberValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
