@@ -42,20 +42,6 @@
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <name>sidebar</name>
-        <type>Region</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Donor__c</fieldItem>
-                <identifier>RecordDonor_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -64,6 +50,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Type__c</fieldItem>
                 <identifier>RecordType_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Donor__c</fieldItem>
+                <identifier>RecordDonor_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-37bfb7dc-aa6d-40d1-8242-46c0d3093426</name>
@@ -290,6 +286,9 @@
                         <valueListItems>
                             <value>NAME</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Attorney__c</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -336,7 +335,7 @@
     <masterLabel>Power of attorney Page</masterLabel>
     <sobjectType>PowerOfAttorney__c</sobjectType>
     <template>
-        <name>flexipage:recordHomeLeftSidebarTemplateDesktop</name>
+        <name>flexipage:recordHomeSingleColTemplateDesktop</name>
         <properties>
             <name>enablePageActionConfig</name>
             <value>false</value>

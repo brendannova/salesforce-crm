@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PowerOfAttorney</fullName>
+    <active>true</active>
+    <businessProcess>Standard</businessProcess>
+    <description>Used for adding a record of a new POA document</description>
+    <label>Power of Attorney</label>
+    <picklistValues>
+        <picklist>ChangeApprovalStatus__c</picklist>
+        <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recalled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rejected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CreatedSource__c</picklist>
+        <values>
+            <fullName>Email-to-case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manual</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DeathCertificateReceived__c</picklist>
+        <values>
+            <fullName>Hard copy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scanned copy</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DocumentProof__c</picklist>
+        <values>
+            <fullName>NOT_NEEDED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOT_REQUESTED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECEIVED_SAVED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>REQUESTED</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EmailStatus__c</picklist>
+        <values>
+            <fullName>Email in approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email in draft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holding email sent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OW_subtype__c</picklist>
+        <values>
+            <fullName>Record</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OffboardingType__c</picklist>
+        <values>
+            <fullName>Full</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Platform__c</picklist>
+        <values>
+            <fullName>Curtis banks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hubwise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transact</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>CIVIL_PARTNERSHIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complex functionality</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIVORCE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERROR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instructions not clear</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MARRIAGE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTHER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User didn%27t attend training</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ReasonsForLeaving__c</picklist>
+        <values>
+            <fullName>Became disengaged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer deceased</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fees too high</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lost to competitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No longer require service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Remaining with existing adviser</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self-managing finances</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service took too long</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transferred to Octopus Money</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unsatisfied with service</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SlaStatus__c</picklist>
+        <values>
+            <fullName>Approaching violation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inside SLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>N%2FA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outside SLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paused</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Team__c</picklist>
+        <values>
+            <fullName>Operations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Planning</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>OTHER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Record new POA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>WhoIsAtFault__c</picklist>
+        <values>
+            <fullName>Hubwise operational error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nova operational error</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

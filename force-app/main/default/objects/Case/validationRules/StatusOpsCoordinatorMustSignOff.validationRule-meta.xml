@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>StatusOpsCoordinatorMustSignOff</fullName>
     <active>true</active>
-    <description>Ensures case can&apos;t be completed unless the coordinator has signed off</description>
+    <description>Ensures case can&#39;t be completed unless the coordinator has signed off</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
 &amp;&amp;
 RecordType.DeveloperName = &quot;Offboarding&quot;
@@ -13,5 +13,5 @@ NOT(CoordinatorSignOff__c)
 &amp;&amp;
 (ISPICKVAL(Status, &quot;Complete&quot;) ||
 ISPICKVAL(Status, &quot;Cancelled&quot;))</errorConditionFormula>
-    <errorMessage>Cases can&apos;t be completed unless the co-ordinator has signed them off</errorMessage>
+    <errorMessage>Cases can&#39;t be completed unless the co-ordinator has signed them off</errorMessage>
 </ValidationRule>
