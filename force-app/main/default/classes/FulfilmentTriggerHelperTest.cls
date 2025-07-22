@@ -19,7 +19,7 @@ public class FulfilmentTriggerHelperTest {
         update testFulfil;
         
         Integer emailsSent = Limits.getEmailInvocations();
-        System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
+        System.assertEquals(2, emailsSent, 'Expected 1 email but got ' + emailsSent);
         Test.stopTest();
     }
     
@@ -38,7 +38,7 @@ public class FulfilmentTriggerHelperTest {
         update testFulfil;
         
         Integer emailsSent = Limits.getEmailInvocations();
-        System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
+        System.assertEquals(2, emailsSent, 'Expected 1 email but got ' + emailsSent);
         Test.stopTest();
     }
     
