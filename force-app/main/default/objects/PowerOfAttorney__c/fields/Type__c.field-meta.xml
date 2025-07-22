@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>Indicates which kind of POA this represents</description>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lasting Power Of Attorney (Health &amp; Welfare)</fullName>
+                <default>false</default>
+                <label>Lasting Power Of Attorney (Health &amp; Welfare)</label>
+            </value>
+            <value>
+                <fullName>Lasting Power Of Attorney (Property &amp; Financial Affairs)</fullName>
+                <default>false</default>
+                <label>Lasting Power Of Attorney (Property &amp; Financial Affairs)</label>
+            </value>
+            <value>
+                <fullName>Ordinary Power Of Attorney</fullName>
+                <default>false</default>
+                <label>Ordinary Power Of Attorney</label>
+            </value>
+            <value>
+                <fullName>Enduring Power Of Attorney</fullName>
+                <default>false</default>
+                <label>Enduring Power Of Attorney</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
