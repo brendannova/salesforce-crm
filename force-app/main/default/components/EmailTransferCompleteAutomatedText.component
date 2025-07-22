@@ -1,26 +1,25 @@
-<apex:component controller="EmailPensionTransferCompleteAutomated" access="global">
-    <apex:attribute name="objectIdValue" type="String" description="This is the ID of the record" assignTo="{!objectId}" access="global" />
+<apex:component access="global">
 	<style type="text/css">
 		p {
   			font-size: 18px;
 		}
 		.residual-cash {
-			display: {!IF(residualCash, '', 'none')};  /* If there is no residual cash, we'll hide the residual cash message */
+			display: &#123;&#123;residualCashDisplay&#125;&#125;;  /* If there is no residual cash, we'll hide the residual cash message */
 		}
 	</style>
 	<c:EmailHeaderTeam/>
     <body style="mso-line-height-rule: exactly; height: 100%; margin: 0; padding: 0; width: 100%;">
 		<div id="app" role="article" aria-label="An email from NOVA Wealth" lang="en" style="background-color: #1d1d1b; background-color: #FFFFFF; color: #0E1E0F; font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 18px; font-weight: 400; line-height: 28px; margin: 0 auto; max-width: 720px; padding: 40px 20px 40px 20px;">
 			<main style="font-size: 18px;">
-				<p><c:EmailHiLine objectIdValue="001Qz00000KyeFMIAZ" emailTemplateDevNameValue="CancellationNotice"></c:EmailHiLine></p>
-				<p>Good news. We’ve completed the {!partialString} transfer of {!finProdNameSource} to {!finProdNameDestination}.</p>
+				<p>&#123;&#123;hiLine&#125;&#125;</p>
+				<p>Good news. We’ve completed the &#123;&#123;partialString&#125;&#125; transfer of &#123;&#123;financialProductNameSource&#125;&#125; to &#123;&#123;financialProductNameDestination&#125;&#125;.</p>
 				<p>You can monitor the ongoing value of your assets through <a href="https://portal.novawm.com/">your portal</a> and this will be updated in the coming days.</p>
 				<div class="residual-cash">
 					<p>There is residual cash remaining with the ceding provider, which we expect will transfer in the future. We will update your portal once this is received.</p>
 				</div>
 				<h3>Your right to change your mind</h3>
-				<p>Now that {!finProdNameSource} has been successfully transferred to {!finProdNameDestination}, it is important to notify you of your right to change your mind.</p>
-				<p>You have the right to a period of reflection to consider the commitment you have made and to change your mind if you so wish. You have a period of <span style="font-weight: 600" >30 days from {!dateString}</span> to do this.</p>
+				<p>Now that &#123;&#123;financialProductNameSource&#125;&#125; has been successfully transferred to &#123;&#123;financialProductNameDestination&#125;&#125;, it is important to notify you of your right to change your mind.</p>
+				<p>You have the right to a period of reflection to consider the commitment you have made and to change your mind if you so wish. You have a period of <span style="font-weight: 600" >30 days from &#123;&#123;dateTodayString&#125;&#125;</span> to do this.</p>
 				<p><div style="font-weight: 600" >If you do wish to cancel this transfer, please email your adviser to notify them as such.</div></p>
 				<p>
 					If you change your mind about transferring pension benefits to us, we will try and send the funds back to the ceding scheme. 
