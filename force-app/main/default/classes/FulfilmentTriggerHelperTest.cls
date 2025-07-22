@@ -10,18 +10,7 @@ public class FulfilmentTriggerHelperTest {
     static void runTestCancellationNotice(){
         System.debug('runTestCancellationNotice');
         Id householdId = createData();
-        Fulfilment__c testFulfil = [SELECT 
-                                    Id 
-                                    FROM 
-                                    Fulfilment__c 
-                                    WHERE
-                                    Recommendation__r.Product__r.ReferenceName__c = 'SIPP_HUBWISE'
-                                    AND
-                                    Recommendation__r.RecommendationType__r.ReferenceName__c = 'OPEN_PRODUCT'
-                                    AND 
-                                    Household__c =: householdId
-                                    LIMIT 1
-                                   ];
+        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.ReferenceName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.ReferenceName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
 
 		testFulfil.Status__c = 'Investment checks';
 		update testFulfil;
@@ -38,27 +27,9 @@ public class FulfilmentTriggerHelperTest {
     static void runTestTransferComplete() {
         System.debug('runTestTransferComplete');
         Id householdId = createData();
-        List<Fulfilment__c> fulfilments = [SELECT 
-                                           Id, 
-                                           SearchName__c,
-                                           Recommendation__r.Product__r.ReferenceName__c,
-                                           Recommendation__r.RecommendationType__r.ReferenceName__c 
-                                           FROM Fulfilment__c 
-                                           WHERE Advice__r.Advice_Household__c =: householdId 
-                                          ];
+        List<Fulfilment__c> fulfilments = [SELECT Id, SearchName__c, Recommendation__r.Product__r.ReferenceName__c, Recommendation__r.RecommendationType__r.ReferenceName__c FROM Fulfilment__c WHERE Advice__r.Advice_Household__c =: householdId ];
         
-        Fulfilment__c testFulfil = [SELECT 
-                                    Id 
-                                    FROM 
-                                    Fulfilment__c 
-                                    WHERE
-                                    Recommendation__r.Product__r.ReferenceName__c = 'SIPP_HUBWISE'
-                                    AND
-                                    Recommendation__r.RecommendationType__r.ReferenceName__c = 'EXTERNAL_TRANSFER_IN'
-                                    AND 
-                                    Household__c =: householdId
-                                    LIMIT 1
-                                   ];
+        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.ReferenceName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.ReferenceName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
 
 		testFulfil.PaymentStatus__c = 'Submitted';
 		update testFulfil;
@@ -77,14 +48,7 @@ public class FulfilmentTriggerHelperTest {
         
         Advice__c advice = df.createAdvice(0, household);
         
-        List<RecommendationType__c> recTypes = [SELECT 
-                                                Id, ReferenceName__c
-                                               	FROM
-                                                RecommendationType__c 
-                                                WHERE
-                                                ReferenceName__c 
-                                                IN ('OPEN_PRODUCT','EXTERNAL_TRANSFER_IN')
-                                               ];
+        List<RecommendationType__c> recTypes = [SELECT Id, ReferenceName__c FROM RecommendationType__c WHERE ReferenceName__c IN ('OPEN_PRODUCT','EXTERNAL_TRANSFER_IN')];
         RecommendationType__c openProdRecType = new RecommendationType__c();
         RecommendationType__c transferRecType = new RecommendationType__c();
         for( RecommendationType__c recType : recTypes ){
@@ -95,14 +59,7 @@ public class FulfilmentTriggerHelperTest {
             }
         }
         
-        List<Product__c> products = [SELECT 
-                                     Id, ReferenceName__c
-                                     FROM
-                                     Product__c 
-                                     WHERE
-                                     ReferenceName__c IN
-                                     ('SIPP_HUBWISE','JSIPP_HUBWISE')
-                                    ];
+        List<Product__c> products = [SELECT Id, ReferenceName__c FROM Product__c WHERE ReferenceName__c IN ('SIPP_HUBWISE','JSIPP_HUBWISE')];
         Product__c productType = new Product__c();
         Product__c productTypeJunior = new Product__c();
         for( Product__c product : products ){
