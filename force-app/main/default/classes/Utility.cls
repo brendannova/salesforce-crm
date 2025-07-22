@@ -204,6 +204,25 @@ rtID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(record
         }
         return field_values_temp;
     }
+
+    // Pass in an object of unknown type and get the type returned as a string
+    public static String getObjectType(Object objectInput) {
+        if(objectInput instanceof Blob)               return 'Blob';
+        if(objectInput instanceof Boolean)            return 'Boolean';
+        if(objectInput instanceof Date)               return 'Date';
+        if(objectInput instanceof Datetime)           return 'Datetime';
+        if(objectInput instanceof Id)                 return 'Id';
+        if(objectInput instanceof Integer)            return 'Integer';
+        if(objectInput instanceof Long)               return 'Long';
+        if(objectInput instanceof SObject)            return ((SObject)objectInput).getSObjectType().getDescribe().getName()+''; 
+        if(objectInput instanceof String)             return 'String';
+        if(objectInput instanceof Time)               return 'Time';
+        if(objectInput == null) return '';
+        //if(objectInput instanceof Decimal)            return 'Decimal';  // we can't distinguish between decimal and double
+        //if(objectInput instanceof Double)             return 'Double';   // we can't distinguish between decimal and double
+        //if(objectInput instanceof List<Object>)       return 'List';
+        return 'Unknown';                    // actually we can't detect maps and sets and maps
+}
     
     public class UtilityException extends Exception {}
 }
