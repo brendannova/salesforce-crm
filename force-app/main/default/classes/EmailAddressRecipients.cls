@@ -96,7 +96,7 @@ public class EmailAddressRecipients {
 
         for( Account household_member : hmrResult.get('Client') ) {
             if (emailConfig.Necessity__c == 'Required' || household_member.ServiceContactPreferences__pc == 'All emails') {
-            	recipients.add(household_member.FinServ__PreferredName__pc);
+            	recipients.add(household_member.AddressedName__pc);
            	}
         }
         recipients.sort();

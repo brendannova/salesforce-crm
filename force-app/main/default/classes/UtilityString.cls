@@ -1,19 +1,10 @@
-/*********************************************************
-Apex Class Name    : UtilityString
-Created Date       : 2024-12-02
-@description       : This class is a collection of string utilities that can be used to do things like convert string formats.
-@author            : Cian Morrissey
-Modification Log:
-Date         Author                               Modification
-2024-12-02   Cian Morrissey                       Initial Version
-*********************************************************/
+/**
+ * A collection of utilities that work with strings and we want to reuse around the place.
+ * In all cases, here the outputs should be a string unless discussed and changed.
+ */
 public with sharing class UtilityString {
-    /*
-    *	@methodName = convertCaseUpperSnakeToSentence
-    *	@return = Sentence case string
-    *	@params = A string in UPPER_SNAKE_CASE
-    *	@description = Method takes a string in upper snake case and converts it to sentence case
-    */
+    
+    // Converts UPPER_SNAKE_CASE string to sentence case (Upper snake case)
     public static String convertCaseUpperSnakeToSentence(String inputString){
         String returnString = inputString.replace('_', ' ');
         returnString = returnString.toLowerCase();
@@ -21,12 +12,7 @@ public with sharing class UtilityString {
         return returnString;
     }
     
-    /*
-    *	@methodName = formatDateForNovaEmail
-    *	@return = Formatted date in the format eg 3 July 2025
-    *	@params = A date time instance
-    *	@description = Method takes a datetime instance and returns a string of the formatted date
-    */
+    // Takes a datetime instance and returns a string of the formatted date, for use in emails, in 3 July 2025 format. 
     public String formatDateForNovaEmail(Datetime dateToFormat){
    		return dateToFormat.format('d MMMMMMMMMM yyyy');
 	}
