@@ -67,11 +67,11 @@ public class FulfilmentTriggerHelper {
         emailRequest.saveAsActivity = true;
         if( fulfilment.Recommendation__r.RecommendationType__r.ReferenceName__c == 'EXTERNAL_TRANSFER_IN') {
 			emailRequest.emailTemplateDeveloperName = 'PensionTransferCompleteAutomated';            
-            emailRequest.parameters = EmailPensionTransferCompleteAutomated.getParameters(fulfilment);
+            emailRequest.parameters = EmailCancellationNoticeTransfer.getParameters(fulfilment);
         } else {
             emailRequest.emailTemplateDeveloperName = 'CancellationNotice'; 
-            emailRequest.parameters = EmailCancellationNotice.getParameters(fulfilment);
-            emailRequest.subject = EmailCancellationNotice.getSubject(fulfilment);
+            emailRequest.parameters = EmailCancellationNoticeNewProduct.getParameters(fulfilment);
+            emailRequest.subject = EmailCancellationNoticeNewProduct.getSubject(fulfilment);
         }
         emailRequest.targetObjectId = getContactId(fulfilment);
         return emailRequest; 
