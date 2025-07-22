@@ -4,41 +4,24 @@
  */
 public class EmailPensionTransferCompleteAutomated {
 
-    public String objectId{get;set;}
-    private Fulfilment__c fulfilment = new Fulfilment__c();
-    Boolean constructorRun = false;
+    public String objectId {get;set;}
+    private static Fulfilment__c fulfilment;
     
     // Constructor to set the fulfilment record
-    public void EmailPensionTransferCompleteAutomated() {
-        if(!constructorRun){
-            constructorRun = true;
-            if(String.isBlank(objectId)){
-                objectId = ApexPages.currentPage().getParameters().get('objectId');
-            }
-            if (String.isNotBlank(objectId)) {
-                fulfilment = [
-                    SELECT 
-                        Id, 
-                        Recommendation__c,
-                        Recommendation__r.PrimaryOwner__r.AddressedName__pc,
-                        Recommendation__r.RegisteredContact__c,
-                        Recommendation__r.RegisteredContact__r.AddressedName__pc,
-                        Recommendation__r.Product__r.Name,
-                        ResidualCash__c,
-                        Recommendation__r.SourceLegacy__r.Public_Provider_Name__r.Name,
-                        Recommendation__r.DestinationLegacy__r.Public_Provider_Name__r.Name,
-                        Recommendation__r.TransferType__c
-                    FROM
-                        Fulfilment__c 
-                    WHERE
-                        Id = :objectId
-                ];
-            }
-        }
+    public static Map<String, String> getParameters(Fulfilment__c fulfilmentInput) {
+        fulfilment = fulfilmentInput;
+        Map<String, String> parameters = new Map<String, String>();
+        parameters.put('{{hiLine}}','Hi Bobbbbb');
+        parameters.put('{{partialString}}', partialString);
+        parameters.put('{{financialProductNameSource}}', financialProductNameSource);
+        parameters.put('{{financialProductNameDestination}}', financialProductNameDestination);
+        parameters.put('{{dateTodayString}}', dateString);
+        parameters.put('{{residualCashDisplay}}', residualCashDisplay);
+        return parameters;
     }
     
     // Method to format today's date into a client friendly format
-    public String dateString {
+    public static String dateString {
         get {
             UtilityString us = new UtilityString();
             return us.formatDateForNovaEmail(Datetime.now());
@@ -46,18 +29,18 @@ public class EmailPensionTransferCompleteAutomated {
     }
     
     // Determines if there is residual cash or not, allowing the associate passage of text to be hidden/shown as appopriate.
-    public Boolean residualCash {
+    public static String residualCashDisplay {
         get{
             if (fulfilment.ResidualCash__c == 'NONE') {
-                return false;
+                return '';
             } else {
-                return true;
+                return 'none';
             }
         }
     }
 
     // Method to provide the friendly name of the destination
-    public String finProdNameDestination{
+    public static String financialProductNameDestination{
         get{
             String result = '';
             if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
@@ -74,7 +57,7 @@ public class EmailPensionTransferCompleteAutomated {
     }
     
     // Method to provide the friendly name of the source
-    public String finProdNameSource{
+    public static String financialProductNameSource{
         get{
             String result = '';
             if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
@@ -90,9 +73,8 @@ public class EmailPensionTransferCompleteAutomated {
     }
     
     // Method to provide string for a partial transfer if required
-    public String partialString{
+    public static String partialString{
         get{
-            EmailPensionTransferCompleteAutomated();
             if (fulfilment.recommendation__r.TransferType__c == 'Partial') {
                 return ' partial ';
             } else {

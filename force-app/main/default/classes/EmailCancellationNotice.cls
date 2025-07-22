@@ -1,53 +1,48 @@
 public class EmailCancellationNotice {
     
-    public String objectId{get;set;}
-    private Fulfilment__c fulfilment = new Fulfilment__c();
-    Boolean constructorRun = false;
+    public String objectId {get;set;}
+    private static Fulfilment__c fulfilment;
     
     // Constructor to set the fulfilment record
-    public void EmailCancellationNotice() {
-        if(!constructorRun){
-            constructorRun = true;
-            if(String.isBlank(objectId)){
-                objectId = ApexPages.currentPage().getParameters().get('objectId');
+    public static Map<String, String> getParameters(Fulfilment__c fulfilmentInput) {
+        fulfilment = fulfilmentInput;
+        Map<String, String> parameters = new Map<String, String>();
+        parameters.put('{{hiLine}}','Hi Bobbbbb');
+        parameters.put('{{clientName}}', clientName);
+        parameters.put('{{productName}}', productName);
+        parameters.put('{{dateTodayString}}', dateString);
+        return parameters;
+    }
+    
+    private static String clientName {
+        get{ 
+            String result = '';
+            if( fulfilment.Recommendation__r.RegisteredContact__c == null) {
+                result = result + 'your ';
+            } else {
+                result = result + fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s ';
             }
-            if(String.isBlank(objectId)){
-                throw new emailCancellationNoticeException('No objectId received');
-            }
-            if (String.isNotBlank(objectId)) {
-                fulfilment = [SELECT 
-                              Id, 
-                              Recommendation__r.Product__r.Name,
-                              Recommendation__r.PrimaryOwner__r.AddressedName__pc,
-                              Recommendation__r.RegisteredContact__c,
-                              Recommendation__r.RegisteredContact__r.AddressedName__pc
-                              FROM Fulfilment__c WHERE Id = :objectId];
-            }
+            return result;
         }
     }
     
-    // Method to identify the correct owner's name
-    public String getClientName(){
-        EmailCancellationNotice();
-        String result = ' ';
-        if( fulfilment.Recommendation__r.RegisteredContact__c == null) {
-            result = result + 'your ';
-        } else {
-            result = result + fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s ';
+    private static String productName{
+        get{
+            return fulfilment.Recommendation__r.Product__r.Name ;
         }
-        return result;
     }
     
-    // Method to identify the product name
-    public String getProductName(){
-        return fulfilment.Recommendation__r.Product__r.Name ;
+    private static String dateString{
+        get{
+            UtilityString us = new UtilityString();
+            return us.formatDateForNovaEmail(Datetime.now());
+        }
     }
-    
-    public String getDateString(){
-        UtilityString us = new UtilityString();
-        return us.formatDateForNovaEmail(Datetime.now());
+
+    public static String getSubject(Fulfilment__c fulfilment){
+        String subject = 'Your new SIPP';
+        return subject;
     }
     
     public class emailCancellationNoticeException extends Exception {}
-
 }
