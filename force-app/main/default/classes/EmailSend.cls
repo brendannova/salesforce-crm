@@ -6,12 +6,9 @@ public without sharing class EmailSend{
 
     final private static String SENDING_PROCESS_AUTOMATIC = 'AUTOMATIC';
     final private static String ONE_REQUEST_ERROR = 'Only one request allowed. This method does not support bulk emails yet.';
-    
-    // A simple method responsible for sending emails
-    private void sendEmails(List<Messaging.SingleEmailMessage> emails){
-        List<Messaging.SendEmailResult> emailSendResults = Messaging.sendEmail(emails, true);
-        // To-do: work through the results to determine if everything was successful
-    }
+    Set<String> fromEmailAddresses = new Set<String>();
+    Map<Id, AccountHouseholdMembers.HouseholdMemberResult> householdMembersMap = new Map<Id, AccountHouseholdMembers.HouseholdMemberResult>();
+    Map<String, OrgWideEmailAddress> orgWideEmailAddressMap;
     
     // The request wrapper that needs to be provided for the correct email to generate
     public class EmailSendRequestAutomatic {
@@ -19,41 +16,147 @@ public without sharing class EmailSend{
         public Id targetObjectId;                               // The core recipient
         public Id householdId;                                  // The household the email relates to
         public Id whatId;                                       // The specific record the email relates to
-        public Boolean saveAsActivity;                          // Set as activity    
+        public Boolean saveAsActivity;                          // Set as activity
+        public String subject;                                  // An option custom subject
+        public Map<String, String> parameters;                  // An optional map of parameters that will be replaced in the email with the values in the map
     }
     
-    // 
     public void sendAutomaticTemplatedEmailCustomSubject(List<EmailSendRequestAutomatic> requests) {
-        if( requests.size() > 1 ) {
-            throw new EmailSendException(ONE_REQUEST_ERROR); 
-        }
-
-        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();              // The list of emails to be sent at the end
-        String subject;
-        EmailConfiguration__c emailConfig = new EmailConfiguration__c();
-        
+        // Validate requests and build a list of the email template developer names
+        Set<String> emailTemplateDeveloperNames = new Set<String>();
+        Set<Id> householdIds = new Set<Id>();
         for(EmailSendRequestAutomatic request : requests){
-            validateInputs(request);
-            
-            emailConfig = getEmailConfig(request.emailTemplateDeveloperName); 
-            
-            String whatId = request.whatId;
-            String whoId = request.targetObjectId;
-            
-            String emailTemplateId = getEmailTemplateId(request.emailTemplateDeveloperName);
-            
-            Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplateId, whoId, whatId);
-            
-            subject = getSubject(emailConfig, request.whatId);
-            email.setSubject(subject);
+            validateRequest(request);
+            emailTemplateDeveloperNames.add(request.emailTemplateDeveloperName);
+            householdIds.add(request.householdId);
+        }
+        Map<String, EmailConfiguration__c> emailConfigurationsMap = getEmailConfigurations(emailTemplateDeveloperNames);
+        orgWideEmailAddressMap = getOrgWideEmailAddresses(fromEmailAddresses);
+        getHouseholdMembers(householdIds);
 
-			email = setUpEmail(email, request.householdId, whoId, whatId, emailConfig);
-
+        // Get all email templates
+        Map<String, EmailTemplate> emailTemplatesMap = getEmailTemplates(emailTemplateDeveloperNames);
+        
+        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();              // The list of emails to be sent at the end
+        
+        // Loop the requests and construct the emails
+        for(EmailSendRequestAutomatic request : requests){
+            // Build the email using the template to render the HTML content
+            Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplatesMap.get(request.emailTemplateDeveloperName).Id, request.targetObjectId, request.whatId);
+            if(!request.parameters.isEmpty()){
+                email.htmlBody = UtilityEmail.tagSubstituter(request.parameters, email.htmlBody); // If there are parameters to swap out, do so
+            }         
+            if(String.isNotBlank(request.subject)){
+                email.setSubject(request.subject); // If there is a custom subject, set it
+            }
+            EmailConfiguration__c emailConfiguration = emailConfigurationsMap.get(request.emailTemplateDeveloperName); 
+			email = setUpEmail(request, email, emailConfiguration);
             emails.add(email);  
         }
         sendEmails(emails);
     }
+
+    // Make sure we have required details for each request
+    private void validateRequest(emailSendRequestAutomatic request) {
+        if(request.targetObjectId == null)                          throw new EmailSendException('targetObjectId required');
+        if(request.householdId == null)                             throw new EmailSendException('householdId required'); 
+        if(request.whatId == null)                                  throw new EmailSendException('whatId required'); 
+        if(String.isBlank(request.emailTemplateDeveloperName))      throw new EmailSendException('Email template must be provided'); 
+    }
+
+    private Map<String, EmailConfiguration__c> getEmailConfigurations(Set<String> emailTemplateDeveloperNames) {
+        List<EmailConfiguration__c> emailConfigurations = [SELECT Id, DeveloperName__c, Subject__c, ClientsAddressed__c, CopyOtherClients__c, PartnerCopied__c, From__c, ReplyTo__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
+        if(emailConfigurations.isEmpty()){
+            throw new EmailSendException('No email configurations found'); 
+        } else if(emailConfigurations.size() != emailTemplateDeveloperNames.size()){
+            throw new EmailSendException('Email configuration records not found for all templates'); 
+        }
+        Map<String, EmailConfiguration__c> emailConfigurationsMap = new Map<String, EmailConfiguration__c>();
+        for(EmailConfiguration__c emailConfiguration : emailConfigurations){
+            emailConfigurationsMap.put(emailConfiguration.DeveloperName__c, emailConfiguration);
+            fromEmailAddresses.add(emailConfiguration.From__c);
+        }
+        return emailConfigurationsMap;
+    }
+
+    private Map<String, EmailTemplate> getEmailTemplates(Set<String> emailTemplateDeveloperNames) {
+        List<EmailTemplate> emailTemplates = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateDeveloperNames];
+        if(emailTemplates.isEmpty()){
+            throw new EmailSendException('No email templates found'); 
+        } else if(emailTemplates.size() != emailTemplateDeveloperNames.size()){
+            throw new EmailSendException('Email templates not all found'); 
+        }
+        Map<String, EmailTemplate> emailTemplatesMap = new Map<String, EmailTemplate>();
+        for(EmailTemplate emailTemplate : emailTemplates){
+            emailTemplatesMap.put(emailTemplate.DeveloperName, emailTemplate);
+        }
+        return emailTemplatesMap;
+    }
+
+    private Map<String, OrgWideEmailAddress> getOrgWideEmailAddresses(Set<String> fromEmailAddresses) {
+        List<OrgWideEmailAddress> orgWideEmailAddresses = [SELECT Id, Address FROM OrgWideEmailAddress WHERE Address IN :fromEmailAddresses];
+        if(orgWideEmailAddresses.isEmpty()){
+            throw new EmailSendException('No org wide email addresses found'); 
+        } else if(orgWideEmailAddresses.size() != fromEmailAddresses.size()){
+            throw new EmailSendException('Org wide email addresses not all found'); 
+        }
+        Map<String, OrgWideEmailAddress> orgWideEmailAddressMap = new Map<String, OrgWideEmailAddress>();
+        for(OrgWideEmailAddress OrgWideEmailAddress : OrgWideEmailAddresses){
+            orgWideEmailAddressMap.put(OrgWideEmailAddress.Address, OrgWideEmailAddress);
+        }
+        return orgWideEmailAddressMap;
+    }
     
+    private Messaging.SingleEmailMessage setUpEmail(EmailSendRequestAutomatic request, Messaging.SingleEmailMessage email, EmailConfiguration__c emailConfig) {
+        email.setorgWideEmailAddressId(orgWideEmailAddressMap.get(emailConfig.From__c).Id);
+        email.setWhatId(request.whatId);
+        email.setTargetObjectId(request.targetObjectId);
+        email.setTreatTargetObjectAsRecipient(true);
+        if(String.isNotBlank(emailConfig.ReplyTo__c)){
+            email.setReplyTo(emailConfig.ReplyTo__c);
+        }
+        email.setUseSignature(false);
+
+        AccountHouseholdMembers.HouseholdMemberResult result = householdMembersMap.get(request.householdId);
+        // To recipients
+        List<String> toAddresses = new List<String>();      // People to address directly
+        if( emailConfig.ClientsAddressed__c == 'One only' ) {
+            // Do nothing as client is targetObjectId
+        } else if( emailConfig.ClientsAddressed__c == 'All' ) {
+            for(Account member : result.memberAccountsByRole.get('Client')){
+                if(member.PersonContactId != request.targetObjectId){
+                    toAddresses.add(member.PersonEmail);
+                }
+            }
+        }
+        
+        // CC recipients
+        List<String> ccAddresses = new List<String>();      // People to CC
+        if( emailConfig.PartnerCopied__c == 'ALWAYS' ) {
+            ccAddresses.add(result.household.Owner.Email);
+        }
+
+        if(!toAddresses.isEmpty()){
+            email.setToAddresses(toAddresses);
+        }
+        if(!ccAddresses.isEmpty()){
+            email.setCcAddresses(ccAddresses);
+        }
+        return email;
+    }
+
+    private void getHouseholdMembers(Set<Id> householdIds){
+        List<AccountHouseholdMembers.HouseholdMemberRequest> requests = new List<AccountHouseholdMembers.HouseholdMemberRequest>();
+        for(Id householdId : householdIds){
+            AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
+            request.householdId = householdId;
+            request.roles = new Set<String>{'Client'};
+            requests.add(request);
+        }
+        householdMembersMap = AccountHouseholdMembers.getHouseholdMembers(requests);
+    }
+
+    /*
     public void sendAutomaticTemplatedEmail(List<EmailSendRequestAutomatic> requests){ 
         if( requests.size() > 1 ) {
             throw new EmailSendException(ONE_REQUEST_ERROR); 
@@ -63,7 +166,7 @@ public without sharing class EmailSend{
         EmailConfiguration__c emailConfig = new EmailConfiguration__c();
         
         for(EmailSendRequestAutomatic request : requests){
-            validateInputs(request);
+            validateRequest(request);
             
             emailConfig = getEmailConfig(request.emailTemplateDeveloperName);
             
@@ -77,142 +180,14 @@ public without sharing class EmailSend{
             
             emails.add(email); 
         }
-        sendEmails(emails);
     }
-    
-    private String getSubject(EmailConfiguration__c emailConfig, Id targetObjectId) {
-        Id objectId = Id.valueOf(targetObjectId);
-        String objectApiName = objectId.getSObjectType().getDescribe().getName();
-        String message = emailConfig.Subject__c;
-        message = Utility.tagSubstituter(message, targetObjectId, objectApiName, emailConfig.DeveloperName__c);
-        
-        return message;
-    }
-    
-    
-    private List<String> getToAddresses(EmailConfiguration__c emailConfig, Id householdId, Id targetObjectId) {
-        List<String> emailAddresses = new List<String>();
-        if( emailConfig.ClientsAddressed__c == 'One only' ) {
-            List<AccountContactRelation> acrs = [SELECT Contact.Email FROM AccountContactRelation WHERE Account.RecordType.DeveloperName = 'IndustriesHousehold' AND Roles = 'Client' AND AccountId =: householdId AND ContactId =: targetObjectId];
-            for( AccountContactRelation acr : acrs ) {
-                emailAddresses.add(acr.Contact.Email);
-            }
-        } else if( emailConfig.ClientsAddressed__c == 'All' ) {
-            List<AccountContactRelation> acrs = [SELECT Contact.Email FROM AccountContactRelation WHERE Account.RecordType.DeveloperName = 'IndustriesHousehold' AND Roles = 'Client' AND AccountId =: householdId];
-            for( AccountContactRelation acr : acrs ) {
-                emailAddresses.add(acr.Contact.Email);
-            }
-        } 
-        return emailAddresses;
-    }
-    
-    private List<String> getCcAddresses(EmailConfiguration__c emailConfig, Id householdId, Id targetObjectId) {
-        List<String> emailAddresses = new List<String>();
-        if( emailConfig.ClientsAddressed__c == 'One only' && emailConfig.CopyOtherClients__c == 'ALWAYS' ) {
-            List<AccountContactRelation> acrs = [SELECT Contact.Email FROM AccountContactRelation WHERE Account.RecordType.DeveloperName = 'IndustriesHousehold' AND Roles = 'Client' AND AccountId =: householdId AND ContactId !=: targetObjectId];
-            for( AccountContactRelation acr : acrs ) {
-                emailAddresses.add(acr.Contact.Email);
-            }
-        } 
-        if( emailConfig.PartnerCopied__c == 'ALWAYS' ) {
-            Account acct = [SELECT Id, Owner.Email FROM Account WHERE Id =: householdId];
-            emailAddresses.add(acct.Owner.Email);
-        }
-        return emailAddresses;
-    }
-    
-    private List<OrgWideEmailAddress> getOrgWideEmailAddress(String address) {
-        List<OrgWideEmailAddress> orgWideEmailAddresses = [SELECT Id FROM OrgWideEmailAddress WHERE Address = :address];
-            if(orgWideEmailAddresses.isEmpty()){
-                throw new EmailSendException('No org wide email address found for :' + address); 
-            }
-        return orgWideEmailAddresses;
-    }
-    
-    private String getEmailTemplateId(String templateDevName) {
-        String emailTemplateId;
-        List<EmailTemplate> emailTemplates = [SELECT Id FROM EmailTemplate WHERE DeveloperName = :templateDevName];
-        if(emailTemplates.isEmpty()){
-            throw new EmailSendException('No email template found with developer name :' + templateDevName); 
-        } else {
-            emailTemplateId = emailTemplates[0].Id;
-        }
-        return emailTemplateId;
-    }
-    
-    private EmailConfiguration__c getEmailConfig(String emailTemplateDeveloperName) {
-        EmailConfiguration__c emailConfig = new EmailConfiguration__c();
-        List<EmailConfiguration__c> emailConfigs = [SELECT 
-                                                    Id, 
-                                                    DeveloperName__c, 
-                                                    Subject__c, 
-                                                    ClientsAddressed__c, 
-                                                    CopyOtherClients__c, 
-                                                    PartnerCopied__c, 
-                                                    From__c, 
-                                                    ReplyTo__c 
-                                                    FROM EmailConfiguration__c 
-                                                    WHERE DeveloperName__c = :emailTemplateDeveloperName 
-                                                     AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
-        if(emailConfigs.isEmpty()){
-            throw new EmailSendException('No email configuration record found for the developer name :' + emailTemplateDeveloperName); 
-        } else {
-            emailConfig = emailConfigs[0];
-        }
-        return emailConfig;
-    }
-        
-    private Messaging.SingleEmailMessage setUpEmail(Messaging.SingleEmailMessage email, Id householdId, Id targetObjId, Id whatId, EmailConfiguration__c emailConfig) {
-		List<String> ccAddresses = new List<String>();                                                  // People to CC
-        List<String> toAddresses = new List<String>();                                                  // People to address directly
-        Id emailTemplateId;
-        List<OrgWideEmailAddress> orgWideEmailAddresses = new List<OrgWideEmailAddress>();
-                        
-        orgWideEmailAddresses = getOrgWideEmailAddress(emailConfig.From__c);
-        
-        ccAddresses = getCcAddresses(emailConfig, householdId, targetObjId);
-        
-        toAddresses = getToAddresses(emailConfig, householdId, targetObjId);
-        
-        email.setTargetObjectId(targetObjId);
-        if(!toAddresses.isEmpty()){
-            email.setToAddresses(toAddresses);
-        }
-        if(!ccAddresses.isEmpty()){
-            email.setCcAddresses(ccAddresses);
-        }
-        email.setorgWideEmailAddressId(orgWideEmailAddresses[0].Id);
-        if(String.isNotBlank(emailConfig.ReplyTo__c)){
-            email.setReplyTo(emailConfig.ReplyTo__c);
-        }
+        */
 
-        email.setWhatId(whatId);
-        email.setUseSignature(false);
-        email.setTreatTargetObjectAsRecipient(true);
+    // A simple method responsible for sending emails
+    private void sendEmails(List<Messaging.SingleEmailMessage> emails){
+        List<Messaging.SendEmailResult> emailSendResults = Messaging.sendEmail(emails, true);
+        // To-do: work through the results to determine if everything was successful
+    }
         
-        return email;
-    }
-    
-    private void validateInputs(emailSendRequestAutomatic request) {
-        // Make sure we have other required fields prior to proceeding
-            if(request.targetObjectId == null){
-                throw new EmailSendException('targetObjectId required'); 
-            }
-            if(request.householdId == null){
-                throw new EmailSendException('householdId required'); 
-            }
-            if(request.whatId == null){
-                throw new EmailSendException('whatId required'); 
-            }
-        	if(String.isBlank(request.emailTemplateDeveloperName)){
-                throw new EmailSendException('Email template must be provided'); 
-            }
-    }
-    
-    // Placeholder to send email where the body, plain text and HTML, is defined as an input
-    public static void sendCustomEmail(Id targetObjectId, List<String> toAddresses, List<String> ccAddresses, Id whatId, Boolean saveAsActivity, String subject, String htmlBody, String plainTextBody, String fromAddress){ 
-        
-    }
-
     public class EmailSendException extends Exception {}
 }
