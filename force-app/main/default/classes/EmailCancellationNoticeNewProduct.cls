@@ -8,27 +8,30 @@ public class EmailCancellationNoticeNewProduct {
         fulfilment = fulfilmentInput;
         Map<String, String> parameters = new Map<String, String>();
         parameters.put('{{hiLine}}','Hi Bobbbbb');
-        parameters.put('{{clientName}}', clientName);
+        parameters.put('{{financialProductOwnership}}', financialProductOwnership);
         parameters.put('{{productName}}', productName);
         parameters.put('{{dateTodayString}}', dateString);
         return parameters;
     }
     
-    private static String clientName {
-        get{ 
-            String result = '';
-            if( fulfilment.Recommendation__r.RegisteredContact__c == null) {
-                result = result + 'your ';
+    // Returns your or child's name dependent on whether this is a SIPP or JSIPP
+    public static String financialProductOwnership{
+        get{
+            if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
+                return 'your';
             } else {
-                result = result + fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s ';
+                return fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s';
             }
-            return result;
         }
     }
     
     private static String productName{
         get{
-            return fulfilment.Recommendation__r.Product__r.Name ;
+            if(String.isNotBlank(fulfilment.Recommendation__r.Product__r.Name)) {
+                return fulfilment.Recommendation__r.Product__r.Name;
+            } else {
+                throw new EmailCancellationNoticeTransferException('Blank value in product name'); 
+            }
         }
     }
     
