@@ -10,6 +10,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="url" label="URL" type="String" role="inputOnly" description="The URL to take the user to"/>
+            <property name="target" label="Target" type="String" role="inputOnly" required="true" description="The behavior of the redirect e.g. _blank = new tab, _self = same tab" default="_blank" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

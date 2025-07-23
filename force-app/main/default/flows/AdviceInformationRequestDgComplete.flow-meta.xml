@@ -59,7 +59,7 @@
             <targetReference>Update_IRs_awaiting_advice_progression</targetReference>
         </connector>
         <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
         <filters>
             <field>DataGatheringStatus__c</field>
             <operator>EqualTo</operator>
@@ -72,6 +72,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Complete</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RtqStatus__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>No update required</stringValue>
             </value>
         </filters>
         <object>Advice__c</object>

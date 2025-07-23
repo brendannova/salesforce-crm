@@ -5,7 +5,7 @@
         <name>Add_id_to_list</name>
         <label>Add id to list</label>
         <locationX>666</locationX>
-        <locationY>1643</locationY>
+        <locationY>1535</locationY>
         <assignmentItems>
             <assignToReference>idList</assignToReference>
             <operator>Add</operator>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assign_error_message</name>
         <label>Assign error message</label>
-        <locationX>2162</locationX>
+        <locationX>1898</locationX>
         <locationY>431</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -37,7 +37,7 @@
         <name>Set_current_recommendation</name>
         <label>Set current recommendation</label>
         <locationX>842</locationX>
-        <locationY>2267</locationY>
+        <locationY>2159</locationY>
         <assignmentItems>
             <assignToReference>currentRec</assignToReference>
             <operator>Assign</operator>
@@ -54,7 +54,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get specific recommendation</label>
         <locationX>754</locationX>
-        <locationY>2051</locationY>
+        <locationY>1943</locationY>
         <assignNextValueToReference>currentItem_Get_specific_recommendation</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_dependent_recommendations</collectionReference>
@@ -73,7 +73,7 @@
     <customErrors>
         <name>Assign_custom_error</name>
         <label>Assign custom error</label>
-        <locationX>2162</locationX>
+        <locationX>1898</locationX>
         <locationY>539</locationY>
         <customErrorMessages>
             <errorMessage>{!errorMessage}</errorMessage>
@@ -84,7 +84,7 @@
         <name>Are_there_any_dependent_recommendations</name>
         <label>Are there any dependent recommendations?</label>
         <locationX>842</locationX>
-        <locationY>1427</locationY>
+        <locationY>1319</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -131,7 +131,7 @@
         <name>Was_the_sub_flow_successful</name>
         <label>Was the sub flow successful?</label>
         <locationX>754</locationX>
-        <locationY>2567</locationY>
+        <locationY>2459</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assign_custom_error</targetReference>
@@ -157,7 +157,7 @@
         <name>Were_the_fulfiments_just_set</name>
         <label>Were the fulfilments just set?</label>
         <locationX>446</locationX>
-        <locationY>1211</locationY>
+        <locationY>1103</locationY>
         <defaultConnector>
             <targetReference>Get_dependent_recommendations</targetReference>
         </defaultConnector>
@@ -183,7 +183,7 @@
         <name>Create_id_list</name>
         <label>Create id list</label>
         <locationX>578</locationX>
-        <locationY>1535</locationY>
+        <locationY>1427</locationY>
         <collectionReference>Get_dependent_recommendations</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -197,7 +197,7 @@
         <name>Set_current_rec</name>
         <label>Set current rec</label>
         <locationX>754</locationX>
-        <locationY>2159</locationY>
+        <locationY>2051</locationY>
         <collectionReference>Get_specific_recommendation</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -211,7 +211,7 @@
         <name>Update_statuses</name>
         <label>Update statuses</label>
         <locationX>578</locationX>
-        <locationY>1943</locationY>
+        <locationY>1835</locationY>
         <collectionReference>Get_fulfilments</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -332,7 +332,7 @@
         <locationX>50</locationX>
         <locationY>863</locationY>
         <connector>
-            <targetReference>Update_previous_status</targetReference>
+            <targetReference>Were_the_fulfiments_just_set</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -377,7 +377,7 @@
         <locationX>842</locationX>
         <locationY>647</locationY>
         <connector>
-            <targetReference>Update_previous_status</targetReference>
+            <targetReference>Were_the_fulfiments_just_set</targetReference>
         </connector>
         <faultConnector>
             <isGoTo>true</isGoTo>
@@ -420,7 +420,7 @@
         <name>Get_dependent_recommendations</name>
         <label>Get dependent recommendations</label>
         <locationX>842</locationX>
-        <locationY>1319</locationY>
+        <locationY>1211</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_dependent_recommendations</targetReference>
@@ -484,7 +484,7 @@
         <name>Get_fulfilments</name>
         <label>Get fulfilments</label>
         <locationX>578</locationX>
-        <locationY>1835</locationY>
+        <locationY>1727</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_statuses</targetReference>
@@ -512,26 +512,6 @@
         <object>Fulfilment__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_previous_status</name>
-        <label>Update previous status</label>
-        <locationX>446</locationX>
-        <locationY>1103</locationY>
-        <connector>
-            <targetReference>Were_the_fulfiments_just_set</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Assign_error_message</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>PreviousStatus__c</field>
-            <value>
-                <elementReference>$Record__Prior.Status__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
     <start>
         <locationX>320</locationX>
         <locationY>0</locationY>
@@ -590,7 +570,7 @@
         <name>Update_status</name>
         <label>Update status</label>
         <locationX>754</locationX>
-        <locationY>2459</locationY>
+        <locationY>2351</locationY>
         <connector>
             <targetReference>Was_the_sub_flow_successful</targetReference>
         </connector>
