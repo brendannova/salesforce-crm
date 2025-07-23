@@ -1,4 +1,6 @@
 #!/bin/bash
+# This script will create a Salesforce sandbox from prod.
+# It is simple for now but is intended to be expanded to automate seeding when the sandbox is ready.
 
 # Define the prod alias that will be used in knowing the source org
 prod_alias=prod 

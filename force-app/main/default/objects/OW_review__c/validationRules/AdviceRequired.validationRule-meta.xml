@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AdviceRequired</fullName>
     <active>true</active>
-    <description>This rule ensures that advice is linked to the annual review by the time it moves to the provide advice stage. The advice must also be linked when the annual review is complete to ensure this stage is not skipped but not when it&apos;s closed otherwise.</description>
+    <description>This rule ensures that advice is linked to the annual review by the time it moves to the provide advice stage. The advice must also be linked when the annual review is complete to ensure this stage is not skipped but not when it&#39;s closed otherwise.</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
 ISBLANK( OW_advice__c ) &amp;&amp;
 ISCHANGED( OW_status__c ) &amp;&amp; 
