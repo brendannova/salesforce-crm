@@ -2953,26 +2953,15 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>ValuationsUpdatesRequested</name>
+            <name>ValuationUpdatesTriggered</name>
             <choiceReferences>Yes</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Valuations updates requested</fieldText>
+            <fieldText>Valuation updates triggered (if required)</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isDisabled>
                 <booleanValue>false</booleanValue>
             </isDisabled>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>HubwiseAmlInformationRequested</name>
-            <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>Not_required</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Hubwise AML information requested if applicable</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;Only request the information if we do not already have it to hand. &lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
