@@ -7,16 +7,16 @@
 AND (
      ISCHANGED( Advice_Status__c ),
      OR (
-          TEXT(Advice_Status__c) = &apos;Ready for suitability&apos;,
-          TEXT(Advice_Status__c) = &apos;Suitability in progress&apos;,
-          TEXT(Advice_Status__c) = &apos;Deck complete&apos;,
-          TEXT(Advice_Status__c) = &apos;Await decision&apos;,
-          TEXT(Advice_Status__c) = &apos;In fulfilment&apos;,
-          TEXT(Advice_Status__c) = &apos;Complete&apos;
+          TEXT(Advice_Status__c) = &#39;Ready for suitability&#39;,
+          TEXT(Advice_Status__c) = &#39;Suitability in progress&#39;,
+          TEXT(Advice_Status__c) = &#39;Deck complete&#39;,
+          TEXT(Advice_Status__c) = &#39;Await decision&#39;,
+          TEXT(Advice_Status__c) = &#39;In fulfilment&#39;,
+          TEXT(Advice_Status__c) = &#39;Complete&#39;
      ),
-     OR ( TEXT(PRIORVALUE(Advice_Status__c)) = &apos;Setup&apos;, 
-          TEXT(PRIORVALUE(Advice_Status__c)) = &apos;Data Gathering&apos;, 
-          TEXT(PRIORVALUE(Advice_Status__c)) = &apos;Risk call&apos;
+     OR ( TEXT(PRIORVALUE(Advice_Status__c)) = &#39;Setup&#39;, 
+          TEXT(PRIORVALUE(Advice_Status__c)) = &#39;Data Gathering&#39;, 
+          TEXT(PRIORVALUE(Advice_Status__c)) = &#39;Risk call&#39;
      ),
      ISPICKVAL(Advice_Household__r.OW_rtq_status__c, 
      &quot;Expired&quot;) 
