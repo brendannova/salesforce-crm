@@ -15,7 +15,7 @@ public without sharing class AnnualReviewGenerator{
     private final static Id ACCOUNT_HOUSEHOLD_RECORD_TYPE_ID = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get(ACCOUNT_HOUSEHOLD_RECORD_TYPE_DEVELOPER_NAME)?.getRecordTypeId();
     private final static Id REVIEW_ANNUAL_RECORD_TYPE_ID = Schema.SObjectType.OW_review__c.getRecordTypeInfosByDeveloperName().get(REVIEW_ANNUAL_RECORD_TYPE_DEVELOPER_NAME)?.getRecordTypeId();
     @TestVisible private final static Id ADVICE_ANNUAL_REVIEW_RECORD_TYPE_ID = Schema.SObjectType.Advice__c.getRecordTypeInfosByDeveloperName().get(ADVICE_ANNUAL_REVIEW_RECORD_TYPE_DEVELOPER_NAME)?.getRecordTypeId(); 
-    private final static Date MAX_DATE = Date.today().addMonths(2).addDays(-1);
+    private final static Date MAX_DATE = Date.today().addMonths(BusinessConfiguration__c.getOrgDefaults().AnnualReviewLeadTime__c.intValue()).addDays(-1);
     private final static String STATUS_ACTIVE = 'Active';
     private final static String TYPE_EXECUTION_ONLY = 'Execution Only';
     private final static List<String> ADVICE_CONVERTIBLE_STATUSES = new List<String>{'Setup','Data gathering','Data analysis','Risk Call'};
