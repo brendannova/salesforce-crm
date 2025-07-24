@@ -5,7 +5,7 @@
     <description>Cannot set task to complete if related fact find is not complete</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
 AND(
-  RecordType.DeveloperName  = &apos;Chase_fact_find&apos;,
+  RecordType.DeveloperName  = &#39;Chase_fact_find&#39;,
  ISPICKVAL(Status, &quot;Completed&quot;), 
  NOT(ISPICKVAL(Related_Fact_Find__r.FF_Status__c , &quot;Complete&quot;))
 )</errorConditionFormula>
