@@ -44,9 +44,9 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesSkipAudit</name>
-            <conditionLogic>(1 OR 3 OR 4) AND 2</conditionLogic>
+            <conditionLogic>((1 OR 3 OR 4) AND 2) OR (5 AND (6 OR 7))</conditionLogic>
             <conditions>
-                <leftValueReference>Get_fulfilment.FulfilmentType__r.RecommendationTypeReference__c</leftValueReference>
+                <leftValueReference>Get_fulfilment.FulfilmentType__r.RecommendationType__r.ReferenceName__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>UPDATE_EOW</stringValue>
@@ -60,17 +60,38 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_fulfilment.FulfilmentType__r.RecommendationTypeReference__c</leftValueReference>
+                <leftValueReference>Get_fulfilment.FulfilmentType__r.RecommendationType__r.ReferenceName__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>NON_STANDARD_ACTION</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_fulfilment.FulfilmentType__r.RecommendationTypeReference__c</leftValueReference>
+                <leftValueReference>Get_fulfilment.FulfilmentType__r.RecommendationType__r.ReferenceName__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>CLIENT_ACTION</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_fulfilment.FulfilmentType__r.RecommendationType__r.ReferenceName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OPEN_PRODUCT</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_fulfilment.Recommendation__r.Product__r.ReferenceName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SIPP_HUBWISE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_fulfilment.Recommendation__r.Product__r.ReferenceName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>JSIPP_HUBWISE</stringValue>
                 </rightValue>
             </conditions>
             <label>Yes</label>
@@ -642,10 +663,6 @@
         <label>Call funds received flow</label>
         <locationX>1634</locationX>
         <locationY>458</locationY>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Update_fulfilment_audit_log</targetReference>
-        </connector>
         <flowName>FulfilmentScreenFundsReceived</flowName>
         <inputAssignments>
             <name>fulfilment</name>

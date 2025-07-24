@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Create_Client_Portal_Documents</name>
         <label>Create Client Portal Documents</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2546</locationY>
         <actionName>Google2.createClientPortalDocuments</actionName>
         <actionType>externalService</actionType>
@@ -25,7 +25,7 @@
     <assignments>
         <name>Define_body</name>
         <label>Define body</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2438</locationY>
         <assignmentItems>
             <assignToReference>portalDocsFolderBody.householdId</assignToReference>
@@ -41,7 +41,7 @@
     <assignments>
         <name>Define_error</name>
         <label>Define error</label>
-        <locationX>2910</locationX>
+        <locationX>3042</locationX>
         <locationY>2762</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -81,7 +81,7 @@
     <assignments>
         <name>Define_error_incorrect_link</name>
         <label>Define error</label>
-        <locationX>6738</locationX>
+        <locationX>7002</locationX>
         <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -105,7 +105,7 @@
     <assignments>
         <name>Define_error_no_doc_status</name>
         <label>Define error</label>
-        <locationX>5682</locationX>
+        <locationX>5946</locationX>
         <locationY>3212</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -129,7 +129,7 @@
     <assignments>
         <name>Define_error_no_household_folder_review</name>
         <label>Define error</label>
-        <locationX>7002</locationX>
+        <locationX>7266</locationX>
         <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -170,7 +170,7 @@
     <assignments>
         <name>Define_error_not_owner</name>
         <label>Define error</label>
-        <locationX>3922</locationX>
+        <locationX>4054</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -187,7 +187,7 @@
     <assignments>
         <name>Define_error_unknown_migration</name>
         <label>Define error</label>
-        <locationX>3130</locationX>
+        <locationX>3262</locationX>
         <locationY>782</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -204,7 +204,7 @@
     <assignments>
         <name>Define_error_unknown_start_point</name>
         <label>Define error</label>
-        <locationX>4186</locationX>
+        <locationX>4318</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
@@ -237,7 +237,7 @@
     <assignments>
         <name>Set_advice_ID_and_what_ID</name>
         <label>Set advice ID and what ID</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
@@ -274,9 +274,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_emailed_date_time_annual_review</name>
+        <label>Set emailed date time</label>
+        <locationX>5682</locationX>
+        <locationY>3320</locationY>
+        <assignmentItems>
+            <assignToReference>clientEmailedDateTime</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DateTimeReviewUpload</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Display_toast</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_emailed_date_time_Dropbox</name>
         <label>Set emailed date time</label>
-        <locationX>5946</locationX>
+        <locationX>6210</locationX>
         <locationY>2330</locationY>
         <assignmentItems>
             <assignToReference>clientEmailedDateTime</assignToReference>
@@ -292,7 +308,7 @@
     <assignments>
         <name>Set_folder_review_status</name>
         <label>Set folder review status</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>household.GoogleDriveFolderIdReviewed__c</assignToReference>
@@ -308,7 +324,7 @@
     <assignments>
         <name>Set_household_ID</name>
         <label>Set household ID</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -324,7 +340,7 @@
     <assignments>
         <name>Set_household_ID_and_ad_hoc_task</name>
         <label>Set household ID and ad-hoc</label>
-        <locationX>3658</locationX>
+        <locationX>3790</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -354,7 +370,7 @@
     <assignments>
         <name>Set_IDs</name>
         <label>Set IDs</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>householdId</assignToReference>
@@ -394,7 +410,7 @@
     <assignments>
         <name>Set_task_what_ID</name>
         <label>Set task what ID</label>
-        <locationX>3658</locationX>
+        <locationX>3790</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>taskWhatId</assignToReference>
@@ -451,6 +467,13 @@
         <dataType>String</dataType>
         <value>
             <stringValue>CLIENT PORTAL DOCUMENTS</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>PORTAL_DOCS_ANNUAL_REVIEW_UPLOAD_TASK_INFO_NAME</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ADVICE_ANNUAL_REVIEW_UPLOAD</stringValue>
         </value>
     </constants>
     <constants>
@@ -512,7 +535,7 @@
     <decisions>
         <name>Account_type</name>
         <label>Account type?</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Do_Dropbox_task</targetReference>
@@ -551,7 +574,7 @@
     <decisions>
         <name>Action</name>
         <label>Action</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>3104</locationY>
         <defaultConnector>
             <targetReference>Define_error_no_doc_status</targetReference>
@@ -702,6 +725,35 @@
             </connector>
             <label>Ad-hoc pre-advice</label>
         </rules>
+        <rules>
+            <name>Annual_review</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>taskType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>PORTAL_DOCS_ANNUAL_REVIEW_UPLOAD_TASK_INFO_NAME</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>household.PortalDocumentStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>household.GoogleDriveFolderIdPortalDocuments__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Advice_upload_instructions_annual_review</targetReference>
+            </connector>
+            <label>Annual review</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Ad_hoc_or_with_advice</name>
@@ -731,7 +783,7 @@
     <decisions>
         <name>Call_outcome</name>
         <label>Call outcome</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2654</locationY>
         <defaultConnector>
             <targetReference>Define_error</targetReference>
@@ -886,7 +938,7 @@
     <decisions>
         <name>Display_toast</name>
         <label>Display toast?</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>4760</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -908,7 +960,7 @@
     <decisions>
         <name>Google_Drive_folder_status</name>
         <label>Google Drive folder status</label>
-        <locationX>3262</locationX>
+        <locationX>3394</locationX>
         <locationY>1466</locationY>
         <defaultConnector>
             <targetReference>Define_error_no_household_folder_review</targetReference>
@@ -965,7 +1017,7 @@
     <decisions>
         <name>Household_link</name>
         <label>Household link</label>
-        <locationX>5605</locationX>
+        <locationX>5836</locationX>
         <locationY>1682</locationY>
         <defaultConnector>
             <targetReference>Define_error_incorrect_link</targetReference>
@@ -990,7 +1042,7 @@
     <decisions>
         <name>Launched_from</name>
         <label>Launched from</label>
-        <locationX>3262</locationX>
+        <locationX>3394</locationX>
         <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Define_error_unknown_start_point</targetReference>
@@ -1045,7 +1097,7 @@
     <decisions>
         <name>Migration_status</name>
         <label>Migration status?</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>566</locationY>
         <defaultConnector>
             <targetReference>Ad_hoc_migration_in_progress</targetReference>
@@ -1070,7 +1122,7 @@
     <decisions>
         <name>Portal_docs_folder_defined</name>
         <label>Portal docs folder defined?</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Action</targetReference>
@@ -1167,7 +1219,7 @@
     <decisions>
         <name>Portal_documents_status</name>
         <label>Portal documents status</label>
-        <locationX>2998</locationX>
+        <locationX>3130</locationX>
         <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Define_error_unknown_migration</targetReference>
@@ -1199,7 +1251,7 @@
     <decisions>
         <name>User_is_task_owner</name>
         <label>User is task owner?</label>
-        <locationX>3790</locationX>
+        <locationX>3922</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>Define_error_not_owner</targetReference>
@@ -1273,7 +1325,7 @@
     <recordLookups>
         <name>Check_for_migration_task</name>
         <label>Check for migration task</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1323,7 +1375,7 @@
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>2338</locationX>
+        <locationX>2470</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1348,7 +1400,7 @@
     <recordLookups>
         <name>Get_household</name>
         <label>Get household</label>
-        <locationX>3262</locationX>
+        <locationX>3394</locationX>
         <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1380,7 +1432,7 @@
     <recordLookups>
         <name>Get_household_ad_hoc</name>
         <label>Get household</label>
-        <locationX>3196</locationX>
+        <locationX>3328</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1469,7 +1521,7 @@
     <recordLookups>
         <name>Get_task</name>
         <label>Get task</label>
-        <locationX>3790</locationX>
+        <locationX>3922</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1556,7 +1608,7 @@
     <recordLookups>
         <name>Refresh_household_portal_docs_folder_request</name>
         <label>Refresh household</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>2006</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1815,7 +1867,7 @@
     <recordUpdates>
         <name>Close_portal_docs_task_trust</name>
         <label>Close portal docs task</label>
-        <locationX>5946</locationX>
+        <locationX>6210</locationX>
         <locationY>2438</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1990,7 +2042,7 @@
     <recordUpdates>
         <name>Update_household_folder_review</name>
         <label>Update household</label>
-        <locationX>4472</locationX>
+        <locationX>4670</locationX>
         <locationY>1898</locationY>
         <connector>
             <targetReference>Refresh_household_portal_docs_folder_request</targetReference>
@@ -2005,7 +2057,7 @@
     <screens>
         <name>Ad_hoc_migration_in_progress</name>
         <label>Ad-hoc migration in progress</label>
-        <locationX>3394</locationX>
+        <locationX>3526</locationX>
         <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2026,7 +2078,7 @@
     <screens>
         <name>Ad_hoc_task_creation</name>
         <label>Ad-hoc task creation</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>782</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2045,6 +2097,73 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Create task</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Advice_upload_instructions_annual_review</name>
+        <label>Advice upload instructions annual review</label>
+        <locationX>5682</locationX>
+        <locationY>3212</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Set_emailed_date_time_annual_review</targetReference>
+        </connector>
+        <fields>
+            <name>AnnualReviewUploadPrompt</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;Annual review upload | {!household.Name}﻿&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Please create a folder in the advice meetings location with the format &lt;strong&gt;&lt;em&gt;{YYY-MM-DD} - Annual review&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Upload the following:&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;https://octopuswealth--devadvar.sandbox.lightning.force.com/builder_platform_interaction/%7B!Get_advice.AnnualReviewDeckUrl__c%7D&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(1, 118, 211);&quot;&gt;the annual review deck &lt;/a&gt;&lt;/li&gt;&lt;li&gt;KIIDs&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;You do not need to upload any illustrations. Any advice that follows will get a new folder. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_advice.Advice_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Risk Call</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_advice.Advice_Status__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Suitability in progress</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AnnualReviewContentsUploadedToGoogleDrive</name>
+            <choiceReferences>Yes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>New advice folder set up</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Email_to_send</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>EmailToSend</elementReference>
+            </defaultValue>
+            <fieldText>Email to send</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isReadOnly>
+                <booleanValue>true</booleanValue>
+            </isReadOnly>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>DateTimeReviewUpload</name>
+            <dataType>DateTime</dataType>
+            <fieldText>When did you email the client?</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -2236,7 +2355,7 @@
     <screens>
         <name>ConfirmationScreen</name>
         <label>Confirmation Screen</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>4868</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2313,7 +2432,7 @@
     <screens>
         <name>Do_Dropbox_task</name>
         <label>Do Dropbox task</label>
-        <locationX>5946</locationX>
+        <locationX>6210</locationX>
         <locationY>2222</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2374,7 +2493,7 @@
     <screens>
         <name>Folder_Creation</name>
         <label>Folder Creation</label>
-        <locationX>2822</locationX>
+        <locationX>2954</locationX>
         <locationY>2330</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2425,7 +2544,7 @@
     <screens>
         <name>Folder_Test</name>
         <label>Folder Test</label>
-        <locationX>5605</locationX>
+        <locationX>5836</locationX>
         <locationY>1574</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -3024,7 +3143,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>3136</locationX>
+        <locationX>3268</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Launched_from</targetReference>
@@ -3069,7 +3188,7 @@
     <subflows>
         <name>Create_ad_hoc_migration_task</name>
         <label>Create ad-hoc migration task</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>890</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
@@ -3169,6 +3288,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>EmailToSend</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>error</name>
