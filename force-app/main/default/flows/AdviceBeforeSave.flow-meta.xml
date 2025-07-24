@@ -747,6 +747,7 @@
                 <isGoTo>true</isGoTo>
                 <targetReference>Set_status_to_prepare_advice</targetReference>
             </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
             <label>Client not engaging</label>
         </rules>
         <rules>
@@ -1595,7 +1596,7 @@
 6, ({!status_start_date}) - IF({!$Record.OW_status_sla__c}&gt;0,1,0) + {!$Record.OW_status_sla__c} + CEILING(({!$Record.OW_status_sla__c})/5)*2, null)</expression>
     </formulas>
     <formulas>
-        <description>The start date that should apply when monitoring compliance with the status&apos;s SLA</description>
+        <description>The start date that should apply when monitoring compliance with the status&#39;s SLA</description>
         <name>status_start_date</name>
         <dataType>Date</dataType>
         <expression>CASE({!$Record.Advice_Status__c},
