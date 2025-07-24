@@ -1,5 +1,13 @@
+/**
+ * This class can be used for test purposes only. 
+ * It will load configuration data with the Test.loadData method.
+ * The configuration data is loaded from static resource csv files for each object. 
+ * This only supports the simpler configuration data objects without relationships right now. 
+ * It should expanded to support the others once we can easily transform our files in config-data to the appropriate format as part of our CI/CD pipeline.
+ */
 public without sharing class DataFactoryConfigurationData {
     
+    // The currently supported configuration data objects. 
     public static final List<String> VALID_CONFIG_DATA_TEST_OBJECTS = new List<String>{
         'EmailConfiguration__c',
         'FactCategory__c',
@@ -20,6 +28,7 @@ public without sharing class DataFactoryConfigurationData {
         'FeeModel__c'
     };
 
+    // The method that loads the configuration data. This is somewhat messy at this stage but is being left to allow expansion. 
     public static void load() {
         List<sObject> configData06 = Test.loadData(EmailConfiguration__c.sObjectType, 'EmailConfiguration');
         List<sObject> configData08 = Test.loadData(FactCategory__c.sObjectType, 'FactCategory');
