@@ -36,7 +36,17 @@ public with sharing class AccountHouseholdMembers {
         }
 
         // Get all the households and cast them to a map, including the relationships for that households
-        Map<Id, Account> householdsMap = new Map<Id, Account>([SELECT Id, (SELECT Contact.AccountId, Roles, IsActive FROM AccountContactRelations), OwnerId, Owner.Email FROM Account WHERE Id IN :householdIds]);
+        Map<Id, Account> householdsMap = new Map<Id, Account>(
+            [SELECT 
+                Id, 
+                (SELECT Contact.AccountId, Roles, IsActive FROM AccountContactRelations), 
+                (SELECT AdditionalInclusion__r.AccountId, Recipient__c, InclusionType__c FROM EmailInclusionRules__r WHERE Status__c = 'Active' ),
+                OwnerId, Owner.Email 
+            FROM 
+                Account 
+            WHERE 
+                Id IN :householdIds
+            ]);
 
         /**
          * Loop the relationships to get all the relationships then perform another query to get the individuals. 
@@ -46,6 +56,12 @@ public with sharing class AccountHouseholdMembers {
             for(AccountContactRelation member : household.AccountContactRelations){
                 memberIds.add(member.Contact.AccountId);
             }
+            for(EmailInclusionRule__c member : household.EmailInclusionRules__r ){
+                memberIds.add(member.AdditionalInclusion__r.AccountId);
+            }
+            //for(Attorney__c member : household.AccountContactRelations.Accounts.PowerOfAttorneys__r.Attorneys__r){
+              //  memberIds.add(member.Id);
+            //}
         }
         Map<Id, Account> membersMap = new Map<Id, Account>([SELECT Id, PersonContactId, FirstName, LastName, AddressedName__pc, PersonEmail FROM Account WHERE Id IN :memberIds]);
         
@@ -73,6 +89,16 @@ public with sharing class AccountHouseholdMembers {
                     }
                 }                
             }
+            
+            // Loop the household's email inclusion rules and build the map, only if the role was requested
+            for (EmailInclusionRule__c rule : result.household.EmailInclusionRules__r) {
+                if( rule.InclusionType__c == 'To' && request.roles.contains('TO_EMAIL')) {
+                    result.memberAccountsByRole.get('TO_EMAIL').add(membersMap.get(rule.AdditionalInclusion__r.AccountId));
+                } else if ( rule.InclusionType__c == 'CC' && request.roles.contains('CC_EMAIL') ) {
+                	result.memberAccountsByRole.get('CC_EMAIL').add(membersMap.get(rule.AdditionalInclusion__r.AccountId));
+                } 
+            }
+            
             results.put(request.householdId, result);
         }
         return results;

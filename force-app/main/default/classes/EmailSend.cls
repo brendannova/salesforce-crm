@@ -51,6 +51,11 @@ public without sharing class EmailSend{
             }
             EmailConfiguration__c emailConfiguration = emailConfigurationsMap.get(request.emailTemplateDeveloperName); 
 			email = setUpEmail(request, email, emailConfiguration);
+            System.debug(email.htmlBody);
+            if( email.htmlBody.contains('{{') ) {
+                throw new EmailSendException('Tags have not been replaced'); 
+            }
+            
             emails.add(email);  
         }
         sendEmails(emails);
@@ -118,24 +123,12 @@ public without sharing class EmailSend{
         email.setUseSignature(false);
 
         AccountHouseholdMembers.HouseholdMemberResult result = householdMembersMap.get(request.householdId);
-        // To recipients
-        List<String> toAddresses = new List<String>();      // People to address directly
-        if( emailConfig.ClientsAddressed__c == 'One only' ) {
-            // Do nothing as client is targetObjectId
-        } else if( emailConfig.ClientsAddressed__c == 'All' ) {
-            for(Account member : result.memberAccountsByRole.get('Client')){
-                if(member.PersonContactId != request.targetObjectId){
-                    toAddresses.add(member.PersonEmail);
-                }
-            }
-        }
+        System.debug(result);
         
-        // CC recipients
-        List<String> ccAddresses = new List<String>();      // People to CC
-        if( emailConfig.PartnerCopied__c == 'ALWAYS' ) {
-            ccAddresses.add(result.household.Owner.Email);
-        }
-
+        List<Account> toAccounts = getToAccounts(request, result, emailConfig);
+        email.htmlBody = email.htmlBody.replace('{{hiLine}}', getHiString(toAccounts));
+        List<String> toAddresses = getToAddresses(toAccounts);
+        List<String> ccAddresses = getCcAddresses(result, emailConfig);
         if(!toAddresses.isEmpty()){
             email.setToAddresses(toAddresses);
         }
@@ -145,15 +138,83 @@ public without sharing class EmailSend{
         return email;
     }
 
+    private List<Account> getToAccounts(EmailSendRequestAutomatic request, AccountHouseholdMembers.HouseholdMemberResult result, EmailConfiguration__c emailConfig){
+        Set<Account> toAccounts = new Set<Account>();      // People to address directly
+        if( emailConfig.ClientsAddressed__c == 'One only' ) {
+            for(Account member : result.memberAccountsByRole.get('Client')){
+                if(member.PersonContactId == request.targetObjectId){
+                    toAccounts.add(member);
+                }
+            }
+        } else if( emailConfig.ClientsAddressed__c == 'All' ) {
+            for(Account member : result.memberAccountsByRole.get('Client')){
+                if(member.PersonContactId != request.targetObjectId){
+                    toAccounts.add(member);
+                }
+            }
+        }
+        if( result.memberAccountsByRole.get('TO_EMAIL') != null ) {
+            for( Account member : result.memberAccountsByRole.get('TO_EMAIL') ) {
+                    toAccounts.add(member);
+            }
+        }
+        return new List<Account>(toAccounts);
+    }
+    
+    private List<String> getToAddresses(List<Account> accounts) {
+        List<String> toEmails = new List<String>();
+        for(Account account : accounts ) {
+            toEmails.add(account.PersonEmail);
+        }
+        return toEmails;
+    }
+
+    private List<String> getCcAddresses(AccountHouseholdMembers.HouseholdMemberResult result, EmailConfiguration__c emailConfig){
+        // CC recipients
+        Set<String> ccAddresses = new Set<String>();      // People to CC
+        if( emailConfig.PartnerCopied__c == 'ALWAYS' ) {
+            ccAddresses.add(result.household.Owner.Email);
+        }
+        if( result.memberAccountsByRole.get('CC_EMAIL') != null ) {
+            for( Account member : result.memberAccountsByRole.get('CC_EMAIL') ) {
+                    ccAddresses.add(member.PersonEmail);
+            }
+        }
+        return new List<String>(ccAddresses);
+    }
+
     private void getHouseholdMembers(Set<Id> householdIds){
         List<AccountHouseholdMembers.HouseholdMemberRequest> requests = new List<AccountHouseholdMembers.HouseholdMemberRequest>();
         for(Id householdId : householdIds){
             AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
             request.householdId = householdId;
-            request.roles = new Set<String>{'Client'};
+            request.roles = new Set<String>{'Client','CC_EMAIL','TO_EMAIL'};
             requests.add(request);
         }
         householdMembersMap = AccountHouseholdMembers.getHouseholdMembers(requests);
+    }
+    
+    private String getHiString(List<Account> recipients) {
+        Integer n = recipients.size();
+        Integer i = 0;
+        String hiString = 'Hi ';
+        
+        if ( n == 1 ) {
+            hiString = hiString + recipients[0].AddressedName__pc + ',';
+        } else {
+            i = 0;
+            for(Account recipient : recipients){
+                if ( i < n - 2 ) {
+                    hiString = hiString + recipients[i].AddressedName__pc + ', ';
+                } else if ( i == n - 2 ) {
+                    hiString = hiString + recipients[i].AddressedName__pc + ' & ';
+                } else {
+                    hiString = hiString + recipients[i].AddressedName__pc + ',';
+                }
+                i = i + 1;
+            }
+        }
+        return hiString;
     }
 
     /*

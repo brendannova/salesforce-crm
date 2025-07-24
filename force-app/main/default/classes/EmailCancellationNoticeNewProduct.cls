@@ -7,10 +7,9 @@ public class EmailCancellationNoticeNewProduct {
     public static Map<String, String> getParameters(Fulfilment__c fulfilmentInput) {
         fulfilment = fulfilmentInput;
         Map<String, String> parameters = new Map<String, String>();
-        parameters.put('{{hiLine}}','Hi Bobbbbb');
         parameters.put('{{financialProductOwnership}}', financialProductOwnership);
         parameters.put('{{productName}}', productName);
-        parameters.put('{{dateTodayString}}', dateString);
+        parameters.put('{{dateString}}', dateString);
         return parameters;
     }
     
@@ -30,7 +29,7 @@ public class EmailCancellationNoticeNewProduct {
             if(String.isNotBlank(fulfilment.Recommendation__r.Product__r.Name)) {
                 return fulfilment.Recommendation__r.Product__r.Name;
             } else {
-                throw new EmailCancellationNoticeTransferException('Blank value in product name'); 
+                throw new EmailCancellationNoticeNewProductException('Blank value in product name'); 
             }
         }
     }
@@ -43,8 +42,11 @@ public class EmailCancellationNoticeNewProduct {
     }
 
     public static String getSubject(Fulfilment__c fulfilment){
-        String subject = 'Your new SIPP';
-        return subject;
+        if( fulfilment.Recommendation__r.Product__r.ReferenceName__c == 'SIPP_HUBWISE') {
+            return 'NOVA Wealth - Your new SIPP';
+        } else {
+            return 'NOVA Wealth - ' + financialProductOwnership + ' new Junior SIPP';
+        }
     }
     
     public class EmailCancellationNoticeNewProductException extends Exception {}
