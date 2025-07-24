@@ -1,9 +1,6 @@
 public class FulfilmentTriggerHelper {
-    
-    // Change type to Fulfilment__c from SObject
-    public void sendNotices(Map<Id, SObject> fulfilmentsNewMap, Map<Id, SObject> fulfilmentsOldMap) {
+        public void sendNotices(Map<Id, SObject> fulfilmentsNewMap, Map<Id, SObject> fulfilmentsOldMap) {
         
-        // Tidied presentation of this
         List<Fulfilment__c> fulfilments = [
             SELECT
                 Id, 
@@ -16,8 +13,8 @@ public class FulfilmentTriggerHelper {
                 Recommendation__r.RegisteredContact__r.PersonContactId,
                 Recommendation__r.PrimaryOwner__r.AddressedName__pc,
                 Recommendation__r.RegisteredContact__r.AddressedName__pc,
-                Recommendation__r.Product__r.ReferenceName__c,
-                Recommendation__r.RecommendationType__r.ReferenceName__c,
+                Recommendation__r.Product__r.DeveloperName__c,
+                Recommendation__r.RecommendationType__r.DeveloperName__c,
                 Recommendation__r.TransferType__c,
                 Recommendation__r.SourceLegacy__r.Public_Provider_Name__r.Name,
                 Recommendation__r.DestinationLegacy__r.Public_Provider_Name__r.Name,
@@ -27,9 +24,10 @@ public class FulfilmentTriggerHelper {
             FROM
                 Fulfilment__c
             WHERE
-                ((Recommendation__r.RecommendationType__r.ReferenceName__c = 'OPEN_PRODUCT' AND Recommendation__r.Product__r.ReferenceName__c IN ('SIPP_HUBWISE', 'JSIPP_HUBWISE') AND Status__c = 'Complete' ) OR 
-                (Recommendation__r.RecommendationType__r.ReferenceName__c = 'EXTERNAL_TRANSFER_IN' AND Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName = 'FP_SIPP' AND PaymentStatus__c = 'Funds received'))
+                ((Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Recommendation__r.Product__r.DeveloperName__c IN ('SIPP_HUBWISE', 'JSIPP_HUBWISE') AND Status__c = 'Complete' ) OR 
+                (Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName = 'FP_SIPP' AND PaymentStatus__c = 'Funds received'))
                 AND Id IN :fulfilmentsNewMap.keySet()
+            	AND CancellationNoticeSent__c = false
             ];
         
         List<Fulfilment__c> fulfilmentsRequiringNotice = new List<Fulfilment__c>();
@@ -37,10 +35,23 @@ public class FulfilmentTriggerHelper {
         for( Fulfilment__c fulfilment : fulfilments ) {
             Fulfilment__c fulfilmentOld = (Fulfilment__c) fulfilmentsOldMap.get(fulfilment.Id);
             //To do - the logic here needs improving
-            if( fulfilmentOld.CancellationNoticeSent__c == false ) {
-                   fulfilmentsRequiringNotice.add(fulfilment);
-               } 
-            
+            if( 
+            	fulfilmentOld.CancellationNoticeSent__c == false 
+                &&
+                	(
+                  		(
+                            fulfilmentOld.Status__c == 'Chase transfer' 
+                            && fulfilment.Status__c == 'Investment checks'
+                            && fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'EXTERNAL_TRANSFER_IN'
+                        )
+                        ||
+                        (
+                            fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'OPEN_PRODUCT'
+                        )
+                    )
+            ) {
+                fulfilmentsRequiringNotice.add(fulfilment);
+            } 
         }
         
         if( fulfilmentsRequiringNotice.size() > 0 ) {
@@ -48,7 +59,9 @@ public class FulfilmentTriggerHelper {
             List<EmailSend.EmailSendRequestAutomatic> emailRequests = new List<EmailSend.EmailSendRequestAutomatic>();
             
             for (Fulfilment__c fulfilment : fulfilmentsRequiringNotice) {
+                System.debug('Fulfilment for notice: ' + fulfilment);
                 emailRequests.add(constructEmailRequest(fulfilment));
+                System.debug('EmailRequests: ' + emailRequests);
                 fulfilment.CancellationNoticeSent__c = true;
             }  
             
@@ -65,7 +78,7 @@ public class FulfilmentTriggerHelper {
         emailRequest.householdId = fulfilment.Recommendation__r.Household__c;
         emailRequest.whatId = fulfilment.Id;
         emailRequest.saveAsActivity = true;
-        if( fulfilment.Recommendation__r.RecommendationType__r.ReferenceName__c == 'EXTERNAL_TRANSFER_IN') {
+        if( fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'EXTERNAL_TRANSFER_IN') {
 			emailRequest.emailTemplateDeveloperName = 'CancellationNoticeTransfer';            
             emailRequest.parameters = EmailCancellationNoticeTransfer.getParameters(fulfilment);
         } else {
@@ -79,7 +92,7 @@ public class FulfilmentTriggerHelper {
     
     // Get correct contact for this email
     public static String getContactId(Fulfilment__c fulfilment) {
-        if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
+        if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
             return fulfilment.Recommendation__r.PrimaryOwner__r.PersonContactId;
         } else {
             return fulfilment.Recommendation__r.RegisteredContact__r.PersonContactId;

@@ -10,7 +10,7 @@ public class FulfilmentTriggerHelperTest {
     static void runTestCancellationNotice(){
         System.debug('runTestCancellationNotice');
         Id householdId = createData();
-        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.ReferenceName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.ReferenceName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
+        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
 
 		testFulfil.Status__c = 'Investment checks';
 		update testFulfil;
@@ -19,7 +19,7 @@ public class FulfilmentTriggerHelperTest {
         update testFulfil;
         
         Integer emailsSent = Limits.getEmailInvocations();
-        System.assertEquals(2, emailsSent, 'Expected 1 email but got ' + emailsSent);
+        System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
         Test.stopTest();
     }
     
@@ -27,18 +27,21 @@ public class FulfilmentTriggerHelperTest {
     static void runTestTransferComplete() {
         System.debug('runTestTransferComplete');
         Id householdId = createData();
-        List<Fulfilment__c> fulfilments = [SELECT Id, SearchName__c, Recommendation__r.Product__r.ReferenceName__c, Recommendation__r.RecommendationType__r.ReferenceName__c FROM Fulfilment__c WHERE Advice__r.Advice_Household__c =: householdId ];
+        List<Fulfilment__c> fulfilments = [SELECT Id, SearchName__c, Recommendation__r.Product__r.DeveloperName__c, Recommendation__r.RecommendationType__r.DeveloperName__c FROM Fulfilment__c WHERE Advice__r.Advice_Household__c =: householdId ];
         
-        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.ReferenceName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.ReferenceName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
+        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
 
 		testFulfil.PaymentStatus__c = 'Submitted';
+        testFulfil.Status__c = 'Chase transfer';
 		update testFulfil;
         Test.startTest();
         testFulfil.PaymentStatus__c = 'Funds received';
+        testFulfil.Status__c = 'Investment checks';
+		testFulfil.ResidualCash__c = 'AWAITING';
         update testFulfil;
         
         Integer emailsSent = Limits.getEmailInvocations();
-        System.assertEquals(2, emailsSent, 'Expected 1 email but got ' + emailsSent);
+        System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
         Test.stopTest();
     }
     
@@ -48,24 +51,24 @@ public class FulfilmentTriggerHelperTest {
         
         Advice__c advice = df.createAdvice(0, household);
         
-        List<RecommendationType__c> recTypes = [SELECT Id, ReferenceName__c FROM RecommendationType__c WHERE ReferenceName__c IN ('OPEN_PRODUCT','EXTERNAL_TRANSFER_IN')];
+        List<RecommendationType__c> recTypes = [SELECT Id, DeveloperName__c FROM RecommendationType__c WHERE DeveloperName__c IN ('OPEN_PRODUCT','EXTERNAL_TRANSFER_IN')];
         RecommendationType__c openProdRecType = new RecommendationType__c();
         RecommendationType__c transferRecType = new RecommendationType__c();
         for( RecommendationType__c recType : recTypes ){
-            if( recType.ReferenceName__c == 'OPEN_PRODUCT' ) {
+            if( recType.DeveloperName__c == 'OPEN_PRODUCT' ) {
                 openProdRecType = recType;
-            } else if ( recType.ReferenceName__c == 'EXTERNAL_TRANSFER_IN' ) {
+            } else if ( recType.DeveloperName__c == 'EXTERNAL_TRANSFER_IN' ) {
                 transferRecType = recType;
             }
         }
         
-        List<Product__c> products = [SELECT Id, ReferenceName__c FROM Product__c WHERE ReferenceName__c IN ('SIPP_HUBWISE','JSIPP_HUBWISE')];
+        List<Product__c> products = [SELECT Id, DeveloperName__c FROM Product__c WHERE DeveloperName__c IN ('SIPP_HUBWISE','JSIPP_HUBWISE')];
         Product__c productType = new Product__c();
         Product__c productTypeJunior = new Product__c();
         for( Product__c product : products ){
-            if( product.ReferenceName__c == 'SIPP_HUBWISE' ) {
+            if( product.DeveloperName__c == 'SIPP_HUBWISE' ) {
                 productType = product;
-            } else if ( product.ReferenceName__c == 'JSIPP_HUBWISE' ) {
+            } else if ( product.DeveloperName__c == 'JSIPP_HUBWISE' ) {
                 productTypeJunior = product;
             }
         }
@@ -96,7 +99,21 @@ public class FulfilmentTriggerHelperTest {
         
         insert recs;
         
-                
+        Public_Provider_Names__c public_provider = [SELECT Id FROM Public_Provider_Names__c LIMIT 1];
+        
+        FinServ__FinancialAccount__c source = new FinServ__FinancialAccount__c(
+            Name = 'Test',
+            Subtype__c  = 'Defined Contribution',
+            FinServ__PrimaryOwner__c = clients[0],
+            Household__c = household,
+            FinServ__Ownership__c = 'Individual',
+            FinServ__Status__c = 'Open',
+            Public_Provider_Name__c = public_provider.Id,
+            RecordTypeId = Schema.SObjectType.FinServ__FinancialAccount__c.getRecordTypeInfosByDeveloperName().get('FP_SIPP').getRecordTypeId()
+        );
+            
+        insert source;
+        
         Recommendation__c transferSippRec = new Recommendation__c(
         	Product__c = productType.Id,
             RecommendationType__c = transferRecType.Id,
@@ -104,6 +121,7 @@ public class FulfilmentTriggerHelperTest {
             Advice__c = advice.Id,
             Household__c = household,
             TransferType__c = 'Full',
+            SourceLegacy__c = source.Id,
             PreRequisiteRecommendation__c = recs[0].Id
         ); 
         

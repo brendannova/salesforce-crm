@@ -16,7 +16,7 @@ public class EmailCancellationNoticeNewProduct {
     // Returns your or child's name dependent on whether this is a SIPP or JSIPP
     public static String financialProductOwnership{
         get{
-            if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
+            if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
                 return 'your';
             } else {
                 return fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s';
@@ -42,7 +42,7 @@ public class EmailCancellationNoticeNewProduct {
     }
 
     public static String getSubject(Fulfilment__c fulfilment){
-        if( fulfilment.Recommendation__r.Product__r.ReferenceName__c == 'SIPP_HUBWISE') {
+        if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
             return 'NOVA Wealth - Your new SIPP';
         } else {
             return 'NOVA Wealth - ' + financialProductOwnership + ' new Junior SIPP';
