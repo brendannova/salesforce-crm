@@ -1048,19 +1048,6 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Update_review_status</name>
-        <label>Update review status</label>
-        <locationX>4802</locationX>
-        <locationY>1382</locationY>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.OW_status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Provide advice</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Update_review_status_complete</name>
         <label>Update review status</label>
         <locationX>5330</locationX>
@@ -1171,15 +1158,12 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdated.Reason_for_Cancellation__c</assignToReference>
+            <assignToReference>adviceUpdated.ClosedReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>CUSTOMER_NOT_ENGAGING</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_review_status</targetReference>
-        </connector>
     </assignments>
     <choices>
         <name>AnnualReviewFactFindChased</name>
@@ -1634,6 +1618,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Incomplete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.RiskCallStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Skipped</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -3056,9 +3047,6 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <label>Assess retirement call need</label>
         <locationX>4670</locationX>
         <locationY>1190</locationY>
-        <connector>
-            <targetReference>Update_review_status</targetReference>
-        </connector>
         <flowName>AdviceOrchestratorRetirementCallAssess</flowName>
         <inputAssignments>
             <name>advice</name>
@@ -3322,7 +3310,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <name>Confirm_task</name>
         <label>Confirm task</label>
         <locationX>7134</locationX>
-        <locationY>1682</locationY>
+        <locationY>1574</locationY>
         <flowName>OrchestratorTaskComplete</flowName>
         <inputAssignments>
             <name>task</name>
