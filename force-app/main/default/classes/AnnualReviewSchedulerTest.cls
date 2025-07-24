@@ -36,6 +36,11 @@ public without sharing class AnnualReviewSchedulerTest {
         Account testHouseholdOffboarding = DataFactoryAccountHousehold.createHousehold('TEST_HOUSEHOLD_OFFBOARDING', 1, 0, 'Offboarding', 'Full');
         testHouseholdOffboarding.FinServ__NextReview__c = ANNUAL_REVIEW_DATE_IN_RANGE;
         update testHouseholdOffboarding;
+        
+        BusinessConfiguration__c businessConfiguration = new BusinessConfiguration__c(
+            AnnualReviewLeadTime__c = 2
+        );
+        insert businessConfiguration;
     }
 
     @IsTest
