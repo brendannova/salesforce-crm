@@ -18,6 +18,7 @@
             </value>
         </inputParameters>
         <nameSegment>OctopusWealthPortal.updateUser</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
@@ -125,7 +126,7 @@
         <name>EmailInputError</name>
         <dataType>String</dataType>
         <expression>IF({!New_email_screen} = {!Get_person_account.PersonEmail}, &quot;Email must be different&quot;, 
-IF(NOT(REGEX({!New_email_screen}, &quot;^[\\w-+\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$&quot;)), &quot;Invalid email format - please check the email and raise a ticket if you&#39;re confident this is correct&quot;, &quot;Other error, please raise a ticket&quot;))</expression>
+IF(NOT(REGEX({!New_email_screen}, &quot;^[\\w-+\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$&quot;)), &quot;Invalid email format - please check the email and raise a ticket if you&#39;re confident this is correct&quot;, &quot;Other error, please raise a ticket&quot;))</expression>
     </formulas>
     <interviewLabel>Account | Update Email {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account | Update Email</label>
@@ -323,7 +324,7 @@ IF(NOT(REGEX({!New_email_screen}, &quot;^[\\w-+\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$&q
                 <errorMessage>&lt;p&gt;{!EmailInputError}&lt;/p&gt;</errorMessage>
                 <formulaExpression>({!New_email_screen} &lt;&gt; {!Get_person_account.PersonEmail})
 &amp;&amp;
-REGEX({!New_email_screen},&quot;^[\\w-+\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$&quot;)</formulaExpression>
+REGEX({!New_email_screen},&quot;^[\\w-+\\.]+@([\\w-]+\\.)+[\\w-]{2,10}$&quot;)</formulaExpression>
             </validationRule>
         </fields>
         <fields>
