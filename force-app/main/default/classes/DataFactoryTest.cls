@@ -57,4 +57,19 @@ global class DataFactoryTest {
         //System.assert(numClients * numProducts + 1 == financial_products.size()); // Check that there is a financial product for each client plus a joint product
         System.assert(numClients * numProducts + 1 == loas.size()); // Check that there is an LOA for each client plus a joint product
     }
+    
+    @istest
+    static void testgetAccountIds(){
+        Integer numClients = 2;
+        Integer numChildren = 3;
+        String status = 'Active';
+        String identifier = 'cth_test_run';
+        String profileType = 'Full';
+        DataFactory df = new DataFactory();
+        String householdId = df.createHousehold(identifier, numClients, numChildren, status, profileType);
+        List<Id> clients = df.getPersonAccountIds(householdId, 'Client');
+        List<Id> children = df.getPersonAccountIds(householdId, 'Child');
+        System.assert(children.size() == numChildren);
+        System.assert(clients.size() == numClients);
+    }
 }
