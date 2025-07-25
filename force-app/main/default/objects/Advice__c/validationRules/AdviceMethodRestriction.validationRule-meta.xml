@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AdviceMethodRestriction</fullName>
     <active>false</active>
-    <description>Ensures that if there&apos;s a restriction on how the advice is given, this is respected.</description>
+    <description>Ensures that if there&#39;s a restriction on how the advice is given, this is respected.</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp; 
 ((ISPICKVAL(AdviceType__r.AdviceMethod__c, &quot;PRESENTED&quot;) &amp;&amp; 
 NOT(ISPICKVAL(AdviceMethod__c, &quot;PRESENTED&quot;))) ||
