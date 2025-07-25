@@ -25,7 +25,7 @@ public class FulfilmentTriggerHelper {
                 Fulfilment__c
             WHERE
                 ((Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Recommendation__r.Product__r.DeveloperName__c IN ('SIPP_HUBWISE', 'JSIPP_HUBWISE') AND Status__c = 'Complete' ) OR 
-                (Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName = 'FP_SIPP' AND PaymentStatus__c = 'Funds received'))
+                (Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName IN ('Junior_SIPP', 'FP_SIPP') AND PaymentStatus__c = 'Funds received'))
                 AND Id IN :fulfilmentsNewMap.keySet()
             	AND CancellationNoticeSent__c = false
             ];
