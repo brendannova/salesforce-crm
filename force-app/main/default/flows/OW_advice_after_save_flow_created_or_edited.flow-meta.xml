@@ -5,7 +5,7 @@
         <name>Add_advice_tasks</name>
         <label>Add advice tasks</label>
         <locationX>187</locationX>
-        <locationY>5537</locationY>
+        <locationY>5837</locationY>
         <assignmentItems>
             <assignToReference>tasks_temp_storage</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Add_advice_tasks_0</name>
         <label>Add advice tasks</label>
         <locationX>407</locationX>
-        <locationY>6161</locationY>
+        <locationY>6461</locationY>
         <assignmentItems>
             <assignToReference>tasks_temp_storage</assignToReference>
             <operator>Add</operator>
@@ -37,7 +37,7 @@
         <name>Add_task_to_update_variable</name>
         <label>Add task to update variable</label>
         <locationX>803</locationX>
-        <locationY>5645</locationY>
+        <locationY>5945</locationY>
         <assignmentItems>
             <assignToReference>task_to_update</assignToReference>
             <operator>Add</operator>
@@ -53,7 +53,7 @@
         <name>Add_task_to_update_variable_0</name>
         <label>Add task to update variable</label>
         <locationX>407</locationX>
-        <locationY>6653</locationY>
+        <locationY>6953</locationY>
         <assignmentItems>
             <assignToReference>task_to_update</assignToReference>
             <operator>Add</operator>
@@ -194,7 +194,7 @@
         <name>Set_related_advice_and_parking_lot</name>
         <label>Set related advice and parking lot</label>
         <locationX>407</locationX>
-        <locationY>6545</locationY>
+        <locationY>6845</locationY>
         <assignmentItems>
             <assignToReference>Loop_all_affected_tasks.Related_Advice__c</assignToReference>
             <operator>Assign</operator>
@@ -217,7 +217,7 @@
         <name>Set_related_advice_and_parking_lot_0</name>
         <label>Set related advice and parking lot</label>
         <locationX>803</locationX>
-        <locationY>5537</locationY>
+        <locationY>5837</locationY>
         <assignmentItems>
             <assignToReference>Loop_all_tasks.OW_parking_lot__c</assignToReference>
             <operator>Assign</operator>
@@ -336,7 +336,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Call_analysis_assessment_flowProfile</targetReference>
+                <targetReference>What_status_is_the_data_gathering</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -345,7 +345,7 @@
         <name>Any_advice_tasks</name>
         <label>Any advice tasks?</label>
         <locationX>319</locationX>
-        <locationY>5429</locationY>
+        <locationY>5729</locationY>
         <defaultConnector>
             <targetReference>Get_related_fulfilment</targetReference>
         </defaultConnector>
@@ -370,7 +370,7 @@
         <name>Any_tasks_to_update</name>
         <label>Any tasks to update?</label>
         <locationX>649</locationX>
-        <locationY>6929</locationY>
+        <locationY>7229</locationY>
         <defaultConnector>
             <targetReference>Profile_update_required</targetReference>
         </defaultConnector>
@@ -459,7 +459,7 @@
         <name>DB_advice</name>
         <label>DB advice?</label>
         <locationX>649</locationX>
-        <locationY>7745</locationY>
+        <locationY>8045</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
             <name>DB</name>
@@ -488,7 +488,7 @@
         <name>Is_DB_triage_needed</name>
         <label>Is DB triage needed?</label>
         <locationX>737</locationX>
-        <locationY>8177</locationY>
+        <locationY>8477</locationY>
         <defaultConnector>
             <targetReference>Loop_through_person_accounts</targetReference>
         </defaultConnector>
@@ -621,7 +621,7 @@
         <name>Parking_lot</name>
         <label>Parking lot</label>
         <locationX>649</locationX>
-        <locationY>5213</locationY>
+        <locationY>5513</locationY>
         <defaultConnector>
             <targetReference>Any_tasks_to_update</targetReference>
         </defaultConnector>
@@ -715,7 +715,7 @@
         <name>Profile_update_required</name>
         <label>Profile update required</label>
         <locationX>649</locationX>
-        <locationY>7229</locationY>
+        <locationY>7529</locationY>
         <defaultConnector>
             <targetReference>DB_advice</targetReference>
         </defaultConnector>
@@ -930,7 +930,7 @@
         <name>Tasks_found_fulfilment</name>
         <label>Tasks found?</label>
         <locationX>539</locationX>
-        <locationY>6053</locationY>
+        <locationY>6353</locationY>
         <defaultConnector>
             <targetReference>Loop_all_fulfilment</targetReference>
         </defaultConnector>
@@ -949,6 +949,31 @@
                 <targetReference>Add_advice_tasks_0</targetReference>
             </connector>
             <label>Fulfilment tasks found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>What_status_is_the_data_gathering</name>
+        <label>What status is the data gathering?</label>
+        <locationX>495</locationX>
+        <locationY>5021</locationY>
+        <defaultConnector>
+            <targetReference>Call_analysis_assessment_flowProfile</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>In_progress</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.DataGatheringStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In progress</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assess_information_requests</targetReference>
+            </connector>
+            <label>In progress</label>
         </rules>
     </decisions>
     <decisions>
@@ -1049,7 +1074,7 @@ null )</expression>
         <name>Loop_all_affected_tasks</name>
         <label>Loop all affected tasks</label>
         <locationX>319</locationX>
-        <locationY>6437</locationY>
+        <locationY>6737</locationY>
         <collectionReference>tasks_temp_storage</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1063,7 +1088,7 @@ null )</expression>
         <name>Loop_all_fulfilment</name>
         <label>Loop all fulfilment</label>
         <locationX>319</locationX>
-        <locationY>5837</locationY>
+        <locationY>6137</locationY>
         <collectionReference>Get_related_fulfilment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1077,7 +1102,7 @@ null )</expression>
         <name>Loop_all_tasks</name>
         <label>Loop all tasks</label>
         <locationX>715</locationX>
-        <locationY>5429</locationY>
+        <locationY>5729</locationY>
         <collectionReference>Get_tasks_related_to_advice_out_of</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1105,7 +1130,7 @@ null )</expression>
         <name>Loop_through_person_accounts</name>
         <label>Loop through person accounts</label>
         <locationX>517</locationX>
-        <locationY>7961</locationY>
+        <locationY>8261</locationY>
         <collectionReference>Get_ACRs</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1206,7 +1231,7 @@ null )</expression>
         <name>Get_ACRs</name>
         <label>Get ACRs</label>
         <locationX>517</locationX>
-        <locationY>7853</locationY>
+        <locationY>8153</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_through_person_accounts</targetReference>
@@ -1234,7 +1259,7 @@ null )</expression>
         <name>Get_person</name>
         <label>Get person</label>
         <locationX>737</locationX>
-        <locationY>8069</locationY>
+        <locationY>8369</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_DB_triage_needed</targetReference>
@@ -1257,7 +1282,7 @@ null )</expression>
         <name>Get_related_fulfilment</name>
         <label>Get related fulfilment</label>
         <locationX>319</locationX>
-        <locationY>5729</locationY>
+        <locationY>6029</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_all_fulfilment</targetReference>
@@ -1279,7 +1304,7 @@ null )</expression>
         <name>Get_tasks_for_fulfilment</name>
         <label>Get tasks for fulfilment</label>
         <locationX>539</locationX>
-        <locationY>5945</locationY>
+        <locationY>6245</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Tasks_found_fulfilment</targetReference>
@@ -1307,7 +1332,7 @@ null )</expression>
         <name>Get_tasks_related_to_advice</name>
         <label>Get tasks related to advice</label>
         <locationX>319</locationX>
-        <locationY>5321</locationY>
+        <locationY>5621</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Any_advice_tasks</targetReference>
@@ -1335,7 +1360,7 @@ null )</expression>
         <name>Get_tasks_related_to_advice_out_of</name>
         <label>Get parking lot tasks related to advice</label>
         <locationX>715</locationX>
-        <locationY>5321</locationY>
+        <locationY>5621</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_all_tasks</targetReference>
@@ -1413,7 +1438,7 @@ null )</expression>
         <name>Update_household_profile_status</name>
         <label>Update household profile status</label>
         <locationX>517</locationX>
-        <locationY>7553</locationY>
+        <locationY>7853</locationY>
         <connector>
             <targetReference>DB_advice</targetReference>
         </connector>
@@ -1429,7 +1454,7 @@ null )</expression>
         <name>Update_profile_statusRegular</name>
         <label>Update advice profile status</label>
         <locationX>517</locationX>
-        <locationY>7445</locationY>
+        <locationY>7745</locationY>
         <connector>
             <targetReference>Update_household_profile_status</targetReference>
         </connector>
@@ -1445,7 +1470,7 @@ null )</expression>
         <name>Update_tasks</name>
         <label>Update tasks</label>
         <locationX>517</locationX>
-        <locationY>7037</locationY>
+        <locationY>7337</locationY>
         <connector>
             <targetReference>Profile_update_required</targetReference>
         </connector>
@@ -1462,6 +1487,29 @@ null )</expression>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Assess_information_requests</name>
+        <label>Assess information requests</label>
+        <locationX>363</locationX>
+        <locationY>5129</locationY>
+        <connector>
+            <targetReference>Call_analysis_assessment_flowProfile</targetReference>
+        </connector>
+        <flowName>AdviceDataGatheringAssess</flowName>
+        <inputAssignments>
+            <name>advice</name>
+            <value>
+                <elementReference>advice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <subflows>
         <description>Use the subflow to add the SLA in business days to the status start date.</description>
         <name>Calculate_status_due_date</name>
@@ -1519,8 +1567,8 @@ null )</expression>
     <subflows>
         <name>Call_analysis_assessment_flowProfile</name>
         <label>Call analysis assessment flow</label>
-        <locationX>517</locationX>
-        <locationY>5021</locationY>
+        <locationX>495</locationX>
+        <locationY>5321</locationY>
         <connector>
             <targetReference>Parking_lot</targetReference>
         </connector>
@@ -1570,7 +1618,7 @@ null )</expression>
         <name>Create_DB_Triage_task</name>
         <label>Create DB Triage task</label>
         <locationX>605</locationX>
-        <locationY>8285</locationY>
+        <locationY>8585</locationY>
         <connector>
             <targetReference>Loop_through_person_accounts</targetReference>
         </connector>
@@ -1669,7 +1717,7 @@ null )</expression>
         <name>Create_send_full_profile_task</name>
         <label>Create send full profile task</label>
         <locationX>517</locationX>
-        <locationY>7337</locationY>
+        <locationY>7637</locationY>
         <connector>
             <targetReference>Update_profile_statusRegular</targetReference>
         </connector>
