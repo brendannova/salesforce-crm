@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OW_completion_review_date_required</fullName>
+    <fullName>ReviewFactFindCompleteDateRequired</fullName>
     <active>true</active>
     <description>Ensures that a review date is recorded for the review prior completing it.</description>
-    <errorConditionFormula>ISPICKVAL( OW_status__c, &quot;Complete&quot; )
-
-&amp;&amp; 
-
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+ISPICKVAL( OW_status__c, &quot;Complete&quot; ) &amp;&amp;
 ISBLANK(  OW_review_date__c )</errorConditionFormula>
     <errorDisplayField>OW_review_date__c</errorDisplayField>
     <errorMessage>A review date must be recorded prior to completing the review. This is controlled from the advice by setting the suitability meeting date/time.</errorMessage>
