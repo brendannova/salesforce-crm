@@ -8,41 +8,45 @@ public class FulfilmentTriggerHelperTest {
     
     @istest
     static void runTestCancellationNotice(){
-        System.debug('runTestCancellationNotice');
-        Id householdId = createData();
-        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
-
-		testFulfil.Status__c = 'Investment checks';
-		update testFulfil;
-        Test.startTest();
-        testFulfil.Status__c = 'Complete';
-        update testFulfil;
-        
-        Integer emailsSent = Limits.getEmailInvocations();
-        System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
-        Test.stopTest();
+        if( IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
+            System.debug('runTestCancellationNotice');
+            Id householdId = createData();
+            Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
+            
+            testFulfil.Status__c = 'Investment checks';
+            update testFulfil;
+            Test.startTest();
+            testFulfil.Status__c = 'Complete';
+            update testFulfil;
+            
+            Integer emailsSent = Limits.getEmailInvocations();
+            System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
+            Test.stopTest();
+        }
     }
     
     @isTest
     static void runTestTransferComplete() {
-        System.debug('runTestTransferComplete');
-        Id householdId = createData();
-        List<Fulfilment__c> fulfilments = [SELECT Id, SearchName__c, Recommendation__r.Product__r.DeveloperName__c, Recommendation__r.RecommendationType__r.DeveloperName__c FROM Fulfilment__c WHERE Advice__r.Advice_Household__c =: householdId ];
-        
-        Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
-
-		testFulfil.PaymentStatus__c = 'Submitted';
-        testFulfil.Status__c = 'Chase transfer';
-		update testFulfil;
-        Test.startTest();
-        testFulfil.PaymentStatus__c = 'Funds received';
-        testFulfil.Status__c = 'Investment checks';
-		testFulfil.ResidualCash__c = 'AWAITING';
-        update testFulfil;
-        
-        Integer emailsSent = Limits.getEmailInvocations();
-        System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
-        Test.stopTest();
+        if( IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
+            System.debug('runTestTransferComplete');
+            Id householdId = createData();
+            List<Fulfilment__c> fulfilments = [SELECT Id, SearchName__c, Recommendation__r.Product__r.DeveloperName__c, Recommendation__r.RecommendationType__r.DeveloperName__c FROM Fulfilment__c WHERE Advice__r.Advice_Household__c =: householdId ];
+            
+            Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
+    
+            testFulfil.PaymentStatus__c = 'Submitted';
+            testFulfil.Status__c = 'Chase transfer';
+            update testFulfil;
+            Test.startTest();
+            testFulfil.PaymentStatus__c = 'Funds received';
+            testFulfil.Status__c = 'Investment checks';
+            testFulfil.ResidualCash__c = 'AWAITING';
+            update testFulfil;
+            
+            Integer emailsSent = Limits.getEmailInvocations();
+            System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
+            Test.stopTest();
+        }
     }
     
     static Id createData() {
@@ -137,6 +141,21 @@ public class FulfilmentTriggerHelperTest {
         update transferSippRec;
         
         return household;
+    }
+    
+    private static final Boolean IS_EMAIL_DELIVERABILITY_ENABLED {
+        get {
+            if (IS_EMAIL_DELIVERABILITY_ENABLED == null) {
+                try {
+                    System.Messaging.reserveSingleEmailCapacity(1);
+                    IS_EMAIL_DELIVERABILITY_ENABLED = true;
+                } catch (System.NoAccessException e) {
+                    IS_EMAIL_DELIVERABILITY_ENABLED = false;
+                }
+            }
+            return IS_EMAIL_DELIVERABILITY_ENABLED;
+        }
+        set;
     }
 
 }
