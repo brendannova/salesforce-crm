@@ -92,6 +92,16 @@
                 <identifier>RecordAwaitReply__cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SendingProcess__c</fieldItem>
+                <identifier>RecordSendingProcess_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-d8c8f066-9e61-48df-824d-8f14496eaf51</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -189,12 +199,6 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <itemInstances>
-            <componentInstance>
-                <componentName>flexipage:blankSpace</componentName>
-                <identifier>flexipage_blankSpace</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
@@ -202,6 +206,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.PartnerCopied__c</fieldItem>
                 <identifier>RecordPartnerCopied_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CopyOtherClients__c</fieldItem>
+                <identifier>RecordCopyOtherClients__cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.ClientsAddressed__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>One only</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-4e7a2976-397a-4648-930b-6d4a4ab6d7eb</name>
