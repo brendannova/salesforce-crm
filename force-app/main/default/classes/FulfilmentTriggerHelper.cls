@@ -59,9 +59,7 @@ public class FulfilmentTriggerHelper {
             List<EmailSend.EmailSendRequestAutomatic> emailRequests = new List<EmailSend.EmailSendRequestAutomatic>();
             
             for (Fulfilment__c fulfilment : fulfilmentsRequiringNotice) {
-                System.debug('Fulfilment for notice: ' + fulfilment);
                 emailRequests.add(constructEmailRequest(fulfilment));
-                System.debug('EmailRequests: ' + emailRequests);
                 fulfilment.CancellationNoticeSent__c = true;
             }  
             

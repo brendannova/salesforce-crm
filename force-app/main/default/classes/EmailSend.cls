@@ -153,8 +153,8 @@ public without sharing class EmailSend{
                 }
             }
         }
-        if( result.memberAccountsByRole.get('TO_EMAIL') != null ) {
-            for( Account member : result.memberAccountsByRole.get('TO_EMAIL') ) {
+        if( result.memberAccountsByRole.get('EMAIL_INCLUDE_TO') != null ) {
+            for( Account member : result.memberAccountsByRole.get('EMAIL_INCLUDE_TO') ) {
                     toAccounts.add(member);
             }
         }
@@ -175,8 +175,8 @@ public without sharing class EmailSend{
         if( emailConfig.PartnerCopied__c == 'ALWAYS' ) {
             ccAddresses.add(result.household.Owner.Email);
         }
-        if( result.memberAccountsByRole.get('CC_EMAIL') != null ) {
-            for( Account member : result.memberAccountsByRole.get('CC_EMAIL') ) {
+        if( result.memberAccountsByRole.get('EMAIL_INCLUDE_CC') != null ) {
+            for( Account member : result.memberAccountsByRole.get('EMAIL_INCLUDE_CC') ) {
                     ccAddresses.add(member.PersonEmail);
             }
         }
@@ -188,7 +188,7 @@ public without sharing class EmailSend{
         for(Id householdId : householdIds){
             AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
             request.householdId = householdId;
-            request.roles = new Set<String>{'Client','CC_EMAIL','TO_EMAIL'};
+            request.roles = new Set<String>{'Client','EMAIL_INCLUDE_CC','EMAIL_INCLUDE_TO'};
             requests.add(request);
         }
         householdMembersMap = AccountHouseholdMembers.getHouseholdMembers(requests);

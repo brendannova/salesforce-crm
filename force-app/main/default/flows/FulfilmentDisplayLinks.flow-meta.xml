@@ -31,7 +31,7 @@
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>display</targetReference>
+            <targetReference>Display</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -46,7 +46,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
-        <name>display</name>
+        <name>Display</name>
         <label>Display</label>
         <locationX>176</locationX>
         <locationY>242</locationY>
@@ -149,6 +149,35 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>discountEmail</name>
+            <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1Xi8Tv_A_3uU0a8YEW9s2O64R31AVE6Onpo28IgmW30Q/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(255, 0, 111);&quot;&gt;Email to OI for discounts template&lt;/a&gt;&lt;a href=&quot;https://docs.google.com/document/d/1Xi8Tv_A_3uU0a8YEW9s2O64R31AVE6Onpo28IgmW30Q/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(255, 13, 106);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>Get_fulfilment.Status__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Submit fulfilment</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_fulfilment.Recommendation__r.Product__r.ProductType__r.Name</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>VCT</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_fulfilment.Recommendation__r.Product__r.ProductType__r.Name</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>EIS</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>ptic</name>
             <fieldText>&lt;p&gt;&lt;a href=&quot;https://docs.google.com/document/d/1VwZVtOqOs9PrZkNVHSVCKFOxM4Lf0HcNwApbRMrI67g/edit&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(4, 105, 14);&quot;&gt;Phasing ticket template&lt;/a&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -224,7 +253,7 @@
             <targetReference>Get_fulfilment</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

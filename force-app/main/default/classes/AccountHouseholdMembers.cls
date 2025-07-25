@@ -92,10 +92,10 @@ public with sharing class AccountHouseholdMembers {
             
             // Loop the household's email inclusion rules and build the map, only if the role was requested
             for (EmailInclusionRule__c rule : result.household.EmailInclusionRules__r) {
-                if( rule.InclusionType__c == 'To' && request.roles.contains('TO_EMAIL')) {
-                    result.memberAccountsByRole.get('TO_EMAIL').add(membersMap.get(rule.AdditionalInclusion__r.AccountId));
-                } else if ( rule.InclusionType__c == 'CC' && request.roles.contains('CC_EMAIL') ) {
-                	result.memberAccountsByRole.get('CC_EMAIL').add(membersMap.get(rule.AdditionalInclusion__r.AccountId));
+                if( rule.InclusionType__c == 'To' && request.roles.contains('EMAIL_INCLUDE_TO')) {
+                    result.memberAccountsByRole.get('EMAIL_INCLUDE_TO').add(membersMap.get(rule.AdditionalInclusion__r.AccountId));
+                } else if ( rule.InclusionType__c == 'CC' && request.roles.contains('EMAIL_INCLUDE_CC') ) {
+                	result.memberAccountsByRole.get('EMAIL_INCLUDE_CC').add(membersMap.get(rule.AdditionalInclusion__r.AccountId));
                 } 
             }
             

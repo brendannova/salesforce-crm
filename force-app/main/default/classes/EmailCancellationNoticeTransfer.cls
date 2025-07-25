@@ -28,9 +28,9 @@ public with sharing class EmailCancellationNoticeTransfer {
     public static String residualCashDisplay {
         get{
             if (fulfilment.ResidualCash__c == RESIDUAL_CASH_NONE) {
-                return '';
-            } else if (fulfilment.ResidualCash__c == RESIDUAL_CASH_AWAITING || fulfilment.ResidualCash__c == RESIDUAL_CASH_RECEIVED) {
                 return 'none';
+            } else if (fulfilment.ResidualCash__c == RESIDUAL_CASH_AWAITING || fulfilment.ResidualCash__c == RESIDUAL_CASH_RECEIVED) {
+                return '';
             } else {
                 throw new EmailCancellationNoticeTransferException('Unknown residual cash status'); 
             }
