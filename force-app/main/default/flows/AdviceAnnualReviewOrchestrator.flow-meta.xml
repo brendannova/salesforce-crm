@@ -333,37 +333,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Update_review_status</name>
-        <label>Copy 1 of Update review status</label>
-        <locationX>13690</locationX>
-        <locationY>674</locationY>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.OW_status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.OW_review_date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>reviewSharedDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.ReviewDateTime__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>reviewSharedDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Confirm_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Create_deck_updates</name>
         <label>Create deck updates</label>
         <locationX>9730</locationX>
@@ -836,22 +805,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Confirm_task</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_emailed_date_time</name>
-        <label>Set emailed date/time</label>
-        <locationX>13690</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>clientEmailedDateTime</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Call_advice_document_upload_flow.clientEmailedDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Copy_1_of_Update_review_status</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1333,7 +1286,8 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_emailed_date_time</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Confirm_advice</targetReference>
             </connector>
             <label>Non-presented</label>
         </rules>
@@ -3120,7 +3074,10 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
                 <elementReference>task.OW_task_information_name__c</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>clientEmailedDateTime</assignToReference>
+            <name>clientEmailedDateTime</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Call_data_gathering_flow</name>
@@ -3732,6 +3689,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <flowName>AdviceCustomerDocumentUpload</flowName>
         <inputAssignments>
+            <name>EmailToSend</name>
+            <value>
+                <elementReference>EmailToSend</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>adviceId</elementReference>
@@ -3741,12 +3704,6 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <name>taskType</name>
             <value>
                 <elementReference>task.OW_task_information_name__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>EmailToSend</name>
-            <value>
-                <elementReference>EmailToSend</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
