@@ -23,6 +23,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EmailAddressRecipients</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailCancellationNoticeNewProduct</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>DataFactoryConfigurationData</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -36,6 +44,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EmailInformationRequestUpdateTableTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailCancellationNoticeTransfer</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailSend</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -980,6 +996,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>FlowUtilityTaskCreateList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FulfilmentTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FulfilmentTriggerHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FulfilmentTriggerHelperTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2681,11 +2709,6 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningBolt</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
-        <application>standard__LightningInstrumentation</application>
         <default>false</default>
         <visible>false</visible>
     </applicationVisibilities>
@@ -12582,6 +12605,11 @@
         <editable>true</editable>
         <field>Fulfillment__c.Value_Recieved__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <readable>false</readable>
+        <field>FulfilmentType__c.ReferenceName__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
