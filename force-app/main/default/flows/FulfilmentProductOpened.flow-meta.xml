@@ -83,7 +83,7 @@
         <name>Is_there_a_designation</name>
         <label>Is there a designation?</label>
         <locationX>182</locationX>
-        <locationY>2330</locationY>
+        <locationY>2030</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yesdesignation</name>
@@ -105,7 +105,7 @@
         <name>Is_there_a_joint_owner</name>
         <label>Is there a joint owner?</label>
         <locationX>182</locationX>
-        <locationY>2030</locationY>
+        <locationY>1730</locationY>
         <defaultConnector>
             <targetReference>Is_there_a_designation</targetReference>
         </defaultConnector>
@@ -126,49 +126,12 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Is_this_for_a_new_pension</name>
-        <label>Is this for a new pension?</label>
-        <locationX>182</locationX>
-        <locationY>1406</locationY>
-        <defaultConnector>
-            <targetReference>Update_financial_product</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesPension</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>fulfilment.Recommendation__r.Product__r.DeveloperName__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>SIPP_HUBWISE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>fulfilment.Recommendation__r.Product__r.DeveloperName__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>JSIPP_HUBWISE</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Confirm_modal</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <description>This flow allows users to input new product details</description>
     <environments>Default</environments>
     <formulas>
         <name>checkboxValue</name>
         <dataType>String</dataType>
         <expression>SUBSTITUTE({!Loop_through_tasks},&quot; &quot;,&quot;&quot;)</expression>
-    </formulas>
-    <formulas>
-        <name>newAuditLog</name>
-        <dataType>String</dataType>
-        <expression>{!fulfilment.TasksAuditLog__c} &amp;BR() + {!$User.FirstName} + &quot; &quot; + {!$User.LastName} + &quot;: &quot; + {!Get_fulfilment_type_status.Tasks__c}</expression>
     </formulas>
     <formulas>
         <name>stopInternalChangeProcessing</name>
@@ -274,7 +237,7 @@
         <name>Update_financial_product</name>
         <label>Update financial product</label>
         <locationX>182</locationX>
-        <locationY>1706</locationY>
+        <locationY>1406</locationY>
         <connector>
             <targetReference>Update_fulfilment</targetReference>
         </connector>
@@ -308,19 +271,13 @@
                 <stringValue>Open</stringValue>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>IO_Plan_ID__c</field>
-            <value>
-                <elementReference>Plan_IO_ID</elementReference>
-            </value>
-        </inputAssignments>
         <object>FinServ__FinancialAccount__c</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_fulfilment</name>
         <label>Update fulfilment</label>
         <locationX>182</locationX>
-        <locationY>1814</locationY>
+        <locationY>1514</locationY>
         <connector>
             <targetReference>Update_primary_owner_status</targetReference>
         </connector>
@@ -354,12 +311,6 @@
                 <elementReference>$User.Id</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>TasksAuditLog__c</field>
-            <value>
-                <elementReference>newAuditLog</elementReference>
-            </value>
-        </inputAssignments>
         <object>Fulfilment__c</object>
     </recordUpdates>
     <runInMode>SystemModeWithSharing</runInMode>
@@ -372,7 +323,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Is_this_for_a_new_pension</targetReference>
+            <targetReference>Update_financial_product</targetReference>
         </connector>
         <fields>
             <name>Policy_number</name>
@@ -408,14 +359,6 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Plan_IO_ID</name>
-            <dataType>String</dataType>
-            <fieldText>Plan IO ID</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
             <name>tasksToComplete</name>
             <extensionName>runtime_industries_lending:flowCheckbox</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -441,65 +384,6 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Confirm_modal</name>
-        <label>Confirm modal</label>
-        <locationX>50</locationX>
-        <locationY>1514</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Update_financial_product</targetReference>
-        </connector>
-        <fields>
-            <name>confirmModal</name>
-            <extensionName>c:confirmModalFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>navigateBackOnCancel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>navigateForwardOnConfirm</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Confirm</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>message</name>
-                <value>
-                    <stringValue>When you complete this flow, a cancellation notice will be sent to the client.</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>theme</name>
-                <value>
-                    <stringValue>warning</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <stringValue>warning</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <nextOrFinishButtonLabel>Confirm and send email</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -531,7 +415,7 @@
         <name>Update_primary_owner_status</name>
         <label>Update primary owner status</label>
         <locationX>182</locationX>
-        <locationY>1922</locationY>
+        <locationY>1622</locationY>
         <connector>
             <targetReference>Is_there_a_joint_owner</targetReference>
         </connector>
@@ -553,7 +437,7 @@
         <name>Update_status</name>
         <label>Update status</label>
         <locationX>50</locationX>
-        <locationY>2138</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>Is_there_a_designation</targetReference>
         </connector>
@@ -575,7 +459,7 @@
         <name>Update_statusDesignation</name>
         <label>Update status</label>
         <locationX>50</locationX>
-        <locationY>2438</locationY>
+        <locationY>2138</locationY>
         <flowName>OW_account_party_state_manager</flowName>
         <inputAssignments>
             <name>eventType</name>
