@@ -21,8 +21,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>followUpTasks</assignToReference>
+            <operator>Add</operator>
             <value>
                 <stringValue>ADVICE_PROTECTION_NARRATIVE_WRITE</stringValue>
             </value>
@@ -41,8 +41,8 @@
         <locationX>2426</locationX>
         <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>followUpTasks</assignToReference>
+            <operator>Add</operator>
             <value>
                 <stringValue>PORTAL_DOCS_UPLOAD</stringValue>
             </value>
@@ -93,8 +93,8 @@
         <locationX>2162</locationX>
         <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>followUpTasks</assignToReference>
+            <operator>Add</operator>
             <value>
                 <stringValue>ADVICE_PROTECTION_DECK_ADVICE_WRITE</stringValue>
             </value>
@@ -110,8 +110,8 @@
         <locationX>50</locationX>
         <locationY>674</locationY>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>followUpTasks</assignToReference>
+            <operator>Add</operator>
             <value>
                 <stringValue>ADVICE_PROTECTION_DATA_GATHERING</stringValue>
             </value>
@@ -143,8 +143,8 @@
         <locationX>1370</locationX>
         <locationY>674</locationY>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>followUpTasks</assignToReference>
+            <operator>Add</operator>
             <value>
                 <stringValue>ADVICE_PROTECTION_RECOMMENDATIONS_CREATE</stringValue>
             </value>
@@ -222,8 +222,8 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>followUpTasks</assignToReference>
+            <operator>Add</operator>
             <value>
                 <stringValue>ADVICE_PROTECTION_DECK_PROPOSAL_PRESENT</stringValue>
             </value>
@@ -879,8 +879,8 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -945,8 +945,8 @@
             <name>errorMessage</name>
         </outputAssignments>
         <outputAssignments>
-            <assignToReference>followUpTask</assignToReference>
-            <name>followUpTask</name>
+            <assignToReference>followUpTasks</assignToReference>
+            <name>followUpTasks</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -1039,9 +1039,9 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
-        <name>followUpTask</name>
+        <name>followUpTasks</name>
         <dataType>String</dataType>
-        <isCollection>false</isCollection>
+        <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>true</isOutput>
     </variables>
