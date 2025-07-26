@@ -12,6 +12,7 @@ public with sharing class EmailMessageHelper {
     private Set<Id> householdIds = new Set<Id>();
     private Set<Id> adviceIds = new Set<Id>();
     private Set<Id> caseIds = new Set<Id>();
+    private Set<Id> fulfilmentIds = new Set<Id>();
     private Map<Id, Id> relatedIdHouseholdIdMap = new Map<Id, Id>();
     private Map<Id, Account> householdMap;
     private List<Account> households;
@@ -48,6 +49,8 @@ public with sharing class EmailMessageHelper {
                     adviceIds.add(email.RelatedToId);
                 } else if(relatedObjectApiName == 'Case'){
                     caseIds.add(email.RelatedToId);
+                } else if(relatedObjectApiName == 'Fulfilment__c') {
+                    fulfilmentIds.add(email.RelatedToId);
                 }
                 outboundMessages.add(emailDetail);
             }
@@ -70,7 +73,7 @@ public with sharing class EmailMessageHelper {
 
     // Gets email configruation record information for use in applying business rules
     private void collateEmailConfigurationInformation(){
-        List<EmailConfiguration__c> emailConfigs = [SELECT Id, DeveloperName__c, PartnerCopied__c, Necessity__c, Type__c, From__c, CustomPermission__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames];
+        List<EmailConfiguration__c> emailConfigs = [SELECT Id, SendingProcess__c, DeveloperName__c, PartnerCopied__c, Necessity__c, Type__c, From__c, CustomPermission__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames];
         for(EmailConfiguration__c config : emailConfigs){
             emailConfigMap.put(emailTemplateDevNameIdMap.get(config.DeveloperName__c), config);
         }
@@ -94,6 +97,17 @@ public with sharing class EmailMessageHelper {
             for(Case c : caseList){
                 if(!String.IsBlank(c.AccountId)){
                     relatedIdHouseholdIdMap.put(c.Id, c.AccountId);
+                }
+            }
+        }
+        householdIds.addAll(relatedIdHouseholdIdMap.values());
+        
+        // Get the household IDs for the fulfilment we are sending messages for
+        if(fulfilmentIds.size() > 0){
+            List<Fulfilment__c> fulfilmentList = [SELECT Id, Recommendation__r.Advice__r.Advice_Household__c FROM Fulfilment__c WHERE Id IN :fulfilmentIds];
+            for(Fulfilment__c f : fulfilmentList){
+                if(!String.IsBlank(f.Recommendation__r.Advice__r.Advice_Household__c)){
+                    relatedIdHouseholdIdMap.put(f.Id, f.Recommendation__r.Advice__r.Advice_Household__c);
                 }
             }
         }
@@ -146,7 +160,7 @@ public with sharing class EmailMessageHelper {
                     EmailConfiguration__c emailConfig = emailConfigMap.get(outboundMessage.emailMessage.EmailTemplateId);
                     if (emailConfig == null) {
                         errors.add(System.Label.EmailTriggerNoConfig);
-                    } else {
+                    } else if ( emailConfig.SendingProcess__c != 'AUTOMATIC' ) {
                         // Check that the user has the permission to send the associated email template and throw an error if not
                         if(!FeatureManagement.checkPermission(emailConfig.CustomPermission__c)){
                             errors.add(System.Label.EmailTriggerNoPermission);
