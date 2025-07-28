@@ -20,8 +20,7 @@ prod_alias=prod
 source_org=$prod_alias
 
 # Get to the config data directory where the export.json file is
-cd ~
-cd VSC/Pipeline/configuration-data/salesforce-crm/config-data
+cd ../../config-data
 
 echo -e "\nLaunching SFDMU to move config data run from $source_org → $target_org\n"
 sf sfdmu run -s $source_org -u $target_org
