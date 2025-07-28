@@ -3,7 +3,8 @@
     <fullName>OW_ow_product_details_required_sipp</fullName>
     <active>false</active>
     <description>Ensures that information required for SIPPs we offer is captured.</description>
-    <errorConditionFormula>Public_Provider_Name__r.OW_own_company__c
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+Public_Provider_Name__r.OW_own_company__c
 &amp;&amp;
 (RecordType.DeveloperName = &#39;FP_SIPP&#39; || RecordType.DeveloperName = &#39;Junior_SIPP&#39;)
 &amp;&amp;

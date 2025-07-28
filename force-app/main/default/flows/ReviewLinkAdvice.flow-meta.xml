@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_open_advice</name>
+        <label>Get open advice</label>
+        <locationX>1062</locationX>
+        <locationY>566</locationY>
+        <actionName>FlowUtilityQuery</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>New_or_existing_advice</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>U__outputRecords</typeName>
+            <typeValue>Advice__c</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>queryString</name>
+            <value>
+                <elementReference>queryString</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityQuery</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>openAdvice</assignToReference>
+            <name>outputRecords</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Link_review_to_advice</name>
         <label>Link review to advice</label>
         <locationX>1062</locationX>
-        <locationY>1298</locationY>
+        <locationY>1190</locationY>
         <assignmentItems>
             <assignToReference>review.OW_advice__c</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +49,7 @@
         <name>Set_advice_ID</name>
         <label>Set advice ID</label>
         <locationX>798</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +65,7 @@
         <name>Set_advice_ID_from_new_advice</name>
         <label>Set advice ID</label>
         <locationX>1062</locationX>
-        <locationY>1106</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>adviceId</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +81,7 @@
         <name>Set_error_to_fault</name>
         <label>Set error to fault</label>
         <locationX>754</locationX>
-        <locationY>2054</locationY>
+        <locationY>1946</locationY>
         <assignmentItems>
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
@@ -137,11 +165,18 @@
             <stringValue>New</stringValue>
         </value>
     </choices>
+    <constants>
+        <name>queryStringStart</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SELECT Id, Name, Advice_Status__c FROM Advice__c WHERE Advice_Status__c IN (&#39;Setup&#39;,&#39;Data gathering&#39;,&#39;Risk Call&#39;) AND AdviceType__r.DeveloperName__c IN (&#39;AD_HOC&#39;,&#39;DRAWDOWN&#39;) AND Advice_Household__c = &#39;</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Action_type</name>
         <label>Action type</label>
         <locationX>314</locationX>
-        <locationY>1598</locationY>
+        <locationY>1490</locationY>
         <defaultConnector>
             <targetReference>Update_review</targetReference>
         </defaultConnector>
@@ -166,7 +201,7 @@
         <name>Error_occurred</name>
         <label>Error occurred</label>
         <locationX>666</locationX>
-        <locationY>1490</locationY>
+        <locationY>1382</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Roll_back</targetReference>
@@ -192,7 +227,7 @@
         <name>Link_type</name>
         <label>Link type</label>
         <locationX>1062</locationX>
-        <locationY>890</locationY>
+        <locationY>782</locationY>
         <defaultConnectorLabel>Unknown</defaultConnectorLabel>
         <rules>
             <name>Existing_advice_outcome</name>
@@ -231,7 +266,7 @@
         <locationX>666</locationX>
         <locationY>458</locationY>
         <defaultConnector>
-            <targetReference>Get_ad_hoc_advice_type</targetReference>
+            <targetReference>Get_open_advice</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not linked</defaultConnectorLabel>
         <rules>
@@ -252,6 +287,11 @@
     </decisions>
     <description>Screen flow launched from a review, allowing advice to be linked to it.</description>
     <environments>Default</environments>
+    <formulas>
+        <name>queryString</name>
+        <dataType>String</dataType>
+        <expression>{!queryStringStart} + {!householdId} + &quot;&#39;&quot;</expression>
+    </formulas>
     <interviewLabel>Review | Link advice {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Review | Link advice</label>
     <processMetadataValues>
@@ -273,33 +313,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>Get_ad_hoc_advice_type</name>
-        <label>Get ad hoc advice type</label>
-        <locationX>1062</locationX>
-        <locationY>566</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_open_advice</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Set_error_to_fault</targetReference>
-        </faultConnector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>AD_HOC</stringValue>
-            </value>
-        </filters>
-        <object>AdviceType__c</object>
-        <outputReference>adHocAdviceType</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>RecordTypeDeveloperName__c</queriedFields>
-        <queriedFields>AdviceChecklistRecordTypeDeveloperName__c</queriedFields>
-    </recordLookups>
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
@@ -326,61 +339,6 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>OW_review__c</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_open_advice</name>
-        <label>Get open advice</label>
-        <locationX>1062</locationX>
-        <locationY>674</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>New_or_existing_advice</targetReference>
-        </connector>
-        <faultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Set_error_to_fault</targetReference>
-        </faultConnector>
-        <filterLogic>1 AND (2 OR 3 OR 4) AND 5</filterLogic>
-        <filters>
-            <field>Advice_Household__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Setup</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Data gathering</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Advice_Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Risk Call</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>AdviceType__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>adHocAdviceType.Id</elementReference>
-            </value>
-        </filters>
-        <object>Advice__c</object>
-        <outputReference>openAdvice</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>Advice_Status__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_review_details</name>
@@ -413,7 +371,7 @@
         <name>Roll_back</name>
         <label>Roll back</label>
         <locationX>754</locationX>
-        <locationY>2162</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Display_error</targetReference>
         </connector>
@@ -422,7 +380,7 @@
         <name>Update_advice</name>
         <label>Update advice</label>
         <locationX>50</locationX>
-        <locationY>1706</locationY>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>Update_review</targetReference>
         </connector>
@@ -436,7 +394,7 @@
         <name>Update_review</name>
         <label>Update review</label>
         <locationX>314</locationX>
-        <locationY>1946</locationY>
+        <locationY>1838</locationY>
         <faultConnector>
             <targetReference>Set_error_to_fault</targetReference>
         </faultConnector>
@@ -486,7 +444,7 @@
         <name>Display_error</name>
         <label>Display error</label>
         <locationX>754</locationX>
-        <locationY>2270</locationY>
+        <locationY>2162</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -502,7 +460,7 @@
         <name>New_or_existing_advice</name>
         <label>New or existing advice</label>
         <locationX>1062</locationX>
-        <locationY>782</locationY>
+        <locationY>674</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -598,7 +556,7 @@
         <name>Call_create_advice_sub_flow</name>
         <label>Call create advice sub-flow</label>
         <locationX>1062</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <connector>
             <targetReference>Set_advice_ID_from_new_advice</targetReference>
         </connector>
@@ -640,7 +598,7 @@
         <name>Change_advice_type</name>
         <label>Change advice type</label>
         <locationX>798</locationX>
-        <locationY>1106</locationY>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Link_review_to_advice</targetReference>
         </connector>
