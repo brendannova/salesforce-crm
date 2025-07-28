@@ -404,40 +404,6 @@ public with sharing class DataFactory {
         public String preferredName {get;set;}
     }
     
-	// Method to return the account IDs of either clients or children for the household
-    public List<Id> getPersonAccountIds(Id householdId, String role) {
-        if( role != 'Child' && role != 'Client') {
-            throw new DataFactoryException('Role must be Client or Child');
-        }
-        List<AccountContactRelation> acrs = [SELECT 
-                                             Contact.AccountId, 
-                                             AccountId, 
-                                             Roles, 
-                                             isActive 
-                                             FROM 
-                                             AccountContactRelation
-                                             WHERE 
-                                             AccountId =: householdId
-                                            ];
-        
-        List<Id> clients = new List<Id>();
-        List<Id> children = new List<Id>();
-        
-        for(AccountContactRelation acr : acrs) {
-            if(acr.Roles.split(';').contains('Client')){
-                clients.add(acr.Contact.AccountId);
-            } else if(acr.Roles.split(';').contains('Child')) {
-                children.add(acr.Contact.AccountId);
-            }
-        }
-        if( role == 'Client' ) {
-            return clients;
-        } else if( role == 'Child' ) {
-            return children;
-        }
-        return null;
-    }
-    
     public class DataFactoryException extends Exception {}
     
 }

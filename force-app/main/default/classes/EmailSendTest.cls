@@ -5,8 +5,14 @@ public class EmailSendTest {
         if( IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
             DataFactory df = new DataFactory();
             Id household = df.createHousehold('OW001 Test',2,2,'Onboarding','Full');
-            List<Id> clients = df.getPersonAccountIds(household, 'Client');
-            List<Id> children = df.getPersonAccountIds(household, 'Child');
+            
+            AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
+        	request.householdId = household;
+        	request.roles = new Set<String>{'Client','Child'};
+        	AccountHouseholdMembers.HouseholdMemberResult result = AccountHouseholdMembers.getHouseholdMembers(request);
+        	List<Account> clients = result.memberAccountsByRole.get('Client');
+        	List<Account> children = result.memberAccountsByRole.get('Child');
+            
             AccountContactRelation targetObject = [SELECT ContactId FROM AccountContactRelation WHERE AccountId =: household LIMIT 1][0];
             
             EmailConfiguration__c emailConfig = new EmailConfiguration__c(
