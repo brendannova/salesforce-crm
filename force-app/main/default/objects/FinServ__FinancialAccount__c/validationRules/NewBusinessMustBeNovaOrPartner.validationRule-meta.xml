@@ -3,7 +3,8 @@
     <fullName>NewBusinessMustBeNovaOrPartner</fullName>
     <active>true</active>
     <description>Ensures that products marked as new business have a provider of either NOVA Wealth or a partner company</description>
-    <errorConditionFormula>NOT( Public_Provider_Name__r.OW_own_company__c )
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+NOT( Public_Provider_Name__r.OW_own_company__c )
 &amp;&amp;
 NOT( Public_Provider_Name__r.PartnerCompany__c )
 &amp;&amp;
