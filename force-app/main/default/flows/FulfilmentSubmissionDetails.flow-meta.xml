@@ -5,7 +5,7 @@
         <name>Assign_joint_owner_bank_account</name>
         <label>Assign joint owner bank account</label>
         <locationX>264</locationX>
-        <locationY>866</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>bankAccountJointOwner</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Assign_primary_owner_bank_account</name>
         <label>Assign primary owner bank account</label>
         <locationX>264</locationX>
-        <locationY>458</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>bankAccountPrimaryOwner</assignToReference>
             <operator>Assign</operator>
@@ -38,7 +38,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Joint owner bank account</label>
         <locationX>176</locationX>
-        <locationY>650</locationY>
+        <locationY>950</locationY>
         <assignNextValueToReference>currentItem_Joint_owner_bank_account</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_bank_details</collectionReference>
@@ -59,7 +59,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Joint owner employment</label>
         <locationX>176</locationX>
-        <locationY>1274</locationY>
+        <locationY>1574</locationY>
         <assignNextValueToReference>currentItem_Primary_owner_employment</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_employment</collectionReference>
@@ -80,7 +80,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Primary owner bank account</label>
         <locationX>176</locationX>
-        <locationY>242</locationY>
+        <locationY>542</locationY>
         <assignNextValueToReference>currentItem_Joint_owner_bank_account</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_bank_details</collectionReference>
@@ -101,7 +101,7 @@
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Primary owner employment</label>
         <locationX>176</locationX>
-        <locationY>1166</locationY>
+        <locationY>1466</locationY>
         <assignNextValueToReference>currentItem_Primary_owner_employment</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
         <collectionReference>Get_employment</collectionReference>
@@ -117,6 +117,31 @@
             <targetReference>Joint_owner_employment</targetReference>
         </connector>
     </collectionProcessors>
+    <decisions>
+        <name>Fulfilment_received</name>
+        <label>Fulfilment received?</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>Get_fulfilment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>fulfilment</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_bank_details</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Sub flow used to display details required for input whn submitting fulfilment</description>
     <environments>Default</environments>
     <formulas>
@@ -124,13 +149,18 @@
         <dataType>String</dataType>
         <expression>SUBSTITUTE(TEXT({!fulfilment.Recommendation__r.Amount__c}),&#39;,&#39;,&#39;&#39;)</expression>
     </formulas>
+    <formulas>
+        <name>sourceOfFundsFormatted</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!fulfilment.Recommendation__r.SourceOfFunds__c})</expression>
+    </formulas>
     <interviewLabel>Fulfilment | Submission details {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Fulfilment | Submission details</label>
     <loops>
         <name>Joint_owner_bank_account_collection</name>
         <label>Joint owner bank account collection</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>1058</locationY>
         <collectionReference>Joint_owner_bank_account</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -144,7 +174,7 @@
         <name>Primary_owner_bank_account_collection</name>
         <label>Primary owner bank account collection</label>
         <locationX>176</locationX>
-        <locationY>350</locationY>
+        <locationY>650</locationY>
         <collectionReference>Primary_owner_bank_account</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -177,7 +207,7 @@
         <name>Get_bank_details</name>
         <label>Get bank details</label>
         <locationX>176</locationX>
-        <locationY>134</locationY>
+        <locationY>434</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Primary_owner_bank_account</targetReference>
@@ -212,7 +242,7 @@
         <name>Get_employment</name>
         <label>Get employment</label>
         <locationX>176</locationX>
-        <locationY>1058</locationY>
+        <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Primary_owner_employment</targetReference>
@@ -247,7 +277,7 @@
         <name>Get_fees</name>
         <label>Get fees</label>
         <locationX>176</locationX>
-        <locationY>1382</locationY>
+        <locationY>1682</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Display_details</targetReference>
@@ -264,14 +294,38 @@
         <object>Fee__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_fulfilment</name>
+        <label>Get fulfilment</label>
+        <locationX>264</locationX>
+        <locationY>242</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_bank_details</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>Fulfilment__c</object>
+        <outputReference>fulfilment</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Recommendation__c</queriedFields>
+        <queriedFields>LinkToForms__c</queriedFields>
+        <queriedFields>Advice__c</queriedFields>
+    </recordLookups>
     <screens>
         <name>Display_details</name>
         <label>Display details</label>
         <locationX>176</locationX>
-        <locationY>1490</locationY>
-        <allowBack>true</allowBack>
+        <locationY>1790</locationY>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <fields>
             <name>Links</name>
             <fieldText>Links</fieldText>
@@ -280,30 +334,9 @@
                 <name>Links_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>linkToForms</name>
-                    <extensionName>flowruntime:url</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Link to forms</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>readonly</name>
-                        <value>
-                            <booleanValue>true</booleanValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>value</name>
-                        <value>
-                            <elementReference>fulfilment.LinkToForms__c</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <name>clickLinkToForms</name>
+                    <fieldText>&lt;p&gt;&lt;a href=&quot;{!fulfilment.LinkToForms__c}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Link to forms&lt;/a&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -317,30 +350,9 @@
                 <name>Links_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>linkToDeck</name>
-                    <extensionName>flowruntime:url</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>label</name>
-                        <value>
-                            <stringValue>Link to deck</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>readonly</name>
-                        <value>
-                            <booleanValue>true</booleanValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>value</name>
-                        <value>
-                            <elementReference>fulfilment.Advice__r.AdviceDeckUrl__c</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                    <name>clickLinkToDeck</name>
+                    <fieldText>&lt;p&gt;&lt;a href=&quot;{!fulfilment.Advice__r.AdviceDeckUrl__c}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Link to deck&lt;/a&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -708,6 +720,31 @@
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
+                    <name>Policy_number</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__FinancialAccountNumber__c</elementReference>
+                    </defaultValue>
+                    <fieldText>Policy number</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isReadOnly>
+                        <booleanValue>true</booleanValue>
+                    </isReadOnly>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Financial_product_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
                     <name>providerContactAddress</name>
                     <extensionName>flowruntime:address</extensionName>
                     <fieldType>ComponentInstance</fieldType>
@@ -766,31 +803,6 @@
                             </rightValue>
                         </conditions>
                     </visibilityRule>
-                </fields>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Financial_product_Column2</name>
-                <fieldType>Region</fieldType>
-                <fields>
-                    <name>Policy_number</name>
-                    <dataType>String</dataType>
-                    <defaultValue>
-                        <elementReference>fulfilment.Recommendation__r.DestinationLegacy__r.FinServ__FinancialAccountNumber__c</elementReference>
-                    </defaultValue>
-                    <fieldText>Policy number</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isReadOnly>
-                        <booleanValue>true</booleanValue>
-                    </isReadOnly>
-                    <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -956,27 +968,17 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Display_details_Section8</name>
+            <name>Miscellaneous</name>
+            <fieldText>Miscellaneous</fieldText>
             <fieldType>RegionContainer</fieldType>
             <fields>
-                <name>Display_details_Section8_Column1</name>
-                <fieldType>Region</fieldType>
-                <inputParameters>
-                    <name>width</name>
-                    <value>
-                        <stringValue>6</stringValue>
-                    </value>
-                </inputParameters>
-                <isRequired>false</isRequired>
-            </fields>
-            <fields>
-                <name>Display_details_Section8_Column2</name>
+                <name>Miscellaneous_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Source_of_funds</name>
                     <dataType>String</dataType>
                     <defaultValue>
-                        <elementReference>fulfilment.Recommendation__r.SourceOfFunds__c</elementReference>
+                        <elementReference>sourceOfFundsFormatted</elementReference>
                     </defaultValue>
                     <fieldText>Source of funds</fieldText>
                     <fieldType>InputField</fieldType>
@@ -994,9 +996,21 @@
                 </inputParameters>
                 <isRequired>false</isRequired>
             </fields>
+            <fields>
+                <name>Miscellaneous_Column2</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
             <isRequired>false</isRequired>
-            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <regionContainerType>SectionWithHeader</regionContainerType>
         </fields>
+        <nextOrFinishButtonLabel>Close</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -1004,7 +1018,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_bank_details</targetReference>
+            <targetReference>Fulfilment_received</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -1063,5 +1077,12 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Fulfilment__c</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>
