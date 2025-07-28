@@ -42,7 +42,7 @@
         <name>Assign_destination_product_values</name>
         <label>Assign destination product values</label>
         <locationX>182</locationX>
-        <locationY>1382</locationY>
+        <locationY>1982</locationY>
         <assignmentItems>
             <assignToReference>financialProduct.Id</assignToReference>
             <operator>Assign</operator>
@@ -79,7 +79,7 @@
         <name>Assign_IO_ID</name>
         <label>Assign IO ID</label>
         <locationX>50</locationX>
-        <locationY>1598</locationY>
+        <locationY>2198</locationY>
         <assignmentItems>
             <assignToReference>financialProduct.IO_Plan_ID__c</assignToReference>
             <operator>Assign</operator>
@@ -91,6 +91,22 @@
             <targetReference>Update_product</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>YesChoice</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Do_we_have_fulfilment</name>
         <label>Do we have fulfilment?</label>
@@ -120,7 +136,7 @@
         <name>Does_the_IO_ID_require_an_update</name>
         <label>Does the IO ID require an update?</label>
         <locationX>182</locationX>
-        <locationY>1490</locationY>
+        <locationY>2090</locationY>
         <defaultConnector>
             <targetReference>Update_product</targetReference>
         </defaultConnector>
@@ -145,7 +161,7 @@
         <name>Has_the_payment_been_received</name>
         <label>Has the payment been received?</label>
         <locationX>776</locationX>
-        <locationY>1166</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Update_fulfilmentPaymentAwaiting</targetReference>
         </defaultConnector>
@@ -170,7 +186,7 @@
         <name>Is_a_tax_relief_task_needed</name>
         <label>Is a tax relief task needed?</label>
         <locationX>182</locationX>
-        <locationY>2114</locationY>
+        <locationY>2714</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesTaxRelief</name>
@@ -223,6 +239,63 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Is_there_residual_cash_to_be_transferred</name>
+        <label>Is there residual cash to be transferred?</label>
+        <locationX>776</locationX>
+        <locationY>1466</locationY>
+        <defaultConnector>
+            <targetReference>Has_the_payment_been_received</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesResidualCash</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>YesChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_to_chase_residual_cash</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_this_for_a_pension_transfer</name>
+        <label>Is this for a pension transfer?</label>
+        <locationX>776</locationX>
+        <locationY>1166</locationY>
+        <defaultConnector>
+            <targetReference>Is_there_residual_cash_to_be_transferred</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesPensionTransfer</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_recommendation.Product__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SIPP_HUBWISE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_recommendation.Product__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>JSIPP_HUBWISE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Confirmation_modal</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <description>Flow for when funds are received via new process</description>
     <dynamicChoiceSets>
         <name>PaymentStatusChoice</name>
@@ -251,9 +324,19 @@
         <expression>SUBSTITUTE({!Text_output}, &quot; &quot;, &quot;&quot;)</expression>
     </formulas>
     <formulas>
+        <name>newAuditLog</name>
+        <dataType>String</dataType>
+        <expression>{!fulfilment.TasksAuditLog__c} &amp;BR() + {!$User.FirstName} + &quot; &quot; + {!$User.LastName} + &quot;: &quot; + {!Get_fulfilment_type_status.Tasks__c}</expression>
+    </formulas>
+    <formulas>
         <name>productStatus</name>
         <dataType>String</dataType>
         <expression>IF(AND(OR({!Get_recommendation.RecommendationTypeName__c}=&quot;External transfer in&quot;, {!Get_recommendation.RecommendationTypeName__c}=&quot;Internal transfer&quot;  ),ISPICKVAL({!Get_recommendation.TransferType__c}, &quot;Full&quot;)), &quot;Closed&quot;, &quot;Open&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>residualCash</name>
+        <dataType>String</dataType>
+        <expression>IF({!Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer}==&#39;Yes&#39;, &#39;AWAITING&#39;, &#39;NONE&#39;)</expression>
     </formulas>
     <formulas>
         <name>stopInternalChangeProcessingDestination</name>
@@ -390,7 +473,7 @@
         <name>Roll_back</name>
         <label>Roll back</label>
         <locationX>578</locationX>
-        <locationY>2006</locationY>
+        <locationY>2606</locationY>
         <connector>
             <targetReference>Error</targetReference>
         </connector>
@@ -399,7 +482,7 @@
         <name>Complete_task</name>
         <label>Complete task</label>
         <locationX>182</locationX>
-        <locationY>2006</locationY>
+        <locationY>2606</locationY>
         <connector>
             <targetReference>Is_a_tax_relief_task_needed</targetReference>
         </connector>
@@ -485,7 +568,7 @@
         <name>Update_fulfilment</name>
         <label>Update fulfilment</label>
         <locationX>182</locationX>
-        <locationY>1274</locationY>
+        <locationY>1874</locationY>
         <connector>
             <targetReference>Assign_destination_product_values</targetReference>
         </connector>
@@ -520,9 +603,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ResidualCash__c</field>
+            <value>
+                <elementReference>residualCash</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status__c</field>
             <value>
                 <stringValue>Investment checks</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>TasksAuditLog__c</field>
+            <value>
+                <elementReference>newAuditLog</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -537,7 +632,7 @@
         <name>Update_fulfilmentPaymentAwaiting</name>
         <label>Update fulfilment</label>
         <locationX>1370</locationX>
-        <locationY>1274</locationY>
+        <locationY>1874</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -558,7 +653,7 @@
         <name>Update_product</name>
         <label>Update destination product</label>
         <locationX>182</locationX>
-        <locationY>1790</locationY>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>Update_source_product</targetReference>
         </connector>
@@ -572,7 +667,7 @@
         <name>Update_source_product</name>
         <label>Update source product</label>
         <locationX>182</locationX>
-        <locationY>1898</locationY>
+        <locationY>2498</locationY>
         <connector>
             <targetReference>Complete_task</targetReference>
         </connector>
@@ -617,7 +712,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Has_the_payment_been_received</targetReference>
+            <targetReference>Is_this_for_a_pension_transfer</targetReference>
         </connector>
         <fields>
             <name>Payment_status</name>
@@ -745,6 +840,28 @@
                     </visibilityRule>
                 </fields>
                 <fields>
+                    <name>Is_there_any_residual_cash_that_will_be_sent_as_part_of_this_transfer</name>
+                    <choiceReferences>YesChoice</choiceReferences>
+                    <choiceReferences>No</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultSelectedChoiceReference>YesChoice</defaultSelectedChoiceReference>
+                    <fieldText>Is there any residual cash that will be sent as part of this transfer?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <helpText>&lt;p&gt;Selecting &#39;Yes&#39; here will add the residual cash line to the automatic confirmation email sent to the client.&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Today_s_value_of_source</leftValueReference>
+                            <operator>GreaterThan</operator>
+                            <rightValue>
+                                <numberValue>0.0</numberValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
                     <name>IO_ID</name>
                     <dataType>String</dataType>
                     <defaultValue>
@@ -826,10 +943,69 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Confirmation_modal</name>
+        <label>Confirmation modal</label>
+        <locationX>644</locationX>
+        <locationY>1274</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Is_there_residual_cash_to_be_transferred</targetReference>
+        </connector>
+        <fields>
+            <name>confirmModal</name>
+            <extensionName>c:confirmModalFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>navigateBackOnCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>navigateForwardOnConfirm</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Confirm</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>When you complete this flow, an email confirming the transfer will be sent to the client.</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theme</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <nextOrFinishButtonLabel>Confirm and send email</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Error</name>
         <label>Error</label>
         <locationX>578</locationX>
-        <locationY>2114</locationY>
+        <locationY>2714</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -853,7 +1029,7 @@
         <name>Create_tax_relief_task</name>
         <label>Create tax relief task</label>
         <locationX>50</locationX>
-        <locationY>2222</locationY>
+        <locationY>2822</locationY>
         <flowName>OW_task_create_from_task_information</flowName>
         <inputAssignments>
             <name>household_id</name>
@@ -865,6 +1041,35 @@
             <name>task_type</name>
             <value>
                 <stringValue>ensure_tax_relief_applied_and_update_io</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>fulfilment.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Create_to_chase_residual_cash</name>
+        <label>Create to chase residual cash</label>
+        <locationX>644</locationX>
+        <locationY>1574</locationY>
+        <connector>
+            <targetReference>Has_the_payment_been_received</targetReference>
+        </connector>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>fulfilment.Household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>CHASE_RESIDUAL_CASH</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
