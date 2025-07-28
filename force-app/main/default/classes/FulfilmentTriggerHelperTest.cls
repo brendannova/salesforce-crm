@@ -77,15 +77,19 @@ public class FulfilmentTriggerHelperTest {
             }
         }
 
-        List<Id> clients = df.getPersonAccountIds(household, 'Client');
-        List<Id> children = df.getPersonAccountIds(household, 'Child');
+        AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
+        request.householdId = household;
+        request.roles = new Set<String>{'Client','Child'};
+        AccountHouseholdMembers.HouseholdMemberResult result = AccountHouseholdMembers.getHouseholdMembers(request);
+        List<Account> clients = result.memberAccountsByRole.get('Client');
+        List<Account> children = result.memberAccountsByRole.get('Child');
         
         List<Recommendation__c> recs = new List<Recommendation__c>();
         
         Recommendation__c openSippRec = new Recommendation__c(
         	Product__c = productType.Id,
             RecommendationType__c = openProdRecType.Id,
-            PrimaryOwner__c = clients[0],
+            PrimaryOwner__c = clients[0].Id,
             Advice__c = advice.Id,
             Household__c = household
         );
@@ -94,8 +98,8 @@ public class FulfilmentTriggerHelperTest {
         Recommendation__c openJuniorSippRec = new Recommendation__c(
         	Product__c = productTypeJunior.Id,
             RecommendationType__c = openProdRecType.Id,
-            PrimaryOwner__c = children[0],
-            RegisteredContact__c = clients[0],
+            PrimaryOwner__c = children[0].Id,
+            RegisteredContact__c = clients[0].Id,
             Advice__c = advice.Id,
             Household__c = household
         );
@@ -108,7 +112,7 @@ public class FulfilmentTriggerHelperTest {
         FinServ__FinancialAccount__c source = new FinServ__FinancialAccount__c(
             Name = 'Test',
             Subtype__c  = 'Defined Contribution',
-            FinServ__PrimaryOwner__c = clients[0],
+            FinServ__PrimaryOwner__c = clients[0].Id,
             Household__c = household,
             FinServ__Ownership__c = 'Individual',
             FinServ__Status__c = 'Open',
@@ -121,7 +125,7 @@ public class FulfilmentTriggerHelperTest {
         Recommendation__c transferSippRec = new Recommendation__c(
         	Product__c = productType.Id,
             RecommendationType__c = transferRecType.Id,
-            PrimaryOwner__c = clients[0],
+            PrimaryOwner__c = clients[0].Id,
             Advice__c = advice.Id,
             Household__c = household,
             TransferType__c = 'Full',
