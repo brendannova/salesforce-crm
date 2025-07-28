@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AdviceDateGivenRestrictions</fullName>
     <active>true</active>
-    <description>Restrictions on the date the advice is given to ensure it is after the deck was completed and before the deck expires. Also ensures the date isn&apos;t in the future.</description>
+    <description>Restrictions on the date the advice is given to ensure it is after the deck was completed and before the deck expires. Also ensures the date isn&#39;t in the future.</description>
     <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp; 
 ((NOT(ISBLANK(AdviceDeckExpiry__c)) &amp;&amp;
 DATEVALUE(Suitability_meeting_date_time__c) &gt; AdviceDeckExpiry__c) ||

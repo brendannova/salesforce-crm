@@ -790,13 +790,6 @@
         <locationX>50</locationX>
         <locationY>458</locationY>
         <assignmentItems>
-            <assignToReference>followUpTask</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>ADVICE_ANNUAL_REVIEW_DATA_GATHERING</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>reviewUpdated.OW_status__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -985,20 +978,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceChecklistUpdated.SuitabilityBuilder__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SuitabilityBuilderUrl.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>adviceUpdated.Suitability_Builder_Link__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SuitabilityBuilderUrl.value</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>adviceChecklistUpdated.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -1051,10 +1030,10 @@
     </choices>
     <choices>
         <name>There_s_one_in_progress</name>
-        <choiceText>There&#39;s one in progress</choiceText>
+        <choiceText>There&apos;s one in progress</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>There&#39;s one in progress</stringValue>
+            <stringValue>There&apos;s one in progress</stringValue>
         </value>
     </choices>
     <choices>
@@ -1179,7 +1158,7 @@
             <connector>
                 <targetReference>Advice_updates_skipped_catch_up</targetReference>
             </connector>
-            <label>Catch up call didn&#39;t happen</label>
+            <label>Catch up call didn&apos;t happen</label>
         </rules>
     </decisions>
     <decisions>
@@ -2227,7 +2206,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>AnnualReview</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click next to confirm that the risk call is complete. You&#39;ll then be prompted to update vulnerability &amp;amp; conflict of interest for all people in this household.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click next to confirm that the risk call is complete. You&apos;ll then be prompted to update vulnerability &amp;amp; conflict of interest for all people in this household.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2356,69 +2335,6 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Narrative_complete</name>
-        <label>Narrative complete?</label>
-        <locationX>3746</locationX>
-        <locationY>350</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Write_narrative_updates</targetReference>
-        </connector>
-        <fields>
-            <name>confirmNarrative</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Click next to confirm that the suitability narrative is complete. The next task will be to create the recommendations.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>SuitabilityBuilderUrl</name>
-            <extensionName>flowruntime:url</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Suitability builder</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>adviceChecklist.SuitabilityBuilder__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>SnapshotTaken</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <elementReference>adviceChecklist.SnapshotTaken__c</elementReference>
-            </defaultValue>
-            <fieldText>Snapshot taken?</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isDisabled>
-                <booleanValue>true</booleanValue>
-            </isDisabled>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Snapshot required. This can be done using the take snapshot button.&lt;/p&gt;</errorMessage>
-                <formulaExpression>{!SnapshotTaken}</formulaExpression>
-            </validationRule>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Partner_deck_review_task</name>
         <label>Partner deck review task</label>
         <locationX>9466</locationX>
@@ -2471,7 +2387,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </fields>
         <fields>
             <name>nonPresented</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as &lt;/span&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; If this isn&#39;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as &lt;/span&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; If this isn&apos;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2506,7 +2422,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>ConfirmCompleteDeckReviewPlanner</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Provide comments on the advice checklist and indicate whether this&lt;/span&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;);&quot;&gt; should be returned to the suitability planner.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Provide comments on the advice checklist and indicate whether this&lt;/span&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &apos;Segoe UI&apos;, Roboto, Helvetica, Arial, sans-serif, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;, &apos;Segoe UI Symbol&apos;);&quot;&gt; should be returned to the suitability planner.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3021,6 +2937,72 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
                 <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Narrative_complete</name>
+        <label>Narrative complete</label>
+        <locationX>3746</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>Write_narrative_updates</targetReference>
+        </connector>
+        <flowName>AdviceOrchestrationNarrativeComplete</flowName>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceChecklistUpdated</name>
+            <value>
+                <elementReference>adviceChecklistUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceType</name>
+            <value>
+                <elementReference>adviceType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceUpdated</name>
+            <value>
+                <elementReference>adviceUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceChecklistUpdated</assignToReference>
+            <name>adviceChecklistUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceUpdated</assignToReference>
+            <name>adviceUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>closeTask</assignToReference>
+            <name>closeTask</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>followUpTask</assignToReference>
+            <name>followUpTask</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Partner_narrative_review</name>

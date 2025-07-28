@@ -4,16 +4,14 @@ private class UserEventTriggerHelperTest {
     private final static String TEST_2_USERNAME = 'testupdateusereventtrigger@test.novawm.com';
 
     @testSetup static void methodName() {
-        DataFactoryUser dfu = new DataFactoryUser();
-        User testUser = dfu.createAdmin(TEST_2_USERNAME);
+        User testUser = DataFactoryUser.createAdmin(TEST_2_USERNAME);
     }
 
     @isTest
     static void userInserted_success(){
         String TEST_1_USERNAME = 'testusereventtrigger@test.novawm.com';
-        DataFactoryUser dfu = new DataFactoryUser();
         Test.startTest();
-        User testUser = dfu.createAdmin(TEST_1_USERNAME);
+        User testUser = DataFactoryUser.createAdmin(TEST_1_USERNAME);
         Test.getEventBus().deliver();
         Test.stopTest();
         testUser = [SELECT Id, ColleagueAccountId__c FROM User WHERE Username = :TEST_1_USERNAME];
