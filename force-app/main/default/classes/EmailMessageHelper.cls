@@ -18,11 +18,8 @@ public with sharing class EmailMessageHelper {
     private List<Account> households;
     private Map<Id, List<String>> householdEmailsMap = new Map<Id, List<String>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
     private Map<Id, List<RecipientInformation>> householdRecipientMap = new Map<Id, List<RecipientInformation>>(); // Map of household ID to a list of the email addresses that can be safely sent to 
-
-    private final static List<String> EXCLUDED_SUBJECTS = new List<String>{LoggerEmailSender.LOG_ERROR_EMAIL_SUBECT};
-    private final static String VALIDATION_TYPE_NONE = 'NONE';
-    private final static String VALIDATION_TYPE_OUTGOING_MANUAL = 'OUTGOING_MANUAL';
-
+	final private static String SENDING_PROCESS_AUTOMATIC = 'AUTOMATIC';
+    
     // This constructor runs to collate the information needed to validate an email message
     public EmailMessageHelper(Map<Id,EmailMessage> messagesMap){
         collateEmailInformation(messagesMap.values());      // Collate the key information needed
@@ -33,9 +30,9 @@ public with sharing class EmailMessageHelper {
     }
  
     // Constructs a list of EmailDetail objects for each outbound EmailMessage
-    private void collateEmailInformation(List<EmailMessage> allEmails){        
+    private void collateEmailInformation(List<EmailMessage> allEmails){
         for(EmailMessage email : allEmails){
-            if(email.Incoming == false && !EXCLUDED_SUBJECTS.contains(email.Subject)){
+            if(email.Incoming == false){
                 EmailDetail emailDetail = new EmailDetail();
                 emailDetail.emailMessage = email;
                 emailDetail.relatedToId = email.RelatedToId;
@@ -105,9 +102,9 @@ public with sharing class EmailMessageHelper {
         // Get the household IDs for the fulfilment we are sending messages for
         if(fulfilmentIds.size() > 0){
             List<Fulfilment__c> fulfilmentList = [SELECT Id, Recommendation__r.Advice__r.Advice_Household__c FROM Fulfilment__c WHERE Id IN :fulfilmentIds];
-            for(Fulfilment__c f : fulfilmentList){
-                if(!String.IsBlank(f.Recommendation__r.Advice__r.Advice_Household__c)){
-                    relatedIdHouseholdIdMap.put(f.Id, f.Recommendation__r.Advice__r.Advice_Household__c);
+            for(Fulfilment__c fulilment : fulfilmentList){
+                if(!String.IsBlank(fulilment.Recommendation__r.Advice__r.Advice_Household__c)){
+                    relatedIdHouseholdIdMap.put(fulilment.Id, fulilment.Recommendation__r.Advice__r.Advice_Household__c);
                 }
             }
         }
@@ -146,7 +143,7 @@ public with sharing class EmailMessageHelper {
     }
 
     // Runs through the collated information to determine if the email message meets the business rules that apply
-    public void validateConditions(){
+    public void validateConditions(){        
         // Loop the known outbound emails to validate the conditions are met
         for(EmailDetail outboundMessage : outboundMessages){
             if(outboundMessage.EmailMessage.Status == '3' || (outboundMessage.EmailMessage.Status == '5' && outboundMessage.EmailMessage.ApprovalStatus__c == 'In approval')){
@@ -160,7 +157,7 @@ public with sharing class EmailMessageHelper {
                     EmailConfiguration__c emailConfig = emailConfigMap.get(outboundMessage.emailMessage.EmailTemplateId);
                     if (emailConfig == null) {
                         errors.add(System.Label.EmailTriggerNoConfig);
-                    } else if ( emailConfig.SendingProcess__c != 'AUTOMATIC' ) {
+                    } else if ( emailConfig.SendingProcess__c != SENDING_PROCESS_AUTOMATIC ) {
                         // Check that the user has the permission to send the associated email template and throw an error if not
                         if(!FeatureManagement.checkPermission(emailConfig.CustomPermission__c)){
                             errors.add(System.Label.EmailTriggerNoPermission);
