@@ -38,6 +38,12 @@
                 <identifier>record_flexipage_dynamicHighlights</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>auditor</componentName>
+                <identifier>c_auditor</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -48,8 +54,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Type__c</fieldItem>
-                <identifier>RecordType_cField</identifier>
+                <fieldItem>Record.Donor__c</fieldItem>
+                <identifier>RecordDonor_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -58,8 +64,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Donor__c</fieldItem>
-                <identifier>RecordDonor_cField</identifier>
+                <fieldItem>Record.Region__c</fieldItem>
+                <identifier>RecordRegion__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.DecisionMaking__c</fieldItem>
+                <identifier>RecordDecisionMaking__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-37bfb7dc-aa6d-40d1-8242-46c0d3093426</name>
@@ -74,6 +90,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Status__c</fieldItem>
                 <identifier>RecordStatus_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Type__c</fieldItem>
+                <identifier>RecordType_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-eeb20c19-2578-4738-8410-9da966c9ac8f</name>
@@ -110,18 +136,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DateSigned__c</fieldItem>
-                <identifier>RecordDateSigned_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DateOfEnd__c</fieldItem>
-                <identifier>RecordDateOfEnd_cField</identifier>
+                <fieldItem>Record.ActivatedDate__c</fieldItem>
+                <identifier>RecordDateActivated_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c09565c2-c543-472d-99c7-c4e0fe8db222</name>
@@ -134,8 +150,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.DateActivated__c</fieldItem>
-                <identifier>RecordDateActivated_cField</identifier>
+                <fieldItem>Record.EndDate__c</fieldItem>
+                <identifier>RecordDateOfEnd_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f8225017-8aa1-4fae-a681-c912e5dca9cc</name>
@@ -288,6 +304,9 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Attorney__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Status__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
