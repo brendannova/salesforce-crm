@@ -2,7 +2,7 @@
  * This class handles the sending of emails from Nova to customers, using a variety of methods to ensure consistency over who gets addressed, copied etc.
  * It works in conjuction with email templates and Apex components and their controllers to produce content.
  */
-@SuppressWarnings('PMD.CognitiveComplexity, PMD.CyclomaticComplexity')
+@SuppressWarnings('PMD.CognitiveComplexity, PMD.CyclomaticComplexity, PMD.OperationWithLimitsInLoop')
 public without sharing class EmailSend{
 
     final private static String SENDING_PROCESS_AUTOMATIC = 'AUTOMATIC';
@@ -45,7 +45,7 @@ public without sharing class EmailSend{
 
         // Loop the requests and construct the emails
         for(EmailSendRequestAutomatic request : requests){
-            // Build the email using the template to render the HTML content
+            // Build the email using the template to render the HTML content. This is OK in a for loop as the email templates should not use a controller and therefore any limited operations.
             Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplatesMap.get(request.emailTemplateDeveloperName).Id, request.targetObjectId, request.whatId);
              // If there are parameters to swap out, do so
             if(!request.parameters.isEmpty()){
