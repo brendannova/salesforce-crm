@@ -12,7 +12,6 @@ public without sharing class EmailSend{
     final private static String CLIENT ='Client';
     final private static String ONE_ONLY ='One only';
     final private static String ALL ='All';
-    final private static String ONE_REQUEST_ERROR = 'Only one request allowed. This method does not support bulk emails yet.';
     Set<String> fromEmailAddresses = new Set<String>();
     Map<Id, AccountHouseholdMembers.HouseholdMemberResult> householdMembersMap = new Map<Id, AccountHouseholdMembers.HouseholdMemberResult>();
     Map<String, OrgWideEmailAddress> orgWideEmailAddressMap;
