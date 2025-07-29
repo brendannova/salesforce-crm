@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Status__c</fullName>
-    <description>Indicates the status of the POA</description>
+    <description>The status of the POA, capturing whether it is simply registered, active, or no longer applicable.</description>
     <label>Status</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -12,24 +12,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>In place</fullName>
+                <fullName>SIGNED</fullName>
                 <default>false</default>
-                <label>In place</label>
+                <label>Signed but not registered</label>
             </value>
             <value>
-                <fullName>Active</fullName>
+                <fullName>REGISTERED</fullName>
+                <default>false</default>
+                <label>Registered</label>
+            </value>
+            <value>
+                <fullName>ACTIVE</fullName>
                 <default>false</default>
                 <label>Active</label>
             </value>
             <value>
-                <fullName>Expired</fullName>
+                <fullName>EXPIRED</fullName>
                 <default>false</default>
                 <label>Expired</label>
             </value>
             <value>
-                <fullName>Removed</fullName>
+                <fullName>ENDED</fullName>
                 <default>false</default>
-                <label>Removed</label>
+                <label>Ended</label>
             </value>
         </valueSetDefinition>
     </valueSet>
