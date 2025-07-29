@@ -5,6 +5,12 @@
 public without sharing class EmailSend{
 
     final private static String SENDING_PROCESS_AUTOMATIC = 'AUTOMATIC';
+    final private static String EMAIL_INCLUDE_TO = 'EMAIL_INCLUDE_TO';
+    final private static String EMAIL_INCLUDE_CC = 'EMAIL_INCLUDE_CC';
+    final private static String HI_LINE ='{{hiLine}}';
+    final private static String CLIENT ='Client';
+    final private static String ONE_ONLY ='One only';
+    final private static String ALL ='All';
     final private static String ONE_REQUEST_ERROR = 'Only one request allowed. This method does not support bulk emails yet.';
     Set<String> fromEmailAddresses = new Set<String>();
     Map<Id, AccountHouseholdMembers.HouseholdMemberResult> householdMembersMap = new Map<Id, AccountHouseholdMembers.HouseholdMemberResult>();
@@ -126,7 +132,7 @@ public without sharing class EmailSend{
         System.debug(result);
         
         List<Account> toAccounts = getToAccounts(request, result, emailConfig);
-        email.htmlBody = email.htmlBody.replace('{{hiLine}}', getHiString(toAccounts));
+        email.htmlBody = email.htmlBody.replace(HI_LINE, getHiString(toAccounts));
         List<String> toAddresses = getToAddresses(toAccounts);
         List<String> ccAddresses = getCcAddresses(result, emailConfig);
         if(!toAddresses.isEmpty()){
@@ -140,21 +146,21 @@ public without sharing class EmailSend{
 
     private List<Account> getToAccounts(EmailSendRequestAutomatic request, AccountHouseholdMembers.HouseholdMemberResult result, EmailConfiguration__c emailConfig){
         Set<Account> toAccounts = new Set<Account>();      // People to address directly
-        if( emailConfig.ClientsAddressed__c == 'One only' ) {
-            for(Account member : result.memberAccountsByRole.get('Client')){
+        if( emailConfig.ClientsAddressed__c == ONE_ONLY ) {
+            for(Account member : result.memberAccountsByRole.get(CLIENT)){
                 if(member.PersonContactId == request.targetObjectId){
                     toAccounts.add(member);
                 }
             }
-        } else if( emailConfig.ClientsAddressed__c == 'All' ) {
-            for(Account member : result.memberAccountsByRole.get('Client')){
+        } else if( emailConfig.ClientsAddressed__c == 'ALL' ) {
+            for(Account member : result.memberAccountsByRole.get(CLIENT)){
                 if(member.PersonContactId != request.targetObjectId){
                     toAccounts.add(member);
                 }
             }
         }
-        if( result.memberAccountsByRole.get('EMAIL_INCLUDE_TO') != null ) {
-            for( Account member : result.memberAccountsByRole.get('EMAIL_INCLUDE_TO') ) {
+        if( result.memberAccountsByRole.containsKey(EMAIL_INCLUDE_TO) ) {
+            for( Account member : result.memberAccountsByRole.get(EMAIL_INCLUDE_TO) ) {
                     toAccounts.add(member);
             }
         }
@@ -175,8 +181,8 @@ public without sharing class EmailSend{
         if( emailConfig.PartnerCopied__c == 'ALWAYS' ) {
             ccAddresses.add(result.household.Owner.Email);
         }
-        if( result.memberAccountsByRole.get('EMAIL_INCLUDE_CC') != null ) {
-            for( Account member : result.memberAccountsByRole.get('EMAIL_INCLUDE_CC') ) {
+        if( result.memberAccountsByRole.containsKey(EMAIL_INCLUDE_CC) ) {
+            for( Account member : result.memberAccountsByRole.get(EMAIL_INCLUDE_CC) ) {
                     ccAddresses.add(member.PersonEmail);
             }
         }
@@ -188,7 +194,7 @@ public without sharing class EmailSend{
         for(Id householdId : householdIds){
             AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
             request.householdId = householdId;
-            request.roles = new Set<String>{'Client','EMAIL_INCLUDE_CC','EMAIL_INCLUDE_TO'};
+            request.roles = new Set<String>{CLIENT,EMAIL_INCLUDE_CC,EMAIL_INCLUDE_TO};
             requests.add(request);
         }
         householdMembersMap = AccountHouseholdMembers.getHouseholdMembers(requests);
@@ -216,33 +222,6 @@ public without sharing class EmailSend{
         }
         return hiString;
     }
-
-    /*
-    public void sendAutomaticTemplatedEmail(List<EmailSendRequestAutomatic> requests){ 
-        if( requests.size() > 1 ) {
-            throw new EmailSendException(ONE_REQUEST_ERROR); 
-        }
-        
-        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();              // The list of emails to be sent at the end
-        EmailConfiguration__c emailConfig = new EmailConfiguration__c();
-        
-        for(EmailSendRequestAutomatic request : requests){
-            validateRequest(request);
-            
-            emailConfig = getEmailConfig(request.emailTemplateDeveloperName);
-            
-            String emailTemplateId = getEmailTemplateId(request.emailTemplateDeveloperName);
-            
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            
-            email.setTemplateId(emailTemplateId);
-            
-            email = setUpEmail(email, request.householdId, request.targetObjectId, request.whatId, emailConfig);
-            
-            emails.add(email); 
-        }
-    }
-        */
 
     // A simple method responsible for sending emails
     private void sendEmails(List<Messaging.SingleEmailMessage> emails){
