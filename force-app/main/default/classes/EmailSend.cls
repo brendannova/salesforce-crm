@@ -9,9 +9,10 @@ public without sharing class EmailSend{
     final private static String EMAIL_INCLUDE_TO = 'EMAIL_INCLUDE_TO';
     final private static String EMAIL_INCLUDE_CC = 'EMAIL_INCLUDE_CC';
     final private static String HI_LINE ='{{hiLine}}';
-    final private static String CLIENT ='Client';
-    final private static String ONE_ONLY ='One only';
-    final private static String ALL ='All';
+    final private static String ROLE_CLIENT ='Client';
+    final private static String CLIENTS_ADDRESSED_ONE_ONLY ='One only';
+    final private static String CLIENTS_ADDRESSED_ALL ='All';
+    final private static String PARTNER_COPIED_ALWAYS ='ALWAYS';
     Set<String> fromEmailAddresses = new Set<String>();
     Map<Id, AccountHouseholdMembers.HouseholdMemberResult> householdMembersMap = new Map<Id, AccountHouseholdMembers.HouseholdMemberResult>();
     Map<String, OrgWideEmailAddress> orgWideEmailAddressMap;
@@ -146,14 +147,14 @@ public without sharing class EmailSend{
     // Get the people who should directly receive the email, in to.
     private List<Account> getToAccounts(EmailSendRequestAutomatic request, AccountHouseholdMembers.HouseholdMemberResult result, EmailConfiguration__c emailConfig){
         Set<Account> toAccounts = new Set<Account>();
-        if( emailConfig.ClientsAddressed__c == ONE_ONLY ) {
-            for(Account member : result.memberAccountsByRole.get(CLIENT)){
+        if( emailConfig.ClientsAddressed__c == CLIENTS_ADDRESSED_ONE_ONLY ) {
+            for(Account member : result.memberAccountsByRole.get(ROLE_CLIENT)){
                 if(member.PersonContactId == request.targetObjectId){
                     toAccounts.add(member);
                 }
             }
-        } else if( emailConfig.ClientsAddressed__c == 'ALL' ) {
-            for(Account member : result.memberAccountsByRole.get(CLIENT)){
+        } else if( emailConfig.ClientsAddressed__c == CLIENTS_ADDRESSED_ALL) {
+            for(Account member : result.memberAccountsByRole.get(ROLE_CLIENT)){
                 if(member.PersonContactId != request.targetObjectId){
                     toAccounts.add(member);
                 }
@@ -179,7 +180,7 @@ public without sharing class EmailSend{
     // Get the people who should receive the email as CC.
     private List<String> getCcAddresses(AccountHouseholdMembers.HouseholdMemberResult result, EmailConfiguration__c emailConfig){
         Set<String> ccAddresses = new Set<String>();
-        if( emailConfig.PartnerCopied__c == 'ALWAYS' ) {
+        if( emailConfig.PartnerCopied__c == PARTNER_COPIED_ALWAYS) {
             ccAddresses.add(result.household.Owner.Email);
         }
         if( result.memberAccountsByRole.containsKey(EMAIL_INCLUDE_CC) ) {
@@ -196,7 +197,7 @@ public without sharing class EmailSend{
         for(Id householdId : householdIds){
             AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
             request.householdId = householdId;
-            request.roles = new Set<String>{CLIENT,EMAIL_INCLUDE_CC,EMAIL_INCLUDE_TO};
+            request.roles = new Set<String>{ROLE_CLIENT,EMAIL_INCLUDE_CC,EMAIL_INCLUDE_TO};
             requests.add(request);
         }
         householdMembersMap = AccountHouseholdMembers.getHouseholdMembers(requests);
