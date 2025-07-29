@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Lightning page for attorney object</description>
+    <description>Lightning page for the attorney object</description>
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
@@ -16,6 +16,16 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PowerOfAttorney__c</fieldItem>
+                <identifier>RecordPowerOfAttorney_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-91ea16ba-2a70-4203-acd3-4a629e80108e</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -38,6 +48,12 @@
                 <identifier>record_flexipage_dynamicHighlights</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>auditor</componentName>
+                <identifier>c_auditor</identifier>
+            </componentInstance>
+        </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -49,17 +65,7 @@
                     <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Attorney__c</fieldItem>
-                <identifier>RecordAttorney_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Status__c</fieldItem>
-                <identifier>RecordStatus__cField</identifier>
+                <identifier>RecordAttorney_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-72d293ac-519d-4b1d-a70a-43d381c2f519</name>
@@ -72,8 +78,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.PowerOfAttorney__c</fieldItem>
-                <identifier>RecordPowerOfAttorney_cField</identifier>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-745d78c9-e47d-42b7-8b6a-e529dc6cd2e6</name>
