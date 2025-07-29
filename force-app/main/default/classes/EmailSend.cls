@@ -50,7 +50,7 @@ public without sharing class EmailSend{
             Messaging.SingleEmailMessage email = Messaging.renderStoredEmailTemplate(emailTemplatesMap.get(request.emailTemplateDeveloperName).Id, request.targetObjectId, request.whatId);
              // If there are parameters to swap out, do so
             if(!request.parameters.isEmpty()){
-                email.htmlBody = UtilityEmail.tagSubstituter(request.parameters, email.htmlBody);
+                email.htmlBody = emailTagSubstituter(request.parameters, email.htmlBody);
             }
             // If there is a custom subject, set it
             if(String.isNotBlank(request.subject)){
@@ -69,10 +69,10 @@ public without sharing class EmailSend{
 
     // Make sure we have required details for each request
     private void validateRequest(emailSendRequestAutomatic request) {
-        if(request.targetObjectId == null)                          {throw new EmailSendException('targetObjectId required')};
-        if(request.householdId == null)                             {throw new EmailSendException('householdId required')};
-        if(request.whatId == null)                                  {throw new EmailSendException('whatId required')};
-        if(String.isBlank(request.emailTemplateDeveloperName))      {throw new EmailSendException('Email template must be provided')};
+        if(request.targetObjectId == null)                          {throw new EmailSendException('targetObjectId required');}
+        if(request.householdId == null)                             {throw new EmailSendException('householdId required');}
+        if(request.whatId == null)                                  {throw new EmailSendException('whatId required');}
+        if(String.isBlank(request.emailTemplateDeveloperName))      {throw new EmailSendException('Email template must be provided');}
     }
 
     // Get all email configuration records for the emails being sent
