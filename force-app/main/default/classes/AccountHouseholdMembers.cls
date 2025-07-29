@@ -36,7 +36,7 @@ public with sharing class AccountHouseholdMembers {
         }
 
         // Get all the households and cast them to a map, including the relationships for that households
-        Map<Id, Account> householdsMap = new Map<Id, Account>([SELECT Id, (SELECT Contact.AccountId, Roles, IsActive FROM AccountContactRelations) FROM Account WHERE Id IN :householdIds]);
+        Map<Id, Account> householdsMap = new Map<Id, Account>([SELECT Id, Owner.Email, (SELECT Contact.AccountId, Roles, IsActive FROM AccountContactRelations) FROM Account WHERE Id IN :householdIds]);
 
         /**
          * Loop the relationships to get all the relationships then perform another query to get the individuals. 
