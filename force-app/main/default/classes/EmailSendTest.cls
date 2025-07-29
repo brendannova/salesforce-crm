@@ -1,6 +1,7 @@
 @IsTest
+@SuppressWarnings('PMD.ApexUnitTestClassShouldHaveRunAs')
 public class EmailSendTest { 
-    @isTest
+    @IsTest
     static void runTest() {
         if( IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
             DataFactory df = new DataFactory();
@@ -62,6 +63,5 @@ public class EmailSendTest {
             return IS_EMAIL_DELIVERABILITY_ENABLED;
         }
         set;
-    }
-    
+    }   
 }
