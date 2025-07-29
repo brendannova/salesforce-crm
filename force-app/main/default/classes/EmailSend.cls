@@ -57,7 +57,6 @@ public without sharing class EmailSend{
             }
             EmailConfiguration__c emailConfiguration = emailConfigurationsMap.get(request.emailTemplateDeveloperName);
 			email = setUpEmail(request, email, emailConfiguration);
-            System.debug(email.htmlBody);
             if( email.htmlBody.contains('{{') ) {
                 throw new EmailSendException('Tags have not been replaced');
             }
@@ -130,10 +129,7 @@ public without sharing class EmailSend{
             email.setReplyTo(emailConfig.ReplyTo__c);
         }
         email.setUseSignature(false);
-
         AccountHouseholdMembers.HouseholdMemberResult result = householdMembersMap.get(request.householdId);
-        System.debug(result);
-
         List<Account> toAccounts = getToAccounts(request, result, emailConfig);
         email.htmlBody = email.htmlBody.replace(HI_LINE, getHiString(toAccounts));
         List<String> toAddresses = getToAddresses(toAccounts);
