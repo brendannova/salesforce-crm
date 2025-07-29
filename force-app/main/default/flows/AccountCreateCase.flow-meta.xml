@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Navigate_to_advice</name>
         <label>Navigate to advice</label>
-        <locationX>389</locationX>
-        <locationY>3296</locationY>
+        <locationX>257</locationX>
+        <locationY>3404</locationY>
         <actionName>c:navigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -55,7 +55,7 @@
         <name>Define_case_variables</name>
         <label>Define case variables</label>
         <locationX>1282</locationX>
-        <locationY>4964</locationY>
+        <locationY>5072</locationY>
         <assignmentItems>
             <assignToReference>case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -119,13 +119,6 @@
                 <elementReference>How_did_we_get_this_request</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.OwnerId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_specialist_queue.Id</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Create_case</targetReference>
         </connector>
@@ -133,8 +126,8 @@
     <assignments>
         <name>Define_deceased_case_variables</name>
         <label>Define deceased case variables</label>
-        <locationX>957</locationX>
-        <locationY>2864</locationY>
+        <locationX>825</locationX>
+        <locationY>2972</locationY>
         <assignmentItems>
             <assignToReference>case.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -235,7 +228,7 @@
         <name>Define_name_change_case_variables</name>
         <label>Define name change case variables</label>
         <locationX>1018</locationX>
-        <locationY>4772</locationY>
+        <locationY>4880</locationY>
         <assignmentItems>
             <assignToReference>case.FirstNameBefore__c</assignToReference>
             <operator>Assign</operator>
@@ -293,7 +286,7 @@
         <name>Define_offboarding_case_variables</name>
         <label>Define offboarding case variables</label>
         <locationX>1282</locationX>
-        <locationY>4664</locationY>
+        <locationY>4772</locationY>
         <assignmentItems>
             <assignToReference>case.AdditionalLeavingNotes__c</assignToReference>
             <operator>Assign</operator>
@@ -315,8 +308,8 @@
     <assignments>
         <name>Define_P_L_case_variables</name>
         <label>Define P&amp;L case variables</label>
-        <locationX>1485</locationX>
-        <locationY>2972</locationY>
+        <locationX>1353</locationX>
+        <locationY>3080</locationY>
         <assignmentItems>
             <assignToReference>case.Platform__c</assignToReference>
             <operator>Assign</operator>
@@ -393,64 +386,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Define_POA_case_variables</name>
-        <label>Define POA case variables</label>
-        <locationX>1749</locationX>
-        <locationY>2864</locationY>
-        <assignmentItems>
-            <assignToReference>case.Subject</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>subjectDefault</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.Type</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>POA_NEW</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.OW_household__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>New</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.AccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>householdId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.RecordTypeId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseRecordTypeChoice.firstSelectedRow.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>case.Person__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>PersonSelection.firstSelectedRow.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_POA</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Case_Record_Type</name>
         <label>Set Case Record Type</label>
         <locationX>2382</locationX>
@@ -493,7 +428,7 @@
         <name>Set_case_type</name>
         <label>Set case type</label>
         <locationX>1304</locationX>
-        <locationY>4280</locationY>
+        <locationY>4388</locationY>
         <assignmentItems>
             <assignToReference>caseType</assignToReference>
             <operator>Assign</operator>
@@ -524,8 +459,8 @@
     <assignments>
         <name>Set_case_type_error_no_sub_status</name>
         <label>Set case type error</label>
-        <locationX>693</locationX>
-        <locationY>2864</locationY>
+        <locationX>561</locationX>
+        <locationY>2972</locationY>
         <assignmentItems>
             <assignToReference>caseCreateError</assignToReference>
             <operator>Assign</operator>
@@ -541,8 +476,8 @@
     <assignments>
         <name>Set_case_type_name_change</name>
         <label>Set case type</label>
-        <locationX>1221</locationX>
-        <locationY>2756</locationY>
+        <locationX>1089</locationX>
+        <locationY>2864</locationY>
         <assignmentItems>
             <assignToReference>case.Type</assignToReference>
             <operator>Assign</operator>
@@ -558,8 +493,8 @@
         <description>Assign type and sub-type of case from known status/sub-status values</description>
         <name>Set_case_variables</name>
         <label>Set case variables</label>
-        <locationX>409</locationX>
-        <locationY>3680</locationY>
+        <locationX>277</locationX>
+        <locationY>3788</locationY>
         <assignmentItems>
             <assignToReference>caseType</assignToReference>
             <operator>Assign</operator>
@@ -603,6 +538,38 @@
             <targetReference>Get_clients_in_household</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_owner</name>
+        <label>Set owner</label>
+        <locationX>1282</locationX>
+        <locationY>2648</locationY>
+        <assignmentItems>
+            <assignToReference>case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_specialist_queue.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CaseTypeDecision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_owner_to_admin_queue</name>
+        <label>Set owner to admin queue</label>
+        <locationX>1617</locationX>
+        <locationY>2972</locationY>
+        <assignmentItems>
+            <assignToReference>case.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>adminQueueId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_case_details</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>No</name>
         <choiceText>No</choiceText>
@@ -636,8 +603,8 @@
     <decisions>
         <name>Any_advice</name>
         <label>Any advice?</label>
-        <locationX>409</locationX>
-        <locationY>2972</locationY>
+        <locationX>277</locationX>
+        <locationY>3080</locationY>
         <defaultConnector>
             <targetReference>Set_case_variables</targetReference>
         </defaultConnector>
@@ -751,7 +718,7 @@
         <name>Case_type</name>
         <label>Case type</label>
         <locationX>1282</locationX>
-        <locationY>4556</locationY>
+        <locationY>4664</locationY>
         <defaultConnector>
             <targetReference>Define_case_variables</targetReference>
         </defaultConnector>
@@ -798,7 +765,7 @@
         <name>Case_type_pre_defined</name>
         <label>Case type pre-defined?</label>
         <locationX>1282</locationX>
-        <locationY>4064</locationY>
+        <locationY>4172</locationY>
         <defaultConnector>
             <targetReference>Case_type_specified</targetReference>
         </defaultConnector>
@@ -823,7 +790,7 @@
         <name>Case_type_specified</name>
         <label>Case type specified?</label>
         <locationX>1436</locationX>
-        <locationY>4172</locationY>
+        <locationY>4280</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_case_details</targetReference>
@@ -849,7 +816,7 @@
         <name>CaseTypeDecision</name>
         <label>Case type</label>
         <locationX>1282</locationX>
-        <locationY>2648</locationY>
+        <locationY>2756</locationY>
         <defaultConnector>
             <targetReference>Get_case_details</targetReference>
         </defaultConnector>
@@ -915,7 +882,7 @@
             <label>P&amp;L</label>
         </rules>
         <rules>
-            <name>Power_of_attorneyCaseType</name>
+            <name>Power_of_attorney_chosen</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>caseRecordTypeDeveloperName</leftValueReference>
@@ -925,9 +892,25 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Collect_POA_details</targetReference>
+                <targetReference>Get_admin_queue</targetReference>
             </connector>
             <label>Power of attorney</label>
+        </rules>
+        <rules>
+            <name>GDPR_chosen</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>caseRecordTypeDeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>GDPR</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Get_admin_queue</targetReference>
+            </connector>
+            <label>GDPR</label>
         </rules>
     </decisions>
     <decisions>
@@ -1115,8 +1098,8 @@
         <description>If there is no sub-status and the household is in onboarding, we need to prevent the advice case being created.</description>
         <name>Onboarding_sub_status</name>
         <label>Onboarding sub-status</label>
-        <locationX>551</locationX>
-        <locationY>2756</locationY>
+        <locationX>419</locationX>
+        <locationY>2864</locationY>
         <defaultConnector>
             <targetReference>Set_case_type_error_no_sub_status</targetReference>
         </defaultConnector>
@@ -1148,39 +1131,39 @@
             <connector>
                 <targetReference>Get_any_advice_awaiting_a_decision</targetReference>
             </connector>
-            <label>Doesn&#39;t need sub</label>
+            <label>Doesn&apos;t need sub</label>
         </rules>
     </decisions>
     <description>This flow walks the user through creating a case for a household. This allows us to customise the case creation process and get more out of it than we can with the standard create dialogue.</description>
     <dynamicChoiceSets>
         <name>CaseOriginChoice</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Origin</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>CasePriorityChoice</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Priority</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>CaseReasonsForLeavingChoice</name>
         <dataType>Multipicklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>ReasonsForLeaving__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>CaseTypeChoiceSet</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Type</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
@@ -1204,24 +1187,24 @@
     <dynamicChoiceSets>
         <name>platformChoice</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Platform__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>poaStatusChoice</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Status__c</picklistField>
         <picklistObject>PowerOfAttorney__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>poaTypeChoice</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>Type__c</picklistField>
         <picklistObject>PowerOfAttorney__c</picklistObject>
     </dynamicChoiceSets>
@@ -1287,15 +1270,15 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
 &quot;GDPR&quot;, &quot;GDPR request&quot;,
 &quot;PersonalInformationChange&quot;, &quot;Update details for &quot; &amp; {!PersonSelection.firstSelectedRow.Name},
 &quot;ProfitAndLoss&quot;, &quot;Profit and loss for &quot; &amp; {!Get_household_details.Name},
-{!caseRecordTypeDeveloperName} &amp; &quot; for &quot; &amp; {!Get_household_details.Name})</expression>
+{!CaseRecordTypeChoice.firstSelectedRow.Name})</expression>
     </formulas>
     <interviewLabel>Account | Create Case {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account | Create Case</label>
     <loops>
         <name>Loop_advice</name>
         <label>Loop advice</label>
-        <locationX>301</locationX>
-        <locationY>3080</locationY>
+        <locationX>169</locationX>
+        <locationY>3188</locationY>
         <collectionReference>Get_any_advice_awaiting_a_decision</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1342,59 +1325,11 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <name>Create_case</name>
         <label>Create case</label>
         <locationX>1282</locationX>
-        <locationY>5072</locationY>
+        <locationY>5180</locationY>
         <connector>
             <targetReference>Success_toast_screen</targetReference>
         </connector>
         <inputReference>case</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_POA</name>
-        <label>Create POA</label>
-        <locationX>1749</locationX>
-        <locationY>2972</locationY>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Create_case</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>DateActivated__c</field>
-            <value>
-                <elementReference>Date_activated</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DateOfEnd__c</field>
-            <value>
-                <elementReference>Expiry_date</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DateSigned__c</field>
-            <value>
-                <elementReference>Date_signed</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Donor__c</field>
-            <value>
-                <elementReference>PersonSelection.firstSelectedRow.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status__c</field>
-            <value>
-                <elementReference>Status</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type__c</field>
-            <value>
-                <elementReference>POA_type</elementReference>
-            </value>
-        </inputAssignments>
-        <object>PowerOfAttorney__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
         <name>Check_number_of_clients</name>
@@ -1433,10 +1368,40 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_admin_queue</name>
+        <label>Get admin queue</label>
+        <locationX>1617</locationX>
+        <locationY>2864</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_owner_to_admin_queue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Admins</stringValue>
+            </value>
+        </filters>
+        <object>Group</object>
+        <outputAssignments>
+            <assignToReference>adminQueueId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>Get_any_advice_awaiting_a_decision</name>
         <label>Get any advice awaiting a decision</label>
-        <locationX>409</locationX>
-        <locationY>2864</locationY>
+        <locationX>277</locationX>
+        <locationY>2972</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Any_advice</targetReference>
@@ -1552,8 +1517,8 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
     <recordLookups>
         <name>Get_role</name>
         <label>Get role</label>
-        <locationX>1485</locationX>
-        <locationY>2756</locationY>
+        <locationX>1353</locationX>
+        <locationY>2864</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_P_L_details</targetReference>
@@ -1578,7 +1543,7 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <locationY>2540</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>CaseTypeDecision</targetReference>
+            <targetReference>Set_owner</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1604,8 +1569,8 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
     <screens>
         <name>Advice_outcome_must_be_updated</name>
         <label>Advice outcome must be updated</label>
-        <locationX>389</locationX>
-        <locationY>3188</locationY>
+        <locationX>257</locationX>
+        <locationY>3296</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1614,7 +1579,7 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         </connector>
         <fields>
             <name>MustUpdateAdviceOutcome</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;We&#39;ve found some advice that has been presented and is awaiting an outcome decision, or is currently in fulfilment. You must decline the advice before you can create an offboarding case.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;We&apos;ve found some advice that has been presented and is awaiting an outcome decision, or is currently in fulfilment. You must decline the advice before you can create an offboarding case.&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <nextOrFinishButtonLabel>Take me to advice</nextOrFinishButtonLabel>
@@ -1776,82 +1741,6 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Collect_POA_details</name>
-        <label>Collect POA details</label>
-        <locationX>1749</locationX>
-        <locationY>2756</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Define_POA_case_variables</targetReference>
-        </connector>
-        <fields>
-            <name>POA_type</name>
-            <choiceReferences>poaTypeChoice</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>POA type</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Status</name>
-            <choiceReferences>poaStatusChoice</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Status</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Date_signed</name>
-            <dataType>Date</dataType>
-            <fieldText>Date signed</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>Date_activated</name>
-            <dataType>Date</dataType>
-            <fieldText>Date activated</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>Status</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Active</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Expiry_date</name>
-            <dataType>Date</dataType>
-            <fieldText>Expiry date</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>POA_type</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Ordinary Power Of Attorney</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Error_screen</name>
         <label>Error screen</label>
         <locationX>2646</locationX>
@@ -1871,7 +1760,7 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <name>Get_case_details</name>
         <label>Get case details</label>
         <locationX>1282</locationX>
-        <locationY>3956</locationY>
+        <locationY>4064</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2041,8 +1930,8 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
     <screens>
         <name>Get_deceased_case_details</name>
         <label>Get deceased case details</label>
-        <locationX>957</locationX>
-        <locationY>2756</locationY>
+        <locationX>825</locationX>
+        <locationY>2864</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2084,7 +1973,7 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <name>Get_name_change_details</name>
         <label>Get name change details</label>
         <locationX>1018</locationX>
-        <locationY>4664</locationY>
+        <locationY>4772</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2445,8 +2334,8 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
     <screens>
         <name>Get_P_L_details</name>
         <label>Get P&amp;L details</label>
-        <locationX>1485</locationX>
-        <locationY>2864</locationY>
+        <locationX>1353</locationX>
+        <locationY>2972</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2489,7 +2378,7 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <name>Success_toast_screen</name>
         <label>Success toast screen</label>
         <locationX>1282</locationX>
-        <locationY>5180</locationY>
+        <locationY>5288</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2574,6 +2463,13 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
+        <name>adminQueueId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>adviceStageCollection</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
@@ -2588,7 +2484,7 @@ IF(CONTAINS({!adviceStageCollection}, &quot;NOT_PRESENTED&quot;), &quot;NOT_PRES
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <description>Collection to store all related advice status&#39;s</description>
+        <description>Collection to store all related advice status&apos;s</description>
         <name>adviceStatusCollection</name>
         <dataType>String</dataType>
         <isCollection>true</isCollection>
