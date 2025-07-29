@@ -57,7 +57,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Recipient__c</fieldItem>
+                <fieldItem>Record.MainRecipient__c</fieldItem>
                 <identifier>RecordRecipient_cField</identifier>
             </fieldInstance>
         </itemInstances>
@@ -71,6 +71,12 @@
                 <identifier>RecordInclusionType_cField</identifier>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldItem>Record.IsActive__c</fieldItem>
+                <identifier>RecordIsActive__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-146b92ed-660d-4a10-965c-8d35f31ef3d1</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -81,8 +87,8 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Status__c</fieldItem>
-                <identifier>RecordStatus_cField</identifier>
+                <fieldItem>Record.IsActive__c</fieldItem>
+                <identifier>RecordIsActive_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -91,7 +97,7 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.AdditionalInclusion__c</fieldItem>
+                <fieldItem>Record.AdditionalRecipient__c</fieldItem>
                 <identifier>RecordAdditionalInclusion_cField</identifier>
             </fieldInstance>
         </itemInstances>
