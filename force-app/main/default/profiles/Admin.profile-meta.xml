@@ -23,14 +23,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>EmailAddressRecipients</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EmailCancellationNoticeNewProduct</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>DataFactoryConfigurationData</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -44,14 +36,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EmailInformationRequestUpdateTableTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EmailCancellationNoticeTransfer</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EmailSend</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -991,23 +975,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FlowUtilityQuery</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowUtilityQueryTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>FlowUtilityTaskCreate</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FlowUtilityTaskCreateList</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FulfilmentTriggerHandler</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FulfilmentTriggerHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FulfilmentTriggerHelperTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -12605,11 +12585,6 @@
         <editable>true</editable>
         <field>Fulfillment__c.Value_Recieved__c</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <readable>false</readable>
-        <field>FulfilmentType__c.ReferenceName__c</field>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -24933,6 +24908,12 @@
         <layout>SalesforceContract-Salesforce Contract Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>SalesforceInvoice-Salesforce Invoice Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforcePayment-Salesforce Payment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -27641,10 +27622,6 @@
     <tabVisibilities>
         <tab>standard-NamespaceRegistry</tab>
         <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>standard-OmniComponentErrorLog</tab>
-        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-OmniDataPack</tab>
