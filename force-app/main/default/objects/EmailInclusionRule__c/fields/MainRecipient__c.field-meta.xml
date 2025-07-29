@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MainRecipient__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <description>The person who, when addressed, will trigger the firing of the email inclusion rule. The person must be a core member of the household this rule relates to.</description>
+    <inlineHelpText>The person who, when addressed, will trigger the firing of the email inclusion rule. The person must be a core member of the household this rule relates to.</inlineHelpText>
+    <label>Main recipient</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Email inclusion rules</relationshipLabel>
+    <relationshipName>EmailInclusionRulesCoreRecipient</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
