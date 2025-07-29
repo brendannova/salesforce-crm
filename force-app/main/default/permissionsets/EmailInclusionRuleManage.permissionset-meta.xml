@@ -3,7 +3,7 @@
     <description>Gives create and edit access to the email inclusion rules object</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EmailInclusionRule__c.AdditionalInclusion__c</field>
+        <field>EmailInclusionRule__c.AdditionalRecipient__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18,7 +18,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>EmailInclusionRule__c.Recipient__c</field>
+        <field>EmailInclusionRule__c.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EmailInclusionRule__c.MainRecipient__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
@@ -32,4 +37,8 @@
         <object>EmailInclusionRule__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>EmailInclusionRule__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
