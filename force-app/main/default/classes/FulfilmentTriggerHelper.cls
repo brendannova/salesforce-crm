@@ -1,5 +1,6 @@
 public class FulfilmentTriggerHelper {
-        public void sendNotices(Map<Id, SObject> fulfilmentsNewMap, Map<Id, SObject> fulfilmentsOldMap) {
+    // Class to collect the fulfilment details from those in the trigger, construct email requests and pass them to the email send class for sending
+    public void sendNotices(Map<Id, SObject> fulfilmentsNewMap, Map<Id, SObject> fulfilmentsOldMap) {
         
         List<Fulfilment__c> fulfilments = [
             SELECT
@@ -34,22 +35,7 @@ public class FulfilmentTriggerHelper {
         
         for( Fulfilment__c fulfilment : fulfilments ) {
             Fulfilment__c fulfilmentOld = (Fulfilment__c) fulfilmentsOldMap.get(fulfilment.Id);
-            //To do - the logic here needs improving
-            if( 
-            	fulfilmentOld.CancellationNoticeSent__c == false 
-                &&
-                	(
-                  		(
-                            fulfilmentOld.Status__c == 'Chase transfer' 
-                            && fulfilment.Status__c == 'Investment checks'
-                            && fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'EXTERNAL_TRANSFER_IN'
-                        )
-                        ||
-                        (
-                            fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'OPEN_PRODUCT'
-                        )
-                    )
-            ) {
+            if( fulfilmentOld.CancellationNoticeSent__c == false && ((fulfilmentOld.Status__c == 'Chase transfer' && fulfilment.Status__c == 'Investment checks'&& fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'EXTERNAL_TRANSFER_IN')||(fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'OPEN_PRODUCT'))) {
                 fulfilmentsRequiringNotice.add(fulfilment);
             } 
         }
@@ -71,6 +57,7 @@ public class FulfilmentTriggerHelper {
         
     }
     
+    // Method to take a piece of fulfilment and create an email request of the correct type with the correct parameters
     public static EmailSend.EmailSendRequestAutomatic constructEmailRequest(Fulfilment__c fulfilment) {
         EmailSend.EmailSendRequestAutomatic emailRequest = new EmailSend.EmailSendRequestAutomatic();
         emailRequest.householdId = fulfilment.Recommendation__r.Household__c;

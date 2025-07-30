@@ -1,11 +1,13 @@
 @IsTest
 public class FulfilmentTriggerHelperTest {
     
+    // Method to load configuration test data
     @TestSetup
     static void makeData(){
         DataFactoryConfigurationData.load();
     }
     
+    // Method to test the cancellation notice emails for new products
     @istest
     static void runTestCancellationNotice(){
         if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
@@ -25,6 +27,7 @@ public class FulfilmentTriggerHelperTest {
         }
     }
     
+    // Method to test the transfer complete emails
     @isTest
     static void runTestTransferComplete() {
         if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
@@ -48,7 +51,8 @@ public class FulfilmentTriggerHelperTest {
             Test.stopTest();
         }
     }
-    
+
+    // Method to generate test data for the scenarios
     static Id createData() {
         DataFactory df = new DataFactory();
         Id household = df.createHousehold('OW001 Test',2,2,'Onboarding','Full');
