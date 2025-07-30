@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Provides access to view POA records.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>POA | View</label>
     <fieldPermissions>
         <editable>false</editable>
         <field>Attorney__c.Attorney__c</field>
@@ -48,6 +50,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>PowerOfAttorney__c.RegisteredDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>PowerOfAttorney__c.SignedDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>PowerOfAttorney__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -56,8 +68,6 @@
         <field>PowerOfAttorney__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <hasActivationRequired>false</hasActivationRequired>
-    <label>POA | View</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
