@@ -14,42 +14,42 @@
         {
             "query": "SELECT Id, readonly_false FROM RecommendationType__c",
             "operation": "Upsert",
-            "externalId": "ReferenceName__c"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM FulfilmentType__c",
             "operation": "Upsert",
-            "externalId": "ReferenceName__c"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM FulfilmentTypeStatus__c",
             "operation": "Upsert",
-            "externalId": "ReferenceName__c"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM ProductType__c",
             "operation": "Upsert",
-            "externalId": "ReferenceName__c"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM Public_Provider_Names__c",
             "operation": "Upsert",
-            "externalId": "Name"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM Product__c",
             "operation": "Upsert",
-            "externalId": "ReferenceName__c"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM FactCategory__c",
             "operation": "Upsert",
-            "externalId": "Enum__c"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM Fact__c",
             "operation": "Upsert",
-            "externalId": "Name"
+            "externalId": "DeveloperName__c"
         },
         {
             "query": "SELECT Id, readonly_false FROM AssetType__c",
@@ -89,6 +89,16 @@
         },
         {
             "query": "SELECT Id, readonly_false FROM InformationRequestType__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM Licence__c",
+            "operation": "Upsert",
+            "externalId": "DeveloperName__c"
+        },
+        {
+            "query": "SELECT Id, readonly_false FROM UserLicence__c",
             "operation": "Upsert",
             "externalId": "DeveloperName__c"
         }

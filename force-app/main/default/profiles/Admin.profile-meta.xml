@@ -23,6 +23,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>DataFactoryConfigurationData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DataFactoryConfigurationDataTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EmailInformationRequestUpdateTable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -111,8 +119,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__DeployCustomPicklist</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__DialogLookUpConfig</apexClass>
@@ -191,8 +199,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__ModalController</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__MoiApexLangHelper</apexClass>
@@ -599,8 +607,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__ReportService</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__RollupByLookupConfigService</apexClass>
@@ -643,12 +651,12 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__SegmentationController</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__SegmentationService</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__TaskService</apexClass>
@@ -695,8 +703,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TestDeployCustomPicklist</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__TestFieldSetController</apexClass>
@@ -715,8 +723,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TestModalController</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__TestMoiReciprocalRoleService</apexClass>
@@ -735,8 +743,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TestReportService</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__TestRollupByLookupConfigService</apexClass>
@@ -759,16 +767,16 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TestSegmentationController</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TestSegmentationService</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TestTodayPageController</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__TestTopicService</apexClass>
@@ -787,8 +795,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TestWMBaseService</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__TestWMBiDirectionalRelationService</apexClass>
@@ -819,8 +827,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <enabled>false</enabled>
         <apexClass>FinServ__TodayPageController</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FinServ__TopicService</apexClass>
@@ -964,6 +972,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>FlowUtilityGetRecordTypeIdTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowUtilityQuery</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FlowUtilityQueryTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -20137,41 +20153,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Blockers__c.Details__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Blockers__c.Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Blockers__c.Date_Resolved__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Blockers__c.Advice__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Blockers__c.LOA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Blockers__c.Fulfilment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Blockers__c.Days_Blocked__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Terms_of_Business__c.Date_terms_of_business_sent__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20373,31 +20354,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>CalendlyAction__c.UtmTerm__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account_To_Advice__c.Person_Account_Name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account_To_Advice__c.DT_Risk_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account_To_Advice__c.FinaMetrica_Risk_Score__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account_To_Advice__c.Date_terms_of_business_last_accepted__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Account_To_Advice__c.Date_DB_triage_doc_confirmed_by_client__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20918,41 +20874,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>FF_External_Gains_ISAs__c.OctopusMoneyRecord__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Gifts__c.Recipient__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Gifts__c.Giver__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Gifts__c.Date_of_Gift_Start__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Gifts__c.End_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Gifts__c.Notes__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Gifts__c.Value__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Gifts__c.Frequency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -21598,46 +21519,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OW_system_log__c.OW_status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.Income_Change__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.Owner__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.Related_Employment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.Related_Financial_Product__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.Related_Asset__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.Start_Date__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Changes_to_Income__c.End_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23351,9 +23232,6 @@
         <layout>AccountTeamMember-Account Team Member Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account_To_Advice__c-Account To Advice Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>ActionPlan-Action Plan Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -23509,9 +23387,6 @@
         <layout>BankAccount__c-Bank account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Blockers__c-Blocker Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>BusinessBrand-Business Brand Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -23654,9 +23529,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseParticipant-Case Participant Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Changes_to_Income__c-Changes to Income Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Claim-Claim Layout</layout>
@@ -24577,9 +24449,6 @@
         <layout>Fulfilment__c-Fulfilment Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Gifts__c-Gifts Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Global-Global Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -25042,6 +24911,12 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>SalesforceContract-Salesforce Contract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceInvoice-Salesforce Invoice Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforcePayment-Salesforce Payment Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>
@@ -26899,10 +26774,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Assets__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Blockers__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

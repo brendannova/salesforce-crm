@@ -169,7 +169,7 @@
         <name>queryStringStart</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>SELECT Id, Name, Advice_Status__c FROM Advice__c WHERE Advice_Status__c IN (&apos;Setup&apos;,&apos;Data gathering&apos;,&apos;Risk Call&apos;) AND AdviceType__r.DeveloperName__c IN (&apos;AD_HOC&apos;,&apos;DRAWDOWN&apos;) AND Advice_Household__c = &apos;</stringValue>
+            <stringValue>SELECT Id, Name, Advice_Status__c FROM Advice__c WHERE Advice_Status__c IN (&#39;Setup&#39;,&#39;Data gathering&#39;,&#39;Risk Call&#39;) AND AdviceType__r.DeveloperName__c IN (&#39;AD_HOC&#39;,&#39;DRAWDOWN&#39;) AND Advice_Household__c = &#39;</stringValue>
         </value>
     </constants>
     <decisions>
@@ -290,7 +290,7 @@
     <formulas>
         <name>queryString</name>
         <dataType>String</dataType>
-        <expression>{!queryStringStart} + {!householdId} + &quot;&apos;&quot;</expression>
+        <expression>{!queryStringStart} + {!householdId} + &quot;&#39;&quot;</expression>
     </formulas>
     <interviewLabel>Review | Link advice {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Review | Link advice</label>

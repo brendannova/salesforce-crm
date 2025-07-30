@@ -24,6 +24,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -50,6 +51,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
@@ -241,7 +243,9 @@
             <label>Required</label>
         </rules>
     </decisions>
-    <description>Runs periodically to check where annual reviews are needed and creates these.</description>
+    <description>Superseded by Apex driven process, AnnualReviewScheduler and AnnualReviewGenerator.
+
+Runs periodically to check where annual reviews are needed and creates these.</description>
     <environments>Default</environments>
     <formulas>
         <description>This formula returns true if a household is due a review.</description>
@@ -281,7 +285,7 @@
         <expression>{!$Record.Name}  &amp; &quot; - Annual review &quot; &amp; TEXT( {!annualReviewYear} )</expression>
     </formulas>
     <interviewLabel>Account | Household | Create Reviews {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Account | Household | Create Reviews</label>
+    <label>zDel | Account | Household | Create Reviews</label>
     <loops>
         <name>Loop_the_clients_in_the_household</name>
         <label>Loop the clients in the household</label>
@@ -366,7 +370,7 @@
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
     <subflows>
         <name>Get_the_clients_in_the_household</name>
         <label>Get the clients in the household</label>

@@ -99,7 +99,8 @@ global with sharing class Utility {
     // Returns the sandbox name. The return value will be null if run in production. 
     public static String sandboxName{
         get {
-            return System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+            sandboxName = System.DomainParser.parse(URL.getOrgDomainUrl()).getSandboxName();
+            return sandboxName == null ? '' : sandboxName;
         }
         set;
     }
