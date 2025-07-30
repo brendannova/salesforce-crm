@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The default page for all email configuration records.</description>
     <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
@@ -66,30 +67,10 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.DeveloperName__c</fieldItem>
-                <identifier>RecordDeveloperName_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Type__c</fieldItem>
-                <identifier>RecordType_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.AwaitReply__c</fieldItem>
-                <identifier>RecordAwaitReply__cField</identifier>
+                <fieldItem>Record.Status__c</fieldItem>
+                <identifier>RecordStatus_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -112,38 +93,8 @@
                     <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.Description__c</fieldItem>
-                <identifier>RecordDescription_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CustomPermission__c</fieldItem>
-                <identifier>RecordCustomPermission_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Necessity__c</fieldItem>
-                <identifier>RecordNecessity__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.GoogleDriveTemplateUrl__c</fieldItem>
-                <identifier>RecordGoogleDriveTemplateURL_cField</identifier>
+                <fieldItem>Record.DeveloperName__c</fieldItem>
+                <identifier>RecordDeveloperName_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-f746c10b-bd3d-4f1f-8ce0-959eb40780a4</name>
@@ -180,8 +131,8 @@
                     <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.From__c</fieldItem>
-                <identifier>RecordFrom_cField</identifier>
+                <fieldItem>Record.Type__c</fieldItem>
+                <identifier>RecordType_cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -190,8 +141,107 @@
                     <name>uiBehavior</name>
                     <value>required</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.ClientsAddressed__c</fieldItem>
-                <identifier>RecordClientsAddressed_cField</identifier>
+                <fieldItem>Record.SendingProcess__c</fieldItem>
+                <identifier>RecordSendingProcess_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CustomPermission__c</fieldItem>
+                <identifier>RecordCustomPermission_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-a4aca11e-d8c2-42f8-91f3-f0b5f014ebd7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Necessity__c</fieldItem>
+                <identifier>RecordNecessity__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Service</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Description__c</fieldItem>
+                <identifier>RecordDescription_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.GoogleDriveTemplateUrl__c</fieldItem>
+                <identifier>RecordGoogleDriveTemplateURL_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-72669393-90a8-4164-a080-8094433e77c7</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-a4aca11e-d8c2-42f8-91f3-f0b5f014ebd7</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column9</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-72669393-90a8-4164-a080-8094433e77c7</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column10</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-6b4de950-35c4-40d8-a9b5-9532a6e93316</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.From__c</fieldItem>
+                <identifier>RecordFrom_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.AwaitReply__c</fieldItem>
+                <identifier>RecordAwaitReply__cField2</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-608e2102-abe5-4ca0-a837-3b4a5700b54e</name>
@@ -202,25 +252,15 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.PartnerCopied__c</fieldItem>
-                <identifier>RecordPartnerCopied_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.CopyOtherClients__c</fieldItem>
-                <identifier>RecordCopyOtherClients__cField</identifier>
+                <fieldItem>Record.ReplyTo__c</fieldItem>
+                <identifier>RecordReplyTo_cField2</identifier>
                 <visibilityRule>
                     <criteria>
-                        <leftValue>{!Record.ClientsAddressed__c}</leftValue>
+                        <leftValue>{!Record.SendingProcess__c}</leftValue>
                         <operator>EQUAL</operator>
-                        <rightValue>One only</rightValue>
+                        <rightValue>AUTOMATIC</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -250,6 +290,75 @@
             </componentInstance>
         </itemInstances>
         <name>Facet-8df9cb21-01ef-4238-aa4b-552a9d6ff022</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ClientsAddressed__c</fieldItem>
+                <identifier>RecordClientsAddressed_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CopyOtherClients__c</fieldItem>
+                <identifier>RecordCopyOtherClients__cField2</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.ClientsAddressed__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>One only</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-82fc9da0-d15d-409d-a5a4-7b278d45c679</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.PartnerCopied__c</fieldItem>
+                <identifier>RecordPartnerCopied_cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <name>Facet-2574b068-8e0a-478c-8aa0-b988cb841c96</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-82fc9da0-d15d-409d-a5a4-7b278d45c679</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-2574b068-8e0a-478c-8aa0-b988cb841c96</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:column</componentName>
+                <identifier>flexipage_column8</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-55c53738-8d9f-45bd-bb79-28c781a572fc</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -317,10 +426,28 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Information</value>
+                    <value>Email configuration information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-6b4de950-35c4-40d8-a9b5-9532a6e93316</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Email information</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -335,10 +462,28 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>To/From</value>
+                    <value>Sender</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection3</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>columns</name>
+                    <value>Facet-55c53738-8d9f-45bd-bb79-28c781a572fc</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>horizontalAlignment</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Recipients</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:fieldSection</componentName>
+                <identifier>flexipage_fieldSection4</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -353,7 +498,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>System Information</value>
+                    <value>System information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
@@ -368,7 +513,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Email Configuration Record Page</masterLabel>
+    <masterLabel>Email configuration record page</masterLabel>
     <sobjectType>EmailConfiguration__c</sobjectType>
     <template>
         <name>flexipage:recordHomeSingleColTemplateDesktop</name>
