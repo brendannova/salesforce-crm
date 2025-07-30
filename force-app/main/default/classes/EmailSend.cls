@@ -76,7 +76,7 @@ public without sharing class EmailSend{
 
     // Get all email configuration records for the emails being sent
     private Map<String, EmailConfiguration__c> getEmailConfigurations(Set<String> emailTemplateDeveloperNames) {
-        List<EmailConfiguration__c> emailConfigurations = [SELECT Id, DeveloperName__c, Subject__c, ClientsAddressed__c, CopyOtherClients__c, PartnerCopied__c, From__c, ReplyTo__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
+        List<EmailConfiguration__c> emailConfigurations = [SELECT Id, DeveloperName__c, ClientsAddressed__c, CopyOtherClients__c, PartnerCopied__c, From__c, ReplyTo__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
         if(emailConfigurations.isEmpty()){
             throw new EmailSendException('No email configurations found');
         } else if(emailConfigurations.size() != emailTemplateDeveloperNames.size()){
