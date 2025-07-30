@@ -333,37 +333,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Update_review_status</name>
-        <label>Copy 1 of Update review status</label>
-        <locationX>13690</locationX>
-        <locationY>674</locationY>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.OW_status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Complete</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.OW_review_date__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>reviewSharedDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.ReviewDateTime__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>reviewSharedDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Confirm_advice</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Create_deck_updates</name>
         <label>Create deck updates</label>
         <locationX>9730</locationX>
@@ -839,22 +808,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_emailed_date_time</name>
-        <label>Set emailed date/time</label>
-        <locationX>13690</locationX>
-        <locationY>566</locationY>
-        <assignmentItems>
-            <assignToReference>clientEmailedDateTime</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Call_advice_document_upload_flow.clientEmailedDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Copy_1_of_Update_review_status</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_follow_up_data_gathering_task</name>
         <label>Set follow up data gathering task</label>
         <locationX>50</locationX>
@@ -1048,19 +1001,6 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Update_review_status</name>
-        <label>Update review status</label>
-        <locationX>4802</locationX>
-        <locationY>1382</locationY>
-        <assignmentItems>
-            <assignToReference>reviewUpdated.OW_status__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Provide advice</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
         <name>Update_review_status_complete</name>
         <label>Update review status</label>
         <locationX>5330</locationX>
@@ -1171,15 +1111,12 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>adviceUpdated.Reason_for_Cancellation__c</assignToReference>
+            <assignToReference>adviceUpdated.ClosedReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>CUSTOMER_NOT_ENGAGING</stringValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Update_review_status</targetReference>
-        </connector>
     </assignments>
     <choices>
         <name>AnnualReviewFactFindChased</name>
@@ -1263,10 +1200,10 @@
     </choices>
     <choices>
         <name>There_s_one_in_progress</name>
-        <choiceText>There&apos;s one in progress</choiceText>
+        <choiceText>There&#39;s one in progress</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>There&apos;s one in progress</stringValue>
+            <stringValue>There&#39;s one in progress</stringValue>
         </value>
     </choices>
     <choices>
@@ -1349,7 +1286,8 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_emailed_date_time</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Confirm_advice</targetReference>
             </connector>
             <label>Non-presented</label>
         </rules>
@@ -1484,7 +1422,7 @@
             <connector>
                 <targetReference>Advice_updates_skipped_catch_up</targetReference>
             </connector>
-            <label>Catch up call didn&apos;t happen</label>
+            <label>Catch up call didn&#39;t happen</label>
         </rules>
     </decisions>
     <decisions>
@@ -1634,6 +1572,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Incomplete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>advice.RiskCallStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Skipped</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2352,11 +2297,9 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
     <formulas>
         <name>EmailToSend</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Incomplete&quot;), &quot;2C | Client did not engage in time&quot;,
-IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Skipped&quot;), &quot;3B | Client did not have catch up call&quot;,
-IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;PRESENTED&quot;), &quot;3 | Review + presented advice&quot;,
-IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;NON_PRESENTED&quot;), &quot;3 | Review + non-presented advice&quot;,
-&quot;Unknown email type&quot;))))</expression>
+        <expression>IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Incomplete&quot;), &quot;Pack uploaded | Profile not completed&quot;,
+IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Skipped&quot;), &quot;Pack uploaded | Catch up call not completed&quot;,
+IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Complete&quot;) &amp;&amp; ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Complete&quot;), &quot;Pack uploaded | Advice follows&quot;, &quot;Unknown email type&quot;)))</expression>
     </formulas>
     <formulas>
         <name>illustrationsTask</name>
@@ -2478,7 +2421,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>ConfirmAutomaticAnnualReviewDecision</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Assess whether we can do an automatic or manual annual review.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;A review can be automatic if the client:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;is in accumulation&lt;/li&gt;&lt;li&gt;doesn&apos;t hold advised VCTs&lt;/li&gt;&lt;li&gt;doesn&apos;t have an adviser charge linked to other households&lt;/li&gt;&lt;li&gt;is not a trust&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Assess whether we can do an automatic or manual annual review.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;A review can be automatic if the client:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;is in accumulation&lt;/li&gt;&lt;li&gt;doesn&#39;t hold advised VCTs&lt;/li&gt;&lt;li&gt;doesn&#39;t have an adviser charge linked to other households&lt;/li&gt;&lt;li&gt;is not a trust&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2714,7 +2657,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>AnnualReview</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click next to confirm that the risk call is complete. You&apos;ll then be prompted to update vulnerability &amp;amp; conflict of interest for all people in this household.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click next to confirm that the risk call is complete. You&#39;ll then be prompted to update vulnerability &amp;amp; conflict of interest for all people in this household.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2895,7 +2838,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </fields>
         <fields>
             <name>nonPresented</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as &lt;/span&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; If this isn&apos;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as &lt;/span&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; If this isn&#39;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2930,7 +2873,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>ConfirmCompleteDeckReviewPlanner</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Provide comments on the advice checklist and indicate whether this&lt;/span&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &apos;Segoe UI&apos;, Roboto, Helvetica, Arial, sans-serif, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;, &apos;Segoe UI Symbol&apos;);&quot;&gt; should be returned to the suitability planner.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Provide comments on the advice checklist and indicate whether this&lt;/span&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;);&quot;&gt; should be returned to the suitability planner.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2964,26 +2907,15 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>ValuationsUpdatesRequested</name>
+            <name>ValuationUpdatesTriggered</name>
             <choiceReferences>Yes</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Valuations updates requested</fieldText>
+            <fieldText>Valuation updates triggered (if required)</fieldText>
             <fieldType>DropdownBox</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isDisabled>
                 <booleanValue>false</booleanValue>
             </isDisabled>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>HubwiseAmlInformationRequested</name>
-            <choiceReferences>Yes</choiceReferences>
-            <choiceReferences>Not_required</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Hubwise AML information requested if applicable</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <helpText>&lt;p&gt;Only request the information if we do not already have it to hand. &lt;/p&gt;</helpText>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
@@ -3058,9 +2990,6 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <label>Assess retirement call need</label>
         <locationX>4670</locationX>
         <locationY>1190</locationY>
-        <connector>
-            <targetReference>Update_review_status</targetReference>
-        </connector>
         <flowName>AdviceOrchestratorRetirementCallAssess</flowName>
         <inputAssignments>
             <name>advice</name>
@@ -3145,7 +3074,10 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
                 <elementReference>task.OW_task_information_name__c</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>clientEmailedDateTime</assignToReference>
+            <name>clientEmailedDateTime</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Call_data_gathering_flow</name>
@@ -3324,7 +3256,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <name>Confirm_task</name>
         <label>Confirm task</label>
         <locationX>7134</locationX>
-        <locationY>1682</locationY>
+        <locationY>1574</locationY>
         <flowName>OrchestratorTaskComplete</flowName>
         <inputAssignments>
             <name>task</name>
@@ -3757,6 +3689,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <flowName>AdviceCustomerDocumentUpload</flowName>
         <inputAssignments>
+            <name>EmailToSend</name>
+            <value>
+                <elementReference>EmailToSend</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>recordId</name>
             <value>
                 <elementReference>adviceId</elementReference>
@@ -3766,12 +3704,6 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <name>taskType</name>
             <value>
                 <elementReference>task.OW_task_information_name__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>EmailToSend</name>
-            <value>
-                <elementReference>EmailToSend</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
