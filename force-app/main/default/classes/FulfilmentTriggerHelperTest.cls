@@ -8,7 +8,7 @@ public class FulfilmentTriggerHelperTest {
     
     @istest
     static void runTestCancellationNotice(){
-        if( IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
+        if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
             System.debug('runTestCancellationNotice');
             Id householdId = createData();
             Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
@@ -27,7 +27,7 @@ public class FulfilmentTriggerHelperTest {
     
     @isTest
     static void runTestTransferComplete() {
-        if( IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
+        if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
             System.debug('runTestTransferComplete');
             Id householdId = createData();
             List<Fulfilment__c> fulfilments = [SELECT Id, SearchName__c, Recommendation__r.Product__r.DeveloperName__c, Recommendation__r.RecommendationType__r.DeveloperName__c FROM Fulfilment__c WHERE Advice__r.Advice_Household__c =: householdId ];
@@ -146,20 +146,4 @@ public class FulfilmentTriggerHelperTest {
         
         return household;
     }
-    
-    private static final Boolean IS_EMAIL_DELIVERABILITY_ENABLED {
-        get {
-            if (IS_EMAIL_DELIVERABILITY_ENABLED == null) {
-                try {
-                    System.Messaging.reserveSingleEmailCapacity(1);
-                    IS_EMAIL_DELIVERABILITY_ENABLED = true;
-                } catch (System.NoAccessException e) {
-                    IS_EMAIL_DELIVERABILITY_ENABLED = false;
-                }
-            }
-            return IS_EMAIL_DELIVERABILITY_ENABLED;
-        }
-        set;
-    }
-
 }
