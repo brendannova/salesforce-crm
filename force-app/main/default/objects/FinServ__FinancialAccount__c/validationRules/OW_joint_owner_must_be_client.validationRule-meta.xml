@@ -3,7 +3,8 @@
     <fullName>OW_joint_owner_must_be_client</fullName>
     <active>true</active>
     <description>Ensures the primary owner is a client in their primary household</description>
-    <errorConditionFormula>(NOT( ISBLANK( FinServ__JointOwner__r.Household_Lookup__c ) )
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+(NOT( ISBLANK( FinServ__JointOwner__r.Household_Lookup__c ) )
 &amp;&amp;
 NOT( FinServ__JointOwner__r.OW_role_in_primary_household__c = &quot;Client&quot; )
 &amp;&amp; 
