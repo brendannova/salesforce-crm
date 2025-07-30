@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>OwnerName__c</fullName>
-    <description>Formula to display case owner, either user&apos;s name or queue name. This field is displayed instead of the OwnerId to ensure we can enforce the appropriate controls when the owner is changed.</description>
+    <description>Formula to display case owner, either user&#39;s name or queue name. This field is displayed instead of the OwnerId to ensure we can enforce the appropriate controls when the owner is changed.</description>
     <externalId>false</externalId>
-    <formula>IF(ISBLANK(Owner:Queue.QueueName),  Owner:User.FirstName + &apos; &apos; +  Owner:User.LastName , (Owner:Queue.QueueName))</formula>
+    <formula>IF(ISBLANK(Owner:Queue.QueueName),  Owner:User.FirstName + &#39; &#39; +  Owner:User.LastName , (Owner:Queue.QueueName))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Owner name</label>
     <required>false</required>
