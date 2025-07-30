@@ -24,6 +24,7 @@ public class EmailCancellationNoticeNewProduct {
         }
     }
     
+    // Returns the name of the destination product (Sipp or JSIPP)
     private static String productName{
         get{
             if(String.isNotBlank(fulfilment.Recommendation__r.Product__r.Name)) {
@@ -33,7 +34,8 @@ public class EmailCancellationNoticeNewProduct {
             }
         }
     }
-    
+
+    // Returns a formatted string with todays date in the format '3 July 2025'
     private static String dateString{
         get{
             UtilityString us = new UtilityString();
@@ -41,6 +43,7 @@ public class EmailCancellationNoticeNewProduct {
         }
     }
 
+    // Returns the subject if the email based on whether this is a SIPP or JSIPP
     public static String getSubject(Fulfilment__c fulfilment){
         if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
             return 'NOVA Wealth - Your new SIPP';
