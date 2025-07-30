@@ -50,6 +50,7 @@ public class EmailSendTest {
         }
     }
     
+    @TestVisible
     private static final Boolean IS_EMAIL_DELIVERABILITY_ENABLED {
         get {
             if (IS_EMAIL_DELIVERABILITY_ENABLED == null) {
