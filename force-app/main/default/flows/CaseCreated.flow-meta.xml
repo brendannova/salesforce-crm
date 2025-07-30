@@ -29,7 +29,7 @@
     <decisions>
         <name>What_type_is_the_case</name>
         <label>What type is the case?</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>Other</defaultConnectorLabel>
         <rules>
@@ -216,6 +216,21 @@
             </connector>
             <label>Profit &amp; Loss</label>
         </rules>
+        <rules>
+            <name>Power_of_attorney</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PowerOfAttorney</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_set_up_POA_task</targetReference>
+            </connector>
+            <label>Power of attorney</label>
+        </rules>
     </decisions>
     <description>Triggers next steps on creation of a case like automating the update of person and household status changes.</description>
     <environments>Default</environments>
@@ -243,7 +258,7 @@
     <recordUpdates>
         <name>Cancel_advice</name>
         <label>Cancel advice</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1031</locationY>
         <connector>
             <targetReference>Cancel_Open_AML</targetReference>
@@ -287,7 +302,7 @@
     <recordUpdates>
         <name>Cancel_Open_AML</name>
         <label>Cancel Open AML</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1139</locationY>
         <connector>
             <targetReference>Cancel_Open_LOAs</targetReference>
@@ -332,7 +347,7 @@
     <recordUpdates>
         <name>Cancel_Open_Fulfilment</name>
         <label>Cancel Open Fulfilment</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1463</locationY>
         <connector>
             <targetReference>Cancel_Open_Fulfilment_Old</targetReference>
@@ -382,7 +397,7 @@
     <recordUpdates>
         <name>Cancel_Open_Fulfilment_Old</name>
         <label>Cancel Open Fulfilment (Old)</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1571</locationY>
         <connector>
             <targetReference>Cancel_Open_RTQs</targetReference>
@@ -440,7 +455,7 @@
     <recordUpdates>
         <name>Cancel_open_household_tasks</name>
         <label>Cancel open household tasks</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1787</locationY>
         <filterLogic>1 AND 4 AND (2 OR 3)</filterLogic>
         <filters>
@@ -482,7 +497,7 @@
     <recordUpdates>
         <name>Cancel_Open_LOAs</name>
         <label>Cancel Open LOAs</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1247</locationY>
         <connector>
             <targetReference>Decline_open_recommendationa</targetReference>
@@ -526,7 +541,7 @@
     <recordUpdates>
         <name>Cancel_Open_RTQs</name>
         <label>Cancel Open RTQs</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1679</locationY>
         <connector>
             <targetReference>Cancel_open_household_tasks</targetReference>
@@ -558,7 +573,7 @@
         <description>Any recommendations that are awaiting a decision should be declined since the customer is offboarding.</description>
         <name>Decline_open_recommendationa</name>
         <label>Decline open recommendationa</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1355</locationY>
         <connector>
             <targetReference>Cancel_Open_Fulfilment</targetReference>
@@ -593,7 +608,7 @@
         <object>Recommendation__c</object>
     </recordUpdates>
     <start>
-        <locationX>1244</locationX>
+        <locationX>1376</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>What_type_is_the_case</targetReference>
@@ -601,7 +616,8 @@
         <filterFormula>{!$Record.RecordType.DeveloperName} = &quot;Offboarding&quot; ||
 {!$Record.RecordType.DeveloperName} = &quot;Deceased&quot; ||
 {!$Record.RecordType.DeveloperName} = &quot;PersonalInformationChange&quot; ||
-{!$Record.RecordType.DeveloperName} = &quot;ProfitAndLoss&quot;</filterFormula>
+{!$Record.RecordType.DeveloperName} = &quot;ProfitAndLoss&quot; ||
+{!$Record.RecordType.DeveloperName} = &quot;PowerOfAttorney&quot;</filterFormula>
         <object>Case</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
@@ -806,6 +822,32 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
+        <name>Create_set_up_POA_task</name>
+        <label>Create set up POA task</label>
+        <locationX>2690</locationX>
+        <locationY>431</locationY>
+        <flowName>OW_task_create_from_task_information</flowName>
+        <inputAssignments>
+            <name>household_id</name>
+            <value>
+                <elementReference>$Record.OW_household__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task_type</name>
+            <value>
+                <stringValue>CASE_POA_SET_UP</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>what_id</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <description>When the case is created, we want the off-board client task to trigger</description>
         <name>Create_task_Off_board_Client</name>
         <label>Create task - Off-board Client</label>
@@ -889,7 +931,7 @@
     <subflows>
         <name>Update_Account_Status</name>
         <label>Update Account Status</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>923</locationY>
         <connector>
             <targetReference>Cancel_advice</targetReference>
