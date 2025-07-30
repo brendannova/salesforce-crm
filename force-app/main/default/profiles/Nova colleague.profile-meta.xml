@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>true</custom>
     <description>This is the base Nova profile that should be assigned to most colleagues, except administrators.</description>
@@ -302,6 +302,9 @@
         <enabled>false</enabled>
         <name>ViewPersonalOrg</name>
     </userPermissions>
+    <layoutAssignments>
+        <layout>Attorney__c-Attorney Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
         <recordType>Case.AdminSupport</recordType>
@@ -1949,6 +1952,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>PortfolioCharge__c-Portfolio Charge Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PowerOfAttorney__c-Power of attorney Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Pricebook2-Price Book Layout</layout>

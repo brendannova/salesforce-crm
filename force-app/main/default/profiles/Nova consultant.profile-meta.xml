@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>true</custom>
     <description>This is the base Nova profile that should be assigned to consultants and any other external person who has access to Nova Salesforce.</description>
@@ -286,6 +286,9 @@
         <enabled>true</enabled>
         <name>ViewHelpLink</name>
     </userPermissions>
+    <layoutAssignments>
+        <layout>Attorney__c-Attorney Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>LogEntryDataMaskRule__mdt-Log Entry Data Mask Rule Layout</layout>
     </layoutAssignments>
@@ -1893,6 +1896,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>PortfolioCharge__c-Portfolio Charge Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PowerOfAttorney__c-Power of attorney Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Pricebook2-Price Book Layout</layout>
