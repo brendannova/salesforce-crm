@@ -19,7 +19,7 @@ public class FulfilmentTriggerHelper {
                 Recommendation__r.TransferType__c,
                 Recommendation__r.SourceLegacy__r.Public_Provider_Name__r.Name,
                 Recommendation__r.DestinationLegacy__r.Public_Provider_Name__r.Name,
-                Recommendation__r.DestinationLegacy__r.RecordType,
+                Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName,
                 ResidualCash__c,
                 Status__c,
                 CancellationNoticeSent__c
