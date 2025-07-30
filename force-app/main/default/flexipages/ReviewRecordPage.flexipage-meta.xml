@@ -42,16 +42,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.OwnerId</fieldItem>
-                <identifier>RecordOwnerIdField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Advice__c</fieldItem>
                 <identifier>RecordAdvice_cField</identifier>
             </fieldInstance>
@@ -116,6 +106,16 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-37f226a6-7ca3-4615-abf8-98f1adbf8303</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
                 <componentInstanceProperties>
                     <name>showLegacyActivityComposer</name>
                     <value>false</value>
@@ -130,14 +130,18 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>forceChatter:recordFeedContainer</componentName>
-                <identifier>forceChatter_recordFeedContainer</identifier>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-37f226a6-7ca3-4615-abf8-98f1adbf8303</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Standard.Tab.collaborate</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
-        <name>Facet-37f226a6-7ca3-4615-abf8-98f1adbf8303</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
@@ -154,20 +158,6 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-37f226a6-7ca3-4615-abf8-98f1adbf8303</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Standard.Tab.collaborate</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:tab</componentName>
-                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-6914586e-cc52-4e90-a714-d82191278ff5</name>
@@ -204,7 +194,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>none</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Name</fieldItem>
                 <identifier>RecordNameField</identifier>
@@ -226,8 +216,43 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.OW_advice__c</fieldItem>
-                <identifier>RecordOW_advice_cField</identifier>
+                <fieldItem>Record.OW_review_date__c</fieldItem>
+                <identifier>RecordOW_review_date_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ReviewType__c</fieldItem>
+                <identifier>RecordReviewType_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Provide advice</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Closed</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-c8bcc3fc-0be7-4ae6-97e9-0f5306997434</name>
@@ -238,7 +263,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>required</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_status__c</fieldItem>
                 <identifier>RecordOW_status_cField</identifier>
@@ -250,8 +275,25 @@
                     <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.OW_review_date__c</fieldItem>
-                <identifier>RecordOW_review_date_cField</identifier>
+                <fieldItem>Record.OW_advice__c</fieldItem>
+                <identifier>RecordOW_advice_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ReviewDeckUrl__c</fieldItem>
+                <identifier>RecordReviewDeckUrl_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OW_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -351,16 +393,12 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_review_fact_find_status__c</fieldItem>
                 <identifier>RecordOW_review_fact_find_status_cField</identifier>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-895a066c-acfc-48c1-9237-78933b967b74</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -369,36 +407,15 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_completed_by_client__c</fieldItem>
                 <identifier>RecordOW_completed_by_client_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OW_review_fact_find_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
-        <name>Facet-8039a38e-0744-4f08-9e47-aea8e256b820</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-895a066c-acfc-48c1-9237-78933b967b74</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column4</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>body</name>
-                    <value>Facet-8039a38e-0744-4f08-9e47-aea8e256b820</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:column</componentName>
-                <identifier>flexipage_column5</identifier>
-            </componentInstance>
-        </itemInstances>
-        <name>Facet-98c42120-c692-4802-8af1-d1a3558f08f3</name>
-        <type>Facet</type>
-    </flexiPageRegions>
-    <flexiPageRegions>
         <itemInstances>
             <fieldInstance>
                 <fieldInstanceProperties>
@@ -407,6 +424,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_anything_else_to_know__c</fieldItem>
                 <identifier>RecordOW_anything_else_to_know_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OW_review_fact_find_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -417,6 +441,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_expected_changes_short_term__c</fieldItem>
                 <identifier>RecordOW_expected_changes_short_term_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OW_review_fact_find_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
@@ -427,6 +458,13 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.OW_expected_changes_long_term__c</fieldItem>
                 <identifier>RecordOW_expected_changes_long_term_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.OW_review_fact_find_status__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Complete</rightValue>
+                    </criteria>
+                </visibilityRule>
             </fieldInstance>
         </itemInstances>
         <name>Facet-d478e755-54f2-44c4-8e7c-5ac3725ce446</name>
@@ -511,7 +549,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Setup</value>
+                    <value>Review information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection</identifier>
@@ -529,28 +567,17 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Catch Up Call</value>
+                    <value>Catch up call</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>columns</name>
-                    <value>Facet-98c42120-c692-4802-8af1-d1a3558f08f3</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>horizontalAlignment</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>label</name>
-                    <value>Annual review fact find information</value>
-                </componentInstanceProperties>
-                <componentName>flexipage:fieldSection</componentName>
-                <identifier>flexipage_fieldSection3</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.ProcessVersion__c}</leftValue>
+                        <operator>LE</operator>
+                        <rightValue>1.0</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -565,7 +592,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>Annual review fact find information (wide)</value>
+                    <value>Annual review fact find</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection4</identifier>
@@ -583,7 +610,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>label</name>
-                    <value>System Information</value>
+                    <value>System information</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection5</identifier>
