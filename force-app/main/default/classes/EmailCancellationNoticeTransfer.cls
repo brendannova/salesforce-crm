@@ -20,7 +20,7 @@ public with sharing class EmailCancellationNoticeTransfer {
         parameters.put('{{financialProductNameSource}}', financialProductNameSource);
         parameters.put('{{destinationOwnership}}', destinationOwnership);
         parameters.put('{{financialProductNameDestination}}', financialProductNameDestination);
-        parameters.put('{{dateTodayString}}', dateString);
+        parameters.put('{{dateString}}', dateString);
         return parameters;
     }
     
@@ -53,12 +53,15 @@ public with sharing class EmailCancellationNoticeTransfer {
     // Returns your or child's name dependent on whether this is a SIPP or JSIPP
     public static String sourceOwnership{
         get{
-            if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
+            if( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'FP_SIPP' ) {
                 return 'your';
-            } else {
+            } else if( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'Junior_SIPP' ){
                 return fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s';
+            } else {
+                throw new EmailCancellationNoticeTransferException('Unknown value for product developer name'); 
             }
         }
+
     }
 
     // Returns the name of the source financial product as it should be displayed in the email 
@@ -75,10 +78,12 @@ public with sharing class EmailCancellationNoticeTransfer {
     // Returns "your" or "their" dependent on whether this is a SIPP or JSIPP
     public static String destinationOwnership{
         get{
-            if( fulfilment.Recommendation__r.RegisteredContact__c == null ) {
+            if( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'FP_SIPP' ) {
                 return 'your';
-            } else {
+            } else if ( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'Junior_SIPP'){
                 return 'their';
+            } else {
+                throw new EmailCancellationNoticeTransferException('Unknown value for product developer name'); 
             }
         }
     }

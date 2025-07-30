@@ -45,10 +45,12 @@ public class EmailCancellationNoticeNewProduct {
 
     // Returns the subject if the email based on whether this is a SIPP or JSIPP
     public static String getSubject(Fulfilment__c fulfilment){
-        if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
+        if( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'FP_SIPP' ) {
             return 'NOVA Wealth - Your new SIPP';
-        } else {
+        } else if ( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'Junior_SIPP' ) {
             return 'NOVA Wealth - ' + financialProductOwnership + ' new Junior SIPP';
+        } else {
+            throw new EmailCancellationNoticeNewProductException('Unknown record type'); 
         }
     }
     
