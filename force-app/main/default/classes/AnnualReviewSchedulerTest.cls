@@ -58,13 +58,11 @@ public without sharing class AnnualReviewSchedulerTest {
             System.assertEquals(0, ct.TimesTriggered, 'Cron trigger has already fired');
 
             // Verify the next time the job will run
-            Time nextRunTime = Time.newInstance(2, 0, 0, 0);
-            Date nextRunDate = Date.today();
-            Datetime newRunDatetime = Datetime.newInstance(nextRunDate, nextRunTime);
-	        if(Datetime.now() > newRunDatetime){
-                newRunDatetime = newRunDatetime.addDays(1);
+            Datetime nextRunSchedule = Datetime.newInstance(Date.today().year(), Date.today().month(), Date.today().day(), 2, 0, 0);
+	        if(Datetime.now() > nextRunSchedule){
+                nextRunSchedule = nextRunSchedule.addDays(1);
         	}
-            System.assertEquals(Datetime.newInstance(nextRunDate, nextRunTime), ct.NextFireTime, 'Next fire time of CtronTrigger unexpected');
+            System.assertEquals(nextRunSchedule, ct.NextFireTime, 'Next fire time of CtronTrigger unexpected');
             List<OW_review__c> reviews = [SELECT Id FROM OW_review__c];
             System.Assert.areEqual(reviews.size(), 0, 'Expected 0 reviews but ' + reviews.size() + 'have been generated');
         Test.stopTest();
