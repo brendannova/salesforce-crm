@@ -3,7 +3,8 @@
     <fullName>EmploymentLinkedFirst</fullName>
     <active>true</active>
     <description>Ensures that if the FF FP record to which this is linked is meant to have a linked employment, this is linked first.</description>
-    <errorConditionFormula>NOT(ISBLANK( OW_latest_update__c ))
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c &amp;&amp;
+NOT(ISBLANK( OW_latest_update__c ))
 &amp;&amp;
 NOT(ISBLANK( OW_latest_update__r.OW_employment_match_id__c ))
 &amp;&amp;
