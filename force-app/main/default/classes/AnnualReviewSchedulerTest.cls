@@ -59,7 +59,11 @@ public without sharing class AnnualReviewSchedulerTest {
 
             // Verify the next time the job will run
             Time nextRunTime = Time.newInstance(2, 0, 0, 0);
-            Date nextRunDate = Date.today().addDays(1);
+            Date nextRunDate = Date.today();
+            Datetime newRunDatetime = Datetime.newInstance(nextRunDate, nextRunTime);
+	        if(Datetime.now() > newRunDatetime){
+                newRunDatetime = newRunDatetime.addDays(1);
+        	}
             System.assertEquals(Datetime.newInstance(nextRunDate, nextRunTime), ct.NextFireTime, 'Next fire time of CtronTrigger unexpected');
             List<OW_review__c> reviews = [SELECT Id FROM OW_review__c];
             System.Assert.areEqual(reviews.size(), 0, 'Expected 0 reviews but ' + reviews.size() + 'have been generated');
