@@ -3,6 +3,10 @@
     <custom>false</custom>
     <userLicense>Salesforce</userLicense>
     <classAccesses>
+        <apexClass>AccountHouseholdMembers</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CallableLogger</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -36,6 +40,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EmailInformationRequestUpdateTableTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailSend</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailSendTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -23475,6 +23487,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
+        <recordType>Case.PowerOfAttorney</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
         <recordType>Case.ProfitAndLoss</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -26781,6 +26797,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Attorney__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>CalendlyAction__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -26807,6 +26827,10 @@
     <tabVisibilities>
         <tab>EmailConfiguration__c</tab>
         <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>EmailInclusionRule__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>EmailTemplatesManage</tab>
@@ -27051,6 +27075,10 @@
     <tabVisibilities>
         <tab>PortfolioCharge__c</tab>
         <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>PowerOfAttorney__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ProductType__c</tab>
