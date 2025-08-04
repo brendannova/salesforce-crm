@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Go_to_recommendation</name>
         <label>Go to recommendation</label>
-        <locationX>182</locationX>
-        <locationY>2222</locationY>
+        <locationX>314</locationX>
+        <locationY>2270</locationY>
         <actionName>c:navigateToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -22,8 +22,8 @@
     <assignments>
         <name>Add_to_collection</name>
         <label>Add to collection</label>
-        <locationX>162</locationX>
-        <locationY>1622</locationY>
+        <locationX>294</locationX>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>recommendationsToCreate</assignToReference>
             <operator>Add</operator>
@@ -38,8 +38,8 @@
     <assignments>
         <name>Assign_cancel_reg_rec_values</name>
         <label>Assign cancel reg rec values</label>
-        <locationX>162</locationX>
-        <locationY>1514</locationY>
+        <locationX>294</locationX>
+        <locationY>1562</locationY>
         <assignmentItems>
             <assignToReference>recommendationToCreate.Advice__c</assignToReference>
             <operator>Assign</operator>
@@ -91,6 +91,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Add_to_collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_error_message</name>
+        <label>Assign error message</label>
+        <locationX>1106</locationX>
+        <locationY>2054</locationY>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_handle_sub_flow</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -193,7 +209,7 @@
         <name>Get_OW_products</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
         <label>Get OW products</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>674</locationY>
         <assignNextValueToReference>currentItem_Get_OW_products_0</assignNextValueToReference>
         <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
@@ -207,8 +223,8 @@
     <decisions>
         <name>Are_there_any_to_cancel</name>
         <label>Are there any to cancel?</label>
-        <locationX>182</locationX>
-        <locationY>1298</locationY>
+        <locationX>314</locationX>
+        <locationY>1346</locationY>
         <defaultConnector>
             <targetReference>Create_cancel_reg_recs</targetReference>
         </defaultConnector>
@@ -232,8 +248,8 @@
     <decisions>
         <name>Button_selection</name>
         <label>Button selection</label>
-        <locationX>182</locationX>
-        <locationY>2114</locationY>
+        <locationX>314</locationX>
+        <locationY>2162</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Go_again</name>
@@ -270,7 +286,7 @@
     <decisions>
         <name>Product_or_recommendation</name>
         <label>Product or recommendation?</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Create_recommendationRec</targetReference>
@@ -422,8 +438,8 @@
     <loops>
         <name>regulars_to_cancel</name>
         <label>Regulars to cancel</label>
-        <locationX>74</locationX>
-        <locationY>1406</locationY>
+        <locationX>206</locationX>
+        <locationY>1454</locationY>
         <collectionReference>productsCancelSelect.selectedRows</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -455,11 +471,14 @@
     <recordCreates>
         <name>Create_cancel_reg_recs</name>
         <label>Create cancel reg recs</label>
-        <locationX>182</locationX>
-        <locationY>1898</locationY>
+        <locationX>314</locationX>
+        <locationY>1946</locationY>
         <connector>
             <targetReference>Done</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputReference>recommendationsToCreate</inputReference>
     </recordCreates>
     <recordCreates>
@@ -471,6 +490,10 @@
         <connector>
             <targetReference>Are_there_any_to_cancel</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Advice__c</field>
             <value>
@@ -584,12 +607,16 @@
     <recordCreates>
         <name>Create_recommendationRec</name>
         <label>Create recommendation</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1106</locationY>
         <assignRecordIdToReference>recId</assignRecordIdToReference>
         <connector>
             <targetReference>Are_there_any_to_cancel</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>Advice__c</field>
             <value>
@@ -703,12 +730,16 @@
     <recordLookups>
         <name>Get_advice</name>
         <label>Get advice</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_employment</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -724,12 +755,16 @@
     <recordLookups>
         <name>Get_employment</name>
         <label>Get employment</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>242</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_open_product_recommendations</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Household__c</field>
@@ -745,12 +780,16 @@
     <recordLookups>
         <name>Get_open_product_recommendations</name>
         <label>Get open product recommendations</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_possible_pre_req_actions</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>1 AND (2  OR 5) AND 3 AND 4</filterLogic>
         <filters>
             <field>RecommendationTypeName__c</field>
@@ -794,12 +833,16 @@
     <recordLookups>
         <name>Get_open_products</name>
         <label>Get open products</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>566</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_OW_products</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Household__c</field>
@@ -822,12 +865,16 @@
     <recordLookups>
         <name>Get_possible_pre_req_actions</name>
         <label>Get possible pre-req actions</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_open_products</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>RecommendationTypeName__c</field>
@@ -850,12 +897,16 @@
     <recordLookups>
         <name>Get_recommendation_typeCancel</name>
         <label>Get recommendation type for cancelling</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Collect_details</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Assign_error_message</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>DeveloperName__c</field>
@@ -871,7 +922,7 @@
     <screens>
         <name>Collect_details</name>
         <label>Collect details</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>890</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1424,8 +1475,8 @@
     <screens>
         <name>Done</name>
         <label>Done</label>
-        <locationX>182</locationX>
-        <locationY>2006</locationY>
+        <locationX>314</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1469,13 +1520,56 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_advice</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Error_handle_sub_flow</name>
+        <label>Error handle sub flow</label>
+        <locationX>1106</locationX>
+        <locationY>2162</locationY>
+        <flowName>ErrorHandleScreen</flowName>
+        <inputAssignments>
+            <name>closeFlowAfterToast</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>errorMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>showToast</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMessage</name>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastMode</name>
+            <value>
+                <stringValue>error</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>toastTitle</name>
+            <value>
+                <stringValue>Error</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>currentItem_Get_OW_products_0</name>
         <dataType>SObject</dataType>
@@ -1483,6 +1577,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>FinServ__FinancialAccount__c</objectType>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>recId</name>
