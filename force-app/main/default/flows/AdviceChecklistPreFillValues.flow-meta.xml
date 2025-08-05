@@ -576,6 +576,13 @@
                 <elementReference>Loop_throughClients</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdviceChecklist.Client1Mpaa__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>mpaaText</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Loop_throughClients</targetReference>
@@ -647,6 +654,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Loop_throughClients</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdviceChecklist.Client2Mpaa__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>mpaaText</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1539,6 +1553,15 @@ TEXT(IF(ISPICKVAL({!Liabilities.RepaymentFrequency__c}, &#39;Monthly&#39;),{!Lia
         <name>liabilityName</name>
         <dataType>String</dataType>
         <expression>{!Liabilities.Asset__r.Name} + &quot; &quot; + IF(ISBLANK({!Liabilities.CustomProviderName__c}),{!Liabilities.PublicProviderList__r.Name},{!Liabilities.CustomProviderName__c}) + &quot; &quot; + {!Liabilities.LiabilityType__r.Name}</expression>
+    </formulas>
+    <formulas>
+        <name>mpaaText</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISPICKVAL({!Loop_throughClients.MoneyPurchaseAnnualAllowanceStatus__pc},&quot;TRIGGERED&quot;),
+TEXT({!Loop_throughClients.MoneyPurchaseAnnualAllowanceStatus__pc}) + &quot;: &quot; + {!Loop_throughClients.MoneyPurchaseAnnualAllowanceTriggerNotes__pc},
+IF(
+ISPICKVAL({!Loop_throughClients.MoneyPurchaseAnnualAllowanceStatus__pc},&quot;&quot;), &quot;MPAA status unknown. Please review and update both here and on the person account.&quot;, &quot;Not triggered&quot;))</expression>
     </formulas>
     <formulas>
         <name>recommendedReserveText</name>
