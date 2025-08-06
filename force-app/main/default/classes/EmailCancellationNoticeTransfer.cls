@@ -28,9 +28,9 @@ public with sharing class EmailCancellationNoticeTransfer {
     public static String residualCashDisplay {
         get{
             if (fulfilment.ResidualCash__c == RESIDUAL_CASH_NONE) {
-                return 'none';
-            } else if (fulfilment.ResidualCash__c == RESIDUAL_CASH_AWAITING || fulfilment.ResidualCash__c == RESIDUAL_CASH_RECEIVED) {
                 return '';
+            } else if (fulfilment.ResidualCash__c == RESIDUAL_CASH_AWAITING || fulfilment.ResidualCash__c == RESIDUAL_CASH_RECEIVED) {
+                return 'There is residual cash remaining with the ceding provider, which we expect will transfer in the future. We will update your portal once this is received.';
             } else {
                 throw new EmailCancellationNoticeTransferException('Unknown residual cash status'); 
             }
@@ -41,9 +41,9 @@ public with sharing class EmailCancellationNoticeTransfer {
     public static String partialTransfer{
         get{
             if (fulfilment.recommendation__r.TransferType__c == 'Partial') {
-                return '';
+                return 'partial';
             } else if (fulfilment.recommendation__r.TransferType__c == 'Full') {
-                return 'none';
+                return '';
             } else {
                 throw new EmailCancellationNoticeTransferException('Unknown transfer type'); 
             }
@@ -53,9 +53,9 @@ public with sharing class EmailCancellationNoticeTransfer {
     // Returns your or child's name dependent on whether this is a SIPP or JSIPP
     public static String sourceOwnership{
         get{
-            if( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'FP_SIPP' ) {
+            if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
                 return 'your';
-            } else if( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'Junior_SIPP' ){
+            } else if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'JSIPP_HUBWISE' ){
                 return fulfilment.Recommendation__r.PrimaryOwner__r.AddressedName__pc + '\'s';
             } else {
                 throw new EmailCancellationNoticeTransferException('Unknown value for product developer name'); 
@@ -78,9 +78,9 @@ public with sharing class EmailCancellationNoticeTransfer {
     // Returns "your" or "their" dependent on whether this is a SIPP or JSIPP
     public static String destinationOwnership{
         get{
-            if( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'FP_SIPP' ) {
+            if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
                 return 'your';
-            } else if ( fulfilment.Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName == 'Junior_SIPP'){
+            } else if ( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'JSIPP_HUBWISE'){
                 return 'their';
             } else {
                 throw new EmailCancellationNoticeTransferException('Unknown value for product developer name'); 
