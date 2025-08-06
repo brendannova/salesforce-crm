@@ -16,6 +16,7 @@ public class FulfilmentTriggerHelperTest {
             Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
             
             testFulfil.Status__c = 'Investment checks';
+            testFulfil.ResidualCash__c = 'AWAITING';
             update testFulfil;
             Test.startTest();
             testFulfil.Status__c = 'Complete';
@@ -33,7 +34,6 @@ public class FulfilmentTriggerHelperTest {
         if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
             System.debug('runTestTransferComplete');
             Id householdId = createData();
-            List<Fulfilment__c> fulfilments = [SELECT Id, SearchName__c, Recommendation__r.Product__r.DeveloperName__c, Recommendation__r.RecommendationType__r.DeveloperName__c FROM Fulfilment__c WHERE Advice__r.Advice_Household__c =: householdId ];
             
             Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
     
@@ -51,8 +51,31 @@ public class FulfilmentTriggerHelperTest {
             Test.stopTest();
         }
     }
-
+    
+    @isTest
+    static void runTestJuniorTransferComplete() {
+        if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
+            System.debug('runTestTransferComplete');
+            Id householdId = createData();
+            
+            Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'JSIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
+    
+            testFulfil.PaymentStatus__c = 'Submitted';
+            testFulfil.Status__c = 'Chase transfer';
+            update testFulfil;
+            Test.startTest();
+            testFulfil.PaymentStatus__c = 'Funds received';
+            testFulfil.Status__c = 'Investment checks';
+            testFulfil.ResidualCash__c = 'AWAITING';
+            update testFulfil;
+            
+            Integer emailsSent = Limits.getEmailInvocations();
+            System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
+            Test.stopTest();
+        }
+    }
     // Method to generate test data for the scenarios
+    
     static Id createData() {
         DataFactory df = new DataFactory();
         Id household = df.createHousehold('OW001 Test',2,2,'Onboarding','Full');
@@ -126,27 +149,45 @@ public class FulfilmentTriggerHelperTest {
             
         insert source;
         
+        List<Recommendation__c> transferRecs = new List<Recommendation__c>();
+        
         Recommendation__c transferSippRec = new Recommendation__c(
         	Product__c = productType.Id,
             RecommendationType__c = transferRecType.Id,
             PrimaryOwner__c = clients[0].Id,
             Advice__c = advice.Id,
             Household__c = household,
-            TransferType__c = 'Full',
+            TransferType__c = 'Partial',
             SourceLegacy__c = source.Id,
             PreRequisiteRecommendation__c = recs[0].Id
         ); 
+        transferRecs.add(transferSippRec);
         
-        insert transferSippRec;
+        Recommendation__c transferJuniorSippRec = new Recommendation__c(
+        	Product__c = productTypeJunior.Id,
+            RecommendationType__c = transferRecType.Id,
+            PrimaryOwner__c = children[0].Id,
+            Advice__c = advice.Id,
+            Household__c = household,
+            TransferType__c = 'Full',
+            SourceLegacy__c = source.Id,
+            PreRequisiteRecommendation__c = recs[1].Id
+        );
+        
+        transferRecs.add(transferJuniorSippRec);
+        insert transferRecs;
                 
         for( Recommendation__c rec : recs ) {
             rec.Status__c = 'Accepted';
         }
         
         update recs;
+
+        for( Recommendation__c rec : transferRecs ) {
+            rec.Status__c = 'Accepted';
+        }
         
-        transferSippRec.Status__c = 'Accepted';
-        update transferSippRec;
+        update transferRecs;
         
         return household;
     }
