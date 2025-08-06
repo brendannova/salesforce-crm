@@ -28,9 +28,9 @@ public with sharing class EmailCancellationNoticeTransfer {
     public static String residualCashDisplay {
         get{
             if (fulfilment.ResidualCash__c == RESIDUAL_CASH_NONE) {
-                return 'none';
-            } else if (fulfilment.ResidualCash__c == RESIDUAL_CASH_AWAITING || fulfilment.ResidualCash__c == RESIDUAL_CASH_RECEIVED) {
                 return '';
+            } else if (fulfilment.ResidualCash__c == RESIDUAL_CASH_AWAITING || fulfilment.ResidualCash__c == RESIDUAL_CASH_RECEIVED) {
+                return 'There is residual cash remaining with the ceding provider, which we expect will transfer in the future. We will update your portal once this is received.';
             } else {
                 throw new EmailCancellationNoticeTransferException('Unknown residual cash status'); 
             }
@@ -41,9 +41,9 @@ public with sharing class EmailCancellationNoticeTransfer {
     public static String partialTransfer{
         get{
             if (fulfilment.recommendation__r.TransferType__c == 'Partial') {
-                return '';
+                return 'partial';
             } else if (fulfilment.recommendation__r.TransferType__c == 'Full') {
-                return 'none';
+                return '';
             } else {
                 throw new EmailCancellationNoticeTransferException('Unknown transfer type'); 
             }
