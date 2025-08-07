@@ -15,6 +15,9 @@ public with sharing class LwcHelperDynamicRecordList {
             } 
             when 'CUSTOMER_FACTS'{
                 dataWrapper = LwcHelperCustomerFactsList.getCustomerFactData(contextId);
+            when 'LwcHelperFinProdRelatedRingfences' {
+                dataWrapper = LwcHelperFinProdRelatedRingfences.getRingfences(contextId);
+            }
             }
             when else{
                 dataWrapper.errorMessage = 'No logic reference matched';
