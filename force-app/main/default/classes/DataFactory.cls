@@ -31,10 +31,6 @@ public with sharing class DataFactory {
         }
         set;
     }
-
-    public Public_Provider_Names__c NOVA_PROVIDER {
-        get{
-            if(NOVA_PROVIDER == null) {
 public Public_Provider_Names__c NOVA_PROVIDER {
     get{
         if(NOVA_PROVIDER == null) {
@@ -59,9 +55,7 @@ public Public_Provider_Names__c NOVA_PROVIDER {
                 );
                 insert NOVA_PROVIDER;
             }
-            return NOVA_PROVIDER;
         }
-        set;
         return NOVA_PROVIDER;
     }
     set;
