@@ -93,6 +93,18 @@ public with sharing class LwcHelperAccountStatusFlags {
                  AdviceChecklist__c checklist = [SELECT Id, Household__c FROM AdviceChecklist__c WHERE Id = :recordId];
                  flags.householdId = checklist.Household__c;
             }
+            when 'Transaction__c'{
+                Transaction__c transactionRecord = [SELECT Id, FinancialProduct__r.Household__c FROM Transaction__c WHERE Id = :recordId];
+                flags.householdId = transactionRecord.FinancialProduct__r.Household__c;
+            }
+            when 'Expectation__c'{
+                 Expectation__c expectation = [SELECT Id, FinancialProduct__r.Household__c FROM Expectation__c WHERE Id = :recordId];
+                 flags.householdId = expectation.FinancialProduct__r.Household__c;
+            }
+            when 'RegularTransaction__c'{
+                 RegularTransaction__c regularTransaction = [SELECT Id, FinancialProduct__r.Household__c FROM RegularTransaction__c WHERE Id = :recordId];
+                 flags.householdId = regularTransaction.FinancialProduct__r.Household__c;
+            }
             
         }
 
