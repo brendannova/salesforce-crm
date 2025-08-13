@@ -36,8 +36,8 @@ public with sharing class DataFactory {
         get{
             if(NOVA_PROVIDER == null) {
                 NOVA_PROVIDER = new Public_Provider_Names__c(
-                    Name = 'Nova',
-                    ReferenceName__c = 'Nova',
+                    Name = 'Nova Constant',
+                    ReferenceName__c = 'Nova Constant',
                     OW_own_company__c = true
                 );
                 insert NOVA_PROVIDER;
