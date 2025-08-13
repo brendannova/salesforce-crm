@@ -19,8 +19,7 @@ public class TransactionBatchProcessNewTest {
         }
         
         // Create a household with 1 client using DataFactoryAccountHousehold to ensure proper relationships
-        DataFactoryAccountHousehold dfah = new DataFactoryAccountHousehold();
-        Account household = dfah.createHousehold('Test', 1, 0, 'Active', 'Full');
+        Account household = DataFactoryAccountHousehold.createHousehold('Test', 1, 0, 'Active', 'Full');
         Id householdId = household.Id;
         
         // Create advice with 1 product per person - this will create the financial products properly
