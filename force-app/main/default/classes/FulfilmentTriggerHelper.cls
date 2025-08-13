@@ -1,6 +1,4 @@
 public class FulfilmentTriggerHelper {
-    // Class to collect the fulfilment details from those in the trigger, construct email requests and pass them to the email send class for sending
-    public void sendNotices(Map<Id, SObject> fulfilmentsNewMap, Map<Id, SObject> fulfilmentsOldMap) {
 
     public static final String EXPECTATION_TRIGGER_STATUS = 'Submit fulfilment';
 
@@ -58,40 +56,10 @@ public class FulfilmentTriggerHelper {
     public Map<Id, Fulfilment__c> getFulfilmentsChangedToSubmitStatus(Map<Id, Fulfilment__c> oldFulfilmentMap, Map<Id, Fulfilment__c> newFulfilmentMap) {
         Map<Id, Fulfilment__c> fulfilmentsSubmitted = new Map<Id, Fulfilment__c>();
         
-        List<Fulfilment__c> fulfilments = [
-            SELECT
-                Id, 
-                Household__c,
-                Recommendation__c,
-                Recommendation__r.Household__c,
-                Recommendation__r.PrimaryOwner__r.PersonContactId, 
-                Recommendation__r.Product__r.Name,
-                Recommendation__r.RegisteredContact__c,
-                Recommendation__r.RegisteredContact__r.PersonContactId,
-                Recommendation__r.PrimaryOwner__r.AddressedName__pc,
-                Recommendation__r.RegisteredContact__r.AddressedName__pc,
-                Recommendation__r.Product__r.DeveloperName__c,
-                Recommendation__r.RecommendationType__r.DeveloperName__c,
-                Recommendation__r.TransferType__c,
-                Recommendation__r.SourceLegacy__r.Public_Provider_Name__r.Name,
-                Recommendation__r.DestinationLegacy__r.Public_Provider_Name__r.Name,
-                Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName,
-                ResidualCash__c,
-                Status__c,
-                CancellationNoticeSent__c
-            FROM
-                Fulfilment__c
-            WHERE
-                ((Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Recommendation__r.Product__r.DeveloperName__c IN ('SIPP_HUBWISE', 'JSIPP_HUBWISE') AND Status__c = 'Complete' ) OR 
-                (Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Recommendation__r.DestinationLegacy__r.RecordType.DeveloperName IN ('Junior_SIPP', 'FP_SIPP') AND PaymentStatus__c = 'Funds received'))
-                AND Id IN :fulfilmentsNewMap.keySet()
-            	AND CancellationNoticeSent__c = false
-            ];
         if (newFulfilmentMap == null || newFulfilmentMap.isEmpty()) {
             return fulfilmentsSubmitted;
         }
         
-        List<Fulfilment__c> fulfilmentsRequiringNotice = new List<Fulfilment__c>();
         for(Id fulfilmentId : newFulfilmentMap.keySet()) {
             Fulfilment__c newFulfilment = newFulfilmentMap.get(fulfilmentId);
             if (newFulfilment == null) continue;
@@ -130,11 +98,6 @@ public class FulfilmentTriggerHelper {
             return new Map<Id, Recommendation__c>();
         }
         
-        for( Fulfilment__c fulfilment : fulfilments ) {
-            Fulfilment__c fulfilmentOld = (Fulfilment__c) fulfilmentsOldMap.get(fulfilment.Id);
-            if( fulfilmentOld.CancellationNoticeSent__c == false && ((fulfilmentOld.Status__c == 'Chase transfer' && fulfilment.Status__c == 'Investment checks'&& fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'EXTERNAL_TRANSFER_IN')||(fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'OPEN_PRODUCT'))) {
-                fulfilmentsRequiringNotice.add(fulfilment);
-            } 
         Set<Id> recommendationIds = new Set<Id>();
         for(Fulfilment__c fulfilment : fulfilmentsSubmitted.values()) {
             if (fulfilment != null && fulfilment.Recommendation__c != null) {
@@ -160,29 +123,18 @@ public class FulfilmentTriggerHelper {
             return;
         }
         
-        if( fulfilmentsRequiringNotice.size() > 0 ) {
-            // Create a list of email requests for these fulfilments
-            List<EmailSend.EmailSendRequestAutomatic> emailRequests = new List<EmailSend.EmailSendRequestAutomatic>();
         List<ExpectationRequest> requests = new List<ExpectationRequest>();
         Map<String, ExpectationConfiguration__mdt> configs = getNonRegularConfigs();
 
         for(Fulfilment__c fulfilment : fulfilmentsSubmitted.values()) {
             if (fulfilment == null || fulfilment.Recommendation__c == null) continue;
             
-            for (Fulfilment__c fulfilment : fulfilmentsRequiringNotice) {
-                emailRequests.add(constructEmailRequest(fulfilment));
-                fulfilment.CancellationNoticeSent__c = true;
-            }  
             Recommendation__c recommendation = recommendationMap.get(fulfilment.Recommendation__c);
             if (recommendation == null) continue; // Skip if no matching recommendation
 
             String recTypeDevName = recommendation.RecommendationType__r?.DeveloperName__c;
             if(String.isBlank(recTypeDevName) || !configs.containsKey(recTypeDevName)) continue;
             
-            // Send the emails
-            EmailSend emailSender = new EmailSend();
-            emailSender.sendAutomaticTemplatedEmailCustomSubject(emailRequests);
-            update fulfilmentsRequiringNotice;
             if(recommendation.DestinationLegacy__r?.OW_own_product__c == true || recommendation.SourceLegacy__r?.OW_own_product__c == true){
                 ExpectationConfiguration__mdt expectationConfig = configs.get(recTypeDevName);
                 
@@ -226,21 +178,6 @@ public class FulfilmentTriggerHelper {
             return;
         }
         
-    }
-    
-    // Method to take a piece of fulfilment and create an email request of the correct type with the correct parameters
-    public static EmailSend.EmailSendRequestAutomatic constructEmailRequest(Fulfilment__c fulfilment) {
-        EmailSend.EmailSendRequestAutomatic emailRequest = new EmailSend.EmailSendRequestAutomatic();
-        emailRequest.householdId = fulfilment.Recommendation__r.Household__c;
-        emailRequest.whatId = fulfilment.Id;
-        emailRequest.saveAsActivity = true;
-        if( fulfilment.Recommendation__r.RecommendationType__r.DeveloperName__c == 'EXTERNAL_TRANSFER_IN') {
-			emailRequest.emailTemplateDeveloperName = 'CancellationNoticeTransfer';            
-            emailRequest.parameters = EmailCancellationNoticeTransfer.getParameters(fulfilment);
-        } else {
-            emailRequest.emailTemplateDeveloperName = 'CancellationNoticeNewProduct'; 
-            emailRequest.parameters = EmailCancellationNoticeNewProduct.getParameters(fulfilment);
-            emailRequest.subject = EmailCancellationNoticeNewProduct.getSubject(fulfilment);
         List<RegularTransactionRequest> requests = new List<RegularTransactionRequest>();
         Map<String, ExpectationConfiguration__mdt> configs = getRegularConfigs();
 
@@ -314,16 +251,5 @@ public class FulfilmentTriggerHelper {
         if(!requests.isEmpty()){
             RegularTransactionHelper.generateRegularTransactions(requests);
         }
-        emailRequest.targetObjectId = getContactId(fulfilment);
-        return emailRequest; 
     }
-    
-    // Get correct contact for this email
-    public static String getContactId(Fulfilment__c fulfilment) {
-        if( fulfilment.Recommendation__r.Product__r.DeveloperName__c == 'SIPP_HUBWISE' ) {
-            return fulfilment.Recommendation__r.PrimaryOwner__r.PersonContactId;
-        } else {
-            return fulfilment.Recommendation__r.RegisteredContact__r.PersonContactId;
-        }
-    }  
 }

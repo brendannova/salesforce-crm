@@ -4,11 +4,14 @@ global class DataFactoryTest {
     @TestSetup
     static void testDataSetup() {
         // Set up reference data
+        /*
         List<sObject> ls = Test.loadData(Public_Provider_Names__c.sObjectType, 'ProviderRef');
         List<sObject> ls3 = Test.loadData(RecommendationType__c.sObjectType, 'RecRef');
         List<sObject> ls4 = Test.loadData(ProductType__c.sObjectType, 'ProductTypeRef');
         List<sObject> ls2 = Test.loadData(Product__c.sObjectType, 'ProductRef');
         List<sObject> ls5 = Test.loadData(FulfilmentType__c.sObjectType, 'FTRef');
+        */
+        DataFactoryConfigurationData.load();
     }
 
     @istest
