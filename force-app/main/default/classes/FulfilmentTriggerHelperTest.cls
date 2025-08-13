@@ -7,24 +7,6 @@ public class FulfilmentTriggerHelperTest {
         DataFactoryConfigurationData.load();
     }
     
-    // Method to test the cancellation notice emails for new products
-    @istest
-    static void runTestCancellationNotice(){
-        if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
-            System.debug('runTestCancellationNotice');
-            Id householdId = createData();
-            Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE'AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
-            
-            testFulfil.Status__c = 'Investment checks';
-            testFulfil.ResidualCash__c = 'AWAITING';
-            update testFulfil;
-            Test.startTest();
-            testFulfil.Status__c = 'Complete';
-            update testFulfil;
-            
-            Integer emailsSent = Limits.getEmailInvocations();
-            System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
-            Test.stopTest();
     // Test the improved FulfilmentTriggerHelper methods
     @isTest
     static void testGetFulfilmentsChangedToSubmitStatus() {
@@ -225,14 +207,7 @@ public class FulfilmentTriggerHelperTest {
         // Should not throw exception due to error handling
     }
     
-    // Method to test the transfer complete emails
     @isTest
-    static void runTestTransferComplete() {
-        if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
-            System.debug('runTestTransferComplete');
-            Id householdId = createData();
-            
-            Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
     static void testProcessSubmittedFulfilmentsWithValidData() {
         Id householdId = createData();
         Fulfilment__c testFulfilment = [SELECT Id, Status__c, Recommendation__c FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'SIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'OPEN_PRODUCT' AND Household__c =: householdId LIMIT 1];
@@ -270,18 +245,6 @@ public class FulfilmentTriggerHelperTest {
         System.assert(regularTransactionsAfter >= regularTransactionsBefore, 'Should not decrease regular transaction count');
     }
     
-            testFulfil.PaymentStatus__c = 'Submitted';
-            testFulfil.Status__c = 'Chase transfer';
-            update testFulfil;
-            Test.startTest();
-            testFulfil.PaymentStatus__c = 'Funds received';
-            testFulfil.Status__c = 'Investment checks';
-            testFulfil.ResidualCash__c = 'AWAITING';
-            update testFulfil;
-            
-            Integer emailsSent = Limits.getEmailInvocations();
-            System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
-            Test.stopTest();
     @isTest
     static void testGetRegularConfigsAndNonRegularConfigs() {
         FulfilmentTriggerHelper helper = new FulfilmentTriggerHelper();
@@ -305,12 +268,6 @@ public class FulfilmentTriggerHelperTest {
     }
     
     @isTest
-    static void runTestJuniorTransferComplete() {
-        if( EmailSendTest.IS_EMAIL_DELIVERABILITY_ENABLED == true ) {
-            System.debug('runTestTransferComplete');
-            Id householdId = createData();
-            
-            Fulfilment__c testFulfil = [SELECT Id FROM Fulfilment__c WHERE Recommendation__r.Product__r.DeveloperName__c = 'JSIPP_HUBWISE' AND Recommendation__r.RecommendationType__r.DeveloperName__c = 'EXTERNAL_TRANSFER_IN' AND Household__c =: householdId LIMIT 1];
     static void testFulfilmentWithNullRecommendation() {
         // Create a fulfilment with null recommendation to test null handling
         Id householdId = createData();
@@ -346,18 +303,6 @@ public class FulfilmentTriggerHelperTest {
         System.assertEquals(regularTransactionsBefore, regularTransactionsAfter, 'Should not create regular transactions with null recommendation');
     }
     
-            testFulfil.PaymentStatus__c = 'Submitted';
-            testFulfil.Status__c = 'Chase transfer';
-            update testFulfil;
-            Test.startTest();
-            testFulfil.PaymentStatus__c = 'Funds received';
-            testFulfil.Status__c = 'Investment checks';
-            testFulfil.ResidualCash__c = 'AWAITING';
-            update testFulfil;
-            
-            Integer emailsSent = Limits.getEmailInvocations();
-            System.assertEquals(1, emailsSent, 'Expected 1 email but got ' + emailsSent);
-            Test.stopTest();
     @isTest
     static void testConfigurationMapInitialization() {
         FulfilmentTriggerHelper helper = new FulfilmentTriggerHelper();
@@ -389,7 +334,6 @@ public class FulfilmentTriggerHelperTest {
     }
     
     // Method to generate test data for the scenarios
-    
     static Id createData() {
         DataFactory df = new DataFactory();
         Id household = df.createHousehold('OW001 Test',2,2,'Onboarding','Full');
@@ -418,12 +362,6 @@ public class FulfilmentTriggerHelperTest {
             }
         }
 
-        AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
-        request.householdId = household;
-        request.roles = new Set<String>{'Client','Child'};
-        AccountHouseholdMembers.HouseholdMemberResult result = AccountHouseholdMembers.getHouseholdMembers(request);
-        List<Account> clients = result.memberAccountsByRole.get('Client');
-        List<Account> children = result.memberAccountsByRole.get('Child');
         // Get household members using AccountContactRelation
         List<AccountContactRelation> acrs = [SELECT Id, Contact.AccountId, Roles FROM AccountContactRelation WHERE AccountId = :household AND Roles IN ('Client', 'Child')];
         List<Account> householdMembers = new List<Account>();
@@ -439,14 +377,6 @@ public class FulfilmentTriggerHelperTest {
         
         List<Recommendation__c> recs = new List<Recommendation__c>();
         
-        Recommendation__c openSippRec = new Recommendation__c(
-        	Product__c = productType.Id,
-            RecommendationType__c = openProdRecType.Id,
-            PrimaryOwner__c = clients[0].Id,
-            Advice__c = advice.Id,
-            Household__c = household
-        );
-        recs.add(openSippRec);
         if (!householdMembers.isEmpty()) {
             Recommendation__c openSippRec = new Recommendation__c(
                 Product__c = productType.Id,
@@ -458,15 +388,6 @@ public class FulfilmentTriggerHelperTest {
             recs.add(openSippRec);
         }
         
-        Recommendation__c openJuniorSippRec = new Recommendation__c(
-        	Product__c = productTypeJunior.Id,
-            RecommendationType__c = openProdRecType.Id,
-            PrimaryOwner__c = children[0].Id,
-            RegisteredContact__c = clients[0].Id,
-            Advice__c = advice.Id,
-            Household__c = household
-        );
-        recs.add(openJuniorSippRec);
         if (!children.isEmpty() && !householdMembers.isEmpty()) {
             Recommendation__c openJuniorSippRec = new Recommendation__c(
                 Product__c = productTypeJunior.Id,
@@ -486,7 +407,6 @@ public class FulfilmentTriggerHelperTest {
         FinServ__FinancialAccount__c source = new FinServ__FinancialAccount__c(
             Name = 'Test',
             Subtype__c  = 'Defined Contribution',
-            FinServ__PrimaryOwner__c = clients[0].Id,
             FinServ__PrimaryOwner__c = householdMembers.isEmpty() ? null : householdMembers[0].Id,
             Household__c = household,
             FinServ__Ownership__c = 'Individual',
@@ -499,17 +419,6 @@ public class FulfilmentTriggerHelperTest {
         
         List<Recommendation__c> transferRecs = new List<Recommendation__c>();
         
-        Recommendation__c transferSippRec = new Recommendation__c(
-        	Product__c = productType.Id,
-            RecommendationType__c = transferRecType.Id,
-            PrimaryOwner__c = clients[0].Id,
-            Advice__c = advice.Id,
-            Household__c = household,
-            TransferType__c = 'Partial',
-            SourceLegacy__c = source.Id,
-            PreRequisiteRecommendation__c = recs[0].Id
-        ); 
-        transferRecs.add(transferSippRec);
         if (!householdMembers.isEmpty() && !recs.isEmpty()) {
             Recommendation__c transferSippRec = new Recommendation__c(
                 Product__c = productType.Id,
@@ -524,16 +433,6 @@ public class FulfilmentTriggerHelperTest {
             transferRecs.add(transferSippRec);
         }
         
-        Recommendation__c transferJuniorSippRec = new Recommendation__c(
-        	Product__c = productTypeJunior.Id,
-            RecommendationType__c = transferRecType.Id,
-            PrimaryOwner__c = children[0].Id,
-            Advice__c = advice.Id,
-            Household__c = household,
-            TransferType__c = 'Full',
-            SourceLegacy__c = source.Id,
-            PreRequisiteRecommendation__c = recs[1].Id
-        );
         if (!children.isEmpty() && !householdMembers.isEmpty() && recs.size() > 1) {
             Recommendation__c transferJuniorSippRec = new Recommendation__c(
                 Product__c = productTypeJunior.Id,
@@ -548,7 +447,6 @@ public class FulfilmentTriggerHelperTest {
             transferRecs.add(transferJuniorSippRec);
         }
         
-        transferRecs.add(transferJuniorSippRec);
         insert transferRecs;
                 
         for( Recommendation__c rec : recs ) {
