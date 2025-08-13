@@ -35,6 +35,23 @@ public with sharing class DataFactory {
     public Public_Provider_Names__c NOVA_PROVIDER {
         get{
             if(NOVA_PROVIDER == null) {
+public Public_Provider_Names__c NOVA_PROVIDER {
+    get{
+        if(NOVA_PROVIDER == null) {
+            // First check if any Public_Provider_Names__c records with OW_own_company__c = true already exist
+            List<Public_Provider_Names__c> existingProviders = [
+                SELECT Id, Name, ReferenceName__c, OW_own_company__c 
+                FROM Public_Provider_Names__c 
+                WHERE OW_own_company__c = true 
+                LIMIT 1
+            ];
+            
+            // If an existing provider is found, use it
+            if(!existingProviders.isEmpty()) {
+                NOVA_PROVIDER = existingProviders[0];
+            } 
+            // Otherwise create a new one
+            else {
                 NOVA_PROVIDER = new Public_Provider_Names__c(
                     Name = 'Nova Constant',
                     ReferenceName__c = 'Nova Constant',
@@ -45,7 +62,11 @@ public with sharing class DataFactory {
             return NOVA_PROVIDER;
         }
         set;
+        return NOVA_PROVIDER;
     }
+    set;
+}
+
 
 
     public void createConfigurationData(){
