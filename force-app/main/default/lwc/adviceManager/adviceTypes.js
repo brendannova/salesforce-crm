@@ -41,18 +41,13 @@ export default function getAdviceTypes() {
       title: "Click to display Regular amendment advice",
       columns: columnsSimplified,
     },
-    {
-      label: "Household",
-      value: "HOUSEHOLD",
-      title: "Click to display Household advice",
-      columns: columnsSimplified,
-    },
   ];
 }
 
 // The columns to be displayed in the table for onboarding advice.
 const columnsNew = [
   { label: "Stage", fieldName: "Stage" },
+  { label: "Household", fieldName: "HouseholdName" },
   {
     label: "Name",
     fieldName: "RecordLink",
@@ -77,6 +72,7 @@ const columnsNew = [
 // The columns to be displayed in the table for existing customer advice.
 const columnsExisting = [
   { label: "Stage", fieldName: "Stage" },
+  { label: "Household", fieldName: "HouseholdName" },
   {
     label: "Name",
     fieldName: "RecordLink",
@@ -107,6 +103,7 @@ const columnsExisting = [
 // A simplified set of columns for streamlined advice.
 const columnsSimplified = [
   { label: "Stage", fieldName: "Stage" },
+  { label: "Household", fieldName: "HouseholdName" },
   {
     label: "Name",
     fieldName: "RecordLink",
