@@ -1,58 +1,63 @@
-Category__c,DefaultProvider__c,DescriptionCustomer__c,DescriptionInternal__c,DeveloperName__c,HasAFixedTerm__c,HasAnInterestRate__c,HasAnIssueNumber__c,HasANoticePeriod__c,Id,IsTaxable__c,MaximumAge__c,MinimumAge__c,Name,PortalName__c,RecordTypeIdFinServ__c,ShortName__c,SortOrder__c,Status__c
-Cash,,,"Designed for everyday transactions. It provides a secure place to deposit money, and account holders can easily access and manage their funds for various financial transactions",CURRENT_ACCOUNT,Never,Optional,Never,Never,CURRENT_ACCOUNT,Taxable,999,0,Current Account,,,,100,Active
-Cash,,,A bank account designed to help individuals save and earn interest on their money,SAVINGS_ACCOUNT,Ask if we need it,Optional,Never,Ask if we need it,SAVINGS_ACCOUNT,Taxable,999,0,Savings Account,,,,200,Active
-Cash,,,A type of mortgage arrangement that integrates a mortgage loan with a savings or current account resulting in reduced interest payments and a shorter repayment period,OFFSET_MORTGAGE_CASH_ACCOUNT,Ask if we need it,Optional,Never,Ask if we need it,OFFSET_MORTGAGE_CASH_ACCOUNT,Non-taxable,999,18,Offset Mortgage Cash Account,,,,300,Active
-Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,"A savings product offered by National Savings and Investments (NS&I), which is a UK government-backed savings institution. Premium Bonds differ from traditional savings accounts in that they do not pay regular interest. Instead, the interest is replaced by a monthly prize draw where bondholders have the chance to win tax-free cash prizes",PREMIUM_BOND_NS_I,Never,Never,Optional,Never,PREMIUM_BOND_NS_I,Non-taxable,999,0,NS&I Premium Bond,,,,800,Active
-Cash,,,Monthly income with no notice,INCOME_BOND,Never,Mandatory,Optional,Never,INCOME_BOND,Taxable,999,18,Income Bond,,,,600,Active
-Cash,,,"1 year fixed rate, will pay out interest after the year",GUARANTEED_GROWTH_BOND,Mandatory,Mandatory,Optional,Never,GUARANTEED_GROWTH_BOND,Taxable,999,18,Guaranteed Growth Bond,,,,400,Active
-Cash,,,"1 year fixed rate, will pay out interest after the year. Pays monthly income",GUARANTEED_INCOME_BOND,Mandatory,Mandatory,Optional,Never,GUARANTEED_INCOME_BOND,Taxable,999,18,Guaranteed Income Bond,,,,500,Active
-Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,"Money for green project, annual fixed interest rate over 3 year term. Interest will always be 3 years",NS_I_GREEN_SAVINGS_BOND,Mandatory,Mandatory,Optional,Never,NS_I_GREEN_SAVINGS_BOND,Taxable,999,18,NS&I Green Savings Bond,,,,700,Active
-Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,available for 2 or 5 year period at a fixed rate - no longer available to take out but people who hold can reinvest,NS_I_SAVINGS_CERTIFICATE_FIXED_RATE,Ask if we need it,Mandatory,Optional,Never,NS_I_SAVINGS_CERTIFICATE_FIXED_RATE,Non-taxable,999,18,NS&I Savings Certificate (Fixed Rate),,,,900,Active
-Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,3-5 years linked to inflation -  no longer available to take out but people who hold can reinvest,NS_I_SAVINGS_CERTIFICATE_INDEX_LINKED,Ask if we need it,Mandatory,Optional,Never,NS_I_SAVINGS_CERTIFICATE_INDEX_LINKED,Non-taxable,999,18,NS&I Savings Certificate (Index Linked),,,,1000,Active
-Investment,,,,AIM_INVESTMENT,,,,,AIM_INVESTMENT,,,,Inheritance Tax Investment Service,Inheritance Tax Investment Service,0121t0000001eO4AAI,AIM investment,2000,Active
-Investment,,,,DIRECT_EQUITY_HOLDING,,,,,DIRECT_EQUITY_HOLDING,,,,Direct Equity Holding,Direct Equity Holding,0121t0000001ePyAAI,Direct equity holding,40,Active
-Investment,,,,DIRECT_GILT_BOND_HOLDING,,,,,DIRECT_GILT_BOND_HOLDING,,,,Direct Gilt/bond holding,Direct Gilt/Bond Holding,0121t0000001eQ8AAI,Direct Gilt/bond holding,2000,Active
-Investment,,,,EIS,,,,,EIS,,,,Enterprise Investment Scheme,Enterprise Investment Scheme (EIS),0121t0000001eObAAI,EIS,71,Active
-Investment,,,,GIA,,,,,GIA,,,,General Investment Account,General Investment Account,0121t0000001ePeAAI,GIA,20,Active
-Investment,,,,BOND_OFFSHORE,,,,,BOND_OFFSHORE,,,,Offshore Bond,Offshore Bond,0121t0000001eMjAAI,Offshore Bond,74,Active
-Investment,,,,BOND_ONSHORE,,,,,BOND_ONSHORE,,,,Onshore Bond,Onshore Bond,0121t0000001eMeAAI,Onshore Bond,73,Active
-Investment,,,,PEER_PEER_INNOVATIVE_FINANCE,,,,,PEER_PEER_INNOVATIVE_FINANCE,,,,Peer-Peer / Innovative Finance,Peer-to-Peer/Innovative Finance,0121t0000001ePOAAY,Peer-Peer / Innovative finance,2000,Active
-Investment,,,,SEIS,,,,,SEIS,,,,Seed Enterprise Investment Scheme,Direct Equity Holding,0121t0000001eOgAAI,SEIS,72,Active
-Investment,,,,VCT,,,,,VCT,,,,Venture Capital Trust,Venture Capital Trust (VCT),0121t0000001eO9AAI,VCT,70,Active
-ISA,,,,ISA_CASH,,,,,ISA_CASH,,,,Cash ISA,Cash ISA,0121t0000001eN1AAI,Cash ISA,11,Active
-ISA,,,,ISA_JUNIOR,,,,,ISA_JUNIOR,,18,,Junior ISA,Junior ISA,0121t0000001l9AAAQ,Junior ISA,60,Active
-ISA,,,,ISA_STOCKS_SHARES_LIFETIME,,,,,ISA_STOCKS_SHARES_LIFETIME,,,,Lifetime ISA,Lifetime ISA,0121t0000001eNHAAY,Lifetime ISA,2000,Active
-ISA,,,,ISA_PEER_PEER_INNOVATIVE_FINANCE,,,,,ISA_PEER_PEER_INNOVATIVE_FINANCE,,,,Peer-Peer / Innovative Finance ISA,Peer-to-Peer/Innovative Finance ISA,0121t0000001eN6AAI,Peer-Peer / Innovative finance ISA,2000,Active
-ISA,,,,ISA_STOCKS_SHARES,,,,,ISA_STOCKS_SHARES,,,,Stocks & Shares ISA,Stocks & Shares ISA,0121t0000001eNHAAY,Stocks & Shares ISA,10,Active
-ISA,,,,ISA_STRUCTURED_PRODUCT,,,,,ISA_STRUCTURED_PRODUCT,,,,Structured Product ISA,Stocks & Shares ISA,0121t0000001eNRAAY,Structured Product ISA,2000,Active
-Pension,,,,PENSION_ANNUITY,,,,,PENSION_ANNUITY,,,,Annuity,Annuity,0121t0000001eSxAAI,Annuity,2000,Active
-Pension,,,,PENSION_DC_AVC,,,,,PENSION_DC_AVC,,,,Additional Voluntary Contribution,Additional Voluntary Contribution (AVC),0121t0000001eRcAAI,AVC,35,Active
-Pension,,,,PENSION_DB,,,,,PENSION_DB,,,,Defined Benefit Pension,Defined Benefit,0121t0000001eQuAAI,Defined Benefit Pension,39,Active
-Pension,,,,PENSION_DC_GPP,,,,,PENSION_DC_GPP,,,,Group Personal Pension,Defined Contribution,0121t0000001eSFAAY,Group Personal Pension,36,Active
-Pension,,,,PENSION_DC_JUNIOR_SIPP,,,,,PENSION_DC_JUNIOR_SIPP,,18,,Junior SIPP,Defined Contribution,0124J000000d1BjQAI,Junior SIPP,65,Active
-Pension,,,,PENSION_DC_OCCUPATIONAL_COMPANY,,,,,PENSION_DC_OCCUPATIONAL_COMPANY,,,,Occupational/Company Pension,Defined Contribution,0121t0000001eRRAAY,Occupational/Company Pension,31,Active
-Pension,,,,PENSION_DC_PERSONAL,,,,,PENSION_DC_PERSONAL,,,,Personal Pension,Defined Contribution,0121t0000001eRhAAI,Personal Pension (PP),33,Active
-Pension,,,,PENSION_DC_RETIREMENT_ANNUITY_CONTRACT,,,,,PENSION_DC_RETIREMENT_ANNUITY_CONTRACT,,,,Retirement Annuity Contract,Defined Contribution,0121t0000001eSaAAI,Retirement Annuity Contract,2000,Active
-Pension,,,,PENSION_DC_SSAS,,,,,PENSION_DC_SSAS,,,,Small Self Administered Scheme,Defined Contribution,0121t0000001eRmAAI,Small Self Administered Scheme,2000,Active
-Pension,,,,PENSION_DB_SCHEME,,,,,PENSION_DB_SCHEME,,,,Scheme Pension,Defined Contribution,0121t0000001eTLAAY,Scheme Pension,32,Active
-Pension,,,,PENSION_DC_SECTION_32,,,,,PENSION_DC_SECTION_32,,,,Section 32,Defined Contribution,0121t0000001eSVAAY,Section 32,2000,Active
-Pension,,,,PENSION_DC_SIPP,,,,,PENSION_DC_SIPP,,,,Self Invested Personal Pension,Defined Contribution,0121t0000001eRHAAY,Self Invested Personal Pension,34,Active
-Pension,,,,PENSION_STAKEHOLDER,,,,,PENSION_STAKEHOLDER,,,,Stakeholder Pension,Defined Contribution,0121t0000001eSKAAY,Stakeholder Pension,2000,Active
-Protection,,,,PROTECTION_ACCIDENT_SICKNESS_UNEMPLOYMENT,,,,,PROTECTION_ACCIDENT_SICKNESS_UNEMPLOYMENT,,,,"Accident, Sickness and Unemployment",Accident Sickness & Unemployment,0121t0000001eUeAAI,"Accident, Sickness & Unemployment",2000,Active
-Investment,,,,ENDOWMENT,,,,,ENDOWMENT,,,,Endowment,Endowment,0121t0000001eVCAAY,Endowment,2000,Active
-Protection,,,,PROTECTION_FAMILY_INCOME_BENEFIT,,,,,PROTECTION_FAMILY_INCOME_BENEFIT,,,,Family Income Benefit,Family Income Benefit,0124J000000cvmJQAQ,Family Income Benefit,82,Active
-Protection,,,,PROTECTION_INCOME,,,,,PROTECTION_INCOME,,,,Income Protection,Income Protection,0121t0000001eUZAAY,Income Protection,81,Active
-Protection,,,,PROTECTION_LIFE_COVER_TERM,,,,,PROTECTION_LIFE_COVER_TERM,,,,Life Cover (Term),Life Cover,0121t0000001eUvAAI,Life Cover (Term),80,Active
-Protection,,,,PROTECTION_LIFE_COVER_WHOLE_OF_LIFE,,,,,PROTECTION_LIFE_COVER_WHOLE_OF_LIFE,,,,Life Cover (Whole of Life),Life Cover,0121t0000001eVYAAY,Life Cover (Whole of Life),83,Active
-Protection,,,,PROTECTION_LIFE_COVER_CIC_TERM,,,,,PROTECTION_LIFE_COVER_CIC_TERM,,,,Life Cover & CIC (Term),Life & Critical Illness Cover,0121t0000001eU7AAI,Life Cover & CIC (Term),84,Active
-Protection,,,,PROTECTION_PRIVATE_MEDICAL,,,,,PROTECTION_PRIVATE_MEDICAL,,,,Private Medical,Private Medical,0121t0000001eWLAAY,Private Medical,2000,Active
-Protection,,,,PROTECTION_RELEVANT_LIFE_COVER,,,,,PROTECTION_RELEVANT_LIFE_COVER,,,,Relevant Life Cover,Relevant Life Cover,0121t0000001eUvAAI,Relevant Life Cover,85,Active
-Trust,,,,TRUST,,,,,TRUST,,,,Trust,Trust,0121t000000MHItAAO,Trust,2000,Active
-ISA,,,,ISA_CHILD_TRUST_FUND,,,,,ISA_CHILD_TRUST_FUND,,,,Child Trust Fund,Junior ISA / Child Trust Fund,0121t0000001l9AAAQ,Child trust fund,2000,Active
-ISA,,,,LIFETIME_ISA,,,,,LIFETIME_ISA,,,,Lifetime ISA,Lifetime ISA,0121t0000001eNHAAY,Lifetime ISA,2000,Active
-Investment,,,,STRUCTURED_PRODUCT,,,,,STRUCTURED_PRODUCT,,,,Structured Product,Stocks & Shares ISA,0121t0000001eNRAAY,Structured Product,2000,Active
-ISA,,,,ISA_HELP_TO_BUY,,,,,ISA_HELP_TO_BUY,,,,Help To Buy ISA,Cash ISA,0121t0000001eN1AAI,Help to buy ISA,2000,Active
-ISA,,,,ISA_AIM_INVESTMENT,,,,,ISA_AIM_INVESTMENT,,,,Inheritance Tax Investment Service ISA,Inheritance Tax Investment Service ISA,0121t0000001eO4AAI,AIM investment ISA,2000,Active
-Pension,,,,PENSION_DC,,,,,PENSION_DC,,,,Defined Contribution Pension,Defined Contribution,0121t0000001jQFAAY,Defined Contribution Pension,30,Active
-Protection,,,,PROTECTION_CRITICAL_ILLNESS_COVER,,,,,PROTECTION_CRITICAL_ILLNESS_COVER,,,,Critical Illness Cover,Critical Illness Cover,0121t0000001eU7AAI,Critical Illness Cover (CIC),75,Active
-Protection,,,,PROTECTION_DEATH_IN_SERVICE,,,,,PROTECTION_DEATH_IN_SERVICE,,,,Death In Service,Life Cover,0121t0000001eMeAAI,Death In Service,2000,Active
+Category__c,DefaultProvider__c,DescriptionCustomer__c,DescriptionInternal__c,DeveloperName__c,HasAFixedTerm__c,HasAnInterestRate__c,HasAnIssueNumber__c,HasANoticePeriod__c,Id,IsTaxable__c,MaximumAge__c,MinimumAge__c,Name,PortalName__c,RecordTypeIdFinServ__c,ShortName__c,SortOrder__c,Status__c,FinancialProductRecordTypeDeveloperName__c,UnknownType__c
+Cash,,,"Designed for everyday transactions. It provides a secure place to deposit money, and account holders can easily access and manage their funds for various financial transactions",CURRENT_ACCOUNT,Never,Optional,Never,Never,CURRENT_ACCOUNT,Taxable,999,0,Current Account,,,,100,Active,,0
+Cash,,,A bank account designed to help individuals save and earn interest on their money,SAVINGS_ACCOUNT,Ask if we need it,Optional,Never,Ask if we need it,SAVINGS_ACCOUNT,Taxable,999,0,Savings Account,,,,200,Active,,0
+Cash,,,A type of mortgage arrangement that integrates a mortgage loan with a savings or current account resulting in reduced interest payments and a shorter repayment period,OFFSET_MORTGAGE_CASH_ACCOUNT,Ask if we need it,Optional,Never,Ask if we need it,OFFSET_MORTGAGE_CASH_ACCOUNT,Non-taxable,999,18,Offset Mortgage Cash Account,,,,300,Active,,0
+Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,"A savings product offered by National Savings and Investments (NS&I), which is a UK government-backed savings institution. Premium Bonds differ from traditional savings accounts in that they do not pay regular interest. Instead, the interest is replaced by a monthly prize draw where bondholders have the chance to win tax-free cash prizes",PREMIUM_BOND_NS_I,Never,Never,Optional,Never,PREMIUM_BOND_NS_I,Non-taxable,999,0,NS&I Premium Bond,,,,800,Active,,0
+Cash,,,Monthly income with no notice,INCOME_BOND,Never,Mandatory,Optional,Never,INCOME_BOND,Taxable,999,18,Income Bond,,,,600,Active,,0
+Cash,,,"1 year fixed rate, will pay out interest after the year",GUARANTEED_GROWTH_BOND,Mandatory,Mandatory,Optional,Never,GUARANTEED_GROWTH_BOND,Taxable,999,18,Guaranteed Growth Bond,,,,400,Active,,0
+Cash,,,"1 year fixed rate, will pay out interest after the year. Pays monthly income",GUARANTEED_INCOME_BOND,Mandatory,Mandatory,Optional,Never,GUARANTEED_INCOME_BOND,Taxable,999,18,Guaranteed Income Bond,,,,500,Active,,0
+Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,"Money for green project, annual fixed interest rate over 3 year term. Interest will always be 3 years",NS_I_GREEN_SAVINGS_BOND,Mandatory,Mandatory,Optional,Never,NS_I_GREEN_SAVINGS_BOND,Taxable,999,18,NS&I Green Savings Bond,,,,700,Active,,0
+Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,available for 2 or 5 year period at a fixed rate - no longer available to take out but people who hold can reinvest,NS_I_SAVINGS_CERTIFICATE_FIXED_RATE,Ask if we need it,Mandatory,Optional,Never,NS_I_SAVINGS_CERTIFICATE_FIXED_RATE,Non-taxable,999,18,NS&I Savings Certificate (Fixed Rate),,,,900,Active,,0
+Cash,NATIONAL_SAVINGS__INVESTMENTS_NSI,,3-5 years linked to inflation -  no longer available to take out but people who hold can reinvest,NS_I_SAVINGS_CERTIFICATE_INDEX_LINKED,Ask if we need it,Mandatory,Optional,Never,NS_I_SAVINGS_CERTIFICATE_INDEX_LINKED,Non-taxable,999,18,NS&I Savings Certificate (Index Linked),,,,1000,Active,,0
+Investment,,,,AIM_INVESTMENT,,,,,AIM_INVESTMENT,,,,Inheritance Tax Investment Service,Inheritance Tax Investment Service,0121t0000001eO4AAI,AIM investment,2000,Active,FP_BPR,0
+Investment,,,,DIRECT_EQUITY_HOLDING,,,,,DIRECT_EQUITY_HOLDING,,,,Direct Equity Holding,Direct Equity Holding,0121t0000001ePyAAI,Direct equity holding,40,Active,FP_Direct_equity_holding,0
+Investment,,,,DIRECT_GILT_BOND_HOLDING,,,,,DIRECT_GILT_BOND_HOLDING,,,,Direct Gilt/bond holding,Direct Gilt/Bond Holding,0121t0000001eQ8AAI,Direct Gilt/bond holding,2000,Active,FP_Direct_Gilt_bond_holding,0
+Investment,,,,EIS,,,,,EIS,,,,Enterprise Investment Scheme,Enterprise Investment Scheme (EIS),0121t0000001eObAAI,EIS,71,Active,FP_EIS,0
+Investment,,,,GIA,,,,,GIA,,,,General Investment Account,General Investment Account,0121t0000001ePeAAI,GIA,20,Active,FP_General_Investment_Account_GIA,0
+Investment,,,,BOND_OFFSHORE,,,,,BOND_OFFSHORE,,,,Offshore Bond,Offshore Bond,0121t0000001eMjAAI,Offshore Bond,74,Active,FP_Offshore_Bond,0
+Investment,,,,BOND_ONSHORE,,,,,BOND_ONSHORE,,,,Onshore Bond,Onshore Bond,0121t0000001eMeAAI,Onshore Bond,73,Active,FP_Onshore_Bond,0
+Investment,,,,PEER_PEER_INNOVATIVE_FINANCE,,,,,PEER_PEER_INNOVATIVE_FINANCE,,,,Peer-Peer / Innovative Finance,Peer-to-Peer/Innovative Finance,0121t0000001ePOAAY,Peer-Peer / Innovative finance,2000,Active,FP_Peer_Peer_Innovative_finance,0
+Investment,,,,SEIS,,,,,SEIS,,,,Seed Enterprise Investment Scheme,Direct Equity Holding,0121t0000001eOgAAI,SEIS,72,Active,FP_SEIS,0
+Investment,,,,VCT,,,,,VCT,,,,Venture Capital Trust,Venture Capital Trust (VCT),0121t0000001eO9AAI,VCT,70,Active,FP_VCT,0
+ISA,,,,ISA_CASH,,,,,ISA_CASH,,,,Cash ISA,Cash ISA,0121t0000001eN1AAI,Cash ISA,11,Active,FP_Cash_ISA,0
+ISA,,,,ISA_JUNIOR,,,,,ISA_JUNIOR,,18,,Junior ISA,Junior ISA,0121t0000001l9AAAQ,Junior ISA,60,Active,Junior_ISA,0
+ISA,,,,ISA_STOCKS_SHARES_LIFETIME,,,,,ISA_STOCKS_SHARES_LIFETIME,,,,Lifetime ISA,Lifetime ISA,0121t0000001eNHAAY,Lifetime ISA,2000,Active,FP_Stocks_Shares_ISA,0
+ISA,,,,ISA_PEER_PEER_INNOVATIVE_FINANCE,,,,,ISA_PEER_PEER_INNOVATIVE_FINANCE,,,,Peer-Peer / Innovative Finance ISA,Peer-to-Peer/Innovative Finance ISA,0121t0000001eN6AAI,Peer-Peer / Innovative finance ISA,2000,Active,Peer_Peer_Innovative_finance_ISA,0
+ISA,,,,ISA_STOCKS_SHARES,,,,,ISA_STOCKS_SHARES,,,,Stocks & Shares ISA,Stocks & Shares ISA,0121t0000001eNHAAY,Stocks & Shares ISA,10,Active,FP_Stocks_Shares_ISA,0
+ISA,,,,ISA_STRUCTURED_PRODUCT,,,,,ISA_STRUCTURED_PRODUCT,,,,Structured Product ISA,Stocks & Shares ISA,0121t0000001eNRAAY,Structured Product ISA,2000,Active,FP_Structured_Product_ISA,0
+Pension,,,,PENSION_ANNUITY,,,,,PENSION_ANNUITY,,,,Annuity,Annuity,0121t0000001eSxAAI,Annuity,2000,Active,FP_Annuity,0
+Pension,,,,PENSION_DC_AVC,,,,,PENSION_DC_AVC,,,,Additional Voluntary Contribution,Additional Voluntary Contribution (AVC),0121t0000001eRcAAI,AVC,35,Active,FP_AVC,0
+Pension,,,,PENSION_DB,,,,,PENSION_DB,,,,Defined Benefit Pension,Defined Benefit,0121t0000001eQuAAI,Defined Benefit Pension,39,Active,FP_Defined_Benefit_Pension,0
+Pension,,,,PENSION_DC_GPP,,,,,PENSION_DC_GPP,,,,Group Personal Pension,Defined Contribution,0121t0000001eSFAAY,Group Personal Pension,36,Active,FP_Group_Personal_Pension_GPP,0
+Pension,,,,PENSION_DC_JUNIOR_SIPP,,,,,PENSION_DC_JUNIOR_SIPP,,18,,Junior SIPP,Defined Contribution,0124J000000d1BjQAI,Junior SIPP,65,Active,Junior_SIPP,0
+Pension,,,,PENSION_DC_OCCUPATIONAL_COMPANY,,,,,PENSION_DC_OCCUPATIONAL_COMPANY,,,,Occupational/Company Pension,Defined Contribution,0121t0000001eRRAAY,Occupational/Company Pension,31,Active,FP_Occupational_Company_Pension_Scheme,0
+Pension,,,,PENSION_DC_PERSONAL,,,,,PENSION_DC_PERSONAL,,,,Personal Pension,Defined Contribution,0121t0000001eRhAAI,Personal Pension (PP),33,Active,FP_Personal_Pension_PP,0
+Pension,,,,PENSION_DC_RETIREMENT_ANNUITY_CONTRACT,,,,,PENSION_DC_RETIREMENT_ANNUITY_CONTRACT,,,,Retirement Annuity Contract,Defined Contribution,0121t0000001eSaAAI,Retirement Annuity Contract,2000,Active,FP_Retirement_Annuity_Contract_RAC,0
+Pension,,,,PENSION_DC_SSAS,,,,,PENSION_DC_SSAS,,,,Small Self Administered Scheme,Defined Contribution,0121t0000001eRmAAI,Small Self Administered Scheme,2000,Active,FP_SASS,0
+Pension,,,,PENSION_DB_SCHEME,,,,,PENSION_DB_SCHEME,,,,Scheme Pension,Defined Contribution,0121t0000001eTLAAY,Scheme Pension,32,Active,FP_Scheme_Pension,0
+Pension,,,,PENSION_DC_SECTION_32,,,,,PENSION_DC_SECTION_32,,,,Section 32,Defined Contribution,0121t0000001eSVAAY,Section 32,2000,Active,FP_Section_32,0
+Pension,,,,PENSION_DC_SIPP,,,,,PENSION_DC_SIPP,,,,Self Invested Personal Pension,Defined Contribution,0121t0000001eRHAAY,Self Invested Personal Pension,34,Active,FP_SIPP,0
+Pension,,,,PENSION_STAKEHOLDER,,,,,PENSION_STAKEHOLDER,,,,Stakeholder Pension,Defined Contribution,0121t0000001eSKAAY,Stakeholder Pension,2000,Active,FP_Stakeholder_Pension,0
+Protection,,,,PROTECTION_ACCIDENT_SICKNESS_UNEMPLOYMENT,,,,,PROTECTION_ACCIDENT_SICKNESS_UNEMPLOYMENT,,,,"Accident, Sickness and Unemployment",Accident Sickness & Unemployment,0121t0000001eUeAAI,"Accident, Sickness & Unemployment",2000,Active,FP_Accident_Sickness_Unemployment,0
+Investment,,,,ENDOWMENT,,,,,ENDOWMENT,,,,Endowment,Endowment,0121t0000001eVCAAY,Endowment,2000,Active,FP_Endowment,0
+Protection,,,,PROTECTION_FAMILY_INCOME_BENEFIT,,,,,PROTECTION_FAMILY_INCOME_BENEFIT,,,,Family Income Benefit,Family Income Benefit,0124J000000cvmJQAQ,Family Income Benefit,82,Active,Family_Income_Benefit,0
+Protection,,,,PROTECTION_INCOME,,,,,PROTECTION_INCOME,,,,Income Protection,Income Protection,0121t0000001eUZAAY,Income Protection,81,Active,FP_Income_Protection,0
+Protection,,,,PROTECTION_LIFE_COVER_TERM,,,,,PROTECTION_LIFE_COVER_TERM,,,,Life Cover (Term),Life Cover,0121t0000001eUvAAI,Life Cover (Term),80,Active,FP_Life_Cover_Term,0
+Protection,,,,PROTECTION_LIFE_COVER_WHOLE_OF_LIFE,,,,,PROTECTION_LIFE_COVER_WHOLE_OF_LIFE,,,,Life Cover (Whole of Life),Life Cover,0121t0000001eVYAAY,Life Cover (Whole of Life),83,Active,FP_Life_Cover_Whole_of_Life,0
+Protection,,,,PROTECTION_LIFE_COVER_CIC_TERM,,,,,PROTECTION_LIFE_COVER_CIC_TERM,,,,Life Cover & CIC (Term),Life & Critical Illness Cover,0121t0000001eU7AAI,Life Cover & CIC (Term),84,Active,FP_Life_Cover_CIC_Term,0
+Protection,,,,PROTECTION_PRIVATE_MEDICAL,,,,,PROTECTION_PRIVATE_MEDICAL,,,,Private Medical,Private Medical,0121t0000001eWLAAY,Private Medical,2000,Active,FP_Private_Medical,0
+Protection,,,,PROTECTION_RELEVANT_LIFE_COVER,,,,,PROTECTION_RELEVANT_LIFE_COVER,,,,Relevant Life Cover,Relevant Life Cover,0121t0000001eUvAAI,Relevant Life Cover,85,Active,RelevantLifeCover,0
+Trust,,,,TRUST,,,,,TRUST,,,,Trust,Trust,0121t000000MHItAAO,Trust,2000,Active,Trust,0
+ISA,,,,ISA_CHILD_TRUST_FUND,,,,,ISA_CHILD_TRUST_FUND,,,,Child Trust Fund,Junior ISA / Child Trust Fund,0121t0000001l9AAAQ,Child trust fund,2000,Active,Junior_ISA,0
+ISA,,,,LIFETIME_ISA,,,,,LIFETIME_ISA,,,,Lifetime ISA,Lifetime ISA,0121t0000001eNHAAY,Lifetime ISA,2000,Active,FP_Stocks_Shares_ISA,0
+Investment,,,,STRUCTURED_PRODUCT,,,,,STRUCTURED_PRODUCT,,,,Structured Product,Stocks & Shares ISA,0121t0000001eNRAAY,Structured Product,2000,Active,FP_Structured_Product,0
+ISA,,,,ISA_HELP_TO_BUY,,,,,ISA_HELP_TO_BUY,,,,Help To Buy ISA,Cash ISA,0121t0000001eN1AAI,Help to buy ISA,2000,Active,FP_Stocks_Shares_ISA,0
+ISA,,,,ISA_AIM_INVESTMENT,,,,,ISA_AIM_INVESTMENT,,,,Inheritance Tax Investment Service ISA,Inheritance Tax Investment Service ISA,0121t0000001eO4AAI,AIM investment ISA,2000,Active,FP_BPR_ISA,0
+Pension,,,,PENSION_DC,,,,,PENSION_DC,,,,Defined Contribution Pension,Defined Contribution,0121t0000001jQFAAY,Defined Contribution Pension,30,Active,FP_SIPP,0
+Protection,,,,PROTECTION_CRITICAL_ILLNESS_COVER,,,,,PROTECTION_CRITICAL_ILLNESS_COVER,,,,Critical Illness Cover,Critical Illness Cover,0121t0000001eU7AAI,Critical Illness Cover (CIC),75,Active,FP_Life_Cover_CIC_Term,0
+Protection,,,,PROTECTION_DEATH_IN_SERVICE,,,,,PROTECTION_DEATH_IN_SERVICE,,,,Death In Service,Life Cover,0121t0000001eMeAAI,Death In Service,2000,Active,FP_Life_Cover_CIC_Term,0
+Pension,,,,PENSION_UNKNOWN,,,,,PENSION_UNKNOWN,,,,Pension Unknown,I don't know,,,,Active,FP_Personal_Pension_PP,1
+ISA,,,,ISA_UNKNOWN,,,,,ISA_UNKNOWN,,,,ISA Unknown,I don't know,,,,Active,FP_Stocks_Shares_ISA,1
+Protection,,,,PROTECTION_UNKNOWN,,,,,PROTECTION_UNKNOWN,,,,Protection Unknown,I don't know,,,,Active,FP_Life_Cover_Whole_of_Life,1
+Investment,,,,INVESTMENT_UNKNOWN,,,,,INVESTMENT_UNKNOWN,,,,Investment I Don't Know,I don't know,,,,Active,FP_General_Investment_Account_GIA,1
+Protection,,,,PROTECTION_LIFE_COVER_CIC_WHOLE_OF_LIFE,,,,,PROTECTION_LIFE_COVER_CIC_WHOLE_OF_LIFE,,,,Life Cover & CIC (Whole of Life),Life & Critical Illness Cover (Whole of Life),,Life Cover & CIC (Whole of Life),84,Active,FP_Whole_of_Life_Critical_Illness_Cover,0
