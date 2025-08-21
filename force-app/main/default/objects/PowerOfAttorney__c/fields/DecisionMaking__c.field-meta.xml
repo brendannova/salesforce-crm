@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DecisionMaking__c</fullName>
+    <description>Records whether decisions made by attorneys will be made:
+- ‘jointly and severally’ - on their own or with other attorneys
+- ‘jointly’ - all the attorneys have to agree on the decision
+- mixed - some decisions ‘jointly’ and others ‘jointly and severally’</description>
+    <label>Decision making</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>JOINTLY</fullName>
+                <default>false</default>
+                <label>Jointly</label>
+            </value>
+            <value>
+                <fullName>JOINTLY_AND_SEVERALLY</fullName>
+                <default>false</default>
+                <label>Jointly and severally</label>
+            </value>
+            <value>
+                <fullName>MIXED</fullName>
+                <default>false</default>
+                <label>Mixed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Get_licensed_users</name>
+        <label>Get licensed users</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <actionName>FlowUtilityGetLicensedUsers</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Choose_planner</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>licenceDeveloperName</name>
+            <value>
+                <elementReference>LicenceDeveloperName</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>FlowUtilityGetLicensedUsers</nameSegment>
+        <offset>0</offset>
+        <outputParameters>
+            <assignToReference>planners</assignToReference>
+            <name>licensedUsers</name>
+        </outputParameters>
+    </actionCalls>
     <apiVersion>62.0</apiVersion>
     <assignments>
         <name>Set_planner_ID</name>
         <label>Set planner ID</label>
-        <locationX>446</locationX>
-        <locationY>758</locationY>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>plannerId</assignToReference>
             <operator>Assign</operator>
@@ -17,126 +41,26 @@
     <decisions>
         <name>Advice_type</name>
         <label>Advice type</label>
-        <locationX>446</locationX>
-        <locationY>242</locationY>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Error</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Undefined</defaultConnectorLabel>
         <rules>
-            <name>Standard_all_planner_list</name>
+            <name>Defined</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsBlank</operator>
                 <rightValue>
-                    <stringValue>AD_HOC</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ANNUAL_REVIEW_ACCUMULATION</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ANNUAL_REVIEW_RETIREMENT</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>DRAWDOWN</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>EXECUTION_ONLY</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>OCTOPUS_INVESTMENTS</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ONBOARDING_ACCUMULATION</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>ONBOARDING_RETIREMENT</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>REGULAR_AMENDMENT</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>WITHDRAWAL</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>TRUST_ONBOARDING</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_all_planners</targetReference>
+                <targetReference>Get_licensed_users</targetReference>
             </connector>
-            <label>Standard all planner list</label>
-        </rules>
-        <rules>
-            <name>Top_up</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>TOP_UP</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_top_up_planners</targetReference>
-            </connector>
-            <label>Top up</label>
-        </rules>
-        <rules>
-            <name>Protection</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>adviceType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>PROTECTION</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_protection_planners</targetReference>
-            </connector>
-            <label>Protection</label>
+            <label>Defined</label>
         </rules>
     </decisions>
     <description>A flow to orchestrate assigning the suitability planner that will prepare a given bit of advice.</description>
@@ -149,6 +73,11 @@
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>LicenceDeveloperName</name>
+        <dataType>String</dataType>
+        <expression>&quot;ADVICE_WRITE_&quot; + {!adviceType}</expression>
+    </formulas>
     <interviewLabel>Advice | Orchestrator | Assign Planner {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Advice | Orchestrator | Assign Planner</label>
     <processMetadataValues>
@@ -170,156 +99,12 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>Get_all_planners</name>
-        <label>Get all planners</label>
-        <locationX>50</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Choose_planner</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3)</filterLogic>
-        <filters>
-            <field>IsActive</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>UserRoleId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>plannerRoleId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Username</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>hugo@novawm.com</stringValue>
-            </value>
-        </filters>
-        <object>User</object>
-        <outputReference>planners</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <sortField>Name</sortField>
-        <sortOrder>Asc</sortOrder>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_planner_role_ID</name>
-        <label>Get planner role ID</label>
-        <locationX>446</locationX>
-        <locationY>134</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Advice_type</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Planner</stringValue>
-            </value>
-        </filters>
-        <object>UserRole</object>
-        <outputAssignments>
-            <assignToReference>plannerRoleId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_protection_planners</name>
-        <label>Get protection planners</label>
-        <locationX>578</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Choose_planner</targetReference>
-        </connector>
-        <filterLogic>or</filterLogic>
-        <filters>
-            <field>Username</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>olu@novawm.com</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Username</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>william.shillingford@novawm.com</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Username</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>joe.hunter@novawm.com</stringValue>
-            </value>
-        </filters>
-        <object>User</object>
-        <outputReference>planners</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <sortField>Name</sortField>
-        <sortOrder>Asc</sortOrder>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_top_up_planners</name>
-        <label>Get top up planners</label>
-        <locationX>314</locationX>
-        <locationY>350</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Choose_planner</targetReference>
-        </connector>
-        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
-        <filters>
-            <field>IsActive</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>UserRoleId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>plannerRoleId</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Username</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>hugo@novawm.com</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Username</field>
-            <operator>StartsWith</operator>
-            <value>
-                <stringValue>ella.killen@novawm.com</stringValue>
-            </value>
-        </filters>
-        <object>User</object>
-        <outputReference>planners</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <sortField>Name</sortField>
-        <sortOrder>Asc</sortOrder>
-    </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>Choose_planner</name>
         <label>Choose planner</label>
-        <locationX>446</locationX>
-        <locationY>650</locationY>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -347,8 +132,8 @@
     <screens>
         <name>Error</name>
         <label>Error</label>
-        <locationX>842</locationX>
-        <locationY>350</locationY>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -388,10 +173,10 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_planner_role_ID</targetReference>
+            <targetReference>Advice_type</targetReference>
         </connector>
     </start>
     <status>Active</status>

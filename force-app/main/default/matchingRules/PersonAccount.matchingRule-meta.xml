@@ -27,4 +27,15 @@
         </matchingRuleItems>
         <ruleStatus>Active</ruleStatus>
     </matchingRules>
+    <matchingRules>
+        <fullName>PersonAdminMatch</fullName>
+        <description>This matching rule is used where administrators need to manually tag person accounts that need to be merged to address duplicate data issues. This match will be established by manually setting identical values in the test ID field.</description>
+        <label>Person admin match</label>
+        <matchingRuleItems>
+            <blankValueBehavior>NullNotAllowed</blankValueBehavior>
+            <fieldName>TestId__c</fieldName>
+            <matchingMethod>Exact</matchingMethod>
+        </matchingRuleItems>
+        <ruleStatus>Active</ruleStatus>
+    </matchingRules>
 </MatchingRules>
