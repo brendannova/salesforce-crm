@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <custom>true</custom>
     <description>This is the base Nova profile that should be assigned to most colleagues, except administrators.</description>
@@ -302,6 +302,13 @@
         <enabled>false</enabled>
         <name>ViewPersonalOrg</name>
     </userPermissions>
+    <layoutAssignments>
+        <layout>Attorney__c-Attorney Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.PowerOfAttorney</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
         <recordType>Case.AdminSupport</recordType>
@@ -818,6 +825,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>EmailContent-Email Content Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EmailInclusionRule__c-Email inclusion rule Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>EmailMessage-Email Message Layout</layout>
@@ -1951,6 +1961,9 @@
         <layout>PortfolioCharge__c-Portfolio Charge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>PowerOfAttorney__c-Power of attorney Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Pricebook2-Price Book Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -2038,6 +2051,12 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>SalesforceContract-Salesforce Contract Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceInvoice-Salesforce Invoice Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforcePayment-Salesforce Payment Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Scorecard-Scorecard Layout</layout>
@@ -3889,6 +3908,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Attorney__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>CalendlyAction__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -3914,6 +3937,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>EmailConfiguration__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>EmailInclusionRule__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
@@ -4158,6 +4185,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>PortfolioCharge__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>PowerOfAttorney__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

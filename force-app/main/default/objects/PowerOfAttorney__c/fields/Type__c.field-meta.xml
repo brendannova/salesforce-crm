@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <description>Indicates which kind of POA this represents</description>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>LASTING_HEALTH_WELFARE</fullName>
+                <default>false</default>
+                <label>Lasting (Health &amp; Welfare)</label>
+            </value>
+            <value>
+                <fullName>LASTING_PROPERTY_FINANCIAL</fullName>
+                <default>false</default>
+                <label>Lasting (Property &amp; Financial Affairs)</label>
+            </value>
+            <value>
+                <fullName>ORDINARY</fullName>
+                <default>false</default>
+                <label>Ordinary</label>
+            </value>
+            <value>
+                <fullName>ENDURING</fullName>
+                <default>false</default>
+                <label>Enduring</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
