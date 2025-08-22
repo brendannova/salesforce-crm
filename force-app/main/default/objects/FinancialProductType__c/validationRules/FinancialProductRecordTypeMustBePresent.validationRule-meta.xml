@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FinancialProductRecordTypeMustBePresent</fullName>
+    <active>true</active>
+    <description>Ensures a record type for the corresponding financial product is given so automations can function</description>
+    <errorConditionFormula>!$Setup.SystemConfiguration__c.ValidationBypass__c
+&amp;&amp; ISBLANK( FinancialProductRecordTypeDeveloperName__c)
+&amp;&amp; !ISPICKVAL(Category__c, &#39;Cash&#39;)</errorConditionFormula>
+    <errorDisplayField>FinancialProductRecordTypeDeveloperName__c</errorDisplayField>
+    <errorMessage>Please specify a Financial Product Record Type Developer Name</errorMessage>
+</ValidationRule>
