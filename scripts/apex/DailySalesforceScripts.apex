@@ -58,3 +58,32 @@ for(Advice__c record : records){
     }    
 }
 System.debug(i + ' tasks created');
+
+/**
+ * Link FF FPs to FPs where this has failed.
+ */
+
+Integer i = 0;
+List<FF_financial_product__c> fffps = [SELECT Id, name, Household__r.Finserv__status__c, createddate, match_id__c, validated__c, Household__r.Fact_Find_Validations_Outstanding__c, Deleted_By__c, Financial_Product__c from ff_financial_product__c where match_id__c != null and Financial_Product__c = null ORDER BY CreatedDate DESC];
+Set<String> matchIds = new Set<String>();
+for(FF_financial_product__c fffp : fffps){
+    matchIds.add(fffp.match_id__c);
+}
+List<FinServ__financialaccount__c> fps = [SELECT Id, name, MATCH_id__c FROM FinServ__financialaccount__c where match_id__c IN :matchIds];
+Map<String, FinServ__financialaccount__c> fpmap = new Map<String, FinServ__financialaccount__c>();
+for(FinServ__financialaccount__c fp : fps){
+    fpmap.put(fp.match_id__c, fp);
+}
+List<FF_financial_product__c> fffpsupdate = new List<FF_financial_product__c>();
+for(FF_financial_product__c fffp : fffps){
+    
+    if(fpmap.containskey(fffp.match_id__c)){
+        fffpsupdate.add(new FF_financial_product__c(Id = fffp.Id, Financial_Product__c = fpmap.get(fffp.match_id__c).Id));
+        System.debug(fffp.match_id__c + ' | ' + i + ' | ' + fffp.Household__r.Finserv__status__c + ' | ' + fffp.name + ' | ' + fpmap.get(fffp.match_id__c).Name);
+
+    }    
+    i++;
+}
+System.debug(fffpsupdate.size());
+System.debug(fffpsupdate);
+update fffpsupdate;
