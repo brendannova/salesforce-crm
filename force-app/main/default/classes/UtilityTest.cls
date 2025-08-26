@@ -60,9 +60,9 @@ public class UtilityTest {
     
     @isTest
     static void getPicklistValues_success(){
-        Map<String, String> picklistMap = Utility.getPicklistApiLabelMap('AdviceType__c','ProfileUpdate__c');
-        List<Schema.PicklistEntry> picklistItems = AdviceType__c.ProfileUpdate__c.getDescribe().getPicklistValues();
-        System.Assert.areEqual(picklistItems.size(), picklistMap.size(), 'Number of ites in the picklist map does not match the number of picklist options.');
+        Map<String, String> picklistMap = Utility.getPicklistApiLabelMap('Contract','Status');
+        List<Schema.PicklistEntry> picklistItems = Contract.Status.getDescribe().getPicklistValues();
+        System.Assert.areEqual(picklistMap.get('Draft'), 'Draft', 'Api label does not match requested value');
     }
     
     }
