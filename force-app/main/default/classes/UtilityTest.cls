@@ -57,7 +57,7 @@ public class UtilityTest {
         Date offsetDate = Utility.getOffsetBusinessDate(startDate, daysOffset);
         Date expectedOffsetDate = Date.newInstance(2025, 1, 6);
         Assert.areEqual(expectedOffsetDate, offsetDate , 'Incorrect number of business days offset');
-    
+    }
     @isTest
     static void getPicklistValues_success(){
         Map<String, String> picklistMap = Utility.getPicklistApiLabelMap('Contract','Status');
