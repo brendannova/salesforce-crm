@@ -2512,6 +2512,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <flowName>AdviceOrchestrationNarrativeComplete</flowName>
         <inputAssignments>
+            <name>advice</name>
+            <value>
+                <elementReference>advice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>adviceChecklist</name>
             <value>
                 <elementReference>adviceChecklist</elementReference>
@@ -2521,6 +2527,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <name>adviceChecklistUpdated</name>
             <value>
                 <elementReference>adviceChecklistUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
