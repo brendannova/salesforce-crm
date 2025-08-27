@@ -5,7 +5,7 @@
         <name>Add_id_to_collection</name>
         <label>Add id to collection</label>
         <locationX>138</locationX>
-        <locationY>2546</locationY>
+        <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>recIds</assignToReference>
             <operator>Add</operator>
@@ -21,7 +21,7 @@
         <name>Add_original_to_collection</name>
         <label>Add original to collection</label>
         <locationX>479</locationX>
-        <locationY>1382</locationY>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>fulfilmentsToUpdate</assignToReference>
             <operator>Add</operator>
@@ -34,10 +34,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Add_recordId_to_fulfilment_IDs_collection</name>
+        <label>Add recordId to fulfilment IDs collection</label>
+        <locationX>479</locationX>
+        <locationY>242</locationY>
+        <assignmentItems>
+            <assignToReference>fulfilmentIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_dependent_recommendations</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Add_to_collection</name>
         <label>Add to collection</label>
         <locationX>567</locationX>
-        <locationY>458</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>recIds</assignToReference>
             <operator>Add</operator>
@@ -53,12 +69,19 @@
         <name>Add_to_collectionFulfilments</name>
         <label>Add to collection</label>
         <locationX>567</locationX>
-        <locationY>974</locationY>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>fulfilmentsToUpdate</assignToReference>
             <operator>Add</operator>
             <value>
                 <elementReference>fulfilmentToUpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fulfilmentIds</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_2_Prep_dependent_fulfilment.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -69,7 +92,7 @@
         <name>Assign_cancel_variables</name>
         <label>Assign cancel variables</label>
         <locationX>479</locationX>
-        <locationY>1274</locationY>
+        <locationY>1382</locationY>
         <assignmentItems>
             <assignToReference>fulfilmentToUpdate.Id</assignToReference>
             <operator>Assign</operator>
@@ -106,7 +129,7 @@
         <name>Assign_variables</name>
         <label>Assign variables</label>
         <locationX>567</locationX>
-        <locationY>866</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>fulfilmentToUpdate.Id</assignToReference>
             <operator>Assign</operator>
@@ -143,7 +166,7 @@
         <name>Clear_rec_ids</name>
         <label>Clear rec ids</label>
         <locationX>248</locationX>
-        <locationY>2114</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>recIds</assignToReference>
             <operator>Assign</operator>
@@ -156,7 +179,7 @@
         <name>Are_there_any_recommendations</name>
         <label>Are there any recommendations?</label>
         <locationX>248</locationX>
-        <locationY>2330</locationY>
+        <locationY>2438</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Update_employment</targetReference>
@@ -182,7 +205,7 @@
         <name>Is_there_an_employment_related</name>
         <label>Is there an employment related?</label>
         <locationX>479</locationX>
-        <locationY>2006</locationY>
+        <locationY>2114</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -204,7 +227,7 @@
         <name>Is_there_any_other_fulfilment_for_this_employment</name>
         <label>Is there any other fulfilment for this employment?</label>
         <locationX>50</locationX>
-        <locationY>2846</locationY>
+        <locationY>2954</locationY>
         <defaultConnector>
             <targetReference>Update_employment</targetReference>
         </defaultConnector>
@@ -248,7 +271,7 @@
         <name>Collect_ids</name>
         <label>Collect ids</label>
         <locationX>50</locationX>
-        <locationY>2438</locationY>
+        <locationY>2546</locationY>
         <collectionReference>Get_recommendations_related_to_employment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -262,7 +285,7 @@
         <name>Loop_1_Get_rec_ids</name>
         <label>Loop 1 | Get rec ids</label>
         <locationX>479</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <collectionReference>Get_dependent_recommendations</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -276,7 +299,7 @@
         <name>Loop_2_Prep_dependent_fulfilment</name>
         <label>Loop 2 | Prep dependent fulfilment</label>
         <locationX>479</locationX>
-        <locationY>758</locationY>
+        <locationY>866</locationY>
         <collectionReference>Get_dependent_fulfilment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -290,7 +313,7 @@
         <name>Loop_3_Create_tasks</name>
         <label>Loop 3 | Create tasks</label>
         <locationX>479</locationX>
-        <locationY>1706</locationY>
+        <locationY>1814</locationY>
         <collectionReference>fulfilmentsToUpdate</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -323,7 +346,7 @@
         <name>Get_dependent_fulfilment</name>
         <label>Get dependent fulfilment</label>
         <locationX>479</locationX>
-        <locationY>650</locationY>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_2_Prep_dependent_fulfilment</targetReference>
@@ -344,7 +367,7 @@
         <name>Get_dependent_recommendations</name>
         <label>Get dependent recommendations</label>
         <locationX>479</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_1_Get_rec_ids</targetReference>
@@ -382,7 +405,7 @@
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_dependent_recommendations</targetReference>
+            <targetReference>Add_recordId_to_fulfilment_IDs_collection</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -400,7 +423,7 @@
         <name>Get_fulfilment_related_to_employment</name>
         <label>Get fulfilment related to employment</label>
         <locationX>50</locationX>
-        <locationY>2738</locationY>
+        <locationY>2846</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_there_any_other_fulfilment_for_this_employment</targetReference>
@@ -435,7 +458,7 @@
         <name>Get_recommendations_related_to_employment</name>
         <label>Get recommendations related to employment</label>
         <locationX>248</locationX>
-        <locationY>2222</locationY>
+        <locationY>2330</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Are_there_any_recommendations</targetReference>
@@ -470,16 +493,16 @@
         <name>Close_tasks</name>
         <label>Close tasks</label>
         <locationX>479</locationX>
-        <locationY>1598</locationY>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>Loop_3_Create_tasks</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
-            <operator>EqualTo</operator>
+            <operator>In</operator>
             <value>
-                <elementReference>recordId</elementReference>
+                <elementReference>fulfilmentIds</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -494,7 +517,7 @@
         <name>Update_employment</name>
         <label>Update employment</label>
         <locationX>182</locationX>
-        <locationY>2954</locationY>
+        <locationY>3062</locationY>
         <connector>
             <targetReference>Update_tasks</targetReference>
         </connector>
@@ -524,7 +547,7 @@
         <name>Update_fulfilments</name>
         <label>Update fulfilments</label>
         <locationX>479</locationX>
-        <locationY>1490</locationY>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>Close_tasks</targetReference>
         </connector>
@@ -534,7 +557,7 @@
         <name>Update_tasks</name>
         <label>Update tasks</label>
         <locationX>182</locationX>
-        <locationY>3062</locationY>
+        <locationY>3170</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>WhatId</field>
@@ -563,7 +586,7 @@
         <name>Collect_details</name>
         <label>Collect details</label>
         <locationX>479</locationX>
-        <locationY>1166</locationY>
+        <locationY>1274</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -683,7 +706,7 @@
         <name>Create_clean_up_task</name>
         <label>Create clean up task</label>
         <locationX>567</locationX>
-        <locationY>1814</locationY>
+        <locationY>1922</locationY>
         <connector>
             <targetReference>Loop_3_Create_tasks</targetReference>
         </connector>
@@ -708,6 +731,13 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>fulfilmentIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>fulfilmentsToUpdate</name>
         <dataType>SObject</dataType>
