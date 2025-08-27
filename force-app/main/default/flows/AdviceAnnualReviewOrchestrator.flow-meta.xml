@@ -2299,7 +2299,8 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Incomplete&quot;), &quot;Pack uploaded | Profile not completed&quot;,
 IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Skipped&quot;), &quot;Pack uploaded | Catch up call not completed&quot;,
-IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Complete&quot;) &amp;&amp; ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Complete&quot;), &quot;Pack uploaded | Advice follows&quot;, &quot;Unknown email type&quot;)))</expression>
+IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Complete&quot;) &amp;&amp; ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Complete&quot;), 
+IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;PRESENTED&quot;), &quot;Pack uploaded | Presented advice follows&quot;, &quot;Pack uploaded | Non-presented advice follows&quot;), &quot;Unknown email type&quot;)))</expression>
     </formulas>
     <formulas>
         <name>illustrationsTask</name>
