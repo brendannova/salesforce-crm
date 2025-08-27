@@ -2113,7 +2113,7 @@
         </connector>
         <fields>
             <name>AnnualReviewUploadPrompt</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(68, 68, 68);&quot;&gt;Annual review upload | {!household.Name}﻿&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Please create a folder in the advice meetings location with the format &lt;strong&gt;&lt;em&gt;{YYY-MM-DD} - Annual review&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Upload the following:&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;https://octopuswealth--devadvar.sandbox.lightning.force.com/builder_platform_interaction/%7B!Get_advice.AnnualReviewDeckUrl__c%7D&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(1, 118, 211);&quot;&gt;the annual review deck &lt;/a&gt;&lt;/li&gt;&lt;li&gt;KIIDs&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;You do not need to upload any illustrations. Any advice that follows will get a new folder.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;Annual review upload | {!household.Name}﻿&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Please create a folder in the advice meetings location with the format &lt;strong&gt;&lt;em&gt;{YYY-MM-DD} - Annual review&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Upload the following:&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;{!Get_advice.AnnualReviewDeckUrl__c}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the annual review deck&lt;/a&gt;&lt;/li&gt;&lt;li&gt;KIIDs&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;You do not need to upload any illustrations. Any advice that follows will get a new folder.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2187,21 +2187,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Pack uploaded | Catch up call not completed</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>AnnualReviewPackEmailTemplateGuidance3</name>
-            <fieldText>&lt;p&gt;The client will go on to have advice and the email we send them now depends on whether that advice will be presented or non-presented. Unfortunately, we can&apos;t yet confirm which to use here but we will soon be improving that. For now, please confirm which is correct and use one of the following email templates:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Pack uploaded | Presented advice follows&lt;/li&gt;&lt;li&gt;Pack uploaded | Non-presented advice follows&lt;/li&gt;&lt;/ol&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>EmailToSend</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Pack uploaded | Advice follows</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
