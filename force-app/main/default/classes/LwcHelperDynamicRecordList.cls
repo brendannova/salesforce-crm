@@ -16,18 +16,14 @@ public with sharing class LwcHelperDynamicRecordList {
             when 'CUSTOMER_FACTS'{
                 dataWrapper = LwcHelperCustomerFactsList.getCustomerFactData(contextId);
             }
-            when 'LwcHelperFinProdRelatedRingfences' {
+            when 'LwcHelperFinProdRelatedRingfences'{
                 dataWrapper = LwcHelperFinProdRelatedRingfences.getRingfences(contextId);
-            }
-            when 'LwcHelperHouseholdInformationRequestList' {
-                dataWrapper = LwcHelperHouseholdInformationRequestList.getInformationRequests(contextId);
             }
             when else{
                 dataWrapper.errorMessage = 'No logic reference matched';
                 //could also throw an error here once logic above is added to prevent (unreachable logic error bellow)
             }
         }
-
 
         List<String> errors = validateDataWrapper(dataWrapper);
         if(errors.size() > 0) {
