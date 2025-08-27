@@ -48,9 +48,9 @@ public class UtilityTest {
         } else {
             System.assert(String.isBlank(sandboxName), 'Expected no sandbox name but a value was returned');
         }
-        
     }
-@IsTest
+    
+	@isTest
     static void getOffsetBusinessDate_success(){
         Date startDate = Date.newInstance(2024, 12, 31);
         Integer daysOffset = 3; //over a bank holiday and a weekend
@@ -58,5 +58,11 @@ public class UtilityTest {
         Date expectedOffsetDate = Date.newInstance(2025, 1, 6);
         Assert.areEqual(expectedOffsetDate, offsetDate , 'Incorrect number of business days offset');
     }
-
+    
+    @isTest
+    static void getPicklistValues_success(){
+        Map<String, String> picklistMap = Utility.getPicklistApiLabelMap('Contract','Status');
+        List<Schema.PicklistEntry> picklistItems = Contract.Status.getDescribe().getPicklistValues();
+        System.Assert.areEqual(picklistMap.get('Draft'), 'Draft', 'Api label does not match requested value');
+    }
 }
