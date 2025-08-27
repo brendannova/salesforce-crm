@@ -174,7 +174,10 @@ const SUPPORTED_OBJECTS = [
     'OW_review__c',
     'OW_rtq__c',
     'PersonAccount',
-    'Recommendation__c'
+    'Recommendation__c',
+    'Expectation__c',
+    'Transaction__c',
+    'RegularTransaction__c'
 ];
 
 

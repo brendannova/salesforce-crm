@@ -378,6 +378,22 @@
         </value>
     </choices>
     <choices>
+        <name>InformationRequested</name>
+        <choiceText>Information requested</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Information requested</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ProviderProcessing</name>
+        <choiceText>Provider processing</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Provider processing</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Received</name>
         <choiceText>Received</choiceText>
         <dataType>String</dataType>
@@ -919,7 +935,9 @@ IF(ISPICKVAL({!informationRequest.InformationRequestType__r.BuilderLevel__c},&qu
         </connector>
         <fields>
             <name>Additional_information_request_status</name>
-            <choiceReferences>addInfoRequestStatus</choiceReferences>
+            <choiceReferences>Received</choiceReferences>
+            <choiceReferences>ProviderProcessing</choiceReferences>
+            <choiceReferences>InformationRequested</choiceReferences>
             <dataType>String</dataType>
             <defaultValue>
                 <elementReference>informationRequest.AdditionalInformationRequestStatus__c</elementReference>

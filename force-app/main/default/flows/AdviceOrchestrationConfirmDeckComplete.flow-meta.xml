@@ -266,8 +266,8 @@
     <dynamicChoiceSets>
         <name>AdviceMethodChoice</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>AdviceMethod__c</picklistField>
         <picklistObject>Advice__c</picklistObject>
     </dynamicChoiceSets>
@@ -355,7 +355,7 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
         <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
-        <description>Returned as a list even though there&#39;ll only be 1 result so that this can be used to pre-populate the table. This is inefficient as I could extract this from the list returned in the next query but given we are working with a screen flow and will not hit any limits, this is being accepted.</description>
+        <description>Returned as a list even though there&apos;ll only be 1 result so that this can be used to pre-populate the table. This is inefficient as I could extract this from the list returned in the next query but given we are working with a screen flow and will not hit any limits, this is being accepted.</description>
         <name>Get_current_advice_type</name>
         <label>Get current advice type</label>
         <locationX>336</locationX>
@@ -494,6 +494,16 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.DeckStatus__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Not started</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>AdviceMethod</name>

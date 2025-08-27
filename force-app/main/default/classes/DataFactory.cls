@@ -31,15 +31,111 @@ public with sharing class DataFactory {
         }
         set;
     }
+public Public_Provider_Names__c NOVA_PROVIDER {
+    get{
+        if(NOVA_PROVIDER == null) {
+            // First check if any Public_Provider_Names__c records with OW_own_company__c = true already exist
+            List<Public_Provider_Names__c> existingProviders = [
+                SELECT Id, Name, ReferenceName__c, OW_own_company__c 
+                FROM Public_Provider_Names__c 
+                WHERE OW_own_company__c = true 
+                LIMIT 1
+            ];
+            
+            // If an existing provider is found, use it
+            if(!existingProviders.isEmpty()) {
+                NOVA_PROVIDER = existingProviders[0];
+            } 
+            // Otherwise create a new one
+            else {
+                NOVA_PROVIDER = new Public_Provider_Names__c(
+                    Name = 'Nova Constant',
+                    ReferenceName__c = 'Nova Constant',
+                    OW_own_company__c = true
+                );
+                insert NOVA_PROVIDER;
+            }
+        }
+        return NOVA_PROVIDER;
+    }
+    set;
+}
 
-    /* This can be used in the future to load configuration data. 
-     * public void createConfigurationData(){
-        List<sObject> ls = Test.loadData(Public_Provider_Names__c.sObjectType, 'ProvidersRef');
+// Cache for fulfilment types to avoid multiple queries
+private Map<String, FulfilmentType__c> fulfilmentTypeCache = new Map<String, FulfilmentType__c>();
+
+public FulfilmentType__c FULFILMENT_TYPE_OPEN_PRODUCT {
+    get{
+        if(FULFILMENT_TYPE_OPEN_PRODUCT == null) {
+            loadFulfilmentTypes();
+            FULFILMENT_TYPE_OPEN_PRODUCT = fulfilmentTypeCache.get('OPEN_PRODUCT');
+            
+            // If not found in cache, create a new one
+            if(FULFILMENT_TYPE_OPEN_PRODUCT == null) {
+                Id recId = [SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'OPEN_PRODUCT' ].Id;
+                FULFILMENT_TYPE_OPEN_PRODUCT = new FulfilmentType__c(
+                    Name = 'Fulfilment Type Open',
+                    ReferenceName__c = 'OPEN_PRODUCT',
+                    RecommendationType__c = recId
+                );
+                insert FULFILMENT_TYPE_OPEN_PRODUCT;
+                fulfilmentTypeCache.put('OPEN_PRODUCT', FULFILMENT_TYPE_OPEN_PRODUCT);
+            }
+        }
+        return FULFILMENT_TYPE_OPEN_PRODUCT;
+    }
+    set;
+}
+
+public FulfilmentType__c FULFILMENT_TYPE_LUMP_SUM {
+    get{
+        if(FULFILMENT_TYPE_LUMP_SUM == null) {
+            loadFulfilmentTypes();
+            FULFILMENT_TYPE_LUMP_SUM = fulfilmentTypeCache.get('LUMP_SUM');
+            
+            // If not found in cache, create a new one
+            if(FULFILMENT_TYPE_LUMP_SUM == null) {
+                Id recTypeId = [SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'LUMP_SUM' ].Id;
+                FULFILMENT_TYPE_LUMP_SUM = new FulfilmentType__c(
+                    Name = 'Fulfilment Type Lump Sum',
+                    ReferenceName__c = 'LUMP_SUM',
+                    RecommendationType__c = recTypeId
+                );
+                insert FULFILMENT_TYPE_LUMP_SUM;
+                fulfilmentTypeCache.put('LUMP_SUM', FULFILMENT_TYPE_LUMP_SUM);
+            }
+        }
+        return FULFILMENT_TYPE_LUMP_SUM;
+    }
+    set;
+}
+
+/**
+ * Loads all required fulfilment types in a single SOQL query for efficiency
+ */
+private void loadFulfilmentTypes() {
+    if(fulfilmentTypeCache.isEmpty()) {
+        List<FulfilmentType__c> existingFulfilmentTypes = [
+            SELECT Id, Name, ReferenceName__c, RecommendationType__c 
+            FROM FulfilmentType__c 
+            WHERE ReferenceName__c IN ('OPEN_PRODUCT', 'LUMP_SUM')
+        ];
+        
+        for(FulfilmentType__c fulfilmentType : existingFulfilmentTypes) {
+            fulfilmentTypeCache.put(fulfilmentType.ReferenceName__c, fulfilmentType);
+        }
+    }
+}
+
+
+
+    public void createConfigurationData(){
+        List<sObject> ls = Test.loadData(Public_Provider_Names__c.sObjectType, 'ProviderRef');
         List<sObject> ls3 = Test.loadData(RecommendationType__c.sObjectType, 'RecRef');
         List<sObject> ls4 = Test.loadData(ProductType__c.sObjectType, 'ProductTypeRef');
         List<sObject> ls2 = Test.loadData(Product__c.sObjectType, 'ProductRef');
     }
-    */
+
     
     // Takes a number of clients, children, and status as inputs and generates the data   
     public Id createHousehold (String idenfitifer, Integer numClients, Integer numChildren, String status, String profileType) {
@@ -233,7 +329,7 @@ public with sharing class DataFactory {
             insert ltas;
             
             List<FinServ__FinancialAccount__c> novaprods = new List<FinServ__FinancialAccount__c>();
-            Id novaProviderId = [SELECT Id FROM Public_Provider_Names__c WHERE OW_own_company__c = true ].Id;
+
             for(AccountContactRelation acr : acrs) {
                 FinServ__FinancialAccount__c novaprod = new FinServ__FinancialAccount__c(
                     Name = 'Test',
@@ -241,7 +337,7 @@ public with sharing class DataFactory {
                     FinServ__PrimaryOwner__c = acr.Contact.AccountId,
                     Household__c = householdId,
                     FinServ__Status__c = 'Open',
-                    Public_Provider_Name__c = novaProviderId,
+                    Public_Provider_Name__c = NOVA_PROVIDER.Id,
                     RecordTypeId = Schema.SObjectType.FinServ__FinancialAccount__c.getRecordTypeInfosByDeveloperName().get('FP_Stocks_Shares_ISA').getRecordTypeId()
                 );
                 novaprods.add(novaprod);
@@ -285,6 +381,12 @@ public with sharing class DataFactory {
             
             // Create open product fulfilments
             List<Fulfilment__c> fulfils = new List<Fulfilment__c>();
+
+            // Use lazy-loaded fulfilment types that handle existing records
+            FulfilmentType__c fulfilmentTypeOpen = FULFILMENT_TYPE_OPEN_PRODUCT;
+            FulfilmentType__c fulfilmentTypeLumpSum = FULFILMENT_TYPE_LUMP_SUM;
+
+
             for( Recommendation__c rec : recs){
                 Fulfilment__c fulfil = new Fulfilment__c(
                     Recommendation__c = rec.Id,
@@ -293,10 +395,15 @@ public with sharing class DataFactory {
                     AdditionalBankDetailsStatus__c = 'Not required',
                     Advice__c = advice.Id,
                     ExpressionOfWishFormStatus__c = 'Not required',
-                    FulfilmentType__c = [SELECT Id FROM FulfilmentType__c WHERE RecommendationType__c =: rec.RecommendationType__c AND DestinationProductType__c = '0121t0000001eNHAAY' ].Id,
                     SearchName__c = rec.PrimaryOwner__c + ' | ' + rec.recommendationType__r.Name + ' ISA ',
                     TransferFormsStatus__c = 'Not required'
                 );
+
+                if(rec.RecommendationType__c == recTypeId){
+                    fulfil.FulfilmentType__c = fulfilmentTypeLumpSum.Id;
+                } else if(rec.RecommendationType__c == recId){
+                    fulfil.FulfilmentType__c = fulfilmentTypeOpen.Id;
+                }
                 fulfils.add(fulfil);
             }
             insert fulfils;
@@ -403,4 +510,162 @@ public with sharing class DataFactory {
         public String lastName {get;set;}
         public String preferredName {get;set;}
     }
+
+    // ## Test Data Factory Methods for Transaction Objects ##
+    
+    /**
+     * Creates a RegularTransaction__c record with sensible defaults for all parameters
+     * @param financialProductId The Financial Product ID to link to (required)
+     * @param amount The transaction amount (default: 150.00)
+     * @param direction The transaction direction (default: ExpectationHelper.DIRECTION_CONTRIBUTION)
+     * @param frequency The transaction frequency (default: 'Monthly')
+     * @param nextTransactionDate The next transaction date (default: today's start of month)
+     * @param startDate The start date (default: 1 month ago)
+     * @param status The status (default: RegularTransactionHelper.REGULAR_TRANSACTION_STATUS_ACTIVE)
+     * @return The created RegularTransaction__c record
+     */
+    public RegularTransaction__c createRegularTransaction(
+        Id financialProductId,
+        Decimal amount,
+        String direction,
+        String frequency,
+        Date nextTransactionDate,
+        Date startDate,
+        String status
+    ) {
+        RegularTransaction__c regularTransaction = new RegularTransaction__c(
+            FinancialProduct__c = financialProductId,
+            Amount__c = amount,
+            Direction__c = direction,
+            Frequency__c = frequency,
+            NextTransactionDate__c = nextTransactionDate,
+            StartDate__c = startDate,
+            Status__c = status
+        );
+        insert regularTransaction;
+        return regularTransaction;
+    }
+
+    /**
+     * Creates a RegularTransaction__c record with all default values
+     * @param financialProductId The Financial Product ID to link to
+     * @return The created RegularTransaction__c record
+     */
+    public RegularTransaction__c createRegularTransaction(Id financialProductId) {
+        return createRegularTransaction(
+            financialProductId,
+            150.00,
+            ExpectationHelper.DIRECTION_CONTRIBUTION,
+            'Monthly',
+            Date.today().toStartOfMonth(),
+            Date.today().addMonths(-1),
+            RegularTransactionHelper.REGULAR_TRANSACTION_STATUS_ACTIVE
+        );
+    }
+
+    /**
+     * Creates a Transaction__c record with sensible defaults for all parameters
+     * @param financialProductId The Financial Product ID to link to (required)
+     * @param amount The transaction amount (default: 50.00)
+     * @param direction The transaction direction (default: ExpectationHelper.DIRECTION_CONTRIBUTION)
+     * @param transactionDate The transaction date (default: 1 month ago)
+     * @param transactionType The transaction type (default: TransactionHelper.TRANSACTION_TYPE_REGULAR)
+     * @param status The status (default: TransactionHelper.TRANSACTION_STATUS_NEW)
+     * @return The created Transaction__c record
+     */
+    public Transaction__c createTransaction(
+        Id financialProductId,
+        Decimal amount,
+        String direction,
+        Date transactionDate,
+        String transactionType,
+        String status
+    ) {
+        Transaction__c transactionRecord = new Transaction__c(
+            FinancialProduct__c = financialProductId,
+            Amount__c = amount,
+            Direction__c = direction,
+            Date__c = transactionDate,
+            Type__c = transactionType,
+            Status__c = status
+        );
+        insert transactionRecord;
+        return transactionRecord;
+    }
+
+    /**
+     * Creates a Transaction__c record with all default values
+     * @param financialProductId The Financial Product ID to link to
+     * @return The created Transaction__c record
+     */
+    public Transaction__c createTransaction(Id financialProductId) {
+        return createTransaction(
+            financialProductId,
+            50.00,
+            ExpectationHelper.DIRECTION_CONTRIBUTION,
+            Date.today().addMonths(-1),
+            TransactionHelper.TRANSACTION_TYPE_REGULAR,
+            TransactionHelper.TRANSACTION_STATUS_NEW
+        );
+    }
+
+    /**
+     * Creates an Expectation__c record with sensible defaults for all parameters
+     * @param financialProductId The Financial Product ID to link to (required)
+     * @param amount The expectation amount (default: 1000.00)
+     * @param expectationDate The expectation date (default: 30 days from today)
+     * @param direction The direction (default: ExpectationHelper.DIRECTION_CONTRIBUTION)
+     * @param transactionType The transaction type (default: TransactionHelper.TRANSACTION_TYPE_REGULAR)
+     * @param status The status (default: ExpectationHelper.EXPECTATION_STATUS_PENDING)
+     * @param fulfilmentId The Fulfilment ID (optional)
+     * @param regularTransactionId The Regular Transaction ID (optional)
+     * @param transactionId The Transaction ID (optional)
+     * @return The created Expectation__c record
+     */
+    public Expectation__c createExpectation(
+        Id financialProductId,
+        Decimal amount,
+        Date expectationDate,
+        String direction,
+        String transactionType,
+        String status,
+        Id fulfilmentId,
+        Id regularTransactionId,
+        Id transactionId
+    ) {
+        Expectation__c expectation = new Expectation__c(
+            FinancialProduct__c = financialProductId,
+            Amount__c = amount,
+            Date__c = expectationDate,
+            Direction__c = direction,
+            Type__c = transactionType,
+            Status__c = status,
+            Fulfilment__c = fulfilmentId,
+            RegularTransaction__c = regularTransactionId,
+            Transaction__c = transactionId
+        );
+        insert expectation;
+        return expectation;
+    }
+
+    /**
+     * Creates an Expectation__c record with all default values
+     * @param financialProductId The Financial Product ID to link to
+     * @return The created Expectation__c record
+     */
+    public Expectation__c createExpectation(Id financialProductId) {
+        return createExpectation(
+            financialProductId,
+            1000.00,
+            System.today().addDays(30),
+            ExpectationHelper.DIRECTION_CONTRIBUTION,
+            TransactionHelper.TRANSACTION_TYPE_REGULAR,
+            ExpectationHelper.EXPECTATION_STATUS_PENDING,
+            null,
+            null,
+            null
+        );
+    }
+
+
 }

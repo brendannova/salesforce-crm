@@ -999,6 +999,20 @@
             <fields>
                 <name>Miscellaneous_Column2</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>MPAA_Status</name>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>fulfilment.Recommendation__r.PrimaryOwner__r.MoneyPurchaseAnnualAllowanceStatus__pc</elementReference>
+                    </defaultValue>
+                    <fieldText>MPAA Status</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isReadOnly>
+                        <booleanValue>true</booleanValue>
+                    </isReadOnly>
+                    <isRequired>false</isRequired>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>

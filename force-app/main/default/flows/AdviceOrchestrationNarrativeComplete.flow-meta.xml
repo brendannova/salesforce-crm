@@ -5,7 +5,7 @@
         <name>Assign_updates</name>
         <label>Assign updates</label>
         <locationX>50</locationX>
-        <locationY>350</locationY>
+        <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>adviceChecklistUpdated.SuitabilityBuilder__c</assignToReference>
             <operator>Assign</operator>
@@ -25,7 +25,7 @@
         <name>Updates_to_make</name>
         <label>Updates to make?</label>
         <locationX>182</locationX>
-        <locationY>242</locationY>
+        <locationY>350</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -83,7 +83,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Updates_to_make</targetReference>
+            <targetReference>Capture_core_advice_details</targetReference>
         </connector>
         <fields>
             <name>confirmNarrative</name>
@@ -153,6 +153,78 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Capture_core_advice_details</name>
+        <label>Capture core advice details</label>
+        <locationX>182</locationX>
+        <locationY>242</locationY>
+        <connector>
+            <targetReference>Updates_to_make</targetReference>
+        </connector>
+        <flowName>AdviceOrchestrationConfirmDeckComplete</flowName>
+        <inputAssignments>
+            <name>advice</name>
+            <value>
+                <elementReference>advice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceChecklist</name>
+            <value>
+                <elementReference>adviceChecklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceChecklistUpdated</name>
+            <value>
+                <elementReference>adviceChecklistUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceUpdated</name>
+            <value>
+                <elementReference>adviceUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>householdId</name>
+            <value>
+                <elementReference>householdId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>task</name>
+            <value>
+                <elementReference>task</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceChecklistUpdated</assignToReference>
+            <name>adviceChecklistUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>adviceUpdated</assignToReference>
+            <name>adviceUpdated</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <name>advice</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advice__c</objectType>
+    </variables>
     <variables>
         <name>adviceChecklist</name>
         <dataType>SObject</dataType>
@@ -168,6 +240,13 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>AdviceChecklist__c</objectType>
+    </variables>
+    <variables>
+        <name>adviceId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>adviceType</name>

@@ -53,13 +53,16 @@ export default class polaris extends LightningElement {
   @api taskInformation;
 
   async getTaskInfo(){
-    if(this.selectedTask && this.selectedTask.OW_task_information_name__c){
+    try{
+      if(this.selectedTask && this.selectedTask.OW_task_information_name__c){
+        this.taskInformation = await getTaskInfo({taskTypeName: this.selectedTask.OW_task_information_name__c});
 
-      this.taskInformation = await getTaskInfo({taskTypeName: this.selectedTask.OW_task_information_name__c});
-
-      if(this.taskInformation && this.taskInformation.OW_task_description_google_doc_link__c){
-        this.showHelpButton = true;
+        if(this.taskInformation && this.taskInformation.OW_task_description_google_doc_link__c){
+          this.showHelpButton = true;
+        }
       }
+    } catch(error){
+      console.log('error:', error);
     }
   }
 
@@ -75,6 +78,7 @@ export default class polaris extends LightningElement {
       this.showOrchestatorFlow = true;
 
       const outputVariables = event.detail.outputVariables;
+
 
       for (let i = 0; i < outputVariables.length; i++) {
         const outputVar = outputVariables[i];
