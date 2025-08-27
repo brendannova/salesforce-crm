@@ -61,6 +61,72 @@ public Public_Provider_Names__c NOVA_PROVIDER {
     set;
 }
 
+// Cache for fulfilment types to avoid multiple queries
+private Map<String, FulfilmentType__c> fulfilmentTypeCache = new Map<String, FulfilmentType__c>();
+
+public FulfilmentType__c FULFILMENT_TYPE_OPEN_PRODUCT {
+    get{
+        if(FULFILMENT_TYPE_OPEN_PRODUCT == null) {
+            loadFulfilmentTypes();
+            FULFILMENT_TYPE_OPEN_PRODUCT = fulfilmentTypeCache.get('OPEN_PRODUCT');
+            
+            // If not found in cache, create a new one
+            if(FULFILMENT_TYPE_OPEN_PRODUCT == null) {
+                Id recId = [SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'OPEN_PRODUCT' ].Id;
+                FULFILMENT_TYPE_OPEN_PRODUCT = new FulfilmentType__c(
+                    Name = 'Fulfilment Type Open',
+                    ReferenceName__c = 'OPEN_PRODUCT',
+                    RecommendationType__c = recId
+                );
+                insert FULFILMENT_TYPE_OPEN_PRODUCT;
+                fulfilmentTypeCache.put('OPEN_PRODUCT', FULFILMENT_TYPE_OPEN_PRODUCT);
+            }
+        }
+        return FULFILMENT_TYPE_OPEN_PRODUCT;
+    }
+    set;
+}
+
+public FulfilmentType__c FULFILMENT_TYPE_LUMP_SUM {
+    get{
+        if(FULFILMENT_TYPE_LUMP_SUM == null) {
+            loadFulfilmentTypes();
+            FULFILMENT_TYPE_LUMP_SUM = fulfilmentTypeCache.get('LUMP_SUM');
+            
+            // If not found in cache, create a new one
+            if(FULFILMENT_TYPE_LUMP_SUM == null) {
+                Id recTypeId = [SELECT Id FROM RecommendationType__c WHERE ReferenceName__c = 'LUMP_SUM' ].Id;
+                FULFILMENT_TYPE_LUMP_SUM = new FulfilmentType__c(
+                    Name = 'Fulfilment Type Lump Sum',
+                    ReferenceName__c = 'LUMP_SUM',
+                    RecommendationType__c = recTypeId
+                );
+                insert FULFILMENT_TYPE_LUMP_SUM;
+                fulfilmentTypeCache.put('LUMP_SUM', FULFILMENT_TYPE_LUMP_SUM);
+            }
+        }
+        return FULFILMENT_TYPE_LUMP_SUM;
+    }
+    set;
+}
+
+/**
+ * Loads all required fulfilment types in a single SOQL query for efficiency
+ */
+private void loadFulfilmentTypes() {
+    if(fulfilmentTypeCache.isEmpty()) {
+        List<FulfilmentType__c> existingFulfilmentTypes = [
+            SELECT Id, Name, ReferenceName__c, RecommendationType__c 
+            FROM FulfilmentType__c 
+            WHERE ReferenceName__c IN ('OPEN_PRODUCT', 'LUMP_SUM')
+        ];
+        
+        for(FulfilmentType__c fulfilmentType : existingFulfilmentTypes) {
+            fulfilmentTypeCache.put(fulfilmentType.ReferenceName__c, fulfilmentType);
+        }
+    }
+}
+
 
 
     public void createConfigurationData(){
@@ -316,22 +382,9 @@ public Public_Provider_Names__c NOVA_PROVIDER {
             // Create open product fulfilments
             List<Fulfilment__c> fulfils = new List<Fulfilment__c>();
 
-            List<FulfilmentType__c> fulfilmentTypes = new List<FulfilmentType__c>();
-            FulfilmentType__c fulfilmentTypeOpen = new FulfilmentType__c(
-                Name = 'Fulfilment Type Open',
-                ReferenceName__c = 'OPEN_PRODUCT',
-                RecommendationType__c = recId
-            );
-            fulfilmentTypes.add(fulfilmentTypeOpen);
-
-            FulfilmentType__c fulfilmentTypeLumpSum = new FulfilmentType__c(
-                Name = 'Fulfilment Type Lump Sum',
-                ReferenceName__c = 'LUMP_SUM',
-                RecommendationType__c = recTypeId
-            );
-            fulfilmentTypes.add(fulfilmentTypeLumpSum);
-            
-            insert fulfilmentTypes;
+            // Use lazy-loaded fulfilment types that handle existing records
+            FulfilmentType__c fulfilmentTypeOpen = FULFILMENT_TYPE_OPEN_PRODUCT;
+            FulfilmentType__c fulfilmentTypeLumpSum = FULFILMENT_TYPE_LUMP_SUM;
 
 
             for( Recommendation__c rec : recs){
