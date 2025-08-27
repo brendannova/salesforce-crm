@@ -41,14 +41,22 @@ public class LwcHelperFinProdRelatedRingfencesTest {
             } 
         }
 
-        List<Id> clients = df.getPersonAccountIds(household, 'Client');
-        List<Id> children = df.getPersonAccountIds(household, 'Child');
+        AccountHouseholdMembers ahm = new AccountHouseholdMembers();
+        AccountHouseholdMembers.HouseholdMemberRequest request = new AccountHouseholdMembers.HouseholdMemberRequest();
+        request.householdId = household;
+        Set<String> roles = new Set<String>{'Client','Child'};
+        request.roles = roles;
+        
+        AccountHouseholdMembers.HouseholdMemberResult result = AccountHouseholdMembers.getHouseholdMembers(request);
+        
+        List<Account> clients = result.memberAccountsByRole.get('Client');
+        List<Account> children = result.memberAccountsByRole.get('Child');
         
         
         Recommendation__c openSippRec = new Recommendation__c(
         	Product__c = productType.Id,
             RecommendationType__c = openProdRecType.Id,
-            PrimaryOwner__c = clients[0],
+            PrimaryOwner__c = clients[0].Id,
             Advice__c = advice.Id,
             Household__c = household
         );
