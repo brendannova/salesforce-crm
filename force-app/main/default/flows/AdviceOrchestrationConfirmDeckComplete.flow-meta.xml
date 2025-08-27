@@ -139,6 +139,22 @@
             <targetReference>Advice_type_chosen</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_current_advice_method</name>
+        <label>Set current advice method</label>
+        <locationX>600</locationX>
+        <locationY>1274</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.AdviceMethod__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>advice.AdviceMethod__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Confirm_date_and_method</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>NOT(ISPICKVAL({!AdviceTypeSelection.firstSelectedRow.AdviceMethod__c}, &quot;Any&quot;))</description>
         <name>Advice_method</name>
@@ -146,7 +162,7 @@
         <locationX>336</locationX>
         <locationY>1166</locationY>
         <defaultConnector>
-            <targetReference>Confirm_date_and_method</targetReference>
+            <targetReference>Set_current_advice_method</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Chosen</defaultConnectorLabel>
         <rules>
