@@ -2192,6 +2192,21 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>AnnualReviewPackEmailTemplateGuidance3</name>
+            <fieldText>&lt;p&gt;The client will go on to have advice and the email we send them now depends on whether that advice will be presented or non-presented. Unfortunately, we can&apos;t yet confirm which to use here but we will soon be improving that. For now, please confirm which is correct and use one of the following email templates:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Pack uploaded | Presented advice follows&lt;/li&gt;&lt;li&gt;Pack uploaded | Non-presented advice follows&lt;/li&gt;&lt;/ol&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EmailToSend</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Pack uploaded | Advice follows</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>AnnualReviewPackEmailTemplateGuidance4</name>
             <fieldText>&lt;p&gt;Unfortunately I am unable to confirm which email template you should be using here. Please choose from one of the &lt;strong&gt;pack uploaded&lt;/strong&gt; email templates in the annual reviews folder based on your knowledge of the customer situation. Raise a ticket and the product team can look into this further but do not let this hold up sharing the annual review pack with the customer. &lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
