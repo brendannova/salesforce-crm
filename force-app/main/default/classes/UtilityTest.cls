@@ -48,7 +48,6 @@ public class UtilityTest {
         } else {
             System.assert(String.isBlank(sandboxName), 'Expected no sandbox name but a value was returned');
         }
-        
     }
     
 	@isTest
@@ -66,5 +65,4 @@ public class UtilityTest {
         List<Schema.PicklistEntry> picklistItems = Contract.Status.getDescribe().getPicklistValues();
         System.Assert.areEqual(picklistMap.get('Draft'), 'Draft', 'Api label does not match requested value');
     }
-    
 }
