@@ -67,6 +67,4 @@ public class UtilityTest {
         System.Assert.areEqual(picklistMap.get('Draft'), 'Draft', 'Api label does not match requested value');
     }
     
-    
-
 }
