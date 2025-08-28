@@ -17,6 +17,21 @@ public without sharing class EmailSend{
     Map<Id, AccountHouseholdMembers.HouseholdMemberResult> householdMembersMap = new Map<Id, AccountHouseholdMembers.HouseholdMemberResult>();
     Map<String, OrgWideEmailAddress> orgWideEmailAddressMap;
 
+    @TestVisible final private static String ERROR_TAGS_NOT_REPLACED = 'Tags have not been replaced';
+    @TestVisible final private static String ERROR_NO_EMAIL_CONFIGS = 'No email configurations found';
+    @TestVisible final private static String ERROR_WRONG_SIZE_EMAIL_CONFIGS = 'Email configuration records not found for all templates';
+    @TestVisible final private static String ERROR_NO_EMAIL_TEMPLATES = 'No email templates found';
+    @TestVisible final private static String ERROR_WRONG_SIZE_EMAIL_TEMPLATES = 'Email templates not all found';
+    @TestVisible final private static String ERROR_NO_ORGWIDE_ADDRESSES = 'No org wide email addresses found';
+    @TestVisible final private static String ERROR_WRONG_SIZE_ORGWIDE_ADDRESSES = 'Org wide email addresses not all found';
+    @TestVisible final private static String ERROR_EMAIL_SEND_ERROR = 'The EmailSend class encountered an error';
+    @TestVisible final private static String ERROR_TARGET_OBJECT_MISSING = 'targetObjectId required';
+    @TestVisible final private static String ERROR_HOUSEHOLD_MISSING = 'Household ID missing';
+    @TestVisible final private static String ERROR_WHAT_ID_MISSING = 'What ID missing';
+    @TestVisible final private static String ERROR_EMAIL_TEMPLATE_MISSING = 'Email template missing';
+    @TestVisible final private static String NO_TO_EMAILS = 'No "To" emails';
+
+
     // The request wrapper that needs to be provided for the correct email to generate
     public class EmailSendRequestAutomatic {
         public String emailTemplateDeveloperName;               // The email template
@@ -59,7 +74,7 @@ public without sharing class EmailSend{
             EmailConfiguration__c emailConfiguration = emailConfigurationsMap.get(request.emailTemplateDeveloperName);
 			email = setUpEmail(request, email, emailConfiguration);
             if( email.htmlBody.contains('{{') ) {
-                throw new EmailSendException('Tags have not been replaced');
+                throw new EmailSendException(ERROR_TAGS_NOT_REPLACED);
             }
             emails.add(email);
         }
@@ -68,19 +83,19 @@ public without sharing class EmailSend{
 
     // Make sure we have required details for each request
     private void validateRequest(emailSendRequestAutomatic request) {
-        if(request.targetObjectId == null)                          {throw new EmailSendException('targetObjectId required');}
-        if(request.householdId == null)                             {throw new EmailSendException('householdId required');}
-        if(request.whatId == null)                                  {throw new EmailSendException('whatId required');}
-        if(String.isBlank(request.emailTemplateDeveloperName))      {throw new EmailSendException('Email template must be provided');}
+        if(request.targetObjectId == null)                          {throw new EmailSendException(ERROR_TARGET_OBJECT_MISSING);}
+        if(request.householdId == null)                             {throw new EmailSendException(ERROR_HOUSEHOLD_MISSING);}
+        if(request.whatId == null)                                  {throw new EmailSendException(ERROR_WHAT_ID_MISSING);}
+        if(String.isBlank(request.emailTemplateDeveloperName))      {throw new EmailSendException(ERROR_EMAIL_TEMPLATE_MISSING);}
     }
 
     // Get all email configuration records for the emails being sent
     private Map<String, EmailConfiguration__c> getEmailConfigurations(Set<String> emailTemplateDeveloperNames) {
         List<EmailConfiguration__c> emailConfigurations = [SELECT Id, DeveloperName__c, ClientsAddressed__c, CopyOtherClients__c, PartnerCopied__c, From__c, ReplyTo__c FROM EmailConfiguration__c WHERE DeveloperName__c IN :emailTemplateDeveloperNames AND SendingProcess__c = :SENDING_PROCESS_AUTOMATIC];
         if(emailConfigurations.isEmpty()){
-            throw new EmailSendException('No email configurations found');
+            throw new EmailSendException(ERROR_NO_EMAIL_CONFIGS);
         } else if(emailConfigurations.size() != emailTemplateDeveloperNames.size()){
-            throw new EmailSendException('Email configuration records not found for all templates');
+            throw new EmailSendException(ERROR_WRONG_SIZE_EMAIL_CONFIGS);
         }
         Map<String, EmailConfiguration__c> emailConfigurationsMap = new Map<String, EmailConfiguration__c>();
         for(EmailConfiguration__c emailConfiguration : emailConfigurations){
@@ -94,9 +109,9 @@ public without sharing class EmailSend{
     private Map<String, EmailTemplate> getEmailTemplates(Set<String> emailTemplateDeveloperNames) {
         List<EmailTemplate> emailTemplates = [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :emailTemplateDeveloperNames];
         if(emailTemplates.isEmpty()){
-            throw new EmailSendException('No email templates found');
+            throw new EmailSendException(ERROR_NO_EMAIL_TEMPLATES);
         } else if(emailTemplates.size() != emailTemplateDeveloperNames.size()){
-            throw new EmailSendException('Email templates not all found');
+            throw new EmailSendException(ERROR_WRONG_SIZE_EMAIL_TEMPLATES);
         }
         Map<String, EmailTemplate> emailTemplatesMap = new Map<String, EmailTemplate>();
         for(EmailTemplate emailTemplate : emailTemplates){
@@ -109,9 +124,9 @@ public without sharing class EmailSend{
     private Map<String, OrgWideEmailAddress> getOrgWideEmailAddresses(Set<String> fromEmailAddresses) {
         List<OrgWideEmailAddress> orgWideEmailAddresses = [SELECT Id, Address FROM OrgWideEmailAddress WHERE Address IN :fromEmailAddresses];
         if(orgWideEmailAddresses.isEmpty()){
-            throw new EmailSendException('No org wide email addresses found');
+            throw new EmailSendException(ERROR_NO_ORGWIDE_ADDRESSES);
         } else if(orgWideEmailAddresses.size() != fromEmailAddresses.size()){
-            throw new EmailSendException('Org wide email addresses not all found');
+            throw new EmailSendException(ERROR_WRONG_SIZE_ORGWIDE_ADDRESSES);
         }
         Map<String, OrgWideEmailAddress> orgWideEmailAddressMap = new Map<String, OrgWideEmailAddress>();
         for(OrgWideEmailAddress OrgWideEmailAddress : OrgWideEmailAddresses){
@@ -172,8 +187,15 @@ public without sharing class EmailSend{
     private List<String> getToAddresses(List<Account> accounts) {
         List<String> toEmails = new List<String>();
         for(Account account : accounts ) {
-            toEmails.add(account.PersonEmail);
+            if( account.PersonEmail != null) {
+                toEmails.add(account.PersonEmail);
+
+            }
         }
+    
+        if( toEmails.size() == 0 ) {
+            throw new EmailSendException(NO_TO_EMAILS);
+        }    
         return toEmails;
     }
 
@@ -237,7 +259,11 @@ public without sharing class EmailSend{
     // A simple method responsible for sending emails
     private void sendEmails(List<Messaging.SingleEmailMessage> emails){
         List<Messaging.SendEmailResult> emailSendResults = Messaging.sendEmail(emails, true);
-        // To-do: work through the results to determine if everything was successful
+        for( Messaging.SendEmailResult emailSendResult : emailSendResults){
+            if( !emailSendResult.isSuccess() ) {
+                throw new EmailSendException(ERROR_EMAIL_SEND_ERROR + emailSendResult.getErrors()[0].getMessage());
+            }
+        }
     }
     
     // Exception class used to handle custom errors within this class

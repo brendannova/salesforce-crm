@@ -2729,11 +2729,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__LightningInstrumentation</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__LightningSales</application>
         <default>false</default>
         <visible>false</visible>
@@ -27141,6 +27136,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>RegularTransaction__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Role__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -27150,6 +27149,14 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Terms_of_Business__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Transaction__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Transactions_Monitor</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
@@ -27673,10 +27680,6 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>standard-MarketSegmentActivation</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>standard-MktCalculatedInsight</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -27691,10 +27694,6 @@
     <tabVisibilities>
         <tab>standard-NamespaceRegistry</tab>
         <visibility>DefaultOff</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>standard-OmniComponentErrorLog</tab>
-        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-OmniDataPack</tab>
@@ -28043,6 +28042,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>CanAccessCE</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>CanApproveUninstalledApps</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

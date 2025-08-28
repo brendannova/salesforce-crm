@@ -2113,7 +2113,7 @@
         </connector>
         <fields>
             <name>AnnualReviewUploadPrompt</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;Annual review upload | {!household.Name}﻿&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Please create a folder in the advice meetings location with the format &lt;strong&gt;&lt;em&gt;{YYY-MM-DD} - Annual review&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Upload the following:&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;https://octopuswealth--devadvar.sandbox.lightning.force.com/builder_platform_interaction/%7B!Get_advice.AnnualReviewDeckUrl__c%7D&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;color: rgb(1, 118, 211);&quot;&gt;the annual review deck &lt;/a&gt;&lt;/li&gt;&lt;li&gt;KIIDs&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;You do not need to upload any illustrations. Any advice that follows will get a new folder. &lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); font-size: 16px; background-color: rgb(255, 255, 255);&quot;&gt;Annual review upload | {!household.Name}﻿&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Please create a folder in the advice meetings location with the format &lt;strong&gt;&lt;em&gt;{YYY-MM-DD} - Annual review&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;&lt;li&gt;Upload the following:&lt;ol&gt;&lt;li&gt;&lt;a href=&quot;{!Get_advice.AnnualReviewDeckUrl__c}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;the annual review deck&lt;/a&gt;&lt;/li&gt;&lt;li&gt;KIIDs&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;You do not need to upload any illustrations. Any advice that follows will get a new folder.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2143,18 +2143,83 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>Email_to_send</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>EmailToSend</elementReference>
-            </defaultValue>
-            <fieldText>Email to send</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isReadOnly>
-                <booleanValue>true</booleanValue>
-            </isReadOnly>
-            <isRequired>false</isRequired>
+            <name>AnnualReviewPackEmailTemplateGuidance</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Emailing the client&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>AnnualReviewPackEmailTemplateGuidance1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Please email the client using the template: &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!EmailToSend}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>EmailToSend</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Pack uploaded | Profile not completed</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>EmailToSend</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Pack uploaded | Non-presented advice follows</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>EmailToSend</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Pack uploaded | Presented advice follows</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AnnualReviewPackEmailTemplateGuidance2</name>
+            <fieldText>&lt;p&gt;The client did not have a a catch up call, which could mean they didn&apos;t engage and we weren&apos;t able to book one or that they let us know they were unable to have one with us for some other reason.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please send one of the following email templates as appropriate:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Pack uploaded | Catch up call incomplete (some comms)&lt;/li&gt;&lt;li&gt;Pack uploaded | Catch up call incomplete (no comms)&lt;/li&gt;&lt;/ol&gt;&lt;p&gt;The right one to use depends on why we didn&apos;t have a catch up call. &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Apologies that we can&apos;t be more specific at this stage. We will be making changes to the upstream process to ensure we can be in the near future. Then we&apos;ll automate this altogether for you :)&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EmailToSend</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Pack uploaded | Catch up call not completed</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AnnualReviewPackEmailTemplateGuidance3</name>
+            <fieldText>&lt;p&gt;The client will go on to have advice and the email we send them now depends on whether that advice will be presented or non-presented. Unfortunately, we can&apos;t yet confirm which to use here but we will soon be improving that. For now, please confirm which is correct and use one of the following email templates:&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Pack uploaded | Presented advice follows&lt;/li&gt;&lt;li&gt;Pack uploaded | Non-presented advice follows&lt;/li&gt;&lt;/ol&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EmailToSend</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Pack uploaded | Advice follows</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AnnualReviewPackEmailTemplateGuidance4</name>
+            <fieldText>&lt;p&gt;Unfortunately I am unable to confirm which email template you should be using here. Please choose from one of the &lt;strong&gt;pack uploaded&lt;/strong&gt; email templates in the annual reviews folder based on your knowledge of the customer situation. Raise a ticket and the product team can look into this further but do not let this hold up sharing the annual review pack with the customer. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>EmailToSend</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Unknown email type</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>DateTimeReviewUpload</name>

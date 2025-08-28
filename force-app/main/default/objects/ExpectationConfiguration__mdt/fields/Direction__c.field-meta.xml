@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Direction__c</fullName>
+    <description>Indicates whether the configured expectation represents money coming in (CONTRIBUTION) or going out (WITHDRAWL) of the financial product</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Direction</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CONTRIBUTION</fullName>
+                <default>true</default>
+                <label>CONTRIBUTION</label>
+            </value>
+            <value>
+                <fullName>WITHDRAWL</fullName>
+                <default>false</default>
+                <label>WITHDRAWL</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

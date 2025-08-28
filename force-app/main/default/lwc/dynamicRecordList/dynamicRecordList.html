@@ -33,8 +33,9 @@
                                 columns={state.columns}
                                 data={state.rows}
                                 key-field={state.keyField}
-                                hide-checkbox-column
+                                hide-checkbox-column={hideCheckboxColumn}
                                 show-row-number-column
+                                onrowselection={handleRowSelection}
                                 >
                 </lightning-datatable>   
             </div>
