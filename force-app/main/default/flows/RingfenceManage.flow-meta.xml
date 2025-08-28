@@ -270,6 +270,12 @@
     <description>Flow to add or update a ringfence from fulfilment</description>
     <environments>Default</environments>
     <formulas>
+        <name>OtherRingfencesTotal</name>
+        <dataType>Number</dataType>
+        <expression>{!RingfenceAmountInitialTotal} - {!RingfenceAmountInitial}</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
         <description>The new total ringfence amount</description>
         <name>RingfenceAmountTotal</name>
         <dataType>Number</dataType>
@@ -488,6 +494,21 @@
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <scale>2</scale>
+        </fields>
+        <fields>
+            <name>Total_of_other_ringfences</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>OtherRingfencesTotal</elementReference>
+            </defaultValue>
+            <fieldText>Total of other ringfences</fieldText>
+            <fieldType>InputField</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isReadOnly>
+                <booleanValue>true</booleanValue>
+            </isReadOnly>
+            <isRequired>false</isRequired>
             <scale>2</scale>
         </fields>
         <fields>
