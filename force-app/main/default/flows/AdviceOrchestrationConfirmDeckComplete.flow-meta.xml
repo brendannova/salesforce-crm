@@ -139,6 +139,22 @@
             <targetReference>Advice_type_chosen</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_current_advice_method</name>
+        <label>Set current advice method</label>
+        <locationX>600</locationX>
+        <locationY>1274</locationY>
+        <assignmentItems>
+            <assignToReference>adviceUpdated.AdviceMethod__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>advice.AdviceMethod__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Confirm_date_and_method</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>NOT(ISPICKVAL({!AdviceTypeSelection.firstSelectedRow.AdviceMethod__c}, &quot;Any&quot;))</description>
         <name>Advice_method</name>
@@ -146,7 +162,7 @@
         <locationX>336</locationX>
         <locationY>1166</locationY>
         <defaultConnector>
-            <targetReference>Confirm_date_and_method</targetReference>
+            <targetReference>Set_current_advice_method</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Chosen</defaultConnectorLabel>
         <rules>
@@ -266,8 +282,8 @@
     <dynamicChoiceSets>
         <name>AdviceMethodChoice</name>
         <dataType>Picklist</dataType>
-        <displayField xsi:nil="true" />
-        <object xsi:nil="true" />
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
         <picklistField>AdviceMethod__c</picklistField>
         <picklistObject>Advice__c</picklistObject>
     </dynamicChoiceSets>
@@ -355,7 +371,7 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
         <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
-        <description>Returned as a list even though there&#39;ll only be 1 result so that this can be used to pre-populate the table. This is inefficient as I could extract this from the list returned in the next query but given we are working with a screen flow and will not hit any limits, this is being accepted.</description>
+        <description>Returned as a list even though there&apos;ll only be 1 result so that this can be used to pre-populate the table. This is inefficient as I could extract this from the list returned in the next query but given we are working with a screen flow and will not hit any limits, this is being accepted.</description>
         <name>Get_current_advice_type</name>
         <label>Get current advice type</label>
         <locationX>336</locationX>
@@ -494,6 +510,16 @@ IF({!adviceType} = &quot;ANNUAL_REVIEW_ACCUMULATION&quot; || {!adviceType} = &qu
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>advice.DeckStatus__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Not started</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>AdviceMethod</name>
