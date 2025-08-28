@@ -54,6 +54,16 @@
                             <value>Account.CreateLiability</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Account.CreateFinancialProduct</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$Permission.CustomPermission.FinancialProductManage}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Account.CreateCashAccount</value>
                             <visibilityRule>
                                 <criteria>
@@ -2367,11 +2377,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
-                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>adminFilters</name>
@@ -2458,9 +2463,6 @@
                 <componentInstanceProperties>
                     <name>actionNames</name>
                     <valueList>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
                         <valueListItems>
                             <value>CustomButton.FinServ__FinancialAccount__c.ViewAll</value>
                         </valueListItems>
@@ -2549,11 +2551,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
-                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>adminFilters</name>
@@ -2623,11 +2620,6 @@
             <componentInstance>
                 <componentInstanceProperties>
                     <name>actionNames</name>
-                    <valueList>
-                        <valueListItems>
-                            <value>New</value>
-                        </valueListItems>
-                    </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>adminFilters</name>
@@ -4982,6 +4974,9 @@
                         <valueListItems>
                             <value>New</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>New</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -5012,7 +5007,13 @@
                     <name>relatedListFieldAliases</name>
                     <valueList>
                         <valueListItems>
+                            <value>NAME</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Status__c</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>RecommendationOverview__c</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

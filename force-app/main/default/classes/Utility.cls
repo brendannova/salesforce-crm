@@ -105,4 +105,27 @@ global with sharing class Utility {
         set;
     }
 
+    
+    /*
+*	@methodName = getPicklistApiLabelMap
+*	@return = Map from option values to labels
+*	@params = A string with the API name of a Salesforce sObject, and a string with the API name of a picklist field on that object.
+*	@description = Method takes a Salesforce object and field and returns a map from the picklist values to their labels. Field name MUST be for a field which is a picklist.
+*/
+    public static Map<String,String> getPicklistApiLabelMap(String objectName, String fieldName){
+        Map <String,Schema.SObjectType> gd = Schema.getGlobalDescribe();
+        Schema.SObjectType sobjType = gd.get(objectName);
+        Schema.DescribeSObjectResult r = sobjType.getDescribe();
+        Map<String, Schema.SObjectField> MapofField = r.fields.getMap();
+        Schema.SObjectField field = MapofField.get(fieldName);
+        
+        List<Schema.PicklistEntry> picklistItems = field.getDescribe().getPicklistValues();
+        
+        Map<String,String> picklistApiLabelMap = new Map<String,String>();
+        For(Schema.PicklistEntry picklistItem : picklistItems){
+            picklistApiLabelMap.put(picklistItem.getValue(), picklistItem.getLabel());
+        }
+        return picklistApiLabelMap; 
+    }
+    
 }

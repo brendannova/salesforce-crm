@@ -33,6 +33,7 @@ public without sharing class LwcHelperAdviceManager {
                     Map<String, Object> adviceData = new Map<String, Object>();
                     adviceData.put('Id', String.valueOf(advice.Id));
                     adviceData.put('Name', advice.Name);
+                    adviceData.put('HouseholdName', advice.Advice_Household__r.Name);
                     adviceData.put('RecordLink', urlPrefix + advice.Id);
                     adviceData.put('Status', advice.Advice_Status__c);
                     adviceData.put('Planner', advice.Assigned_planner__r.Name);
