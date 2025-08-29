@@ -22,7 +22,7 @@ jobs:
         run: |
           curl -L -o pmd-bin.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.16.0/pmd-dist-7.16.0-bin.zip
           unzip -q pmd-bin.zip
-          mv pmd-bin-7.0.0 pmd
+          mv pmd-bin-7.16.0 pmd
 
       - name: Run PMD with Salesforce ruleset
         run: |
