@@ -5,6 +5,7 @@ public with sharing class LwcHelperDynamicRecordList {
 
     @AuraEnabled
     public static DataWrapper getDynamicData(String logicReference, Id contextId) {
+    public static DataWrapper getDynamicData(String logicReference, Id contextId, String whereClause) {
         DataWrapper dataWrapper = new DataWrapper();
         switch on logicReference {
             /*when 'LOGIC_NAME_HERE'{
