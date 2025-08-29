@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Custom Salesforce Ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             https://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>
+        Ruleset containing all standard Salesforce Apex rules, plus a custom rule 
+        requiring metadata XML files that support descriptions (PermissionSet, Profile, 
+        CustomObject, CustomField, Layout, CustomApplication, GlobalValueSet, 
+        CustomMetadata, ApexClass meta, ApexTrigger meta, Flow meta) 
+        to include a &lt;description&gt; tag.
+    </description>
+
+    <!-- ✅ Include all built-in Salesforce (Apex) rules -->
+    <rule ref="category/apex/bestpractices.xml"/>
+    <rule ref="category/apex/codestyle.xml"/>
+    <rule ref="category/apex/design.xml"/>
+    <rule ref="category/apex/documentation.xml"/>
+    <rule ref="category/apex/errorprone.xml"/>
+    <rule ref="category/apex/performance.xml"/>
+    <rule ref="category/apex/security.xml"/>
+
+    <!-- ✅ Custom XPath rule: Check only metadata types that support <description> -->
+    <rule name="MetadataMustHaveDescription"
+          language="xml"
+          message="This Salesforce metadata type must contain a <description> tag."
+          class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+            Ensures that only Salesforce metadata types that officially support <description>
+            (PermissionSet, Profile, CustomObject, CustomField, Layout, CustomApplication, 
+            GlobalValueSet, CustomMetadata, ApexClass/Trigger meta, Flow meta) 
+            include it for maintainability.
+        </description>
+        <priority>2</priority>
+        <properties>
+            <property name="xpath">
+                <value>
+                    <![CDATA[
+                        //PermissionSet[not(description)]
+                        | //Profile[not(description)]
+                        | //CustomObject[not(description)]
+                        | //CustomField[not(description)]
+                        | //Layout[not(description)]
+                        | //CustomApplication[not(description)]
+                        | //GlobalValueSet[not(description)]
+                        | //CustomMetadata[not(description)]
+                        | //ApexClass[not(description)]
+                        | //ApexTrigger[not(description)]
+                        | //Flow[not(description)]
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+</ruleset>

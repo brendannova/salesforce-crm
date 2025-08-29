@@ -1,0 +1,32 @@
+name: PMD Analysis
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  pmd:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Download PMD
+        run: |
+          curl -L -o pmd-bin.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.0.0/pmd-bin-7.0.0.zip
+          unzip -q pmd-bin.zip
+          mv pmd-bin-7.0.0 pmd
+
+      - name: Run PMD with Salesforce ruleset
+        run: |
+          ./pmd/bin/pmd check \
+            --dir force-app \
+            --rulesets .github/rulesets/salesforce-ruleset.xml \
+            --format text
