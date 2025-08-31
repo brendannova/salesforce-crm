@@ -24,6 +24,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -50,6 +51,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -76,6 +78,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <outputParameters>
             <assignToReference>financialProductAdult.RecordTypeId</assignToReference>
             <name>recordTypeId</name>
@@ -105,6 +108,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -131,6 +135,7 @@
             </value>
         </inputParameters>
         <nameSegment>RecordTypeGetId</nameSegment>
+        <offset>0</offset>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
@@ -437,6 +442,10 @@
         </assignmentItems>
         <assignmentItems>
             <assignToReference>financialProductClone.OW_external_ID__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>financialProductClone.NovaId__c</assignToReference>
             <operator>Assign</operator>
         </assignmentItems>
         <connector>
