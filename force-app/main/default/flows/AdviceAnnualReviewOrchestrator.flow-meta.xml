@@ -1200,10 +1200,10 @@
     </choices>
     <choices>
         <name>There_s_one_in_progress</name>
-        <choiceText>There&#39;s one in progress</choiceText>
+        <choiceText>There&apos;s one in progress</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>There&#39;s one in progress</stringValue>
+            <stringValue>There&apos;s one in progress</stringValue>
         </value>
     </choices>
     <choices>
@@ -1422,7 +1422,7 @@
             <connector>
                 <targetReference>Advice_updates_skipped_catch_up</targetReference>
             </connector>
-            <label>Catch up call didn&#39;t happen</label>
+            <label>Catch up call didn&apos;t happen</label>
         </rules>
     </decisions>
     <decisions>
@@ -2299,7 +2299,8 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Incomplete&quot;), &quot;Pack uploaded | Profile not completed&quot;,
 IF(ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Skipped&quot;), &quot;Pack uploaded | Catch up call not completed&quot;,
-IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Complete&quot;) &amp;&amp; ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Complete&quot;), &quot;Pack uploaded | Advice follows&quot;, &quot;Unknown email type&quot;)))</expression>
+IF(ISPICKVAL({!advice.ProfileUpdateStatus__c}, &quot;Complete&quot;) &amp;&amp; ISPICKVAL({!advice.RiskCallStatus__c}, &quot;Complete&quot;), 
+IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;PRESENTED&quot;), &quot;Pack uploaded | Presented advice follows&quot;, IF(ISPICKVAL({!advice.AdviceMethod__c}, &quot;NON_PRESENTED&quot;), &quot;Pack uploaded | Non-presented advice follows&quot;, &quot;Pack uploaded | Advice follows&quot;)), &quot;Unknown email type&quot;)))</expression>
     </formulas>
     <formulas>
         <name>illustrationsTask</name>
@@ -2421,7 +2422,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>ConfirmAutomaticAnnualReviewDecision</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Assess whether we can do an automatic or manual annual review.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;A review can be automatic if the client:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;is in accumulation&lt;/li&gt;&lt;li&gt;doesn&#39;t hold advised VCTs&lt;/li&gt;&lt;li&gt;doesn&#39;t have an adviser charge linked to other households&lt;/li&gt;&lt;li&gt;is not a trust&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Assess whether we can do an automatic or manual annual review.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;A review can be automatic if the client:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;is in accumulation&lt;/li&gt;&lt;li&gt;doesn&apos;t hold advised VCTs&lt;/li&gt;&lt;li&gt;doesn&apos;t have an adviser charge linked to other households&lt;/li&gt;&lt;li&gt;is not a trust&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2657,7 +2658,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>AnnualReview</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click next to confirm that the risk call is complete. You&#39;ll then be prompted to update vulnerability &amp;amp; conflict of interest for all people in this household.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Click next to confirm that the risk call is complete. You&apos;ll then be prompted to update vulnerability &amp;amp; conflict of interest for all people in this household.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2838,7 +2839,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </fields>
         <fields>
             <name>nonPresented</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as &lt;/span&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; If this isn&#39;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;This advice has been marked as &lt;/span&gt;&lt;strong style=&quot;font-size: 12px;&quot;&gt;{!presentationMethod}.&lt;/strong&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt; If this isn&apos;t correct, please add this as a comment in your review and indicate that updates are needed.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2873,7 +2874,7 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <fields>
             <name>ConfirmCompleteDeckReviewPlanner</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Provide comments on the advice checklist and indicate whether this&lt;/span&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Helvetica, Arial, sans-serif, &#39;Apple Color Emoji&#39;, &#39;Segoe UI Emoji&#39;, &#39;Segoe UI Symbol&#39;);&quot;&gt; should be returned to the suitability planner.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!task.Subject}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Provide comments on the advice checklist and indicate whether this&lt;/span&gt;&lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &apos;Segoe UI&apos;, Roboto, Helvetica, Arial, sans-serif, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;, &apos;Segoe UI Symbol&apos;);&quot;&gt; should be returned to the suitability planner.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3417,6 +3418,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
         </connector>
         <flowName>AdviceOrchestrationNarrativeComplete</flowName>
         <inputAssignments>
+            <name>advice</name>
+            <value>
+                <elementReference>advice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>adviceChecklist</name>
             <value>
                 <elementReference>adviceChecklist</elementReference>
@@ -3426,6 +3433,12 @@ IF(NOT({!adviceChecklist.IsLifelineRequired__c}) &amp;&amp; NOT({!adviceChecklis
             <name>adviceChecklistUpdated</name>
             <value>
                 <elementReference>adviceChecklistUpdated</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>adviceId</name>
+            <value>
+                <elementReference>adviceId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

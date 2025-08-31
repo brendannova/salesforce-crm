@@ -59,6 +59,14 @@
         <picklistObject>Recommendation__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>sourceOfFundsChoice</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true" />
+        <object xsi:nil="true" />
+        <picklistField>SourceOfFunds__c</picklistField>
+        <picklistObject>Recommendation__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>transferMethod</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true" />
@@ -309,6 +317,12 @@
             <field>SourceLegacy__c</field>
             <value>
                 <elementReference>Source.recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SourceOfFunds__c</field>
+            <value>
+                <elementReference>Source_of_funds</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -785,6 +799,28 @@ ISBLANK({!Get_recommendation.Product__c})
                             <operator>NotEqualTo</operator>
                             <rightValue>
                                 <stringValue>Single</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Source_of_funds</name>
+                    <choiceReferences>sourceOfFundsChoice</choiceReferences>
+                    <dataType>String</dataType>
+                    <defaultValue>
+                        <elementReference>Get_recommendation.SourceOfFunds__c</elementReference>
+                    </defaultValue>
+                    <fieldText>Source of funds</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>false</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Get_recommendation.RecommendationType__r.HasAmount__c</leftValueReference>
+                            <operator>NotEqualTo</operator>
+                            <rightValue>
+                                <stringValue>Not Applicable</stringValue>
                             </rightValue>
                         </conditions>
                     </visibilityRule>

@@ -275,7 +275,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>YesPensionTransfer</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>Get_recommendation.Product__r.DeveloperName__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -288,6 +288,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>JSIPP_HUBWISE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_recommendation.RecommendationType__r.DeveloperName__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>EXTERNAL_TRANSFER_IN</stringValue>
                 </rightValue>
             </conditions>
             <connector>
