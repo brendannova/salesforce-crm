@@ -25,10 +25,10 @@
     <!-- ✅ Custom XPath rule: Check only metadata types that support <description> -->
     <rule name="MetadataMustHaveDescription"
           language="xml"
-          message="This Salesforce metadata type must contain a description tag."
+          message="This Salesforce metadata type must contain a description element."
           class="net.sourceforge.pmd.lang.rule.XPathRule">
         <description>
-            Ensures that only Salesforce metadata types that officially support <description>
+            Ensures that only Salesforce metadata types that officially support
             (PermissionSet, Profile, CustomObject, CustomField, Layout, CustomApplication, 
             GlobalValueSet, CustomMetadata, ApexClass/Trigger meta, Flow meta) 
             include it for maintainability.
