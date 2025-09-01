@@ -4,7 +4,6 @@ public with sharing class LwcHelperDynamicRecordList {
     private static final Set<String> VALID_COLUMN_TYPES = new Set<String>{'text', 'url', 'currency', 'number', 'date', 'percent', 'location'};
 
     @AuraEnabled
-    public static DataWrapper getDynamicData(String logicReference, Id contextId) {
     public static DataWrapper getDynamicData(String logicReference, Id contextId, String whereClause) {
         DataWrapper dataWrapper = new DataWrapper();
         switch on logicReference {

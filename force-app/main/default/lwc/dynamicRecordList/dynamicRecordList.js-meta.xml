@@ -17,6 +17,7 @@
             <property name="title" type="String" label="List title" required="true" description="What text will display before the record count at the top of the component"/>
             <property name="iconName" type="String" label="Icon Name" required="true" description="Icon reference from SLDS framework e.g. standard:account"/>
             <property name="pageSpecifiedColumnNames" type="String" label="Override Columns (comma seperated list)" description="Field names provided in display order. Columns must be prespecified in Apex logic"/>
+            <property name="maxRowSelection" type="Integer" label="Maximum Row Selection" description="Maximum number of rows that can be selected. Leave empty for unlimited selection."/>
         </targetConfig>
         <targetConfig targets="lightning__FlowScreen">
             <property name="title" type="String" label="List title" required="true" description="What text will display before the record count at the top of the component"/>
@@ -62,6 +63,13 @@
                 label="List of selected Ids"
                 description = "Ids of the selected rows"
                 role="outputOnly" />
+
+            <property
+                name="maxRowSelection"
+                type="Integer"
+                label="Maximum Row Selection"
+                description="Maximum number of rows that can be selected. Leave empty for unlimited selection."
+                role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
