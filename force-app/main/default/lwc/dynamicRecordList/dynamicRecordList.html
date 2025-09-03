@@ -1,44 +1,58 @@
 <template>
-    <!-- display error if set -->
-     {state.error}
+    <!-- Error display -->
+    <template if:true={state.error}>
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <lightning-icon icon-name="utility:error" alternative-text="Error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+            <h2>{state.error}</h2>
+        </div>
+    </template>
+    
+    <!-- Related List -->
     <template if:true={state.showRelatedList}>
-    <div class="related-list-style-div"></div>
-        <div class="slds-card_boundary">
-            <div class="slds-page-header related-list-header">
-                <div class="slds-page-header__row">
-                    <div class="slds-page-header__col-title">
-                        <div class="slds-media">
-                            <div class="slds-media__figure">
-                                <lightning-icon icon-name={state.iconName} size="small"></lightning-icon>
-                            </div>
-                        <div class="slds-media__body">
-                            <div class="slds-page-header__name">
-                                <div class="slds-page-header__name-title">
-                                    <h2>
-                                        <span class="slds-page-header__title slds-truncate" title={state.title}>
-                                            {state.title}
-                                        </span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <lightning-card>
+            <!-- Related List Header -->
+            <div slot="title" class="slds-media slds-media_center">
+                <div class="slds-media__figure">
+                    <lightning-icon icon-name={state.iconName} size="small"></lightning-icon>
+                </div>
+                <div class="slds-media__body">
+                    <span>{state.title}</span>
                 </div>
             </div>
-        </div>
-        <template if:true={hasRows}>
-            <div class="related-list-body">
-                <lightning-datatable class="related-list"
-                                onrowaction={handleRowAction}
-                                columns={state.columns}
-                                data={state.rows}
-                                key-field={state.keyField}
-                                hide-checkbox-column
-                                show-row-number-column
-                                >
-                </lightning-datatable>   
+            
+            <div slot="actions">
+                <lightning-button-icon 
+                    icon-name="utility:refresh" 
+                    variant="bare" 
+                    size="small" 
+                    title="Refresh"
+                    onclick={handleRefreshData}>
+                </lightning-button-icon>
             </div>
-        </template>
-    </div>
+            
+            <!-- Related List Body -->
+            <template if:true={hasRows}>
+                <div class="slds-table_header-fixed_container">
+                    <div class="slds-scrollable_y" style="height: 300px;">
+                        <lightning-datatable 
+                            columns={state.columns}
+                            data={state.rows}
+                            key-field={state.keyField}
+                            hide-checkbox-column={hideCheckboxColumn}
+                            show-row-number-column
+                            onrowselection={handleRowSelection}
+                            onrowaction={handleRowAction}
+                            max-row-selection={maxRowSelectionValue}>
+                        </lightning-datatable>
+                    </div>
+                </div>
+            </template>
+            <template if:false={hasRows}>
+                <div class="slds-text-align_center slds-p-vertical_medium">
+                    <p class="slds-text-body_small slds-text-color_weak">No records found</p>
+                </div>
+            </template>
+        </lightning-card>
     </template>
 </template>

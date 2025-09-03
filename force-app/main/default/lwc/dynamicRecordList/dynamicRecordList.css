@@ -1,17 +1,30 @@
-.lightning-card{
-    width: 100%;
+/* Minimal custom styling for related list appearance */
+
+/* Scrolling container styling */
+.slds-table_header-fixed_container {
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
 }
-.slds-card__header{
-    padding: var(--lwc-varSpacingVerticalSmall,0.75rem) var(--lwc-varSpacingHorizontalMedium,1rem) var(--lwc-varSpacingVerticalSmall,0.75rem);
-    margin: 0 0 0;  
+
+.slds-scrollable_y {
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-.related-list .slds-button_icon-bare{
-	display: none;
+
+/* Ensure datatable looks like a related list */
+lightning-datatable {
+    border: none;
 }
-.related-list a span {
-	color: rgba(27, 82, 151, 1.0);
+
+/* Error notification styling */
+.slds-notify_alert {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
 }
-.related-list .slds-scrollable_x {
-	overflow-y:visible;
-	overflow-x:visible;
+
+.slds-theme_error {
+    background: #fef7f7;
+    color: #c23934;
+    border: 1px solid #ea001e;
 }
