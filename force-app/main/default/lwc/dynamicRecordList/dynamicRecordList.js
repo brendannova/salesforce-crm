@@ -156,46 +156,6 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         }
     }
 
-    handleFlowData() {
-        try {
-            if(this.logicReference != null && this.logicReference !== '') {
-                //query dynamically
-                this.handleFetchData();
-            }else{
-                //otherwise expect it to be passed in variables
-                if (this.tableDataString) {
-                    this.state.rows = JSON.parse(this.tableDataString);
-                    
-                } else {
-                    this.state.rows = [];
-                }
-                console.log('rows:',this.state.rows);
-
-
-                if (this.columnsString) {
-                    this.state.columns = JSON.parse(this.columnsString);
-                } else {
-                    this.state.columns = [];
-                }
-                console.log('columns:',this.state.columns);
-                
-                // In Flow mode, the keyField is passed directly
-                this.state.keyField = this.keyField; 
-                console.log('keyField:', this.state.keyField)
-            }
-
-            if (!this.state.keyField) {
-                 this.state.error = 'Error: You must specify a Key Field when using this component in a Flow.';
-            }
-
-        } catch(e) {
-            this.state.error = 'Error parsing data or columns. Please ensure they are valid JSON strings. Details: ' + e.message;
-            this.state.rows = [];
-            this.state.columns = [];
-            console.log(this.state.error);
-        }
-    }
-
     setColumns() {
         //if none specified ignore and load all
         let tempColumns = [];
