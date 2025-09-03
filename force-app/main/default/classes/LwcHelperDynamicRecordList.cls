@@ -4,7 +4,7 @@ public with sharing class LwcHelperDynamicRecordList {
     private static final Set<String> VALID_COLUMN_TYPES = new Set<String>{'text', 'url', 'currency', 'number', 'date', 'percent', 'location'};
 
     @AuraEnabled
-    public static DataWrapper getDynamicData(String logicReference, Id contextId) {
+    public static DataWrapper getDynamicData(String logicReference, Id contextId, String whereClause) {
         DataWrapper dataWrapper = new DataWrapper();
         switch on logicReference {
             /*when 'LOGIC_NAME_HERE'{
@@ -16,12 +16,14 @@ public with sharing class LwcHelperDynamicRecordList {
             when 'CUSTOMER_FACTS'{
                 dataWrapper = LwcHelperCustomerFactsList.getCustomerFactData(contextId);
             }
+            when 'LwcHelperFinProdRelatedRingfences'{
+                dataWrapper = LwcHelperFinProdRelatedRingfences.getRingfences(contextId);
+            }
             when else{
                 dataWrapper.errorMessage = 'No logic reference matched';
                 //could also throw an error here once logic above is added to prevent (unreachable logic error bellow)
             }
         }
-
 
         List<String> errors = validateDataWrapper(dataWrapper);
         if(errors.size() > 0) {
