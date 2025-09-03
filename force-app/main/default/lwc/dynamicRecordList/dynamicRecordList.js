@@ -1,49 +1,61 @@
 import { LightningElement, track, api, wire } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
+import { FlowAttributeChangeEvent } from 'lightning/flowSupport';
 //import { CurrentPageReference } from "lightning/navigation"; \\Currently unused. This gives an option to access key value pairs defined in a page's URL
 import getDynamicData from "@salesforce/apex/LwcHelperDynamicRecordList.getDynamicData";
 
 export default class dynamicRecordList extends NavigationMixin(LightningElement) {
 
     @track dataReturn;
-    @track state = {}
+    @track state = {};
     @api recordId;
-    @api pageSpecifiedColumnNames; //comma seperated list of columns to display
+    @api pageSpecifiedColumnNames;
     @api rowActionHandler;
     @api customActions = [];
-
     @api title;
     @api iconName;
+    @api contextId;
+    @api logicReference;
+    @api whereClause;
+    @api maxRowSelection;
+    @api maxHeight;
 
-    _contextId;
-    @api
-    get contextId() {
-        return this._contextId;
-    }
-    set contextId(value) {
-        this._contextId = value;
+    // --- Flow Screen Properties ---
+    // Remove the custom getters and setters
+    @api isFlowMode = false; // Set a JS default
+    @api keyField;
+    @api tableDataString;
+    @api columnsString;
+    @api outputSelectedRowsString;
+    @api outputSelectedIds;
+
+    /**
+     * @description This lifecycle hook fires when the component is inserted into the DOM.
+     * It's the ideal place for initialization because all @api properties have been set.
+     */
+    connectedCallback() {
+        // We now call init() here, once, ensuring all properties are available.
         this.init();
     }
 
-    _logicReference;
-    @api
-    get logicReference() {
-        return this._logicReference;
-    }
-    set logicReference(value) {
-        this._logicReference = value;
-        this.init();
+    get isFlowModeEnabled() { //flows cannot set a boolean correclty consitently
+        // This reliably checks the string value passed from the Flow.
+        return this.isFlowMode === 'true';
     }
 
-   /* get an ID from the URL and sets the contextId
-    urlRecordId;
-    @wire(CurrentPageReference)
-    setCurrentPageReference(currentPageReference){
-        if(currentPageReference && currentPageReference.state.c__recordId){
-            this.urlRecordId = currentPageReference.state.c__recordId;
-            this.init();
-        }
-    } */
+    get hideCheckboxColumn(){
+        return !this.isFlowMode;
+    }
+
+    get maxRowSelectionValue() {
+        // Only apply max row selection if specified
+        return this.maxRowSelection ? parseInt(this.maxRowSelection) : undefined;
+    }
+
+    get heightStyle() {
+        // If maxHeight is specified, apply it; otherwise allow natural height
+        return this.maxHeight ? `height: ${this.maxHeight}px;` : '';
+    }
 
     get hasRows() {
         return this.state.rows != null && this.state.rows.length && this.state.keyField != null;
@@ -57,30 +69,131 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         }
     }
 
+    async handleFetchData(){
+        this.dataReturn = await this.fetchData(this.logicReference, this.contextId, this.whereClause);
+        if(this.dataReturn !== null && this.dataReturn.errorMessage !== null ){
+            this.state.error = this.dataReturn.errorMessage;
+        }
+        this.setColumns();
+        this.setKeyField();
+        this.setRows();
+        // Update title after data is loaded to ensure correct count
+        this.setTitle();
+    }
+
     async init(){
+        console.log('init called');
         this.state.title = this.title;
         this.state.iconName = this.iconName;
         this.state.showRelatedList = true;
+        this.state.error = null; // Reset error on init
 
-        if(this.recordId && !this.contextId){ //set context id as record id if not overwritten
-            this.contextId = this.recordId;
-        } /*else if(this.urlRecordId && !this.contextId) { //set contextId as ID from URL if not overwritten & not a record page
-            this.contextId = this.urlRecordId;
-        } */
+        //this.isFlowMode = true;
 
-        console.log(this.contextId);
-        console.log(this.logicReference);
-        if(this.contextId != null && !this.contextId !== '' && this.logicReference != null && !this.logicReference !== ''){
+        console.log('FlowMdde:', this.isFlowMode);
+        console.log('isFlowModeEnabled:', this.isFlowModeEnabled);
 
-            this.dataReturn = await this.fetchData(this.logicReference, this.contextId);
-            if(this.dataRetrun !== null && this.dataReturn.errorMessage !== null ){
-                this.state.error = this.dataReturn.errorMessage;
+        if (this.isFlowModeEnabled) {
+            // Logic for Flow Mode ---
+            console.log('In Flow Mode');
+            this.handleFlowData();
+            // Update title after flow data is processed
+            this.setTitle();
+        } else {
+            // --- Logic on page ---
+            if(this.recordId && !this.contextId){
+                this.contextId = this.recordId;
             }
-            this.setColumns();
-            this.setKeyField();
-            this.setRows();
+
+            console.log('Context ID:', this.contextId);
+            console.log('Logic Reference:', this.logicReference);
+            if(this.contextId != null && this.contextId !== '' && this.logicReference != null && this.logicReference !== ''){
+                await this.handleFetchData();
+            } else {
+                // Set initial title even when no data is available
+                this.setTitle();
+            }
         }
-        this.setTitle();
+    }
+
+    handleFlowData() {
+        try {
+            if(this.logicReference != null && this.logicReference !== '') {
+                //query dynamically
+                this.handleFetchData();
+            }else{
+                //otherwise expect it to be passed in variables
+                if (this.tableDataString) {
+                    this.state.rows = JSON.parse(this.tableDataString);
+                    
+                } else {
+                    this.state.rows = [];
+                }
+                console.log('rows:',this.state.rows);
+
+
+                if (this.columnsString) {
+                    this.state.columns = JSON.parse(this.columnsString);
+                } else {
+                    this.state.columns = [];
+                }
+                console.log('columns:',this.state.columns);
+                
+                // In Flow mode, the keyField is passed directly
+                this.state.keyField = this.keyField; 
+                console.log('keyField:', this.state.keyField)
+            }
+
+            if (!this.state.keyField) {
+                 this.state.error = 'Error: You must specify a Key Field when using this component in a Flow.';
+            }
+
+        } catch(e) {
+            this.state.error = 'Error parsing data or columns. Please ensure they are valid JSON strings. Details: ' + e.message;
+            this.state.rows = [];
+            this.state.columns = [];
+            console.log(this.state.error);
+        }
+    }
+
+    handleFlowData() {
+        try {
+            if(this.logicReference != null && this.logicReference !== '') {
+                //query dynamically
+                this.handleFetchData();
+            }else{
+                //otherwise expect it to be passed in variables
+                if (this.tableDataString) {
+                    this.state.rows = JSON.parse(this.tableDataString);
+                    
+                } else {
+                    this.state.rows = [];
+                }
+                console.log('rows:',this.state.rows);
+
+
+                if (this.columnsString) {
+                    this.state.columns = JSON.parse(this.columnsString);
+                } else {
+                    this.state.columns = [];
+                }
+                console.log('columns:',this.state.columns);
+                
+                // In Flow mode, the keyField is passed directly
+                this.state.keyField = this.keyField; 
+                console.log('keyField:', this.state.keyField)
+            }
+
+            if (!this.state.keyField) {
+                 this.state.error = 'Error: You must specify a Key Field when using this component in a Flow.';
+            }
+
+        } catch(e) {
+            this.state.error = 'Error parsing data or columns. Please ensure they are valid JSON strings. Details: ' + e.message;
+            this.state.rows = [];
+            this.state.columns = [];
+            console.log(this.state.error);
+        }
     }
 
     setColumns() {
@@ -130,9 +243,9 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         this.state.title += ' (' + this.numberOfRows + ')';
     }
 
-    async fetchData(logicReference, contextId){
+    async fetchData(logicReference, contextId, whereClause){
         try{
-            let data = await getDynamicData({logicReference: logicReference, contextId: contextId});
+            let data = await getDynamicData({logicReference: logicReference, contextId: contextId, whereClause: whereClause});
             return data;
         } catch (error) {
             console.log('error in fetchData');
@@ -141,7 +254,65 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         }
     }
 
-    handleRefreshData() {
-        this.init();
+    async handleRefreshData() {
+        await this.init();
     }
+
+    /**
+     * @description NEW: Handles the row selection event from the datatable.
+     */
+    handleRowSelection(event) {
+        const selectedRows = event.detail.selectedRows;
+
+        //get selected rows id field value and add to list of string
+        let selectedIds = [];
+        for (let row of selectedRows) {
+            selectedIds.push(row[this.state.keyField]);
+        }
+        console.log('selected Ids: ' + selectedIds);
+        
+        // Convert the selected rows back to a JSON string for the Flow
+        const selectedRowsJson = JSON.stringify(selectedRows);
+        
+        
+        // Notify the Flow that the output attribute has changed
+        //this.outputSelectedRowsString = selectedRowsJson;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('outputSelectedRowsString', selectedRowsJson);
+        this.dispatchEvent(attributeChangeEvent);
+
+        //this.outputSelectedIds = selectedIds;
+        const selectedRowsIdsChangeEvent = new FlowAttributeChangeEvent('outputSelectedIds', selectedIds);
+        this.dispatchEvent(selectedRowsIdsChangeEvent);
+    }
+
+    /**
+     * @description Handles row action events from the datatable.
+     */
+    handleRowAction(event) {
+        const { action, row } = event.detail;
+        
+        if (this.rowActionHandler) {
+            // If a custom action handler is provided, dispatch a custom event
+            const customEvent = new CustomEvent('rowaction', {
+                detail: {
+                    action: action,
+                    row: row,
+                    keyField: this.state.keyField
+                }
+            });
+            this.dispatchEvent(customEvent);
+        } else {
+            // Default navigation behavior
+            if (action.name === 'view' || action.name === 'edit') {
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: row[this.state.keyField],
+                        actionName: action.name === 'view' ? 'view' : 'edit'
+                    }
+                });
+            }
+        }
+    }
+
 }
