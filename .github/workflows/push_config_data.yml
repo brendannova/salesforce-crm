@@ -1,0 +1,53 @@
+# This workflow is designed to query Salesforce for information about a specific sandbox.
+# If the sandbox exists, it will refresh it. If not, it will create a new one.
+
+name: Populate config data
+
+on:
+  # This allows the workflow to be triggered manually from the GitHub Actions tab.
+  # It also defines a single input for the sandbox name.
+  workflow_dispatch:
+    inputs:
+      sandboxName:
+        description: 'Name of the Salesforce sandbox to populate data'
+        required: true
+        type: string
+
+jobs:
+  manage-salesforce-sandbox:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: |
+          npm install @salesforce/cli --global 
+
+      - name: Install SFDMU
+        run: |
+          echo Installing Salesforce Data Move Utility..."
+          sf plugins install sfdmu 
+
+      - name: Authenticate with Salesforce
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
+        run: |
+          echo "Authenticating to Salesforce dev hub using auth URL..."
+          sf org login sfdx-url --sfdx-url-file <(echo "$SF_AUTH_URL") --set-default-dev-hub --set-default 
+
+      - name: Authenticate with Salesforce Sandbox
+        env:
+          SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
+        run: |
+          echo "Authenticating to Salesforce dev hub using auth URL..."
+          sf org resume sandbox --name=$SANDBOX_NAME
+
+      - name: Initiate SFDMU job
+        id: seed-data
+        env:
+          SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
+        run: |
+          echo "Querying for sandbox: $SANDBOX_NAME"
+          sf org list
