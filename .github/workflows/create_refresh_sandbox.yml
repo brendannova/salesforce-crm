@@ -1,0 +1,87 @@
+# This workflow is designed to query Salesforce for information about a specific sandbox.
+# If the sandbox exists, it will refresh it. If not, it will create a new one.
+
+name: Query & Manage Salesforce Sandbox
+
+on:
+  # This allows the workflow to be triggered manually from the GitHub Actions tab.
+  # It also defines a single input for the sandbox name.
+  workflow_dispatch:
+    inputs:
+      sandboxName:
+        description: 'Name of the Salesforce sandbox to query'
+        required: true
+        type: string
+
+jobs:
+  manage-salesforce-sandbox:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install and set up the Salesforce CLI.
+      - name: Install Salesforce CLI
+        run: |
+          npm install @salesforce/cli --global
+
+      # Step 3: Authenticate with the Salesforce dev hub using JWT.
+      # The credentials must be stored as GitHub Secrets for security.
+      # You need to configure SF_CLIENT_ID, SF_USERNAME, and SFDX_JWT_KEY in your repository secrets.
+      - name: Authenticate with Salesforce
+        env:
+          SF_CLIENT_ID: ${{ secrets.SF_CLIENT_ID }}
+          SF_USERNAME: ${{ secrets.SF_USERNAME }}
+          SFDX_JWT_KEY: ${{ secrets.SFDX_JWT_KEY }}
+        run: |
+          echo "Authenticating to Salesforce dev hub..."
+          sf org:login:jwt --client-id "$SF_CLIENT_ID" --username "$SF_USERNAME" --jwt-key-file <(echo "$SFDX_JWT_KEY" | base64 --decode) --set-default-dev-hub
+
+      # Step 4: Run the Salesforce query and check for existence.
+      # The results are parsed to determine if the sandbox already exists.
+      - name: Query for Sandbox Existence
+        id: query-sandbox
+        env:
+          SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
+        run: |
+          echo "Querying for sandbox: $SANDBOX_NAME"
+          QUERY_RESULTS=$(sf data query --query "SELECT Id FROM SandboxInfo WHERE SandboxName = '$SANDBOX_NAME'" --json)
+          
+          # Use jq to parse the JSON and check for a sandbox ID.
+          # The -r flag is used to get the raw string output.
+          SANDBOX_ID=$(echo "$QUERY_RESULTS" | jq -r '.result.records[0].Id')
+
+          # Set output variables that can be used in subsequent steps' conditions.
+          if [ -n "$SANDBOX_ID" ]; then
+            echo "sandbox_exists=true" >> $GITHUB_OUTPUT
+            echo "sandbox_id=$SANDBOX_ID" >> $GITHUB_OUTPUT
+            echo "Sandbox found with ID: $SANDBOX_ID"
+          else
+            echo "sandbox_exists=false" >> $GITHUB_OUTPUT
+            echo "No existing sandbox found with name: $SANDBOX_NAME"
+          fi
+
+      # Step 5: Refresh the existing sandbox if it was found.
+      # This step will only run if the 'sandbox_exists' output from the previous step is 'true'.
+      - name: Refresh existing sandbox
+        if: steps.query-sandbox.outputs.sandbox_exists == 'true'
+        env:
+          SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
+        run: |
+          echo "Refreshing sandbox '$SANDBOX_NAME'..."
+          sf org:refresh sandbox --name "$SANDBOX_NAME" --wait 360
+
+      # Step 6: Create a new sandbox if one was not found.
+      # This step will only run if the 'sandbox_exists' output from the query step is 'false'.
+      - name: Create new sandbox
+        if: steps.query-sandbox.outputs.sandbox_exists == 'false'
+        env:
+          SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
+          DEV_HUB_USERNAME: ${{ secrets.SF_USERNAME }}
+        run: |
+          echo "No sandbox found. Creating a new one named '$SANDBOX_NAME'..."
+          # The --type flag is used to specify the sandbox type.
+          sf org:create sandbox --name "$SANDBOX_NAME" --type Developer --source-org "$DEV_HUB_USERNAME" --wait 360
+
