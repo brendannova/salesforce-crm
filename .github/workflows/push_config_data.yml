@@ -48,6 +48,7 @@ jobs:
         id: seed-data
         env:
           SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
+          SF_USER:  ${{ secrets.SF_USER }}
         run: |
           echo "Querying for sandbox: $SANDBOX_NAME"
-          sf org list
+          sf sfdmu run -p config-data -s csvfile -t $SF_USER.$SANDBOX_NAME --simulation
