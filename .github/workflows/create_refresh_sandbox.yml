@@ -81,5 +81,4 @@ jobs:
           DEV_HUB_USERNAME: ${{ secrets.SF_USERNAME }}
         run: |
           echo "No sandbox found. Creating a new one named '$SANDBOX_NAME'..."
-          # The --type flag is used to specify the sandbox type.
-          sf org create sandbox --name "$SANDBOX_NAME" --no-prompt --license-type Developer --target-org="$DEV_HUB_USERNAME" --wait 360
+          sf org create sandbox --name "$SANDBOX_NAME" --no-prompt --license-type=Developer --wait 360
