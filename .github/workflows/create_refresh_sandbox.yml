@@ -45,10 +45,8 @@ jobs:
           SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
         run: |
           echo "Querying for sandbox: $SANDBOX_NAME"
-          sf data query --use-tooling-api --query "SELECT Id FROM SandboxInfo WHERE SandboxName = '$SANDBOX_NAME'" --json
           QUERY_RESULTS=$(sf data query --use-tooling-api --query "SELECT Id FROM SandboxInfo WHERE SandboxName = '$SANDBOX_NAME'" --json)
 
-          echo "QR: $QUERY_RESULTS"
           
           # Use jq to parse the JSON and check for a sandbox ID.
           # The -r flag is used to get the raw string output.
@@ -72,7 +70,7 @@ jobs:
           SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
         run: |
           echo "Refreshing sandbox '$SANDBOX_NAME'..."
-          sf org:refresh sandbox --name "$SANDBOX_NAME" --wait 360
+          sf org refresh sandbox --no-prompt --name "$SANDBOX_NAME" --wait 360
 
       # Step 6: Create a new sandbox if one was not found.
       # This step will only run if the 'sandbox_exists' output from the query step is 'false'.
