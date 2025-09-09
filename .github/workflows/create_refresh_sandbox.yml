@@ -82,4 +82,4 @@ jobs:
         run: |
           echo "No sandbox found. Creating a new one named '$SANDBOX_NAME'..."
           # The --type flag is used to specify the sandbox type.
-          sf org:create sandbox --name "$SANDBOX_NAME" --type Developer --source-org "$DEV_HUB_USERNAME" --wait 360
+          sf org create sandbox --name "$SANDBOX_NAME" --no-prompt --license-type Developer --source-org "$DEV_HUB_USERNAME" --wait 360
