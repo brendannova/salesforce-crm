@@ -35,7 +35,7 @@ jobs:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
           echo "Authenticating to Salesforce dev hub using auth URL..."
-          sf org login sfdx-url --sfdx-url-file <(echo "$SF_AUTH_URL") --set-default-dev-hub
+          sf org login sfdx-url --sfdx-url-file <(echo "$SF_AUTH_URL") --set-default-dev-hub --set-default 
 
       # Step 4: Run the Salesforce query and check for existence.
       # The results are parsed to determine if the sandbox already exists.
@@ -45,6 +45,7 @@ jobs:
           SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
         run: |
           echo "Querying for sandbox: $SANDBOX_NAME"
+          sf data query --query --use-tooling-api "SELECT Id FROM SandboxInfo WHERE SandboxName = '$SANDBOX_NAME'" --json
           QUERY_RESULTS=$(sf data query --query --use-tooling-api "SELECT Id FROM SandboxInfo WHERE SandboxName = '$SANDBOX_NAME'" --json)
 
           echo "QR: $QUERY_RESULTS"
