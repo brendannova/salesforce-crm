@@ -53,7 +53,7 @@ jobs:
           SANDBOX_ID=$(echo "$QUERY_RESULTS" | jq -r '.result.records[0]?.Id')
 
           # Set output variables that can be used in subsequent steps' conditions.
-          if [ -n "$SANDBOX_ID" ]; then
+          if [ "$SANDBOX_ID" != "null" ] && [ -n "$SANDBOX_ID" ]; then
             echo "sandbox_exists=true" >> $GITHUB_OUTPUT
             echo "sandbox_id=$SANDBOX_ID" >> $GITHUB_OUTPUT
             echo "Sandbox found with ID: $SANDBOX_ID"
