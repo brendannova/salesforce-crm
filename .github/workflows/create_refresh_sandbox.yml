@@ -27,17 +27,15 @@ jobs:
         run: |
           npm install @salesforce/cli --global
 
-      # Step 3: Authenticate with the Salesforce dev hub using JWT.
-      # The credentials must be stored as GitHub Secrets for security.
-      # You need to configure SF_CLIENT_ID, SF_USERNAME, and SFDX_JWT_KEY in your repository secrets.
+      # Step 3: Authenticate with the Salesforce dev hub using an Auth URL.
+      # The URL must be stored as a GitHub Secret for security.
+      # You need to configure the SF_AUTH_URL secret in your repository.
       - name: Authenticate with Salesforce
         env:
-          SF_CLIENT_ID: ${{ secrets.SF_CLIENT_ID }}
-          SF_USERNAME: ${{ secrets.SF_USERNAME }}
-          SFDX_JWT_KEY: ${{ secrets.SFDX_JWT_KEY }}
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
-          echo "Authenticating to Salesforce dev hub..."
-          sf org:login:jwt --client-id "$SF_CLIENT_ID" --username "$SF_USERNAME" --jwt-key-file <(echo "$SFDX_JWT_KEY" | base64 --decode) --set-default-dev-hub
+          echo "Authenticating to Salesforce dev hub using auth URL..."
+          org login sfdx-url --sfdx-url "$SF_AUTH_URL" --set-default-dev-hub
 
       # Step 4: Run the Salesforce query and check for existence.
       # The results are parsed to determine if the sandbox already exists.
@@ -84,4 +82,3 @@ jobs:
           echo "No sandbox found. Creating a new one named '$SANDBOX_NAME'..."
           # The --type flag is used to specify the sandbox type.
           sf org:create sandbox --name "$SANDBOX_NAME" --type Developer --source-org "$DEV_HUB_USERNAME" --wait 360
-
