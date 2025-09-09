@@ -17,3 +17,16 @@ for file in $(find . -type f -name "*.namedCredential-meta.xml"); do
     -v "NOUSER" \
     "$file"
 done
+
+for file in $(find . -type f -name "*.authprovider-meta.xml"); do
+  [ -f "$file" ] || continue
+
+  echo "Processing $file"
+
+  # Add <password>NOPASSWORD</password> after <protocol>password</protocol>, ignoring namespaces
+  xmlstarlet ed -L \
+  -u "//*[local-name()='AuthProvider']/*[local-name()='consumerKey']"    -v "NOKEY" \
+  -u "//*[local-name()='AuthProvider']/*[local-name()='authorizeUrl']"   -v "https://example.com" \
+    "$file"
+done
+
