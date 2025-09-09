@@ -45,7 +45,7 @@ jobs:
           SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
         run: |
           echo "Querying for sandbox: $SANDBOX_NAME"
-          QUERY_RESULTS=$(sf data query --query "SELECT Id FROM SandboxInfo WHERE SandboxName = '$SANDBOX_NAME'" --json)
+          QUERY_RESULTS=$(sf data query --query --use-tooling-api "SELECT Id FROM SandboxInfo WHERE SandboxName = '$SANDBOX_NAME'" --json)
           
           # Use jq to parse the JSON and check for a sandbox ID.
           # The -r flag is used to get the raw string output.
