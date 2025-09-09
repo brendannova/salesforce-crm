@@ -35,7 +35,7 @@ jobs:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
           echo "Authenticating to Salesforce dev hub using auth URL..."
-          sf org login sfdx-url --sfdx-url "$SF_AUTH_URL" --set-default-dev-hub
+          sf org login sfdx-url --sfdx-url-file "$SF_AUTH_URL" --set-default-dev-hub
 
       # Step 4: Run the Salesforce query and check for existence.
       # The results are parsed to determine if the sandbox already exists.
