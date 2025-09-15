@@ -12,64 +12,37 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__HomePage, lightning__RecordPage, lightning__AppPage">
-            <property name="contextId" type="String" label="Override Page Record Id" description="Will default to the page record ID if avaliable, but can be manually overwritten or specified here"/>
-            <property name="logicReference" type="String" label="API name of logic to call" required="true" description="Reference apex will use to delected with funciton to get data from"/>
-            <property name="title" type="String" label="List title" required="true" description="What text will display before the record count at the top of the component"/>
-            <property name="iconName" type="String" label="Icon Name" required="true" description="Icon reference from SLDS framework e.g. standard:account"/>
-            <property name="pageSpecifiedColumnNames" type="String" label="Override Columns (comma seperated list)" description="Field names provided in display order. Columns must be prespecified in Apex logic"/>
-            <property name="maxRowSelection" type="Integer" label="Maximum Row Selection" description="Maximum number of rows that can be selected. Leave empty for unlimited selection."/>
+            <property name="contextId" type="String" label="Override Page Record Id" description="Will default to the page record ID if avaliable, but can be manually overwritten or specified here" />
+            <property name="logicReference" type="String" label="API name of logic to call" required="true" description="Reference apex will use to delected with funciton to get data from" />
+            <property name="title" type="String" label="List title" required="true" description="What text will display before the record count at the top of the component" />
+            <property name="iconName" type="String" label="Icon Name" required="true" description="Icon reference from SLDS framework e.g. standard:account" />
+            <property name="pageSpecifiedColumnNames" type="String" label="Override Columns (comma seperated list)" description="Field names provided in display order. Columns must be prespecified in Apex logic" />
+            <property name="maxRowSelection" type="Integer" label="Maximum Row Selection" description="Maximum number of rows that can be selected. Leave empty for unlimited selection." />
+            <property name="maxHeight" type="Integer" label="Maximum Height (px)" description="Maximum height of the list in pixels. Leave empty to allow natural height." />
         </targetConfig>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="title" type="String" label="List title" required="true" description="What text will display before the record count at the top of the component"/>
-            <property name="iconName" type="String" label="Icon Name" required="true" description="TIcon reference from SLDS framework e.g. standard:account"/>
+            <property name="title" type="String" label="List title" required="true" description="What text will display before the record count at the top of the component" />
+            <property name="iconName" type="String" label="Icon Name" required="true" description="TIcon reference from SLDS framework e.g. standard:account" />
 
-            <property
-                name="isFlowMode"
-                type="string"
-                label="Enable Flow Mode"
-                description="Set to 'true' to provide data directly from the Flow."/>
+            <property name="isFlowMode" type="string" label="Enable Flow Mode" description="Set to 'true' to provide data directly from the Flow." />
             
-            <property
-                name="tableDataString"
-                type="String"
-                label="Table Data (Apex-Defined)"
-                description="Input a collection of Apex-defined variables. Must be a JSON string."
-                role="inputOnly"/>
+            <property name="logicReference" type="String" label="Logic Reference (Apex Function)" description="Reference to Apex function to call for data. If specified, will use Apex instead of input strings." role="inputOnly" />
             
-            <property
-                name="columnsString"
-                type="String"
-                label="Column Definitions"
-                description="Define the table columns. Must be a JSON string. Example: [{'label':'Name', 'fieldName':'name'}]"
-                role="inputOnly"/>
-
-            <property
-                name="keyField"
-                type="String"
-                label="Key Field"
-                description="The API name of the unique identifier field in your data (e.g., 'Id' or 'id')."
-                role="inputOnly"/>
+            <property name="contextId" type="String" label="Context ID" description="ID to pass to the Apex function when using logicReference." role="inputOnly" />
             
-            <property
-                name="outputSelectedRowsString"
-                type="String"
-                label="Output Selected Rows"
-                description="Outputs the selected rows as a JSON string to an Apex-defined collection variable."
-                role="outputOnly"/>
+            <property name="tableDataString" type="String" label="Table Data (JSON String)" description="Input a collection of data as a JSON string. Only used if logicReference is not specified." role="inputOnly" />
+            
+            <property name="columnsString" type="String" label="Column Definitions" description="Define the table columns as a JSON string. Only used if logicReference is not specified. Example: [{'label':'Name', 'fieldName':'name'}]" role="inputOnly" />
 
-            <property
-                name="outputSelectedIds"
-                type="String[]"
-                label="List of selected Ids"
-                description = "Ids of the selected rows"
-                role="outputOnly" />
+            <property name="keyField" type="String" label="Key Field" description="The API name of the unique identifier field in your data (e.g., 'Id' or 'id')." role="inputOnly" />
+            
+            <property name="outputSelectedRowsString" type="String" label="Output Selected Rows" description="Outputs the selected rows as a JSON string to an Apex-defined collection variable." role="outputOnly" />
 
-            <property
-                name="maxRowSelection"
-                type="Integer"
-                label="Maximum Row Selection"
-                description="Maximum number of rows that can be selected. Leave empty for unlimited selection."
-                role="inputOnly"/>
+            <property name="outputSelectedIds" type="String[]" label="List of selected Ids" description="Ids of the selected rows" role="outputOnly" />
+
+            <property name="maxRowSelection" type="Integer" label="Maximum Row Selection" description="Maximum number of rows that can be selected. Leave empty for unlimited selection." role="inputOnly" />
+            
+            <property name="maxHeight" type="Integer" label="Maximum Height (px)" description="Maximum height of the list in pixels. Leave empty to allow natural height." role="inputOnly" />
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

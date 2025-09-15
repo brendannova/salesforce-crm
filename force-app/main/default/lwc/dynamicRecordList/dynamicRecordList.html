@@ -34,7 +34,7 @@
             <!-- Related List Body -->
             <template if:true={hasRows}>
                 <div class="slds-table_header-fixed_container">
-                    <div class="slds-scrollable_y" style="height: 300px;">
+                    <div class="slds-scrollable_y" style={heightStyle}>
                         <lightning-datatable 
                             columns={state.columns}
                             data={state.rows}

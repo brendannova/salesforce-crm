@@ -11,6 +11,11 @@
     overflow-x: hidden;
 }
 
+/* When no max height is specified, allow natural expansion */
+.slds-scrollable_y:not([style*="height"]) {
+    overflow-y: visible;
+}
+
 /* Ensure datatable looks like a related list */
 lightning-datatable {
     border: none;

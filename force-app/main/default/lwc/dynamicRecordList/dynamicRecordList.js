@@ -18,6 +18,7 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
     @api logicReference;
     @api whereClause;
     @api maxRowSelection;
+    @api maxHeight;
 
     // --- Flow Screen Properties ---
     // Remove the custom getters and setters
@@ -49,6 +50,11 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
     get maxRowSelectionValue() {
         // Only apply max row selection if specified
         return this.maxRowSelection ? parseInt(this.maxRowSelection) : undefined;
+    }
+
+    get heightStyle() {
+        // If maxHeight is specified, apply it; otherwise allow natural height
+        return this.maxHeight ? `height: ${this.maxHeight}px;` : '';
     }
 
     get hasRows() {
@@ -107,46 +113,6 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
                 // Set initial title even when no data is available
                 this.setTitle();
             }
-        }
-    }
-
-    handleFlowData() {
-        try {
-            if(this.logicReference != null && this.logicReference !== '') {
-                //query dynamically
-                this.handleFetchData();
-            }else{
-                //otherwise expect it to be passed in variables
-                if (this.tableDataString) {
-                    this.state.rows = JSON.parse(this.tableDataString);
-                    
-                } else {
-                    this.state.rows = [];
-                }
-                console.log('rows:',this.state.rows);
-
-
-                if (this.columnsString) {
-                    this.state.columns = JSON.parse(this.columnsString);
-                } else {
-                    this.state.columns = [];
-                }
-                console.log('columns:',this.state.columns);
-                
-                // In Flow mode, the keyField is passed directly
-                this.state.keyField = this.keyField; 
-                console.log('keyField:', this.state.keyField)
-            }
-
-            if (!this.state.keyField) {
-                 this.state.error = 'Error: You must specify a Key Field when using this component in a Flow.';
-            }
-
-        } catch(e) {
-            this.state.error = 'Error parsing data or columns. Please ensure they are valid JSON strings. Details: ' + e.message;
-            this.state.rows = [];
-            this.state.columns = [];
-            console.log(this.state.error);
         }
     }
 
@@ -309,30 +275,4 @@ export default class dynamicRecordList extends NavigationMixin(LightningElement)
         }
     }
 
-    /**
-     * @description NEW: Handles the row selection event from the datatable.
-     */
-    handleRowSelection(event) {
-        const selectedRows = event.detail.selectedRows;
-
-        //get selected rows id field value and add to list of string
-        let selectedIds = [];
-        for (let row of selectedRows) {
-            selectedIds.push(row[this.state.keyField]);
-        }
-        console.log('selected Ids: ' + selectedIds);
-        
-        // Convert the selected rows back to a JSON string for the Flow
-        const selectedRowsJson = JSON.stringify(selectedRows);
-        
-        
-        // Notify the Flow that the output attribute has changed
-        //this.outputSelectedRowsString = selectedRowsJson;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('outputSelectedRowsString', selectedRowsJson);
-        this.dispatchEvent(attributeChangeEvent);
-
-        //this.outputSelectedIds = selectedIds;
-        const selectedRowsIdsChangeEvent = new FlowAttributeChangeEvent('outputSelectedIds', selectedIds);
-        this.dispatchEvent(selectedRowsIdsChangeEvent);
-    }
 }
