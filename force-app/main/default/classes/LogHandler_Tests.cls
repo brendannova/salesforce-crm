@@ -189,10 +189,13 @@ private class LogHandler_Tests {
     log = [SELECT Id, HasOrganizationLimits__c, OrganizationLimits__c FROM Log__c WHERE Id = :log.Id];
     System.Assert.isTrue(log.HasOrganizationLimits__c);
     Map<String, LogHandler.SerializableOrganizationLimit> limitNameToExpectedOrganizationLimits = new Map<String, LogHandler.SerializableOrganizationLimit>();
-    List<String> sortedSystemOrgLimitNames = new List<String>(System.OrgLimits.getMap().keySet());
+    
+    Map<String, System.OrgLimit> orgLimitsMap = System.OrgLimits.getMap();
+    List<String> sortedSystemOrgLimitNames = new List<String>(orgLimitsMap.keySet());
     sortedSystemOrgLimitNames.sort();
+
     for (String systemOrgLimitName : sortedSystemOrgLimitNames) {
-      System.OrgLimit systemOrgLimit = System.OrgLimits.getMap().get(systemOrgLimitName);
+      System.OrgLimit systemOrgLimit = orgLimitsMap.get(systemOrgLimitName);
       LogHandler.SerializableOrganizationLimit organizationLimit = new LogHandler.SerializableOrganizationLimit();
       organizationLimit.Name = systemOrgLimit.getName();
       organizationLimit.Used = systemOrgLimit.getValue();
