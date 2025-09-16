@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       sandboxName:
-        description: 'Name of the Salesforce sandbox to populate data'
+        description: "Name of the Salesforce sandbox to populate data"
         required: true
         type: string
 
@@ -23,19 +23,19 @@ jobs:
 
       - name: Install Salesforce CLI
         run: |
-          npm install @salesforce/cli --global 
+          npm install @salesforce/cli --global
 
       - name: Install SFDMU
         run: |
           echo "Installing Salesforce Data Move Utility..."
-          sf plugins install sfdmu 
+          sf plugins install sfdmu
 
       - name: Authenticate with Salesforce
         env:
           SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
         run: |
           echo "Authenticating to Salesforce dev hub using auth URL..."
-          sf org login sfdx-url --sfdx-url-file <(echo "$SF_AUTH_URL") --set-default-dev-hub --set-default 
+          sf org login sfdx-url --sfdx-url-file <(echo "$SF_AUTH_URL") --set-default-dev-hub --set-default
 
       - name: Authenticate with Salesforce Sandbox
         env:
@@ -48,7 +48,7 @@ jobs:
         id: seed-data
         env:
           SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
-          SF_USER:  ${{ secrets.SF_USER }}
+          SF_USER: ${{ secrets.SF_USER }}
         run: |
           echo "Querying for sandbox: $SANDBOX_NAME"
-          sf sfdmu run -p config-data -s csvfile -t $SF_USER.$SANDBOX_NAME --simulation
+          sf sfdmu run -p config-data -s csvfile -u $SF_USER.$SANDBOX_NAME --simulation
