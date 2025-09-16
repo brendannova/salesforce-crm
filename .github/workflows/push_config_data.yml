@@ -51,4 +51,4 @@ jobs:
           SF_USER: ${{ secrets.SF_USER }}
         run: |
           echo "Querying for sandbox: $SANDBOX_NAME"
-          sf sfdmu run -p config-data -s csvfile -u $SF_USER.$SANDBOX_NAME --simulation
+          sf sfdmu run -n -p config-data -s csvfile -u $SF_USER.$SANDBOX_NAME --simulation
