@@ -1,0 +1,63 @@
+name: PMD Analysis
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  pmd:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Download PMD 7.16.0
+        run: |
+          curl -L -o pmd-bin.zip https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.16.0/pmd-dist-7.16.0-bin.zip
+          unzip -q pmd-bin.zip
+          mv pmd-bin-7.16.0 pmd
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: |
+            force-app/**/*.cls
+            force-app/**/*.trigger
+            force-app/**/*.xml
+
+      - name: Run PMD on changed files
+        if: steps.changed-files.outputs.all_changed_files != ''
+        run: |
+          echo "Running PMD on changed files:"
+          echo "${{ steps.changed-files.outputs.all_changed_files }}"
+          ./pmd/bin/pmd check \
+            --dir ${{ steps.changed-files.outputs.all_changed_files }} \
+            --rulesets .github/rulesets/salesforce-ruleset.xml \
+            --format sarif \
+            --report-file pmd-report.sarif || true
+
+      - name: Upload PMD results to GitHub Code Scanning
+        if: steps.changed-files.outputs.all_changed_files != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: pmd-report.sarif
+
+      - name: Fail if violations found
+        if: steps.changed-files.outputs.all_changed_files != ''
+        run: |
+          if grep -q '"results": \[' pmd-report.sarif && ! grep -q '"results": \[\]' pmd-report.sarif; then
+            echo "PMD violations detected!"
+            exit 1
+          fi
