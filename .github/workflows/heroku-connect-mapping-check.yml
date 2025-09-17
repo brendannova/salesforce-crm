@@ -24,20 +24,6 @@ jobs:
       - name: Install sfdx-git-delta
         run: sf plugins install sfdx-git-delta
 
-      - name: Authenticate with Salesforce
-        env:
-          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
-        run: |
-          echo "Authenticating to Salesforce dev hub using auth URL..."
-          sf org login sfdx-url --sfdx-url-file <(echo "$SF_AUTH_URL") --set-default-dev-hub --set-default
-
-      - name: Authenticate with Salesforce Sandbox
-        env:
-          SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
-        run: |
-          echo "Authenticating to Salesforce dev hub using auth URL..."
-          sf org resume sandbox --name=$SANDBOX_NAME
-
       - name: Generate delta package
         run: |
           MERGE_BASE=$(git merge-base ${{ github.base_ref }} ${{ github.head_ref }})
