@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Salesforce CLI
         run: |
-          npm install @salesforce/cli  @heroku/cli --global
+          npm install @salesforce/cli heroku --global
 
       - name: Install sfdx-git-delta
         run: sf plugins install sfdx-git-delta
