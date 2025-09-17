@@ -1,0 +1,61 @@
+name: Heroku Connect Delta Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-delta-fields:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Salesforce CLI
+        run: |
+          npm install @salesforce/cli  @heroku/cli --global
+
+      - name: Install sfdx-git-delta
+        run: sf plugins install sfdx-git-delta
+
+      - name: Authenticate with Salesforce
+        env:
+          SF_AUTH_URL: ${{ secrets.SF_AUTH_URL }}
+        run: |
+          echo "Authenticating to Salesforce dev hub using auth URL..."
+          sf org login sfdx-url --sfdx-url-file <(echo "$SF_AUTH_URL") --set-default-dev-hub --set-default
+
+      - name: Authenticate with Salesforce Sandbox
+        env:
+          SANDBOX_NAME: ${{ github.event.inputs.sandboxName }}
+        run: |
+          echo "Authenticating to Salesforce dev hub using auth URL..."
+          sf org resume sandbox --name=$SANDBOX_NAME
+
+      - name: Generate delta package
+        run: |
+          MERGE_BASE=$(git merge-base ${{ github.base_ref }} ${{ github.head_ref }})
+          sf sgd source delta --from $MERGE_BASE --to ${{ github.head_ref }} --ignore-whitespace --generate-delta
+
+      - name: Retrieve Mappings
+        env:
+          HEROKU_NETRC: ${{ secrets.HEROKU_NETRC }}
+        run: |
+          cat $HEROKU_NETRC > $HOME/.netrc && mkdir heroku-connect && cd heroku-connect && heroku connect:export --app ow-portal-dev && mv *.json heroku-mappings.json
+
+      - name: Check delta against Heroku Connect mappings
+        id: check-delta
+        run: |
+          scripts/validate-hc-mappings.js
+
+      - name: Post PR comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: ${{ steps.check-delta.outputs.comment }}
