@@ -1,0 +1,63 @@
+name: Heroku Connect Delta Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-delta-fields:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Fetch base and head branches
+        run: |
+          git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+          git fetch origin ${{ github.head_ref }}:${{ github.head_ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Salesforce CLI and Heroku CLI
+        run: |
+          npm install @salesforce/cli heroku --global
+
+      - name: Install sfdx-git-delta and heroku connect
+        run: |
+          mkdir -p $HOME/.config/sf && echo '["sfdx-git-delta"]' > $HOME/.config/sf/unsignedPluginAllowList.json
+          sf plugins install sfdx-git-delta && heroku plugins:install @heroku-cli/heroku-connect-plugin
+
+      - name: Generate delta package
+        run: |
+          MERGE_BASE=$(git merge-base ${{ github.base_ref }} ${{ github.head_ref }})
+          sf sgd source delta --from $MERGE_BASE --to ${{ github.head_ref }} --ignore-whitespace --generate-delta
+
+      - name: Retrieve Mappings
+        env:
+          HEROKU_NETRC: ${{ secrets.HEROKU_NETRC }}
+        run: |
+          echo $HEROKU_NETRC > $HOME/.netrc && mkdir heroku-connect && cd heroku-connect && heroku connect:export --app ow-portal-dev && mv *.json heroku-mappings.json
+
+      - name: Check delta against Heroku Connect mappings
+        id: check-delta
+        run: |
+          node scripts/js/validate-hc-mapping.js
+
+      - name: Post PR comment
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "${{ steps.check-delta.outputs.comment }}" > comment.txt
+          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
